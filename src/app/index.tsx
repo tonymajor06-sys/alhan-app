@@ -1,4 +1,3 @@
-import { setAudioModeAsync, useAudioPlayer, useAudioPlayerStatus } from 'expo-audio';
 import { router, useLocalSearchParams } from 'expo-router';
 import { ReactNode, useEffect, useState } from 'react';
 import { BackHandler, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
@@ -31,6 +30,28 @@ import {
   updateSettings,
   useSettings,
 } from '../hooks/use-settings';
+import {
+  currentTrack,
+  playQueue,
+  QueueTrack,
+  seekBy,
+  setRepeat,
+  skip,
+  stopQueue,
+  togglePlay,
+  trackKey,
+  useAudioQueue,
+} from '../hooks/use-audio-queue';
+import {
+  audioFor,
+  findHymn,
+  isInPlaylist,
+  movePlaylistItem,
+  PlaylistItem,
+  removePlaylistItem,
+  togglePlaylistItem,
+  usePlaylist,
+} from '../hooks/use-playlist';
 import { useTodayJdn } from '../hooks/use-today';
 
 const colors = alhanColors;
@@ -59,6 +80,20 @@ const strings = {
     nowIn: 'Now in',
     next: 'Next',
     openCalendar: 'Coptic calendar',
+    playlistTitle: 'My Playlist',
+    playlistDesc: (n: number) => (n === 1 ? '1 hymn' : `${n} hymns`),
+    playlistEmpty: 'Your playlist is empty. Open any hymn marked ♪ Audio and tap “Add to playlist”.',
+    addToPlaylist: '+ Add to playlist',
+    inPlaylist: '✓ In playlist',
+    playAll: '▶ Play all',
+    repeatPlaylist: '⟳ Repeat playlist',
+    previousTrack: 'Previous',
+    nextTrack: 'Next',
+    stop: 'Stop',
+    moveUp: 'Move up',
+    moveDown: 'Move down',
+    remove: 'Remove',
+    nowPlaying: 'Now playing',
   },
   ar: {
     appTitle: 'ألحان',
@@ -83,6 +118,20 @@ const strings = {
     nowIn: 'نحن الآن في',
     next: 'القادم',
     openCalendar: 'التقويم القبطي',
+    playlistTitle: 'قائمة التشغيل',
+    playlistDesc: (n: number) => `${n} ${n >= 3 && n <= 10 ? 'ألحان' : 'لحن'}`,
+    playlistEmpty: 'قائمة التشغيل فارغة. افتح أي لحن عليه ♪ صوت واضغط «أضف إلى قائمة التشغيل».',
+    addToPlaylist: '+ أضف إلى قائمة التشغيل',
+    inPlaylist: '✓ في قائمة التشغيل',
+    playAll: '▶ تشغيل الكل',
+    repeatPlaylist: '⟳ تكرار القائمة',
+    previousTrack: 'السابق',
+    nextTrack: 'التالي',
+    stop: 'إيقاف',
+    moveUp: 'تحريك لأعلى',
+    moveDown: 'تحريك لأسفل',
+    remove: 'حذف',
+    nowPlaying: 'يعمل الآن',
   },
 };
 
@@ -118,7 +167,7 @@ export default function HomeScreen() {
   const isRTL = lang === 'ar';
   const insets = useSafeAreaInsets();
 
-  const [currentView, setCurrentView] = useState<'home' | 'responses-home' | 'seasons-home'>('home');
+  const [currentView, setCurrentView] = useState<'home' | 'responses-home' | 'seasons-home' | 'playlist'>('home');
 
   // Deacon navigation state
   const [selectedDeaconCategory, setSelectedDeaconCategory] = useState<DeaconCategory | null>(null);
@@ -131,7 +180,6 @@ export default function HomeScreen() {
   const [selectedHymn, setSelectedHymn] = useState<Hymn | null>(null);
 
   const [activeLanguage, setActiveLanguage] = useState<LanguageType>(defaultHymnLanguage(lang));
-  const [isLooping, setIsLooping] = useState<boolean>(false);
 
   const activeTargetHymn = selectedHymn || selectedDeaconHymn;
 
@@ -166,34 +214,48 @@ export default function HomeScreen() {
 
   const currentAudio =
     activeTargetHymn?.versions.find((v) => v.language === effectiveLanguage)?.audio ?? null;
-  const player = useAudioPlayer(currentAudio);
-  const status = useAudioPlayerStatus(player);
+  // Audio lives in a shared queue so it keeps playing after leaving the hymn or the app
+  const queue = useAudioQueue();
+  const nowPlaying = currentTrack(queue);
+  const playlist = usePlaylist();
+  const readerItem: PlaylistItem | null = activeTargetHymn
+    ? { hymnId: activeTargetHymn.id, language: effectiveLanguage }
+    : null;
+  const readerIsCurrent = !!readerItem && !!nowPlaying && trackKey(nowPlaying) === trackKey(readerItem);
+  const status = readerIsCurrent ? queue.status : { playing: false, currentTime: 0, duration: 0 };
 
-  useEffect(() => {
-    setAudioModeAsync({ playsInSilentMode: true });
-  }, []);
+  const toTrack = (item: PlaylistItem): QueueTrack | null => {
+    const hymn = findHymn(item.hymnId);
+    const source = audioFor(item);
+    return hymn && source ? { ...item, title: displayTitle(hymn, lang), source } : null;
+  };
 
-  useEffect(() => {
-    // Object.assign keeps the React Compiler from flagging a hook-value mutation
-    Object.assign(player, { loop: isLooping });
-  }, [player, isLooping]);
+  const toggleReaderAudio = () => {
+    if (readerIsCurrent) return togglePlay();
+    const track = readerItem && toTrack(readerItem);
+    if (track) playQueue([track]);
+  };
 
-  const pausePlayer = () => {
-    try {
-      player.pause();
-    } catch {
-      // ignore
-    }
+  const playPlaylist = (startIndex = 0) =>
+    playQueue(
+      playlist.map(toTrack).filter((t): t is QueueTrack => t !== null),
+      startIndex,
+      'playlist'
+    );
+
+  const openNowPlaying = () => {
+    const hymn = nowPlaying && findHymn(nowPlaying.hymnId);
+    if (!hymn || !nowPlaying) return;
+    setActiveLanguage(nowPlaying.language);
+    setSelectedHymn(hymn);
   };
 
   const closeHymn = () => {
-    pausePlayer();
     setSelectedHymn(null);
     setSelectedDeaconHymn(null);
   };
 
   const changeLanguage = (next: LanguageType) => {
-    pausePlayer();
     setActiveLanguage(next);
   };
 
@@ -227,10 +289,75 @@ export default function HomeScreen() {
   const rowDirection = isRTL ? styles.rowReverse : styles.row;
   const textAlign = isRTL ? styles.alignRight : styles.alignLeft;
 
+  // The reader already has full controls for its own track, so the mini player only shows elsewhere
+  const showMiniPlayer = !!nowPlaying && !readerIsCurrent;
+  const bottomPadding = insets.bottom + 40 + (showMiniPlayer ? 96 : 0);
+
+  const miniPlayer = () => {
+    if (!showMiniPlayer || !nowPlaying) return null;
+    const { playing, currentTime, duration } = queue.status;
+    const progress = duration > 0 ? Math.min(1, currentTime / duration) : 0;
+    const hasQueue = queue.tracks.length > 1;
+    return (
+      <View style={[styles.miniPlayer, { bottom: insets.bottom + 12 }]}>
+        <View style={styles.miniProgressTrack}>
+          <View style={[styles.progressFill, { width: `${progress * 100}%` }]} />
+        </View>
+        <View style={[styles.miniRow, rowDirection]}>
+          <Pressable
+            onPress={openNowPlaying}
+            accessibilityRole="button"
+            accessibilityLabel={`${t.nowPlaying}: ${nowPlaying.title}`}
+            style={({ pressed }) => [styles.rowTextWrap, pressed && styles.pressed]}>
+            <Text style={[styles.miniLabel, textAlign]}>
+              ♪ {t.nowPlaying}
+              {hasQueue ? ` · ${queue.index + 1}/${queue.tracks.length}` : ''}
+            </Text>
+            <Text style={[styles.miniTitle, textAlign]} numberOfLines={1}>
+              {nowPlaying.title}
+            </Text>
+          </Pressable>
+          {hasQueue ? (
+            <Pressable
+              onPress={() => skip(-1)}
+              accessibilityRole="button"
+              accessibilityLabel={t.previousTrack}
+              style={({ pressed }) => [styles.miniButton, pressed && styles.pressed]}>
+              <Text style={styles.miniButtonText}>{isRTL ? '⏭\uFE0E' : '⏮\uFE0E'}</Text>
+            </Pressable>
+          ) : null}
+          <Pressable
+            onPress={togglePlay}
+            accessibilityRole="button"
+            accessibilityLabel={playing ? t.pause : t.play}
+            style={({ pressed }) => [styles.miniPlayButton, pressed && styles.pressed]}>
+            <Text style={styles.miniPlayIcon}>{playing ? '❚❚' : '▶'}</Text>
+          </Pressable>
+          {hasQueue ? (
+            <Pressable
+              onPress={() => skip(1)}
+              accessibilityRole="button"
+              accessibilityLabel={t.nextTrack}
+              style={({ pressed }) => [styles.miniButton, pressed && styles.pressed]}>
+              <Text style={styles.miniButtonText}>{isRTL ? '⏮\uFE0E' : '⏭\uFE0E'}</Text>
+            </Pressable>
+          ) : null}
+          <Pressable
+            onPress={stopQueue}
+            accessibilityRole="button"
+            accessibilityLabel={t.stop}
+            style={({ pressed }) => [styles.miniButton, pressed && styles.pressed]}>
+            <Text style={styles.miniButtonText}>✕</Text>
+          </Pressable>
+        </View>
+      </View>
+    );
+  };
+
   const screen = (title: string, subtitle: string | null, children: ReactNode) => (
     <View style={styles.root}>
       <ScrollView
-        contentContainerStyle={[styles.scrollContent, { paddingTop: insets.top + 12, paddingBottom: insets.bottom + 40 }]}>
+        contentContainerStyle={[styles.scrollContent, { paddingTop: insets.top + 12, paddingBottom: bottomPadding }]}>
         <Pressable
           onPress={goBack}
           accessibilityRole="button"
@@ -243,6 +370,7 @@ export default function HomeScreen() {
         {subtitle ? <Text style={[styles.subtitle, textAlign]}>{subtitle}</Text> : null}
         {children}
       </ScrollView>
+      {miniPlayer()}
     </View>
   );
 
@@ -283,12 +411,12 @@ export default function HomeScreen() {
           )
     );
 
-  // 1. HOME
-  if (currentView === 'home') {
+  // 1. HOME (the mini player can open a hymn straight from here)
+  if (currentView === 'home' && !activeTargetHymn) {
     return (
       <View style={styles.root}>
         <ScrollView
-          contentContainerStyle={[styles.homeContent, { paddingTop: insets.top + 40, paddingBottom: insets.bottom + 40 }]}>
+          contentContainerStyle={[styles.homeContent, { paddingTop: insets.top + 40, paddingBottom: bottomPadding }]}>
           <View style={styles.hero}>
             <Text style={styles.heroCross}>☩</Text>
             <Text style={styles.heroTitle}>{t.appTitle}</Text>
@@ -341,11 +469,12 @@ export default function HomeScreen() {
           </View>
 
           {[
-            { category: mainCategories[1], icon: '♫', desc: t.hymnsDesc, view: 'seasons-home' as const },
-            { category: mainCategories[0], icon: '✝', desc: t.responsesDesc, view: 'responses-home' as const },
-          ].map(({ category, icon, desc, view }) => (
+            { key: 'hymns', title: displayTitle(mainCategories[1], lang), icon: '♫', desc: t.hymnsDesc, view: 'seasons-home' as const },
+            { key: 'responses', title: displayTitle(mainCategories[0], lang), icon: '✝', desc: t.responsesDesc, view: 'responses-home' as const },
+            { key: 'playlist', title: t.playlistTitle, icon: '☰', desc: t.playlistDesc(playlist.length), view: 'playlist' as const },
+          ].map(({ key, title, icon, desc, view }) => (
             <Pressable
-              key={category.id}
+              key={key}
               onPress={() => setCurrentView(view)}
               accessibilityRole="button"
               style={({ pressed }) => [styles.homeCard, rowDirection, pressed && styles.rowCardPressed]}>
@@ -353,13 +482,14 @@ export default function HomeScreen() {
                 <Text style={styles.homeIconText}>{icon}</Text>
               </View>
               <View style={styles.rowTextWrap}>
-                <Text style={[styles.homeCardTitle, textAlign]}>{displayTitle(category, lang)}</Text>
+                <Text style={[styles.homeCardTitle, textAlign]}>{title}</Text>
                 <Text style={[styles.homeCardDesc, textAlign]}>{desc}</Text>
               </View>
               <Text style={styles.chevron}>{isRTL ? '‹' : '›'}</Text>
             </Pressable>
           ))}
         </ScrollView>
+        {miniPlayer()}
       </View>
     );
   }
@@ -372,6 +502,8 @@ export default function HomeScreen() {
     const isArabicText = effectiveLanguage === 'arabic' || rawText === strings.ar.notAvailable;
     const fontSize = 20 * settings.textScale;
     const progress = status.duration > 0 ? Math.min(1, status.currentTime / status.duration) : 0;
+    const repeatOne = queue.repeat === 'one';
+    const inPlaylist = !!readerItem && isInPlaylist(playlist, readerItem);
 
     return screen(
       displayTitle(activeTargetHymn, lang),
@@ -399,7 +531,7 @@ export default function HomeScreen() {
           <View style={styles.audioCard}>
             <View style={[styles.audioTopRow, rowDirection]}>
               <Pressable
-                onPress={() => (status.playing ? player.pause() : player.play())}
+                onPress={toggleReaderAudio}
                 accessibilityRole="button"
                 accessibilityLabel={status.playing ? t.pause : t.play}
                 style={({ pressed }) => [styles.playButton, pressed && styles.pressed]}>
@@ -416,24 +548,41 @@ export default function HomeScreen() {
             </View>
             <View style={[styles.audioControls, rowDirection]}>
               <Pressable
-                onPress={() => player.seekTo(Math.max(0, status.currentTime - 10))}
-                style={({ pressed }) => [styles.controlButton, pressed && styles.pressed]}>
+                onPress={() => seekBy(-10)}
+                disabled={!readerIsCurrent}
+                style={({ pressed }) => [styles.controlButton, pressed && styles.pressed, !readerIsCurrent && styles.disabled]}>
                 <Text style={styles.controlText}>↺ 10s</Text>
               </Pressable>
               <Pressable
-                onPress={() => player.seekTo(Math.min(status.duration, status.currentTime + 10))}
-                style={({ pressed }) => [styles.controlButton, pressed && styles.pressed]}>
+                onPress={() => seekBy(10)}
+                disabled={!readerIsCurrent}
+                style={({ pressed }) => [styles.controlButton, pressed && styles.pressed, !readerIsCurrent && styles.disabled]}>
                 <Text style={styles.controlText}>10s ↻</Text>
               </Pressable>
               <Pressable
-                onPress={() => setIsLooping((prev) => !prev)}
-                accessibilityState={{ selected: isLooping }}
-                style={[styles.controlButton, isLooping && styles.controlButtonActive]}>
-                <Text style={[styles.controlText, isLooping && styles.controlTextActive]}>
+                onPress={() => setRepeat(repeatOne ? 'none' : 'one')}
+                accessibilityState={{ selected: repeatOne }}
+                style={[styles.controlButton, repeatOne && styles.controlButtonActive]}>
+                <Text style={[styles.controlText, repeatOne && styles.controlTextActive]}>
                   ⟳ {t.repeat}
                 </Text>
               </Pressable>
             </View>
+            {readerItem ? (
+              <Pressable
+                onPress={() => togglePlaylistItem(readerItem)}
+                accessibilityRole="button"
+                accessibilityState={{ selected: inPlaylist }}
+                style={({ pressed }) => [
+                  styles.playlistButton,
+                  inPlaylist && styles.controlButtonActive,
+                  pressed && styles.pressed,
+                ]}>
+                <Text style={[styles.controlText, inPlaylist && styles.controlTextActive]}>
+                  {inPlaylist ? t.inPlaylist : t.addToPlaylist}
+                </Text>
+              </Pressable>
+            ) : null}
           </View>
         ) : null}
 
@@ -468,6 +617,85 @@ export default function HomeScreen() {
           </Text>
         </View>
       </>
+    );
+  }
+
+  // PLAYLIST
+  if (currentView === 'playlist') {
+    const playingFromPlaylist = queue.origin === 'playlist' && nowPlaying;
+    const repeatAll = queue.repeat === 'all';
+    return screen(
+      t.playlistTitle,
+      t.playlistDesc(playlist.length),
+      playlist.length === 0 ? (
+        <Text style={[styles.emptyText, textAlign]}>{t.playlistEmpty}</Text>
+      ) : (
+        <>
+          <View style={[styles.audioControls, styles.playlistActions, rowDirection]}>
+            <Pressable
+              onPress={() => playPlaylist(0)}
+              accessibilityRole="button"
+              style={({ pressed }) => [styles.controlButton, styles.playAllButton, pressed && styles.pressed]}>
+              <Text style={[styles.controlText, styles.playAllText]}>{t.playAll}</Text>
+            </Pressable>
+            <Pressable
+              onPress={() => setRepeat(repeatAll ? 'none' : 'all')}
+              accessibilityRole="button"
+              accessibilityState={{ selected: repeatAll }}
+              style={[styles.controlButton, repeatAll && styles.controlButtonActive]}>
+              <Text style={[styles.controlText, repeatAll && styles.controlTextActive]}>{t.repeatPlaylist}</Text>
+            </Pressable>
+          </View>
+          {playlist.map((item, index) => {
+            const hymn = findHymn(item.hymnId);
+            if (!hymn) return null;
+            const isCurrent = !!playingFromPlaylist && trackKey(playingFromPlaylist) === trackKey(item);
+            const languageLabel = languageLabels[lang].find((l) => l.key === item.language)?.label;
+            return (
+              <View
+                key={trackKey(item)}
+                style={[styles.rowCard, styles.playlistRow, rowDirection, isCurrent && styles.rowCardPressed]}>
+                <Pressable
+                  onPress={() => playPlaylist(index)}
+                  accessibilityRole="button"
+                  style={({ pressed }) => [styles.rowTextWrap, pressed && styles.pressed]}>
+                  <Text style={[styles.rowTitle, textAlign]}>
+                    {isCurrent ? (queue.status.playing ? '♪ ' : '❚❚ ') : `${index + 1}. `}
+                    {displayTitle(hymn, lang)}
+                  </Text>
+                  <Text style={[styles.playlistMeta, textAlign]}>{languageLabel}</Text>
+                </Pressable>
+                <View style={[styles.playlistRowButtons, rowDirection]}>
+                  <Pressable
+                    onPress={() => movePlaylistItem(index, -1)}
+                    disabled={index === 0}
+                    accessibilityLabel={t.moveUp}
+                    style={({ pressed }) => [styles.iconButton, pressed && styles.pressed, index === 0 && styles.disabled]}>
+                    <Text style={styles.iconButtonText}>▲</Text>
+                  </Pressable>
+                  <Pressable
+                    onPress={() => movePlaylistItem(index, 1)}
+                    disabled={index === playlist.length - 1}
+                    accessibilityLabel={t.moveDown}
+                    style={({ pressed }) => [
+                      styles.iconButton,
+                      pressed && styles.pressed,
+                      index === playlist.length - 1 && styles.disabled,
+                    ]}>
+                    <Text style={styles.iconButtonText}>▼</Text>
+                  </Pressable>
+                  <Pressable
+                    onPress={() => removePlaylistItem(index)}
+                    accessibilityLabel={t.remove}
+                    style={({ pressed }) => [styles.iconButton, pressed && styles.pressed]}>
+                    <Text style={styles.iconButtonText}>✕</Text>
+                  </Pressable>
+                </View>
+              </View>
+            );
+          })}
+        </>
+      )
     );
   }
 
@@ -879,6 +1107,119 @@ const styles = StyleSheet.create({
   },
   controlTextActive: {
     color: colors.gold,
+  },
+  playlistButton: {
+    minHeight: 48,
+    marginTop: 8,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: colors.border,
+    backgroundColor: colors.background,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  // Mini player
+  miniPlayer: {
+    position: 'absolute',
+    left: 12,
+    right: 12,
+    backgroundColor: colors.surfacePressed,
+    borderRadius: 18,
+    borderWidth: 1,
+    borderColor: colors.gold,
+    overflow: 'hidden',
+    shadowColor: '#000',
+    shadowOpacity: 0.35,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 8,
+  },
+  miniProgressTrack: {
+    height: 3,
+    backgroundColor: colors.border,
+  },
+  miniRow: {
+    alignItems: 'center',
+    gap: 6,
+    paddingVertical: 10,
+    paddingHorizontal: 14,
+  },
+  miniLabel: {
+    fontSize: 13,
+    fontWeight: '700',
+    color: colors.gold,
+  },
+  miniTitle: {
+    fontSize: 17,
+    fontWeight: '600',
+    color: colors.text,
+    marginTop: 2,
+  },
+  miniButton: {
+    width: 44,
+    height: 48,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  miniButtonText: {
+    fontSize: 20,
+    color: colors.text,
+  },
+  miniPlayButton: {
+    width: 52,
+    height: 52,
+    borderRadius: 26,
+    backgroundColor: colors.gold,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  miniPlayIcon: {
+    fontSize: 20,
+    color: colors.background,
+    fontWeight: '800',
+  },
+
+  // Playlist
+  emptyText: {
+    fontSize: 17,
+    color: colors.muted,
+    lineHeight: 26,
+  },
+  playlistActions: {
+    marginTop: 0,
+    marginBottom: 14,
+  },
+  playAllButton: {
+    backgroundColor: colors.gold,
+    borderColor: colors.gold,
+  },
+  playAllText: {
+    color: colors.background,
+    fontWeight: '800',
+  },
+  playlistRow: {
+    paddingHorizontal: 14,
+  },
+  playlistMeta: {
+    fontSize: 14,
+    color: colors.muted,
+    marginTop: 2,
+  },
+  playlistRowButtons: {
+    gap: 4,
+  },
+  iconButton: {
+    width: 40,
+    height: 44,
+    borderRadius: 10,
+    backgroundColor: colors.background,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  iconButtonText: {
+    fontSize: 15,
+    color: colors.text,
   },
   textSizeRow: {
     alignItems: 'center',
