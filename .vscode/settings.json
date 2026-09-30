@@ -1,0 +1,15 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit",
+    "source.organizeImports": "explicit",
+    "source.sortMembers": "explicit"
+  },
+  "liveshare.allowGuestDebugControl": true,
+  "liveshare.allowGuestTaskControl": true,
+  "liveshare.anonymousGuestApproval": "accept",
+  "liveshare.connectionMode": "direct",
+  "liveshare.diagnosticLogging": true,
+  "liveshare.diagnosticMode": true,
+  "liveshare.languages.allowGuestCommandControl": true,
+  "liveshare.notebooks.allowGuestExecuteCells": true
+}
