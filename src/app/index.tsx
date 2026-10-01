@@ -1,17 +1,32 @@
 import { useKeepAwake } from 'expo-keep-awake';
 import { router, useLocalSearchParams } from 'expo-router';
-import { ReactNode, useEffect, useState } from 'react';
-import { Alert, BackHandler, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { ReactNode, useEffect, useRef, useState } from 'react';
+import {
+  Alert,
+  BackHandler,
+  Platform,
+  Pressable,
+  ScrollView,
+  StyleProp,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  ViewStyle,
+} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { AlhanPalette } from '../constants/alhan-colors';
 import { displayTitle } from '../data/arabic-titles';
 import {
+  copticMonths,
   currentSeasonName,
   formatCopticDate,
   formatDaysUntil,
   getSeasonInfo,
+  jdnToCoptic,
   kindName,
+  toArabicDigits,
   tuneName,
 } from '../data/coptic-calendar';
 import {
@@ -85,7 +100,6 @@ const strings = {
     textSize: 'Text size',
     notAvailable: 'Text not available in this language.',
     hasAudio: 'Audio',
-    nowIn: 'Now in',
     next: 'Next',
     openCalendar: 'Coptic calendar',
     playlistTitle: 'My Playlist',
@@ -107,7 +121,6 @@ const strings = {
     searchHint: 'Search titles and words in every language.',
     noResults: 'No hymns found.',
     titleMatch: 'Title',
-    todaysHymns: 'Today’s hymns',
     sideBySide: '⇆ Side by side',
     compareWith: 'Next to it',
     download: '⬇ Download for offline',
@@ -136,7 +149,6 @@ const strings = {
     textSize: 'حجم الخط',
     notAvailable: 'النص غير متوفر بهذه اللغة.',
     hasAudio: 'صوت',
-    nowIn: 'نحن الآن في',
     next: 'القادم',
     openCalendar: 'التقويم القبطي',
     playlistTitle: 'قائمة التشغيل',
@@ -158,7 +170,6 @@ const strings = {
     searchHint: 'ابحث في العناوين والكلمات بكل اللغات.',
     noResults: 'لا توجد ألحان مطابقة.',
     titleMatch: 'العنوان',
-    todaysHymns: 'ألحان اليوم',
     sideBySide: '⇆ جنباً إلى جنب',
     compareWith: 'بجانبه',
     download: '⬇ تنزيل للاستماع بدون إنترنت',
@@ -192,6 +203,91 @@ const defaultHymnLanguage = (lang: AppLanguage): LanguageType => (lang === 'ar' 
 const withoutNumber = (title: string) => title.replace(/^\d+\.\s*/, '');
 
 const splitVerses = (text: string) => text.split(/\n\s*\n/).filter((p) => p.trim());
+
+// A paragraph that is only a speaker's name ("Deacon:") is drawn in that speaker's color, like the service books
+type Speaker = 'deacon' | 'people' | 'priest';
+const speakerLabels: Record<string, Speaker> = {
+  'Deacon:': 'deacon',
+  'People:': 'people',
+  'Priest:': 'priest',
+  'Ⲡⲓⲇⲓⲁⲕⲱⲛ:': 'deacon',
+  'Ⲡⲓⲗⲁⲟⲥ:': 'people',
+  'Ⲡⲓⲟⲩⲏⲃ:': 'priest',
+  'Pi-diakon:': 'deacon',
+  'Pi-laos:': 'people',
+  'Pi-ouib:': 'priest',
+  'الشماس:': 'deacon',
+  'الشعب:': 'people',
+  'الكاهن:': 'priest',
+  'Esh-shammas:': 'deacon',
+  "Esh-sha'b:": 'people',
+  'El-kahin:': 'priest',
+};
+const speakerOf = (paragraph: string): Speaker | undefined => speakerLabels[paragraph.trim()];
+
+// A verse, with the speaker label that introduces it kept on the line just above it
+interface Verse {
+  speaker?: Speaker;
+  label?: string;
+  text: string;
+}
+
+function toVerses(text: string): Verse[] {
+  const verses: Verse[] = [];
+  let pending: Verse | null = null;
+  for (const paragraph of splitVerses(text)) {
+    const speaker = speakerOf(paragraph);
+    if (speaker) {
+      if (pending) verses.push(pending);
+      pending = { speaker, label: paragraph.trim(), text: '' };
+    } else {
+      verses.push(pending ? { ...pending, text: paragraph } : { text: paragraph });
+      pending = null;
+    }
+  }
+  if (pending) verses.push(pending);
+  return verses;
+}
+
+// Book-like serif for hymn text; Coptic and Arabic letters fall back to the system fonts that have them
+const readerFont = Platform.select({ ios: 'Georgia', android: 'serif', default: 'Georgia, "Times New Roman", serif' });
+
+// One line of chips that scrolls sideways instead of wrapping onto several rows.
+// Right-to-left starts scrolled to the right edge so the first chip is visible.
+function ChipScroller({
+  rtl,
+  contentStyle,
+  children,
+}: {
+  rtl: boolean;
+  contentStyle?: StyleProp<ViewStyle>;
+  children: ReactNode;
+}) {
+  const ref = useRef<ScrollView>(null);
+  return (
+    <ScrollView
+      ref={ref}
+      horizontal
+      showsHorizontalScrollIndicator={false}
+      onContentSizeChange={() => {
+        if (rtl) ref.current?.scrollToEnd({ animated: false });
+      }}
+      style={chipScrollerStyles.scroller}
+      contentContainerStyle={[
+        chipScrollerStyles.content,
+        { flexDirection: rtl ? 'row-reverse' : 'row' },
+        contentStyle,
+      ]}>
+      {children}
+    </ScrollView>
+  );
+}
+
+const chipScrollerStyles = StyleSheet.create({
+  // Runs to the screen edges, past the page's 20px padding
+  scroller: { marginHorizontal: -20, flexGrow: 0 },
+  content: { flexGrow: 1, alignItems: 'center', gap: 8, paddingHorizontal: 20 },
+});
 
 // Keeps the screen on while a hymn is open, so it doesn't dim in the middle of a service
 function KeepScreenAwake() {
@@ -235,6 +331,8 @@ export default function HomeScreen() {
 
   const today = useTodayJdn();
   const seasonInfo = getSeasonInfo(today, 1);
+  const todayCoptic = jdnToCoptic(today);
+  const localDigits = (n: number) => (isRTL ? toArabicDigits(n) : String(n));
 
   // "Open hymns" on the calendar screen lands here with ?season=<id>
   const { season: seasonParam, at: seasonParamAt } = useLocalSearchParams<{ season?: string; at?: string }>();
@@ -313,14 +411,6 @@ export default function HomeScreen() {
     for (const file of files) {
       if (!(await downloadAudio(file))) return Alert.alert(t.downloadFailed);
     }
-  };
-
-  // Today's season (or the annual hymns on ordinary days), opened straight to one of its services
-  const todaySeason = seasons.find((s) => s.id === (seasonInfo.current?.seasonId ?? 'annual')) ?? seasons[0];
-  const openService = (season: Season, service: Service) => {
-    setSelectedSeason(season);
-    setSelectedService(service);
-    setCurrentView('seasons-home');
   };
 
   const openSearchResult = (result: SearchResult) => {
@@ -453,12 +543,17 @@ export default function HomeScreen() {
     </View>
   );
 
-  const row = (key: string, title: string, onPress: () => void, badge?: string) => (
+  const row = (key: string, title: string, onPress: () => void, badge?: string, number?: number) => (
     <Pressable
       key={key}
       onPress={onPress}
       accessibilityRole="button"
       style={({ pressed }) => [styles.rowCard, rowDirection, pressed && styles.rowCardPressed]}>
+      {number !== undefined ? (
+        <View style={styles.rowNumber}>
+          <Text style={styles.rowNumberText}>{isRTL ? toArabicDigits(number) : number}</Text>
+        </View>
+      ) : null}
       <View style={styles.rowTextWrap}>
         <Text style={[styles.rowTitle, textAlign]}>{title}</Text>
         {badge ? (
@@ -478,120 +573,128 @@ export default function HomeScreen() {
     </View>
   );
 
-  const hymnList = (hymns: Hymn[], onSelect: (h: Hymn) => void) =>
-    hymns.map((hymn) =>
-      hymn.isSectionHeader
-        ? sectionHeader(hymn.id, displayTitle(hymn, lang))
-        : row(
-            hymn.id,
-            displayTitle(hymn, lang),
-            () => onSelect(hymn),
-            hymn.versions.some((v) => v.audio) ? t.hasAudio : undefined
-          )
-    );
+  // Numbered in order, starting again from 1 after each section header
+  const hymnList = (hymns: Hymn[], onSelect: (h: Hymn) => void) => {
+    let number = 0;
+    return hymns.map((hymn) => {
+      if (hymn.isSectionHeader) {
+        number = 0;
+        return sectionHeader(hymn.id, displayTitle(hymn, lang));
+      }
+      number += 1;
+      return row(
+        hymn.id,
+        displayTitle(hymn, lang),
+        () => onSelect(hymn),
+        hymn.versions.some((v) => v.audio) ? t.hasAudio : undefined,
+        number
+      );
+    });
+  };
 
   // 1. HOME (the mini player can open a hymn straight from here)
   if (currentView === 'home' && !activeTargetHymn) {
     return (
       <View style={styles.root}>
         <ScrollView
-          contentContainerStyle={[styles.homeContent, { paddingTop: insets.top + 40, paddingBottom: bottomPadding }]}>
-          <View style={styles.hero}>
-            <Text style={styles.heroCross}>☩</Text>
-            <Text style={styles.heroTitle}>{t.appTitle}</Text>
-            <Text style={styles.heroSubtitle}>{t.appSubtitle}</Text>
+          contentContainerStyle={[styles.homeContent, { paddingTop: insets.top + 12, paddingBottom: bottomPadding }]}>
+          {/* Today in the church calendar, with search in the corner */}
+          <View style={[styles.topBar, rowDirection]}>
+            <Pressable
+              onPress={() => router.push('/calendar')}
+              accessibilityRole="button"
+              accessibilityLabel={`${formatCopticDate(today, lang)}, ${currentSeasonName(seasonInfo, lang)}`}
+              accessibilityHint={t.openCalendar}
+              style={({ pressed }) => [styles.calendarBox, rowDirection, pressed && styles.rowCardPressed]}>
+              {/* Today's Coptic date as a calendar page */}
+              <View style={styles.calendarTile}>
+                <Text style={styles.calendarTileDay}>{localDigits(todayCoptic.day)}</Text>
+                <Text style={styles.calendarTileMonth} numberOfLines={1}>
+                  {copticMonths[lang][todayCoptic.month - 1]}
+                </Text>
+                <Text style={styles.calendarTileYear}>{localDigits(todayCoptic.year)}</Text>
+              </View>
+              <View style={styles.calendarInfo}>
+                <Text
+                  style={[styles.calendarSeason, textAlign, seasonInfo.current?.kind === 'fast' && { color: colors.fast }]}
+                  numberOfLines={2}>
+                  {currentSeasonName(seasonInfo, lang)}
+                </Text>
+                <Text style={[styles.calendarMeta, textAlign]} numberOfLines={1}>
+                  {seasonInfo.current ? kindName[lang][seasonInfo.current.kind] : tuneName[lang][seasonInfo.tune]}
+                </Text>
+                {seasonInfo.upcoming[0] ? (
+                  <View style={styles.calendarNext}>
+                    <Text style={[styles.calendarNextText, textAlign]} numberOfLines={1}>
+                      {t.next}: {seasonInfo.upcoming[0].name[lang]}
+                    </Text>
+                    <Text style={[styles.calendarNextWhen, textAlign]}>
+                      {formatDaysUntil(seasonInfo.upcoming[0].daysUntil, lang)}
+                    </Text>
+                  </View>
+                ) : null}
+              </View>
+            </Pressable>
+            <Pressable
+              onPress={() => setCurrentView('search')}
+              accessibilityRole="search"
+              accessibilityLabel={t.search}
+              style={({ pressed }) => [styles.searchButton, pressed && styles.rowCardPressed]}>
+              <Text style={styles.searchButtonIcon}>⌕</Text>
+            </Pressable>
           </View>
 
-          <Pressable
-            onPress={() => setCurrentView('search')}
-            accessibilityRole="search"
-            accessibilityLabel={t.search}
-            style={({ pressed }) => [styles.searchEntry, rowDirection, pressed && styles.rowCardPressed]}>
-            <Text style={styles.searchIcon}>⌕</Text>
-            <Text style={[styles.searchEntryText, textAlign]}>{t.search}</Text>
-          </Pressable>
-
-          <Pressable
-            onPress={() => router.push('/calendar')}
-            accessibilityRole="button"
-            accessibilityHint={t.openCalendar}
-            style={({ pressed }) => [styles.seasonCard, pressed && styles.rowCardPressed]}>
-            <View style={[styles.seasonCardTop, rowDirection]}>
-              <Text style={[styles.seasonDate, textAlign]}>☩ {formatCopticDate(today, lang)}</Text>
-              <Text style={styles.chevron}>{isRTL ? '‹' : '›'}</Text>
-            </View>
-            <Text style={[styles.seasonLabel, textAlign]}>{t.nowIn}</Text>
-            <Text
-              style={[styles.seasonName, textAlign, seasonInfo.current?.kind === 'fast' && { color: colors.fast }]}>
-              {currentSeasonName(seasonInfo, lang)}
-            </Text>
-            <Text style={[styles.seasonMeta, textAlign]}>
-              {seasonInfo.current ? kindName[lang][seasonInfo.current.kind] : tuneName[lang][seasonInfo.tune]}
-            </Text>
-            {seasonInfo.upcoming[0] ? (
-              <View style={[styles.seasonNext, rowDirection]}>
-                <Text style={[styles.seasonNextText, textAlign]} numberOfLines={1}>
-                  {t.next}: {seasonInfo.upcoming[0].name[lang]}
-                </Text>
-                <Text style={styles.seasonNextWhen}>
-                  {formatDaysUntil(seasonInfo.upcoming[0].daysUntil, lang)}
-                </Text>
+          <View style={styles.homeBody}>
+            <View style={styles.hero}>
+              <View style={styles.heroMedallion}>
+                <Text style={styles.heroCross}>☩</Text>
               </View>
-            ) : null}
-          </Pressable>
+              <Text style={styles.heroTitle}>{t.appTitle}</Text>
+              <Text style={styles.heroSubtitle}>{t.appSubtitle}</Text>
+              <View style={styles.ornament}>
+                <View style={styles.ornamentLine} />
+                <Text style={styles.ornamentMark}>✦</Text>
+                <View style={styles.ornamentLine} />
+              </View>
+            </View>
 
-          <View style={styles.todayCard}>
-            <Text style={[styles.seasonLabel, textAlign]}>♫ {t.todaysHymns}</Text>
-            <Text style={[styles.todaySeason, textAlign]}>{withoutNumber(displayTitle(todaySeason, lang))}</Text>
-            <View style={[styles.chipWrap, styles.todayServices, rowDirection]}>
-              {todaySeason.services.map((service) => (
+            <Text style={styles.languagePrompt}>{t.languagePrompt}</Text>
+            <View style={styles.segmented}>
+              {(['en', 'ar'] as AppLanguage[]).map((option) => (
                 <Pressable
-                  key={service.id}
-                  onPress={() => openService(todaySeason, service)}
+                  key={option}
+                  onPress={() => changeAppLanguage(option)}
                   accessibilityRole="button"
-                  style={({ pressed }) => [styles.chip, pressed && styles.rowCardPressed]}>
-                  <Text style={styles.chipText}>{displayTitle(service, lang)}</Text>
+                  accessibilityState={{ selected: lang === option }}
+                  style={[styles.segment, lang === option && styles.segmentActive]}>
+                  <Text style={[styles.segmentText, lang === option && styles.segmentTextActive]}>
+                    {option === 'en' ? 'English' : 'العربية'}
+                  </Text>
                 </Pressable>
               ))}
             </View>
-          </View>
 
-          <Text style={styles.languagePrompt}>{t.languagePrompt}</Text>
-          <View style={styles.segmented}>
-            {(['en', 'ar'] as AppLanguage[]).map((option) => (
+            {[
+              { key: 'hymns', title: displayTitle(mainCategories[1], lang), icon: '♫', desc: t.hymnsDesc, view: 'seasons-home' as const },
+              { key: 'responses', title: displayTitle(mainCategories[0], lang), icon: '✝', desc: t.responsesDesc, view: 'responses-home' as const },
+              { key: 'playlist', title: t.playlistTitle, icon: '☰', desc: t.playlistDesc(playlist.length), view: 'playlist' as const },
+            ].map(({ key, title, icon, desc, view }) => (
               <Pressable
-                key={option}
-                onPress={() => changeAppLanguage(option)}
+                key={key}
+                onPress={() => setCurrentView(view)}
                 accessibilityRole="button"
-                accessibilityState={{ selected: lang === option }}
-                style={[styles.segment, lang === option && styles.segmentActive]}>
-                <Text style={[styles.segmentText, lang === option && styles.segmentTextActive]}>
-                  {option === 'en' ? 'English' : 'العربية'}
-                </Text>
+                style={({ pressed }) => [styles.homeCard, rowDirection, pressed && styles.rowCardPressed]}>
+                <View style={styles.homeIcon}>
+                  <Text style={styles.homeIconText}>{icon}</Text>
+                </View>
+                <View style={styles.rowTextWrap}>
+                  <Text style={[styles.homeCardTitle, textAlign]}>{title}</Text>
+                  <Text style={[styles.homeCardDesc, textAlign]}>{desc}</Text>
+                </View>
+                <Text style={styles.chevron}>{isRTL ? '‹' : '›'}</Text>
               </Pressable>
             ))}
           </View>
-
-          {[
-            { key: 'hymns', title: displayTitle(mainCategories[1], lang), icon: '♫', desc: t.hymnsDesc, view: 'seasons-home' as const },
-            { key: 'responses', title: displayTitle(mainCategories[0], lang), icon: '✝', desc: t.responsesDesc, view: 'responses-home' as const },
-            { key: 'playlist', title: t.playlistTitle, icon: '☰', desc: t.playlistDesc(playlist.length), view: 'playlist' as const },
-          ].map(({ key, title, icon, desc, view }) => (
-            <Pressable
-              key={key}
-              onPress={() => setCurrentView(view)}
-              accessibilityRole="button"
-              style={({ pressed }) => [styles.homeCard, rowDirection, pressed && styles.rowCardPressed]}>
-              <View style={styles.homeIcon}>
-                <Text style={styles.homeIconText}>{icon}</Text>
-              </View>
-              <View style={styles.rowTextWrap}>
-                <Text style={[styles.homeCardTitle, textAlign]}>{title}</Text>
-                <Text style={[styles.homeCardDesc, textAlign]}>{desc}</Text>
-              </View>
-              <Text style={styles.chevron}>{isRTL ? '‹' : '›'}</Text>
-            </Pressable>
-          ))}
         </ScrollView>
         {miniPlayer()}
       </View>
@@ -626,10 +729,23 @@ export default function HomeScreen() {
     const showSideBySide = settings.sideBySide && compareLanguage !== null;
     const columnStyle = (language: LanguageType) => (language === 'arabic' ? styles.arabicText : styles.alignLeft);
     // Verse by verse, so each line sits next to its translation
-    const verses = splitVerses(hymnText);
-    const compareVerses = compareLanguage ? splitVerses(textFor(compareLanguage)) : [];
+    const verses = toVerses(hymnText);
+    const compareVerses = compareLanguage ? toVerses(textFor(compareLanguage)) : [];
     const columnSize = fontSize * 0.85;
     const columnText = { fontSize: columnSize, lineHeight: columnSize * 1.6 };
+    const speakerColor: Record<Speaker, string> = { deacon: colors.gold, people: colors.people, priest: colors.priest };
+    const verseContent = (verse: Verse | undefined) =>
+      verse ? (
+        <>
+          {verse.speaker ? (
+            <Text style={[styles.speaker, { color: speakerColor[verse.speaker] }]}>
+              {verse.label}
+              {verse.text ? '\n' : ''}
+            </Text>
+          ) : null}
+          {verse.text}
+        </>
+      ) : null;
 
     return screen(
       displayTitle(activeTargetHymn, lang),
@@ -637,7 +753,7 @@ export default function HomeScreen() {
       <>
         <KeepScreenAwake />
         {availableLanguages.length > 1 ? (
-          <View style={[styles.chipWrap, rowDirection]}>
+          <ChipScroller rtl={isRTL} contentStyle={styles.readerChips}>
             {availableLanguages.map((l) => {
               const active = effectiveLanguage === l.key;
               return (
@@ -651,23 +767,42 @@ export default function HomeScreen() {
                 </Pressable>
               );
             })}
-          </View>
+          </ChipScroller>
         ) : null}
 
-        {compareOptions.length > 0 ? (
-          <View style={[styles.compareRow, rowDirection]}>
+        {/* Reading tools: side by side on one end, text size on the other */}
+        <View style={[styles.toolbar, rowDirection]}>
+          {compareOptions.length > 0 ? (
             <Pressable
               onPress={() => updateSettings({ sideBySide: !settings.sideBySide })}
               accessibilityRole="switch"
               accessibilityState={{ checked: showSideBySide }}
-              style={[styles.chip, showSideBySide && styles.controlButtonActive]}>
+              style={[styles.chip, styles.chipSmall, showSideBySide && styles.controlButtonActive]}>
               <Text style={[styles.chipText, showSideBySide && styles.controlTextActive]}>{t.sideBySide}</Text>
             </Pressable>
+          ) : (
+            <View />
+          )}
+          <View style={[styles.textSizeButtons, rowDirection]}>
+            <Pressable
+              onPress={() => changeTextScale(-0.15)}
+              disabled={settings.textScale <= TEXT_SCALE_MIN}
+              accessibilityLabel={`${t.textSize} -`}
+              style={({ pressed }) => [styles.sizeButton, pressed && styles.pressed, settings.textScale <= TEXT_SCALE_MIN && styles.disabled]}>
+              <Text style={styles.sizeButtonSmall}>A−</Text>
+            </Pressable>
+            <Pressable
+              onPress={() => changeTextScale(0.15)}
+              disabled={settings.textScale >= TEXT_SCALE_MAX}
+              accessibilityLabel={`${t.textSize} +`}
+              style={({ pressed }) => [styles.sizeButton, pressed && styles.pressed, settings.textScale >= TEXT_SCALE_MAX && styles.disabled]}>
+              <Text style={styles.sizeButtonLarge}>A+</Text>
+            </Pressable>
           </View>
-        ) : null}
+        </View>
         {showSideBySide && compareOptions.length > 1 ? (
-          <View style={[styles.chipWrap, styles.compareChips, rowDirection]}>
-            <Text style={styles.textSizeLabel}>{t.compareWith}:</Text>
+          <ChipScroller rtl={isRTL} contentStyle={styles.compareChips}>
+            <Text style={styles.compareLabel}>{t.compareWith}:</Text>
             {compareOptions.map((l) => {
               const active = compareLanguage === l.key;
               return (
@@ -681,7 +816,7 @@ export default function HomeScreen() {
                 </Pressable>
               );
             })}
-          </View>
+          </ChipScroller>
         ) : null}
 
         {currentAudio ? (
@@ -760,36 +895,28 @@ export default function HomeScreen() {
           </View>
         ) : null}
 
-        <View style={[styles.textSizeRow, rowDirection]}>
-          <Text style={styles.textSizeLabel}>{t.textSize}</Text>
-          <View style={[styles.textSizeButtons, rowDirection]}>
-            <Pressable
-              onPress={() => changeTextScale(-0.15)}
-              disabled={settings.textScale <= TEXT_SCALE_MIN}
-              accessibilityLabel={`${t.textSize} -`}
-              style={({ pressed }) => [styles.sizeButton, pressed && styles.pressed, settings.textScale <= TEXT_SCALE_MIN && styles.disabled]}>
-              <Text style={styles.sizeButtonSmall}>A−</Text>
-            </Pressable>
-            <Pressable
-              onPress={() => changeTextScale(0.15)}
-              disabled={settings.textScale >= TEXT_SCALE_MAX}
-              accessibilityLabel={`${t.textSize} +`}
-              style={({ pressed }) => [styles.sizeButton, pressed && styles.pressed, settings.textScale >= TEXT_SCALE_MAX && styles.disabled]}>
-              <Text style={styles.sizeButtonLarge}>A+</Text>
-            </Pressable>
-          </View>
-        </View>
-
         <View style={styles.textCard}>
           {showSideBySide && compareLanguage ? (
             Array.from({ length: Math.max(verses.length, compareVerses.length) }, (_, i) => (
               <View key={i} style={[styles.verseRow, rowDirection, i > 0 && styles.verseRowDivider]}>
-                <Text style={[styles.hymnText, styles.verseColumn, columnText, columnStyle(effectiveLanguage)]}>
-                  {verses[i] ?? ''}
+                <Text
+                  style={[
+                    styles.hymnText,
+                    styles.verseColumn,
+                    columnText,
+                    columnStyle(effectiveLanguage),
+                  ]}>
+                  {verseContent(verses[i])}
                 </Text>
                 <View style={styles.verseGutter} />
-                <Text style={[styles.hymnText, styles.verseColumn, columnText, columnStyle(compareLanguage)]}>
-                  {compareVerses[i] ?? ''}
+                <Text
+                  style={[
+                    styles.hymnText,
+                    styles.verseColumn,
+                    columnText,
+                    columnStyle(compareLanguage),
+                  ]}>
+                  {verseContent(compareVerses[i])}
                 </Text>
               </View>
             ))
@@ -800,7 +927,12 @@ export default function HomeScreen() {
                 { fontSize, lineHeight: fontSize * 1.65 },
                 isArabicText ? styles.arabicText : styles.alignLeft,
               ]}>
-              {hymnText}
+              {verses.map((verse, i) => (
+                <Text key={i}>
+                  {i > 0 ? '\n\n' : ''}
+                  {verseContent(verse)}
+                </Text>
+              ))}
             </Text>
           )}
         </View>
@@ -985,7 +1117,15 @@ export default function HomeScreen() {
     return screen(
       t.seasonsTitle,
       t.chooseSeason,
-      seasons.map((season) => row(season.id, displayTitle(season, lang), () => setSelectedSeason(season)))
+      seasons.map((season, index) =>
+        row(
+          season.id,
+          withoutNumber(displayTitle(season, lang)),
+          () => setSelectedSeason(season),
+          undefined,
+          index + 1
+        )
+      )
     );
   }
 
@@ -1032,57 +1172,138 @@ const createStyles = (colors: AlhanPalette) => StyleSheet.create({
   disabled: { opacity: 0.35 },
 
   // Home
-  searchEntry: {
-    alignItems: 'center',
-    gap: 10,
-    minHeight: 54,
-    paddingHorizontal: 18,
-    borderRadius: 16,
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.border,
-    marginBottom: 16,
-  },
   searchIcon: {
     fontSize: 24,
     color: colors.gold,
   },
-  searchEntryText: {
-    flex: 1,
-    fontSize: 18,
-    color: colors.muted,
+  homeContent: {
+    paddingHorizontal: 20,
+    flexGrow: 1,
   },
-  todayCard: {
+  // Everything below the top bar, centered in the space that is left
+  homeBody: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    paddingTop: 28,
+  },
+  topBar: {
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    gap: 10,
+  },
+  // Only as wide as its contents, so it reads as a small card rather than a banner
+  calendarBox: {
+    maxWidth: '82%',
+    alignItems: 'center',
+    gap: 14,
     backgroundColor: colors.surface,
     borderRadius: 20,
     borderWidth: 1,
     borderColor: colors.border,
-    padding: 18,
-    marginBottom: 28,
+    padding: 14,
+    shadowColor: '#000',
+    shadowOpacity: 0.12,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 3,
   },
-  todaySeason: {
-    fontSize: 21,
+  calendarTile: {
+    width: 76,
+    alignSelf: 'stretch',
+    minHeight: 92,
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: colors.gold,
+    backgroundColor: colors.goldSoft,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 4,
+    paddingVertical: 8,
+  },
+  calendarTileDay: {
+    fontSize: 34,
+    lineHeight: 38,
+    fontWeight: '800',
+    color: colors.gold,
+    fontVariant: ['tabular-nums'],
+  },
+  calendarTileMonth: {
+    fontSize: 14,
     fontWeight: '800',
     color: colors.text,
     marginTop: 2,
   },
-  todayServices: {
-    marginTop: 12,
-    marginBottom: 0,
+  calendarTileYear: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: colors.muted,
+    marginTop: 1,
   },
-  homeContent: {
-    paddingHorizontal: 20,
-    flexGrow: 1,
+  calendarInfo: {
+    flexShrink: 1,
+    minWidth: 140,
+  },
+  calendarSeason: {
+    fontSize: 19,
+    fontWeight: '800',
+    color: colors.gold,
+  },
+  calendarMeta: {
+    fontSize: 14,
+    color: colors.muted,
+    marginTop: 2,
+  },
+  calendarNext: {
+    marginTop: 10,
+    paddingTop: 10,
+    borderTopWidth: 1,
+    borderTopColor: colors.border,
+  },
+  calendarNextText: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: colors.text,
+  },
+  calendarNextWhen: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: colors.gold,
+    marginTop: 2,
+  },
+  searchButton: {
+    width: 54,
+    height: 54,
+    borderRadius: 27,
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.border,
+    alignItems: 'center',
     justifyContent: 'center',
+  },
+  searchButtonIcon: {
+    fontSize: 26,
+    lineHeight: 30,
+    color: colors.gold,
   },
   hero: {
     alignItems: 'center',
-    marginBottom: 36,
+    marginBottom: 32,
+  },
+  heroMedallion: {
+    width: 76,
+    height: 76,
+    borderRadius: 38,
+    borderWidth: 1,
+    borderColor: colors.gold,
+    backgroundColor: colors.goldSoft,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 14,
   },
   heroCross: {
-    fontSize: 44,
+    fontSize: 40,
+    lineHeight: 46,
     color: colors.gold,
-    marginBottom: 8,
   },
   heroTitle: {
     fontSize: 40,
@@ -1095,60 +1316,20 @@ const createStyles = (colors: AlhanPalette) => StyleSheet.create({
     color: colors.muted,
     marginTop: 6,
   },
-  seasonCard: {
-    backgroundColor: colors.surface,
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderTopWidth: 3,
-    borderTopColor: colors.gold,
-    padding: 18,
-    marginBottom: 28,
-  },
-  seasonCardTop: {
-    alignItems: 'center',
-    gap: 8,
-  },
-  seasonDate: {
-    flex: 1,
-    fontSize: 17,
-    fontWeight: '700',
-    color: colors.text,
-  },
-  seasonLabel: {
-    fontSize: 14,
-    fontWeight: '700',
-    color: colors.muted,
-    marginTop: 4,
-  },
-  seasonName: {
-    fontSize: 24,
-    fontWeight: '800',
-    color: colors.gold,
-    marginTop: 2,
-  },
-  seasonMeta: {
-    fontSize: 15,
-    color: colors.muted,
-    marginTop: 2,
-  },
-  seasonNext: {
+  ornament: {
+    flexDirection: 'row',
     alignItems: 'center',
     gap: 10,
-    marginTop: 14,
-    paddingTop: 12,
-    borderTopWidth: 1,
-    borderTopColor: colors.border,
+    marginTop: 18,
   },
-  seasonNextText: {
-    flex: 1,
-    fontSize: 16,
-    fontWeight: '600',
-    color: colors.text,
+  ornamentLine: {
+    width: 44,
+    height: 1,
+    backgroundColor: colors.gold,
+    opacity: 0.5,
   },
-  seasonNextWhen: {
-    fontSize: 15,
-    fontWeight: '700',
+  ornamentMark: {
+    fontSize: 12,
     color: colors.gold,
   },
   languagePrompt: {
@@ -1275,6 +1456,21 @@ const createStyles = (colors: AlhanPalette) => StyleSheet.create({
   rowTextWrap: {
     flex: 1,
   },
+  rowNumber: {
+    minWidth: 34,
+    height: 34,
+    paddingHorizontal: 6,
+    borderRadius: 17,
+    backgroundColor: colors.goldSoft,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  rowNumberText: {
+    fontSize: 15,
+    fontWeight: '800',
+    color: colors.gold,
+    fontVariant: ['tabular-nums'],
+  },
   rowTitle: {
     fontSize: 19,
     fontWeight: '600',
@@ -1318,12 +1514,6 @@ const createStyles = (colors: AlhanPalette) => StyleSheet.create({
   },
 
   // Reader
-  chipWrap: {
-    flexWrap: 'wrap',
-    gap: 8,
-    marginTop: 16,
-    marginBottom: 16,
-  },
   chip: {
     minHeight: 46,
     justifyContent: 'center',
@@ -1512,17 +1702,19 @@ const createStyles = (colors: AlhanPalette) => StyleSheet.create({
   },
 
   // Side by side
-  compareRow: {
-    marginTop: -4,
-    marginBottom: 16,
-  },
   compareChips: {
-    alignItems: 'center',
-    marginTop: -6,
+    paddingTop: 2,
+    paddingBottom: 16,
+  },
+  compareLabel: {
+    fontSize: 15,
+    fontWeight: '600',
+    color: colors.muted,
   },
   chipSmall: {
     minHeight: 40,
-    paddingHorizontal: 12,
+    paddingHorizontal: 14,
+    borderRadius: 20,
   },
   verseRow: {
     paddingVertical: 10,
@@ -1585,22 +1777,22 @@ const createStyles = (colors: AlhanPalette) => StyleSheet.create({
     fontSize: 15,
     color: colors.text,
   },
-  textSizeRow: {
+  textSizeButtons: {
+    gap: 8,
+  },
+  readerChips: {
+    paddingTop: 16,
+    paddingBottom: 14,
+  },
+  toolbar: {
     alignItems: 'center',
     justifyContent: 'space-between',
+    gap: 12,
     marginBottom: 14,
   },
-  textSizeLabel: {
-    fontSize: 16,
-    color: colors.muted,
-    fontWeight: '600',
-  },
-  textSizeButtons: {
-    gap: 10,
-  },
   sizeButton: {
-    width: 60,
-    height: 48,
+    width: 52,
+    height: 44,
     borderRadius: 12,
     backgroundColor: colors.surface,
     borderWidth: 1,
@@ -1625,10 +1817,16 @@ const createStyles = (colors: AlhanPalette) => StyleSheet.create({
     borderColor: colors.border,
     borderTopWidth: 3,
     borderTopColor: colors.gold,
-    padding: 22,
+    paddingHorizontal: 22,
+    paddingVertical: 24,
   },
   hymnText: {
     color: colors.text,
+    fontFamily: readerFont,
+  },
+  speaker: {
+    fontWeight: '800',
+    letterSpacing: 0.3,
   },
   arabicText: {
     textAlign: 'right',

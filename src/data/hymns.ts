@@ -1259,6 +1259,34 @@ annualLiturgy?.hymns.push({
   ],
 });
 
+// ---- Annual > Liturgy: after Ouoniatou Khen Oumethmee ----
+annualLiturgy?.hymns.push({
+  id: 'annual-liturgy-hiten-ni-presvia-eleos',
+  title: 'Ϩⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ ⲛ̀ⲧⲉ Ϯⲑⲉⲟ̀ⲧⲟⲕⲟⲥ',
+  versions: [
+    {
+      language: 'coptic',
+      text: 'Ϩⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ ⲛ̀ⲧⲉ Ϯⲑⲉⲟ̀ⲧⲟⲕⲟⲥ ⲉⲑⲟⲩⲁⲃ Ⲙⲁⲣⲓⲁ: Ⲡ̀ϭⲟⲓⲥ ⲁ̀ⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.\n\nⲦⲉⲛⲟⲩⲱϣⲧ ⲙ̀ⲙⲟⲕ ⲱ̀ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: ⲛⲉⲙ Ⲡⲉⲕⲓⲱⲧ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ: ⲛⲉⲙ Ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ ⲉⲑⲟⲩⲁⲃ: ϫⲉ ⲁⲕⲓ̀ ⲁⲕⲥⲱϯ ⲙ̀ⲙⲟⲛ.\n\nⲈⲗⲉⲟⲥ ⲓ̀ⲣⲏⲛⲏⲥ: ⲑⲩⲥⲓⲁ ⲉ̀ⲛⲉⲥⲉⲱⲥ.',
+    },
+    {
+      language: 'englishCoptic',
+      text: 'Hiten ni-epresvia ente ti-Theotokos ethowab Maria: Epchois ari-ehmot nan em-pi-kho evol ente nen-novi.\n\nTen-ou-osht emmok o Pikhristos: nem Pek-iot en-agathos: nem Pi-epnevma ethowab: je aki aksoti emmon.\n\nEleos irinis: thysia enesios.',
+    },
+    {
+      language: 'english',
+      text: 'Through the intercessions of the Theotokos, Saint Mary, O Lord, grant us the forgiveness of our sins.\n\nWe worship You, O Christ, with Your Good Father and the Holy Spirit, for You have come and saved us.\n\nA mercy of peace, a sacrifice of praise.',
+    },
+    {
+      language: 'englishArabic',
+      text: 'Bi-shafa\'at walidat el-ilah el-qiddisa Maryam, ya rabbu an\'im lana bi-maghfirat khatayana.\n\nNasjudu laka ayyuha el-Maseeh, ma\'a abeeka es-saleh war-Rooh el-Qudus, li-annaka ataita wa khallastana.\n\nRahmatu es-salam, dhabeehatu et-tasbeeh.',
+    },
+    {
+      language: 'arabic',
+      text: 'بشفاعات والدة الإله القديسة مريم، ياربُ انعم لنا بمغفرةِ خطايانا.\n\nنسجدُ لكَ أيها المسيح، مع أبيكَ الصالح، والروح القدس، لأنك أتيتَ وخلصتنا.\n\nرحمةُ السلامِ، ذبيحةُ التسبيحِ.',
+    },
+  ],
+});
+
 // ---- Audio: Annual > Liturgy > Psalm Trailer for the Pope or a Bishop ----
 const psalmTrailerPopeBishopHymn = annualLiturgy?.hymns.find((h) => h.id === 'annual-liturgy-psalm-trailer-pope-bishop');
 const psalmTrailerPopeBishopCoptic = psalmTrailerPopeBishopHymn?.versions.find((v) => v.language === 'coptic');
@@ -1307,4 +1335,210 @@ if (doxologyVirginMaryCopticVersion) {
 }
 if (doxologyVirginMaryEnglishCopticVersion) {
   doxologyVirginMaryEnglishCopticVersion.audio = 'doxology-virgin-mary.m4a';
+}
+// ---- Deacon Responses > Annual > Matins: replace the placeholders with the real responses ----
+const deaconAnnualMatins = deaconCategories
+  .find((c) => c.id === 'deacon-annual')
+  ?.services.find((s) => s.id === 'd-annual-matins');
+
+const prayForMercyCoptic =
+  'Ⲧⲱⲃϩ ϩⲓⲛⲁ ⲛ̀ⲧⲉ Ⲫⲛⲟⲩϯ ⲛⲁⲓ ⲛⲁⲛ: ⲛ̀ⲧⲉϥϣⲉⲛϩⲏⲧ ϧⲁⲣⲟⲛ: ⲛ̀ⲧⲉϥⲥⲱⲧⲉⲙ ⲉ̀ⲣⲟⲛ: ⲛ̀ⲧⲉϥⲉⲣⲃⲟⲏ̀ⲑⲓⲛ ⲉ̀ⲣⲟⲛ: ⲛ̀ⲧⲉϥϭⲓ ⲛ̀ⲛⲓϯϩⲟ ⲛⲉⲙ ⲛⲓⲧⲱⲃϩ ⲛ̀ⲧⲉ ⲛⲏⲉⲑⲟⲩⲁⲃ ⲛ̀ⲧⲁϥ: ⲛ̀ⲧⲟⲧⲟⲩ ⲉ̀ϩⲣⲏⲓ ⲉ̀ϫⲱⲛ ⲉ̀ⲡⲓⲁ̀ⲅⲁⲑⲟⲛ ⲛ̀ⲥⲏⲟⲩ ⲛⲓⲃⲉⲛ: ☩ ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ.';
+const prayForMercyEnglishCoptic =
+  'Tobh hina ente Efnouti nai nan: entef-shenhit kharon: entef-sotem eron: entef-erbo-ithin eron: entef-chi enni-tiho nem ni-tobh ente nee-ethowab entaf: entotou e-ehree ejon e-pi-agathon en-seou niven: ☩ entef-kha nen-novi nan evol.';
+const prayForMercyEnglish =
+  'Pray that God may have mercy and compassion on us, hear us, help us, and accept the supplications and prayers of His saints, for that which is good on our behalf at all times ☩ and forgive us our sins.';
+const prayForMercyEnglishArabic =
+  'Utlubu likay yarhamana Allah, wa yatara\'af \'alayna, wa yasma\'na, wa yu\'eenana, wa yaqbal su\'alat wa talabat qiddiseeh minhum bis-salah \'anna fi kulli heen ☩ wa yaghfir lana khatayana.';
+const prayForMercyArabic =
+  'اطلبوا لكي يرحمَنا الله، ويتراءف علينا، ويسمعنا، ويعيننا، ويقبلَ سؤالات وطلبات قديسيه منهم بالصلاحِ عنا في كلِّ حينٍ ☩ ويغفرَ لنا خطايانا.';
+
+if (deaconAnnualMatins) {
+  deaconAnnualMatins.hymns = [
+    {
+      id: 'd-annual-matins-stand-up-for-prayer',
+      title: 'Ⲉⲡⲓ ⲡ̀ⲣⲟⲥⲉⲩⲭⲏ ⲥ̀ⲧⲁⲑⲏⲧⲉ (Stand Up for Prayer)',
+      versions: [
+        { language: 'coptic', text: 'Ⲉⲡⲓ ⲡ̀ⲣⲟⲥⲉⲩⲭⲏ ⲥ̀ⲧⲁⲑⲏⲧⲉ.' },
+        { language: 'englishCoptic', text: 'Epi proseuchi stathite.' },
+        { language: 'english', text: 'Stand up for prayer.' },
+        { language: 'englishArabic', text: 'Lis-salah qifu.' },
+        { language: 'arabic', text: 'للصلاة قفوا.' },
+      ],
+    },
+    {
+      id: 'd-annual-matins-pray',
+      title: 'Ⲡⲣⲟⲥⲉⲩⲝⲁⲥⲑⲉ (Pray)',
+      versions: [
+        { language: 'coptic', text: 'Ⲡⲣⲟⲥⲉⲩⲝⲁⲥⲑⲉ.' },
+        { language: 'englishCoptic', text: 'Proseuxasthe.' },
+        { language: 'english', text: 'Pray.' },
+        { language: 'englishArabic', text: 'Sallu.' },
+        { language: 'arabic', text: 'صلوا.' },
+      ],
+    },
+    {
+      id: 'd-annual-matins-pray-for-mercy',
+      title: 'Ⲧⲱⲃϩ ϩⲓⲛⲁ (Pray That God May Have Mercy)',
+      versions: [
+        { language: 'coptic', text: prayForMercyCoptic },
+        { language: 'englishCoptic', text: prayForMercyEnglishCoptic },
+        { language: 'english', text: prayForMercyEnglish },
+        { language: 'englishArabic', text: prayForMercyEnglishArabic },
+        { language: 'arabic', text: prayForMercyArabic },
+      ],
+    },
+    {
+      id: 'd-annual-matins-pray-for-mercy-pope-bishop',
+      title: 'Ⲧⲱⲃϩ ϩⲓⲛⲁ (Pray That God May Have Mercy, in the Presence of the Pope or a Bishop)',
+      versions: [
+        {
+          language: 'coptic',
+          text: `${prayForMercyCoptic}\n\nⲛ̀ⲧⲉϥⲁ̀ⲣⲉϩ ⲉ̀ⲡ̀ⲱⲛϧ ⲛⲉⲙ ⲡ̀ⲧⲁϩⲟ ⲉ̀ⲣⲁⲧϥ ⲙ̀ⲡⲉⲛⲓⲱⲧ ⲉⲧⲧⲁⲓⲏⲟⲩⲧ ⲛ̀ⲁⲣⲭⲓⲉ̀ⲣⲉⲩⲥ ⲡⲁⲡⲁ ⲁⲃⲃⲁ (ⲛⲓⲙ) ⲛⲉⲙ ⲡⲉϥⲕⲉϣ̀ⲫⲏⲣ ⲛ̀ⲗⲓⲧⲟⲩⲣⲅⲟⲥ ⲡⲉⲛⲓⲱⲧ ⲛ̀ⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲥ (ⲙ̀ⲙⲏⲧⲣⲟⲡⲟⲗⲏⲧⲏⲥ) ⲁⲃⲃⲁ (ⲛⲓⲙ).`,
+        },
+        {
+          language: 'englishCoptic',
+          text: `${prayForMercyEnglishCoptic}\n\nentef-areh e-ep-onkh nem ep-taho eratf em-pen-iot et-tai-ooet en-arshee-erefs papa Avva (...) nem pef-ke-esh-fir en-litourgos pen-iot en-episkopos (em-mitropolitis) Avva (...).`,
+        },
+        {
+          language: 'english',
+          text: `${prayForMercyEnglish}\n\nand to keep the life and standing of our honored father, the archpriest, Pope Abba (...), and his partner in the liturgy, our father the bishop (metropolitan), Abba (...).`,
+        },
+        {
+          language: 'englishArabic',
+          text: `${prayForMercyEnglishArabic}\n\nWa an yahfaz hayat wa qiyam abina el-mukarram el-Baba el-Anba (...) wa shareekahu fil-khidma [er-rasouliya] abina el-usquf (el-mutran) Anba (...).`,
+        },
+        {
+          language: 'arabic',
+          text: `${prayForMercyArabic}\n\nوأن يحفظَ حياةَ وقيامَ أبينا المكرمِ البابا الأنبا (...) وشريكه في الخدمةِ [الرسولية] أبينا الأسقف (المطران) أنبا (...).`,
+        },
+      ],
+    },
+    {
+      id: 'd-annual-matins-pray-for-the-sick',
+      title: 'Ⲧⲱⲃϩ ⲉ̀ϫⲉⲛ ⲛⲉⲛⲓⲟϯ (Pray for the Sick)',
+      versions: [
+        {
+          language: 'coptic',
+          text: 'Ⲧⲱⲃϩ ⲉ̀ϫⲉⲛ ⲛⲉⲛⲓⲟϯ ⲛⲉⲙ ⲛⲉⲛ̀ⲥⲛⲏⲟⲩ ⲉⲧϣⲱⲛⲓ ϧⲉⲛ ϫⲓⲛϣⲱⲛⲓ ⲛⲓⲃⲉⲛ: ⲓ̀ⲧⲉ ϧⲉⲛ ⲡⲁⲓⲧⲟⲡⲟⲥ ⲓ̀ⲧⲉ ϧⲉⲛ ⲙⲁⲓ ⲛⲓⲃⲉⲛ: ϩⲓⲛⲁ ⲛ̀ⲧⲉ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ Ⲡⲉⲛⲛⲟⲩϯ ⲉⲣϩ̀ⲙⲟⲧ ⲛⲁⲛ ⲛⲉⲙⲱⲟⲩ ⲙ̀ⲡⲓⲟⲩϫⲁⲓ ⲛⲉⲙ ⲡⲓⲧⲁⲗϭⲟ: ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ.',
+        },
+        {
+          language: 'englishCoptic',
+          text: 'Tobh ejen nen-ioti nem nen-esneou et-shoni khen jin-shoni niven: ite khen pai-topos ite khen mai niven: hina ente Pikhristos Pen-nouti er-ehmot nan nemo-ou em-pi-oujai nem pi-talcho: entef-kha nen-novi nan evol.',
+        },
+        {
+          language: 'english',
+          text: 'Pray for our fathers and our brethren who are sick with any sickness, whether in this place or in any place, that Christ our God may grant us, with them, health and healing, and forgive us our sins.',
+        },
+        {
+          language: 'englishArabic',
+          text: 'Utlubu \'an aba\'ina wa ikhwatina el-marda bi-kulli marad, in kana fi hadha el-maskan aw bi-kulli mawdi\', likay el-Maseeh ilahuna yun\'im lana wa lahum bil-\'afiya wash-shifa\', wa yaghfir lana khatayana.',
+        },
+        {
+          language: 'arabic',
+          text: 'أطلبوا عن آبائنا وأخوتِنا المرضى بكلِّ مرضٍ، إن كانَ في هذا المسكنِ أو بكلِّ موضعٍ، لكي المسيحُ إلهنا ينعمَ لنا ولهم بالعافيةِ والشفاءِ ويغفرَ لنا خطايانا.',
+        },
+      ],
+    },
+    {
+      id: 'd-annual-matins-pray-for-travelers',
+      title: 'Ⲧⲱⲃϩ ⲉ̀ϫⲉⲛ ⲛⲉⲛⲓⲟϯ (Pray for the Travelers)',
+      versions: [
+        {
+          language: 'coptic',
+          text: 'Ⲧⲱⲃϩ ⲉ̀ϫⲉⲛ ⲛⲉⲛⲓⲟϯ ⲛⲉⲙ ⲛⲉⲛ̀ⲥⲛⲏⲟⲩ ⲉ̀ⲧⲁⲩϣⲉ ⲉ̀ⲡ̀ϣⲉⲙⲙⲟ: ⲓⲉ ⲛⲏⲉⲑⲙⲉⲩ̀ⲓ ⲉ̀ϣⲉ ϧⲉⲛ ⲙⲁⲓ ⲛⲓⲃⲉⲛ: ⲥⲟⲩⲧⲱⲛ ⲛⲟⲩⲙⲱⲓⲧ ⲧⲏⲣⲟⲩ: ⲓ̀ⲧⲉ ⲉ̀ⲃⲟⲗ ϩⲓⲧⲉⲛ ⲫⲓⲟⲙ ⲓⲉ ⲛⲓⲓⲁⲣⲱⲟⲩ ⲓⲉ ⲛⲓⲗⲩⲙⲛⲏ ⲓⲉ ⲛⲓⲙⲱⲓⲧ ⲙ̀ⲙⲟϣⲓ: (ⲓⲉ ⲡⲓⲁⲏⲣ) ⲓⲉ ⲉⲩ̀ⲓⲣⲓ ⲙ̀ⲡⲟⲩϫⲓⲛⲙⲟϣⲓ ⲛ̀ⲣⲏϯ ⲛⲓⲃⲉⲛ: ϩⲓⲛⲁ ⲛ̀ⲧⲉ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ Ⲡⲉⲛⲛⲟⲩϯ ⲧⲁⲥⲑⲱⲟⲩ ⲉ̀ⲛⲏⲉ̀ⲧⲉ ⲛⲟⲩⲟⲩ ⲙ̀ⲙⲁⲛ̀ϣⲱⲡⲓ ϧⲉⲛ ⲟⲩϩⲓⲣⲏⲛⲏ: ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ.',
+        },
+        {
+          language: 'englishCoptic',
+          text: 'Tobh ejen nen-ioti nem nen-esneou etau-she e-epshemmo: ie nee-ethmev-i e-she khen mai niven: soutton nou-mo-it tirou: ite evol hiten fiom ie ni-iaro-ou ie ni-limni ie ni-mo-it em-moshi: (ie pi-aeer) ie ev-iri em-pou-jin-moshi en-riti niven: hina ente Pikhristos Pen-nouti tasth-o-ou e-nee-ete nou-ou em-ma-en-shopi khen ou-hirini: entef-kha nen-novi nan evol.',
+        },
+        {
+          language: 'english',
+          text: 'Pray for our fathers and our brethren who are traveling, and those who intend to travel anywhere. Straighten all their ways, whether by sea, rivers, lakes, roads, [air,] or those who are traveling by any other means, that Christ our God may bring them back to their own homes in peace, and forgive us our sins.',
+        },
+        {
+          language: 'englishArabic',
+          text: 'Utlubu \'an aba\'ina wa ikhwatina el-musafireen, wal-ladheena yudmiroon es-safar fi kulli mawdi\', likay yusahhil turuqahum ajma\'een, in kana fil-bahr aw el-anhar aw el-buhayrat aw et-turuq el-maslouka, [aw el-jaw] aw el-musafireen bi-kulli naw\', likay el-Maseeh ilahuna yaruddahum ila masakinihim saalimeen, wa yaghfir lana khatayana.',
+        },
+        {
+          language: 'arabic',
+          text: 'اطلبوا عن آبائنا وإخوتنا المسافرين، والذين يضمرون السفر في كل موضع، لكي يسهل طرقهم أجمعين إن كان في البحر أو الأنهار أو البحيرات أو الطرق المسلوكة، [أو الجو] أو المسافرين بكل نوعٍ، لكي المسيح إلهنا يردهم إلى مساكنهم سالمين، ويغفر لنا خطايانا.',
+        },
+      ],
+    },
+    {
+      id: 'd-annual-matins-pray-for-providers',
+      title: 'Ⲧⲱⲃϩ ⲉ̀ϫⲉⲛ ⲛⲏⲉⲧϥⲓ ⲙ̀ⲫ̀ⲣⲱⲟⲩϣ (Pray for Those Who Provide)',
+      versions: [
+        {
+          language: 'coptic',
+          text: 'Ⲧⲱⲃϩ ⲉ̀ϫⲉⲛ ⲛⲏⲉⲧϥⲓ ⲙ̀ⲫ̀ⲣⲱⲟⲩϣ ⲛ̀ⲛⲓⲑⲩⲥⲓⲁ ⲛⲓⲡ̀ⲣⲟⲥⲫⲟⲣⲁ ⲛⲓⲁ̀ⲡⲁⲣⲭⲏ ⲛⲓⲛⲉϩ ⲛⲓⲥ̀ⲑⲟⲓⲛⲟⲩϥⲓ ⲛⲓⲥ̀ⲕⲉⲡⲁⲥⲙⲁ ⲛⲓϫⲱⲙ ⲛ̀ⲱϣ ⲛⲓⲕⲩⲙⲓⲗⲗⲓⲟⲛ ⲛ̀ⲧⲉ ⲡⲓⲙⲁⲛ̀ⲉⲣϣⲱⲟⲩϣⲓ: ϩⲓⲛⲁ ⲛ̀ⲧⲉ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ Ⲡⲉⲛⲛⲟⲩϯ ϯϣⲉⲃⲓⲱ ⲛⲱⲟⲩ ϧⲉⲛ Ⲓⲉⲣⲟⲩⲥⲁⲗⲏⲙ ⲛ̀ⲧⲉ ⲧ̀ⲫⲉ: ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ.',
+        },
+        {
+          language: 'englishCoptic',
+          text: 'Tobh ejen nee-etfi em-ep-roush en-ni-thysia ni-prosfora ni-aparkhi ni-neh ni-esthoi-noufi ni-skepasma ni-jom en-osh ni-kimilion ente pi-ma-en-ershou-oushi: hina ente Pikhristos Pen-nouti ti-shevio nou khen Ierousalim ente etfe: entef-kha nen-novi nan evol.',
+        },
+        {
+          language: 'english',
+          text: 'Pray for those who provide for the sacrifices, offerings, first fruits, oil, incense, coverings, reading books, and altar vessels, that Christ our God may reward them in the heavenly Jerusalem, and forgive us our sins.',
+        },
+        {
+          language: 'englishArabic',
+          text: 'Utlubu \'an el-muhtammeen bis-sa\'a\'id, wal-qarabeen, wal-bukur, waz-zeit, wal-bukhur, was-sutur, wa kutub el-qira\'a, wa awani el-madhbah, likay el-Maseeh ilahuna yukafi\'ahum fi Urushaleem es-sama\'iya, wa yaghfir lana khatayana.',
+        },
+        {
+          language: 'arabic',
+          text: 'اطلبوا عن المهتمينَ بالصعائدِ، والقرابينَ، والبكورِ، والزيتِ، والبخورِ، والستورِ، وكتبِ القراءةِ، وأواني المذبحِ، لكي المسيحُ إلهُنا يكافئهم في أورشليمَ السمائيةِ، ويغفرَ لنا خطايانا.',
+        },
+      ],
+    },
+    {
+      id: 'd-annual-matins-pray-for-the-gospel',
+      title: 'Ⲡⲣⲟⲥⲉⲩⲝⲁⲥⲑⲉ ⲩ̀ⲡⲉⲣ ⲧⲟⲩ ⲁ̀ⲅⲓⲟⲩ ⲉⲩⲁⲅⲅⲉⲗⲓⲟⲩ (Pray for the Holy Gospel)',
+      versions: [
+        { language: 'coptic', text: 'Ⲡⲣⲟⲥⲉⲩⲝⲁⲥⲑⲉ ⲩ̀ⲡⲉⲣ ⲧⲟⲩ ⲁ̀ⲅⲓⲟⲩ ⲉⲩⲁⲅⲅⲉⲗⲓⲟⲩ.' },
+        { language: 'englishCoptic', text: 'Proseuxasthe hyper tou agiou evangeliou.' },
+        { language: 'english', text: 'Pray for the Holy Gospel.' },
+        { language: 'englishArabic', text: 'Sallu min ajl el-Injeel el-Muqaddas.' },
+        { language: 'arabic', text: 'صلوا من أجل الإنجيل المقدس.' },
+      ],
+    },
+    {
+      id: 'd-annual-matins-stand-in-the-fear-of-god',
+      title: 'Ⲥⲧⲁⲑⲏⲧⲉ ⲙⲉⲧⲁ ⲫⲟⲃⲟⲩ Ⲑⲉⲟⲩ (Stand in the Fear of God)',
+      versions: [
+        { language: 'coptic', text: 'Ⲥⲧⲁⲑⲏⲧⲉ ⲙⲉⲧⲁ ⲫⲟⲃⲟⲩ Ⲑⲉⲟⲩ: ⲁ̀ⲕⲟⲩⲥⲱⲙⲉⲛ ⲧⲟⲩ ⲁ̀ⲅⲓⲟⲩ ⲉⲩⲁⲅⲅⲉⲗⲓⲟⲩ.' },
+        { language: 'englishCoptic', text: 'Stathite meta fovou Theou: akousomen tou agiou evangeliou.' },
+        { language: 'english', text: 'Stand in the fear of God. Let us hear the Holy Gospel.' },
+        { language: 'englishArabic', text: 'Qifu bi-khawf Allah li-sama\' el-Injeel el-Muqaddas.' },
+        { language: 'arabic', text: 'قفوا بخوفِ الله لسماعِ الإنجيل المقدس.' },
+      ],
+    },
+    {
+      // People and deacon take turns; each speaker is its own paragraph so side by side lines up
+      id: 'd-annual-matins-in-christ-jesus-our-lord',
+      title: 'Ϧⲉⲛ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲉⲛϭⲟⲓⲥ (In Christ Jesus Our Lord)',
+      versions: [
+        {
+          language: 'coptic',
+          text: 'Ⲡⲓⲗⲁⲟⲥ:\n\nϦⲉⲛ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲉⲛϭⲟⲓⲥ.\n\nⲠⲓⲇⲓⲁⲕⲱⲛ:\n\nⲦⲁⲥ ⲕⲉⲫⲁⲗⲁⲥ ⲩ̀ⲙⲱⲛ ⲧⲱ Ⲕⲩⲣⲓⲱ ⲕ̀ⲗⲓⲛⲁⲧⲉ.\n\nⲠⲓⲗⲁⲟⲥ:\n\nⲈⲛⲱⲡⲓⲟⲛ ⲥⲟⲩ Ⲕⲩⲣⲓⲉ.\n\nⲠⲓⲇⲓⲁⲕⲱⲛ:\n\nⲠⲣⲟⲥⲭⲱⲙⲉⲛ Ⲑⲉⲟⲩ ⲙⲉⲧⲁ ⲫⲟⲃⲟⲩ: ⲁ̀ⲙⲏⲛ.',
+        },
+        {
+          language: 'englishCoptic',
+          text: 'Pi-laos:\n\nKhen Pikhristos Iesous Pen-chois.\n\nPi-diakon:\n\nTas kefalas imon to Kyrio klinate.\n\nPi-laos:\n\nEnopion sou Kyrie.\n\nPi-diakon:\n\nProskhomen Theou meta fovou: amin.',
+        },
+        {
+          language: 'english',
+          text: 'People:\n\nIn Christ Jesus our Lord.\n\nDeacon:\n\nBow your heads to the Lord.\n\nPeople:\n\nBefore You, O Lord.\n\nDeacon:\n\nLet us attend in the fear of God. Amen.',
+        },
+        {
+          language: 'englishArabic',
+          text: 'Esh-sha\'b:\n\nBil-Maseeh Yasou\' Rabbina.\n\nEsh-shammas:\n\nIhnu ru\'usakum lir-Rabb.\n\nEsh-sha\'b:\n\nAmamak ya Rabb.\n\nEsh-shammas:\n\nAnsitu bi-khawf Allah. Ameen.',
+        },
+        {
+          language: 'arabic',
+          text: 'الشعب:\n\nبالمسيحِ يسوعِ ربنا.\n\nالشماس:\n\nإحنوا رؤوسَكم للربِ.\n\nالشعب:\n\nأمامك ياربُ.\n\nالشماس:\n\nأنصتوا بخوفِ الله. آمين.',
+        },
+      ],
+    },
+  ];
 }

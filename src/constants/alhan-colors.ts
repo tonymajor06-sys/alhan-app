@@ -12,6 +12,9 @@ export const alhanColors = {
   fastSoft: 'rgba(143, 134, 217, 0.16)',
   text: '#f6f1e7',
   muted: '#a4abc0',
+  // Who is speaking in a response (the deacon uses gold)
+  people: '#5fb0d4',
+  priest: '#e08a7a',
 };
 
 export type AlhanPalette = typeof alhanColors;
@@ -29,4 +32,6 @@ export const alhanLightColors: AlhanPalette = {
   fastSoft: 'rgba(90, 78, 192, 0.12)',
   text: '#1f1b14',
   muted: '#675f51',
+  people: '#23698a',
+  priest: '#a3412f',
 };

@@ -71,6 +71,19 @@ const arabicTitles: Record<string, string> = {
   'annual-liturgy-praxis-response': 'السلام لك يا مريم (مرد الإبركسيس)',
   'annual-liturgy-agios': 'قدوس الله',
   'annual-liturgy-blessed-are-they': 'طوباهم بالحقيقة',
+  'annual-liturgy-hiten-ni-presvia-eleos': 'بشفاعات والدة الإله (رحمة السلام)',
+
+  // Deacon Responses > Annual > Matins
+  'd-annual-matins-stand-up-for-prayer': 'للصلاة قفوا',
+  'd-annual-matins-pray': 'صلوا',
+  'd-annual-matins-pray-for-mercy': 'اطلبوا لكي يرحمنا الله',
+  'd-annual-matins-pray-for-mercy-pope-bishop': 'اطلبوا لكي يرحمنا الله (في حضور البابا أو الأسقف)',
+  'd-annual-matins-pray-for-the-sick': 'أوشية المرضى (اطلبوا عن آبائنا وإخوتنا المرضى)',
+  'd-annual-matins-pray-for-travelers': 'أوشية المسافرين (اطلبوا عن آبائنا وإخوتنا المسافرين)',
+  'd-annual-matins-pray-for-providers': 'أوشية القرابين (اطلبوا عن المهتمين بالصعائد)',
+  'd-annual-matins-pray-for-the-gospel': 'صلوا من أجل الإنجيل المقدس',
+  'd-annual-matins-stand-in-the-fear-of-god': 'قفوا بخوف الله',
+  'd-annual-matins-in-christ-jesus-our-lord': 'بالمسيح يسوع ربنا',
   'annual-liturgy-psalm-trailer-pope-bishop': 'ذيل المزمور في حضور البابا أو الأسقف',
 };
 
