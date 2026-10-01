@@ -1,9 +1,10 @@
+import { useKeepAwake } from 'expo-keep-awake';
 import { router, useLocalSearchParams } from 'expo-router';
 import { ReactNode, useEffect, useState } from 'react';
-import { BackHandler, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Alert, BackHandler, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { alhanColors } from '../constants/alhan-colors';
+import { AlhanPalette } from '../constants/alhan-colors';
 import { displayTitle } from '../data/arabic-titles';
 import {
   currentSeasonName,
@@ -23,6 +24,15 @@ import {
   seasons,
   Service,
 } from '../data/hymns';
+import { searchHymns, SearchResult } from '../data/search';
+import { useAlhanColors, useThemedStyles } from '../hooks/use-alhan-colors';
+import {
+  audioSourceFor,
+  canDownload,
+  downloadAudio,
+  removeDownload,
+  useAudioDownloads,
+} from '../hooks/use-audio-downloads';
 import {
   AppLanguage,
   TEXT_SCALE_MAX,
@@ -53,8 +63,6 @@ import {
   usePlaylist,
 } from '../hooks/use-playlist';
 import { useTodayJdn } from '../hooks/use-today';
-
-const colors = alhanColors;
 
 const strings = {
   en: {
@@ -94,6 +102,19 @@ const strings = {
     moveDown: 'Move down',
     remove: 'Remove',
     nowPlaying: 'Now playing',
+    search: 'Search hymns',
+    searchPlaceholder: 'Coptic, English or Arabic',
+    searchHint: 'Search titles and words in every language.',
+    noResults: 'No hymns found.',
+    titleMatch: 'Title',
+    todaysHymns: 'Today’s hymns',
+    sideBySide: '⇆ Side by side',
+    compareWith: 'Next to it',
+    download: '⬇ Download for offline',
+    downloading: 'Downloading…',
+    downloaded: '✓ Downloaded · tap to remove',
+    downloadFailed: 'Download failed. Check your connection and try again.',
+    downloadAll: '⬇ Download all for offline',
   },
   ar: {
     appTitle: 'ألحان',
@@ -132,6 +153,19 @@ const strings = {
     moveDown: 'تحريك لأسفل',
     remove: 'حذف',
     nowPlaying: 'يعمل الآن',
+    search: 'ابحث في الألحان',
+    searchPlaceholder: 'قبطي أو إنجليزي أو عربي',
+    searchHint: 'ابحث في العناوين والكلمات بكل اللغات.',
+    noResults: 'لا توجد ألحان مطابقة.',
+    titleMatch: 'العنوان',
+    todaysHymns: 'ألحان اليوم',
+    sideBySide: '⇆ جنباً إلى جنب',
+    compareWith: 'بجانبه',
+    download: '⬇ تنزيل للاستماع بدون إنترنت',
+    downloading: 'جارٍ التنزيل…',
+    downloaded: '✓ تم التنزيل · اضغط للحذف',
+    downloadFailed: 'فشل التنزيل. تحقق من الاتصال وحاول مرة أخرى.',
+    downloadAll: '⬇ تنزيل الكل للاستماع بدون إنترنت',
   },
 };
 
@@ -154,6 +188,17 @@ const languageLabels: Record<AppLanguage, { key: LanguageType; label: string }[]
 
 const defaultHymnLanguage = (lang: AppLanguage): LanguageType => (lang === 'ar' ? 'arabic' : 'coptic');
 
+// Season titles carry their list number ("5. Kiahk Praises & Season"), which reads oddly on its own
+const withoutNumber = (title: string) => title.replace(/^\d+\.\s*/, '');
+
+const splitVerses = (text: string) => text.split(/\n\s*\n/).filter((p) => p.trim());
+
+// Keeps the screen on while a hymn is open, so it doesn't dim in the middle of a service
+function KeepScreenAwake() {
+  useKeepAwake(undefined, { suppressDeactivateWarnings: true });
+  return null;
+}
+
 const formatTime = (seconds: number) => {
   const m = Math.floor(seconds / 60);
   const s = Math.floor(seconds % 60);
@@ -166,8 +211,13 @@ export default function HomeScreen() {
   const t = strings[lang];
   const isRTL = lang === 'ar';
   const insets = useSafeAreaInsets();
+  const colors = useAlhanColors();
+  const styles = useThemedStyles(createStyles);
 
-  const [currentView, setCurrentView] = useState<'home' | 'responses-home' | 'seasons-home' | 'playlist'>('home');
+  const [currentView, setCurrentView] = useState<'home' | 'responses-home' | 'seasons-home' | 'playlist' | 'search'>(
+    'home'
+  );
+  const [searchQuery, setSearchQuery] = useState('');
 
   // Deacon navigation state
   const [selectedDeaconCategory, setSelectedDeaconCategory] = useState<DeaconCategory | null>(null);
@@ -218,6 +268,7 @@ export default function HomeScreen() {
   const queue = useAudioQueue();
   const nowPlaying = currentTrack(queue);
   const playlist = usePlaylist();
+  const downloads = useAudioDownloads();
   const readerItem: PlaylistItem | null = activeTargetHymn
     ? { hymnId: activeTargetHymn.id, language: effectiveLanguage }
     : null;
@@ -226,7 +277,8 @@ export default function HomeScreen() {
 
   const toTrack = (item: PlaylistItem): QueueTrack | null => {
     const hymn = findHymn(item.hymnId);
-    const source = audioFor(item);
+    const file = audioFor(item);
+    const source = file ? audioSourceFor(file) : null;
     return hymn && source ? { ...item, title: displayTitle(hymn, lang), source } : null;
   };
 
@@ -248,6 +300,32 @@ export default function HomeScreen() {
     if (!hymn || !nowPlaying) return;
     setActiveLanguage(nowPlaying.language);
     setSelectedHymn(hymn);
+  };
+
+  const toggleDownload = (file: string) => {
+    if (downloads.downloaded.has(file)) return removeDownload(file);
+    downloadAudio(file).then((ok) => {
+      if (!ok) Alert.alert(t.downloadFailed);
+    });
+  };
+
+  const downloadAll = async (files: string[]) => {
+    for (const file of files) {
+      if (!(await downloadAudio(file))) return Alert.alert(t.downloadFailed);
+    }
+  };
+
+  // Today's season (or the annual hymns on ordinary days), opened straight to one of its services
+  const todaySeason = seasons.find((s) => s.id === (seasonInfo.current?.seasonId ?? 'annual')) ?? seasons[0];
+  const openService = (season: Season, service: Service) => {
+    setSelectedSeason(season);
+    setSelectedService(service);
+    setCurrentView('seasons-home');
+  };
+
+  const openSearchResult = (result: SearchResult) => {
+    if (result.language) setActiveLanguage(result.language);
+    setSelectedHymn(result.hymn);
   };
 
   const closeHymn = () => {
@@ -357,6 +435,7 @@ export default function HomeScreen() {
   const screen = (title: string, subtitle: string | null, children: ReactNode) => (
     <View style={styles.root}>
       <ScrollView
+        keyboardShouldPersistTaps="handled"
         contentContainerStyle={[styles.scrollContent, { paddingTop: insets.top + 12, paddingBottom: bottomPadding }]}>
         <Pressable
           onPress={goBack}
@@ -424,6 +503,15 @@ export default function HomeScreen() {
           </View>
 
           <Pressable
+            onPress={() => setCurrentView('search')}
+            accessibilityRole="search"
+            accessibilityLabel={t.search}
+            style={({ pressed }) => [styles.searchEntry, rowDirection, pressed && styles.rowCardPressed]}>
+            <Text style={styles.searchIcon}>⌕</Text>
+            <Text style={[styles.searchEntryText, textAlign]}>{t.search}</Text>
+          </Pressable>
+
+          <Pressable
             onPress={() => router.push('/calendar')}
             accessibilityRole="button"
             accessibilityHint={t.openCalendar}
@@ -451,6 +539,22 @@ export default function HomeScreen() {
               </View>
             ) : null}
           </Pressable>
+
+          <View style={styles.todayCard}>
+            <Text style={[styles.seasonLabel, textAlign]}>♫ {t.todaysHymns}</Text>
+            <Text style={[styles.todaySeason, textAlign]}>{withoutNumber(displayTitle(todaySeason, lang))}</Text>
+            <View style={[styles.chipWrap, styles.todayServices, rowDirection]}>
+              {todaySeason.services.map((service) => (
+                <Pressable
+                  key={service.id}
+                  onPress={() => openService(todaySeason, service)}
+                  accessibilityRole="button"
+                  style={({ pressed }) => [styles.chip, pressed && styles.rowCardPressed]}>
+                  <Text style={styles.chipText}>{displayTitle(service, lang)}</Text>
+                </Pressable>
+              ))}
+            </View>
+          </View>
 
           <Text style={styles.languagePrompt}>{t.languagePrompt}</Text>
           <View style={styles.segmented}>
@@ -496,19 +600,42 @@ export default function HomeScreen() {
 
   // 2. HYMN READER
   if (activeTargetHymn) {
+    const textFor = (language: LanguageType) =>
+      (activeTargetHymn.versions.find((v) => v.language === language)?.text || t.notAvailable).replace(
+        /(?:\\n)+/g,
+        '\n\n'
+      );
     const rawText =
       activeTargetHymn.versions.find((v) => v.language === effectiveLanguage)?.text || t.notAvailable;
-    const hymnText = rawText.replace(/(?:\\n)+/g, '\n\n');
+    const hymnText = textFor(effectiveLanguage);
     const isArabicText = effectiveLanguage === 'arabic' || rawText === strings.ar.notAvailable;
     const fontSize = 20 * settings.textScale;
     const progress = status.duration > 0 ? Math.min(1, status.currentTime / status.duration) : 0;
     const repeatOne = queue.repeat === 'one';
     const inPlaylist = !!readerItem && isInPlaylist(playlist, readerItem);
+    const audioFile = currentAudio;
+    const isDownloading = !!audioFile && downloads.downloading.has(audioFile);
+    const isDownloaded = !!audioFile && downloads.downloaded.has(audioFile);
+
+    // Second column: the language last chosen for it, else English, else whatever else this hymn has
+    const compareOptions = availableLanguages.filter((l) => l.key !== effectiveLanguage);
+    const compareLanguage =
+      compareOptions.find((l) => l.key === settings.compareLanguage)?.key ??
+      (compareOptions.find((l) => l.key === 'english') ?? compareOptions[0])?.key ??
+      null;
+    const showSideBySide = settings.sideBySide && compareLanguage !== null;
+    const columnStyle = (language: LanguageType) => (language === 'arabic' ? styles.arabicText : styles.alignLeft);
+    // Verse by verse, so each line sits next to its translation
+    const verses = splitVerses(hymnText);
+    const compareVerses = compareLanguage ? splitVerses(textFor(compareLanguage)) : [];
+    const columnSize = fontSize * 0.85;
+    const columnText = { fontSize: columnSize, lineHeight: columnSize * 1.6 };
 
     return screen(
       displayTitle(activeTargetHymn, lang),
       null,
       <>
+        <KeepScreenAwake />
         {availableLanguages.length > 1 ? (
           <View style={[styles.chipWrap, rowDirection]}>
             {availableLanguages.map((l) => {
@@ -521,6 +648,36 @@ export default function HomeScreen() {
                   accessibilityState={{ selected: active }}
                   style={[styles.chip, active && styles.chipActive]}>
                   <Text style={[styles.chipText, active && styles.chipTextActive]}>{l.label}</Text>
+                </Pressable>
+              );
+            })}
+          </View>
+        ) : null}
+
+        {compareOptions.length > 0 ? (
+          <View style={[styles.compareRow, rowDirection]}>
+            <Pressable
+              onPress={() => updateSettings({ sideBySide: !settings.sideBySide })}
+              accessibilityRole="switch"
+              accessibilityState={{ checked: showSideBySide }}
+              style={[styles.chip, showSideBySide && styles.controlButtonActive]}>
+              <Text style={[styles.chipText, showSideBySide && styles.controlTextActive]}>{t.sideBySide}</Text>
+            </Pressable>
+          </View>
+        ) : null}
+        {showSideBySide && compareOptions.length > 1 ? (
+          <View style={[styles.chipWrap, styles.compareChips, rowDirection]}>
+            <Text style={styles.textSizeLabel}>{t.compareWith}:</Text>
+            {compareOptions.map((l) => {
+              const active = compareLanguage === l.key;
+              return (
+                <Pressable
+                  key={l.key}
+                  onPress={() => updateSettings({ compareLanguage: l.key })}
+                  accessibilityRole="button"
+                  accessibilityState={{ selected: active }}
+                  style={[styles.chip, styles.chipSmall, active && styles.controlButtonActive]}>
+                  <Text style={[styles.chipText, active && styles.controlTextActive]}>{l.label}</Text>
                 </Pressable>
               );
             })}
@@ -583,6 +740,23 @@ export default function HomeScreen() {
                 </Text>
               </Pressable>
             ) : null}
+            {audioFile && canDownload(audioFile) ? (
+              <Pressable
+                onPress={() => toggleDownload(audioFile)}
+                disabled={isDownloading}
+                accessibilityRole="button"
+                accessibilityState={{ selected: isDownloaded, busy: isDownloading }}
+                style={({ pressed }) => [
+                  styles.playlistButton,
+                  isDownloaded && styles.controlButtonActive,
+                  pressed && styles.pressed,
+                  isDownloading && styles.disabled,
+                ]}>
+                <Text style={[styles.controlText, isDownloaded && styles.controlTextActive]}>
+                  {isDownloading ? t.downloading : isDownloaded ? t.downloaded : t.download}
+                </Text>
+              </Pressable>
+            ) : null}
           </View>
         ) : null}
 
@@ -607,14 +781,28 @@ export default function HomeScreen() {
         </View>
 
         <View style={styles.textCard}>
-          <Text
-            style={[
-              styles.hymnText,
-              { fontSize, lineHeight: fontSize * 1.65 },
-              isArabicText ? styles.arabicText : styles.alignLeft,
-            ]}>
-            {hymnText}
-          </Text>
+          {showSideBySide && compareLanguage ? (
+            Array.from({ length: Math.max(verses.length, compareVerses.length) }, (_, i) => (
+              <View key={i} style={[styles.verseRow, rowDirection, i > 0 && styles.verseRowDivider]}>
+                <Text style={[styles.hymnText, styles.verseColumn, columnText, columnStyle(effectiveLanguage)]}>
+                  {verses[i] ?? ''}
+                </Text>
+                <View style={styles.verseGutter} />
+                <Text style={[styles.hymnText, styles.verseColumn, columnText, columnStyle(compareLanguage)]}>
+                  {compareVerses[i] ?? ''}
+                </Text>
+              </View>
+            ))
+          ) : (
+            <Text
+              style={[
+                styles.hymnText,
+                { fontSize, lineHeight: fontSize * 1.65 },
+                isArabicText ? styles.arabicText : styles.alignLeft,
+              ]}>
+              {hymnText}
+            </Text>
+          )}
         </View>
       </>
     );
@@ -624,6 +812,10 @@ export default function HomeScreen() {
   if (currentView === 'playlist') {
     const playingFromPlaylist = queue.origin === 'playlist' && nowPlaying;
     const repeatAll = queue.repeat === 'all';
+    const toDownload = [
+      ...new Set(playlist.map(audioFor).filter((f): f is string => !!f && canDownload(f))),
+    ].filter((f) => !downloads.downloaded.has(f));
+    const downloadingAny = toDownload.some((f) => downloads.downloading.has(f));
     return screen(
       t.playlistTitle,
       t.playlistDesc(playlist.length),
@@ -646,6 +838,20 @@ export default function HomeScreen() {
               <Text style={[styles.controlText, repeatAll && styles.controlTextActive]}>{t.repeatPlaylist}</Text>
             </Pressable>
           </View>
+          {toDownload.length > 0 ? (
+            <Pressable
+              onPress={() => downloadAll(toDownload)}
+              disabled={downloadingAny}
+              accessibilityRole="button"
+              style={({ pressed }) => [
+                styles.playlistButton,
+                styles.playlistDownload,
+                pressed && styles.pressed,
+                downloadingAny && styles.disabled,
+              ]}>
+              <Text style={styles.controlText}>{downloadingAny ? t.downloading : t.downloadAll}</Text>
+            </Pressable>
+          ) : null}
           {playlist.map((item, index) => {
             const hymn = findHymn(item.hymnId);
             if (!hymn) return null;
@@ -699,6 +905,67 @@ export default function HomeScreen() {
     );
   }
 
+  // SEARCH (opening a result keeps the search underneath, so Back returns to the results)
+  if (currentView === 'search') {
+    const results = searchHymns(searchQuery);
+    const hasQuery = searchQuery.trim().length >= 2;
+    return screen(
+      t.search,
+      null,
+      <>
+        <View style={[styles.searchField, rowDirection]}>
+          <Text style={styles.searchIcon}>⌕</Text>
+          <TextInput
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+            placeholder={t.searchPlaceholder}
+            placeholderTextColor={colors.muted}
+            autoFocus
+            autoCorrect={false}
+            autoCapitalize="none"
+            returnKeyType="search"
+            clearButtonMode="while-editing"
+            accessibilityLabel={t.search}
+            style={[styles.searchInput, textAlign]}
+          />
+        </View>
+        {!hasQuery ? (
+          <Text style={[styles.emptyText, textAlign]}>{t.searchHint}</Text>
+        ) : results.length === 0 ? (
+          <Text style={[styles.emptyText, textAlign]}>{t.noResults}</Text>
+        ) : (
+          results.map((result) => {
+            const { hymn, location, language } = result;
+            const where = `${withoutNumber(displayTitle(location.group, lang))} › ${displayTitle(location.service, lang)}`;
+            const matchedIn = language ? languageLabels[lang].find((l) => l.key === language)?.label : t.titleMatch;
+            return (
+              <Pressable
+                key={hymn.id}
+                onPress={() => openSearchResult(result)}
+                accessibilityRole="button"
+                style={({ pressed }) => [styles.rowCard, rowDirection, pressed && styles.rowCardPressed]}>
+                <View style={styles.rowTextWrap}>
+                  <Text style={[styles.rowTitle, textAlign]}>{displayTitle(hymn, lang)}</Text>
+                  <Text style={[styles.playlistMeta, textAlign]} numberOfLines={1}>
+                    {where} · {matchedIn}
+                  </Text>
+                  {result.snippet ? (
+                    <Text
+                      style={[styles.searchSnippet, language === 'arabic' ? styles.arabicText : textAlign]}
+                      numberOfLines={2}>
+                      {result.snippet}
+                    </Text>
+                  ) : null}
+                </View>
+                <Text style={styles.chevron}>{isRTL ? '‹' : '›'}</Text>
+              </Pressable>
+            );
+          })
+        )}
+      </>
+    );
+  }
+
   // 3. HYMNS FLOW
   if (selectedService) {
     return screen(displayTitle(selectedService, lang), t.chooseHymn, hymnList(selectedService.hymns, setSelectedHymn));
@@ -748,7 +1015,7 @@ export default function HomeScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors: AlhanPalette) => StyleSheet.create({
   root: {
     flex: 1,
     backgroundColor: colors.background,
@@ -765,6 +1032,44 @@ const styles = StyleSheet.create({
   disabled: { opacity: 0.35 },
 
   // Home
+  searchEntry: {
+    alignItems: 'center',
+    gap: 10,
+    minHeight: 54,
+    paddingHorizontal: 18,
+    borderRadius: 16,
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.border,
+    marginBottom: 16,
+  },
+  searchIcon: {
+    fontSize: 24,
+    color: colors.gold,
+  },
+  searchEntryText: {
+    flex: 1,
+    fontSize: 18,
+    color: colors.muted,
+  },
+  todayCard: {
+    backgroundColor: colors.surface,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: colors.border,
+    padding: 18,
+    marginBottom: 28,
+  },
+  todaySeason: {
+    fontSize: 21,
+    fontWeight: '800',
+    color: colors.text,
+    marginTop: 2,
+  },
+  todayServices: {
+    marginTop: 12,
+    marginBottom: 0,
+  },
   homeContent: {
     paddingHorizontal: 20,
     flexGrow: 1,
@@ -877,7 +1182,7 @@ const styles = StyleSheet.create({
     color: colors.muted,
   },
   segmentTextActive: {
-    color: colors.background,
+    color: colors.onGold,
   },
   homeCard: {
     alignItems: 'center',
@@ -1038,7 +1343,7 @@ const styles = StyleSheet.create({
     color: colors.text,
   },
   chipTextActive: {
-    color: colors.background,
+    color: colors.onGold,
     fontWeight: '800',
   },
   audioCard: {
@@ -1063,7 +1368,7 @@ const styles = StyleSheet.create({
   },
   playIcon: {
     fontSize: 26,
-    color: colors.background,
+    color: colors.onGold,
     fontWeight: '800',
   },
   progressTrack: {
@@ -1176,8 +1481,63 @@ const styles = StyleSheet.create({
   },
   miniPlayIcon: {
     fontSize: 20,
-    color: colors.background,
+    color: colors.onGold,
     fontWeight: '800',
+  },
+
+  // Search
+  searchField: {
+    alignItems: 'center',
+    gap: 10,
+    minHeight: 56,
+    paddingHorizontal: 16,
+    borderRadius: 16,
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.gold,
+    marginTop: 12,
+    marginBottom: 18,
+  },
+  searchInput: {
+    flex: 1,
+    fontSize: 18,
+    color: colors.text,
+    paddingVertical: 12,
+  },
+  searchSnippet: {
+    fontSize: 15,
+    lineHeight: 21,
+    color: colors.muted,
+    marginTop: 6,
+  },
+
+  // Side by side
+  compareRow: {
+    marginTop: -4,
+    marginBottom: 16,
+  },
+  compareChips: {
+    alignItems: 'center',
+    marginTop: -6,
+  },
+  chipSmall: {
+    minHeight: 40,
+    paddingHorizontal: 12,
+  },
+  verseRow: {
+    paddingVertical: 10,
+  },
+  verseRowDivider: {
+    borderTopWidth: 1,
+    borderTopColor: colors.border,
+  },
+  verseColumn: {
+    flex: 1,
+  },
+  verseGutter: {
+    width: 1,
+    marginHorizontal: 10,
+    backgroundColor: colors.border,
   },
 
   // Playlist
@@ -1195,8 +1555,12 @@ const styles = StyleSheet.create({
     borderColor: colors.gold,
   },
   playAllText: {
-    color: colors.background,
+    color: colors.onGold,
     fontWeight: '800',
+  },
+  playlistDownload: {
+    marginTop: 0,
+    marginBottom: 14,
   },
   playlistRow: {
     paddingHorizontal: 14,

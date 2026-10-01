@@ -3,7 +3,8 @@ export type LanguageType = 'coptic' | 'englishCoptic' | 'english' | 'englishArab
 export interface LanguageVersion {
   language: LanguageType;
   text: string;
-  audio?: number | string;
+  // File name of the recording; see src/data/audio.ts for where it is played from
+  audio?: string;
 }
 
 export interface Hymn {
@@ -348,22 +349,22 @@ const psalm150Audio = seasons
 
 const psalm150ArabicVersion = psalm150Audio?.versions.find((v) => v.language === 'arabic');
 if (psalm150ArabicVersion) {
-  psalm150ArabicVersion.audio = require('../../assets/audio/psalm-150-arabic.m4a');
+  psalm150ArabicVersion.audio = 'psalm-150-arabic.m4a';
 }const psalm150EnglishArabicVersion = psalm150Audio?.versions.find((v) => v.language === 'englishArabic');
 if (psalm150EnglishArabicVersion) {
-  psalm150EnglishArabicVersion.audio = require('../../assets/audio/psalm-150-arabic.m4a');
+  psalm150EnglishArabicVersion.audio = 'psalm-150-arabic.m4a';
 }
 const psalm150CopticVersion = psalm150Audio?.versions.find((v) => v.language === 'coptic');
 if (psalm150CopticVersion) {
-  psalm150CopticVersion.audio = require('../../assets/audio/psalm-150-coptic.mp3');
+  psalm150CopticVersion.audio = 'psalm-150-coptic.mp3';
 }
 const psalm150EnglishCopticVersion = psalm150Audio?.versions.find((v) => v.language === 'englishCoptic');
 if (psalm150EnglishCopticVersion) {
-  psalm150EnglishCopticVersion.audio = require('../../assets/audio/psalm-150-coptic.mp3');
+  psalm150EnglishCopticVersion.audio = 'psalm-150-coptic.mp3';
 }
 const psalm150EnglishVersion = psalm150Audio?.versions.find((v) => v.language === 'english');
 if (psalm150EnglishVersion) {
-  psalm150EnglishVersion.audio = require('../../assets/audio/psalm-150-english.mp3');
+  psalm150EnglishVersion.audio = 'psalm-150-english.mp3';
 }
 
 // ---- Annual > Distribution: add "Melodies" divider + Our Father ----
@@ -1212,11 +1213,11 @@ if (annualLiturgy) {
 const verseOfCymbalsHymn = annualMatins?.hymns.find((h) => h.id === 'annual-matins-verse-of-cymbals');
 const verseOfCymbalsCoptic = verseOfCymbalsHymn?.versions.find((v) => v.language === 'coptic');
 if (verseOfCymbalsCoptic) {
-  verseOfCymbalsCoptic.audio = require('../../assets/audio/verse-of-the-cymbals-annual.mp3');
+  verseOfCymbalsCoptic.audio = 'verse-of-the-cymbals-annual.mp3';
 }
 const verseOfCymbalsEnglishCoptic = verseOfCymbalsHymn?.versions.find((v) => v.language === 'englishCoptic');
 if (verseOfCymbalsEnglishCoptic) {
-  verseOfCymbalsEnglishCoptic.audio = require('../../assets/audio/verse-of-the-cymbals-annual.mp3');
+  verseOfCymbalsEnglishCoptic.audio = 'verse-of-the-cymbals-annual.mp3';
 }
 
 // ---- Annual > Liturgy: same Psalm Trailer for the Pope or a Bishop as Matins, with its own audio ----
@@ -1262,11 +1263,11 @@ annualLiturgy?.hymns.push({
 const psalmTrailerPopeBishopHymn = annualLiturgy?.hymns.find((h) => h.id === 'annual-liturgy-psalm-trailer-pope-bishop');
 const psalmTrailerPopeBishopCoptic = psalmTrailerPopeBishopHymn?.versions.find((v) => v.language === 'coptic');
 if (psalmTrailerPopeBishopCoptic) {
-  psalmTrailerPopeBishopCoptic.audio = require('../../assets/audio/psalm-trailer-pope-bishop-liturgy.mp3');
+  psalmTrailerPopeBishopCoptic.audio = 'psalm-trailer-pope-bishop-liturgy.mp3';
 }
 const psalmTrailerPopeBishopEnglishCoptic = psalmTrailerPopeBishopHymn?.versions.find((v) => v.language === 'englishCoptic');
 if (psalmTrailerPopeBishopEnglishCoptic) {
-  psalmTrailerPopeBishopEnglishCoptic.audio = require('../../assets/audio/psalm-trailer-pope-bishop-liturgy.mp3');
+  psalmTrailerPopeBishopEnglishCoptic.audio = 'psalm-trailer-pope-bishop-liturgy.mp3';
 }
 
 // ---- Audio: Annual > Matins > Introduction to the Doxologies (Coptic) ----
@@ -1277,11 +1278,11 @@ const introDoxologiesHymn = seasons
 
 const introDoxologiesCoptic = introDoxologiesHymn?.versions.find((v) => v.language === 'coptic');
 if (introDoxologiesCoptic) {
-  introDoxologiesCoptic.audio = require('../../assets/audio/introduction-to-doxologies-coptic.m4a');
+  introDoxologiesCoptic.audio = 'introduction-to-doxologies-coptic.m4a';
 }
 const introDoxologiesEnglishCoptic = introDoxologiesHymn?.versions.find((v) => v.language === 'englishCoptic');
 if (introDoxologiesEnglishCoptic) {
-  introDoxologiesEnglishCoptic.audio = require('../../assets/audio/introduction-to-doxologies-coptic.m4a');
+  introDoxologiesEnglishCoptic.audio = 'introduction-to-doxologies-coptic.m4a';
 }
 // ---- Audio: Annual > Matins > The Conclusion of the Doxologies ----
 const doxologyConclusionHymn = seasons
@@ -1291,19 +1292,19 @@ const doxologyConclusionHymn = seasons
 
 const doxologyConclusionCoptic = doxologyConclusionHymn?.versions.find((v) => v.language === 'coptic');
 if (doxologyConclusionCoptic) {
-  doxologyConclusionCoptic.audio = require('../../assets/audio/doxology-conclusion-coptic.m4a');
+  doxologyConclusionCoptic.audio = 'doxology-conclusion-coptic.m4a';
 }
 
 const doxologyConclusionEnglishCoptic = doxologyConclusionHymn?.versions.find((v) => v.language === 'englishCoptic');
 if (doxologyConclusionEnglishCoptic) {
-  doxologyConclusionEnglishCoptic.audio = require('../../assets/audio/doxology-conclusion-coptic.m4a');
+  doxologyConclusionEnglishCoptic.audio = 'doxology-conclusion-coptic.m4a';
 }
 const doxologyVirginMary = annualMatins?.hymns.find((h) => h.id === 'annual-matins-doxology-virgin-mary');
 const doxologyVirginMaryCopticVersion = doxologyVirginMary?.versions.find((v) => v.language === 'coptic');
 const doxologyVirginMaryEnglishCopticVersion = doxologyVirginMary?.versions.find((v) => v.language === 'englishCoptic');
 if (doxologyVirginMaryCopticVersion) {
-  doxologyVirginMaryCopticVersion.audio = require('../../assets/audio/doxology-virgin-mary.m4a');
+  doxologyVirginMaryCopticVersion.audio = 'doxology-virgin-mary.m4a';
 }
 if (doxologyVirginMaryEnglishCopticVersion) {
-  doxologyVirginMaryEnglishCopticVersion.audio = require('../../assets/audio/doxology-virgin-mary.m4a');
+  doxologyVirginMaryEnglishCopticVersion.audio = 'doxology-virgin-mary.m4a';
 }

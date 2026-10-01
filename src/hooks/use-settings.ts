@@ -1,11 +1,16 @@
 import { readSetting, writeSetting } from './settings-storage';
 import { useSyncExternalStore } from 'react';
 
+import type { LanguageType } from '../data/hymns';
+
 export type AppLanguage = 'en' | 'ar';
 
 export interface Settings {
   language: AppLanguage;
   textScale: number;
+  // Hymn reader shows a second language next to the first, verse by verse
+  sideBySide: boolean;
+  compareLanguage: LanguageType | null;
 }
 
 const STORAGE_KEY = 'alhan-settings';
@@ -13,7 +18,7 @@ export const TEXT_SCALE_MIN = 0.85;
 export const TEXT_SCALE_MAX = 1.9;
 
 const loadSettings = (): Settings => {
-  const defaults: Settings = { language: 'en', textScale: 1 };
+  const defaults: Settings = { language: 'en', textScale: 1, sideBySide: false, compareLanguage: null };
   try {
     const raw = readSetting(STORAGE_KEY);
     return raw ? { ...defaults, ...JSON.parse(raw) } : defaults;

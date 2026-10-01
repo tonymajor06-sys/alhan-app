@@ -2,6 +2,7 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 
+import { useAlhanColors } from '@/hooks/use-alhan-colors';
 import { useSettings } from '@/hooks/use-settings';
 import { useTodayJdn } from '@/hooks/use-today';
 import { syncSeasonWidget } from '@/widgets/season-widget-sync';
@@ -9,6 +10,7 @@ import { syncSeasonWidget } from '@/widgets/season-widget-sync';
 export default function RootLayout() {
   const { language } = useSettings();
   const today = useTodayJdn();
+  const colors = useAlhanColors();
 
   // Keep the home-screen widget's schedule fresh whenever the app opens or the language changes
   useEffect(() => {
@@ -17,14 +19,15 @@ export default function RootLayout() {
 
   return (
     <>
-      <StatusBar style="light" />
+      {/* Light status bar text on the dark theme, dark text on the light theme */}
+      <StatusBar style="auto" />
       <Stack
         screenOptions={{
           headerStyle: {
-            backgroundColor: '#0e1322',
+            backgroundColor: colors.background,
           },
-          headerTintColor: '#ffffff',
-          contentStyle: { backgroundColor: '#0e1322' },
+          headerTintColor: colors.text,
+          contentStyle: { backgroundColor: colors.background },
           headerTitleStyle: {
             fontWeight: '700',
           },

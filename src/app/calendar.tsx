@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { alhanColors as colors } from '@/constants/alhan-colors';
+import { AlhanPalette } from '@/constants/alhan-colors';
 import {
   ChurchEvent,
   copticMonths,
@@ -20,6 +20,7 @@ import {
   toArabicDigits,
   tuneName,
 } from '@/data/coptic-calendar';
+import { useAlhanColors, useThemedStyles } from '@/hooks/use-alhan-colors';
 import { useSettings } from '@/hooks/use-settings';
 import { useTodayJdn } from '@/hooks/use-today';
 
@@ -62,6 +63,8 @@ export default function CalendarScreen() {
   const t = strings[lang];
   const isRTL = lang === 'ar';
   const insets = useSafeAreaInsets();
+  const colors = useAlhanColors();
+  const styles = useThemedStyles(createStyles);
   const today = useTodayJdn();
 
   const [selected, setSelected] = useState(today);
@@ -268,7 +271,7 @@ export default function CalendarScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors: AlhanPalette) => StyleSheet.create({
   root: { flex: 1, backgroundColor: colors.background },
   content: { paddingHorizontal: 16 },
   row: { flexDirection: 'row' },
@@ -342,7 +345,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  primaryButtonText: { fontSize: 18, fontWeight: '800', color: colors.background },
+  primaryButtonText: { fontSize: 18, fontWeight: '800', color: colors.onGold },
 
   monthCard: {
     backgroundColor: colors.surface,
@@ -389,7 +392,7 @@ const styles = StyleSheet.create({
   daySelected: { borderColor: colors.text },
   dayNumber: { fontSize: 16, fontWeight: '700', color: colors.text },
   dayGregorian: { fontSize: 10, color: colors.muted },
-  dayNumberToday: { color: colors.background },
+  dayNumberToday: { color: colors.onGold },
   legend: { gap: 16, justifyContent: 'center', marginTop: 10 },
   legendItem: { alignItems: 'center', gap: 6 },
   legendSwatch: { width: 14, height: 14, borderRadius: 4 },
