@@ -1352,6 +1352,11 @@ const prayForMercyEnglishArabic =
 const prayForMercyArabic =
   'اطلبوا لكي يرحمَنا الله، ويتراءف علينا، ويسمعنا، ويعيننا، ويقبلَ سؤالات وطلبات قديسيه منهم بالصلاحِ عنا في كلِّ حينٍ ☩ ويغفرَ لنا خطايانا.';
 
+// Added when the Pope or a bishop is present; Coptic and English are the same in every service
+const popeBishopCoptic = 'ⲛ̀ⲧⲉϥⲁ̀ⲣⲉϩ ⲉ̀ⲡ̀ⲱⲛϧ ⲛⲉⲙ ⲡ̀ⲧⲁϩⲟ ⲉ̀ⲣⲁⲧϥ ⲙ̀ⲡⲉⲛⲓⲱⲧ ⲉⲧⲧⲁⲓⲏⲟⲩⲧ ⲛ̀ⲁⲣⲭⲓⲉ̀ⲣⲉⲩⲥ ⲡⲁⲡⲁ ⲁⲃⲃⲁ (ⲛⲓⲙ) ⲛⲉⲙ ⲡⲉϥⲕⲉϣ̀ⲫⲏⲣ ⲛ̀ⲗⲓⲧⲟⲩⲣⲅⲟⲥ ⲡⲉⲛⲓⲱⲧ ⲛ̀ⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲥ (ⲙ̀ⲙⲏⲧⲣⲟⲡⲟⲗⲏⲧⲏⲥ) ⲁⲃⲃⲁ (ⲛⲓⲙ).';
+const popeBishopEnglishCoptic = 'entef-areh e-ep-onkh nem ep-taho eratf em-pen-iot et-tai-ooet en-arshee-erefs papa Avva (...) nem pef-ke-esh-fir en-litourgos pen-iot en-episkopos (em-mitropolitis) Avva (...).';
+const popeBishopEnglish = 'and to keep the life and standing of our honored father, the archpriest, Pope Abba (...), and his partner in the liturgy, our father the bishop (metropolitan), Abba (...).';
+
 if (deaconAnnualMatins) {
   deaconAnnualMatins.hymns = [
     {
@@ -1393,15 +1398,15 @@ if (deaconAnnualMatins) {
       versions: [
         {
           language: 'coptic',
-          text: `${prayForMercyCoptic}\n\nⲛ̀ⲧⲉϥⲁ̀ⲣⲉϩ ⲉ̀ⲡ̀ⲱⲛϧ ⲛⲉⲙ ⲡ̀ⲧⲁϩⲟ ⲉ̀ⲣⲁⲧϥ ⲙ̀ⲡⲉⲛⲓⲱⲧ ⲉⲧⲧⲁⲓⲏⲟⲩⲧ ⲛ̀ⲁⲣⲭⲓⲉ̀ⲣⲉⲩⲥ ⲡⲁⲡⲁ ⲁⲃⲃⲁ (ⲛⲓⲙ) ⲛⲉⲙ ⲡⲉϥⲕⲉϣ̀ⲫⲏⲣ ⲛ̀ⲗⲓⲧⲟⲩⲣⲅⲟⲥ ⲡⲉⲛⲓⲱⲧ ⲛ̀ⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲥ (ⲙ̀ⲙⲏⲧⲣⲟⲡⲟⲗⲏⲧⲏⲥ) ⲁⲃⲃⲁ (ⲛⲓⲙ).`,
+          text: `${prayForMercyCoptic}\n\n${popeBishopCoptic}`,
         },
         {
           language: 'englishCoptic',
-          text: `${prayForMercyEnglishCoptic}\n\nentef-areh e-ep-onkh nem ep-taho eratf em-pen-iot et-tai-ooet en-arshee-erefs papa Avva (...) nem pef-ke-esh-fir en-litourgos pen-iot en-episkopos (em-mitropolitis) Avva (...).`,
+          text: `${prayForMercyEnglishCoptic}\n\n${popeBishopEnglishCoptic}`,
         },
         {
           language: 'english',
-          text: `${prayForMercyEnglish}\n\nand to keep the life and standing of our honored father, the archpriest, Pope Abba (...), and his partner in the liturgy, our father the bishop (metropolitan), Abba (...).`,
+          text: `${prayForMercyEnglish}\n\n${popeBishopEnglish}`,
         },
         {
           language: 'englishArabic',
@@ -1540,5 +1545,128 @@ if (deaconAnnualMatins) {
         },
       ],
     },
+  ];
+}
+
+// ---- Deacon Responses > Annual > Offering of the Lamb: replace the placeholders with the real responses ----
+const deaconAnnualOffering = deaconCategories
+  .find((c) => c.id === 'deacon-annual')
+  ?.services.find((s) => s.id === 'd-annual-offering-lamb');
+
+// Like the Matins prayer, but asking to partake of the Mysteries instead of forgiveness alone
+const offeringPrayForMercyCoptic =
+  'Ⲧⲱⲃϩ ϩⲓⲛⲁ ⲛ̀ⲧⲉ Ⲫⲛⲟⲩϯ ⲛⲁⲓ ⲛⲁⲛ: ⲛ̀ⲧⲉϥϣⲉⲛϩⲏⲧ ϧⲁⲣⲟⲛ: ⲛ̀ⲧⲉϥⲥⲱⲧⲉⲙ ⲉ̀ⲣⲟⲛ: ⲛ̀ⲧⲉϥⲉⲣⲃⲟⲏ̀ⲑⲓⲛ ⲉ̀ⲣⲟⲛ: ⲛ̀ⲧⲉϥϭⲓ ⲛ̀ⲛⲓϯϩⲟ ⲛⲉⲙ ⲛⲓⲧⲱⲃϩ ⲛ̀ⲧⲉ ⲛⲏⲉⲑⲟⲩⲁⲃ ⲛ̀ⲧⲁϥ ⲛ̀ⲧⲟⲧⲟⲩ ⲉ̀ϩⲣⲏⲓ ⲉ̀ϫⲱⲛ ⲉ̀ⲡⲓⲁ̀ⲅⲁⲑⲟⲛ ⲛ̀ⲥⲏⲟⲩ ⲛⲓⲃⲉⲛ: ☩ ⲛ̀ⲧⲉϥⲁⲓⲧⲉⲛ ⲛ̀ⲉⲙⲡ̀ϣⲁ ⲉⲑⲣⲉⲛϭⲓ ⲉ̀ⲃⲟⲗϧⲉⲛ ϯⲕⲟⲓⲛⲱⲛⲓⲁ ⲛ̀ⲧⲉ ⲛⲉϥⲙⲩⲥⲧⲏⲣⲓⲟⲛ ⲉⲑⲟⲩⲁⲃ ⲉⲧⲥ̀ⲙⲁⲣⲱⲟⲩⲧ ⲉ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.';
+const offeringPrayForMercyEnglishCoptic =
+  'Tobh hina ente Efnouti nai nan: entef-shenhit kharon: entef-sotem eron: entef-erbo-ithin eron: entef-chi enni-tiho nem ni-tobh ente nee-ethowab entaf entotou e-ehree ejon e-pi-agathon en-seou niven: ☩ entef-aiten en-em-epsha ethren-chi evol-khen ti-koinonia ente nef-mystirion ethowab et-esmarowt e-pi-kho evol ente nen-novi.';
+const offeringPrayForMercyEnglish =
+  'Pray that God may have mercy and compassion on us, hear us, help us, and accept the supplications and prayers of His saints, for that which is good on our behalf at all times; ☩ and make us worthy to partake of the communion of His holy and blessed Mysteries, for the remission of our sins.';
+const offeringPrayForMercyEnglishArabic =
+  'Utlubu likay yarhamana Allah, wa yatara\'af \'alayna, wa yasma\'ana, wa yu\'eenana, wa yaqbal su\'alat wa talabat qiddiseeh minhum bis-salah \'anna fi kulli heen, ☩ wa yaj\'alana mustahiqqeen an nanal min sharikat asrarihi el-muqaddasa el-mubaraka, li-maghfirat khatayana.';
+const offeringPrayForMercyArabic =
+  'اطلبوا لكي يرحمنا الله، ويتراءف علينا، ويسمَعَنَا، ويُعينَنَا، ويَقْبَلَ سؤالات وطلبات قديسيه منهم بالصلاح عنا في كل حين، ☩ ويجعلنا مستحقين أن ننال من شركةِ أسرارِه المقدسة المباركة، لمغفرة خطايانا.';
+
+// The same short responses as in Matins, under their own ids
+const fromMatins = (matinsId: string, id: string): Hymn[] => {
+  const hymn = deaconAnnualMatins?.hymns.find((h) => h.id === matinsId);
+  return hymn ? [{ ...hymn, id, versions: hymn.versions.map((v) => ({ ...v })) }] : [];
+};
+
+if (deaconAnnualOffering) {
+  deaconAnnualOffering.hymns = [
+    {
+      id: 'd-annual-offering-lamb-pray-for-the-gifts',
+      title: 'Ⲡⲣⲟⲥⲉⲩⲝⲁⲥⲑⲉ ⲩ̀ⲡⲉⲣ ⲧⲱⲛ ⲁ̀ⲅⲓⲱⲛ (Pray for These Holy Gifts)',
+      versions: [
+        {
+          language: 'coptic',
+          text: 'Ⲡⲣⲟⲥⲉⲩⲝⲁⲥⲑⲉ ⲩ̀ⲡⲉⲣ ⲧⲱⲛ ⲁ̀ⲅⲓⲱⲛ ⲧⲓⲙⲓⲱⲛ ⲇⲱⲣⲟⲛ ⲧⲟⲩⲧⲱⲛ ⲕⲉ ⲑⲩⲥⲓⲱⲛ ⲏ̀ⲙⲱⲛ ⲕⲉ ⲡ̀ⲣⲟⲥⲫⲉⲣⲟⲛⲧⲱⲛ: Ⲕⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ.',
+        },
+        {
+          language: 'englishCoptic',
+          text: 'Proseuxasthe hyper ton agion timion doron touton ke thysion imon ke prosferonton: Kyrie eleison.',
+        },
+        {
+          language: 'english',
+          text: 'Pray for these holy and precious gifts, our sacrifices, and those who bring them. Lord have mercy.',
+        },
+        {
+          language: 'englishArabic',
+          text: 'Sallu min ajl hadhihi el-qarabeen el-muqaddasa el-kareema, wa dahayana wal-ladheena qaddamuha. Ya Rabbu irham.',
+        },
+        {
+          language: 'arabic',
+          text: 'صلوا من أجل هذه القرابين المقدسة الكريمة، وضحايانا والذين قدموها. ياربُ إرحَم.',
+        },
+      ],
+    },
+    {
+      id: 'd-annual-offering-lamb-one-is-the-holy-father',
+      title: 'Ⲁ̀ⲙⲏⲛ. Ⲓⲥ Ⲡⲁⲧⲏⲣ ⲁ̀ⲅⲓⲟⲥ (Amen. One Is the Holy Father)',
+      versions: [
+        {
+          language: 'coptic',
+          text: 'Ⲁ̀ⲙⲏⲛ. Ⲓⲥ Ⲡⲁⲧⲏⲣ ⲁ̀ⲅⲓⲟⲥ: ⲓⲥ Ⲩ̀ⲓⲟⲥ ⲁ̀ⲅⲓⲟⲥ: ⲉⲛ Ⲡ̀ⲛⲉⲩⲙⲁ Ⲁ̀ⲅⲓⲟⲛ. Ⲁ̀ⲙⲏⲛ.\n\nⲈⲩⲗⲟⲅⲓⲧⲟⲥ Ⲕⲩⲣⲓⲟⲥ ⲟ̀ Ⲑⲉⲟⲥ ⲓⲥ ⲧⲟⲩⲥ ⲉ̀ⲱ̀ⲛⲁⲥ. Ⲁ̀ⲙⲏⲛ.\n\nⲚⲓⲉⲑⲛⲟⲥ ⲧⲏⲣⲟⲩ ⲥ̀ⲙⲟⲩ ⲉ̀Ⲡ̅ⲟ̅ⲥ̅: ⲙⲁⲣⲟⲩⲥ̀ⲙⲟⲩ ⲉ̀ⲣⲟϥ ⲛ̀ϫⲉ ⲛⲓⲗⲁⲟⲥ ⲧⲏⲣⲟⲩ: ϫⲉ ⲁ̀ ⲡⲉϥⲛⲁⲓ ⲧⲁϫⲣⲟ ⲉ̀ϩⲣⲏⲓ ⲉ̀ϫⲱⲛ: ⲟⲩⲟϩ ϯⲙⲉⲑⲙⲏⲓ ⲛ̀ⲧⲉ Ⲡ̅ⲟ̅ⲥ̅ ϣⲟⲡ ϣⲁ ⲉ̀ⲛⲉϩ. Ⲁ̀ⲙⲏⲛ ⲁⲗⲗⲏⲗⲟⲩⲓⲁ.',
+        },
+        {
+          language: 'englishCoptic',
+          text: 'Amin. Is Patir agios: is Eyos agios: en Epnevma Agion. Amin.\n\nEvlogitos Kyrios o Theos is tous e-onas. Amin.\n\nNi-ethnos tirou esmou e-Epchois: marou-esmou erof enje ni-laos tirou: je a pef-nai tajro e-ehree ejon: ouoh ti-methmi ente Epchois shop sha eneh. Amin allilouia.',
+        },
+        {
+          language: 'english',
+          text: 'Amen. One is the holy Father, one is the holy Son, one is the Holy Spirit. Amen.\n\nBlessed be the Lord God forever. Amen.\n\nPraise the Lord all you nations, praise Him all you peoples, for His mercy is confirmed upon us, and the truth of the Lord endures forever. Amen alleluia.',
+        },
+        {
+          language: 'englishArabic',
+          text: 'Ameen. Wahid huwa el-Ab el-Quddus, wahid huwa el-Ibn el-Quddus, wahid huwa er-Rooh el-Qudus. Ameen.\n\nMubarak er-Rabb el-Ilah ila el-abad. Ameen.\n\nYa jamee\' el-umam barikoo er-Rabb. Wal-tubarikhu jamee\' esh-shu\'ub. Li-anna rahmatahu thubbitat \'alayna. Wa haqq er-Rabb yadoom ila el-abad. Ameen hallelouia.',
+        },
+        {
+          language: 'arabic',
+          text: 'آمين. واحد هو الآب القدوس، واحد هو الإبن القدوس، واحد هو الروح القدس. آمين.\n\nمبارك الرب الإله إلى الأبد. آمين.\n\nيا جميع الأمم باركوا الرب. ولتباركه جميع الشعوب. لأن رحمته ثُبِتَت علينا. وحق الرب يدوم إلى الأبد. آمين هلليلويا.',
+        },
+      ],
+    },
+    ...fromMatins('d-annual-matins-stand-up-for-prayer', 'd-annual-offering-lamb-stand-up-for-prayer'),
+    ...fromMatins('d-annual-matins-pray', 'd-annual-offering-lamb-pray'),
+    {
+      id: 'd-annual-offering-lamb-pray-for-mercy',
+      title: 'Ⲧⲱⲃϩ ϩⲓⲛⲁ (Pray That God May Have Mercy)',
+      versions: [
+        { language: 'coptic', text: offeringPrayForMercyCoptic },
+        { language: 'englishCoptic', text: offeringPrayForMercyEnglishCoptic },
+        { language: 'english', text: offeringPrayForMercyEnglish },
+        { language: 'englishArabic', text: offeringPrayForMercyEnglishArabic },
+        { language: 'arabic', text: offeringPrayForMercyArabic },
+      ],
+    },
+    {
+      id: 'd-annual-offering-lamb-pray-for-mercy-pope-bishop',
+      title: 'Ⲧⲱⲃϩ ϩⲓⲛⲁ (Pray That God May Have Mercy, in the Presence of the Pope or a Bishop)',
+      versions: [
+        { language: 'coptic', text: `${offeringPrayForMercyCoptic}\n\n${popeBishopCoptic}` },
+        { language: 'englishCoptic', text: `${offeringPrayForMercyEnglishCoptic}\n\n${popeBishopEnglishCoptic}` },
+        { language: 'english', text: `${offeringPrayForMercyEnglish}\n\n${popeBishopEnglish}` },
+        {
+          language: 'englishArabic',
+          text: `${offeringPrayForMercyEnglishArabic}\n\nWa an yahfaz hayat wa qiyam abina el-mukarram el-Baba el-Anba (...) wa shareekahu fil-khidma er-rasouliya abina el-usquf (el-mutran) Anba (...).`,
+        },
+        {
+          language: 'arabic',
+          text: `${offeringPrayForMercyArabic}\n\nوأن يحفظ حياة وقيام أبينا المكرم البابا الأنبا (...) وشريكه في الخدمة الرسولية أبينا الأسقف (المطران) انبا (...).`,
+        },
+      ],
+    },
+  ];
+}
+
+// ---- Deacon Responses > Annual > Liturgy of the Word: the same responses as in Matins ----
+const deaconAnnualLiturgyWord = deaconCategories
+  .find((c) => c.id === 'deacon-annual')
+  ?.services.find((s) => s.id === 'd-annual-liturgy-word');
+
+if (deaconAnnualLiturgyWord) {
+  deaconAnnualLiturgyWord.hymns = [
+    ...fromMatins('d-annual-matins-stand-up-for-prayer', 'd-annual-liturgy-word-stand-up-for-prayer'),
+    ...fromMatins('d-annual-matins-pray-for-the-gospel', 'd-annual-liturgy-word-pray-for-the-gospel'),
+    ...fromMatins('d-annual-matins-stand-in-the-fear-of-god', 'd-annual-liturgy-word-stand-in-the-fear-of-god'),
   ];
 }

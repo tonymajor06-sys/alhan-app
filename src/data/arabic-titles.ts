@@ -84,6 +84,19 @@ const arabicTitles: Record<string, string> = {
   'd-annual-matins-pray-for-the-gospel': 'صلوا من أجل الإنجيل المقدس',
   'd-annual-matins-stand-in-the-fear-of-god': 'قفوا بخوف الله',
   'd-annual-matins-in-christ-jesus-our-lord': 'بالمسيح يسوع ربنا',
+
+  // Deacon Responses > Annual > Offering of the Lamb
+  'd-annual-offering-lamb-pray-for-the-gifts': 'صلوا من أجل هذه القرابين',
+  'd-annual-offering-lamb-one-is-the-holy-father': 'آمين. واحد هو الآب القدوس',
+  'd-annual-offering-lamb-stand-up-for-prayer': 'للصلاة قفوا',
+  'd-annual-offering-lamb-pray': 'صلوا',
+  'd-annual-offering-lamb-pray-for-mercy': 'اطلبوا لكي يرحمنا الله',
+  'd-annual-offering-lamb-pray-for-mercy-pope-bishop': 'اطلبوا لكي يرحمنا الله (في حضور البابا أو الأسقف)',
+
+  // Deacon Responses > Annual > Liturgy of the Word
+  'd-annual-liturgy-word-stand-up-for-prayer': 'للصلاة قفوا',
+  'd-annual-liturgy-word-pray-for-the-gospel': 'صلوا من أجل الإنجيل المقدس',
+  'd-annual-liturgy-word-stand-in-the-fear-of-god': 'قفوا بخوف الله',
   'annual-liturgy-psalm-trailer-pope-bishop': 'ذيل المزمور في حضور البابا أو الأسقف',
 };
 
