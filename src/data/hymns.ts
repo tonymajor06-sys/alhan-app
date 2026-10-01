@@ -1089,15 +1089,26 @@ if (verseOfCymbalsEnglishCoptic) {
   verseOfCymbalsEnglishCoptic.audio = require('../../assets/audio/verse-of-the-cymbals-annual.mp3');
 }
 
-// ---- Audio: Annual > Matins > Psalm Trailer for the Pope or a Bishop ----
-const psalmTrailerPopeBishopHymn = annualMatins?.hymns.find((h) => h.id === 'annual-matins-psalm-trailer-pope-bishop');
+// ---- Annual > Liturgy: same Psalm Trailer for the Pope or a Bishop as Matins, with its own audio ----
+const matinsPsalmTrailerPopeBishop = annualMatins?.hymns.find((h) => h.id === 'annual-matins-psalm-trailer-pope-bishop');
+if (annualLiturgy && matinsPsalmTrailerPopeBishop) {
+  annualLiturgy.hymns.push({
+    ...matinsPsalmTrailerPopeBishop,
+    id: 'annual-liturgy-psalm-trailer-pope-bishop',
+    // Copy each version so audio set here doesn't leak into the Matins hymn
+    versions: matinsPsalmTrailerPopeBishop.versions.map((v) => ({ ...v })),
+  });
+}
+
+// ---- Audio: Annual > Liturgy > Psalm Trailer for the Pope or a Bishop ----
+const psalmTrailerPopeBishopHymn = annualLiturgy?.hymns.find((h) => h.id === 'annual-liturgy-psalm-trailer-pope-bishop');
 const psalmTrailerPopeBishopCoptic = psalmTrailerPopeBishopHymn?.versions.find((v) => v.language === 'coptic');
 if (psalmTrailerPopeBishopCoptic) {
-  psalmTrailerPopeBishopCoptic.audio = require('../../assets/audio/psalm-trailer-pope-bishop-annual.mp3');
+  psalmTrailerPopeBishopCoptic.audio = require('../../assets/audio/psalm-trailer-pope-bishop-liturgy.mp3');
 }
 const psalmTrailerPopeBishopEnglishCoptic = psalmTrailerPopeBishopHymn?.versions.find((v) => v.language === 'englishCoptic');
 if (psalmTrailerPopeBishopEnglishCoptic) {
-  psalmTrailerPopeBishopEnglishCoptic.audio = require('../../assets/audio/psalm-trailer-pope-bishop-annual.mp3');
+  psalmTrailerPopeBishopEnglishCoptic.audio = require('../../assets/audio/psalm-trailer-pope-bishop-liturgy.mp3');
 }
 
 // ---- Audio: Annual > Matins > Introduction to the Doxologies (Coptic) ----
