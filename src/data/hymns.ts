@@ -1089,6 +1089,17 @@ if (verseOfCymbalsEnglishCoptic) {
   verseOfCymbalsEnglishCoptic.audio = require('../../assets/audio/verse-of-the-cymbals-annual.mp3');
 }
 
+// ---- Audio: Annual > Matins > Psalm Trailer for the Pope or a Bishop ----
+const psalmTrailerPopeBishopHymn = annualMatins?.hymns.find((h) => h.id === 'annual-matins-psalm-trailer-pope-bishop');
+const psalmTrailerPopeBishopCoptic = psalmTrailerPopeBishopHymn?.versions.find((v) => v.language === 'coptic');
+if (psalmTrailerPopeBishopCoptic) {
+  psalmTrailerPopeBishopCoptic.audio = require('../../assets/audio/psalm-trailer-pope-bishop-annual.mp3');
+}
+const psalmTrailerPopeBishopEnglishCoptic = psalmTrailerPopeBishopHymn?.versions.find((v) => v.language === 'englishCoptic');
+if (psalmTrailerPopeBishopEnglishCoptic) {
+  psalmTrailerPopeBishopEnglishCoptic.audio = require('../../assets/audio/psalm-trailer-pope-bishop-annual.mp3');
+}
+
 // ---- Audio: Annual > Matins > Introduction to the Doxologies (Coptic) ----
 const introDoxologiesHymn = seasons
   .find((s) => s.id === 'annual')
