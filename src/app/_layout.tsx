@@ -35,9 +35,6 @@ export default function RootLayout() {
       >
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="calendar" options={{ headerShown: false }} />
-        <Stack.Screen name="services" options={{ title: 'Services' }} />
-        <Stack.Screen name="hymns" options={{ title: 'Hymns' }} />
-        <Stack.Screen name="detail" options={{ title: 'Hymn Lyrics' }} />
       </Stack>
     </>
   );
