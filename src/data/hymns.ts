@@ -1075,6 +1075,136 @@ if (annualLiturgy) {
         },
       ],
     },
+    {
+      id: 'annual-liturgy-hymn-of-intercessions',
+      title: 'Ϩⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ (Hymn of the Intercessions)',
+      versions: [
+        {
+          language: 'coptic',
+          text: 'Ϩⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ: ⲛ̀ⲧⲉ Ϯⲑⲉⲟ̀ⲧⲟⲕⲟⲥ ⲉⲑⲟⲩⲁⲃ Ⲙⲁⲣⲓⲁ: Ⲡ̀ϭⲟⲓⲥ ⲁ̀ⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ: ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.\n\n(For the Commemoration of Archangel Gabriel, the Feast of the Annunciation, and the month of Koiahk)\n\nϨⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ ⲛ̀ⲧⲉ ⲡⲓⲁⲣⲭⲏⲁⲅⲅⲉⲗⲟⲥ ⲉⲑⲟⲩⲁⲃ Ⲅⲁⲃⲣⲓⲏⲗ ⲡⲓϥⲁⲓϣⲉⲛⲛⲟⲩϥⲓ: Ⲡ̀ϭⲟⲓⲥ ⲁ̀ⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ: ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.\n\nϨⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ ⲛ̀ⲧⲉ ⲡⲓϣⲁϣϥ ⲛ̀ⲁⲣⲭⲏⲁⲅⲅⲉⲗⲟⲥ ⲛⲉⲙ ⲛⲓⲧⲁⲅⲙⲁ ⲛ̀ⲉ̀ⲡⲟⲩⲣⲁⲛⲓⲟⲛ: Ⲡ̀ϭⲟⲓⲥ ⲁ̀ⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ: ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.\n\nϨⲓⲧⲉⲛ ⲛⲓⲉⲩⲭⲏ ⲛ̀ⲧⲉ ⲛⲁϭⲟⲓⲥ ⲛ̀ⲓⲟϯ ⲛ̀ⲁ̀ⲡⲟⲥⲧⲟⲗⲟⲥ ⲛⲉⲙ ⲡ̀ⲥⲉⲡⲓ ⲛ̀ⲧⲉ ⲛⲓⲙⲁⲑⲏⲧⲏⲥ: Ⲡ̀ϭⲟⲓⲥ ⲁ̀ⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ: ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.\n\nϨⲓⲧⲉⲛ ⲛⲓⲉⲩⲭⲏ ⲛ̀ⲧⲉ ⲡⲓⲑⲉⲱ̀ⲣⲓⲙⲟⲥ ⲛ̀ⲉⲩⲁⲅⲅⲉⲗⲓⲥⲧⲏⲥ Ⲙⲁⲣⲕⲟⲥ ⲡⲓⲁ̀ⲡⲟⲥⲧⲟⲗⲟⲥ: Ⲡ̀ϭⲟⲓⲥ ⲁ̀ⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ: ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.\n\nϨⲓⲧⲉⲛ ⲛⲓⲉⲩⲭⲏ ⲛ̀ⲧⲉ ⲡⲓⲁⲑⲗⲟⲫⲟⲣⲟⲥ ⲙ̀ⲙⲁⲣⲧⲩⲣⲟⲥ ⲡⲁϭⲟⲓⲥ ⲡ̀ⲟⲩⲣⲟ Ⲅⲉⲱⲣⲅⲓⲟⲥ: Ⲡ̀ϭⲟⲓⲥ ⲁ̀ⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ: ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.\n\n(For the Commemoration of St. Philopater Mercurius)\n\nϨⲓⲧⲉⲛ ⲛⲓⲉⲩⲭⲏ ⲛ̀ⲧⲉ ⲡⲓⲁⲑⲗⲟⲫⲟⲣⲟⲥ ⲙ̀ⲙⲁⲣⲧⲩⲣⲟⲥ Ⲫⲓⲗⲟⲡⲁⲧⲏⲣ Ⲙⲉⲣⲕⲟⲩⲣⲓⲟⲥ: Ⲡ̀ϭⲟⲓⲥ ⲁ̀ⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ: ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.\n\n(For the Commemoration of St. Mena)\n\nϨⲓⲧⲉⲛ ⲛⲓⲉⲩⲭⲏ ⲛ̀ⲧⲉ ⲡⲓⲁⲑⲗⲟⲫⲟⲣⲟⲥ ⲙ̀ⲙⲁⲣⲧⲩⲣⲟⲥ ⲁ̀ⲡⲁ Ⲙⲏⲛⲁ ⲛ̀ⲧⲉ ⲛⲓⲫⲁⲓⲁⲧ: Ⲡ̀ϭⲟⲓⲥ ⲁ̀ⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ: ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.\n\n(For the Commemoration of Abba Abraam Bishop of Fayoum)\n\nϨⲓⲧⲉⲛ ⲛⲓⲉ̀ⲩⲭⲏ: ⲛ̀ⲧⲉ ⲡⲉⲛⲓⲱⲧ ⲉⲑⲟⲩⲁⲃ ⲛ̀ⲇⲓⲕⲉⲟⲥ: ⲁⲃⲃⲁ Ⲁⲃⲣⲁⲁⲙ ⲡⲓⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲥ: Ⲡ̀ϭⲟⲓⲥ ⲁ̀ⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ: ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.\n\n(For the Commemoration of Pope Kyrillos the 6th)\n\nϨⲓⲧⲉⲛ ⲛⲓⲉⲩⲭⲏ: ⲛ̀ⲧⲉ ⲡⲉⲛⲓⲱⲧ ⲉⲑⲟⲩⲁⲃ ⲙ̀ⲡⲁⲧⲣⲓⲁⲣⲭⲏⲥ: Ⲁⲃⲃⲁ Ⲕⲩⲣⲓⲗⲗⲟⲥ Ⲡⲓⲙⲁϩⲥⲟⲟⲩ: Ⲡ̀ϭⲟⲓⲥ ⲁ̀ⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ: ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.\n\n(The verse for the saint of the church is added here, if not already mentioned above)\n\nϨⲓⲧⲉⲛ ⲛⲓⲉⲩⲭⲏ ⲛ̀ⲧⲉ ⲛⲏⲉⲑⲟⲩⲁⲃ ⲛ̀ⲧⲉ ⲡⲁⲓⲉ̀ϩⲟⲟⲩ ⲡⲓⲟⲩⲁⲓ ⲡⲓⲟⲩⲁⲓ ⲕⲁⲧⲁ ⲡⲉϥⲣⲁⲛ: Ⲡ̀ϭⲟⲓⲥ ⲁ̀ⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ: ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.\n\nϨⲓⲧⲉⲛ ⲛⲟⲩⲉⲩⲭⲏ ⲁ̀ⲣⲉϩ ⲉ̀ⲡ̀ⲱⲛϧ ⲙ̀ⲡⲉⲛⲓⲱⲧ ⲉⲧⲧⲁⲓⲏⲟⲩⲧ ⲛ̀ⲁⲣⲭⲏⲉ̀ⲣⲉⲩⲥ ⲡⲁⲡⲁ ⲁⲃⲃⲁ (ⲛⲓⲙ): Ⲡ̀ϭⲟⲓⲥ ⲁ̀ⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ: ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.\n\nϨⲓⲧⲉⲛ ⲛⲟⲩⲉⲩⲭⲏ ⲁ̀ⲣⲉϩ ⲉ̀ⲡ̀ⲱⲛϧ ⲙ̀ⲡⲉⲛⲓⲱⲧ ⲉⲧⲧⲁⲓⲏⲟⲩⲧ ⲛ̀ⲇⲓⲕⲉⲟⲥ ⲁⲃⲃⲁ (ⲛⲓⲙ) ⲡⲓⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲥ (ⲡⲓⲙⲏⲧⲣⲟⲡⲟⲗⲓⲧⲏⲥ): Ⲡ̀ϭⲟⲓⲥ ⲁ̀ⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ: ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.\n\n(On standard days of the year and on fasting days)\n\nⲦⲉⲛⲟⲩⲱϣⲧ ⲙ̀ⲙⲟⲕ ⲱ̀ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: ⲛⲉⲙ Ⲡⲉⲕⲓⲱⲧ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ: ⲛⲉⲙ Ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ ⲉⲑⲟⲩⲁⲃ: ϫⲉ ⲁⲕⲓ̀ ⲁⲕⲥⲱϯ ⲙ̀ⲙⲟⲛ ⲛⲁⲓ ⲛⲁⲛ.',
+        },
+        {
+          language: 'englishCoptic',
+          text: 'Hiten ni-epresvia: ente ti-Theotokos ethowab Maria: Epchois ari-ehmot nan: em-pi-kho evol ente nen-novi.\n\n(For the Commemoration of Archangel Gabriel, the Feast of the Annunciation, and the month of Koiahk)\n\nHiten ni-epresvia ente pi-arshee-angelos ethowab Gabriel pi-fai-shen-noufi: Epchois ari-ehmot nan: em-pi-kho evol ente nen-novi.\n\nHiten ni-epresvia ente pi-shashf en-arshee-angelos nem ni-taghma en-eporanion: Epchois ari-ehmot nan: em-pi-kho evol ente nen-novi.\n\nHiten ni-evshee ente nachois en-iotee en-apostolos nem ep-sepi ente ni-matheetees: Epchois ari-ehmot nan: em-pi-kho evol ente nen-novi.\n\nHiten ni-evshee ente pi-theoreemos en-evangelistees Markos pi-apostolos: Epchois ari-ehmot nan: em-pi-kho evol ente nen-novi.\n\nHiten ni-evshee ente pi-athloforos em-martyros pachois ep-ouro Georgios: Epchois ari-ehmot nan: em-pi-kho evol ente nen-novi.\n\n(For the Commemoration of St. Philopater Mercurius)\n\nHiten ni-evshee ente pi-athloforos em-martyros Philopateer Merkourios: Epchois ari-ehmot nan: em-pi-kho evol ente nen-novi.\n\n(For the Commemoration of St. Mena)\n\nHiten ni-evshee ente pi-athloforos em-martyros apa Meena ente ni-fai-at: Epchois ari-ehmot nan: em-pi-kho evol ente nen-novi.\n\n(For the Commemoration of Abba Abraam Bishop of Fayoum)\n\nHiten ni-evshee: ente peniot ethowab en-dikeos: Avva Avraam pi-episkopos: Epchois ari-ehmot nan: em-pi-kho evol ente nen-novi.\n\n(For the Commemoration of Pope Kyrillos the 6th)\n\nHiten ni-evshee: ente peniot ethowab em-patriarkhees: Avva Kyrillos pi-mah-soo: Epchois ari-ehmot nan: em-pi-kho evol ente nen-novi.\n\n(The verse for the saint of the church is added here, if not already mentioned above)\n\nHiten ni-evshee ente nee-ethowab ente pai-ehoo-ou pi-ouai pi-ouai kata pef-ran: Epchois ari-ehmot nan: em-pi-kho evol ente nen-novi.\n\nHiten nou-evshee areh e-ep-onkh em-peniot ettai-ooet en-arshee-erefs papa Avva (...): Epchois ari-ehmot nan: em-pi-kho evol ente nen-novi.\n\nHiten nou-evshee areh e-ep-onkh em-peniot ettai-ooet en-dikeos Avva (...) pi-episkopos (pi-meetropolitees): Epchois ari-ehmot nan: em-pi-kho evol ente nen-novi.\n\n(On standard days of the year and on fasting days)\n\nTen-ou-osht emmok o Pikhristos: nem Pek-iot en-agathos: nem Pi-epnevma ethowab: je aki aksoti emmon nai nan.',
+        },
+        {
+          language: 'english',
+          text: 'Through the intercessions, of the Theotokos Saint Mary, O Lord grant us, the forgiveness of our sins.\n\n(For the Commemoration of Archangel Gabriel, the Feast of the Annunciation, and the month of Koiahk)\n\nThrough the intercessions of the holy archangel Gabriel, the herald of glad tidings: O Lord, grant us the forgiveness of our sins.\n\nThrough the intercessions of the seven archangels, and the heavenly orders, O Lord, grant us the forgiveness of our sins.\n\nThrough the prayers of my lords and fathers, the apostles, and the rest of the disciples, O Lord, grant us the forgiveness of our sins.\n\nThrough the prayers of the Beholder of God, the Evangelist Mark, the apostle, O Lord, grant us the forgiveness of our sins.\n\nThrough the prayers of the struggle-mantled martyr, my lord Prince George, O Lord, grant us the forgiveness of our sins.\n\n(For the Commemoration of St. Philopater Mercurius)\n\nThrough the prayers of the struggle-mantled martyr, Philopater Mercurius, O Lord, grant us the forgiveness of our sins.\n\n(For the Commemoration of St. Mena)\n\nThrough the prayers of the struggle-mantled martyr, holy Abba Mena of Bayad, O Lord, grant us the forgiveness of our sins.\n\n(For the Commemoration of Abba Abraam Bishop of Fayoum)\n\nThrough the prayers: of our righteous father: Abba Abraam the bishop: O Lord grant us the forgiveness of our sins.\n\n(For the Commemoration of Pope Kyrillos the 6th)\n\nThrough the prayers, of our holy father the patriarch, Abba Kyrillos the Sixth, O Lord grant us the forgiveness of our sins.\n\n(The verse for the saint of the church is added here, if not already mentioned above)\n\nThrough the prayers of the saints of this day, each one according to their names, O Lord, grant us the forgiveness of our sins.\n\nThrough their prayers, keep the life of our honored father, the archpriest, Pope Abba (...). O Lord, grant us the forgiveness of our sins.\n\nThrough their prayers, keep the life of our honored and righteous father, Abba (...) the bishop (metropolitan), O Lord, grant us the forgiveness of our sins.\n\n(On standard days of the year and on fasting days)\n\nWe worship You, O Christ, with Your good Father, and the Holy Spirit, for You have come and saved us. Have mercy on us.',
+        },
+        {
+          language: 'englishArabic',
+          text: 'Bi-shafa\'at walidat el-ilah el-qiddisa Maryam, ya rabbu an\'im lana, bi-maghfirat khatayana.\n\n(Fi tizkar ra\'is el-mala\'ika Ghobrial, wa \'eid el-bishara, wa shahr Kiahk)\n\nBi-shafa\'at ra\'is el-mala\'ika et-tahir Ghobrial el-mubashshir. Ya rabbu an\'im \'alayna bi-maghfirat khatayana.\n\nBi-shafa\'at ru\'asa\' el-mala\'ika es-sab\'a wat-tughmat es-sama\'iya, ya rabbu an\'im \'alayna bi-maghfirat khatayana.\n\nBi-salawat sadati el-aba\' er-rusul wa baqiyyat et-talameez, ya rabbu an\'im \'alayna bi-maghfirat khatayana.\n\nBi-salawat nazir el-ilah el-injeeli Marqos er-rasool, ya rabbu an\'im \'alayna bi-maghfirat khatayana.\n\nBi-salawat el-mujahid esh-shaheed sayyidi el-malik Georgios, ya rabbu an\'im \'alayna bi-maghfirat khatayana.\n\n(Fi tizkar el-qiddis Philopater Marqorios)\n\nBi-salawat el-mujahid esh-shaheed Philopater Marqorios, ya rabbu an\'im \'alayna bi-maghfirat khatayana.\n\n(Fi tizkar el-qiddis Mar Mina)\n\nBi-salawat el-mujahid esh-shaheed Abba Mina el-Bayadi, ya rabbu an\'im \'alayna bi-maghfirat khatayana.\n\n(Fi tizkar el-Anba Abram usquf el-Fayoum)\n\nBi-salawat abina el-qiddis el-barr Anba Abram el-usquf, ya rabbu an\'im lana bi-maghfirat khatayana.\n\n(Fi tizkar el-Baba Kirollos es-sadis)\n\nBi-salawat, ya abana el-qiddis el-batreerk, el-Anba Kirollos es-sadis, ya rabbu an\'im \'alayna bi-maghfirat khatayana.\n\n(Yudaf huna rub\' qiddis el-kanisa in lam yuzkar a\'lah)\n\nBi-salawat qiddisi hadha el-yawm, kullu wahid bi-ismih, ya rabbu an\'im \'alayna bi-maghfirat khatayana.\n\nBi-salawatihim ihfaz hayat abina el-mukarram ra\'is el-kahana el-Baba el-Anba (...), ya rabbu an\'im \'alayna bi-maghfirat khatayana.\n\nBi-salawatihim ihfaz hayat abina el-mukarram el-barr Anba (...) el-usquf (el-mutran), ya rabbu an\'im \'alayna bi-maghfirat khatayana.\n\n(Fil-ayyam es-sanawiya wa ayyam es-sawm)\n\nNasjudu laka ayyuha el-Maseeh, ma\'a abeeka es-saleh war-Roh el-Qudus, li-annaka ateita wa khallastana. [Irhamna]',
+        },
+        {
+          language: 'arabic',
+          text: 'بشفاعاتِ والِدةِ الإلهِ القدِّيسةِ مريمَ، يا ربُّ أنعِمْ لَنا، بمغفِرةِ خطايانا.\n\n(في تذكار رئيس الملائكة غبريال، وعيد البشارة، وشهر كيهك)\n\nبشفاعات رئيس الملائكة الطاهر غبريال المبشر. يارب أنعم علينا بمغفرة خطايانا.\n\nبشفاعات رؤساء الملائكة السبعة والطغمات السمائية، يارب أنعم علينا بمغفرة خطايانا.\n\nبصلوات سادتي الآباء الرسل وبقية التلاميذ، يارب أنعم علينا بمغفرة خطايانا.\n\nبصلوات ناظر الإله الإنجيلي مرقس الرسول، يارب أنعم علينا بمغفرة خطايانا.\n\nبصلوات المجاهد الشهيد سيدي الملك جيؤرجيوس، يارب أنعم علينا بمغفرة خطايانا.\n\n(في تذكار القديس فيلوباتير مرقوريوس)\n\nبصلوات المجاهد الشهيد فيلوباتير مرقوريوس، يارب أنعم علينا بمغفرة خطايانا.\n\n(في تذكار القديس مار مينا)\n\nبصلوات المجاهد الشهيد ابا مينا البياضي، يارب أنعم علينا بمغفرة خطايانا.\n\n(في تذكار الأنبا أبرام أسقف الفيوم)\n\nبصلوات ابينا القديس البار أنبا أبرام الاسقف يارب انعم لنا بمغفرة خطايانا.\n\n(في تذكار البابا كيرلس السادس)\n\nبصلوات، يا أبانا القديس البطريرك، الانبا كيرلس السادس، يا رب أنعم علينا بمغفرة خطايانا.\n\n(يُضاف هنا ربع قديس الكنيسة إن لم يُذكر أعلاه)\n\nبصلوات قديسي هذا اليوم، كل واحد باسمِه، يارب أنعم علينا بمغفرة خطايانا.\n\nبصلواتِهم إحفظ حياة أبينا المكرم رئيس الكهنة البابا الأنبا(...)، يارب أنعم علينا بمغفرة خطايانا.\n\nبصلواتهم إحفظ حياة أبينا المكرم البار أنبا (...) الاسقف (المطران) يارب أنعم علينا بمغفرة خطايانا.\n\n(في الأيام السنوية وأيام الصوم)\n\nنسجدُ لكَ أيها المسيحُ، معَ أبيكَ الصالحِ والرّوحِ القُدُسِ، لأنَّكَ أتيتَ وخلَّصتَنا. [ارحَمْنا]',
+        },
+      ],
+    },
+    {
+      id: 'annual-liturgy-pihmot-gar',
+      title: 'Ⲡⲓϩ̀ⲙⲟⲧ ⲅⲁⲣ',
+      versions: [
+        {
+          language: 'coptic',
+          text: 'Ⲡⲓϩ̀ⲙⲟⲧ ⲅⲁⲣ ⲙ̀ⲡⲉⲛⲟ̅ⲥ̅ Ⲓ̅ⲏ̅ⲥ̅ Ⲡⲭ̅ⲥ̅: ⲉϥⲉ̀ϣⲱⲡⲓ ⲛⲉⲙ ⲡⲉⲕⲁ̀ⲅⲓⲟⲛ ⲡ̀ⲛⲉⲩⲙⲁ: ⲡⲁⲟ̅ⲥ̅ ⲛ̀ⲓⲱⲧ ⲉⲧⲧⲁⲓⲏⲟⲩⲧ ⲛ̀ⲁ̀ⲣⲭⲏⲉ̀ⲣⲉⲩⲥ ⲡⲁⲡⲁ ⲁⲃⲃⲁ (ⲛⲓⲙ).\n\nⲚⲉⲙ ⲡⲉⲛⲓⲱⲧ ⲙ̀ⲙⲏⲧⲣⲟⲡⲟⲗⲓⲧⲏⲥ ⲁⲃⲃⲁ (ⲛⲓⲙ).\n\nⲚⲉⲙ ⲡⲉⲛⲓⲱⲧ ⲛ̀ⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲥ ⲁⲃⲃⲁ (ⲛⲓⲙ).\n\nⲘⲁⲣⲉ ⲡⲓⲕ̀ⲗⲏⲣⲟⲥ: ⲛⲉⲙ ⲡⲓⲗⲁⲟⲥ ⲧⲏⲣϥ: ⲟⲩϫⲁⲓ ϧⲉⲛ Ⲡ̅ⲟ̅ⲥ̅: ϫⲉ ⲁ̀ⲙⲏⲛ ⲉⲥⲉ̀ϣⲱⲡⲓ.',
+        },
+        {
+          language: 'englishCoptic',
+          text: 'Pi-ehmot gar em-Penchois Iesous Pikhristos: ef-e-shopi nem pek-agion em-epnevma: pachois en-iot ettai-ooet en-arshee-erefs papa Avva (...).\n\nNem peniot em-meetropolitees Avva (...).\n\nNem peniot en-episkopos Avva (...).\n\nMare pi-kleeros: nem pi-laos teerf: ouchai khen Epchois: je amen es-eshopi.',
+        },
+        {
+          language: 'english',
+          text: 'The grace of our Lord Jesus Christ, be with your saintly spirit, my lord the honored father the high priest Pope Abba (...).\n\nAnd our father the Metropolitan Abba (...).\n\nAnd our father the Bishop Abba (...).\n\nMay the clergy and all the people be safe in the Lord. Amen. So be it.',
+        },
+        {
+          language: 'englishArabic',
+          text: 'Ni\'mat Rabbina Yasou\' el-Maseeh takoon ma\'a roohak et-tahira, ya sayyidi el-ab el-mukarram ra\'is el-kahana el-Baba Anba (...).\n\nWa abina el-mutran el-Anba (...).\n\nWa abina el-usquf el-Anba (...).\n\nFal-yakun el-ekleeros wa kull esh-sha\'b mu\'afeen fir-Rabb. Ameen yakoon.',
+        },
+        {
+          language: 'arabic',
+          text: 'نعمة ربنا يسوع المسيح تكون مع روحك الطاهرة، يا سيدي الأب المكرم رئيس الكهنة البابا أنبا (...).\n\nوأبينا المطران الأنبا (...).\n\nوأبينا الأسقف الأنبا (...).\n\nفليكن الإكليروس وكل الشعب معافين في الرب. آمين يكون.',
+        },
+      ],
+    },
+    {
+      id: 'annual-liturgy-perfect-is-the-blessing',
+      title: 'Ⲁ̀ ⲡⲉⲧϫⲏⲕ ⲉ̀ⲃⲟⲗ',
+      versions: [
+        {
+          language: 'coptic',
+          text: 'Ⲁ̀ ⲡⲉⲧϫⲏⲕ ⲉ̀ⲃⲟⲗ ⲛ̀ϫⲉ ⲡⲓⲥ̀ⲙⲟⲩ ⲧⲟⲩ Ⲗⲟⲅⲟⲩ Ⲡⲉϥⲓⲱⲧ: ⲓ̀ ⲁϥϭⲓⲥⲁⲣⲝ ϩⲱⲥ ⲣⲱⲙⲓ ⲛ̀ⲧⲉⲗⲓⲟⲥ.\n\nⲆⲟⲝⲁ Ⲡⲁⲧⲣⲓ ⲕⲉ Ⲩ̀ⲓⲱ ⲕⲉ Ⲁ̀ⲅⲓⲱ Ⲡ̀ⲛⲉⲩⲙⲁⲧⲓ.\n\nⲀ̀ ⲡⲉⲧϧⲉⲗϧⲱⲗϥ ⲛⲁⲩ ⲉ̀ⲣⲟϥ: ⲁ̀ ⲡⲉⲧϧⲉⲗϧⲱⲗϥ ϣⲟⲡ ⲛⲉⲙⲱⲧⲉⲛ: ⲁ̀ ⲡⲉⲧϧⲉⲗϧⲱⲗϥ ⲁϣϥ ϩⲓϫⲉⲛ ⲡⲓⲥ̀ⲧⲁⲩⲣⲟⲥ.\n\nⲔⲉ ⲛⲩⲛ ⲕⲉ ⲁ̀ⲓ̀ ⲕⲉ ⲓⲥ ⲧⲟⲩⲥ ⲉ̀ⲱ̀ⲛⲁⲥ ⲧⲱⲛ ⲉ̀ⲱ̀ⲛⲱⲛ. Ⲁ̀ⲙⲏⲛ.\n\nⲐⲁⲓ ⲧⲉ ϯⲛⲟⲩ ⲉ̀ⲧⲉ: ⲑⲁⲓ ⲧⲉ ϯⲥⲉⲃⲏⲣⲟⲥ: ϯⲡ̀ⲣⲟⲥⲕⲩⲛⲏⲥⲓⲥ ⲧⲱ ⲙⲟⲛⲱ Ⲭ̀ⲣⲓⲥⲧⲟⲥ.\n\nⲈ̀ⲣⲉ ⲡⲓⲥ̀ⲙⲟⲩ ⲛ̀ϯⲦ̀ⲣⲓⲁⲥ ⲉ̅ⲑ̅ⲩ̅ (ⲃ̅): Ⲫ̀ⲓⲱⲧ ⲛⲉⲙ Ⲡ̀ϣⲏⲣⲓ ⲛⲉⲙ Ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ ⲉ̅ⲑ̅ⲩ̅.\n\nⲈ̀ⲣⲉ ⲡⲓⲥ̀ⲙⲟⲩ ⲛ̀ϯⲑⲉⲟ̀ⲧⲟⲕⲟⲥ (ⲃ̅): Ⲙⲁⲣⲓⲁ ⲑ̀ⲙⲁⲩ ⲛ̀Ⲓ̅ⲏ̅ⲥ̅ Ⲡⲭ̅ⲥ̅.\n\nⲈ̀ⲣⲉ ⲡⲓⲥ̀ⲙⲟⲩ ⲙ̀ⲡⲉⲛⲡⲁⲧⲣⲓⲁⲣⲭⲏⲥ (ⲃ̅): ⲛ̀ⲓⲱⲧ ⲉⲧⲧⲁⲓⲏⲟⲧ ⲛ̀ⲁⲣⲭⲏⲉ̀ⲣⲉⲩⲥ ⲡⲁⲡⲁ ⲁⲃⲃⲁ (...).\n\nⲈ̀ⲣⲉ ⲡⲓⲥ̀ⲙⲟⲩ ⲙ̀ⲡⲉⲛ ⲙⲏⲧⲣⲟⲡⲟⲗⲓⲧⲏⲥ: ⲛ̀ⲓⲱⲧ ⲉⲧⲧⲁⲓⲏⲟⲧ ⲁⲃⲃⲁ (...).\n\nⲈ̀ⲣⲉ ⲡⲓⲥ̀ⲙⲟⲩ ⲙ̀ⲡⲉⲛⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲥ: ⲛ̀ⲓⲱⲧ ⲉⲧⲧⲁⲓⲏⲟⲧ ⲁⲃⲃⲁ (...).\n\nⲈⲩⲉ̀ⲓ̀ ⲉ̀ϩ̀ⲣⲏⲓ ⲉ̀ϫⲉⲛ ⲡⲁⲓⲗⲁⲟⲥ ⲧⲏⲣϥ: ϫⲉ ⲁ̀ⲙⲏⲛ ⲉⲥⲉ̀ϣⲱⲡⲓ.\n\nⲔⲁⲑⲟⲗⲓⲕⲟⲛ: ⲕⲁⲑⲟⲗⲓⲕⲟⲛ.',
+        },
+        {
+          language: 'englishCoptic',
+          text: 'A pet-jeek evol enje pi-esmou tou Logou Pef-iot: i af-chi-sarx hos romi en-teleios.\n\nDoxa Patri ke Eyo ke Agio Epnevmati.\n\nA pet-khel-kholf nav erof: a pet-khel-kholf shop nemoten: a pet-khel-kholf ashf hijen pi-stavros.\n\nKe nyn ke a-ee ke is tous e-onas ton e-onon. Amen.\n\nThai te ti-nou ete: thai te ti-seveeros: ti-proskyneesis to mono Khristos.\n\nEre pi-esmou ente ti-Trias ethowab (2): Efiot nem Epsheeri nem Pi-epnevma ethowab.\n\nEre pi-esmou ente ti-Theotokos (2): Maria ethmav en-Iesous Pikhristos.\n\nEre pi-esmou em-pen-patriarkhees (2): en-iot ettai-ooet en-arshee-erefs papa Avva (...).\n\nEre pi-esmou em-pen-meetropolitees: en-iot ettai-ooet Avva (...).\n\nEre pi-esmou em-pen-episkopos: en-iot ettai-ooet Avva (...).\n\nEv-ei e-ehree ejen pai-laos teerf: je amen es-eshopi.\n\nKatholikon: katholikon.',
+        },
+        {
+          language: 'english',
+          text: 'Perfect is the blessing, of the Word of the Father, who came and was incarnate as a perfect man.\n\nGlory to the Father, and the Son, and the Holy Spirit.\n\nThe slaughtered One was seen. The slaughtered One is present among you. The slaughtered One is crucified on the Cross.\n\nNow and ever and unto the age of ages. Amen.\n\nThis is the perceptible. This is the miraculous. Worship is due to the only-begotten Christ.\n\nThe blessing of the Holy Trinity (2), the Father, the Son, and the Holy Spirit.\n\nThe blessing of the Theotokos (2), Mary the Mother of Jesus Christ.\n\nThe blessing of our patriarch (2), the honored father, the archpriest, Pope Abba (...).\n\nThe blessing of our metropolitan, the honored father Abba (...).\n\nThe blessing of our bishop, the honored father Abba (...).\n\nShall come upon this entire congregation. Amen. So be it.\n\nThe catholic epistle, the catholic epistle.',
+        },
+        {
+          language: 'englishArabic',
+          text: 'El-kamil barakat abeeh el-kalima, ata wa tajassad ka-insan kamil.\n\nEl-majd lil-Ab wal-Ibn war-Rooh el-Qudus.\n\nEl-mazbooh nazarooh, el-mazbooh el-ka\'in ma\'akum, el-mazbooh mu\'allaq \'ala es-saleeb.\n\nEl-aan wa kull awan wa ila dahr ed-duhoor. Ameen.\n\nHadhihi el-\'aqliya, hadhihi el-u\'jooba, es-sujood lil-Maseeh el-wahid.\n\n(Barakat eth-thaloos el-aqdas) 2, el-Ab wal-Ibn war-Rooh el-Qudus.\n\n(Barakat walidat el-ilah) 2, Maryam umm Yasou\' el-Maseeh.\n\n(Barakat batreerkina) 2, el-ab el-mukarram ra\'is el-kahana el-Baba Anba (...).\n\nBarakat el-ab el-mutran el-Anba (...).\n\nBarakat el-ab el-usquf el-Anba (...).\n\nTahillu \'ala hadha esh-sha\'b kullih. Ameen yakoon.\n\nEl-Katholikon el-Katholikon.',
+        },
+        {
+          language: 'arabic',
+          text: 'الكامل بركة أبيه الكلمة، أتى وتجسد كإنسان كامل.\n\nالمجد للآب والإبن والروح القدس.\n\nالمذبوح نظروه، المذبوح الكائن معكم، المذبوح مُعَلق على الصليب.\n\nالآن وكل أوان وإلى دهر الدهور. آمين.\n\nهذه العقلية، هذه الأعجوبة، السجود للمسيح الواحد.\n\n(بركة الثالوث الاقدس)٢، الآب والإبن والروح القدس.\n\n(بركة والدة الإله)٢، مريم أم يسوع المسيح.\n\n(بركة بطريركنا)٢، الآب المكرم رئيس الكهنة البابا أنبا (...).\n\nبركة الأب المطران الانبا (...)\n\nبركة الأب الاسقف الانبا (...)\n\nتحل علي هذا الشعب كله أمين يكون.\n\nالكاثوليكون الكاثوليكون.',
+        },
+      ],
+    },
+    {
+      id: 'annual-liturgy-praxis-response',
+      title: 'Ⲭⲉⲣⲉ ⲛⲉ Ⲙⲁⲣⲓⲁ (Praxis Response)',
+      versions: [
+        {
+          language: 'coptic',
+          text: 'Ⲭⲉⲣⲉ ⲛⲉ Ⲙⲁⲣⲓⲁ: ϯϭ̀ⲣⲟⲙⲡⲓ ⲉⲑⲛⲉⲥⲱⲥ: ⲑⲏⲉ̀ⲧⲁⲥⲙⲓⲥⲓ ⲛⲁⲛ: ⲙ̀Ⲫ̀ⲛⲟⲩϯ ⲡⲓⲖⲟⲅⲟⲥ.\n\nⲔ̀ⲥ̀ⲙⲁⲣⲱⲟⲩⲧ ⲁ̀ⲗⲏⲑⲱⲥ: ⲛⲉⲙ Ⲡⲉⲕⲓⲱⲧ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ: ⲛⲉⲙ Ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ ⲉⲑⲟⲩⲁⲃ: ϫⲉ ⲁⲕⲓ̀ ⲁⲕⲥⲱϯ ⲙ̀ⲙⲟⲛ ⲛⲁⲓ ⲛⲁⲛ.',
+        },
+        {
+          language: 'englishCoptic',
+          text: 'Shere ne Maria: ti-ehrompi eth-nesos: thee-etas-misi nan: em-Efnouti pi-Logos.\n\nEk-esmaro-out aleethos: nem Pek-iot en-agathos: nem Pi-epnevma ethowab: je aki aksoti emmon nai nan.',
+        },
+        {
+          language: 'english',
+          text: 'Hail to you O Mary, the beautiful dove, who has borne to us, God the Logos.\n\nBlessed are You indeed, with Your good Father, and the Holy Spirit, for You have come and saved us. Have mercy on us.',
+        },
+        {
+          language: 'englishArabic',
+          text: 'Es-salamu laki ya Maryam el-hamama el-hasana, allati waladat lana Allah el-kalima.\n\nMubarakun anta bil-haqiqa, ma\'a abeeka es-saleh war-Rooh el-Qudus, li-annaka ateita wa khallastana. Irhamna.',
+        },
+        {
+          language: 'arabic',
+          text: 'السلام لك يا مريم الحمامة الحسنة التي ولدت لنا الله الكلمة.\n\nمبارك أنت بالحقيقة، مع أبيك الصالح والروح القدس لأنك أتيتَ وخلصتنا. ارحمنا.',
+        },
+      ],
+    },
+    {
+      id: 'annual-liturgy-agios',
+      title: 'Ⲁⲅⲓⲟⲥ ⲟ̀ Ⲑⲉⲟⲥ',
+      versions: [
+        {
+          language: 'coptic',
+          text: 'Ⲁⲅⲓⲟⲥ ⲟ̀ Ⲑⲉⲟⲥ: Ⲁⲅⲓⲟⲥ ⲓⲥⲭⲩⲣⲟⲥ: Ⲁⲅⲓⲟⲥ ⲁ̀ⲑⲁⲛⲁⲧⲟⲥ: ⲟ̀ ⲉⲕ ⲡⲁⲣⲑⲉⲛⲟⲩ ⲅⲉⲛⲛⲉⲑⲓⲥ: ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ ⲏ̀ⲙⲁⲥ.\n\nⲀⲅⲓⲟⲥ ⲟ̀ Ⲑⲉⲟⲥ: Ⲁⲅⲓⲟⲥ ⲓⲥⲭⲩⲣⲟⲥ: Ⲁⲅⲓⲟⲥ ⲁ̀ⲑⲁⲛⲁⲧⲟⲥ: ⲟ̀ ⲥ̀ⲧⲁⲩⲣⲱⲑⲓⲥ ⲇⲓ ⲏⲙⲁⲥ: ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ ⲏ̀ⲙⲁⲥ.\n\nⲀⲅⲓⲟⲥ ⲟ̀ Ⲑⲉⲟⲥ: Ⲁⲅⲓⲟⲥ ⲓⲥⲭⲩⲣⲟⲥ: Ⲁⲅⲓⲟⲥ ⲁ̀ⲑⲁⲛⲁⲧⲟⲥ: ⲟ̀ ⲁ̀ⲛⲁⲥⲧⲁⲥ ⲉⲕ ⲧⲱⲛ ⲛⲉⲕⲣⲱⲛ ⲕⲉ ⲁ̀ⲛⲉⲗⲑⲱⲛ ⲓⲥ ⲧⲟⲩⲥ ⲟⲩⲣⲁⲛⲟⲥ: ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ ⲏ̀ⲙⲁⲥ.\n\nⲆⲟⲝⲁ Ⲡⲁⲧⲣⲓ ⲕⲉ Ⲩ̀ⲓⲱ ⲕⲉ ⲁ̀ⲅⲓⲱ Ⲡⲛⲉⲩⲙⲁⲧⲓ: ⲕⲉ ⲛⲩⲛ ⲕⲉ ⲁ̀ⲓ̀ ⲕⲉ ⲓⲥ ⲧⲟⲩⲥ ⲉ̀ⲱ̀ⲛⲁⲥ ⲧⲱⲛ ⲉ̀ⲱ̀ⲛⲱⲛ: ⲁ̀ⲙⲏⲛ. Ⲁⲅⲓⲁ Ⲧ̀ⲣⲓⲁⲥ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ ⲏ̀ⲙⲁⲥ.',
+        },
+        {
+          language: 'englishCoptic',
+          text: 'Agios o Theos: Agios isk-yros: Agios athanatos: o ek parthenou gennetheis: eleison imas.\n\nAgios o Theos: Agios isk-yros: Agios athanatos: o stavrotheis di imas: eleison imas.\n\nAgios o Theos: Agios isk-yros: Agios athanatos: o anastas ek ton nekron ke anelthon is tous ouranous: eleison imas.\n\nDoxa Patri ke Eyo ke agio Pnevmati: ke nyn ke a-ee ke is tous e-onas ton e-onon: amen. Agia Trias eleison imas.',
+        },
+        {
+          language: 'english',
+          text: 'Holy God, Holy Mighty, Holy Immortal, who was born of the Virgin, have mercy upon us.\n\nHoly God, Holy Mighty, Holy Immortal, who was crucified for us, have mercy upon us.\n\nHoly God, Holy Mighty, Holy Immortal, who rose from the dead and ascended into the heavens, have mercy upon us.\n\nGlory to the Father and to the Son and to the Holy Spirit, now and ever and unto the age of the ages. Amen. O Holy Trinity, have mercy upon us.',
+        },
+        {
+          language: 'englishArabic',
+          text: 'Quddoos Allah. Quddoos el-qawi. Quddoos el-hayy elladhi la yamoot. Ya man wulida min el-\'adhra\', irhamna.\n\nQuddoos Allah. Quddoos el-qawi. Quddoos el-hayy elladhi la yamoot. Ya man sulliba \'anna, irhamna.\n\nQuddoos Allah. Quddoos el-qawi. Quddoos el-hayy elladhi la yamoot. Ya man qama min el-amwat wa sa\'ida ila es-samawat, irhamna.\n\nEl-majdu lil-Ab wal-Ibn war-Rooh el-Qudus, el-aan wa kull awan wa ila dahr ed-dahireen. Ameen. Ayyuha eth-thaloothu el-quddoos, irhamna.',
+        },
+        {
+          language: 'arabic',
+          text: 'قدوسُ الله. قدوسُ القوى. قدوسُ الحي الذي لا يموتُ. يا من وُلِّدَ من العذراء، إرحَمنا.\n\nقدوس الله. قدوس القوى. قدوس الحي الذي لا يموت. يا من صُلِّبَ عنا، إرحَمنا.\n\nقدوس الله. قدوس القوى. قدوس الحي الذي لا يموت. يا من قامَ من الامواتِ وصعدَ إلى السموات، إرحَمنا.\n\nالمجدُ للآبِ والابنِ والروحِ القدس، الآنَ وكل أوانٍ وإلى دهر الداهرين. آمين. أيها الثالوثُ القدوس، إرحَمنا.',
+        },
+      ],
+    },
   );
 }
 
@@ -1099,6 +1229,34 @@ if (annualLiturgy && matinsPsalmTrailerPopeBishop) {
     versions: matinsPsalmTrailerPopeBishop.versions.map((v) => ({ ...v })),
   });
 }
+
+// ---- Annual > Liturgy: after the Psalm Trailer for the Pope or a Bishop ----
+annualLiturgy?.hymns.push({
+  id: 'annual-liturgy-blessed-are-they',
+  title: 'Ⲱⲟⲩⲛⲓⲁⲧⲟⲩ ϧⲉⲛ ⲟⲩⲙⲉⲑⲙⲏⲓ',
+  versions: [
+    {
+      language: 'coptic',
+      text: 'Ⲱⲟⲩⲛⲓⲁⲧⲟⲩ ϧⲉⲛ ⲟⲩⲙⲉⲑⲙⲏⲓ: ⲛⲏⲉⲑⲟⲩⲁⲃ ⲛ̀ⲧⲉ ⲡⲁⲓⲉ̀ϩⲟⲟⲩ: ⲡⲓⲟⲩⲁⲓ ⲡⲓⲟⲩⲁⲓ ⲕⲁⲧⲁ ⲡⲉϥⲣⲁⲛ: ⲛⲓⲙⲉⲛⲣⲁϯ ⲛ̀ⲧⲉ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ.\n\nⲀ̀ⲣⲓⲡ̀ⲣⲉⲥⲃⲉⲩⲓⲛ ⲉ̀ϩ̀ⲣⲏⲓ ⲉ̀ϫⲱⲛ: ⲱ̀ ⲧⲉⲛϭⲟⲓⲥ ⲛ̀ⲛⲏⲃ ⲧⲏⲣⲉⲛ ϯⲑⲉⲟ̀ⲧⲟⲕⲟⲥ: Ⲙⲁⲣⲓⲁ ⲑ̀ⲙⲁⲩ ⲙ̀ⲡⲉⲛⲥⲱⲧⲏⲣ: ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ.\n\nⲦⲱⲃϩ ⲙ̀Ⲡ̅ⲟ̅ⲥ̅ ⲉ̀ϩ̀ⲣⲏⲓ ⲉ̀ϫⲱⲛ: ⲱ̀ ⲡⲓⲁ̀ⲑⲗⲟⲫⲟⲣⲟⲥ ⲙ̀ⲙⲁⲣⲧⲩⲣⲟⲥ: Ⲫⲓⲗⲟⲡⲁⲧⲏⲣ Ⲙⲉⲣⲕⲟⲩⲣⲓⲟⲥ: ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ.\n\nϪⲉ ϥ̀ⲥ̀ⲙⲁⲣⲱⲟⲩⲧ ⲛ̀ϫⲉ Ⲫ̀ⲓⲱⲧ ⲛⲉⲙ Ⲡ̀ϣⲏⲣⲓ: ⲛⲉⲙ Ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ ⲉⲑⲟⲩⲁⲃ: ϯⲦ̀ⲣⲓⲁⲥ ⲉⲧϫⲏⲕ ⲉ̀ⲃⲟⲗ: ⲧⲉⲛⲟⲩⲱϣⲧ ⲙ̀ⲙⲟⲥ ⲧⲉⲛϯⲱ̀ⲟⲩ ⲛⲁⲥ.',
+    },
+    {
+      language: 'englishCoptic',
+      text: 'Oo-oo-niatou khen oumethmee: nee-ethowab ente pai-ehoo-ou: pi-ouai pi-ouai kata pef-ran: ni-menrati ente Pikhristos.\n\nAri-epresvevin e-ehree ejon: o tenchois enneeb teeren ti-Theotokos: Maria ethmav em-pen-Soteer: entef-ka nen-novi nan evol.\n\nTovh em-Epchois e-ehree ejon: o pi-athloforos em-martyros: Philopateer Merkourios: entef-ka nen-novi nan evol.\n\nJe ef-esmaro-out enje Efiot nem Epsheeri: nem Pi-epnevma ethowab: ti-Trias et-jeek evol: ten-ou-osht emmos ten-ti-o-oo nas.',
+    },
+    {
+      language: 'english',
+      text: 'Blessed are they in truth, the saints of this day, each one according to their name, the beloved of Christ.\n\nIntercede on our behalf, O Lady of us all, the Theotokos, Mary, the mother of our Savior, that He may forgive us our sins.\n\nPray to the Lord on our behalf, O struggle-bearer and martyr: Philopater Mercurius: that He may forgive us our sins.\n\nBlessed be the Father and the Son and the Holy Spirit, the perfect Trinity. We worship Him and glorify Him.',
+    },
+    {
+      language: 'englishArabic',
+      text: 'Toobahum bil-haqiqa qiddeesu hadha el-yawm, kullu wahid bi-ismih, ahibba\' el-Maseeh.\n\nIshfa\'i feena ya sayyidatana kullina, es-sayyida walidat el-ilah Maryam umm mukhallisina, li-yaghfira lana khatayana.\n\nUtlub min er-Rabb \'anna ayyuha esh-shaheed el-mujahid muhibb el-Ab Marqorios, li-yaghfira lana khatayana.\n\nLi-annahu mubarakun el-Ab wal-Ibn war-Rooh el-Qudus, eth-thaloos el-kamil, nasjudu lahu wa numajjiduh.',
+    },
+    {
+      language: 'arabic',
+      text: 'طوباهم بالحقيقةِ قديسو هذا اليوم، كل واحد بإسمه احباء المسيح.\n\nأشفعي فينا يا سيدتَنا كلِنا، السيدة والدة الإله مريم أم مخلصنا، ليغفرَ لنا خطايانا.\n\nاطلب من الرب عنا أيها الشهيد المجاهد محب الآب مرقوريوس ليغفر لنا خطايانا.\n\nلأنه مباركٌ الآب والابن والروح القدس، الثالوث الكامل، نسجد له ونمجده.',
+    },
+  ],
+});
 
 // ---- Audio: Annual > Liturgy > Psalm Trailer for the Pope or a Bishop ----
 const psalmTrailerPopeBishopHymn = annualLiturgy?.hymns.find((h) => h.id === 'annual-liturgy-psalm-trailer-pope-bishop');

@@ -65,6 +65,13 @@ const arabicTitles: Record<string, string> = {
   'annual-liturgy-offering-sotis-amen': 'خلصت حقاً ولروحك',
   'annual-liturgy-offering-golden-censer': 'هذه هي المجمرة الذهب',
   'annual-liturgy-offering-golden-censer-virgin': 'المجمرة الذهب هي العذراء',
+  'annual-liturgy-hymn-of-intercessions': 'بشفاعات',
+  'annual-liturgy-pihmot-gar': 'نعمة ربنا',
+  'annual-liturgy-perfect-is-the-blessing': 'الكامل بركة أبيه',
+  'annual-liturgy-praxis-response': 'السلام لك يا مريم (مرد الإبركسيس)',
+  'annual-liturgy-agios': 'قدوس الله',
+  'annual-liturgy-blessed-are-they': 'طوباهم بالحقيقة',
+  'annual-liturgy-psalm-trailer-pope-bishop': 'ذيل المزمور في حضور البابا أو الأسقف',
 };
 
 // Service names are shared across seasons, so match on the English title
