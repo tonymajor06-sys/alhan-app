@@ -73,6 +73,60 @@ const arabicTitles: Record<string, string> = {
   'annual-liturgy-blessed-are-they': 'طوباهم بالحقيقة',
   'annual-liturgy-hiten-ni-presvia-eleos': 'بشفاعات والدة الإله (رحمة السلام)',
 
+  // Annual > Midnight Praises
+  'annual-midnight-general': 'عام',
+  'annual-midnight-arise-o-children': 'قوموا يا بني النور',
+  'annual-midnight-first-canticle': 'الهوس الأول',
+  'annual-midnight-first-canticle-lobsh': 'لبش الهوس الأول',
+  'annual-midnight-sunday-theotokion-7': 'ثيئوطوكية الأحد (القطعة السابعة)',
+  'annual-midnight-sunday-theotokion-8': 'ثيئوطوكية الأحد (القطعة الثامنة)',
+  'annual-midnight-sunday-theotokion-9': 'ثيئوطوكية الأحد (القطعة التاسعة)',
+  'annual-midnight-second-canticle': 'الهوس الثاني',
+  'annual-midnight-second-canticle-lobsh': 'لبش الهوس الثاني',
+  'annual-midnight-third-canticle': 'الهوس الثالث',
+  'annual-midnight-greek-psali-watos': 'إبصالية يوناني (واطس)',
+  'annual-midnight-three-holy-children': 'تسبحة الثلاثة فتية القديسين',
+  'annual-midnight-commemoration': 'المجمع',
+  'annual-midnight-doxologies': 'الذكصولوجيات',
+  'annual-midnight-doxology-virgin-mary': 'ذكصولوجية السيدة العذراء',
+  'annual-midnight-doxology-archangel-gabriel': 'ذكصولوجية الملاك غبريال',
+  'annual-midnight-doxology-michael-gabriel': 'ذكصولوجية الملاكين ميخائيل وغبريال',
+  'annual-midnight-doxology-heavenly-beings': 'ذكصولوجية السمائيين',
+  'annual-midnight-doxology-apostles': 'ذكصولوجية الرسل',
+  'annual-midnight-doxology-apostles-2': 'ذكصولوجية أخرى للرسل',
+  'annual-midnight-doxology-st-mark': 'ذكصولوجية مار مرقس الرسول',
+  'annual-midnight-doxology-st-mark-2': 'ذكصولوجية أخرى لمار مرقس الرسول',
+  'annual-midnight-doxology-st-george': 'ذكصولوجية مار جرجس',
+  'annual-midnight-doxology-st-george-2': 'ذكصولوجية أخرى لمار جرجس',
+  'annual-midnight-doxology-philopater-mercurius': 'ذكصولوجية أبي سيفين',
+  'annual-midnight-doxology-st-mena': 'ذكصولوجية مار مينا العجايبي',
+  'annual-midnight-doxology-anba-abraam': 'ذكصولوجية الأنبا أبرآم',
+  'annual-midnight-doxology-pope-kyrillos': 'ذكصولوجية البابا كيرلس السادس',
+  'annual-midnight-doxology-conclusion': 'ختام الذكصولوجيات',
+  'annual-midnight-fourth-canticle': 'الهوس الرابع',
+  'annual-midnight-psali-watos-virgin-mary-21st': 'إبصالية واطس للسيدة العذراء (يوم ٢١ من الشهر القبطي)',
+  'annual-midnight-sunday': 'الأحد',
+  'annual-midnight-monday': 'الاثنين',
+  'annual-midnight-tuesday': 'الثلاثاء',
+  'annual-midnight-wednesday': 'الأربعاء',
+  'annual-midnight-thursday': 'الخميس',
+  'annual-midnight-friday': 'الجمعة',
+  'annual-midnight-saturday': 'السبت',
+  'annual-midnight-sunday-psali': 'إبصالية آدام ليوم الأحد',
+  'annual-midnight-monday-psali': 'إبصالية آدام ليوم الاثنين',
+  'annual-midnight-tuesday-psali': 'إبصالية آدام ليوم الثلاثاء',
+  'annual-midnight-wednesday-psali': 'إبصالية آدام ليوم الأربعاء',
+  'annual-midnight-thursday-psali': 'إبصالية واطس ليوم الخميس',
+  'annual-midnight-friday-psali': 'إبصالية آدام ليوم الجمعة',
+  'annual-midnight-saturday-psali': 'إبصالية واطس للبشارة',
+  'annual-midnight-sunday-theotokia': 'ثيئوطوكية الأحد',
+  'annual-midnight-monday-theotokia': 'ثيئوطوكية الاثنين',
+  'annual-midnight-tuesday-theotokia': 'ثيئوطوكية الثلاثاء',
+  'annual-midnight-wednesday-theotokia': 'ثيئوطوكية الأربعاء',
+  'annual-midnight-thursday-theotokia': 'ثيئوطوكية الخميس',
+  'annual-midnight-friday-theotokia': 'ثيئوطوكية الجمعة',
+  'annual-midnight-saturday-theotokia': 'ثيئوطوكية السبت',
+
   // Deacon Responses > Annual > Matins
   'd-annual-matins-stand-up-for-prayer': 'للصلاة قفوا',
   'd-annual-matins-pray': 'صلوا',
@@ -128,6 +182,10 @@ export function displayTitle(item: { id: string; title: string }, lang: AppLangu
   if (lang !== 'ar') return item.title;
   if (arabicTitles[item.id]) return arabicTitles[item.id];
   if (serviceTitles[item.title]) return serviceTitles[item.title];
+
+  // Theotokia parts, e.g. "annual-midnight-monday-theotokia-part-3" → "ثيئوطوكية الاثنين (القطعة ٣)"
+  const part = item.id.match(/^(.*)-part-(\d+)$/);
+  if (part && arabicTitles[part[1]]) return `${arabicTitles[part[1]]} (القطعة ${toArabicDigits(part[2])})`;
 
   // Placeholder items, e.g. "Matins Hymn #3" / "Matins Response #3"
   const placeholder = item.title.match(/^(.*) (Hymn|Response) #(\d+)$/);

@@ -1,6 +1,6 @@
 import { useSyncExternalStore } from 'react';
 
-import { deaconCategories, Hymn, LanguageType, seasons } from '../data/hymns';
+import { deaconCategories, flattenHymns, Hymn, LanguageType, seasons } from '../data/hymns';
 import { readSetting, writeSetting } from './settings-storage';
 
 export interface PlaylistItem {
@@ -12,7 +12,7 @@ const STORAGE_KEY = 'alhan-playlist';
 
 const hymnsById = new Map<string, Hymn>(
   [...seasons, ...deaconCategories].flatMap((group) =>
-    group.services.flatMap((service) => service.hymns.map((h) => [h.id, h] as const))
+    group.services.flatMap((service) => flattenHymns(service.hymns).map((h) => [h.id, h] as const))
   )
 );
 

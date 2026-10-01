@@ -1,5 +1,5 @@
 import { displayTitle } from './arabic-titles';
-import { deaconCategories, Hymn, LanguageType, seasons, Service } from './hymns';
+import { deaconCategories, flattenHymns, Hymn, LanguageType, seasons, Service } from './hymns';
 
 // Marks people rarely type: Latin accents, Coptic overlines and jinkims, Arabic tashkeel and tatweel
 const IGNORED_MARKS = /[̀-ͯ҃-҉ً-ٰٟۖ-ۭـ⳯-⳱︠-︯]/g;
@@ -62,19 +62,17 @@ function buildIndex(): IndexEntry[] {
   ];
   return groups.flatMap(({ group, kind }) =>
     group.services.flatMap((service) =>
-      service.hymns
-        .filter((hymn) => !hymn.isSectionHeader)
-        .map((hymn) => ({
-          hymn,
-          location: { group, service, kind },
-          titles: [normalizeForSearch(hymn.title), normalizeForSearch(displayTitle(hymn, 'ar'))],
-          versions: hymn.versions
-            .filter((v) => v.text)
-            .map((v) => {
-              const text = cleanText(v.text);
-              return { language: v.language, text, ...normalizeWithMap(text) };
-            }),
-        }))
+      flattenHymns(service.hymns).map((hymn) => ({
+        hymn,
+        location: { group, service, kind },
+        titles: [normalizeForSearch(hymn.title), normalizeForSearch(displayTitle(hymn, 'ar'))],
+        versions: hymn.versions
+          .filter((v) => v.text)
+          .map((v) => {
+            const text = cleanText(v.text);
+            return { language: v.language, text, ...normalizeWithMap(text) };
+          }),
+      }))
     )
   );
 }

@@ -12,7 +12,13 @@ export interface Hymn {
   title: string;
   versions: LanguageVersion[];
   isSectionHeader?: boolean;
+  // Makes this item a group (e.g. "Doxologies") that opens its own list instead of the reader
+  children?: Hymn[];
 }
+
+// Every readable hymn in a list, including those inside groups, in order
+export const flattenHymns = (hymns: Hymn[]): Hymn[] =>
+  hymns.flatMap((h) => (h.children ? flattenHymns(h.children) : h.isSectionHeader ? [] : [h]));
 
 export interface Service {
   id: string;
@@ -1668,5 +1674,111 @@ if (deaconAnnualLiturgyWord) {
     ...fromMatins('d-annual-matins-stand-up-for-prayer', 'd-annual-liturgy-word-stand-up-for-prayer'),
     ...fromMatins('d-annual-matins-pray-for-the-gospel', 'd-annual-liturgy-word-pray-for-the-gospel'),
     ...fromMatins('d-annual-matins-stand-in-the-fear-of-god', 'd-annual-liturgy-word-stand-in-the-fear-of-god'),
+  ];
+}
+
+// ---- Annual > Midnight Praises: General plus a group for each day of the week ----
+// Titles only for now; each hymn's text is added as it comes in
+const annualMidnight = seasons
+  .find((s) => s.id === 'annual')
+  ?.services.find((s) => s.id === 'annual-midnight');
+
+// One day of the week: its Psali, then its Theotokia as a list of parts
+const midnightDay = (day: string, title: string, psaliTitle: string, theotokiaParts: number): Hymn => ({
+  id: `annual-midnight-${day}`,
+  title,
+  versions: [],
+  children: [
+    { id: `annual-midnight-${day}-psali`, title: psaliTitle, versions: [] },
+    {
+      id: `annual-midnight-${day}-theotokia`,
+      title: `${title} Theotokia`,
+      versions: [],
+      children: Array.from({ length: theotokiaParts }, (_, i) => ({
+        id: `annual-midnight-${day}-theotokia-part-${i + 1}`,
+        title: `${title} Theotokia (Part ${i + 1})`,
+        versions: [],
+      })),
+    },
+  ],
+});
+
+if (annualMidnight) {
+  annualMidnight.hymns = [
+    {
+      id: 'annual-midnight-general',
+      title: 'General',
+      versions: [],
+      children: [
+        {
+          id: 'annual-midnight-arise-o-children',
+          title: 'Ⲧⲉⲛⲑⲏⲛⲟⲩ ⲉ̀ⲡ̀ϣⲱⲓ (Arise, O Children of the Light)',
+          versions: [
+            {
+              language: 'coptic',
+              text: 'Ⲧⲉⲛⲑⲏⲛⲟⲩ ⲉ̀ⲡ̀ϣⲱⲓ ⲛⲓϣⲏⲣⲓ ⲛ̀ⲧⲉ ⲡⲓⲟⲩⲱⲓⲛⲓ: ⲛ̀ⲧⲉⲛϩⲱⲥ ⲉ̀Ⲡ̀ϭⲟⲓⲥ ⲛ̀ⲧⲉ ⲛⲓϫⲟⲙ.\n\n+ Ϩⲟⲡⲱⲥ ⲛ̀ⲧⲉϥⲉⲣϩ̀ⲙⲟⲧ ⲛⲁⲛ ⲙ̀ⲡ̀ⲥⲱϯ ⲛ̀ⲧⲉ ⲛⲉⲛⲯⲩⲭⲏ.\n\nϦⲉⲛ ⲡ̀ϫⲓⲛⲑ̀ⲣⲉⲛⲟ̀ϩⲓ ⲉ̀ⲣⲁⲧⲉⲛ ⲙ̀ⲡⲉⲕⲙ̀ⲑⲟ ⲥⲱⲙⲁⲧⲓⲕⲱⲥ.\n\n+ Ⲁ̀ⲗⲓⲟⲩⲓ̀ ⲉ̀ⲃⲟⲗ ϩⲓⲧⲉⲛ ⲡⲉⲛⲛⲟⲩⲥ ⲙ̀ⲡⲓϩⲩⲛⲓⲙ ⲛ̀ⲧⲉ ϯⲉⲃϣⲓ.\n\nⲘⲟⲓ ⲛⲁⲛ Ⲡ̀ϭⲟⲓⲥ ⲛ̀ⲟⲩⲙⲉⲧⲣⲉϥⲉⲣⲛⲩⲙⲫⲓⲛ: ϩⲟⲡⲱⲥ ⲛ̀ⲧⲉⲛⲕⲁϯ ⲛ̀ⲧⲉⲛⲟ̀ϩⲓ ⲉ̀ⲣⲁⲧⲉⲛ ⲙ̀ⲡⲉⲕⲙ̀ⲑⲟ ⲙ̀ⲫ̀ⲛⲁⲩ ⲛ̀ⲧⲉ ϯⲡ̀ⲣⲟⲥⲉⲩⲭⲏ.\n\n+ Ⲟⲩⲟϩ ⲛ̀ⲧⲉⲛⲟⲩⲱⲣⲡ ⲛⲁⲕ ⲉ̀ⲡ̀ϣⲱⲓ ⲛ̀ϯⲇⲟⲝⲟⲗⲟⲅⲓⲁ ⲉ̀ⲧⲉⲣⲡ̀ⲣⲉⲡⲓ: ⲟⲩⲟϩ ⲛ̀ⲧⲉⲛϣⲁϣⲛⲓ ⲉ̀ⲡ̀ⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ ⲉⲧⲟϣ. Ⲇⲟⲝⲁ ⲥⲓ Ⲫⲓⲗⲁⲛⲑ̀ⲣⲱⲡⲉ.\n\nϨⲏⲡⲡⲉ ⲇⲉ ⲥ̀ⲙⲟⲩ ⲉ̀Ⲡ̀ϭⲟⲓⲥ ⲛⲓⲉ̀ⲃⲓⲁⲓⲕ ⲛ̀ⲧⲉ Ⲡ̀ϭⲟⲓⲥ. Ⲇⲟⲝⲁ ⲥⲓ Ⲫⲓⲗⲁⲛⲑ̀ⲣⲱⲡⲉ.\n\n+ Ⲛⲏⲉⲧⲟ̀ϩⲓ ⲉ̀ⲣⲁⲧⲟⲩ ϧⲉⲛ ⲡ̀ⲏⲓ ⲙ̀Ⲡ̀ϭⲟⲓⲥ: ϧⲉⲛ ⲛⲓⲁⲩⲗⲏⲟⲩ ⲛ̀ⲧⲉ ⲡ̀ⲏⲓ ⲙ̀Ⲡⲉⲛⲛⲟⲩϯ. Ⲇⲟⲝⲁ ⲥⲓ Ⲫⲓⲗⲁⲛⲑ̀ⲣⲱⲡⲉ.\n\nⲚ̀ϩ̀ⲣⲏⲓ ϧⲉⲛ ⲛⲓⲉ̀ϫⲱⲣϩ ϥⲁⲓ ⲛ̀ⲛⲉⲧⲉⲛϫⲓϫ ⲉ̀ⲡ̀ϣⲱⲓ ⲛⲏⲉⲑⲟⲩⲁⲃ ⲥ̀ⲙⲟⲩ ⲉ̀Ⲡ̀ϭⲟⲓⲥ. Ⲇⲟⲝⲁ ⲥⲓ Ⲫⲓⲗⲁⲛⲑ̀ⲣⲱⲡⲉ.\n\n+ Ⲡ̀ϭⲟⲓⲥ ⲉϥⲉ̀ⲥ̀ⲙⲟⲩ ⲉ̀ⲣⲟⲕ ⲉ̀ⲃⲟⲗ ϧⲉⲛ Ⲥⲓⲱⲛ: ⲫⲏⲉ̀ⲧⲁϥⲑⲁⲙⲓⲟ ⲛ̀ⲧ̀ⲫⲉ ⲛⲉⲙ ⲡ̀ⲕⲁϩⲓ. Ⲇⲟⲝⲁ ⲥⲓ Ⲫⲓⲗⲁⲛⲑ̀ⲣⲱⲡⲉ.\n\nⲘⲁⲣⲉ ⲡⲁϯϩⲟ ϧⲱⲛⲧ ⲙ̀ⲡⲉⲕⲙ̀ⲑⲟ Ⲡ̀ϭⲟⲓⲥ: ⲙⲁⲕⲁϯ ⲛⲏⲓ ⲕⲁⲧⲁ ⲡⲉⲕⲥⲁϫⲓ. Ⲇⲟⲝⲁ ⲥⲓ Ⲫⲓⲗⲁⲛⲑ̀ⲣⲱⲡⲉ.\n\n+ Ⲉϥⲉ̀ⲓ̀ ⲉ̀ϧⲟⲩⲛ ⲙ̀ⲡⲉⲕⲙ̀ⲑⲟ ⲛ̀ϫⲉ ⲡⲁⲁⲝⲓⲱⲙⲁ: ⲕⲁⲧⲁ ⲡⲉⲕⲥⲁϫⲓ ⲙⲁⲧⲁⲛϧⲟⲓ. Ⲇⲟⲝⲁ ⲥⲓ Ⲫⲓⲗⲁⲛⲑ̀ⲣⲱⲡⲉ.\n\nⲈ̀ⲣⲉ ⲛⲁⲥ̀ⲫⲟⲧⲟⲩ ⲃⲉⲃⲓ ⲛ̀ⲟⲩⲥ̀ⲙⲟⲩ: ⲉ̀ϣⲱⲡ ⲁⲕϣⲁⲛⲧ̀ⲥⲁⲃⲟⲓ ⲉ̀ⲛⲉⲕⲙⲉⲑⲙⲏⲓ. Ⲇⲟⲝⲁ ⲥⲓ Ⲫⲓⲗⲁⲛⲑ̀ⲣⲱⲡⲉ.\n\n+ Ⲡⲁⲗⲁⲥ ⲉϥⲉ̀ⲉⲣⲟⲩⲱ̀ ϧⲉⲛ ⲛⲉⲕⲥⲁϫⲓ ϫⲉ ⲛⲉⲕⲉⲛⲧⲟⲗⲏ ⲧⲏⲣⲟⲩ ϩⲁⲛⲙⲉⲑⲙⲏⲓ ⲛⲉ. Ⲇⲟⲝⲁ ⲥⲓ Ⲫⲓⲗⲁⲛⲑ̀ⲣⲱⲡⲉ.\n\nⲘⲁⲣⲉⲥϣⲱⲡⲓ ⲛ̀ϫⲉ ⲧⲉⲕϫⲓϫ ⲉ̀ⲫ̀ⲛⲁϩⲙⲉⲧ ϫⲉ ⲛⲉⲕⲉⲛⲧⲟⲗⲏ ⲁⲓⲉⲣⲉ̀ⲡⲓⲑⲩⲙⲓⲛ ⲉ̀ⲣⲱⲟⲩ. Ⲇⲟⲝⲁ ⲥⲓ Ⲫⲓⲗⲁⲛⲑ̀ⲣⲱⲡⲉ.\n\n+ Ⲁⲓϭⲓϣϣⲱⲟⲩ ⲙ̀ⲡⲉⲕⲟⲩϫⲁⲓ Ⲡ̀ϭⲟⲓⲥ: ⲟⲩⲟϩ Ⲡⲉⲕⲛⲟⲙⲟⲥ ⲡⲉ ⲧⲁⲙⲉⲗⲉⲧⲏ. Ⲇⲟⲝⲁ ⲥⲓ Ⲫⲓⲗⲁⲛⲑ̀ⲣⲱⲡⲉ.\n\nⲈⲥⲉ̀ⲱⲛϧ ⲛ̀ϫⲉ ⲧⲁⲯⲩⲭⲏ ⲟⲩⲟϩ ⲉⲥⲉ̀ⲥ̀ⲙⲟⲩ ⲉ̀ⲣⲟⲕ: ⲟⲩⲟϩ ⲛⲉⲕϩⲁⲡ ⲉⲩⲉ̀ⲉⲣⲃⲟⲏ̀ⲑⲓⲛ ⲉ̀ⲣⲟⲓ. Ⲇⲟⲝⲁ ⲥⲓ Ⲫⲓⲗⲁⲛⲑ̀ⲣⲱⲡⲉ.\n\n+ Ⲁⲓⲥⲱⲣⲉⲙ ⲙ̀ⲫ̀ⲣⲏϯ ⲛ̀ⲟⲩⲉ̀ⲥⲱⲟⲩ ⲉ̀ⲁϥⲧⲁⲕⲟ: ⲕⲱϯ ⲛ̀ⲥⲁ ⲡⲉⲕⲃⲱⲕ ϫⲉ ⲛⲉⲕⲉⲛⲧⲟⲗⲏ ⲙ̀ⲡⲓⲉⲣⲡⲟⲩⲱⲃϣ. Ⲇⲟⲝⲁ ⲥⲓ Ⲫⲓⲗⲁⲛⲑ̀ⲣⲱⲡⲉ.\n\nⲆⲟⲝⲁ Ⲡⲁⲧⲣⲓ ⲕⲉ Ⲩ̀ⲓⲱ ⲕⲉ Ⲁ̀ⲅⲓⲱ Ⲡ̀ⲛⲉⲩⲙⲁⲧⲓ. Ⲇⲟⲝⲁ ⲥⲓ Ⲫⲓⲗⲁⲛⲑ̀ⲣⲱⲡⲉ.\n\n+ Ⲕⲉ ⲛⲩⲛ ⲕⲉ ⲁ̀ⲓ̀ ⲕⲉ ⲓⲥ ⲧⲟⲩⲥ ⲉ̀ⲱ̀ⲛⲁⲥ ⲧⲱⲛ ⲉ̀ⲱ̀ⲛⲱⲛ ⲁ̀ⲙⲏⲛ. Ⲇⲟⲝⲁ ⲥⲓ Ⲫⲓⲗⲁⲛⲑ̀ⲣⲱⲡⲉ.\n\nⲠⲓⲱ̀ⲟⲩ ⲙ̀Ⲫ̀ⲓⲱⲧ ⲛⲉⲙ Ⲡ̀ϣⲏⲣⲓ ⲛⲉⲙ Ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ ⲉⲑⲟⲩⲁⲃ: ⲓⲥϫⲉⲛ ϯⲛⲟⲩ ⲛⲉⲙ ϣⲁ ⲉ̀ⲛⲉϩ ⲛ̀ⲧⲉ ⲛⲓⲉ̀ⲛⲉϩ ⲧⲏⲣⲟⲩ ⲁ̀ⲙⲏⲛ. Ⲇⲟⲝⲁ ⲥⲓ Ⲫⲓⲗⲁⲛⲑ̀ⲣⲱⲡⲉ.\n\n+ Ⲡⲓⲱ̀ⲟⲩ ⲛⲁⲕ Ⲡⲓⲙⲁⲓⲣⲱⲙⲓ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ: ⲡⲓⲱ̀ⲟⲩ ⲛ̀Ⲧⲉⲕⲙⲁⲩ ⲙ̀Ⲡⲁⲣⲑⲉⲛⲟⲥ ⲛⲉⲙ ⲛⲏⲉⲑⲟⲩⲁⲃ ⲧⲏⲣⲟⲩ ⲛ̀ⲧⲁⲕ. Ⲇⲟⲝⲁ ⲥⲓ Ⲫⲓⲗⲁⲛⲑ̀ⲣⲱⲡⲉ.\n\nⲆⲟⲝⲁ ⲥⲓ ⲟ̀ⲙⲟⲛⲟⲅⲉⲛⲏⲥ: ⲁ̀ⲅⲓⲁ Ⲧ̀ⲣⲓⲁⲥ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ ⲏ̀ⲙⲁⲥ. Ⲇⲟⲝⲁ ⲥⲓ Ⲫⲓⲗⲁⲛⲑ̀ⲣⲱⲡⲉ.\n\n+ Ⲙⲁⲣⲉϥⲧⲱⲛϥ ⲛ̀ϫⲉ Ⲫ̀ⲛⲟⲩϯ ⲙⲁⲣⲟⲩϫⲱⲣ ⲉ̀ⲃⲟⲗ ⲛ̀ϫⲉ ⲛⲉϥϫⲁϫⲓ ⲧⲏⲣⲟⲩ ⲙⲁⲣⲟⲩⲫⲱⲧ ⲉ̀ⲃⲟⲗ ϧⲁⲧ̀ϩⲏ ⲙ̀ⲡⲉϥϩⲟ ⲛ̀ϫⲉ ⲟⲩⲟⲛ ⲛⲓⲃⲉⲛ ⲉⲑⲙⲟⲥϯ ⲙ̀ⲡⲉϥⲣⲁⲛ ⲉⲑⲟⲩⲁⲃ. Ⲇⲟⲝⲁ ⲥⲓ Ⲫⲓⲗⲁⲛⲑ̀ⲣⲱⲡⲉ.\n\nⲠⲉⲕⲗⲁⲟⲥ ⲇⲉ ⲙⲁⲣⲉϥϣⲱⲡⲓ ϧⲉⲛ ⲡⲓⲥ̀ⲙⲟⲩ: ⲉ̀ϩⲁⲛⲁⲛϣⲟ ⲛ̀ϣⲟ ⲛⲉⲙ ϩⲁⲛⲑ̀ⲃⲁ ⲛ̀ⲑ̀ⲃⲁ: ⲉⲩⲓ̀ⲣⲓ ⲙ̀ⲡⲉⲕⲟⲩⲱϣ.\n\n+ Ⲡ̀ϭⲟⲓⲥ ⲉⲕⲉ̀ⲁ̀ⲟⲩⲱⲛ ⲛ̀ⲛⲁⲥ̀ⲫⲟⲧⲟⲩ: ⲟⲩⲟϩ ⲉ̀ⲣⲉ ⲣⲱⲓ ϫⲱ ⲙ̀ⲡⲉⲕⲥ̀ⲙⲟⲩ.',
+            },
+            {
+              language: 'englishCoptic',
+              text: 'Ten theno e-epshoi, ni-shiri ente pi-ou-oyni, enten-hos e-Epshois ente ni-gom.\n\nHopos entef er-ehmot nan emep-soti ente nen-epsishi.\n\nKhen epjin ethrin ohi era-ten, empek emtho soma ti-kos.\n\nAli-owi evol hiten pen-nous empi-hinim, ente ti-evshi.\n\nMoi nan Epshois en-ou-metref ernem-feen, hopos enten-kati enten-ouhi e-raten, empek-emtho, emifnav ente ti-epros-evshi.\n\nOwoh enten ou-orp nak, e-epshoi enti-zoksologeia eterep-repi, owoh enten-shashni e-epko-evol ente nen-novi etosh. Zoxa si filan-ethrobe.\n\nHippe ze esmo Epshois, ni-evi-aik ente Epshois. Zoxa si filan-ethrobe.\n\nNi-etohi era-tou, khen ep-e em-Epshois, khen ni-avleio ente ep-e em-pennouti. Zoxa si filan-ethrobe.\n\nEn-eheri khen ni-egorh, fai enne-ten-jig, e-epshoi ni-ethowab esmo Epshois. Zoxa si filan-ethrobe.\n\nEpshois ef-e-esmo erok, evol khen Seion, fi-etaf-thamio en-etfe nem epkahi. Zoxa si filan-ethrobe.\n\nMare pati-ho, khont empek-emtho Epshois, makati ni-kata pek-saji. Zoxa si filan-ethrobe.\n\nEf-e-ee ekhoun em-pek emtho enje pa-axyoma kata pek-saji matan-khoi. Zoxa si filan-ethrobe.\n\nEre-na esfo-tou, vivi en-ou-esmo eshop akshan etsavoy ennekmethmi. Zoxa si filan-ethrobe.\n\nPalas ef-e-erro-o, khen nek saji je nekentoli tiro han-methme ne. Zoxa si filan-ethrobe.\n\nMares showpi enje tek-jij, e-efnahmet je neken-toli ai-ere pithi-men ero-ou. Zoxa si filan-ethrobe.\n\nAichish-sho-ou empek ougai Epshois, owoh pek-nomos pe-tameleti. Zoxa si filan-ethrobe.\n\nEs-e-ownkh enje ta-epsishi, owoh es-e-esmo erok, owoh nek-hap ev-ervoythin eroy. Zoxa si filan-ethrobe.\n\nAi-sorem emif-riti en-o-e-sow-ou, e-aftako koti ensa pek-vok je neken-toli empi-erpou-ovsh. Zoxa si filan-ethrobe.\n\nZoxa Patree ke Eio ke Agio epnevmati. Zoxa si filan-ethrobe.\n\nKe neen ke a-ee ke estos e-onas ton e-onon amen. Zoxa si filan-ethrobe.\n\nPi-o-ou em-Efiout, nem ep-Shiri, nem pi-Epnevma ethowab, yes-jen tinou nem sha eneh ente ni-eneh tiro. Amen. Zoxa si filan-ethrobe.\n\nPi-o-ou nak pi-mairomi en-aghathos, pi-o-ou entek-mav em-Parthenos, nem ni-ethowab tiro entak. Zoxa si filan-ethrobe.\n\nZoxa si o mono-genis, agia Etrias, eleison emas. Zoxa si filan-ethrobe.\n\nMaref-tonf enje Efnouti, marou-gor evol enje nef-gaje tiro, maro-vot evol kha-et-he empefho enje ou-on niven eth-mosti em-pefran ethowab. Zoxa si filan-ethrobe.\n\nPek-laos ze maref shopi khen pi-esmo e-han ansho ensho, nem han-ethva enethva ev-eri empek-ou-osh.\n\nEpshois ek-e a-ou-own, enna esvoto, owoh ere roy go empek esmo.',
+            },
+            {
+              language: 'english',
+              text: 'Arise O children of the light, let us praise the Lord of hosts.\n\n+ That He may grant us the salvation of our souls.\n\nWhenever we stand before You in the flesh.\n\n+ Cast away from our minds the slumber of sleep.\n\nGrant us sobriety O Lord, that we may know how to stand before You at times of prayer.\n\n+ And ascribe unto You the befitting glorification, and win the forgiveness of our many sins. Glory be to You O Lover of Mankind.\n\nBehold bless the Lord all you servants of the Lord. Glory be to You O Lover of Mankind.\n\n+ You who stand in the house of the Lord, in the courts of the house of our God. Glory be to You O Lover of Mankind.\n\nBy night lift up your hands O you saints and bless the Lord. Glory be to You O Lover of Mankind.\n\n+ The Lord bless you from Zion, who created heaven and earth. Glory be to You O Lover of Mankind.\n\nLet my cry come before You O Lord, give me understanding according to Your word. Glory be to You O Lover of Mankind.\n\n+ Let my supplication come before You, deliver me according to Your word. Glory be to You O Lover of Mankind.\n\nMy lips shall overflow with praise, when You have taught me Your statutes. Glory be to You O Lover of Mankind.\n\n+ My tongue shall speak of Your words for all Your commandments are righteous. Glory be to You O Lover of Mankind.\n\nLet Your hand help me for I have chosen Your precepts. Glory be to You O Lover of Mankind.\n\n+ I have longed for Your salvation O Lord, and Your Law is my delight. Glory be to You O Lover of Mankind.\n\nLet my soul live and it shall praise You, and let Your judgments help me. Glory be to You O Lover of Mankind.\n\n+ I have gone astray like a lost sheep, seek Your servant for I do not forget Your commandments. Glory be to You O Lover of Mankind.\n\nGlory be to the Father and the Son and the Holy Spirit. Glory be to You O Lover of Mankind.\n\n+ Now and forever and unto the age of all ages Amen. Glory be to You O Lover of Mankind.\n\nGlory be to the Father and the Son and the Holy Spirit, now and forever and unto all the ages Amen. Glory be to You O Lover of Mankind.\n\n+ Glory be to You O good One the Lover of Mankind, glory be to Your Mother the Virgin and all Your saints. Glory be to You O Lover of Mankind.\n\nGlory be to You O only-begotten One, O holy Trinity have mercy upon us. Glory be to You O Lover of Mankind.\n\n+ Let God arise and let all His enemies be scattered and let all that hate His holy name flee from before His face. Glory be to You O Lover of Mankind.\n\nAs for Your people let them be blessed, a thousand thousand fold and ten thousand ten thousand fold, doing Your will.\n\n+ O Lord open my lips, and my mouth shall declare Your praise.',
+            },
+            {
+              language: 'arabic',
+              text: 'قوموا يا بني النور، لنسبح رب القوات.\n\n+ لكي ينعم لنا بخلاص نفوسنا.\n\nعندما نقف أمامك جسدياً.\n\n+ إنزع عن عقولنا نوم الغفلة.\n\nأعطنا يا رب يقظة، لكي نفهم أن نقف أمامك وقت الصلاة.\n\n+ ونرسل لك إلى فوق التمجيد اللائق، ونفوز بغفران خطايانا الكثيرة. المجد لك يا محب البشر.\n\nها باركوا الرب يا عبيد الرب. المجد لك يا محب البشر.\n\n+ القائمين في بيت الرب، في ديار بيت إلهنا. المجد لك يا محب البشر.\n\nبالليالي إرفعوا أيديكم إلى فوق أيها القديسون باركوا الرب. المجد لك يا محب البشر.\n\n+ يباركك الرب من صهيون، الذي خلق السماء والأرض. المجد لك يا محب البشر.\n\nفلتدن وسيلتي قدامك يا رب، كقولك فهمني. المجد لك يا محب البشر.\n\n+ ليدخل إبتهالي أمامك، ككلمتك أحيني. المجد لك يا محب البشر.\n\nتفيض شفتاي السُبح، إذا ما علمتني حقوقك. المجد لك يا محب البشر.\n\n+ لساني يجيب بأقوالك لأن جميع وصاياك هي حق. المجد لك يا محب البشر.\n\nلتكن يدك لتخلصني لأني إشتهيت وصاياك. المجد لك يا محب البشر.\n\n+ إشتقت إلى خلاصك يا رب، وناموسك هو تلاوتي. المجد لك يا محب البشر.\n\nتحيا نفسي وتسبحك، وأحكامك تعينني. المجد لك يا محب البشر.\n\n+ ضللت مثل الخروف الضال، فأُطلب عبدك لأني لوصاياك لم أنس. المجد لك يا محب البشر.\n\nالمجد للآب والإبن والروح القدس. المجد لك يا محب البشر.\n\n+ الآن وكل أوان وإلى دهر الدهور آمين. المجد لك يا محب البشر.\n\nالمجد للآب والإبن والروح القدس منذ الآن وإلى أبد الأبدين كلها آمين. المجد لك يا محب البشر.\n\n+ المجد لك يا محب البشر الصالح، المجد لأُمك العذراء وجميع قديسيك. المجد لك يا محب البشر.\n\nالمجد لك أيها الوحيد، أيها الثالوث القدوس إرحمنا. المجد لك يا محب البشر.\n\n+ ليقم الله ولتتبدَّد جميع أعدائه وليهرب من قدام وجهه كل مُبغضي إسمه القدوس. المجد لك يا محب البشر.\n\nوأما شعبك فليكن بالبركة، ألوف ألوف وربوات ربوات، يصنعون إرادتك.\n\n+ يا رب إفتح شفتيَ ولينطق فمي بتسبحتك.',
+            },
+          ],
+        },
+        { id: 'annual-midnight-first-canticle', title: 'The First Canticle', versions: [] },
+        { id: 'annual-midnight-first-canticle-lobsh', title: 'Lobsh of the First Canticle', versions: [] },
+        { id: 'annual-midnight-sunday-theotokion-7', title: 'Sunday Theotokion (Part 7)', versions: [] },
+        { id: 'annual-midnight-sunday-theotokion-8', title: 'Sunday Theotokion (Part 8)', versions: [] },
+        { id: 'annual-midnight-sunday-theotokion-9', title: 'Sunday Theotokion (Part 9)', versions: [] },
+        { id: 'annual-midnight-second-canticle', title: 'The Second Canticle', versions: [] },
+        { id: 'annual-midnight-second-canticle-lobsh', title: 'Lobsh of the Second Canticle', versions: [] },
+        { id: 'annual-midnight-third-canticle', title: 'The Third Canticle', versions: [] },
+        { id: 'annual-midnight-greek-psali-watos', title: 'Greek Psali (Watos)', versions: [] },
+        { id: 'annual-midnight-three-holy-children', title: 'The Song of the Three Holy Children', versions: [] },
+        { id: 'annual-midnight-commemoration', title: 'The Commemoration of the Saints', versions: [] },
+        {
+          id: 'annual-midnight-doxologies',
+          title: 'Doxologies',
+          versions: [],
+          children: [
+            { id: 'annual-midnight-doxology-virgin-mary', title: 'Doxology for St Virgin Mary', versions: [] },
+            { id: 'annual-midnight-doxology-archangel-gabriel', title: 'Doxology for Archangel Gabriel', versions: [] },
+            { id: 'annual-midnight-doxology-michael-gabriel', title: 'Doxology for Archangels Michael and Gabriel', versions: [] },
+            { id: 'annual-midnight-doxology-heavenly-beings', title: 'Doxology for All the Heavenly Beings', versions: [] },
+            { id: 'annual-midnight-doxology-apostles', title: 'Doxology for All the Apostles', versions: [] },
+            { id: 'annual-midnight-doxology-apostles-2', title: 'Another Doxology for All the Apostles', versions: [] },
+            { id: 'annual-midnight-doxology-st-mark', title: 'Doxology for St Mark the Evangelist', versions: [] },
+            { id: 'annual-midnight-doxology-st-mark-2', title: 'Another Doxology for St Mark the Evangelist', versions: [] },
+            { id: 'annual-midnight-doxology-st-george', title: 'Doxology for St George', versions: [] },
+            { id: 'annual-midnight-doxology-st-george-2', title: 'Another Doxology for St George', versions: [] },
+            { id: 'annual-midnight-doxology-philopater-mercurius', title: 'Doxology for St Philopater Mercurius', versions: [] },
+            { id: 'annual-midnight-doxology-st-mena', title: 'Doxology for St Mena', versions: [] },
+            { id: 'annual-midnight-doxology-anba-abraam', title: 'Doxology for Anba Abraam', versions: [] },
+            { id: 'annual-midnight-doxology-pope-kyrillos', title: 'Doxology for Pope Kyrillos', versions: [] },
+            { id: 'annual-midnight-doxology-conclusion', title: 'The Conclusion of the Doxologies', versions: [] },
+          ],
+        },
+        { id: 'annual-midnight-fourth-canticle', title: 'The Fourth Canticle', versions: [] },
+        {
+          id: 'annual-midnight-psali-watos-virgin-mary-21st',
+          title: 'Psali (Watos) for St Mary, on the 21st of the Coptic Month',
+          versions: [],
+        },
+      ],
+    },
+    midnightDay('sunday', 'Sunday', 'Sunday Psali (Adam)', 18),
+    midnightDay('monday', 'Monday', 'Monday Psali (Adam)', 9),
+    midnightDay('tuesday', 'Tuesday', 'Tuesday Psali (Adam)', 9),
+    midnightDay('wednesday', 'Wednesday', 'Wednesday Psali (Adam)', 7),
+    midnightDay('thursday', 'Thursday', 'Thursday Psali (Watos)', 9),
+    midnightDay('friday', 'Friday', 'Friday Psali (Adam)', 7),
+    midnightDay('saturday', 'Saturday', 'Psali (Watos) for the Annunciation', 9),
   ];
 }

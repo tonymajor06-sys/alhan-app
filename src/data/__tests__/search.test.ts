@@ -53,6 +53,12 @@ describe('searchHymns', () => {
     if (morningDoxology >= 0) expect(agios).toBeLessThan(morningDoxology);
   });
 
+  it('finds hymns inside groups, like Midnight Praises > General > Doxologies', () => {
+    expect(searchHymns('three holy children').some((r) => r.hymn.id === 'annual-midnight-three-holy-children')).toBe(true);
+    expect(searchHymns('ذكصولوجية مار جرجس').some((r) => r.hymn.id === 'annual-midnight-doxology-st-george')).toBe(true);
+    expect(searchHymns('doxologies').every((r) => !r.hymn.children)).toBe(true);
+  });
+
   it('never returns section headers', () => {
     expect(searchHymns('doxologies').every((r) => !r.hymn.isSectionHeader)).toBe(true);
   });

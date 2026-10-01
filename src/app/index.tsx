@@ -32,6 +32,7 @@ import {
 import {
   deaconCategories,
   DeaconCategory,
+  flattenHymns,
   Hymn,
   LanguageType,
   mainCategories,
@@ -116,6 +117,7 @@ const strings = {
     moveDown: 'Move down',
     remove: 'Remove',
     nowPlaying: 'Now playing',
+    nothingYet: 'Nothing here yet.',
     search: 'Search hymns',
     searchPlaceholder: 'Coptic, English or Arabic',
     searchHint: 'Search titles and words in every language.',
@@ -165,6 +167,7 @@ const strings = {
     moveDown: 'تحريك لأسفل',
     remove: 'حذف',
     nowPlaying: 'يعمل الآن',
+    nothingYet: 'لا يوجد شيء هنا بعد.',
     search: 'ابحث في الألحان',
     searchPlaceholder: 'قبطي أو إنجليزي أو عربي',
     searchHint: 'ابحث في العناوين والكلمات بكل اللغات.',
@@ -324,6 +327,8 @@ export default function HomeScreen() {
   const [selectedSeason, setSelectedSeason] = useState<Season | null>(null);
   const [selectedService, setSelectedService] = useState<Service | null>(null);
   const [selectedHymn, setSelectedHymn] = useState<Hymn | null>(null);
+  // Groups opened inside the current service (e.g. Midnight Praises > General > Doxologies), outermost first
+  const [openGroups, setOpenGroups] = useState<Hymn[]>([]);
 
   const [activeLanguage, setActiveLanguage] = useState<LanguageType>(defaultHymnLanguage(lang));
 
@@ -347,6 +352,7 @@ export default function HomeScreen() {
       setSelectedDeaconService(null);
       setSelectedDeaconCategory(null);
       setSelectedService(null);
+      setOpenGroups([]);
       setSelectedSeason(requested);
       setCurrentView('seasons-home');
     }
@@ -440,6 +446,7 @@ export default function HomeScreen() {
   // Steps back one level; returns false when already on the home screen
   const goBack = (): boolean => {
     if (activeTargetHymn) closeHymn();
+    else if (openGroups.length > 0) setOpenGroups(openGroups.slice(0, -1));
     else if (selectedService) setSelectedService(null);
     else if (selectedSeason) setSelectedSeason(null);
     else if (selectedDeaconService) setSelectedDeaconService(null);
@@ -582,14 +589,33 @@ export default function HomeScreen() {
         return sectionHeader(hymn.id, displayTitle(hymn, lang));
       }
       number += 1;
+      const hasAudio = (hymn.children ? flattenHymns(hymn.children) : [hymn]).some((h) =>
+        h.versions.some((v) => v.audio)
+      );
       return row(
         hymn.id,
         displayTitle(hymn, lang),
-        () => onSelect(hymn),
-        hymn.versions.some((v) => v.audio) ? t.hasAudio : undefined,
+        () => (hymn.children ? setOpenGroups([...openGroups, hymn]) : onSelect(hymn)),
+        hasAudio ? t.hasAudio : undefined,
         number
       );
     });
+  };
+
+  // A service's list, or the list of the innermost group opened inside it
+  const serviceScreen = (service: Service, chooseLabel: string, onSelect: (h: Hymn) => void) => {
+    const group = openGroups[openGroups.length - 1];
+    const items = group ? (group.children ?? []) : service.hymns;
+    const path = [service, ...openGroups.slice(0, -1)].map((g) => displayTitle(g, lang)).join(isRTL ? ' ‹ ' : ' › ');
+    return screen(
+      displayTitle(group ?? service, lang),
+      group ? path : chooseLabel,
+      items.length === 0 ? (
+        <Text style={[styles.emptyText, textAlign]}>{t.nothingYet}</Text>
+      ) : (
+        hymnList(items, onSelect)
+      )
+    );
   };
 
   // 1. HOME (the mini player can open a hymn straight from here)
@@ -1100,7 +1126,7 @@ export default function HomeScreen() {
 
   // 3. HYMNS FLOW
   if (selectedService) {
-    return screen(displayTitle(selectedService, lang), t.chooseHymn, hymnList(selectedService.hymns, setSelectedHymn));
+    return serviceScreen(selectedService, t.chooseHymn, setSelectedHymn);
   }
 
   if (selectedSeason) {
@@ -1131,11 +1157,7 @@ export default function HomeScreen() {
 
   // 4. DEACON RESPONSES FLOW
   if (selectedDeaconService) {
-    return screen(
-      displayTitle(selectedDeaconService, lang),
-      t.chooseResponse,
-      hymnList(selectedDeaconService.hymns, setSelectedDeaconHymn)
-    );
+    return serviceScreen(selectedDeaconService, t.chooseResponse, setSelectedDeaconHymn);
   }
 
   if (selectedDeaconCategory) {
