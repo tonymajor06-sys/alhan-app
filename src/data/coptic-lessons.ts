@@ -1,4 +1,5 @@
 import { deaconCategories, flattenHymns, Hymn, seasons } from './hymns';
+import { makeQuestion, QuizQuestion, shuffle } from './quiz';
 
 // Lessons for reading Coptic as it is sung in church (the same pronunciation as the app's transliterations)
 
@@ -198,45 +199,15 @@ export const copticWords: CopticWord[] = [
 
 // ---- Quiz ----
 
-export interface QuizQuestion {
-  // What is shown, in Coptic
-  prompt: string;
-  kind: 'letter' | 'word';
-  options: string[];
-  answer: number;
-}
-
-const shuffle = <T>(items: T[], random: () => number): T[] => {
-  const out = [...items];
-  for (let i = out.length - 1; i > 0; i--) {
-    const j = Math.floor(random() * (i + 1));
-    [out[i], out[j]] = [out[j], out[i]];
-  }
-  return out;
-};
-
-// One question: the right answer plus three different wrong ones, in random order
-const makeQuestion = (
-  prompt: string,
-  kind: QuizQuestion['kind'],
-  right: string,
-  pool: string[],
-  random: () => number
-): QuizQuestion => {
-  const wrong = shuffle([...new Set(pool.filter((p) => p !== right))], random).slice(0, 3);
-  const options = shuffle([right, ...wrong], random);
-  return { prompt, kind, options, answer: options.indexOf(right) };
-};
-
 // A round mixing "what is this letter called" and "what does this word mean"
 export function buildQuiz(lang: 'en' | 'ar', count = 10, random: () => number = Math.random): QuizQuestion[] {
   const letterNames = copticAlphabet.map((l) => l.name);
   const meanings = copticWords.map((w) => w.meaning[lang]);
   const letters = shuffle(copticAlphabet, random).map((l) =>
-    makeQuestion(`${l.upper} ${l.lower}`, 'letter', l.name, letterNames, random)
+    makeQuestion(l.name, letterNames, random, { prompt: `${l.upper} ${l.lower}`, kind: 'letter' })
   );
   const words = shuffle(copticWords, random).map((w) =>
-    makeQuestion(w.coptic, 'word', w.meaning[lang], meanings, random)
+    makeQuestion(w.meaning[lang], meanings, random, { prompt: w.coptic, kind: 'word' })
   );
   const half = Math.ceil(count / 2);
   return shuffle([...letters.slice(0, half), ...words.slice(0, count - half)], random);

@@ -4,9 +4,9 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { createAlhanStyles, goBackOrHome, openHymnPage, ScreenShell } from '@/components/alhan-ui';
 import { learnStrings, LessonId, lessonIds } from '@/components/learn-strings';
+import { QuizRound } from '@/components/quiz-round';
 import { AlhanPalette } from '@/constants/alhan-colors';
 import { displayTitle } from '@/data/arabic-titles';
-import { toArabicDigits } from '@/data/coptic-calendar';
 import { buildQuiz, copticAlphabet, copticWords, getPracticeVerses, readingRules } from '@/data/coptic-lessons';
 import { useThemedStyles } from '@/hooks/use-alhan-colors';
 import { AppLanguage, useSettings } from '@/hooks/use-settings';
@@ -154,85 +154,13 @@ function Words({ lang }: LessonProps) {
 
 function Quiz({ lang }: LessonProps) {
   const t = learnStrings[lang];
-  const { styles, shared, textAlign, isRTL } = useLessonStyles(lang);
-  const [questions, setQuestions] = useState(() => buildQuiz(lang));
-  const [index, setIndex] = useState(0);
-  const [picked, setPicked] = useState<number | null>(null);
-  const [right, setRight] = useState(0);
-  const n = (v: number) => (isRTL ? toArabicDigits(v) : String(v));
-
-  const restart = () => {
-    setQuestions(buildQuiz(lang));
-    setIndex(0);
-    setPicked(null);
-    setRight(0);
-  };
-
-  if (index >= questions.length) {
-    const ratio = right / questions.length;
-    return (
-      <View style={[styles.card, styles.center]}>
-        <Text style={styles.bigLetter}>{t.score(n(right), n(questions.length))}</Text>
-        <Text style={[styles.body, styles.centerText]}>
-          {ratio >= 0.9 ? t.scoreGreat : ratio >= 0.6 ? t.scoreGood : t.scoreKeepGoing}
-        </Text>
-        <Pressable onPress={restart} accessibilityRole="button" style={({ pressed }) => [styles.primary, pressed && shared.pressed]}>
-          <Text style={styles.primaryText}>{t.playAgain}</Text>
-        </Pressable>
-      </View>
-    );
-  }
-
-  const q = questions[index];
-  const choose = (i: number) => {
-    if (picked !== null) return;
-    setPicked(i);
-    if (i === q.answer) setRight((r) => r + 1);
-  };
-
   return (
-    <View style={styles.card}>
-      <Text style={[styles.label, textAlign]}>
-        {n(index + 1)} / {n(questions.length)}
-      </Text>
-      <Text style={[styles.body, textAlign]}>{q.kind === 'letter' ? t.whatLetter : t.whatWord}</Text>
-      <Text style={[styles.bigLetter, styles.quizPrompt]}>{q.prompt}</Text>
-      {q.options.map((option, i) => {
-        const isAnswer = picked !== null && i === q.answer;
-        const isWrong = picked === i && i !== q.answer;
-        return (
-          <Pressable
-            key={option}
-            onPress={() => choose(i)}
-            disabled={picked !== null}
-            accessibilityRole="button"
-            style={({ pressed }) => [
-              styles.option,
-              isAnswer && styles.optionRight,
-              isWrong && styles.optionWrong,
-              pressed && shared.pressed,
-            ]}>
-            <Text style={[styles.optionText, textAlign]}>{option}</Text>
-          </Pressable>
-        );
-      })}
-      {picked !== null ? (
-        <>
-          <Text style={[styles.feedback, textAlign, picked === q.answer ? styles.feedbackRight : styles.feedbackWrong]}>
-            {picked === q.answer ? t.correct : t.wrongAnswer(q.options[q.answer])}
-          </Text>
-          <Pressable
-            onPress={() => {
-              setIndex((i) => i + 1);
-              setPicked(null);
-            }}
-            accessibilityRole="button"
-            style={({ pressed }) => [styles.primary, pressed && shared.pressed]}>
-            <Text style={styles.primaryText}>{index + 1 === questions.length ? t.seeScore : t.next}</Text>
-          </Pressable>
-        </>
-      ) : null}
-    </View>
+    <QuizRound
+      lang={lang}
+      build={() => buildQuiz(lang)}
+      strings={t}
+      questionText={(q) => (q.kind === 'letter' ? t.whatLetter : t.whatWord)}
+    />
   );
 }
 
@@ -306,8 +234,6 @@ const createStyles = (colors: AlhanPalette) =>
       padding: 20,
       marginBottom: 16,
     },
-    center: { alignItems: 'center' },
-    centerText: { textAlign: 'center' },
     cardTitle: { fontSize: 22, fontWeight: '800', color: colors.gold, marginBottom: 8 },
     body: { fontSize: 17, lineHeight: 26, color: colors.text, marginBottom: 8 },
     label: { fontSize: 14, fontWeight: '700', color: colors.muted, letterSpacing: 0.5, marginTop: 12 },
@@ -339,23 +265,6 @@ const createStyles = (colors: AlhanPalette) =>
 
     toggle: { flex: 0, marginBottom: 14 },
 
-    quizPrompt: { marginVertical: 12 },
-    option: {
-      minHeight: 52,
-      borderRadius: 12,
-      borderWidth: 1,
-      borderColor: colors.border,
-      backgroundColor: colors.background,
-      justifyContent: 'center',
-      paddingHorizontal: 16,
-      marginBottom: 10,
-    },
-    optionRight: { borderColor: colors.gold, backgroundColor: colors.goldSoft },
-    optionWrong: { borderColor: colors.priest },
-    optionText: { fontSize: 18, fontWeight: '600', color: colors.text },
-    feedback: { fontSize: 17, fontWeight: '700', marginTop: 4, marginBottom: 4 },
-    feedbackRight: { color: colors.gold },
-    feedbackWrong: { color: colors.priest },
 
     primary: {
       marginTop: 12,
