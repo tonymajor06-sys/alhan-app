@@ -30,7 +30,7 @@ describe('getPracticeVerses', () => {
     const verses = getPracticeVerses();
     expect(verses.length).toBeGreaterThan(50);
     const verse = verses.find((v) => v.coptic.startsWith('Ⲧⲉⲙⲉⲧⲛⲓϣϯ ⲱ̀ Ⲙⲁⲣⲓⲁ'));
-    expect(verse?.sound).toMatch(/^Te-metnishti o Maria/);
+    expect(verse?.sound).toMatch(/^Temetnishti ō Maria/);
     expect(verse?.meaning).toMatch(/^Your greatness O Mary/);
     for (const v of verses) {
       expect(v.coptic).not.toMatch(/^\+/);
