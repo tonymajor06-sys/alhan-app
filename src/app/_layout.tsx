@@ -5,17 +5,25 @@ import { useEffect } from 'react';
 import { useAlhanColors } from '@/hooks/use-alhan-colors';
 import { useSettings } from '@/hooks/use-settings';
 import { useTodayJdn } from '@/hooks/use-today';
+import { syncFeastReminders, useReminderNavigation } from '@/notifications/feast-reminders';
 import { syncSeasonWidget } from '@/widgets/season-widget-sync';
 
 export default function RootLayout() {
-  const { language } = useSettings();
+  const { language, feastReminders } = useSettings();
   const today = useTodayJdn();
   const colors = useAlhanColors();
 
-  // Keep the home-screen widget's schedule fresh whenever the app opens or the language changes
+  // Keep the home-screen widgets' schedule fresh whenever the app opens or the language changes
   useEffect(() => {
     syncSeasonWidget(language);
   }, [language, today]);
+
+  // Likewise the feast reminders, which only cover the next few months at a time
+  useEffect(() => {
+    syncFeastReminders(language, feastReminders);
+  }, [language, feastReminders, today]);
+
+  useReminderNavigation();
 
   return (
     <>
@@ -23,6 +31,9 @@ export default function RootLayout() {
       <StatusBar style="auto" />
       <Stack
         screenOptions={{
+          headerShown: false,
+          // The app is portrait; only projector mode turns sideways for a TV or projector
+          orientation: 'portrait',
           headerStyle: {
             backgroundColor: colors.background,
           },
@@ -33,8 +44,13 @@ export default function RootLayout() {
           },
         }}
       >
-        <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="calendar" options={{ headerShown: false }} />
+        <Stack.Screen name="index" />
+        <Stack.Screen name="calendar" />
+        <Stack.Screen name="hymn/[id]" />
+        <Stack.Screen
+          name="present/[id]"
+          options={{ orientation: 'all', animation: 'fade', contentStyle: { backgroundColor: '#000' } }}
+        />
       </Stack>
     </>
   );

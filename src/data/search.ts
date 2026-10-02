@@ -52,6 +52,30 @@ interface IndexEntry {
 }
 
 let index: IndexEntry[] | null = null;
+let locations: Map<string, { hymn: Hymn; location: HymnLocation }> | null = null;
+
+// A hymn's id as it appears in links: a few generated ids contain spaces, which become dashes
+export const hymnSlug = (id: string) => id.replace(/\s+/g, '-');
+
+// Where a hymn lives (season or category, then service), found by its id or its link slug
+export function locateHymn(id: string): { hymn: Hymn; location: HymnLocation } | undefined {
+  if (!locations) {
+    locations = new Map();
+    for (const { group, kind } of [
+      ...seasons.map((g) => ({ group: g, kind: 'hymns' as const })),
+      ...deaconCategories.map((g) => ({ group: g, kind: 'responses' as const })),
+    ]) {
+      for (const service of group.services) {
+        for (const hymn of flattenHymns(service.hymns)) {
+          const entry = { hymn, location: { group, service, kind } };
+          locations.set(hymn.id, entry);
+          if (!locations.has(hymnSlug(hymn.id))) locations.set(hymnSlug(hymn.id), entry);
+        }
+      }
+    }
+  }
+  return locations.get(id);
+}
 
 const cleanText = (text: string) => text.replace(/(?:\\n)+/g, '\n\n');
 

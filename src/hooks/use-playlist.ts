@@ -71,5 +71,5 @@ const subscribe = (listener: () => void) => {
 };
 
 export function usePlaylist(): PlaylistItem[] {
-  return useSyncExternalStore(subscribe, () => playlist);
+  return useSyncExternalStore(subscribe, () => playlist, () => playlist);
 }

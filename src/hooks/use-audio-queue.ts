@@ -18,6 +18,8 @@ export interface QueueState {
   // 'playlist' when the queue was started from the saved playlist, so the playlist screen can highlight it
   origin: 'single' | 'playlist';
   repeat: RepeatMode;
+  // Playback speed (learning mode slows recordings down); 1 = normal
+  rate: number;
   status: Pick<AudioStatus, 'playing' | 'currentTime' | 'duration'>;
 }
 
@@ -48,6 +50,7 @@ let state: QueueState = {
   index: 0,
   origin: 'single',
   repeat: 'none',
+  rate: 1,
   status: { playing: false, currentTime: 0, duration: 0 },
 };
 const listeners = new Set<() => void>();
@@ -57,6 +60,15 @@ const setState = (patch: Partial<QueueState>) => {
   listeners.forEach((l) => l());
 };
 
+const applyRate = (p: AudioPlayer) => {
+  try {
+    // Pitch correction keeps a slowed-down chant at its real pitch
+    p.setPlaybackRate(state.rate, 'high');
+  } catch {
+    // speed control is unavailable on this platform
+  }
+};
+
 const loadTrack = (index: number, autoplay: boolean) => {
   const track = state.tracks[index];
   if (!track) return;
@@ -64,6 +76,7 @@ const loadTrack = (index: number, autoplay: boolean) => {
   const player = getPlayer();
   player.replace(track.source);
   player.loop = state.repeat === 'one';
+  applyRate(player);
   if (autoplay) player.play();
   try {
     // Also keeps Android's foreground service alive; without it background audio stops after ~3 minutes
@@ -106,6 +119,17 @@ export function seekBy(seconds: number) {
   getPlayer().seekTo(Math.min(Math.max(0, currentTime + seconds), duration || currentTime + seconds));
 }
 
+export function seekTo(seconds: number) {
+  if (state.tracks.length === 0) return;
+  getPlayer().seekTo(Math.max(0, seconds));
+  setState({ status: { ...state.status, currentTime: Math.max(0, seconds) } });
+}
+
+export function setPlaybackRate(rate: number) {
+  setState({ rate });
+  if (player) applyRate(player);
+}
+
 export function skip(direction: 1 | -1) {
   // "Previous" restarts the current track first, like most music players
   if (direction === -1 && state.status.currentTime > 3) return getPlayer().seekTo(0);
@@ -137,7 +161,7 @@ const subscribe = (listener: () => void) => {
 };
 
 export function useAudioQueue(): QueueState {
-  return useSyncExternalStore(subscribe, () => state);
+  return useSyncExternalStore(subscribe, () => state, () => state);
 }
 
 export const currentTrack = (q: QueueState): QueueTrack | null => q.tracks[q.index] ?? null;

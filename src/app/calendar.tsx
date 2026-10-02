@@ -1,6 +1,6 @@
 import { router } from 'expo-router';
 import { useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Alert, Platform, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { AlhanPalette } from '@/constants/alhan-colors';
@@ -21,8 +21,9 @@ import {
   tuneName,
 } from '@/data/coptic-calendar';
 import { useAlhanColors, useThemedStyles } from '@/hooks/use-alhan-colors';
-import { useSettings } from '@/hooks/use-settings';
+import { updateSettings, useSettings } from '@/hooks/use-settings';
 import { useTodayJdn } from '@/hooks/use-today';
+import { requestReminderPermission } from '@/notifications/feast-reminders';
 
 const strings = {
   en: {
@@ -38,6 +39,10 @@ const strings = {
     feast: 'Feast',
     fast: 'Fast',
     weekdays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+    reminders: 'Feast reminders',
+    remindersOn: 'On · the evening before each feast and fast',
+    remindersOff: 'Off · tap to get a reminder the evening before',
+    remindersDenied: 'Notifications are turned off for Alhan. You can allow them in Settings.',
   },
   ar: {
     back: 'رجوع',
@@ -52,6 +57,10 @@ const strings = {
     feast: 'عيد',
     fast: 'صوم',
     weekdays: ['أحد', 'اثنين', 'ثلاثاء', 'أربعاء', 'خميس', 'جمعة', 'سبت'],
+    reminders: 'تذكير بالأعياد',
+    remindersOn: 'مفعّل · مساء اليوم السابق لكل عيد وصوم',
+    remindersOff: 'متوقف · اضغط لتصلك رسالة تذكير مساء اليوم السابق',
+    remindersDenied: 'الإشعارات متوقفة لتطبيق ألحان. يمكنك السماح بها من الإعدادات.',
   },
 };
 
@@ -59,7 +68,7 @@ const openSeasonHymns = (seasonId: string) =>
   router.dismissTo({ pathname: '/', params: { season: seasonId, at: String(Date.now()) } });
 
 export default function CalendarScreen() {
-  const { language: lang } = useSettings();
+  const { language: lang, feastReminders } = useSettings();
   const t = strings[lang];
   const isRTL = lang === 'ar';
   const insets = useSafeAreaInsets();
@@ -92,6 +101,12 @@ export default function CalendarScreen() {
   const goToToday = () => {
     setSelected(today);
     setMonthIndex(todayCoptic.year * 13 + todayCoptic.month - 1);
+  };
+
+  const toggleReminders = async () => {
+    if (feastReminders) return updateSettings({ feastReminders: false });
+    if (await requestReminderPermission()) updateSettings({ feastReminders: true });
+    else Alert.alert(t.remindersDenied);
   };
 
   const cells = [
@@ -244,6 +259,28 @@ export default function CalendarScreen() {
         </View>
 
         {/* Upcoming */}
+        {Platform.OS !== 'web' ? (
+          <Pressable
+            onPress={toggleReminders}
+            accessibilityRole="switch"
+            accessibilityState={{ checked: feastReminders }}
+            style={({ pressed }) => [
+              styles.eventRow,
+              styles.reminderRow,
+              rowDirection,
+              feastReminders && styles.reminderRowOn,
+              pressed && styles.eventRowPressed,
+            ]}>
+            <Text style={styles.reminderBell}>{feastReminders ? '🔔' : '🔕'}</Text>
+            <View style={styles.flex}>
+              <Text style={[styles.eventName, textAlign]}>{t.reminders}</Text>
+              <Text style={[styles.eventDate, textAlign]}>{feastReminders ? t.remindersOn : t.remindersOff}</Text>
+            </View>
+            <View style={[styles.switchTrack, feastReminders && styles.switchTrackOn]}>
+              <View style={[styles.switchThumb, feastReminders && styles.switchThumbOn]} />
+            </View>
+          </Pressable>
+        ) : null}
         <Text style={[styles.sectionTitle, textAlign]}>{t.comingUp}</Text>
         {upcoming.map((ev) => (
           <Pressable
@@ -398,6 +435,20 @@ const createStyles = (colors: AlhanPalette) => StyleSheet.create({
   legendSwatch: { width: 14, height: 14, borderRadius: 4 },
   legendText: { fontSize: 13, color: colors.muted },
 
+  reminderRow: { marginBottom: 22 },
+  reminderRowOn: { borderColor: colors.gold },
+  reminderBell: { fontSize: 22 },
+  switchTrack: {
+    width: 50,
+    height: 30,
+    borderRadius: 15,
+    backgroundColor: colors.border,
+    padding: 3,
+    justifyContent: 'center',
+  },
+  switchTrackOn: { backgroundColor: colors.gold },
+  switchThumb: { width: 24, height: 24, borderRadius: 12, backgroundColor: colors.text },
+  switchThumbOn: { alignSelf: 'flex-end', backgroundColor: colors.onGold },
   sectionTitle: {
     fontSize: 16,
     fontWeight: '800',

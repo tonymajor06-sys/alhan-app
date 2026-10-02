@@ -81,5 +81,5 @@ const subscribe = (listener: () => void) => {
 };
 
 export function useAudioDownloads(): DownloadState {
-  return useSyncExternalStore(subscribe, () => state);
+  return useSyncExternalStore(subscribe, () => state, () => state);
 }
