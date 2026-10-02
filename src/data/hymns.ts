@@ -1922,31 +1922,188 @@ const tuesdayTheotokiaTexts: Record<number, LanguageVersion[]> = {
   ],
 };
 
-// One day of the week: its Psali, any extra hymns, then its Theotokia as a list of parts
+// Saturday: the Watos Psali for the Lord Jesus, an alphabet acrostic sung before the Saturday Theotokia
+const saturdayWatosPsali: Hymn = {
+  id: 'annual-midnight-saturday-watos-psali',
+  title: 'Ⲁϥϯ ⲙ̀ⲡ̀ⲟⲩⲛⲟϥ (The Saturday Watos Psali)',
+  versions: [
+    { language: 'coptic', text: 'Ⲁϥϯ ⲙ̀ⲡ̀ⲟⲩⲛⲟϥ ⲛ̀ⲛⲉⲛⲯⲩⲭⲏ: ⲛ̀ϫⲉ ⲡ̀ⲉⲣⲫ̀ⲙⲉⲩⲓ ⲙ̀ⲡⲉⲕⲣⲁⲛ ⲉⲑⲟⲩⲁⲃ: Ⲡⲁϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: Ⲡⲁⲥⲱⲧⲏⲣ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ.\n\nⲂⲟⲛ ⲛⲓⲃⲉⲛ ⲥⲉⲥ̀ⲙⲟⲩ ⲉ̀ⲣⲟⲕ: ⲛⲁ ⲛⲓⲫⲏⲟⲩⲓ̀ ⲛⲉⲙ ⲛⲁ ⲡ̀ⲕⲁϩⲓ: Ⲡⲁϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: Ⲡⲁⲥⲱⲧⲏⲣ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ.\n\nⲄⲉ ⲅⲁⲣ ⲛ̀ⲑⲟⲕ ⲙ̀ⲙⲁⲩⲁⲧⲕ: ⲕ̀ⲉⲙⲡ̀ϣⲁ ⲛ̀ⲧⲉⲛⲥ̀ⲙⲟⲩ ⲉ̀ⲣⲟⲕ: Ⲡⲁϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: Ⲡⲁⲥⲱⲧⲏⲣ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ.\n\nⲆⲓⲕⲉⲱⲥ ⲕⲉ ⲁⲝⲓⲱⲥ: ⲕ̀ⲉⲙⲡ̀ϣⲁ ⲙ̀ⲡⲓⲱ̀ⲟⲩ ⲛⲉⲙ ⲡⲓⲧⲁⲓⲟ: Ⲡⲁϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: Ⲡⲁⲥⲱⲧⲏⲣ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ.\n\nⲈⲩⲉ̀ⲥ̀ⲙⲟⲩ ⲉ̀ⲡⲉⲕⲣⲁⲛ ⲉⲑⲟⲩⲁⲃ: ⲛ̀ϫⲉ ⲛⲓⲫⲩⲗⲏ ⲧⲏⲣⲟⲩ ⲛ̀ⲧⲉ ⲡ̀ⲕⲁϩⲓ: Ⲡⲁϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: Ⲡⲁⲥⲱⲧⲏⲣ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ.\n\nⲤⲟⲟⲩ (ⲋ) ⲛ̀ϩⲩⲇⲣⲓⲁ ⲙ̀ⲙⲱⲟⲩ: ⲁⲕⲁⲓⲧⲟⲩ ⲛ̀ⲏⲣⲡ ⲉϥⲥⲱⲧⲡ: Ⲡⲁϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: Ⲡⲁⲥⲱⲧⲏⲣ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ.\n\nϢⲁϣϥ ⲛ̀ⲥⲟⲡ ⲙ̀ⲡⲓⲉ̀ϩⲟⲟⲩ: ϯⲛⲁⲥ̀ⲙⲟⲩ ⲉ̀ⲡⲉⲕⲣⲁⲛ ⲉⲑⲟⲩⲁⲃ: Ⲡⲁϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: Ⲡⲁⲥⲱⲧⲏⲣ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ.\n\nⲎ̀ⲇⲉⲱⲥ ⲧⲉⲛⲥ̀ⲙⲟⲩ ⲉ̀ⲣⲟⲕ: ⲁ̀ⲛⲟⲛ ⲧⲏⲣⲉⲛ ϧⲁ ⲡⲉⲕⲗⲁⲟⲥ: Ⲡⲁϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: Ⲡⲁⲥⲱⲧⲏⲣ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ.\n\nⲐ̀ⲙⲉⲧⲥⲁⲓⲉ̀ ⲙ̀ⲡⲉⲕⲣⲁⲛ ⲉⲑⲟⲩⲁⲃ: ϧⲉⲛ ⲣⲱⲟⲩ ⲛ̀ⲛⲏⲉⲑⲟⲩⲁⲃ ⲛ̀ⲧⲁⲕ: Ⲡⲁϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: Ⲡⲁⲥⲱⲧⲏⲣ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ.\n\nⲒⲥϫⲉⲛ ϣⲱⲣⲡ ϣⲁ ⲣⲟⲩϩⲓ ⲙ̀ⲙⲏⲛⲓ: ϯⲛⲁⲥ̀ⲙⲟⲩ ⲉ̀ⲡⲉⲕⲣⲁⲛ ⲉⲑⲟⲩⲁⲃ: Ⲡⲁϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: Ⲡⲁⲥⲱⲧⲏⲣ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ.\n\nⲔⲁⲧⲁ ϣⲉⲛⲛⲓϥⲓ ⲛⲓⲃⲉⲛ ⲉ̀ϯⲛⲁⲧⲏⲧⲟⲩ: ϯⲛⲁⲥ̀ⲙⲟⲩ ⲉ̀ⲡⲉⲕⲣⲁⲛ ⲉⲑⲟⲩⲁⲃ: Ⲡⲁϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: Ⲡⲁⲥⲱⲧⲏⲣ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ.\n\nⲖⲱⲓϫⲓ ⲛⲓⲃⲉⲛ ⲛ̀ⲧⲉ ⲫ̀ⲛⲟⲃⲓ: ϩⲓⲧⲟⲩ ⲉ̀ⲃⲟⲗ ϧⲉⲛ ⲛⲉⲛⲯⲩⲭⲏ: Ⲡⲁϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: Ⲡⲁⲥⲱⲧⲏⲣ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ.\n\nⲘⲉⲩⲓ ⲛⲓⲃⲉⲛ ⲛ̀ⲧⲉ ⲡⲓϫⲁϫⲓ: ⲙⲁⲣⲟⲩⲟⲩⲉⲓ ⲥⲁⲃⲟⲗ ⲙ̀ⲙⲟⲓ: Ⲡⲁϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: Ⲡⲁⲥⲱⲧⲏⲣ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ.\n\nⲚⲓϥⲓ ⲛⲓⲃⲉⲛ ⲥⲉⲥ̀ⲙⲟⲩ ⲉ̀ⲣⲟⲕ: ⲕⲁⲧⲁ ⲡ̀ⲥⲁϫⲓ ⲙ̀ⲡⲓⲡ̀ⲣⲟⲫⲏⲧⲏⲥ: Ⲡⲁϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: Ⲡⲁⲥⲱⲧⲏⲣ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ.\n\nⲜⲁⲡ̀ϣⲱⲓ ⲅⲁⲣ ⲛ̀ⲁⲣⲭⲏ ⲛⲓⲃⲉⲛ: ⲛ̀ⲑⲟⲕ ⲡⲉ Ⲡ̀ⲟⲩⲣⲟ ⲛ̀ⲧⲉ ⲛⲓⲟⲩⲣⲱⲟⲩ: Ⲡⲁϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: Ⲡⲁⲥⲱⲧⲏⲣ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ.\n\nⲞⲩⲱ̀ⲟⲩ ⲛⲁⲕ ⲛⲉⲙ Ⲡⲉⲕⲓⲱⲧ: ⲛⲉⲙ Ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ Ⲉⲑⲟⲩⲁⲃ: Ⲡⲁϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: Ⲡⲁⲥⲱⲧⲏⲣ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ.\n\nⲠⲉⲕⲣⲁⲛ ϩⲟⲗϫ ⲟⲩⲟϩ ϥ̀ⲥ̀ⲙⲁⲣⲱⲟⲩⲧ: ϧⲉⲛ ⲣⲱⲟⲩ ⲛ̀ⲛⲏⲉⲑⲟⲩⲁⲃ ⲛ̀ⲧⲁⲕ: Ⲡⲁϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: Ⲡⲁⲥⲱⲧⲏⲣ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ.\n\nⲢⲱⲓ ⲅⲁⲣ ⲛⲁⲥ̀ⲙⲟⲩ ⲉ̀ⲣⲟⲕ: ⲟⲩⲟϩ ⲡⲁⲗⲁⲥ ⲛⲁϯⲱ̀ⲟⲩ ⲛⲁⲕ: Ⲡⲁϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: Ⲡⲁⲥⲱⲧⲏⲣ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ.\n\nⲤⲉ ⲟⲛⲧⲱⲥ ⲧⲉⲛⲥ̀ⲙⲟⲩ ⲉ̀ⲣⲟⲕ: ⲥⲉ ⲟⲛⲧⲱⲥ ⲧⲉⲛϯⲱ̀ⲟⲩ ⲛⲁⲕ: Ⲡⲁϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: Ⲡⲁⲥⲱⲧⲏⲣ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ.\n\nⲦⲉⲛⲛⲁϧⲓⲥⲓ ⲁⲛ ⲉ̀ⲛⲉϩ: ⲧⲉⲛⲛⲁⲕⲏⲛ ⲁⲛ ⲉⲛⲥ̀ⲙⲟⲩ ⲉ̀ⲣⲟⲕ: Ⲡⲁϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: Ⲡⲁⲥⲱⲧⲏⲣ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ.\n\nⲨⲙⲛⲟⲗⲟⲅⲓⲁ ⲛⲓⲃⲉⲛ ⲛ̀ⲥ̀ⲙⲟⲩ: ⲧⲉⲛⲟⲩⲱⲣⲡ ⲙ̀ⲙⲱⲟⲩ ⲉ̀ⲡ̀ϣⲱⲓ ϩⲁⲣⲟⲕ: Ⲡⲁϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: Ⲡⲁⲥⲱⲧⲏⲣ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ.\n\nⲪⲱⲕ ⲡⲉ ⲡⲓⲱ̀ⲟⲩ ⲛⲉⲙ ⲡⲓⲧⲁⲓⲟ: ⲛⲉⲙ ϯⲉⲩⲭⲁⲣⲓⲥⲧⲓⲁ: Ⲡⲁϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: Ⲡⲁⲥⲱⲧⲏⲣ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ.\n\nⲬ̀ⲟⲩⲁⲃ Ⲡ̀ϭⲟⲓⲥ ⲟⲩⲟϩ ⲭ̀ⲟⲩⲁⲃ: ⲭ̀ⲟⲩⲁⲃ Ⲡⲁⲛⲟⲩϯ ϧⲉⲛ ⲟⲩⲙⲉⲑⲙⲏⲓ: Ⲡⲁϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: Ⲡⲁⲥⲱⲧⲏⲣ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ.\n\nⲮⲩⲭⲏ ⲛⲓⲃⲉⲛ ⲥⲉⲥ̀ⲙⲟⲩ ⲉ̀ⲣⲟⲕ: ⲕⲉⲗⲓ ⲛⲓⲃⲉⲛ ⲥⲉ ⲕⲱⲗϫ ⲛⲁⲕ: Ⲡⲁϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: Ⲡⲁⲥⲱⲧⲏⲣ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ.\n\nⲰ̀ ⲡⲓⲣⲁⲛ ⲉⲑⲙⲉϩ ⲛ̀ⲱ̀ⲟⲩ: ⲱ̀ ⲡⲓⲣⲁⲛ ⲉⲑⲙⲉϩ ⲛ̀ⲥ̀ⲙⲟⲩ: Ⲡⲁϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: Ⲡⲁⲥⲱⲧⲏⲣ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ.\n\nϢⲁ ⲉ̀ⲛⲉϩ ⲛ̀ⲧⲉ ⲡⲓⲉ̀ⲛⲉϩ: ⲧⲉⲛⲛⲁⲕⲏⲛ ⲁⲛ ⲉⲛⲥ̀ⲙⲟⲩ ⲉ̀ⲣⲟⲕ: Ⲡⲁϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: Ⲡⲁⲥⲱⲧⲏⲣ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ.\n\nϤ̀ⲉⲛⲧⲁⲕ ⲙ̀ⲙⲁⲩ ⲛ̀ϫⲉ ⲡⲓⲥ̀ⲙⲟⲩ: ⲛⲉⲙ ⲡⲓⲱ̀ⲟⲩ ⲛⲉⲙ ⲡⲓⲧⲁⲓⲟ: Ⲡⲁϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: Ⲡⲁⲥⲱⲧⲏⲣ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ.\n\nϦⲉⲛ ⲟⲩⲥ̀ⲙⲟⲩ ⲧⲉⲛⲥ̀ⲙⲟⲩ ⲉ̀ⲣⲟⲕ: ϧⲉⲛ ⲟⲩⲱ̀ⲟⲩ ⲧⲉⲛϯⲱ̀ⲟⲩ ⲛⲁⲕ: Ⲡⲁϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: Ⲡⲁⲥⲱⲧⲏⲣ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ.\n\nϨⲟⲥ ⲉⲛⲟⲛϧ ⲧⲉⲛⲥ̀ⲙⲟⲩ ⲉ̀ⲣⲟⲕ: ϩⲟⲥ ⲉⲛϣⲟⲡ ⲧⲉⲛϯⲱ̀ⲟⲩ ⲛⲁⲕ: Ⲡⲁϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: Ⲡⲁⲥⲱⲧⲏⲣ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ.\n\nϪⲱⲕ ⲉ̀ⲃⲟⲗ ⲛ̀ⲥ̀ⲙⲟⲩ ⲛⲓⲃⲉⲛ: ⲥⲉⲭⲏ ϧⲉⲛ ⲡⲉⲕⲣⲁⲛ ⲉⲑⲟⲩⲁⲃ: Ⲡⲁϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: Ⲡⲁⲥⲱⲧⲏⲣ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ.\n\nϬⲓ ⲛ̀ⲛⲉⲛϯϩⲟ ⲛ̀ⲧⲟⲧⲉⲛ: ⲁ̀ⲛⲟⲛ ϧⲁ ⲛⲓⲣⲉϥⲉⲣⲛⲟⲃⲓ: Ⲡⲁϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: Ⲡⲁⲥⲱⲧⲏⲣ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ.\n\nϮⲛⲁⲛ ⲛ̀ⲧⲉⲕϩⲓⲣⲏⲛⲏ ⲙ̀ⲙⲏⲓ: ⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ: Ⲡⲁϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: Ⲡⲁⲥⲱⲧⲏⲣ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ.' },
+    { language: 'englishCoptic', text: 'Afti emepounof ennenpsukhē: enje eperefmeui empekran ethouab: Patshois Iēsous Pi-ekhristos: Pasōtēr enagathos.\n\nVon niven se-esmou erok: na nifēou-i nem na epkahi: Patshois Iēsous Pi-ekhristos: Pasōtēr enagathos.\n\nGe gar enthok emmauatk: ekemepsha entenesmou erok: Patshois Iēsous Pi-ekhristos: Pasōtēr enagathos.\n\nDikeōs ke aksiōs: ekemepsha empi-ōou nem pitaio: Patshois Iēsous Pi-ekhristos: Pasōtēr enagathos.\n\nEu-e-esmou epekran ethouab: enje nifulē tērou ente epkahi: Patshois Iēsous Pi-ekhristos: Pasōtēr enagathos.\n\nSoou (6) enhudria emmōou: akaitou enērp efsōtp: Patshois Iēsous Pi-ekhristos: Pasōtēr enagathos.\n\nShashf ensop empi-ehoou: tina-esmou epekran ethouab: Patshois Iēsous Pi-ekhristos: Pasōtēr enagathos.\n\nĒdeōs tenesmou erok: anon tēren kha peklaos: Patshois Iēsous Pi-ekhristos: Pasōtēr enagathos.\n\nEthmetsai-e empekran ethouab: khen rōou ennēethouab entak: Patshois Iēsous Pi-ekhristos: Pasōtēr enagathos.\n\nIsjen shōrp sha rouhi emmēni: tina-esmou epekran ethouab: Patshois Iēsous Pi-ekhristos: Pasōtēr enagathos.\n\nKata shennifi niven etinatētou: tina-esmou epekran ethouab: Patshois Iēsous Pi-ekhristos: Pasōtēr enagathos.\n\nLōiji niven ente efnovi: hitou evol khen nenpsukhē: Patshois Iēsous Pi-ekhristos: Pasōtēr enagathos.\n\nMeui niven ente pijaji: marououei savol emmoi: Patshois Iēsous Pi-ekhristos: Pasōtēr enagathos.\n\nNifi niven se-esmou erok: kata epsaji empi-eprofētēs: Patshois Iēsous Pi-ekhristos: Pasōtēr enagathos.\n\nKsa-epshōi gar enarkhē niven: enthok pe Epouro ente niourōou: Patshois Iēsous Pi-ekhristos: Pasōtēr enagathos.\n\nOu-ōou nak nem Pekiōt: nem Pi-epneuma Ethouab: Patshois Iēsous Pi-ekhristos: Pasōtēr enagathos.\n\nPekran holj ouoh efesmarōout: khen rōou ennēethouab entak: Patshois Iēsous Pi-ekhristos: Pasōtēr enagathos.\n\nRōi gar na-esmou erok: ouoh palas nati-ōou nak: Patshois Iēsous Pi-ekhristos: Pasōtēr enagathos.\n\nSe ontōs tenesmou erok: se ontōs tenti-ōou nak: Patshois Iēsous Pi-ekhristos: Pasōtēr enagathos.\n\nTennakhisi an eneh: tennakēn an enesmou erok: Patshois Iēsous Pi-ekhristos: Pasōtēr enagathos.\n\nUmnologia niven enesmou: tenouōrp emmōou e-epshōi harok: Patshois Iēsous Pi-ekhristos: Pasōtēr enagathos.\n\nFōk pe pi-ōou nem pitaio: nem tieukharistia: Patshois Iēsous Pi-ekhristos: Pasōtēr enagathos.\n\nEkhouab Eptshois ouoh ekhouab: ekhouab Panouti khen oumethmēi: Patshois Iēsous Pi-ekhristos: Pasōtēr enagathos.\n\nPsukhē niven se-esmou erok: keli niven se kōlj nak: Patshois Iēsous Pi-ekhristos: Pasōtēr enagathos.\n\nŌ piran ethmeh enōou: ō piran ethmeh enesmou: Patshois Iēsous Pi-ekhristos: Pasōtēr enagathos.\n\nSha eneh ente pi-eneh: tennakēn an enesmou erok: Patshois Iēsous Pi-ekhristos: Pasōtēr enagathos.\n\nEfentak emmau enje pi-esmou: nem pi-ōou nem pitaio: Patshois Iēsous Pi-ekhristos: Pasōtēr enagathos.\n\nKhen ou-esmou tenesmou erok: khen ou-ōou tenti-ōou nak: Patshois Iēsous Pi-ekhristos: Pasōtēr enagathos.\n\nHos enonkh tenesmou erok: hos enshop tenti-ōou nak: Patshois Iēsous Pi-ekhristos: Pasōtēr enagathos.\n\nJōk evol enesmou niven: sekhē khen pekran ethouab: Patshois Iēsous Pi-ekhristos: Pasōtēr enagathos.\n\nTshi ennentiho entoten: anon kha nirefernovi: Patshois Iēsous Pi-ekhristos: Pasōtēr enagathos.\n\nTinan entekhirēnē emmēi: kha nennovi nan evol: Patshois Iēsous Pi-ekhristos: Pasōtēr enagathos.' },
+    { language: 'english', text: 'Remembering Your Holy Name, brings joy to our souls, O my Lord Jesus Christ, my Good Savior.\n\nEveryone blesses You, the heavenly and the earthly, O my Lord Jesus Christ, my Good Savior.\n\nFor You alone are worthy, to be blessed, O my Lord Jesus Christ, my Good Savior.\n\nTruly You are worthy, of the glory and the honor, O my Lord Jesus Christ, my Good Savior.\n\nAll the tribes of the earth, praise Your Holy Name, O my Lord Jesus Christ, my Good Savior.\n\nSix stone jars, You have changed into choice wine, O my Lord Jesus Christ, my Good Savior.\n\nSeven times everyday, I will praise Your Holy name, O my Lord Jesus Christ, my Good Savior.\n\nWith delight we praise You, all of us Your people, O my Lord Jesus Christ, my Good Savior.\n\nThe beauty of Your Holy name, is on the mouths of Your saints, O my Lord Jesus Christ, my Good Savior.\n\nFrom morning to evening every day, I will praise Your Holy Name, O my Lord Jesus Christ, my Good Savior.\n\nWith every breath that I take, I will praise Your holy name, O my Lord Jesus Christ, my Good Savior.\n\nAll the causes of sin, remove from our souls, O my Lord Jesus Christ, my Good Savior.\n\nAll the thoughts of the enemy, may they be cast away from me, O my Lord Jesus Christ, my Good Savior.\n\nEvery breath praises You, as said by the prophet, O my Lord Jesus Christ, my Good Savior.\n\nYou are above all principalities, You are the King of kings, O my Lord Jesus Christ, my Good Savior.\n\nYours is the glory with Your Father, and the Holy Spirit, O my Lord Jesus Christ, my Good Savior.\n\nYour Name is blessed and sweet, in the mouths of Your saints, O my Lord Jesus Christ, my Good Savior.\n\nMy mouth praises You, and my tongue glorifies You, O my Lord Jesus Christ, my Good Savior.\n\nYes indeed we praise You, yes indeed we glorify You, O my Lord Jesus Christ, my Good Savior.\n\nWe will never get weary, nor cease to praise You, O my Lord Jesus Christ, my Good Savior.\n\nAll the praises and blessings, we send up to You, O my Lord Jesus Christ, my Good Savior.\n\nYours is the glory, the honor and thanksgiving, O my Lord Jesus Christ, my Good Savior.\n\nHoly O Lord and holy, You are holy indeed O my God, O my Lord Jesus Christ, my Good Savior.\n\nEvery soul praises You, every knee bows to You, O my Lord Jesus Christ, my Good Savior.\n\nO name full of glory, O name full of blessings, O my Lord Jesus Christ, my Good Savior.\n\nForever and ever, we will not cease to praise You, O my Lord Jesus Christ, my Good Savior.\n\nYours are the blessings, the glory and the honor, O my Lord Jesus Christ, my Good Savior.\n\nWith blessings we bless You, with glory we glorify You, O my Lord Jesus Christ, my Good Savior.\n\nAs long as we live we will praise You, as long as we are here we will glorify You, O my Lord Jesus Christ, my Good Savior.\n\nThe perfection of all blessings, is in Your holy name, O my Lord Jesus Christ, my Good Savior.\n\nReceive our prayers, we who are the sinners, O my Lord Jesus Christ, my Good Savior.\n\nGrant us Your true peace, and forgive us our sins, O my Lord Jesus Christ, my Good Savior.' },
+    { language: 'englishArabic', text: 'A\'ta farahan li-nufousina, dhikr ismik el-quddous, ya Rabbi Yasou\' el-Maseeh, mukhallisi es-salih.\n\nYubarikuka kullu ahad, es-sama\'iyyoun wal-ardiyyoun, ya Rabbi Yasou\' el-Maseeh, mukhallisi es-salih.\n\nLi-annaka anta wahdak, mustahiqq an nubarikak, ya Rabbi Yasou\' el-Maseeh, mukhallisi es-salih.\n\nHaqqan wa istihqaqan, anta mustahiqq el-majd wal-karama, ya Rabbi Yasou\' el-Maseeh, mukhallisi es-salih.\n\nTusabbih ismak el-quddous, kullu qaba\'il el-ard, ya Rabbi Yasou\' el-Maseeh, mukhallisi es-salih.\n\nSitt ajran ma\', hawwaltaha khamran mukhtaran, ya Rabbi Yasou\' el-Maseeh, mukhallisi es-salih.\n\nSab\' marrat fil-yawm, ubarik ismak el-quddous, ya Rabbi Yasou\' el-Maseeh, mukhallisi es-salih.\n\nBi-ladhdha nubarik, nahnu kulluna sha\'bak, ya Rabbi Yasou\' el-Maseeh, mukhallisi es-salih.\n\nBaha\' ismak el-quddous, fi afwah qiddiseek, ya Rabbi Yasou\' el-Maseeh, mukhallisi es-salih.\n\nMin bakir ila el-masa\' kulla yawm, ubarik ismak el-quddous, ya Rabbi Yasou\' el-Maseeh, mukhallisi es-salih.\n\nKullu nafasin atanassamuh, usabbih ismak el-quddous, ya Rabbi Yasou\' el-Maseeh, mukhallisi es-salih.\n\nKullu asbab el-khatiyya, inza\'ha min anfusina, ya Rabbi Yasou\' el-Maseeh, mukhallisi es-salih.\n\nKullu afkar el-\'aduww, fal-tub\'ad \'anni, ya Rabbi Yasou\' el-Maseeh, mukhallisi es-salih.\n\nKullu nasama tubarikuk, ka-qawl en-nabi, ya Rabbi Yasou\' el-Maseeh, mukhallisi es-salih.\n\nAnta fawqa kulli ri\'asa, anta huwa malik el-mulouk, ya Rabbi Yasou\' el-Maseeh, mukhallisi es-salih.\n\nLaka el-majd ma\'a abeek, war-Rooh el-Qudus, ya Rabbi Yasou\' el-Maseeh, mukhallisi es-salih.\n\nIsmak hulw wa mubarak, fi afwah qiddiseek, ya Rabbi Yasou\' el-Maseeh, mukhallisi es-salih.\n\nFammi yusabbihuk, wa lisani yumajjiduk, ya Rabbi Yasou\' el-Maseeh, mukhallisi es-salih.\n\nNa\'am haqqan nusabbihuk, na\'am haqqan numajjiduk, ya Rabbi Yasou\' el-Maseeh, mukhallisi es-salih.\n\nLa nat\'ab abadan, wa la nakuff \'an tasbeehak, ya Rabbi Yasou\' el-Maseeh, mukhallisi es-salih.\n\nKullu tamajeed el-baraka, nursiluha ilayka ila fawq, ya Rabbi Yasou\' el-Maseeh, mukhallisi es-salih.\n\nLaka el-majd wal-karama, wash-shukr, ya Rabbi Yasou\' el-Maseeh, mukhallisi es-salih.\n\nQuddous anta ya Rabb wa quddous, quddous anta bil-haqiqa, ya Rabbi Yasou\' el-Maseeh, mukhallisi es-salih.\n\nKullu nafs tubarikuk, wa kullu rukba tajthou lak, ya Rabbi Yasou\' el-Maseeh, mukhallisi es-salih.\n\nAyyuha el-ism el-mamlou\' majdan, ayyuha el-ism el-mamlou\' baraka, ya Rabbi Yasou\' el-Maseeh, mukhallisi es-salih.\n\nLa nakuff \'an tasbeehak, ila abad el-abad, ya Rabbi Yasou\' el-Maseeh, mukhallisi es-salih.\n\nLaka el-baraka, wal-majd wal-karama, ya Rabbi Yasou\' el-Maseeh, mukhallisi es-salih.\n\nBil-baraka nubarikuk, bil-majd numajjiduk, ya Rabbi Yasou\' el-Maseeh, mukhallisi es-salih.\n\nMa dumna ahya\' nusabbihuk, ma dumna mawjoudeen numajjiduk, ya Rabbi Yasou\' el-Maseeh, mukhallisi es-salih.\n\nKamal kulli baraka, ka\'in fi ismak el-quddous, ya Rabbi Yasou\' el-Maseeh, mukhallisi es-salih.\n\nIqbal tawassulatina, minna nahnu el-khuta, ya Rabbi Yasou\' el-Maseeh, mukhallisi es-salih.\n\nA\'tina salamak el-haqiqi, waghfir lana khatayana, ya Rabbi Yasou\' el-Maseeh, mukhallisi es-salih.' },
+    { language: 'arabic', text: 'أعطى فرحاً لنفوسنا، ذِكر إسمك القدوس، يا ربي يسوع المسيح، مخلصي الصالح.\n\nيباركك كل أحد، السمائيون والأرضيون، يا ربي يسوع المسيح، مخلصي الصالح.\n\nلأنك أنت وحدك، مستحق أن نباركك، يا ربي يسوع المسيح، مخلصي الصالح.\n\nحقاً وإستحقاقاً، أنت مستحق المجد والكرامة، يا ربي يسوع المسيح، مخلصي الصالح.\n\nتسبح إسمك القدوس، كل قبائل الأرض، يا ربي يسوع المسيح، مخلصي الصالح.\n\nست أجران ماء، حولتها خمراً مختاراً، يا ربي يسوع المسيح، مخلصي الصالح.\n\nسبع مرات في اليوم، أبارك إسمك القدوس، يا ربي يسوع المسيح، مخلصي الصالح.\n\nبلذة نبارك، نحن كلنا شعبك، يا ربي يسوع المسيح، مخلصي الصالح.\n\nبهاء إسمك القدوس، في أفواه قديسيك، يا ربي يسوع المسيح، مخلصي الصالح.\n\nمن باكر إلى المساء كل يوم، أبارك إسمك القدوس، يا ربي يسوع المسيح، مخلصي الصالح.\n\nكل نفس أتنسمه، أسبح إسمك القدوس، يا ربي يسوع المسيح، مخلصي الصالح.\n\nكل أسباب الخطية، إنزعها من أنفسنا، يا ربي يسوع المسيح، مخلصي الصالح.\n\nكل أفكار العدو، فلتبعد عني، يا ربي يسوع المسيح، مخلصي الصالح.\n\nكل نسمة تباركك، كقول النبي، يا ربي يسوع المسيح، مخلصي الصالح.\n\nأنت فوق كل رئاسة، أنت هو ملك الملوك، يا ربي يسوع المسيح، مخلصي الصالح.\n\nلك المجد مع أبيك، والرُّوح القُدُس، يا ربي يسوع المسيح، مخلصي الصالح.\n\nإسمك حلو ومبارك، في أفواه قديسيك، يا ربي يسوع المسيح، مخلصي الصالح.\n\nفمي يسبحك، ولساني يمجدك، يا ربي يسوع المسيح، مخلصي الصالح.\n\nنعم حقاً نسبحك، نعم حقاً نمجدك، يا ربي يسوع المسيح، مخلصي الصالح.\n\nلا نتعب أبداً، ولا نكف عن تسبيحك، يا ربي يسوع المسيح، مخلصي الصالح.\n\nكل تماجيد البركة، نرسلها إليك إلى فوق، يا ربي يسوع المسيح، مخلصي الصالح.\n\nلك المجد والكرامة، والشكر، يا ربي يسوع المسيح، مخلصي الصالح.\n\nقدوس أنت يا رب وقدوس، قدوس أنت بالحقيقة، يا ربي يسوع المسيح، مخلصي الصالح.\n\nكل نفس تباركك، وكل ركبة تجثو لك، يا ربي يسوع المسيح، مخلصي الصالح.\n\nأيها الإسم المملوء مجداً، أيها الإسم المملوء بركة، يا ربي يسوع المسيح، مخلصي الصالح.\n\nلا نكف عن تسبيحك، إلى أبد الأبد، يا ربي يسوع المسيح، مخلصي الصالح.\n\nلك البركة، والمجد والكرامة، يا ربي يسوع المسيح، مخلصي الصالح.\n\nبالبركة نباركك، بالمجد نمجدك، يا ربي يسوع المسيح، مخلصي الصالح.\n\nما دمنا أحياء نسبحك، ما دمنا موجودين نمجدك، يا ربي يسوع المسيح، مخلصي الصالح.\n\nكمال كل بركة، كائن في إسمك القدوس، يا ربي يسوع المسيح، مخلصي الصالح.\n\nإقبل توسلاتنا، منا نحن الخطاة، يا ربي يسوع المسيح، مخلصي الصالح.\n\nأعطنا سلامك الحقيقي، وإغفر لنا خطايانا، يا ربي يسوع المسيح، مخلصي الصالح.' },
+  ],
+};
+
+// Text and names of the Saturday Theotokia, by part number
+const saturdayTheotokiaTexts: Record<number, LanguageVersion[]> = {
+  1: [
+    { language: 'coptic', text: 'Ϯⲁⲧⲑⲱⲗⲉⲃ ⲛ̀ⲥⲉⲙⲛⲉ: ⲟⲩⲟϩ ⲉⲑⲟⲩⲁⲃ ϧⲉⲛ ϩⲱⲃ ⲛⲓⲃⲉⲛ: ⲑⲏⲉ̀ⲧⲁⲥⲓ̀ⲛⲓ ⲛⲁⲛ ⲙ̀Ⲫ̀ⲛⲟⲩϯ: ⲉϥⲧⲁⲗⲏⲟⲩⲧ ⲉ̀ϫⲉⲛ ⲛⲉⲥϫ̀ⲫⲟⲓ.\n\nⲤ̀ⲣⲁϣⲓ ⲛⲉⲙⲉ ⲛ̀ϫⲉ ϯⲕ̀ⲧⲏⲥⲓⲥ ⲧⲏⲣⲥ: ⲉⲥⲱϣ ⲉ̀ⲃⲟⲗ ⲉⲥϫⲱ ⲙ̀ⲙⲟⲥ: ϫⲉ ⲭⲉⲣⲉ ⲑⲏⲉⲑⲙⲉϩ ⲛ̀ϩ̀ⲙⲟⲧ: ⲟⲩⲟϩ Ⲡ̀ϭⲟⲓⲥ ϣⲟⲡ ⲛⲉⲙⲉ.\n\nⲬⲉⲣⲉ ⲑⲏⲉⲑⲙⲉϩ ⲛ̀ϩ̀ⲙⲟⲧ: ⲭⲉⲣⲉ ⲑⲏⲉ̀ⲧⲁⲥϫⲉⲙ ϩ̀ⲙⲟⲧ: ⲭⲉⲣⲉ ⲑⲏⲉ̀ⲧⲁⲥⲙⲉⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: ⲟⲩⲟϩ Ⲡ̀ϭⲟⲓⲥ ϣⲟⲡ ⲛⲉⲙⲉ.' },
+    { language: 'englishCoptic', text: 'Tiatthōleb ensemne: ouoh ethouab khen hōb niven: thē-etasini nan em-Efnouti: eftalēout ejen nesejfoi.\n\nEsrashi neme enje ti-ektēsis tērs: esōsh evol esjō emmos: je khere thēethmeh enehmot: ouoh Eptshois shop neme.\n\nKhere thēethmeh enehmot: khere thē-etasjem ehmot: khere thē-etasmes Pi-ekhristos: ouoh Eptshois shop neme.' },
+    { language: 'english', text: 'O chaste and undefiled, holy in everything, who brought God to us, carried in her arms.\n\nThe whole creation rejoices with you, proclaiming and saying: “Hail to you O full of grace, the Lord is with you!”\n\nHail to you O full of grace. Hail to you who has found grace. Hail to you who has given birth to Christ. The Lord is with you.' },
+    { language: 'englishArabic', text: 'Ayyatuha ghayr ed-danisa el-\'afeefa, el-qiddisa fi kulli shay\', allati qaddamat lana, Allah mahmoulan \'ala dhira\'ayha.\n\nTafrah ma\'aki kull el-khaleeqa, sarikha qa\'ila, "Es-salam laki ya mumtali\'at ni\'ma, er-Rabb ma\'aki."\n\nEs-salam laki ya mumtali\'at ni\'ma, es-salam laki ya man wajadti ni\'ma, es-salam laki ya man waladti el-Maseeh, er-Rabb ma\'aki.' },
+    { language: 'arabic', text: 'أيتها الغير الدَّنِسة العفيفة، القديسة في كل شئ، التي قَدَّمت لنا، الله محمولاً على ذراعيها.\n\nتفرح معكِ كل الخليقة، صارخة قائلة، "السلام لكِ يا مُمْتلئة نعمة، الربُّ مَعَكِ."\n\nالسلام لكِ يا مُمْتلئة نعمة، السلام لكِ يا مَنْ وجدتِ نعمة، السلام لكِ يا مَنْ ولَدْتِ المسيح، الربُّ مَعَكِ.' },
+  ],
+  2: [
+    { language: 'coptic', text: 'Ⲧⲉⲛⲉⲣⲙⲁⲕⲁⲣⲓⲍⲓⲛ ⲛ̀ⲧⲉⲙⲉⲧⲛⲓϣϯ: ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ ⲛ̀ⲥⲁⲃⲏ: ⲧⲉⲛϯ ⲛⲉ ⲙ̀ⲡⲓⲭⲉⲣⲉⲧⲓⲥⲙⲟⲥ: ⲛⲉⲙ Ⲅⲁⲃⲣⲓⲏⲗ ⲡⲓⲁⲅⲅⲉⲗⲟⲥ.\n\nϪⲉ ⲉ̀ⲃⲟⲗ ϩⲓⲧⲉⲛ Ⲡⲉⲕⲁⲣⲡⲟⲥ: ⲁ̀ ⲡⲓⲟⲩϫⲁⲓ ⲧⲁϩⲉ ⲡⲉⲛⲅⲉⲛⲟⲥ: ⲁ̀ Ⲫ̀ⲛⲟⲩϯ ϩⲟⲧⲡⲉⲛ ⲉ̀ⲣⲟϥ ⲛ̀ⲕⲉⲥⲟⲡ: ϩⲓⲧⲉⲛ ⲧⲉϥⲙⲉⲧⲁ̀ⲅⲁⲑⲟⲥ.\n\nⲬⲉⲣⲉ ⲑⲏⲉⲑⲙⲉϩ ⲛ̀ϩ̀ⲙⲟⲧ: ⲭⲉⲣⲉ ⲑⲏⲉ̀ⲧⲁⲥϫⲉⲙ ϩ̀ⲙⲟⲧ: ⲭⲉⲣⲉ ⲑⲏⲉ̀ⲧⲁⲥⲙⲉⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: ⲟⲩⲟϩ Ⲡ̀ϭⲟⲓⲥ ϣⲟⲡ ⲛⲉⲙⲉ.' },
+    { language: 'englishCoptic', text: 'Tenermakarizin entemetnishti: ō Tiparthenos ensavē: tenti ne empikheretismos: nem Gabriēl piaggelos.\n\nJe evol hiten Pekarpos: a pioujai tahe pengenos: a Efnouti hotpen erof enkesop: hiten tefmetagathos.\n\nKhere thēethmeh enehmot: khere thē-etasjem ehmot: khere thē-etasmes Pi-ekhristos: ouoh Eptshois shop neme.' },
+    { language: 'english', text: 'We praise your greatness, O the wise Virgin, and send unto you greetings, with Gabriel the angel.\n\nFor through your fruit, salvation came to our race, and God has reconciled us once again, through His goodness.\n\nHail to you O full of grace. Hail to you who has found grace. Hail to you who has given birth to Christ. The Lord is with you.' },
+    { language: 'englishArabic', text: 'Nughbitu \'azamataki, ayyatuha el-\'adhra\' el-hakeema, wa nu\'teeki es-salam, ma\'a Ghubriyal el-malak.\n\nLi-anna min qibal thamaratik, adraka el-khalas jinsana, wa aslahana Allah marratan ukhra, min qibal salahih.\n\nEs-salam laki ya mumtali\'at ni\'ma, es-salam laki ya man wajadti ni\'ma, es-salam laki ya man waladti el-Maseeh, er-Rabb ma\'aki.' },
+    { language: 'arabic', text: 'نُغبِطُ عظمتكِ، أيتها العذراء الحكيمة، ونُعطيكِ السلام، مع غبريال الملاك.\n\nلأن من قِبَل ثمرتِك، أدرك الخلاص جنسنا، وأصلحنا الله مرةً أخرى، من قِبَل صلاحه.\n\nالسلام لكِ يا مُمْتلئة نعمة، السلام لكِ يا مَنْ وجدتِ نعمة، السلام لكِ يا مَنْ ولَدْتِ المسيح، الربُّ مَعَكِ.' },
+  ],
+  3: [
+    { language: 'coptic', text: 'Ϩⲱⲥ ⲙⲁⲛ̀ϣⲉⲗⲉⲧ ⲛ̀ⲁⲧⲧⲁⲕⲟ: ⲁ̀ Ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ Ⲉⲑⲟⲩⲁⲃ ⲓ̀ ⲉ̀ϫⲱ: ⲟⲩϫⲟⲙ ⲛ̀ⲧⲉ Ⲫⲏⲉⲧϭⲟⲥⲓ: ⲉⲑⲛⲁⲉⲣϧⲏⲓⲃⲓ ⲉ̀ⲣⲟ Ⲙⲁⲣⲓⲁ.\n\nϪⲉ ⲁ̀ⲣⲉϫ̀ⲫⲟ ⲙ̀Ⲡⲓⲁ̀ⲗⲏⲑⲓⲛⲟⲥ: ⲛ̀Ⲗⲟⲅⲟⲥ ⲛ̀Ϣⲏⲣⲓ ⲛ̀ⲧⲉ Ⲫ̀ⲓⲱⲧ: ⲉⲑⲙⲏⲛ ⲉ̀ⲃⲟⲗ ϣⲁ ⲉ̀ⲛⲉϩ: ⲁϥⲓ̀ ⲁϥⲥⲟⲧⲧⲉⲛ ϧⲉⲛ ⲛⲉⲛⲛⲟⲃⲓ.\n\nⲬⲉⲣⲉ ⲑⲏⲉⲑⲙⲉϩ ⲛ̀ϩ̀ⲙⲟⲧ: ⲭⲉⲣⲉ ⲑⲏⲉ̀ⲧⲁⲥϫⲉⲙ ϩ̀ⲙⲟⲧ: ⲭⲉⲣⲉ ⲑⲏⲉ̀ⲧⲁⲥⲙⲉⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: ⲟⲩⲟϩ Ⲡ̀ϭⲟⲓⲥ ϣⲟⲡ ⲛⲉⲙⲉ.' },
+    { language: 'englishCoptic', text: 'Hōs ma-enshelet enattako: a Pi-epneuma Ethouab i ejō: oujom ente Fēettshosi: ethnaerkhēivi ero Maria.\n\nJe are-ejfo em-Pi-alēthinos: en-Logos en-Shēri ente Efiōt: ethmēn evol sha eneh: afi afsotten khen nennovi.\n\nKhere thēethmeh enehmot: khere thē-etasjem ehmot: khere thē-etasmes Pi-ekhristos: ouoh Eptshois shop neme.' },
+    { language: 'english', text: 'As an undefiled chamber, the Holy Spirit came upon you, and the power of the Most High, will overshadow you, O Mary.\n\nFor you bore the True Word, the Son of the eternal Father, who came and saved us, from our sins.\n\nHail to you O full of grace. Hail to you who has found grace. Hail to you who has given birth to Christ. The Lord is with you.' },
+    { language: 'englishArabic', text: 'Ka-khidrin bi-ghayr fasad, er-Rooh el-Qudus halla \'alayki, wa quwwat el-\'Aliy, zallalatki ya Maryam.\n\nLi-annaki waladti, el-kalima el-haqiqi ibn el-Ab, ed-da\'im ila el-abad, ata wa khallasana min khatayana.\n\nEs-salam laki ya mumtali\'at ni\'ma, es-salam laki ya man wajadti ni\'ma, es-salam laki ya man waladti el-Maseeh, er-Rabb ma\'aki.' },
+    { language: 'arabic', text: 'كخِدرٍ بغير فسادٍ، الرُّوح القُدُس حلَّ عليكِ، وقوة العليْ، ظلَّلتِكِ يا مريم.\n\nلأنكِ ولَدْتِ، الكلمة الحقيقي إبن الآب، الدائم إلى الأبد، أتى وخَلَّصنا من خطايانا.\n\nالسلام لكِ يا مُمْتلئة نعمة، السلام لكِ يا مَنْ وجدتِ نعمة، السلام لكِ يا مَنْ ولَدْتِ المسيح، الربُّ مَعَكِ.' },
+  ],
+  4: [
+    { language: 'coptic', text: 'Ⲛ̀ⲑⲟ ⲅⲁⲣ ⲡⲉ ⲡⲓⲅⲉⲛⲟⲥ: ⲛⲉⲙ ϯⲛⲟⲩⲛⲓ ⲛ̀ⲧⲉ Ⲇⲁⲩⲓⲇ: ⲁ̀ⲣⲉⲙⲓⲥⲓ ⲛⲁⲛ ⲕⲁⲧⲁ ⲥⲁⲣⲝ: ⲙ̀Ⲡⲉⲛⲥⲱⲧⲏⲣ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ.\n\nⲠⲓⲙⲟⲛⲟⲅⲉⲛⲏⲥ ⲉ̀ⲃⲟⲗ ϧⲉⲛ Ⲫ̀ⲓⲱⲧ: ϧⲁϫⲱⲟⲩ ⲛ̀ⲛⲓⲉ̀ⲱⲛ ⲧⲏⲣⲟⲩ: ⲁϥϣⲟⲩⲱϥ ⲉ̀ⲃⲟⲗ ⲙ̀ⲙⲓⲛⲙ̀ⲙⲟϥ ⲁϥϭⲓ ⲛ̀ⲟⲩⲙⲟⲣⲫⲏ ⲙ̀ⲃⲱⲕ ⲛ̀ϧⲏϯ: ⲉⲑⲃⲉ ⲡⲉⲛⲟⲩϫⲁⲓ.\n\nⲬⲉⲣⲉ ⲑⲏⲉⲑⲙⲉϩ ⲛ̀ϩ̀ⲙⲟⲧ: ⲭⲉⲣⲉ ⲑⲏⲉ̀ⲧⲁⲥϫⲉⲙ ϩ̀ⲙⲟⲧ: ⲭⲉⲣⲉ ⲑⲏⲉ̀ⲧⲁⲥⲙⲉⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: ⲟⲩⲟϩ Ⲡ̀ϭⲟⲓⲥ ϣⲟⲡ ⲛⲉⲙⲉ.' },
+    { language: 'englishCoptic', text: 'Entho gar pe pigenos: nem tinouni ente Dauid: aremisi nan kata sarks: em-Pensōtēr Iēsous Pi-ekhristos.\n\nPimonogenēs evol khen Efiōt: khajōou enni-eōn tērou: afshouōf evol emminemmof aftshi enoumorfē emvōk enkhēti: ethve penoujai.\n\nKhere thēethmeh enehmot: khere thē-etasjem ehmot: khere thē-etasmes Pi-ekhristos: ouoh Eptshois shop neme.' },
+    { language: 'english', text: 'You are the race, and descendant of David. Who bore to us according to the flesh, our Savior Jesus Christ.\n\nThe only-begotten of the Father, before all ages, He emptied Himself, and took the form of a servant, for our salvation.\n\nHail to you O full of grace. Hail to you who has found grace. Hail to you who has given birth to Christ. The Lord is with you.' },
+    { language: 'englishArabic', text: 'Anti hiya jins, wa asl Dawoud, waladti lana jasadiyyan, mukhallisana Yasou\' el-Maseeh.\n\nEl-waheed min el-Ab, qabla kull ed-duhour, akhla dhatahu wa akhadha shakl \'abdin minki, li-ajl khalasina.\n\nEs-salam laki ya mumtali\'at ni\'ma, es-salam laki ya man wajadti ni\'ma, es-salam laki ya man waladti el-Maseeh, er-Rabb ma\'aki.' },
+    { language: 'arabic', text: 'أنتِ هي جنس، وأصل داود، ولَدْتِ لنا جسدياً، مُخَلِّصنا يسوع المسيح.\n\nالوحيد من الآب، قبل كل الدهور، أخلى ذاته وأخذ شكل عبد منكِ، لأجل خلاصنا.\n\nالسلام لكِ يا مُمْتلئة نعمة، السلام لكِ يا مَنْ وجدتِ نعمة، السلام لكِ يا مَنْ ولَدْتِ المسيح، الربُّ مَعَكِ.' },
+  ],
+  5: [
+    { language: 'coptic', text: 'Ⲁ̀ⲣⲉϣⲱⲡⲓ ⲛ̀ⲟⲩⲙⲁϩⲥ̀ⲛⲟⲩϯ ⲙ̀ⲫⲉ: ϩⲓϫⲉⲛ ⲡⲓⲕⲁϩⲓ ⲱ̀ Ϯⲙⲁⲥⲛⲟⲩϯ: ϫⲉ ⲁϥϣⲁⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ ⲛ̀ϧⲏϯ: ⲛ̀ϫⲉ Ⲡⲓⲣⲏ ⲛ̀ⲧⲉ ϯⲇⲓⲕⲉⲟ̀ⲥⲩⲛⲏ.\n\nⲀ̀ⲣⲉϫ̀ⲫⲟϥ ϩⲓⲧⲉⲛ ⲟⲩⲡ̀ⲣⲟⲫⲏⲧⲓⲁ: ⲁϭⲛⲉ ϫ̀ⲣⲟϫ ⲛ̀ⲁⲧⲧⲁⲕⲟ: ϩⲱⲥ Ⲇⲏⲙⲓⲟⲩⲣⲅⲟⲥ: ⲟⲩⲟϩ ⲛ̀Ⲗⲟⲅⲟⲥ ⲛ̀ⲧⲉ Ⲫ̀ⲓⲱⲧ.\n\nⲬⲉⲣⲉ ⲑⲏⲉⲑⲙⲉϩ ⲛ̀ϩ̀ⲙⲟⲧ: ⲭⲉⲣⲉ ⲑⲏⲉ̀ⲧⲁⲥϫⲉⲙ ϩ̀ⲙⲟⲧ: ⲭⲉⲣⲉ ⲑⲏⲉ̀ⲧⲁⲥⲙⲉⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: ⲟⲩⲟϩ Ⲡ̀ϭⲟⲓⲥ ϣⲟⲡ ⲛⲉⲙⲉ.' },
+    { language: 'englishCoptic', text: 'Areshōpi enoumahesnouti emfe: hijen pikahi ō Timasnouti: je afshai nan evol enkhēti: enje Pirē ente tidike-osunē.\n\nAre-ejfof hiten ou-eprofētia: atshne ejroj enattako: hōs Dēmiourgos: ouoh en-Logos ente Efiōt.\n\nKhere thēethmeh enehmot: khere thē-etasjem ehmot: khere thē-etasmes Pi-ekhristos: ouoh Eptshois shop neme.' },
+    { language: 'english', text: 'You became the Second heaven, on earth, O Mother of God. For the Sun of Righteousness, shone to us from you.\n\nYou bore Him according to the prophecy, without seed or corruption. He is the Creator, and the Word of the Father.\n\nHail to you O full of grace. Hail to you who has found grace. Hail to you who has given birth to Christ. The Lord is with you.' },
+    { language: 'englishArabic', text: 'Sirti sama\'an thaniya, \'ala el-ard ya walidat el-ilah, li-annahu ashraqa lana minki, shams el-birr.\n\nWaladtihi kan-nubuwwa, bi-ghayr zar\'in wa la fasad, wa huwa el-khaliq, wa kalimat el-Ab.\n\nEs-salam laki ya mumtali\'at ni\'ma, es-salam laki ya man wajadti ni\'ma, es-salam laki ya man waladti el-Maseeh, er-Rabb ma\'aki.' },
+    { language: 'arabic', text: 'صرتِ سماءً ثانيةً، على الأرض يا والدة الإله، لأنه أشرق لنا منكِ، شمس البر.\n\nوَلَدْتِه كالنبوة، بغير زرعٍ ولا فسادٍ، وهو الخالق، وكلمة الآب.\n\nالسلام لكِ يا مُمْتلئة نعمة، السلام لكِ يا مَنْ وجدتِ نعمة، السلام لكِ يا مَنْ ولَدْتِ المسيح، الربُّ مَعَكِ.' },
+  ],
+  6: [
+    { language: 'coptic', text: 'Ϯⲥ̀ⲕⲏⲛⲏ ⲑⲏⲉ̀ⲧⲟⲩⲙⲟⲩϯ ⲉ̀ⲣⲟⲥ: ϫⲉ ⲑⲏⲉⲑⲟⲩⲁⲃ ⲛ̀ⲧⲉ ⲛⲏⲉⲑⲟⲩⲁⲃ: ⲉ̀ⲣⲉ ϯⲕⲓⲃⲱⲧⲟⲥ ⲛ̀ϧⲏⲧⲥ: ⲉⲧⲟϣϫ ⲛ̀ⲛⲟⲩⲃ ⲛ̀ⲥⲁⲥⲁ ⲛⲓⲃⲉⲛ.\n\nⲐⲏ ⲉ̀ⲣⲉ ⲛⲓⲡ̀ⲗⲁⲝ ⲛ̀ϧⲏⲧⲥ: ⲛ̀ⲧⲉ ϯⲇⲓⲁⲑⲏⲕⲏ: ⲛⲉⲙ ⲡⲓⲥ̀ⲧⲁⲙⲛⲟⲥ ⲛ̀ⲛⲟⲩⲃ: ⲉ̀ⲣⲉ ⲡⲓⲙⲁⲛⲛⲁ ϩⲏⲡ ⲛ̀ϧⲏⲧϥ.\n\nϤ̀ⲟⲓ ⲛ̀ⲧⲩⲡⲟⲥ ⲙ̀Ⲡ̀ϣⲏⲣⲓ ⲙ̀Ⲫ̀ⲛⲟⲩϯ: ⲉ̀ⲧⲁϥⲓ̀ ⲁϥϣⲱⲡⲓ ϧⲉⲛ Ⲙⲁⲣⲓⲁ: Ϯⲡⲁⲣⲑⲉⲛⲟⲥ ⲛ̀ⲁⲧⲑⲱⲗⲉⲃ: ⲁϥϭⲓⲥⲁⲣⲝ ⲉ̀ⲃⲟⲗ ⲛ̀ϧⲏⲧⲥ.\n\nⲀⲥϫ̀ⲫⲟϥ ⲉ̀ⲡⲓⲕⲟⲥⲙⲟⲥ: ϧⲉⲛ ⲟⲩⲙⲉⲧⲟⲩⲁⲓ ⲛ̀ⲁⲧⲫⲱⲣϫ: ⲁⲗⲗⲁ ⲛ̀ⲑⲟϥ ⲡⲉ Ⲡ̀ⲟⲩⲣⲟ ⲛ̀ⲧⲉ ⲡ̀ⲱ̀ⲟⲩ: ⲁϥⲓ̀ ⲟⲩⲟϩ ⲁϥⲥⲱϯ ⲙ̀ⲙⲟⲛ.\n\nⲠⲓⲡⲁⲣⲁⲇⲓⲥⲟⲥ ⲉ̀ϣ̀ⲗⲏⲗⲟⲩⲓ̀: ϫⲉ ⲁϥⲓ̀ ⲛ̀ϫⲉ Ⲡⲓϩⲓⲏⲃ: ⲛ̀Ⲗⲟⲅⲟⲥ ⲛ̀Ϣⲏⲣⲓ ⲛ̀ⲧⲉ Ⲫ̀ⲓⲱⲧ ⲉⲑⲙⲏⲛ ⲉ̀ⲃⲟⲗ ϣⲁ ⲉ̀ⲛⲉϩ: ⲁϥⲓ̀ ⲁϥⲥⲟⲧⲧⲉⲛ ϧⲉⲛ ⲛⲉⲛⲛⲟⲃⲓ.\n\nⲬⲉⲣⲉ ⲑⲏⲉⲑⲙⲉϩ ⲛ̀ϩ̀ⲙⲟⲧ: ⲭⲉⲣⲉ ⲑⲏⲉ̀ⲧⲁⲥϫⲉⲙ ϩ̀ⲙⲟⲧ: ⲭⲉⲣⲉ ⲑⲏⲉ̀ⲧⲁⲥⲙⲉⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: ⲟⲩⲟϩ Ⲡ̀ϭⲟⲓⲥ ϣⲟⲡ ⲛⲉⲙⲉ.' },
+    { language: 'englishCoptic', text: 'Ti-eskēnē thē-etoumouti eros: je thēethouab ente nēethouab: ere tikivōtos enkhēts: etoshj ennoub ensasa niven.\n\nThē ere ni-eplaks enkhēts: ente tidiathēkē: nem pi-estamnos ennoub: ere pimanna hēp enkhētf.\n\nEfoi entupos em-Epshēri em-Efnouti: etafi afshōpi khen Maria: Tiparthenos enatthōleb: aftshisarks evol enkhēts.\n\nAsejfof epikosmos: khen oumetouai enatfōrj: alla enthof pe Epouro ente epōou: afi ouoh afsōti emmon.\n\nPiparadisos e-eshlēlou-i: je afi enje Pihiēb: en-Logos en-Shēri ente Efiōt ethmēn evol sha eneh: afi afsotten khen nennovi.\n\nKhere thēethmeh enehmot: khere thē-etasjem ehmot: khere thē-etasmes Pi-ekhristos: ouoh Eptshois shop neme.' },
+    { language: 'english', text: 'The dome which is called, the Holy of holies, which contains the ark, overlaid with gold from every side.\n\nWherein are the tablets, of the covenant, and the golden vessel, where the manna hidden in it.\n\nIt is a symbol of the Son of God, who came and dwelt in Virgin Mary, the unblemished, and took flesh from her.\n\nShe gave birth to Him to the world. He is united without separation. For He is the King of Glory; He came and saved us.\n\nParadise rejoices, for the coming of the Lamb, the Word, Son of the Eternal Father, to save us from our sins.\n\nHail to you O full of grace. Hail to you who has found grace. Hail to you who has given birth to Christ. The Lord is with you.' },
+    { language: 'englishArabic', text: 'El-qubba allati tud\'a, quds el-aqdas, allati feeha et-tabout, el-musaffah bidh-dhahab min kulli nahiya.\n\nAllati feeha, lawha el-\'ahd, wal-qist edh-dhahabi, el-makhfi feehi el-mann.\n\nHuwa mithal li-ibn Allah, alladhi ata wa halla fi Maryam, el-\'adhra\' ghayr ed-danisa, wa tajassada minha.\n\nWaladathu lil-\'alam, bi-ittihad bi-ghayr iftiraq, idh huwa malik el-majd, ata wa khallasana.\n\nYatahallal el-firdaws, bi-maji\' el-hamal el-kalima, ibn el-Ab ed-da\'im ila el-abad, li-yukhallisana min khatayana.\n\nEs-salam laki ya mumtali\'at ni\'ma, es-salam laki ya man wajadti ni\'ma, es-salam laki ya man waladti el-Maseeh, er-Rabb ma\'aki.' },
+    { language: 'arabic', text: 'القُبَّة التي تُدعَى، قُدس الأقداس، التي فيها التابوت، المُصفَّح بالذهب من كل ناحيةٍ.\n\nالتي فيه، لوحا العهد، والقِسط الذهبي، المُخفى فيه المَنَّ.\n\nهو مِثال لإبن الله، الذي أتى وحَلَّ في مريم، العذراء غير الدنِسة، وتَجسَّد منها.\n\nوَلَدَتهُ للعالم، بإتحاد بغير إفتراق، إذ هو ملك المجد، أتى وخَلَّصنا.\n\nيتهلَّل الفردوس، بمجئ الحمل الكلمة، إبن الآب الدائم إلى الأبد، ليُخلِّصنا من خطايانا.\n\nالسلام لكِ يا مُمْتلئة نعمة، السلام لكِ يا مَنْ وجدتِ نعمة، السلام لكِ يا مَنْ ولَدْتِ المسيح، الربُّ مَعَكِ.' },
+  ],
+  7: [
+    { language: 'coptic', text: 'Ⲁⲩⲙⲟⲩϯ ⲉ̀ⲣⲟ ϫⲉ Ⲑ̀ⲙⲁⲩ ⲙ̀Ⲫ̀ⲛⲟⲩϯ: Ⲡⲓⲟⲩⲣⲟ ⲙ̀ⲙⲏⲓ ⲙⲉⲛⲉⲛⲥⲁ ⲑ̀ⲣⲉⲙⲁⲥϥ: ⲁ̀ⲣⲉⲟ̀ϩⲓ ⲉ̀ⲣⲉⲟⲓ ⲙ̀ⲡⲁⲣⲑⲉⲛⲟⲥ: ϧⲉⲛ ⲟⲩϩⲱⲃ ⲙ̀ⲡⲁⲣⲁⲇⲟⲝⲟⲛ.\n\nⲈⲙⲙⲁⲛⲟⲩⲏⲗ ⲫⲏⲉ̀ⲧⲁⲣⲉϫ̀ⲫⲟϥ: ⲉⲑⲃⲉ ⲫⲁⲓ ⲁϥⲁ̀ⲣⲉϩ ⲉ̀ⲣⲟ: ⲉ̀ⲣⲉⲟⲓ ⲛ̀ⲁⲧⲧⲁⲕⲟ: ⲉⲥⲧⲟⲃ ⲛ̀ϫⲉ ⲧⲉⲡⲁⲣⲑⲉⲛⲓⲁ.\n\nⲬⲉⲣⲉ ⲑⲏⲉⲑⲙⲉϩ ⲛ̀ϩ̀ⲙⲟⲧ: ⲭⲉⲣⲉ ⲑⲏⲉ̀ⲧⲁⲥϫⲉⲙ ϩ̀ⲙⲟⲧ: ⲭⲉⲣⲉ ⲑⲏⲉ̀ⲧⲁⲥⲙⲉⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: ⲟⲩⲟϩ Ⲡ̀ϭⲟⲓⲥ ϣⲟⲡ ⲛⲉⲙⲉ.' },
+    { language: 'englishCoptic', text: 'Aumouti ero je Ethmau em-Efnouti: Piouro emmēi menensa ethremasf: are-ohi ereoi emparthenos: khen ouhōb emparadokson.\n\nEmmanouēl fē-etare-ejfof: ethve fai afareh ero: ereoi enattako: estob enje teparthenia.\n\nKhere thēethmeh enehmot: khere thē-etasjem ehmot: khere thē-etasmes Pi-ekhristos: ouoh Eptshois shop neme.' },
+    { language: 'english', text: 'You are called the Mother of God, the true King, and after you delivered Him, you mysteriously remained a virgin.\n\nEmmanuel whom you gave birth to, guarded you, from corruption, and your virginity remained sealed.\n\nHail to you O full of grace. Hail to you who has found grace. Hail to you who has given birth to Christ. The Lord is with you.' },
+    { language: 'englishArabic', text: 'Du\'eeti umm Allah, el-malik el-haqiqi, wa ba\'da ma waladtihi, baqeeti \'adhra\' bi-amrin \'ajeeb.\n\n\'Imanoueel alladhi waladtihi, huwa hafazaki, bi-ghayr fasad, wa batouliyyatuki makhtouma.\n\nEs-salam laki ya mumtali\'at ni\'ma, es-salam laki ya man wajadti ni\'ma, es-salam laki ya man waladti el-Maseeh, er-Rabb ma\'aki.' },
+    { language: 'arabic', text: 'دُعيتِ أُم الله، الملك الحقيقي، وبعد ما وَلَدْتِهِ، بَقيتِ عذراء بأمرٍ عجيبٍ.\n\nعمانوئيل الذي وَلَدْتِهِ، هو حَفَظكِ، بغير فسادٍ، وبتوليتِكِ مختومة.\n\nالسلام لكِ يا مُمْتلئة نعمة، السلام لكِ يا مَنْ وجدتِ نعمة، السلام لكِ يا مَنْ ولَدْتِ المسيح، الربُّ مَعَكِ.' },
+  ],
+  8: [
+    { language: 'coptic', text: 'Ⲁ̀ⲣⲉⲧⲉⲛⲑⲱⲛϯ ⲉ̀ϯⲙⲟⲩⲕⲓ: ⲑⲏⲉ̀ⲧⲁ Ⲓⲁⲕⲱⲃ ⲛⲁⲩ ⲉ̀ⲣⲟⲥ: ⲉⲥϭⲟⲥⲓ ϣⲁ ⲉ̀ϩ̀ⲣⲏⲓ ⲉ̀ⲧ̀ⲫⲉ: ⲉ̀ⲣⲉ Ⲡ̀ϭⲟⲓⲥ ϩⲓϫⲱⲥ ϧⲉⲛ ⲟⲩϩⲟϯ.\n\nⲬⲉⲣⲉ ⲛⲉ ⲉ̀ⲃⲟⲗ ϩⲓⲧⲟⲧⲉⲛ: ⲱ̀ ⲑⲏⲉ̀ⲧⲁⲥϣⲱⲡ ⲉ̀ⲣⲟⲥ ⲙ̀Ⲡⲓⲁ̀ⲭⲱⲣⲓⲧⲟⲥ: ϧⲉⲛ ⲧⲉⲥⲙⲏⲧⲣⲁ ⲙ̀ⲡⲁⲣⲑⲉⲛⲓⲕⲏ: ⲟⲩⲟϩ ⲉⲥϣⲟⲧⲉⲙ ⲛ̀ⲥⲁⲥⲁ ⲛⲓⲃⲉⲛ.\n\nⲀ̀ⲣⲉϣⲱⲡⲓ ⲛⲁⲛ ⲛ̀ⲟⲩⲡ̀ⲣⲟⲥⲧⲁⲧⲏⲥ: ⲛⲁϩⲣⲉⲛ Ⲫ̀ⲛⲟⲩϯ Ⲡⲉⲛⲣⲉϥⲥⲱϯ: ⲫⲏⲉ̀ⲧⲁϥϭⲓⲥⲁⲣⲝ ⲉ̀ⲃⲟⲗ ⲛ̀ϧⲏϯ: ⲉⲑⲃⲉ ⲡⲉⲛⲟⲩϫⲁⲓ.\n\nⲬⲉⲣⲉ ⲑⲏⲉⲑⲙⲉϩ ⲛ̀ϩ̀ⲙⲟⲧ: ⲭⲉⲣⲉ ⲑⲏⲉ̀ⲧⲁⲥϫⲉⲙ ϩ̀ⲙⲟⲧ: ⲭⲉⲣⲉ ⲑⲏⲉ̀ⲧⲁⲥⲙⲉⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: ⲟⲩⲟϩ Ⲡ̀ϭⲟⲓⲥ ϣⲟⲡ ⲛⲉⲙⲉ.' },
+    { language: 'englishCoptic', text: 'Aretenthōnti etimouki: thē-eta Iakōb nau eros: estshosi sha e-ehrēi e-etfe: ere Eptshois hijōs khen ouhoti.\n\nKhere ne evol hitoten: ō thē-etasshōp eros em-Pi-akhōritos: khen tesmētra emparthenikē: ouoh esshotem ensasa niven.\n\nAreshōpi nan enou-eprostatēs: nahren Efnouti Penrefsōti: fē-etaftshisarks evol enkhēti: ethve penoujai.\n\nKhere thēethmeh enehmot: khere thē-etasjem ehmot: khere thē-etasmes Pi-ekhristos: ouoh Eptshois shop neme.' },
+    { language: 'english', text: 'You are said to be like, the ladder that Jacob saw, ascending to heaven, and the feared Lord on it.\n\nHail to the one, who accepted in her womb, the uncontainable, and her virginity is sealed from every side.\n\nYou became our intercessor, before God our Savior, who was incarnate from you, for our salvation.\n\nHail to you O full of grace. Hail to you who has found grace. Hail to you who has given birth to Christ. The Lord is with you.' },
+    { language: 'englishArabic', text: 'Shubbihti bis-sullam, alladhi ra\'ahu Ya\'qoub, murtafi\'an ila es-sama\', war-Rabb el-makhouf \'alayh.\n\nSalamuna ila man qabilat, ghayr el-muhwa fi batniha, wa batouliyyatuha makhtouma, min kulli nahiya.\n\nSirti lana shafee\'a, amam Allah mukhallisina, alladhi tajassada minki, li-ajl khalasina.\n\nEs-salam laki ya mumtali\'at ni\'ma, es-salam laki ya man wajadti ni\'ma, es-salam laki ya man waladti el-Maseeh, er-Rabb ma\'aki.' },
+    { language: 'arabic', text: 'شُبِّهتِ بالسُلَّم، الذي رآه يعقوب، مُرتفعاً إلى السماء، والرب المخوف عليه.\n\nسلامنا إلى مَنْ قَبِلتْ، غير المُحوَى في بطنها، وبتوليتها مختومة، من كل ناحية.\n\nصرتِ لنا شفيعة، أمام الله مُخَلِّصنا، الذي تَجسَّد منكِ، لأجل خلاصنا.\n\nالسلام لكِ يا مُمْتلئة نعمة، السلام لكِ يا مَنْ وجدتِ نعمة، السلام لكِ يا مَنْ ولَدْتِ المسيح، الربُّ مَعَكِ.' },
+  ],
+  9: [
+    { language: 'coptic', text: 'Ϩⲏⲡⲡⲉ ⲓⲥ Ⲡ̀ϭⲟⲓⲥ ⲁϥⲓ̀ ⲉ̀ⲃⲟⲗ ⲛ̀ϧⲏϯ: ⲱ̀ ⲑⲏⲉⲧⲥ̀ⲙⲁⲙⲁⲧ ⲉⲧϫⲏⲕ ⲉ̀ⲃⲟⲗ: ⲉ̀ⲛⲟϩⲉⲙ ⲙ̀ⲡⲓⲕⲟⲥⲙⲟⲥ ⲉ̀ⲧⲁϥⲑⲁⲙⲓⲟϥ: ⲉⲑⲃⲉ ⲛⲉϥⲙⲉⲧϣⲉⲛϩⲏⲧ ⲉⲧⲟϣ.\n\nⲦⲉⲛϩⲱⲥ ⲉ̀ⲣⲟϥ ⲧⲉⲛϯⲱ̀ⲟⲩ ⲛⲁϥ: ⲧⲉⲛⲉⲣϩⲟⲩⲟ̀ ϭⲓⲥⲓ ⲙ̀ⲙⲟϥ: ϩⲱⲥ Ⲁ̀ⲅⲁⲑⲟⲥ ⲟⲩⲟϩ ⲙ̀Ⲙⲁⲓⲣⲱⲙⲓ: ⲛⲁⲓ ⲛⲁⲛ ⲕⲁⲧⲁ ⲡⲉⲕⲛⲓϣϯ ⲛ̀ⲛⲁⲓ.\n\nⲬⲉⲣⲉ ⲑⲏⲉⲑⲙⲉϩ ⲛ̀ϩ̀ⲙⲟⲧ: ⲭⲉⲣⲉ ⲑⲏⲉ̀ⲧⲁⲥϫⲉⲙ ϩ̀ⲙⲟⲧ: ⲭⲉⲣⲉ ⲑⲏⲉ̀ⲧⲁⲥⲙⲉⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: ⲟⲩⲟϩ Ⲡ̀ϭⲟⲓⲥ ϣⲟⲡ ⲛⲉⲙⲉ.' },
+    { language: 'englishCoptic', text: 'Hēppe is Eptshois afi evol enkhēti: ō thēetesmamat etjēk evol: enohem empikosmos etafthamiof: ethve nefmetshenhēt etosh.\n\nTenhōs erof tenti-ōou naf: tenerhou-o tshisi emmof: hōs Agathos ouoh em-Mairōmi: nai nan kata peknishti ennai.\n\nKhere thēethmeh enehmot: khere thē-etasjem ehmot: khere thē-etasmes Pi-ekhristos: ouoh Eptshois shop neme.' },
+    { language: 'english', text: 'Behold the Lord came forth from you, O the blessed and perfect, to save the world which He created, according to His mercy.\n\nWe praise and glorify Him, and exceedingly exalt Him, as the Good One and Lover of Mankind. Have mercy on us according to Your great mercy.\n\nHail to you O full of grace. Hail to you who has found grace. Hail to you who has given birth to Christ. The Lord is with you.' },
+    { language: 'englishArabic', text: 'Huwadha er-Rabb kharaja minki, ayyatuha el-mubaraka el-kamila, li-yukhallis el-\'alam alladhi khalaqahu, hasab kathrat ra\'fatih.\n\nNusabbihuhu wa numajjiduhu, wa nuzeeduhu \'uluwwan, ka-salih wa muhibb el-bashar, irhamna ka-\'azeem rahmatik.\n\nEs-salam laki ya mumtali\'at ni\'ma, es-salam laki ya man wajadti ni\'ma, es-salam laki ya man waladti el-Maseeh, er-Rabb ma\'aki.' },
+    { language: 'arabic', text: 'هوذا الرب خرج منكِ، أيتها المباركة الكاملة، ليُخَلِّص العالم الذي خَلَقه، حسب كثرة رأفاته.\n\nنُسبِّحهُ ونُمجِّدهُ، ونُزيدهُ علواً، كصالح ومحب البشر، إرحمنا كعظيم رحمتك.\n\nالسلام لكِ يا مُمْتلئة نعمة، السلام لكِ يا مَنْ وجدتِ نعمة، السلام لكِ يا مَنْ ولَدْتِ المسيح، الربُّ مَعَكِ.' },
+  ],
+};
+
+// Sung after the Saturday Theotokia
+const saturdayAfterTheotokia: Hymn[] = [
+  {
+    id: 'annual-midnight-saturday-watos-lobsh-1',
+    title: 'Ⲭⲉⲣⲉ ⲑⲏⲉⲑⲙⲉϩ ⲛ̀ϩ̀ⲙⲟⲧ (The Watos Lobsh, First Shiraat)',
+    versions: [
+      { language: 'coptic', text: 'Ⲭⲉⲣⲉ ⲑⲏⲉⲑⲙⲉϩ ⲛ̀ϩ̀ⲙⲟⲧ: Ϯⲡⲁⲣⲑⲉⲛⲟⲥ ⲛ̀ⲁⲧⲑⲱⲗⲉⲃ: ⲡⲓⲕⲩⲙⲓⲗⲗⲓⲟⲛ ⲉⲧⲥⲱⲧⲡ: ⲛ̀ⲧⲉ ϯⲟⲓⲕⲟⲩⲙⲉⲛⲏ ⲧⲏⲣⲥ.\n\nⲠⲓⲗⲁⲙⲡⲁⲥ ⲛ̀ⲁⲧϭⲉⲛⲟ: ⲡ̀ϣⲟⲩϣⲟⲩ ⲛ̀ⲧⲉ ϯⲡⲁⲣⲑⲉⲛⲓⲁ: ⲡⲓⲉⲣⲫⲉⲓ ⲛ̀ⲁⲧⲃⲱⲗ ⲉ̀ⲃⲟⲗ: ⲟⲩⲟϩ ⲡⲓϣ̀ⲃⲱⲧ ⲛ̀ⲧⲉ ⲡⲓⲛⲁϩϯ.\n\nⲘⲁϯϩⲟ ⲙ̀ⲫⲏⲉ̀ⲧⲁⲣⲉⲙⲁⲥϥ: Ⲡⲉⲛⲥⲱⲧⲏⲣ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ: ⲛ̀ⲧⲉϥⲱ̀ⲗⲓ ⲛ̀ⲛⲁⲓϧⲓⲥⲓ ⲉ̀ⲃⲟⲗ ϩⲁⲣⲟⲛ: ⲛ̀ⲧⲉϥⲥⲉⲙⲛⲓ ⲛⲁⲛ ⲛ̀ⲧⲉϥϩⲓⲣⲏⲛⲏ.\n\nⲬⲉⲣⲉ ⲑⲏⲉⲑⲙⲉϩ ⲛ̀ϩ̀ⲙⲟⲧ: ϯⲗⲩⲭⲛⲓⲁ ⲛ̀ⲕⲁⲑⲁⲣⲟⲥ: ⲑⲏⲉ̀ⲧⲁⲥϥⲁⲓ ϧⲁ Ⲡⲓⲗⲁⲙⲡⲁⲥ: ⲡⲓⲭ̀ⲣⲱⲙ ⲛ̀ⲧⲉ ϯⲙⲉⲑⲛⲟⲩϯ.\n\nⲬⲉⲣⲉ ϯϩⲉⲗⲡⲓⲥ ⲛ̀ⲟⲩϫⲁⲓ: ⲛ̀ⲧⲉ ϯⲟⲓⲕⲟⲩⲙⲉⲛⲏ ⲧⲏⲣⲥ: ⲉⲑⲃⲏϯ ⲅⲁⲣ ⲁⲛⲉⲣⲣⲉⲙϩⲉ: ⲉ̀ⲃⲟⲗ ϩⲁ ⲡⲓⲥⲁϩⲟⲩⲓ̀ ⲛ̀ⲧⲉ Ⲉ̀ⲩⲁ.\n\nⲈⲑⲃⲏϯ ⲟⲛ ⲁⲛⲉⲣⲙⲁⲛ̀ϣⲱⲡⲓ: ⲙ̀Ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ Ⲉⲑⲟⲩⲁⲃ: ⲫⲁⲓ ⲉ̀ⲧⲁϥⲓ̀ ⲉ̀ϩ̀ⲣⲏⲓ ⲉ̀ϫⲱ: ⲁϥⲉⲣⲁ̀ⲅⲓⲁⲍⲓⲛ ⲙ̀ⲙⲟ.\n\nⲬⲉⲣⲉ ⲑⲏⲉ̀ⲧⲁ Ⲅⲁⲃⲣⲓⲏⲗ: ⲉⲣⲭⲉⲣⲉⲧⲓⲍⲓⲛ ⲙ̀ⲙⲟⲥ: ϫⲉ ⲭⲉⲣⲉ ⲑⲏⲉⲑⲙⲉϩ ⲛ̀ϩ̀ⲙⲟⲧ: ⲟⲩⲟϩ Ⲡ̀ϭⲟⲓⲥ ϣⲟⲡ ⲛⲉⲙⲉ.\n\nⲀ̀ ⲡ̀ϯⲙⲁϯ ⲅⲁⲣ ⲙ̀Ⲫ̀ⲓⲱⲧ: ϣⲱⲡⲓ ϧⲉⲛ ⲡⲉϫⲓⲛⲉⲣⲃⲟⲕⲓ: ⲁ̀ ⲧ̀ⲡⲁⲣⲟⲩⲥⲓⲁ ⲙ̀Ⲡⲓϣⲏⲣⲓ: ϣⲱⲡⲓ ⲛ̀ϩ̀ⲣⲏⲓ ϧⲉⲛ ⲧⲉⲙⲏⲧⲣⲁ.\n\nⲀ̀ Ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ Ⲉⲑⲟⲩⲁⲃ: ⲙⲟϩ ⲙ̀ⲙⲁⲓ ⲛⲓⲃⲉⲛ ⲛ̀ⲧⲉ: ⲧⲉⲯⲩⲭⲏ ⲛⲉⲙ ⲡⲉⲥⲱⲙⲁ: ⲱ̀ Ⲙⲁⲣⲓⲁ Ⲑ̀ⲙⲁⲩ ⲙ̀Ⲫ̀ⲛⲟⲩϯ.\n\nⲈⲑⲃⲉ ⲫⲁⲓ ⲧⲉⲛⲉⲣϣⲁⲓ ϩⲱⲛ: ϧⲉⲛ ⲟⲩϣⲁⲓ ⲙ̀ⲡ̀ⲛⲉⲩⲙⲁⲧⲓⲕⲟⲛ: ⲟⲩⲟϩ ⲙ̀ⲡ̀ⲣⲟⲫⲏⲧⲓⲕⲟⲛ ⲉⲩⲥⲟⲡ: ⲉⲛⲱϣ ⲉ̀ⲃⲟⲗ ⲛⲉⲙ ⲡ̀ⲟⲩⲣⲟ Ⲇⲁⲩⲓⲇ.\n\nϪⲉ ⲧⲱⲛⲕ Ⲡ̀ϭⲟⲓⲥ ⲉ̀ⲡⲉⲕⲙ̀ⲧⲟⲛ: ⲛ̀ⲑⲟⲕ ⲛⲉⲙ ϯⲕⲓⲃⲱⲧⲟⲥ: ⲛ̀ⲧⲉ ⲡⲓⲙⲁ ⲉⲑⲟⲩⲁⲃ ⲛ̀ⲧⲁⲕ: ⲉ̀ⲧⲉ ⲛ̀ⲑⲟ ⲧⲉ ⲱ̀ Ⲙⲁⲣⲓⲁ.\n\nⲦⲉⲛϯϩⲟ ⲁ̀ⲣⲓⲡⲉⲛⲙⲉⲩⲓ: ⲱ̀ ϯⲡ̀ⲣⲟⲥⲧⲁⲧⲏⲥ ⲉ̀ⲧⲉⲛϩⲟⲧ: ⲛⲁϩⲣⲉⲛ Ⲡⲉⲛϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ.' },
+      { language: 'englishCoptic', text: 'Khere thēethmeh enehmot: Tiparthenos enatthōleb: pikumillion etsōtp: ente tioikoumenē tērs.\n\nPilampas enattsheno: epshoushou ente tiparthenia: pierfei enatvōl evol: ouoh pi-eshvōt ente pinahti.\n\nMatiho emfē-etaremasf: Pensōtēr enagathos: entefōli ennaikhisi evol haron: entefsemni nan entefhirēnē.\n\nKhere thēethmeh enehmot: tilukhnia enkatharos: thē-etasfai kha Pilampas: pi-ekhrōm ente timethnouti.\n\nKhere tihelpis enoujai: ente tioikoumenē tērs: ethvēti gar anerremhe: evol ha pisahou-i ente Eua.\n\nEthvēti on anerma-enshōpi: em-Pi-epneuma Ethouab: fai etafi e-ehrēi ejō: aferagiazin emmo.\n\nKhere thē-eta Gabriēl: erkheretizin emmos: je khere thēethmeh enehmot: ouoh Eptshois shop neme.\n\nA eptimati gar em-Efiōt: shōpi khen pejinervoki: a etparousia em-Pishēri: shōpi enehrēi khen temētra.\n\nA Pi-epneuma Ethouab: moh emmai niven ente: tepsukhē nem pesōma: ō Maria Ethmau em-Efnouti.\n\nEthve fai tenershai hōn: khen oushai emepneumatikon: ouoh emeprofētikon eusop: enōsh evol nem epouro Dauid.\n\nJe tōnk Eptshois epekemton: enthok nem tikivōtos: ente pima ethouab entak: ete entho te ō Maria.\n\nTentiho aripenmeui: ō ti-eprostatēs etenhot: nahren Pentshois Iēsous Pi-ekhristos: entefkha nennovi nan evol.' },
+      { language: 'english', text: 'Hail to you, O full of grace, the undefiled Virgin, the chosen vessel, for all the world.\n\nThe ever-burning lamp, the pride of virginity, the indestructible sanctuary, and the scepter of the faith.\n\nAsk of Him whom you have borne, our good Savior, to take away our troubles, and grant us His peace.\n\nHail to you O full of grace, the pure lampstand, who carries the lamp, the fire of divinity.\n\nHail to you the hope, of salvation of the world. Because of you, we were, liberated from Eve\'s curse.\n\nAlso because of you, we became the dwelling, of the Holy Spirit, who came on you and sanctified you.\n\nHail to whom Gabriel, greeted saying: “Hail to you O full of grace; the Lord is with you.”\n\nFor the Father\'s pleasure, was in your pregnancy, and the appearance of the Son, was in your womb.\n\nThe Holy Spirit, filled every part of you, your soul and your body, O Mary the Mother of God.\n\nFor this, we also, celebrate a spiritual, and prophetic feast, proclaiming with King David.\n\nSaying: “Arise, O Lord, into Your rest, You, and the ark, of Your holy place, which is you O Mary.”\n\nWe ask you to remember us, O our faithful advocate, before our Lord Jesus Christ, that He may forgive us our sins.' },
+      { language: 'englishArabic', text: 'Es-salam laki ya mumtali\'at ni\'ma, el-\'adhra\' ghayr ed-danisa, el-ina\' el-mukhtar, li-kull el-maskouna.\n\nEl-misbah ghayr el-mutfa\', fakhr el-batouliyya, el-haykal ghayr el-munqad, wa qadeeb el-eeman.\n\nIs\'ali alladhi waladtihi, mukhallisana es-salih, an yarfa\' \'anna hadhihi el-at\'ab, wa yuqarrir lana salamah.\n\nIfrahi ya mumtali\'at ni\'ma, el-manara en-naqiyya, hamilat el-misbah, nar el-lahout.\n\nIfrahi ya raja\' khalas, kull el-maskouna, li-annana min ajliki, \'utiqna min la\'nat Hawwa\'.\n\nWa min ajliki aydan sirna, maskanan lir-Rooh el-Qudus, alladhi halla \'alayki, wa qaddasaki.\n\nEs-salam lillati aqra\'aha, Ghubriyal es-salam qa\'ilan, "Es-salam laki ya mumtali\'at ni\'ma, er-Rabb ma\'aki."\n\nLi-anna masarrat el-Ab, kanat fi habaliki, wa zuhour el-Ibn, kana fi ahsha\'iki.\n\nWar-Rooh el-Qudus, mala\'a kulla mawdi\' minki, nafsaki wa jasadaki, ya Maryam umm Allah.\n\nLi-ajl hadha nu\'ayyid nahnu aydan, \'eedan rouhiyyan, wa nabawiyyan ma\'an, sarikheen ma\'a el-malik Dawoud.\n\nQa\'ileen "Qum ya Rabb, ila rahatik, anta wa tabout mawdi\'ika el-muqaddas, alladhi huwa anti ya Maryam."\n\nNas\'aluki an tadhkureena, ayyatuha esh-shafee\'a el-mu\'tamana, amam Rabbina Yasou\' el-Maseeh, li-yaghfir lana khatayana.' },
+      { language: 'arabic', text: 'السلام لكِ يا مُمْتلئة نعمة، العذراء غير الدنِسة، الإناء المُختار، لكل المسكونة.\n\nالمصباح غير المُطفَأ، فخر البتولية، الهيكل غير المُنْقَض، وقَضيب الإيمان.\n\nإسألي الذي وَلَدْتِهِ، مُخلِّصنا الصالح، أن يرفع عنا هذه الأتعاب، ويُقرِّر لنا سلامه.\n\nإفرحي يا مُمْتلئة نعمة، المنارة النقية، حاملة المصباح، نار اللاهوت.\n\nإفرحي يا رجاء خلاص، كل المسكونة، لأننا من أجلكِ، عُتقنا من لعنة حواء.\n\nومن أجلكِ أيضاً صرنا، مسكناً للرُّوح القُدُس، الذي حَلَّ عليكِ، وقَدَّسكِ.\n\nالسلام للتي أقرأها، غبريال السلام قائلاً، "السلام لكِ يا مُمْتلئة نعمة، الربُّ مَعَكِ."\n\nلأن مسرة الآب، كانت في حَبَلكِ، وظهور الإبن، كان في أحشائكِ.\n\nوالرُّوح القُدُس، ملأَ كل موضع منكِ، نفسكِ وجسدكِ، يا مريم أُم الله.\n\nلأجل هذا نُعيِّد نحن أيضاً، عيداً روحِيَّاً، ونبوِيَّاً معاً، صارخين مع الملك داود.\n\nقائلين "قُمْ يا رب، إلى راحتك، أنتَ وتابوت موضعك المقدس، الذي هو أنتِ يا مريم."\n\nنسألكِ أن تذكرينا، أيتها الشفيعة المؤتمنة، أمام ربنا يسوع المسيح، ليغفر لنا خطايانا.' },
+    ],
+  },
+  {
+    id: 'annual-midnight-saturday-watos-lobsh-2',
+    title: 'Ⲭⲉⲣⲉ ⲑⲏⲉⲑⲙⲉϩ ⲛ̀ϩ̀ⲙⲟⲧ (The Watos Lobsh, Second Shiraat)',
+    versions: [
+      { language: 'coptic', text: 'Ⲭⲉⲣⲉ ⲑⲏⲉⲑⲙⲉϩ ⲛ̀ϩ̀ⲙⲟⲧ: Ϯⲡⲁⲣⲑⲉⲛⲟⲥ ⲛ̀ⲁⲧⲑⲱⲗⲉⲃ: ϯⲥ̀ⲕⲏⲛⲏ ⲛ̀ⲁⲑⲙⲟⲩⲛⲕ ⲛ̀ϫⲓϫ: ⲡⲓⲁ̀ϩⲟ ⲛ̀ⲧⲉ ϯⲙⲉⲑⲙⲏⲓ.\n\nⲬⲉⲣⲉ ϯϭⲣⲟⲙⲡⲓ ⲉⲑⲛⲉⲥⲱⲥ: ⲑⲏⲉ̀ⲧⲁⲥϩⲓϣⲉⲛⲛⲟⲩϥⲓ ⲛⲁⲛ: ⲛ̀ϯϩⲓⲣⲏⲛⲏ ⲛ̀ⲧⲉ Ⲫ̀ⲛⲟⲩϯ: ⲑⲏⲉ̀ⲧⲁⲥϣⲱⲡⲓ ϣⲁ ⲛⲓⲣⲱⲙⲓ.\n\nⲬⲉⲣⲉ Ⲑ̀ⲙⲁⲩ ⲙ̀ⲫⲏⲉ̀ⲧⲁϥⲉⲣⲣⲱⲙⲓ: ϧⲉⲛ ⲡⲉϥⲟⲩⲱϣ ⲙ̀ⲙⲓⲛ ⲙ̀ⲙⲟϥ: ⲛⲉⲙ ⲡ̀ϯⲙⲁϯ ⲙ̀Ⲡⲉϥⲓⲱⲧ: ⲛⲉⲙ Ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ Ⲉⲑⲟⲩⲁⲃ.\n\nⲬⲉⲣⲉ ⲡⲓⲥ̀ⲧⲁⲙⲛⲟⲥ ⲛ̀ⲛⲟⲩⲃ: ⲉ̀ⲣⲉ Ⲡⲓⲙⲁⲛⲛⲁ ϩⲏⲡ ⲛ̀ϧⲏⲧϥ: ⲛⲉⲙ ⲡⲓϣ̀ⲃⲱⲧ ⲛ̀ϣⲉ ⲙ̀ⲡⲉⲩⲕⲓⲛⲱⲛ: ⲉ̀ⲧⲁ Ⲙⲱⲩ̀ⲥⲏⲥ ⲙⲉϣ ϯⲡⲉⲧⲣⲁ ⲛ̀ϧⲏⲧϥ.\n\nⲬⲉⲣⲉ ⲕⲉ ⲭⲁⲣⲓⲧⲱⲙⲉⲛⲏ: ⲱ̀ ϯⲧ̀ⲣⲁⲡⲉⲍⲁ ⲙ̀ⲡ̀ⲛⲉⲩⲙⲁⲧⲓⲕⲏ: ⲉⲧϯ ⲙ̀ⲡ̀ⲱⲛϧ ⲛ̀ⲟⲩⲟⲛ ⲛⲓⲃⲉⲛ: ⲉⲑⲛⲁⲟⲩⲱⲙ ⲉ̀ⲃⲟⲗ ⲛ̀ϧⲏⲧⲥ.\n\nⲬⲉⲣⲉ ⲡⲓⲕⲩⲙⲓⲗⲗⲓⲟⲛ: ⲛ̀ⲁⲫⲑⲁⲣⲧⲟⲛ ⲛ̀ⲧⲉ ϯⲙⲉⲑⲛⲟⲩϯ: ⲉ̀ⲧⲉⲣⲫⲁϧⲣⲓ ⲛ̀ⲟⲩⲟⲛ ⲛⲓⲃⲉⲛ: ⲉⲑⲛⲁⲥⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ϧⲏⲧϥ.\n\nⲀⲓⲛⲁⲉⲣϩⲏⲧⲥ ϧⲉⲛ ⲟⲩϭⲓϣϣⲱⲟⲩ: ⲛ̀ⲧⲁⲕⲓⲙ ⲙ̀ⲡ̀ⲟⲣⲅⲁⲛⲟⲛ ⲙ̀ⲡⲁⲗⲁⲥ: ⲛ̀ⲧⲁϫⲱ ⲙ̀ⲡ̀ⲧⲁⲓⲟ ⲛ̀ⲧⲉ ⲧⲁⲓⲠⲁⲣⲑⲉⲛⲟⲥ: ⲛⲉⲙ ⲛⲉⲥⲥⲩⲅⲅⲱⲙⲓⲟⲛ ⲉⲩⲥⲟⲡ.\n\nϪⲉ ⲛ̀ⲑⲟⲥ ⲅⲁⲣ ⲡⲉ ⲡⲉⲛϣⲟⲩϣⲟⲩ: ⲛⲉⲙ ⲧⲉⲛϩⲉⲗⲡⲓⲥ ⲛⲉⲙ ⲡⲉⲛⲧⲁϫⲣⲟ: ϧⲉⲛ ⲧ̀ⲡⲁⲣⲟⲩⲥⲓⲁ ⲙ̀Ⲡⲉⲛⲛⲟⲩϯ: Ⲡⲉⲛϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ.\n\nⲦⲉⲛϭⲓⲥⲓ ⲙ̀ⲙⲟ ϧⲉⲛ ⲟⲩⲉⲙⲡ̀ϣⲁ: ⲛⲉⲙ Ⲉ̀ⲗⲓⲥⲁⲃⲉⲧ ⲧⲉⲥⲩⲅⲅⲉⲛⲏⲥ: ϫⲉ ⲧⲉⲥ̀ⲙⲁⲣⲱⲟⲩⲧ ⲛ̀ⲑⲟ ϧⲉⲛ ⲛⲓϩⲓⲟⲙⲓ: ϥ̀ⲥ̀ⲙⲁⲣⲱⲟⲩⲧ ⲛ̀ϫⲉ Ⲡ̀ⲟⲩⲧⲁϩ ⲛ̀ⲧⲉ ⲧⲉⲛⲉϫⲓ.\n\nⲦⲉⲛϯ ⲛⲉ ⲙ̀ⲡⲓⲭⲉⲣⲉⲧⲓⲥⲙⲟⲥ: ⲛⲉⲙ Ⲅⲁⲃⲣⲓⲏⲗ ⲡⲓⲁⲅⲅⲉⲗⲟⲥ: ϫⲉ ⲭⲉⲣⲉ ⲕⲉ ⲭⲁⲣⲓⲧⲱⲙⲉⲛⲏ: ⲟ̀ Ⲕⲩⲣⲓⲟⲥ ⲙⲉⲧⲁ ⲥⲟⲩ.\n\nⲬⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ϯⲟⲩⲣⲱ ⲙ̀ⲙⲏⲓ ⲛ̀ⲁ̀ⲗⲏⲑⲓⲛⲏ: ⲭⲉⲣⲉ ⲡ̀ϣⲟⲩϣⲟⲩ ⲛ̀ⲧⲉ ⲡⲉⲛⲅⲉⲛⲟⲥ: ⲁ̀ⲣⲉϫ̀ⲫⲟ ⲛⲁⲛ ⲛ̀Ⲉⲙⲙⲁⲛⲟⲩⲏⲗ.\n\nⲦⲉⲛϯϩⲟ ⲁ̀ⲣⲓⲡⲉⲛⲙⲉⲩⲓ: ⲱ̀ ϯⲡ̀ⲣⲟⲥⲧⲁⲧⲏⲥ ⲉ̀ⲧⲉⲛϩⲟⲧ: ⲛⲁϩⲣⲉⲛ Ⲡⲉⲛϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ.' },
+      { language: 'englishCoptic', text: 'Khere thēethmeh enehmot: Tiparthenos enatthōleb: ti-eskēnē enathmounk enjij: pi-aho ente timethmēi.\n\nKhere titshrompi ethnesōs: thē-etashishennoufi nan: entihirēnē ente Efnouti: thē-etasshōpi sha nirōmi.\n\nKhere Ethmau emfē-etaferrōmi: khen pefouōsh emmin emmof: nem eptimati em-Pefiōt: nem Pi-epneuma Ethouab.\n\nKhere pi-estamnos ennoub: ere Pimanna hēp enkhētf: nem pi-eshvōt enshe empeukinōn: eta Mō-usēs mesh tipetra enkhētf.\n\nKhere ke kharitōmenē: ō ti-etrapeza emepneumatikē: etti emepōnkh enouon niven: ethnaouōm evol enkhēts.\n\nKhere pikumillion: enaftharton ente timethnouti: eterfakhri enouon niven: ethnasō evol enkhētf.\n\nAinaerhēts khen outshishshōou: entakim emeporganon empalas: entajō emeptaio ente tai-Parthenos: nem nessuggōmion eusop.\n\nJe enthos gar pe penshoushou: nem tenhelpis nem pentajro: khen etparousia em-Pennouti: Pentshois Iēsous Pi-ekhristos.\n\nTentshisi emmo khen ouemepsha: nem Elisavet tesuggenēs: je te-esmarōout entho khen nihiomi: efesmarōout enje Epoutah ente teneji.\n\nTenti ne empikheretismos: nem Gabriēl piaggelos: je khere ke kharitōmenē: o Kurios meta sou.\n\nKhere ne ō Tiparthenos: tiourō emmēi enalēthinē: khere epshoushou ente pengenos: are-ejfo nan en-Emmanouēl.\n\nTentiho aripenmeui: ō ti-eprostatēs etenhot: nahren Pentshois Iēsous Pi-ekhristos: entefkha nennovi nan evol.' },
+      { language: 'english', text: 'Hail to you O full of grace, the undefiled Virgin, the dome not made by hands, the treasure of righteousness.\n\nHail to the beautiful dove, who announced to us, the peace of God, which has been given to men.\n\nHail to the Mother of the Incarnate, by His own will, and the pleasure of His Father, and the Holy Spirit.\n\nHail to you O golden vessel, wherein the Manna was hidden, and the rod of almond wood, which Moses used to strike the rock.\n\nHail to you O full of grace, the spiritual table, which gives life to everyone, who eats from it.\n\nHail to you the incorrupt vessel, which is for the divinity, which cures all, who drink from it.\n\nI begin eagerly to move, the organ of my tongue, and speak of the honor of this virgin, and praise her.\n\nFor she is our pride, our hope and affirmation, in the appearance of our Lord, and God Jesus Christ.\n\nWe exult you worthily, with Elizabeth your cousin: saying, “Blessed are you among women, and blessed is the fruit of your womb.”\n\nWe send you greetings, with Gabriel the angel, saying, “Hail to you O full of grace, the Lord is with you.”\n\nHail to you O Virgin, the right and true Queen. Hail to the pride of our race, who bore to us Emmanuel.\n\nWe ask you to remember us, O our faithful advocate, before our Lord Jesus Christ, that He may forgive us our sins.' },
+      { language: 'englishArabic', text: 'Es-salam lil-mumtali\'a ni\'ma, el-\'adhra\' ghayr ed-danisa, el-qubba ghayr el-masnou\'a bil-aydi, kanz el-birr.\n\nEs-salam lil-hamama el-hasana, allati bashsharatna, bi-salam Allah, alladhi sara lil-bashar.\n\nEs-salam li-umm el-muta\'annis, bi-iradatihi wahdahu, wa masarrat abeeh, war-Rooh el-Qudus.\n\nEs-salam lil-qist edh-dhahabi, el-makhfi feehi el-mann, wa \'asa el-khashab el-lawzi, allati daraba biha Mousa es-sakhra.\n\nEs-salam lil-mumtali\'a ni\'ma, el-ma\'ida er-rouhiyya, allati tu\'ti el-hayah, li-kull man ya\'kul minha.\n\nEs-salam lil-ina\' ghayr el-fasid, alladhi lil-lahout, el-mu\'ti esh-shifa\', li-kull man yashrab minh.\n\nAbda\' bi-ishtiyaq, muharrikan arghun lisani, wa atahaddath bi-karamat hadhihi el-\'adhra\', wa mada\'ihiha ma\'an.\n\nLi-annaha fakhruna, wa raja\'una wa thabatuna, fi zuhour ilahina, Rabbina Yasou\' el-Maseeh.\n\nNu\'azzimuki bi-istihqaq, ma\'a Aleesabat naseebatiki qa\'ileen, "Mubaraka anti fin-nisa\', wa mubaraka hiya thamarat batniki."\n\nNu\'teeki es-salam, ma\'a Ghubriyal el-malak qa\'ileen, "Es-salam laki ya mumtali\'at ni\'ma, er-Rabb ma\'aki."\n\nEs-salam laki ayyatuha el-\'adhra\', el-malika el-haqiqiyya el-haqqaniyya, es-salam li-fakhr jinsina, waladti lana \'Imanoueel.\n\nNas\'aluki an tadhkureena, ayyatuha esh-shafee\'a el-mu\'tamana, amam Rabbina Yasou\' el-Maseeh, li-yaghfir lana khatayana.' },
+      { language: 'arabic', text: 'السلام للمُمْتلئة نعمة، العذراء غير الدنِسة، القُبَّة غير المصنوعة بالأيدي، كنز البر.\n\nالسلام للحمامة الحسنة، التي بشَّرتنا، بسلام الله، الذي صار للبشر.\n\nالسلام لأُم المُتَأنِّس، بإرادته وحده، ومسرة أبيه، والرُّوح القُدُس.\n\nالسلام للقسط الذهبي، المُخفى فيه المَنَّ، وعصا الخشب اللوزي، التي ضَرَبَ بها موسى الصخرة.\n\nالسلام للمُمْتلئة نعمة، المائدة الروحية، التي تُعطي الحياة، لكل مَنْ يأكل منها.\n\nالسلام للإناء غير الفاسد، الذي للاهوت، المُعطي الشفاء، لكل مَنْ يشرب منه.\n\nأبدأ بإشتياقٍ، مُحركاً أرغُن لساني، وأتحدَّث بكرامة هذه العذراء، ومدائحها معاً.\n\nلأنها فخرنا، ورجاؤنا وثباتنا، في ظهور إلهنا، ربنا يسوع المسيح.\n\nنُعظِّمُكِ بإستحقاقٍ، مع أليصابات نَسيبَتكِ قائلين، "مُباركةٌ أنتِ في النساء، ومُباركةٌ هي ثمرة بطنكِ."\n\nنُعطيكِ السلام، مع غبريال الملاك قائلين، "السلام لكِ يا مُمْتلئة نعمة، الربُّ مَعَكِ."\n\nالسلام لكِ أيتها العذراء، الملكة الحقيقية الحقانية، السلام لفخر جنسنا، وَلَدْتِ لنا عمانوئيل.\n\nنسألكِ أن تذكرينا، أيتها الشفيعة المؤتمنة، أمام ربنا يسوع المسيح، ليغفر لنا خطايانا.' },
+    ],
+  },
+];
+
+// The Conclusion of the Watos Theotokia, sung after the Theotokia on Watos days
+const watosTheotokiaConclusion = (day: string): Hymn => ({
+  id: `annual-midnight-${day}-watos-theotokia-conclusion`,
+  title: 'Ⲱ̀ Ⲡⲉⲛϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ (The Conclusion of the Watos Theotokia)',
+  versions: [
+    { language: 'coptic', text: '(Ⲡⲓⲗⲁⲟⲥ)\n\nⲰ̀ Ⲡⲉⲛϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: ⲫⲏⲉⲧⲱ̀ⲗⲓ ⲙ̀ⲫ̀ⲛⲟⲃⲓ ⲙ̀ⲡⲓⲕⲟⲥⲙⲟⲥ: ⲟⲡⲧⲉⲛ ϩⲱⲛ ⲛⲉⲙ ⲛⲉⲕϩⲓⲏⲃ: ⲛⲁⲓ ⲉⲧⲥⲁⲟⲩⲓ̀ⲛⲁⲙ ⲙ̀ⲙⲟⲕ.\n\nⲀⲕϣⲁⲛⲓ̀ ϧⲉⲛ ⲧⲉⲕⲙⲁϩⲥ̀ⲛⲟⲩϯ: ⲙ̀ⲡⲁⲣⲟⲩⲥⲓⲁ ⲉⲧⲟⲓ ⲛ̀ϩⲟϯ: ⲙ̀ⲡⲉⲛⲑ̀ⲣⲉⲛⲥⲱⲧⲉⲙ ϧⲉⲛ ⲟⲩⲥ̀ⲑⲉⲣⲧⲉⲣ: ϫⲉ ϯⲥⲱⲟⲩⲛ ⲙ̀ⲙⲱⲧⲉⲛ ⲁⲛ.\n\nⲀⲗⲗⲁ ⲙⲁⲣⲉⲛⲉⲣⲡ̀ⲉⲙⲡ̀ϣⲁ ⲛ̀ⲥⲱⲧⲉⲙ: ⲉ̀ϯⲥ̀ⲙⲏ ⲉⲑⲙⲉϩ ⲛ̀ⲣⲁϣⲓ: ⲛ̀ⲧⲉ ⲛⲉⲕⲙⲉⲧϣⲁⲛⲁϩ̀ⲑⲏϥ: ⲉⲥⲱϣ ⲉ̀ⲃⲟⲗ ⲉⲥϫⲱ ⲙ̀ⲙⲟⲥ.\n\nϪⲉ ⲁ̀ⲙⲱⲓⲛⲓ ϩⲁⲣⲟⲓ: ⲛⲏⲉⲧⲥ̀ⲙⲁⲣⲱⲟⲩⲧ ⲛ̀ⲧⲉ Ⲡⲁⲓⲱⲧ: ⲁ̀ⲣⲓⲕ̀ⲗⲏⲣⲟⲛⲟⲙⲓⲛ ⲙ̀ⲡⲓⲱⲛϧ: ⲉⲑⲙⲏⲛ ⲉ̀ⲃⲟⲗ ϣⲁ ⲉ̀ⲛⲉϩ.\n\nⲤⲉⲛⲁⲓ̀ ⲛ̀ϫⲉ ⲛⲓⲙⲁⲣⲧⲩⲣⲟⲥ: ⲉⲩϥⲁⲓ ϧⲁ ⲛⲟⲩⲃⲁⲥⲁⲛⲟⲥ: ⲥⲉⲛⲁⲓ̀ ⲛ̀ϫⲉ ⲛⲓⲇⲓⲕⲉⲟⲥ: ⲉⲩϥⲁⲓ ϧⲁ ⲛⲟⲩⲡⲟⲗⲏⲧⲓⲁ.\n\nϤ̀ⲛⲁⲓ̀ ⲛ̀ϫⲉ Ⲡ̀ϣⲏⲣⲓ ⲙ̀Ⲫ̀ⲛⲟⲩϯ: ϧⲉⲛ ⲡⲉϥⲱ̀ⲟⲩ ⲛⲉⲙ ⲫⲁ Ⲡⲉϥⲓⲱⲧ: ϥ̀ⲛⲁϯ ⲙ̀ⲡⲓⲟⲩⲁⲓ ⲡⲓⲟⲩⲁⲓ: ⲕⲁⲧⲁ ⲛⲉϥϩ̀ⲃⲏⲟⲩⲓ̀ ⲉ̀ⲧⲁϥⲁⲓⲧⲟⲩ.\n\nⲠⲓⲭ̀ⲣⲓⲥⲧⲟⲥ Ⲡⲓⲗⲟⲅⲟⲥ ⲛ̀ⲧⲉ Ⲫ̀ⲓⲱⲧ: ⲡⲓⲙⲟⲛⲟⲅⲉⲛⲏⲥ ⲛ̀Ⲛⲟⲩϯ: ⲉⲕⲉ̀ϯ ⲛⲁⲛ ⲛ̀ⲧⲉⲕϩⲓⲣⲏⲛⲏ: ⲑⲁⲓ ⲉⲑⲙⲉϩ ⲛ̀ⲣⲁϣⲓ ⲛⲓⲃⲉⲛ.\n\nⲔⲁⲧⲁ ⲫ̀ⲣⲏϯ ⲉ̀ⲧⲁⲕⲧⲏⲓⲥ: ⲛ̀ⲛⲉⲕⲁ̀ⲅⲓⲟⲥ ⲛ̀ⲁ̀ⲡⲟⲥⲧⲟⲗⲟⲥ: ⲉⲕⲉ̀ϫⲟⲥ ⲛⲁⲛ ⲙ̀ⲡⲟⲩⲣⲏϯ: ϫⲉ ⲧⲁϩⲓⲣⲏⲛⲏ ϯϯ ⲙ̀ⲙⲟⲥ ⲛⲱⲧⲉⲛ.\n\nⲦⲁϩⲓⲣⲏⲛⲏ ⲁ̀ⲛⲟⲕ: ⲑⲏⲉ̀ⲧⲁⲓϭⲓⲧⲥ ϩⲓⲧⲉⲛ Ⲡⲁⲓⲱⲧ: ⲁ̀ⲛⲟⲕ ϯⲭⲱ ⲙ̀ⲙⲟⲥ ⲛⲉⲙⲱⲧⲉⲛ: ⲓⲥϫⲉⲛ ϯⲛⲟⲩ ⲛⲉⲙ ϣⲁ ⲉ̀ⲛⲉϩ.\n\nⲠⲓⲁⲅⲅⲉⲗⲟⲥ ⲛ̀ⲧⲉ ⲡⲁⲓⲉ̀ϩⲟⲟⲩ: ⲉⲧϩⲏⲗ ⲉ̀ⲡ̀ϭⲓⲥⲓ ⲛⲉⲙ ⲡⲁⲓϩⲩⲙⲛⲟⲥ: ⲁ̀ⲣⲓⲡⲉⲛⲙⲉⲩⲓ ϧⲁ ⲧ̀ϩⲏ ⲙ̀Ⲡ̀ϭⲟⲓⲥ: ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ.\n\nⲚⲏⲉⲧϣⲱⲛⲓ ⲙⲁⲧⲁⲗϭⲱⲟⲩ: ⲛⲏⲉ̀ⲧⲁⲩⲉⲛⲕⲟⲧ Ⲡ̀ϭⲟⲓⲥ ⲙⲁⲙ̀ⲧⲟⲛ ⲛⲱⲟⲩ: ⲛⲉⲛⲥ̀ⲛⲏⲟⲩ ⲉⲧⲭⲏ ϧⲉⲛ ϩⲟϫϩⲉϫ ⲛⲓⲃⲉⲛ: Ⲡⲁϭⲟⲓⲥ ⲁ̀ⲣⲓⲃⲟⲏ̀ⲑⲓⲛ ⲉ̀ⲣⲟⲛ ⲛⲉⲙⲱⲟⲩ.\n\nⲈϥⲉ̀ⲥ̀ⲙⲟⲩ ⲉ̀ⲣⲟⲛ ⲛ̀ϫⲉ Ⲫ̀ⲛⲟⲩϯ: ⲧⲉⲛⲛⲁⲥ̀ⲙⲟⲩ ⲉ̀ⲡⲉϥⲣⲁⲛ ⲉⲑⲟⲩⲁⲃ: ⲛ̀ⲥⲏⲟⲩ ⲛⲓⲃⲉⲛ ⲉ̀ⲣⲉ ⲡⲉϥⲥ̀ⲙⲟⲩ: ⲛⲁϣⲱⲡⲓ ⲉϥⲙⲏⲛ ⲉ̀ⲃⲟⲗ ϧⲉⲛ ⲣⲱⲛ.\n\nϪⲉ ϥ̀ⲥ̀ⲙⲁⲣⲱⲟⲩⲧ ⲛ̀ϫⲉ Ⲫ̀ⲓⲱⲧ ⲛⲉⲙ Ⲡ̀ϣⲏⲣⲓ: ⲛⲉⲙ Ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ Ⲉⲑⲟⲩⲁⲃ: Ϯⲧ̀ⲣⲓⲁⲥ ⲉⲧϫⲏⲕ ⲉ̀ⲃⲟⲗ: ⲧⲉⲛⲟⲩⲱϣⲧ ⲙ̀ⲙⲟⲥ ⲧⲉⲛϯⲱ̀ⲟⲩ ⲛⲁⲥ.' },
+    { language: 'englishCoptic', text: '(Pilaos)\n\nŌ Pentshois Iēsous Pi-ekhristos: fēetōli emefnovi empikosmos: opten hōn nem nekhiēb: nai etsaou-inam emmok.\n\nAkshani khen tekmahesnouti: emparousia etoi enhoti: empenethrensōtem khen ou-estherter: je tisōoun emmōten an.\n\nAlla marenerepemepsha ensōtem: eti-esmē ethmeh enrashi: ente nekmetshana-ehthēf: esōsh evol esjō emmos.\n\nJe amōini haroi: nēetesmarōout ente Paiōt: ari-eklēronomin empiōnkh: ethmēn evol sha eneh.\n\nSena-i enje nimarturos: eufai kha nouvasanos: sena-i enje nidikeos: eufai kha noupolētia.\n\nEfna-i enje Epshēri em-Efnouti: khen pefōou nem fa Pefiōt: efnati empiouai piouai: kata nefehvēou-i etafaitou.\n\nPi-ekhristos Pilogos ente Efiōt: pimonogenēs en-Nouti: eketi nan entekhirēnē: thai ethmeh enrashi niven.\n\nKata efrēti etaktēis: ennekagios enapostolos: ekejos nan empourēti: je tahirēnē titi emmos nōten.\n\nTahirēnē anok: thē-etaitshits hiten Paiōt: anok tikhō emmos nemōten: isjen tinou nem sha eneh.\n\nPiaggelos ente pai-ehoou: ethēl e-eptshisi nem paihumnos: aripenmeui kha ethē em-Eptshois: entefkha nennovi nan evol.\n\nNēetshōni mataltshōou: nē-etauenkot Eptshois ma-emton nōou: nenesnēou etkhē khen hojhej niven: Patshois arivo-ēthin eron nemōou.\n\nEfe-esmou eron enje Efnouti: tenna-esmou epefran ethouab: ensēou niven ere pefesmou: nashōpi efmēn evol khen rōn.\n\nJe efesmarōout enje Efiōt nem Epshēri: nem Pi-epneuma Ethouab: Ti-etrias etjēk evol: tenouōsht emmos tenti-ōou nas.' },
+    { language: 'english', text: '(People)\n\nO our Lord Jesus Christ, who carries the sin of the world, count us with Your sheep, who shall stand upon Your right.\n\nAnd in Your awesome, Second Coming may we never, hear with trembling, “I do not know you.”\n\nRather, may we be worthy, to hear Your tender voice, which is full of joy, proclaiming and saying.\n\n“Come to Me, O blessed of My Father, and inherit the life, that endures forever.”\n\nThe martyrs will come, bearing their afflictions, and the righteous shall come, bearing all their virtues.\n\nThe Son of God shall also come, in His and His Father\'s glory, to reward everyone, according to his works.\n\nO Christ the Logos of the Father, the Only-Begotten God, grant us Your peace, that is full of every joy.\n\nAs You have given, to Your holy Apostles, likewise say unto us, “My peace I give to You.\n\nMy peace which I have, taken from My Father, I leave unto you, now and forever.”\n\nO the angel of this (day, night), flying up to the heights with this hymn, remember us before the Lord, that He may forgive us our sins.\n\nThe sick, O Lord, heal them; those who slept repose them; and all our brethren in distress, help us, my Lord, and all of them.\n\nMay God bless us, and let us bless His holy name, and may His praise, be always on our lips.\n\nBlessed be the Father and the Son, and the Holy Spirit, the perfect Trinity, we worship Him and glorify Him.' },
+    { language: 'englishArabic', text: '(Esh-sha\'b)\n\nYa Rabbana Yasou\' el-Maseeh, hamil khatiyyat el-\'alam, ihsibna ma\'a khirafik, alladheena \'an yameenik.\n\n\'Inda zuhourika eth-thani, el-makhouf la nasma\', bi-ra\'da "Innani, lastu a\'rifukum."\n\nBal nakoun mustahiqqeen, li-sama\' sawtak el-hanoun, el-mumtali\' farahan, yasrukh qa\'ilan.\n\n"Ta\'alaw ilayya, ya mubaraki abi, rithou el-hayah, ed-da\'ima ila el-abad."\n\nYa\'ti esh-shuhada\', hamileen \'adhabatihim, wa ya\'ti es-siddeeqoun, hamileen fada\'ilahum.\n\nYa\'ti ibn Allah, fi majdihi wa majd abeeh, wa yujazi kulla wahid, ka-a\'malihi allati \'amilaha.\n\nAyyuha el-Maseeh kalimat el-Ab, el-ilah el-waheed el-jins, a\'tina salamak, el-mamlou\' farahan.\n\nKama a\'taytahu, li-rusulika el-qiddiseen, qul lana mithlahum, "Inni u\'teekum salami.\n\nSalami ana, alladhi akhadhtuhu min abi, ana atrukuhu ma\'akum, min el-an wa ila el-abad."\n\nYa malak hadha el-yawm et-ta\'ir, ila el-\'ulouw bi-hadhihi et-tasbiha, udhkurna amam er-Rabb, li-yaghfir lana khatayana.\n\nEl-marda ishfihim, alladheena raqadou ya Rabb nayyihhum, wa ikhwatuna alladheena fi kulli shidda, ya Rabbi a\'inna wa iyyahum.\n\nYubarikuna Allah, wa li-nubarik ismahu el-quddous, fi kulli heen tasbihatuhu, da\'ima fi afwahina.\n\nMubarak el-Ab wal-Ibn, war-Rooh el-Qudus, eth-thalouth el-kamil, nasjud lahu wa numajjiduh.' },
+    { language: 'arabic', text: '(الشعب)\n\nيا ربنا يسوع المسيح، حامل خطية العالم، أحسبنا مع خرافك، الذين عن يمينِك.\n\nعند ظهورِك الثاني، المخوف لا نسمع، برعدةٍ "أنَّنِي، لَستُ أعرفكم."\n\nبَل نكون مُستحقين، لسماع صوتك الحنون، المُمْتلئ فرحاً، يصرخ قائلاً.\n\n"تعالوا إليَّ، يا مُبارَكي أبي، رثوا الحياة، الدائمة إلى الأبد."\n\nيأتي الشهداء، حاملين عذاباتهم، ويأتي الصدِّيقون، حاملين فضائلهم.\n\nيأتي إبن الله، في مجده ومجد أبيه، ويُجازي كل واحدٍ، كأعماله التي عملها.\n\nأيها المسيح كلمة الآب، الإله الوحيد الجنس، أعطنا سلامك، المملوء فرحاً.\n\nكما أعطيته، لرُسُلِكَ القديسين، قُلْ لنا مِثلهم، "إنِّي أعطيكم سلامي.\n\nسلامي أنا، الذي أخذته من أبي، أنا أتركه معكم، من الأن وإلى الأبد."\n\nيا ملاك هذا اليوم الطائر، إلى العلو بهذه التسبحة، أُذكرنا أمام الرب، ليغفر لنا خطايانا.\n\nالمرضى أشفهم، الذين رقدوا يا رب نَيِّحهم، وأخواتنا الذين في كل شدة، يا ربي أعنا وإيَّاهم.\n\nيُبارِكنا الله، ولنُبارِك إسمه القدوس، في كل حين تسبحته، دائمة في أفواهنا.\n\nمُبارَك الآب والإبن، والرُّوح القُدُس، الثالوث الكامل، نسجد له ونُمجِّدهُ.' },
+  ],
+});
+
+// The Conclusion of the Adam Theotokias: the same text as in Morning Praises (copied, so each keeps its own audio)
+const adamTheotokiasConclusion = (day: string): Hymn => ({
+  id: `annual-midnight-${day}-adam-theotokias-conclusion`,
+  title: 'Ⲛⲉⲕⲛⲁⲓ ⲱ̀ Ⲡⲁⲛⲟⲩϯ (The Conclusion of the Adam Theotokias)',
+  versions: (
+    seasons
+      .flatMap((season) => season.services)
+      .flatMap((service) => flattenHymns(service.hymns))
+      .find((h) => h.id === 'annual-morning-praises-adam-theotokias-conclusion')?.versions ?? []
+  ).map((v) => ({ language: v.language, text: v.text })),
+});
+
+// Sung after Arise O Children of the Light on Sundays and Fridays
+const resurrectionHymn = (day: string): Hymn => ({
+  id: `annual-midnight-${day}-resurrection-hymn`,
+  title: 'Ⲡⲓⲃⲱϩⲉⲙ ⲛ̀ⲧⲉ Ϯⲁ̀ⲛⲁⲥⲧⲁⲥⲓⲥ (The Hymn of the Resurrection)',
+  versions: [],
+});
+
+// A hymn whose text has not come in yet
+const titleOnly = (id: string, title: string): Hymn => ({ id, title, versions: [] });
+
+// Names for a Theotokia's parts: each part's first words, e.g. "Ϯⲁⲧⲑⲱⲗⲉⲃ ⲛ̀ⲥⲉⲙⲛⲉ (Saturday Theotokion 1)"
+function theotokionTitles(day: string, firstWords: string[]): string[] {
+  return firstWords.map((words, i) => (words ? `${words} (${day} Theotokion ${i + 1})` : `${day} Theotokion ${i + 1}`));
+}
+
+const saturdayTheotokiaTitles = theotokionTitles('Saturday', [
+  'Ϯⲁⲧⲑⲱⲗⲉⲃ ⲛ̀ⲥⲉⲙⲛⲉ',
+  'Ⲧⲉⲛⲉⲣⲙⲁⲕⲁⲣⲓⲍⲓⲛ ⲛ̀ⲧⲉⲙⲉⲧⲛⲓϣϯ',
+  'Ϩⲱⲥ ⲙⲁⲛ̀ϣⲉⲗⲉⲧ ⲛ̀ⲁⲧⲧⲁⲕⲟ',
+  'Ⲛ̀ⲑⲟ ⲅⲁⲣ ⲡⲉ ⲡⲓⲅⲉⲛⲟⲥ',
+  'Ⲁ̀ⲣⲉϣⲱⲡⲓ ⲛ̀ⲟⲩⲙⲁϩⲥ̀ⲛⲟⲩϯ ⲙ̀ⲫⲉ',
+  'Ϯⲥ̀ⲕⲏⲛⲏ ⲑⲏⲉ̀ⲧⲟⲩⲙⲟⲩϯ ⲉ̀ⲣⲟⲥ',
+  'Ⲁⲩⲙⲟⲩϯ ⲉ̀ⲣⲟ ϫⲉ Ⲑ̀ⲙⲁⲩ ⲙ̀Ⲫ̀ⲛⲟⲩϯ',
+  'Ⲁ̀ⲣⲉⲧⲉⲛⲑⲱⲛϯ ⲉ̀ϯⲙⲟⲩⲕⲓ',
+  'Ϩⲏⲡⲡⲉ ⲓⲥ Ⲡ̀ϭⲟⲓⲥ ⲁϥⲓ̀ ⲉ̀ⲃⲟⲗ ⲛ̀ϧⲏϯ',
+]);
+
+// One day of the week: the hymns before its Theotokia, the Theotokia as a list of parts, then the hymns after it
 const midnightDay = (
   day: string,
   title: string,
-  psaliTitle: string,
-  theotokiaParts: number,
-  beforeTheotokia: Hymn[] = [],
-  theotokiaTexts: Record<number, LanguageVersion[]> = {}
+  theotokia: { title: string; parts: string[]; texts?: Record<number, LanguageVersion[]> },
+  before: Hymn[],
+  after: Hymn[]
 ): Hymn => ({
   id: `annual-midnight-${day}`,
   title,
   versions: [],
   children: [
-    { id: `annual-midnight-${day}-psali`, title: psaliTitle, versions: [] },
-    ...beforeTheotokia,
+    ...before,
     {
       id: `annual-midnight-${day}-theotokia`,
-      title: `${title} Theotokia`,
+      title: theotokia.title,
       versions: [],
-      children: Array.from({ length: theotokiaParts }, (_, i) => ({
+      children: theotokia.parts.map((partTitle, i) => ({
         id: `annual-midnight-${day}-theotokia-part-${i + 1}`,
-        title: `${title} Theotokia (Part ${i + 1})`,
-        versions: theotokiaTexts[i + 1] ?? [],
+        title: partTitle,
+        versions: theotokia.texts?.[i + 1] ?? [],
       })),
     },
+    ...after,
   ],
 });
 
@@ -2425,16 +2582,199 @@ if (annualMidnight) {
           title: 'Psali (Watos) for St Mary, on the 21st of the Coptic Month',
           versions: [],
         },
+        titleOnly('annual-midnight-psalmody-conclusion', 'Conclusion of the Midnight Psalmody'),
+        titleOnly('annual-midnight-concluding-hymn', 'Concluding Hymn'),
       ],
     },
-    midnightDay('sunday', 'Sunday', 'Sunday Psali (Adam)', 18, [sundayPsaliLordJesus, adamPsaliConclusion('sunday')], sundayTheotokiaTexts),
-    midnightDay('monday', 'Monday', 'Monday Psali (Adam)', 9, [adamPsaliConclusion('monday')], mondayTheotokiaTexts),
-    midnightDay('tuesday', 'Tuesday', 'Tuesday Psali (Adam)', 7, [adamPsaliConclusion('tuesday')], tuesdayTheotokiaTexts),
-    midnightDay('wednesday', 'Wednesday', 'Wednesday Psali (Adam)', 7, [watosPsaliConclusion('wednesday')]),
-    midnightDay('thursday', 'Thursday', 'Thursday Psali (Watos)', 9, [watosPsaliConclusion('thursday')]),
-    midnightDay('friday', 'Friday', 'Friday Psali (Adam)', 7, [watosPsaliConclusion('friday')]),
-    midnightDay('saturday', 'Saturday', 'Psali (Watos) for the Annunciation', 9, [watosPsaliConclusion('saturday')]),
+    midnightDay(
+      'sunday',
+      'Sunday',
+      {
+        title: 'Ϯⲑⲉⲟ̀ⲧⲟⲕⲓⲁ ⲙ̀Ⲡⲉ̀ϩⲟⲟⲩ ⲛ̀Ϯⲕⲩⲣⲓⲁⲕⲏ (The Sunday Theotokia)',
+        parts: theotokionTitles('Sunday', [
+          'Ⲥⲉⲙⲟⲩϯ ⲉ̀ⲣⲟ ⲇⲓⲕⲉⲟⲥ',
+          'Ϯⲕⲓⲃⲱⲧⲟⲥ ⲉⲧⲟϣϫ',
+          'Ⲡⲓⲓ̀ⲗⲁⲥⲧⲏⲣⲓⲟⲛ',
+          'Ⲛ̀ⲑⲟ ⲡⲉ ⲡⲓⲥ̀ⲧⲁⲙⲛⲟⲥ',
+          'Ⲛ̀ⲑⲟ ⲧⲉ ϯⲗⲩⲭⲛⲓⲁ',
+          'Ⲛ̀ⲑⲟ ⲧⲉ ϯϣⲟⲩⲣⲏ',
+          'Ⲭⲉⲣⲉ ⲛⲉ Ⲙⲁⲣⲓⲁ',
+          'Ϣⲁϣϥ ⲛ̀ⲥⲟⲡ ⲙ̀ⲙⲏⲛⲓ',
+          'Ⲁⲩⲙⲟⲩϯ ⲉ̀ⲣⲟ',
+          'Ⲧⲉⲟⲓ ⲛ̀ϩⲓⲕⲁⲛⲟⲥ',
+          'Ⲣⲁⲛ ⲛⲓⲃⲉⲛ ⲉⲧϭⲟⲥⲓ',
+          'Ⲡⲉⲱⲟⲩ Ⲙⲁⲣⲓⲁ',
+          'Ⲟⲩⲥ̀ⲕⲏⲛⲏ ⲙ̀ⲙⲏⲓ',
+          'Ⲁⲕⲥⲟⲗⲥⲉⲗ ⲛ̀ⲛⲉⲛⲯⲩⲭⲏ',
+          'Ⲛⲓⲙ ⲡⲉⲑⲛⲁϣⲥⲁϫⲓ',
+          'Ⲛⲓⲙ ⲅⲁⲣ ϧⲉⲛ ⲛⲓⲛⲟⲩϯ',
+          'Ⲁ̀ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ Ⲡⲉⲛⲛⲟⲩϯ',
+          'Ⲕⲁⲗⲱⲥ ϧⲉⲛ ⲟⲩⲙⲉⲑⲙⲏⲓ',
+        ]),
+        texts: sundayTheotokiaTexts,
+      },
+      [
+        resurrectionHymn('sunday'),
+        titleOnly('annual-midnight-sunday-psali', 'Ⲁⲓⲛⲁϩϯ ⲉⲑⲃⲉ ⲫⲁⲓ (The Adam Sunday Psali)'),
+        titleOnly('annual-midnight-sunday-psali-lord-jesus', 'Ⲁⲓⲕⲱϯ ⲛ̀ⲥⲱⲕ (The Adam Psali for the Lord Jesus)'),
+        sundayPsaliLordJesus,
+        adamPsaliConclusion('sunday'),
+      ],
+      [adamTheotokiasConclusion('sunday')]
+    ),
+    midnightDay(
+      'monday',
+      'Monday',
+      {
+        title: 'Ϯⲑⲉⲟ̀ⲧⲟⲕⲓⲁ ⲙ̀Ⲡⲉ̀ϩⲟⲟⲩ ⲙ̀Ⲡⲥ̀ⲛⲁⲩ (The Monday Theotokia)',
+        parts: theotokionTitles('Monday', [
+          'Ⲁ̀ⲇⲁⲙ ⲉ̀ⲧⲓ ⲉϥⲟⲓ',
+          'Ⲉⲩⲁ ⲑⲏⲉ̀ⲧⲁϥⲉⲣϩⲁⲗ ⲙ̀ⲙⲟⲥ',
+          'Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ Ⲡⲓⲗⲟⲅⲟⲥ',
+          'Ⲛⲁϥⲛⲁⲩ ϧⲉⲛ ⲛⲓⲃⲁⲗ',
+          'Ⲣⲁϣⲓ ⲟⲩⲟϩ ⲑⲉⲗⲏⲗ',
+          'Ⲫⲏⲉⲧϣⲟⲡ: ⲫⲏⲉ̀ⲛⲁϥϣⲟⲡ',
+          'Ⲭⲉⲣⲉ Ⲃⲏⲑⲗⲉⲉⲙ',
+          'Ⲯⲩⲭⲏ ⲛⲓⲃⲉⲛ ⲣⲁϣⲓ',
+          'Ⲟⲩⲟⲩⲱⲓⲛⲓ ⲡⲉ Ⲫ̀ⲛⲟⲩϯ',
+        ]),
+        texts: mondayTheotokiaTexts,
+      },
+      [
+        titleOnly('annual-midnight-monday-psali', 'Ⲁ̀ ⲛⲓⲁ̀ⲛⲁ ⲛ̀ϣⲟ ⲛ̀ϣⲟ (The Monday Adam Psali)'),
+        adamPsaliConclusion('monday'),
+      ],
+      [
+        titleOnly('annual-midnight-monday-adam-lobsh', 'Ⲡⲁⲗⲁⲥ ⲅⲁⲣ ⲉⲧϫⲱϫⲉⲃ (Adam Lobsh on the Monday Theotokia)'),
+        adamTheotokiasConclusion('monday'),
+      ]
+    ),
+    midnightDay(
+      'tuesday',
+      'Tuesday',
+      {
+        title: 'Ϯⲑⲉⲟ̀ⲧⲟⲕⲓⲁ ⲙ̀Ⲡⲉ̀ϩⲟⲟⲩ ⲙ̀Ⲡϣⲟⲙⲧ (The Tuesday Theotokia)',
+        parts: theotokionTitles('Tuesday', [
+          'Ⲡⲓⲭ̀ⲗⲟⲙ ⲛ̀ⲧⲉ ⲡⲉⲛϣⲟⲩϣⲟⲩ',
+          'Ⲟⲩⲛⲓϣϯ ⲡⲉ ⲡⲱⲟⲩ',
+          'Ⲭⲉⲣⲉ Ϯⲙⲁⲥⲛⲟⲩϯ',
+          'Ⲁ̀ⲣⲉϣⲁⲛ ⲟⲩⲁⲓ',
+          'Ⲡⲧⲁⲓⲟ ⲛ̀Ϯⲡⲁⲣⲑⲉⲛⲟⲥ',
+          'Ⲁ̀ⲣⲉϣⲱⲡⲓ ⲛ̀ⲟⲩⲕⲗⲁⲇⲟⲥ',
+          'Ⲛ̀ⲑⲟ Ⲑ̀ⲙⲁⲩ ⲙ̀Ⲡⲓⲟⲩⲱⲓⲛⲓ',
+        ]),
+        texts: tuesdayTheotokiaTexts,
+      },
+      [
+        titleOnly('annual-midnight-tuesday-psali', 'Ⲁ̀ⲙⲟⲩ ϣⲁⲣⲟⲛ ⲙ̀ⲫⲟⲟⲩ (The Tuesday Adam Psali)'),
+        adamPsaliConclusion('tuesday'),
+      ],
+      [
+        titleOnly('annual-midnight-tuesday-adam-lobsh', 'Ⲉⲣⲉ ⲁϣ ⲛ̀ⲗⲁⲥ ⲛ̀ⲥⲁⲣⲝ (Adam Lobsh on the Tuesday Theotokia)'),
+        adamTheotokiasConclusion('tuesday'),
+      ]
+    ),
+    midnightDay(
+      'wednesday',
+      'Wednesday',
+      {
+        title: 'Ϯⲑⲉⲟ̀ⲧⲟⲕⲓⲁ ⲙ̀Ⲡⲉ̀ϩⲟⲟⲩ ⲙ̀Ⲡϥ̀ⲧⲟⲟⲩ (The Wednesday Theotokia)',
+        parts: theotokionTitles('Wednesday', [
+          '',
+          'Ⲁⲩⲥⲁϫⲓ ⲛ̀ϩⲁⲛⲧⲁⲓⲟ ⲉⲑⲃⲏϯ',
+          'Ⲛ̀ⲑⲟ ⲧⲉ ϯϭⲏⲡⲓ ⲉⲧⲁ̀ⲥⲓⲱⲟⲩ',
+          'Ⲟⲩⲛⲓϣϯ ⲅⲁⲣ ⲧⲉ ϯⲧⲓⲙⲏ',
+          'Ⲟⲩϣⲁⲓ ⲙ̀ⲡⲁⲣⲑⲉⲛⲓⲕⲟⲛ',
+          'Ⲟⲩⲛⲓϣϯ ⲡⲉ ⲡ̀ⲧⲁⲓⲟ ⲙ̀Ⲙⲁⲣⲓⲁ',
+          'Ϯⲅⲁⲗⲓⲗⲉⲁ̀ ⲛ̀ⲧⲉ ⲛⲓⲉⲑⲛⲟⲥ',
+        ]),
+      },
+      [
+        titleOnly('annual-midnight-wednesday-psali', 'Ⲙⲁⲣⲟⲩⲟⲩⲛⲟϥ ⲛ̀ⲧⲟⲩⲑⲉⲗⲏⲗ (The Wednesday Watos Psali)'),
+        watosPsaliConclusion('wednesday'),
+      ],
+      [
+        titleOnly('annual-midnight-wednesday-watos-lobsh', 'Ⲓⲉⲍⲉⲕⲓⲏⲗ ⲡⲓⲡ̀ⲣⲟⲫⲏⲧⲏⲥ (Watos Lobsh on the Wednesday Theotokia)'),
+        watosTheotokiaConclusion('wednesday'),
+      ]
+    ),
+    midnightDay(
+      'thursday',
+      'Thursday',
+      {
+        title: 'Ϯⲑⲉⲟ̀ⲧⲟⲕⲓⲁ ⲙ̀Ⲡⲉ̀ϩⲟⲟⲩ ⲙ̀Ⲡϯⲟⲩ (The Thursday Theotokia)',
+        parts: theotokionTitles('Thursday', [
+          'Ⲡⲓⲃⲁⲧⲟⲥ ⲉ̀ⲧⲁ Ⲙⲱⲩ̀ⲥⲏⲥ',
+          'Ⲡϣⲟⲩϣⲟⲩ ⲛ̀ⲛⲓⲡⲁⲣⲑⲉⲛⲟⲥ ⲧⲏⲣⲟⲩ',
+          'Ⲁϣ ⲛ̀ⲛⲟⲩⲥ ⲓⲉ ⲁϣ ⲛ̀ⲥⲁϫⲓ',
+          'Ⲱ̀ ϯⲧⲓⲙⲏ ⲛ̀ⲧⲉ ϯϫⲓⲛⲉⲣⲃⲟⲕⲓ',
+          'Ⲱ̀ ⲛⲓⲛⲁⲕϩⲓ ⲛ̀ⲛⲟⲩϯ',
+          'Ⲱ̀ ϯⲛⲓϣϯ ⲛ̀ϣ̀ⲫⲏⲣⲓ',
+          'Ⲁϥⲱⲣⲕ ⲛ̀ϫⲉ Ⲡ̀ϭⲟⲓⲥ ⲛ̀Ⲇⲁⲩⲓⲇ',
+          'Ⲡⲓⲟⲩⲁⲓ ⲉ̀ⲃⲟⲗ ϧⲉⲛ Ϯⲧ̀ⲣⲓⲁⲥ',
+          'Ⲁⲓⲛⲁⲩ ⲉ̀ⲟⲩⲙⲏⲛⲓ',
+        ]),
+      },
+      [
+        titleOnly('annual-midnight-thursday-psali', 'Ⲗⲟⲓⲡⲟⲛ ⲅⲁⲣ ⲱ̀ ⲛⲁⲙⲉⲛⲣⲁϯ (The Thursday Watos Psali)'),
+        watosPsaliConclusion('thursday'),
+      ],
+      [
+        titleOnly('annual-midnight-thursday-watos-lobsh', 'Ⲫ̀ⲛⲟⲩϯ Ⲡⲓⲁⲧϣⲛⲁⲩ (Watos Lobsh on the Thursday Theotokia)'),
+        watosTheotokiaConclusion('thursday'),
+      ]
+    ),
+    midnightDay(
+      'friday',
+      'Friday',
+      {
+        title: 'Ϯⲑⲉⲟ̀ⲧⲟⲕⲓⲁ ⲙ̀Ⲡⲉ̀ϩⲟⲟⲩ ⲛ̀Ϯⲡⲁⲣⲁⲥⲕⲉⲩⲏ (The Friday Theotokia)',
+        parts: theotokionTitles('Friday', [
+          'Ⲧⲉⲥ̀ⲙⲁⲣⲱⲟⲩⲧ ϧⲉⲛ ⲛⲓϩⲓⲟⲙⲓ',
+          'Ⲧⲉⲥ̀ⲙⲁⲣⲱⲟⲩⲧ ⲉ̀ϩⲟⲧⲉ ⲧ̀ⲫⲉ',
+          'Ⲧⲉⲥ̀ⲙⲁⲣⲱⲟⲩⲧ ⲛ̀ⲑⲟ Ⲙⲁⲣⲓⲁ',
+          'Ⲁ̀ⲟⲩⲙⲏϣ ⲛ̀ϩⲓⲟⲙⲓ ϭⲓⲧⲁⲓⲟ',
+          'Ϯⲡⲁⲣⲑⲉⲛⲟⲥ Ⲙⲁⲣⲓⲁⲙ',
+          'Ϯⲡⲁⲣⲑⲉⲛⲟⲥ Ⲙⲁⲣⲓⲁⲙ',
+          'Ϯⲡⲁⲣⲑⲉⲛⲟⲥ Ⲙⲁⲣⲓⲁⲙ',
+        ]),
+      },
+      [
+        resurrectionHymn('friday'),
+        titleOnly('annual-midnight-friday-psali-annunciation', 'Psali Watos for the Annunciation'),
+        titleOnly('annual-midnight-friday-psali-nativity', 'Watos Nativity Psali on the Friday Theotokia'),
+        titleOnly('annual-midnight-friday-psali-holy-fifty', 'Ⲁ̀ⲗⲏⲑⲱⲥ ⲧⲉⲛⲛⲁϩϯ ⲁ̀ⲛⲟⲛ (Psali Watos for the Holy Fifty Days)'),
+        watosPsaliConclusion('friday'),
+      ],
+      [
+        titleOnly('annual-midnight-friday-watos-lobsh', 'Ⲁⲓⲛⲁⲙⲟⲩϯ ⲉ̀ⲣⲟ (Watos Lobsh on the Friday Theotokia)'),
+        watosTheotokiaConclusion('friday'),
+      ]
+    ),
+    midnightDay(
+      'saturday',
+      'Saturday',
+      {
+        title: 'Ϯⲑⲉⲟ̀ⲧⲟⲕⲓⲁ ⲙ̀Ⲡ̀ⲉ̀ϩⲟⲟⲩ ⲙ̀Ⲡⲓⲥⲁⲃⲃⲁⲧⲟⲛ (The Saturday Theotokia)',
+        parts: saturdayTheotokiaTitles,
+        texts: saturdayTheotokiaTexts,
+      },
+      [saturdayWatosPsali, watosPsaliConclusion('saturday')],
+      [...saturdayAfterTheotokia, watosTheotokiaConclusion('saturday')]
+    ),
   ];
+}
+
+// Sunday Theotokia 7–9 are also sung on weekdays, from General; the full Sunday Theotokia shows the same text
+if (annualMidnight) {
+  const all = flattenHymns(annualMidnight.hymns);
+  for (const n of [7, 8, 9]) {
+    const general = all.find((h) => h.id === `annual-midnight-sunday-theotokion-${n}`);
+    const part = all.find((h) => h.id === `annual-midnight-sunday-theotokia-part-${n}`);
+    if (general && part && part.versions.length === 0) {
+      part.versions = general.versions.map((v) => ({ language: v.language, text: v.text }));
+    }
+  }
 }
 
 // ---- Audio: Annual > Midnight Praises (Coptic recordings, also played with the English-Coptic text) ----
@@ -2442,6 +2782,7 @@ const midnightAudio: Record<string, string> = {
   'annual-midnight-first-canticle': 'midnight-first-canticle.mp3',
   'annual-midnight-first-canticle-lobsh': 'midnight-first-canticle-lobsh.mp3',
   'annual-midnight-sunday-theotokion-7': 'midnight-sunday-theotokion-7.mp3',
+  'annual-midnight-sunday-theotokia-part-7': 'midnight-sunday-theotokion-7.mp3',
   'annual-midnight-second-canticle': 'midnight-second-canticle.mp3',
   'annual-midnight-second-canticle-lobsh': 'midnight-second-canticle-lobsh.mp3',
   'annual-midnight-third-canticle': 'midnight-third-canticle.mp3',
@@ -2450,6 +2791,16 @@ const midnightAudio: Record<string, string> = {
   'annual-midnight-fourth-canticle': 'midnight-fourth-canticle.mp3',
   'annual-midnight-greek-psali-watos': 'midnight-aripsalin.mp3',
   'annual-midnight-doxology-virgin-mary': 'midnight-doxology-virgin-mary.m4a',
+  'annual-midnight-saturday-watos-psali-conclusion': 'midnight-saturday-watos-psali-conclusion.m4a',
+  'annual-midnight-saturday-theotokia-part-1': 'midnight-saturday-theotokion-1.m4a',
+  'annual-midnight-saturday-theotokia-part-2': 'midnight-saturday-theotokion-2.m4a',
+  'annual-midnight-saturday-theotokia-part-3': 'midnight-saturday-theotokion-3.m4a',
+  'annual-midnight-saturday-theotokia-part-4': 'midnight-saturday-theotokion-4.m4a',
+  'annual-midnight-saturday-theotokia-part-5': 'midnight-saturday-theotokion-5.m4a',
+  'annual-midnight-saturday-theotokia-part-6': 'midnight-saturday-theotokion-6.m4a',
+  'annual-midnight-saturday-theotokia-part-7': 'midnight-saturday-theotokion-7.m4a',
+  'annual-midnight-saturday-theotokia-part-8': 'midnight-saturday-theotokion-8.m4a',
+  'annual-midnight-saturday-theotokia-part-9': 'midnight-saturday-theotokion-9.m4a',
 };
 for (const hymn of annualMidnight ? flattenHymns(annualMidnight.hymns) : []) {
   const audio = midnightAudio[hymn.id];

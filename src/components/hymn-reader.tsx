@@ -5,7 +5,7 @@ import { Alert, Pressable, ScrollView, Share, Text, View } from 'react-native';
 import { hymnWebUrl } from '../constants/site';
 import { displayTitle } from '../data/arabic-titles';
 import { Hymn, LanguageType } from '../data/hymns';
-import { hymnSlug, locateHymn } from '../data/search';
+import { hymnSlug, locateHymn, neighborHymns } from '../data/search';
 import { useAlhanColors, useThemedStyles } from '../hooks/use-alhan-colors';
 import {
   audioSourceFor,
@@ -34,6 +34,7 @@ import {
   defaultHymnLanguage,
   formatTime,
   goBackOrHome,
+  hymnHref,
   KeepScreenAwake,
   languageLabels,
   ScreenShell,
@@ -94,6 +95,27 @@ export function HymnReader({
     ? `${withoutNumber(displayTitle(location.group, lang))} ${isRTL ? '‹' : '›'} ${displayTitle(location.service, lang)}`
     : null;
 
+  // Step through the service in order, keeping the language; replace so Back still returns to the list
+  const { previous, next } = neighborHymns(hymn.id);
+  const openNeighbor = (h: Hymn) => router.replace(hymnHref(h.id, effectiveLanguage));
+  const navButton = (h: Hymn | undefined, label: string, arrow: string, end: boolean) =>
+    h ? (
+      <Pressable
+        onPress={() => openNeighbor(h)}
+        accessibilityRole="link"
+        accessibilityLabel={`${label}: ${displayTitle(h, lang)}`}
+        style={({ pressed }) => [styles.hymnNavButton, pressed && styles.rowCardPressed]}>
+        <Text style={[styles.hymnNavLabel, end ? styles.alignRight : styles.alignLeft]}>
+          {end ? `${label} ${arrow}` : `${arrow} ${label}`}
+        </Text>
+        <Text style={[styles.hymnNavTitle, end ? styles.alignRight : styles.alignLeft]} numberOfLines={2}>
+          {displayTitle(h, lang)}
+        </Text>
+      </Pressable>
+    ) : (
+      <View style={styles.verseColumn} />
+    );
+
   const toggleReaderAudio = () => {
     if (readerIsCurrent) return togglePlay();
     const source = currentAudio ? audioSourceFor(currentAudio) : null;
@@ -138,7 +160,9 @@ export function HymnReader({
     (compareOptions.find((l) => l.key === 'english') ?? compareOptions[0])?.key ??
     null;
   const showSideBySide = settings.sideBySide && compareLanguage !== null;
-  const columnStyle = (language: LanguageType) => (language === 'arabic' ? styles.arabicText : styles.alignLeft);
+  const columnStyle = (language: LanguageType) =>
+    language === 'arabic' ? styles.arabicText : language === 'coptic' ? [styles.alignLeft, styles.copticText] : styles.alignLeft;
+  const copticStyle = effectiveLanguage === 'coptic' ? styles.copticText : null;
   // Verse by verse, so each line sits next to its translation
   const verses = toVerses(textFor(effectiveLanguage));
   const compareVerses = compareLanguage ? toVerses(textFor(compareLanguage)) : [];
@@ -473,6 +497,7 @@ export function HymnReader({
                   styles.hymnText,
                   { fontSize, lineHeight: fontSize * 1.65 },
                   isArabicText ? styles.arabicText : styles.alignLeft,
+                  copticStyle,
                 ]}>
                 {verseContent(verse)}
               </Text>
@@ -484,6 +509,7 @@ export function HymnReader({
               styles.hymnText,
               { fontSize, lineHeight: fontSize * 1.65 },
               isArabicText ? styles.arabicText : styles.alignLeft,
+              copticStyle,
             ]}>
             {verses.map((verse, i) => (
               <Text key={i}>
@@ -494,6 +520,13 @@ export function HymnReader({
           </Text>
         )}
       </View>
+
+      {previous || next ? (
+        <View style={[styles.hymnNav, rowDirection]}>
+          {navButton(previous, t.previousHymn, isRTL ? '›' : '‹', isRTL)}
+          {navButton(next, t.nextHymn, isRTL ? '‹' : '›', !isRTL)}
+        </View>
+      ) : null}
     </ScreenShell>
   );
 }

@@ -77,6 +77,16 @@ export function locateHymn(id: string): { hymn: Hymn; location: HymnLocation } |
   return locations.get(id);
 }
 
+// The hymns just before and after this one in its service, in reading order (across groups,
+// so the last part of a Theotokia leads on to the hymn after it)
+export function neighborHymns(id: string): { previous?: Hymn; next?: Hymn } {
+  const found = locateHymn(id);
+  if (!found) return {};
+  const order = flattenHymns(found.location.service.hymns);
+  const i = order.findIndex((h) => h.id === found.hymn.id);
+  return { previous: order[i - 1], next: order[i + 1] };
+}
+
 const cleanText = (text: string) => text.replace(/(?:\\n)+/g, '\n\n');
 
 function buildIndex(): IndexEntry[] {

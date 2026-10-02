@@ -1,4 +1,4 @@
-import { normalizeForSearch, searchHymns } from '../search';
+import { neighborHymns, normalizeForSearch, searchHymns } from '../search';
 
 describe('normalizeForSearch', () => {
   it('ignores case and accents', () => {
@@ -65,5 +65,23 @@ describe('searchHymns', () => {
 
   it('respects the result limit', () => {
     expect(searchHymns('response', 5)).toHaveLength(5);
+  });
+});
+
+describe('neighborHymns', () => {
+  it('steps through the parts of a Theotokia', () => {
+    const { previous, next } = neighborHymns('annual-midnight-saturday-theotokia-part-2');
+    expect(previous?.id).toBe('annual-midnight-saturday-theotokia-part-1');
+    expect(next?.id).toBe('annual-midnight-saturday-theotokia-part-3');
+  });
+
+  it('leads from the last part on to the next hymn', () => {
+    expect(neighborHymns('annual-midnight-saturday-theotokia-part-9').next?.id).toBe(
+      'annual-midnight-saturday-watos-lobsh-1'
+    );
+  });
+
+  it('has nothing before the first hymn of a service', () => {
+    expect(neighborHymns('annual-midnight-arise-o-children').previous).toBeUndefined();
   });
 });

@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { Platform, Pressable, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { goBackOrHome, KeepScreenAwake, languageLabels, readerFont, strings, toVerses, Verse } from '@/components/alhan-ui';
+import { copticFont, goBackOrHome, KeepScreenAwake, languageLabels, readerFont, strings, toVerses, Verse } from '@/components/alhan-ui';
 import { hymnPlainText } from '@/components/hymn-reader';
 import { alhanColors } from '@/constants/alhan-colors';
 import { displayTitle } from '@/data/arabic-titles';
@@ -130,6 +130,7 @@ export default function PresentScreen() {
                   styles.verse,
                   { fontSize, lineHeight: fontSize * 1.35 },
                   arabic && styles.rtl,
+                  l === 'coptic' && styles.coptic,
                   i > 0 && l === 'english' && styles.translation,
                 ]}>
                 {verse.speaker ? (
@@ -221,6 +222,7 @@ const styles = StyleSheet.create({
     fontFamily: readerFont,
   },
   translation: { color: '#e9dfc8' },
+  coptic: { fontFamily: copticFont, fontWeight: 'normal' },
   rtl: { writingDirection: 'rtl' },
   speaker: { fontWeight: '800', letterSpacing: 0.5 },
   tapZones: { flexDirection: 'row' },

@@ -1,8 +1,8 @@
 // Text for the Learn Coptic screens, in both app languages
 
-export type LessonId = 'alphabet' | 'reading' | 'words' | 'quiz' | 'practice';
+export type LessonId = 'alphabet' | 'reading' | 'words' | 'quiz' | 'practice' | 'arabic';
 
-export const lessonIds: LessonId[] = ['alphabet', 'reading', 'words', 'quiz', 'practice'];
+export const lessonIds: LessonId[] = ['alphabet', 'reading', 'words', 'quiz', 'practice', 'arabic'];
 
 export const lessonIcons: Record<LessonId, string> = {
   alphabet: 'Ⲁ',
@@ -10,6 +10,7 @@ export const lessonIcons: Record<LessonId, string> = {
   words: 'Ⲡ̀ϭ',
   quiz: '?',
   practice: '♫',
+  arabic: 'ب',
 };
 
 export const learnStrings = {
@@ -22,6 +23,7 @@ export const learnStrings = {
       words: { title: 'Words from the Hymns', desc: 'The words you will hear most in church' },
       quiz: { title: 'Quiz', desc: 'Test yourself on letters and words' },
       practice: { title: 'Read a Verse', desc: 'Real verses from the hymns in this app' },
+      arabic: { title: 'The Arabic Alphabet', desc: 'For reading the Arabic text of the hymns' },
     } as Record<LessonId, { title: string; desc: string }>,
     tapLetter: 'Tap a letter to see how it sounds',
     sounds: 'Sounds like',
@@ -47,6 +49,14 @@ export const learnStrings = {
     nextVerse: 'Another verse',
     openHymn: 'Open the hymn',
     from: 'From',
+    inEnglishLetters: 'In English letters',
+    copticLetter: 'Coptic letter with this sound',
+    forms: 'How it is written',
+    formAlone: 'Alone',
+    formStart: 'Start',
+    formMiddle: 'Middle',
+    formEnd: 'End',
+    marksTitle: 'Vowel marks and extra letters',
   },
   ar: {
     title: 'تعلّم القبطي',
@@ -57,6 +67,7 @@ export const learnStrings = {
       words: { title: 'كلمات من الألحان', desc: 'أكثر الكلمات التي تسمعها في الكنيسة' },
       quiz: { title: 'اختبار', desc: 'اختبر نفسك في الحروف والكلمات' },
       practice: { title: 'اقرأ ربعاً', desc: 'أرباع حقيقية من ألحان التطبيق' },
+      arabic: { title: 'الحروف العربية', desc: 'لقراءة النص العربي للألحان' },
     } as Record<LessonId, { title: string; desc: string }>,
     tapLetter: 'اضغط على حرف لترى نطقه',
     sounds: 'يُنطق',
@@ -82,5 +93,13 @@ export const learnStrings = {
     nextVerse: 'ربع آخر',
     openHymn: 'افتح اللحن',
     from: 'من',
+    inEnglishLetters: 'بالحروف الإنجليزية',
+    copticLetter: 'الحرف القبطي المقابل',
+    forms: 'أشكال كتابته',
+    formAlone: 'منفرداً',
+    formStart: 'في البداية',
+    formMiddle: 'في الوسط',
+    formEnd: 'في النهاية',
+    marksTitle: 'الحركات وحروف إضافية',
   },
 };

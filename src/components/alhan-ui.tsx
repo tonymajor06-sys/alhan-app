@@ -65,6 +65,8 @@ export const strings = {
     downloadAll: '⬇ Download all for offline',
     share: '↗ Share',
     present: '⛶ Projector',
+    previousHymn: 'Previous',
+    nextHymn: 'Next',
     learn: '♫ Learn',
     speed: 'Speed',
     repeatVerse: '⟳ Repeat verse',
@@ -139,6 +141,8 @@ export const strings = {
     downloadAll: '⬇ تنزيل الكل للاستماع بدون إنترنت',
     share: '↗ مشاركة',
     present: '⛶ وضع العرض',
+    previousHymn: 'السابق',
+    nextHymn: 'التالي',
     learn: '♫ تعلّم',
     speed: 'السرعة',
     repeatVerse: '⟳ تكرار المقطع',
@@ -235,6 +239,10 @@ export function toVerses(text: string): Verse[] {
 
 // Book-like serif for hymn text; Coptic and Arabic letters fall back to the system fonts that have them
 export const readerFont = Platform.select({ ios: 'Georgia', android: 'serif', default: 'Georgia, "Times New Roman", serif' });
+
+// Coptic script in the church-book style: a Unicode copy of CS Avva Shenouda, loaded in the root layout.
+// It only has Coptic letters, digits and punctuation, so anything else falls back to the system font.
+export const copticFont = 'AvvaShenouda';
 
 // One line of chips that scrolls sideways instead of wrapping onto several rows.
 // Right-to-left starts scrolled to the right edge so the first chip is visible.
@@ -978,6 +986,34 @@ export const createAlhanStyles = (colors: AlhanPalette) => StyleSheet.create({
     paddingHorizontal: 14,
     borderRadius: 20,
   },
+  // Previous / next hymn, under the text
+  hymnNav: {
+    gap: 10,
+    marginTop: 16,
+  },
+  hymnNavButton: {
+    flex: 1,
+    minHeight: 64,
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: colors.border,
+    backgroundColor: colors.surface,
+    paddingVertical: 10,
+    paddingHorizontal: 14,
+    justifyContent: 'center',
+  },
+  hymnNavLabel: {
+    fontSize: 13,
+    fontWeight: '800',
+    color: colors.gold,
+    marginBottom: 2,
+  },
+  hymnNavTitle: {
+    fontSize: 15,
+    fontWeight: '600',
+    color: colors.text,
+    lineHeight: 21,
+  },
   verseRow: {
     paddingVertical: 10,
   },
@@ -1093,6 +1129,10 @@ export const createAlhanStyles = (colors: AlhanPalette) => StyleSheet.create({
   arabicText: {
     textAlign: 'right',
     writingDirection: 'rtl',
+  },
+  copticText: {
+    fontFamily: copticFont,
+    fontWeight: 'normal',
   },
   // Share / projector / learn
   actionChips: {

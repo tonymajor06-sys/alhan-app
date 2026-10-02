@@ -1,7 +1,9 @@
+import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 
+import { copticFont } from '@/components/alhan-ui';
 import { useAlhanColors } from '@/hooks/use-alhan-colors';
 import { useSettings } from '@/hooks/use-settings';
 import { useTodayJdn } from '@/hooks/use-today';
@@ -12,6 +14,8 @@ export default function RootLayout() {
   const { language, feastReminders } = useSettings();
   const today = useTodayJdn();
   const colors = useAlhanColors();
+  // Coptic text uses this font everywhere; wait for it so Coptic never flashes in the fallback font
+  const [fontsLoaded, fontError] = useFonts({ [copticFont]: require('../../assets/fonts/AvvaShenouda.ttf') });
 
   // Keep the home-screen widgets' schedule fresh whenever the app opens or the language changes
   useEffect(() => {
@@ -24,6 +28,8 @@ export default function RootLayout() {
   }, [language, feastReminders, today]);
 
   useReminderNavigation();
+
+  if (!fontsLoaded && !fontError) return null;
 
   return (
     <>

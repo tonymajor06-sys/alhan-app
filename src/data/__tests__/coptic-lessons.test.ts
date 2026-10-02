@@ -1,3 +1,4 @@
+import { arabicAlphabet, arabicForms } from '../arabic-lessons';
 import { buildQuiz, copticAlphabet, copticWords, getPracticeVerses } from '../coptic-lessons';
 
 describe('copticAlphabet', () => {
@@ -36,5 +37,20 @@ describe('getPracticeVerses', () => {
       expect(v.coptic).not.toMatch(/^\+/);
       expect(v.coptic.length).toBeLessThanOrEqual(160);
     }
+  });
+});
+
+describe('arabicAlphabet', () => {
+  it('has all 28 letters once, each with an example that uses it', () => {
+    expect(arabicAlphabet).toHaveLength(28);
+    expect(new Set(arabicAlphabet.map((l) => l.letter)).size).toBe(28);
+    for (const l of arabicAlphabet) expect(l.example).toContain(l.letter);
+  });
+
+  it('gives letters that do not join forward no start or middle form', () => {
+    const dal = arabicAlphabet.find((l) => l.letter === 'د')!;
+    expect(arabicForms(dal)).toEqual({ alone: 'د', start: 'د', middle: 'ـد', end: 'ـد' });
+    const ba = arabicAlphabet.find((l) => l.letter === 'ب')!;
+    expect(arabicForms(ba)).toEqual({ alone: 'ب', start: 'بـ', middle: 'ـبـ', end: 'ـب' });
   });
 });
