@@ -429,6 +429,38 @@ if (annualDistribution) {
   );
 }
 
+// ---- Kiahk > Distribution: rename the first hymn (title only) ----
+const kiahkDistributionHymn1 = seasons
+  .find((s) => s.id === 'kiahk')
+  ?.services.find((s) => s.id === 'kiahk-distribution')
+  ?.hymns.find((h) => h.id === 'kiahk-distribution-hymn-1');
+
+if (kiahkDistributionHymn1) {
+  kiahkDistributionHymn1.title = 'Psalm 150';
+  kiahkDistributionHymn1.versions = [
+    {
+      language: 'coptic',
+      text: 'Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ.\nⲤ̀ⲙⲟⲩ ⲉ̀Ⲫϯ ϧⲉⲛ ⲛⲏⲉ̅ⲑ̅ⲩ̅ ⲧⲏⲣⲟⲩ ⲛ̀ⲧⲁϥ.\n+ Ⲥ̀ⲙⲟⲩ ⲉ̀ⲣⲟϥ ϧⲉⲛ ⲡⲓⲧⲁϫⲣⲟ ⲛ̀ⲧⲉ ⲧⲉϥϫⲟⲙ.\nⲤ̀ⲙⲟⲩ ⲉ̀ⲣⲟϥ ⲉ̀ϩ̀ⲣⲏⲓ ϩⲓϫⲉⲛ ⲧⲉϥⲙⲉⲧϫⲱⲣⲓ.\n+ Ⲥ̀ⲙⲟⲩ ⲉ̀ⲣⲟϥ ⲕⲁⲧⲁ ⲡ̀ⲁ̀ϣⲁⲓ ⲛ̀ⲧⲉ ⲧⲉϥⲙⲉⲧⲛⲓϣϯ.\nⲤ̀ⲙⲟⲩ ⲉ̀ⲣⲟϥ ϧⲉⲛ ⲟⲩⲥ̀ⲙⲏ ⲛ̀ⲥⲁⲗⲡⲓⲅⲅⲟⲥ.\n+ Ⲥ̀ⲙⲟⲩ ⲉ̀ⲣⲟϥ ϧⲉⲛ ⲟⲩⲯⲁⲗⲧⲏⲣⲓⲟⲛ ⲛⲉⲙ ⲟⲩⲕⲩⲑⲁⲣⲁ.\nⲤ̀ⲙⲟⲩ ⲉ̀ⲣⲟϥ ϧⲉⲛ ϩⲁⲛⲕⲉⲙⲕⲉⲙ ⲛⲉⲙ ϩⲁⲛⲭⲟⲣⲟⲥ.\n+ Ⲥ̀ⲙⲟⲩ ⲉ̀ⲣⲟϥ ϧⲉⲛ ϩⲁⲛⲕⲁⲡ ⲛⲉⲙ ⲟⲩⲟⲣⲅⲁⲛⲟⲛ.\nⲤ̀ⲙⲟⲩ ⲉ̀ⲣⲟϥ ϧⲉⲛ ϩⲁⲛⲕⲩⲙⲃⲁⲗⲟⲛ ⲉ̀ⲛⲉⲥⲉ ⲧⲟⲩⲥ̀ⲙⲏ.\n+ Ⲥ̀ⲙⲟⲩ ⲉ̀ⲣⲟϥ ϧⲉⲛ ϩⲁⲛⲕⲩⲙⲃⲁⲗⲟⲛ ⲛ̀ⲧⲉ ⲟⲩⲉ̀ϣ̀ⲗⲏⲗⲟⲩⲓ̀.\nⲚⲓϥⲓ ⲛⲓⲃⲉⲛ ⲙⲁⲣⲟⲩⲥ̀ⲙⲟⲩ ⲧⲏⲣⲟⲩ ⲉ̀ⲫ̀ⲣⲁⲛ ⲙ̀Ⲡⲟ̅ⲥ̅ ⲡⲉⲛⲛⲟⲩϯ.\n+ Ⲇⲟⲝⲁ Ⲡⲁⲧⲣⲓ ⲕⲉ Ⲩ̀ⲓⲱ̀ ⲕⲉ ⲁ̀ⲅⲓⲱ̀ Ⲡ̀ⲛⲉⲩⲙⲁⲧⲓ.\nⲔⲉ ⲛⲩⲛ ⲕⲉ ⲁ̀ⲓ̀ ⲕⲉ ⲓⲥ ⲧⲟⲩⲥ ⲉ̀ⲱ̀ⲛⲁⲥ ⲧⲱⲛ ⲉ̀ⲱ̀ⲛⲱⲛ ⲁ̀ⲙⲏⲛ.\n+ Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ ⲁ̅ⲗ̅: ⲇⲟⲝⲁ ⲥⲓ ⲟ Ⲑⲉⲟⲥ ⲏ̀ⲙⲱⲛ.\nⲀⲗⲗⲏⲗⲟⲩⲓⲁ ⲁ̅ⲗ̅: ⲡⲓⲱ̀ⲟⲩ ⲫⲁ ⲡⲉⲛⲚⲟⲩϯ ⲡⲉ.\n+ Ⲓⲏ̅ⲥ̅ Ⲡⲭ̅ⲥ̅ ⲡ̀Ϣⲏⲣⲓ ⲙ̀Ⲫϯ ⲥⲱⲧⲉⲙ ⲉ̀ⲣⲟⲛ ⲟⲩⲟϩ ⲛⲁⲓ ⲛⲁⲛ.',
+    },
+    {
+      language: 'englishCoptic',
+      text: 'Smou Efnouti khen ni-ethouab tiroy al.\nSmou erof khen pe-tagro nte tef-gom al.\nSmou erof kheteriy hijen tef-metjori al.\nSmou erof kata p-shoi nte tef-met-nishti al.\nSmou erof khen ou-soni n-salpigos al.\nSmou erof khen ou-psalterion nem ou-ktara al.\nSmou erof khen han-kymbalon nem han-choros al.\nSmou erof khen han-kap nem organon al.\nSmou erof khen han-kymbalon enese totson al.\nSmou erof khen han-kymbalon nte ou-suleloui al.\nP-nifi niben marou-smou tiroy e-fran m-p-chois Pen-nouti al.\nDoxa Patri ke I-o ke Agio Pneumati al.\nKe nun ke ae ke istis eonas ton eonon: amini al.\nAl. al. Doxa si o Theos imon al.\nAl. al. Pi-ou fa Pen-nouti pe al.\nIesous Pi-christos P-shiri m-Efnouti sotem eron ouoh nai nan.\nKemarout alithos: nem Pek-iot n-agathos: nem Pi-pneumatis ethouab: je ak-i ak-soti mmon.',
+    },
+    {
+      language: 'english',
+      text: 'Alleluia.\nPraise God in all His saints.\n+ Praise Him in the firmament of His power.\nPraise Him for His mighty acts.\n+ Praise Him according to the multitudes of His greatness.\nPraise Him with the sound of the trumpet.\n+ Praise Him with psaltery and harp.\nPraise Him with timbrel and chorus.\n+ Praise Him with strings and organs.\nPraise Him with pleasant sounding cymbals.\n+ Praise Him upon the cymbals of joy.\nLet every thing that has breath praise the name of the Lord our God.\n+ Glory be to the Father, and the Son and the Holy Spirit.\nNow and forever and unto the age of all ages Amen.\n+ Alleluia, Alleluia, glory be to our God.\nAlleluia, Alleluia, glory be to our God.\n+ O Jesus Christ, the Son of God, hear us and have mercy upon us.',
+    },
+    {
+      language: 'englishArabic',
+      text: 'Sabeho Allah fi gamea kideseen.\nSabaho fi galad qowetehee.\nSabaho ala maqderateehy.\nSabaho kakatharat azamateehee.\nSabaho bi sowt el booq.\nSabaho bi mizmar wal kithar.\nSabaho bi difoofel wa sofouf.\nSabaho bi owtaren wa orhoon.\nSabaho bi snuuge hasinat esoot.\nSabaho bi snuuge etahleel.\nKulu nasma faltusabi esmelrab elahona.\nAlelluia, Doxa patri kay ayo kay agio epnevmati.\nKe nin ke a ee ke estosey onan stoney onon amin alleluia.\nDoxasi otheos imon alleluia.\nPi oou fai pennouti pe alleluia.\nEsoos piekhristos epshiri em ef nooti soten eron owoh nai nan.',
+    },
+    {
+      language: 'arabic',
+      text: 'هلليلويا.\nسبحوا الله في جميع قديسيه.\n+ سبحوه في جلد قوته.\nسبحوه على مقدرته.\n+ سبحوه ككثرة عظمته.\nسبحوه بصوت البوق.\n+ سبحوه بالمزمار والقيثار.\nسبحوه بدفوف وصفوف.\n+ سبحوه بأوتار وأرغن.\nسبحوه بصنوج حسنة الصوت.\n+ سبحوه بصنوج التهليل.\nكل نسمة فلتسبح اسم الرب الهنا.\n+ المجد للآب والأبن والروح القدس.\nالآن وكل أوان وإلى دهر الداهرين آمين.\n+ المجد لإلهنا هلليلويا.\nالمجد لإلهنا هلليلويا.\n+ يا يسوع المسيح ابن الله، إسمعنا وإرحمنا.',
+    },
+  ];
+}
+
 // ---- Annual > Matins: add "Doxologies" divider + Introduction to the Doxologies ----
 const annualMatins = seasons
   .find((s) => s.id === 'annual')
