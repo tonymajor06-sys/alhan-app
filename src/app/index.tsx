@@ -13,6 +13,7 @@ import {
   strings,
   withoutNumber,
 } from '../components/alhan-ui';
+import { learnStrings } from '../components/learn-strings';
 import { displayTitle } from '../data/arabic-titles';
 import {
   copticMonths,
@@ -324,10 +325,11 @@ export default function HomeScreen() {
               { key: 'hymns', title: displayTitle(mainCategories[1], lang), icon: '♫', desc: t.hymnsDesc, view: 'seasons-home' as const },
               { key: 'responses', title: displayTitle(mainCategories[0], lang), icon: '✝', desc: t.responsesDesc, view: 'responses-home' as const },
               { key: 'playlist', title: t.playlistTitle, icon: '☰', desc: t.playlistDesc(playlist.length), view: 'playlist' as const },
+              { key: 'learn', title: learnStrings[lang].title, icon: 'Ⲁ', desc: learnStrings[lang].subtitle, view: null },
             ].map(({ key, title, icon, desc, view }) => (
               <Pressable
                 key={key}
-                onPress={() => setCurrentView(view)}
+                onPress={() => (view ? setCurrentView(view) : router.push('/learn'))}
                 accessibilityRole="button"
                 style={({ pressed }) => [styles.homeCard, rowDirection, pressed && styles.rowCardPressed]}>
                 <View style={styles.homeIcon}>
