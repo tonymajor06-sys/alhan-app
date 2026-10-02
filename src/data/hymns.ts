@@ -1947,7 +1947,32 @@ if (annualMidnight) {
             },
           ],
         },
-        { id: 'annual-midnight-first-canticle', title: 'The First Canticle', versions: [] },
+        {
+          id: 'annual-midnight-first-canticle',
+          title: 'Ⲧⲟⲧⲉ ⲁϥϩⲱⲥ (The First Canticle)',
+          versions: [
+            {
+              language: 'coptic',
+              text: 'Ⲁ̀ⲙⲏⲛ Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ Ⲕⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ: Ⲕⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ: Ⲕⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ.\n\nⲦⲟⲧⲉ ⲁϥϩⲱⲥ ⲛ̀ϫⲉ Ⲙⲱⲩ̀ⲥⲏⲥ ⲛⲉⲙ ⲛⲉⲛϣⲏⲣⲓ ⲙ̀Ⲡⲓⲥⲣⲁⲏⲗ ⲉ̀ⲧⲁⲓϩⲱⲇⲏ ⲛ̀ⲧⲉ Ⲡ̀ϭⲟⲓⲥ ⲟⲩⲟϩ ⲁϥϫⲟⲥ ⲉⲑⲣⲟⲩϫⲟⲥ: ϫⲉ ⲙⲁⲣⲉⲛϩⲱⲥ ⲉ̀Ⲡ̀ϭⲟⲓⲥ ϫⲉ ϧⲉⲛ ⲟⲩⲱ̀ⲟⲩ ⲅⲁⲣ ⲁϥϭⲓⲱ̀ⲟⲩ.\n\n+ Ⲟⲩϩ̀ⲑⲟ ⲛⲉⲙ ⲟⲩϭⲁⲥⲓϩ̀ⲑⲟ ⲁϥⲃⲉⲣⲃⲱⲣⲟⲩ ⲉ̀ⲫ̀ⲓⲟⲙ. Ⲟⲩⲃⲟⲏ̀ⲑⲟⲥ ⲛⲉⲙ ⲟⲩⲣⲉϥϩⲱⲃⲥ ⲉ̀ⲃⲟⲗ ϩⲓϫⲱⲓ: ⲁϥϣⲱⲡⲓ ⲛⲏⲓ ⲛ̀ⲟⲩⲥⲱⲧⲏⲣⲓⲁ.\n\nⲪⲁⲓ ⲡⲉ Ⲡⲁⲛⲟⲩϯ ϯⲛⲁϯⲱ̀ⲟⲩ ⲛⲁϥ: Ⲫ̀ⲛⲟⲩϯ ⲙ̀ⲡⲁⲓⲱⲧ ϯⲛⲁϭⲁⲥϥ.\n\n+ Ⲡ̀ϭⲟⲓⲥ ⲡⲉⲧϧⲟⲙϧⲉⲙ ⲛ̀ⲛⲓⲃⲱⲧⲥ: Ⲡ̀ϭⲟⲓⲥ ⲡⲉ ⲡⲉϥⲣⲁⲛ. Ⲛⲓⲃⲉⲣⲉϭⲱⲟⲩⲧⲥ ⲛ̀ⲧⲉ Ⲫⲁⲣⲁⲱ̀ ⲛⲉⲙ ⲧⲉϥϫⲟⲙ ⲧⲏⲣⲥ ⲁϥⲃⲉⲣⲃⲱⲣⲟⲩ ⲉ̀ⲫ̀ⲓⲟⲙ.\n\nϨⲁⲛⲥⲱⲧⲡ ⲛ̀ⲁ̀ⲛⲁⲃⲁⲧⲏⲥ ⲛ̀ⲧ̀ⲣⲓⲥⲧⲁⲧⲏⲥ ⲁϥϫⲟⲗⲕⲟⲩ ϧⲉⲛ ⲫ̀ⲓⲟⲙ ⲛ̀ϣⲁⲣⲓ.\n\n+ Ⲁϥϩⲱⲃⲥ ⲉ̀ϩ̀ⲣⲏⲓ ⲉ̀ϫⲱⲟⲩ ⲛ̀ϫⲉ ⲡⲓⲙⲱⲟⲩ: ⲁⲩⲱⲙⲥ ⲉ̀ϧ̀ⲣⲏⲓ ⲉ̀ⲡⲉⲧϣⲏⲕ ⲙ̀ⲫ̀ⲣⲏϯ ⲛ̀ⲟⲩⲱ̀ⲛⲓ.\n\nⲦⲉⲕⲟⲩⲓ̀ⲛⲁⲙ Ⲡ̀ϭⲟⲓⲥ ⲁⲥϭⲓⲱ̀ⲟⲩ ϧⲉⲛ ⲟⲩϫⲟⲙ. Ⲧⲉⲕϫⲓϫ ⲛ̀ⲟⲩⲓ̀ⲛⲁⲙ Ⲡⲁⲛⲟⲩϯ ⲁⲥⲧⲁⲕⲉ ⲛⲉⲕϫⲁϫⲓ.\n\n+ Ϧⲉⲛ ⲡ̀ⲁ̀ϣⲁⲓ ⲛ̀ⲧⲉ ⲡⲉⲕⲱ̀ⲟⲩ: ⲁⲕϧⲟⲙϧⲉⲙ ⲛ̀ⲛⲏⲉⲧϯⲟⲩⲃⲏⲛ: ⲁⲕⲟⲩⲱⲣⲡ ⲙ̀ⲡⲉⲕϫⲱⲛⲧ: ⲁϥⲟⲩⲟ̀ⲙⲟⲩ ⲙ̀ⲫ̀ⲣⲏϯ ⲛ̀ϩⲁⲛⲣⲱⲟⲩⲓ̀.\n\nⲈ̀ⲃⲟⲗ ϩⲓⲧⲉⲛ ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ ⲛ̀ⲧⲉ ⲡⲉⲕⲙ̀ⲃⲟⲛ ⲁϥⲟ̀ϩⲓ ⲉ̀ⲣⲁⲧϥ ⲛ̀ϫⲉ ⲡⲓⲙⲱⲟⲩ: ⲁⲩϭⲓⲥⲓ ⲛ̀ϫⲉ ⲛⲓⲙⲱⲟⲩ ⲙ̀ⲫ̀ⲣⲏϯ ⲛ̀ⲟⲩⲥⲟⲃⲧ: ⲁⲩϭⲱⲥ ⲛ̀ϫⲉ ⲛⲓϫⲟⲗ ϧⲉⲛ ⲑ̀ⲙⲏϯ ⲙ̀ⲫ̀ⲓⲟⲙ.\n\n+ Ⲁϥϫⲟⲥ ⲅⲁⲣ ⲛ̀ϫⲉ ⲡⲓϫⲁϫⲓ: ϫⲉ ϯⲛⲁϭⲟϫⲓ ⲛ̀ⲧⲁⲧⲁϩⲟ: ⲛ̀ⲧⲁⲫⲱϣ ⲛ̀ϩⲁⲛϣⲱⲗ: ⲛ̀ⲧⲁⲧ̀ⲥⲓⲟ ⲛ̀ⲧⲁⲯⲩⲭⲏ: ⲛ̀ⲧⲁϧⲱⲧⲉⲃ ϧⲉⲛ ⲧⲁⲥⲏϥⲓ ⲛ̀ⲧⲉ ⲧⲁϫⲓϫ ⲉⲣϭⲟⲓⲥ.\n\nⲀⲕⲟⲩⲱⲣⲡ ⲙ̀Ⲡⲉⲕⲡ̀ⲛⲉⲩⲙⲁ: ⲁϥϩⲟⲃⲥⲟⲩ ⲛ̀ϫⲉ ⲫ̀ⲓⲟⲙ: ⲁⲩⲱⲙⲥ ⲉ̀ⲡⲉⲥⲏⲧ ⲙ̀ⲫ̀ⲣⲏϯ ⲛ̀ⲟⲩⲧⲁⲧϩ ϧⲉⲛ ϩⲁⲛⲙⲱⲟⲩ ⲉⲩⲟϣ.\n\n+ Ⲛⲓⲙ ⲉⲧⲟ̀ⲛⲓ ⲙ̀ⲙⲟⲕ ϧⲉⲛ ⲛⲓⲛⲟⲩϯ Ⲡ̀ϭⲟⲓⲥ. Ⲛⲓⲙ ⲉⲧⲟ̀ⲛⲓ ⲙ̀ⲙⲟⲕ: ⲉ̀ⲁⲩϯⲱ̀ⲟⲩ ⲛⲁⲕ ϧⲉⲛ ⲛⲏⲉⲑⲟⲩⲁⲃ ⲛ̀ⲧⲁⲕ: ⲉⲩⲉⲣϣ̀ⲫⲏⲣⲓ ⲙ̀ⲙⲟⲕ ϧⲉⲛ ⲟⲩⲱ̀ⲟⲩ: ⲉⲕⲓ̀ⲣⲓ ⲛ̀ϩⲁⲛϣ̀ⲫⲏⲣⲓ.\n\nⲀⲕⲥⲟⲩⲧⲉⲛ ⲧⲉⲕⲟⲩⲓ̀ⲛⲁⲙ ⲉ̀ⲃⲟⲗ ⲁϥⲟⲙⲕⲟⲩ ⲛ̀ϫⲉ ⲡ̀ⲕⲁϩⲓ. Ⲁⲕϭⲓⲙⲱⲓⲧ ϧⲁϫⲱϥ ⲙ̀ⲡⲉⲕⲗⲁⲟⲥ ϧⲉⲛ ⲟⲩⲙⲉⲑⲙⲏⲓ: ⲫⲁⲓ ⲉ̀ⲧⲁⲕⲥⲟⲧⲡϥ: ⲁⲕϯϫⲟⲙ ⲛⲁϥ ϧⲉⲛ ⲧⲉⲕⲛⲟⲙϯ: ⲉⲩⲙⲁ ⲛ̀ⲉⲙⲧⲟⲛ ⲉϥⲟⲩⲁⲃ ⲛⲁⲕ.\n\n+ Ⲁⲩⲥⲱⲧⲉⲙ ⲛ̀ϫⲉ ϩⲁⲛⲉⲑⲛⲟⲥ ⲟⲩⲟϩ ⲁⲩϫⲱⲛⲧ: ϩⲁⲛⲛⲁⲕϩⲓ ⲁⲩϭⲓ ⲛ̀ⲛⲏⲉⲧϣⲟⲡ ϧⲉⲛ Ⲛⲓⲫⲩⲗⲓⲥⲧⲓⲙ.\n\nⲦⲟⲧⲉ ⲁⲩⲓⲏⲥ ⲙ̀ⲙⲱⲟⲩ ⲛ̀ϫⲉ ⲛⲓϩⲏⲅⲉⲙⲱⲛ ⲛ̀ⲧⲉ Ⲉ̀ⲇⲱⲙ: ⲛⲓⲁⲣⲭⲱⲛ ⲛ̀ⲧⲉ Ⲛⲓⲙⲱⲁ̀ⲃⲓⲧⲏⲥ ⲟⲩⲥ̀ⲑⲉⲣⲧⲉⲣ ⲡⲉ ⲉ̀ⲧⲁϥϭⲓⲧⲟⲩ.\n\n+ Ⲁⲩⲃⲱⲗ ⲉ̀ⲃⲟⲗ ⲛ̀ϫⲉ ⲟⲩⲟⲛ ⲛⲓⲃⲉⲛ ⲉⲧϣⲟⲡ ϧⲉⲛ Ⲭⲁⲛⲁⲁⲛ: ⲁϥⲓ̀ ⲉ̀ϩ̀ⲣⲏⲓ ⲉ̀ϫⲱⲟⲩ ⲛ̀ϫⲉ ⲟⲩⲥ̀ⲑⲉⲣⲧⲉⲣ ⲛⲉⲙ ⲟⲩϩⲟϯ.\n\nϦⲉⲛ ⲡ̀ⲁ̀ϣⲁⲓ ⲛ̀ⲧⲉ ⲡⲉⲕϫ̀ⲫⲟⲓ ⲙⲁⲣⲟⲩⲉⲣⲱ̀ⲛⲓ: ϣⲁⲧⲉϥⲥⲓⲛⲓ ⲛ̀ϫⲉ ⲡⲉⲕⲗⲁⲟⲥ Ⲡ̀ϭⲟⲓⲥ: ϣⲁⲧⲉϥⲥⲓⲛⲓ ⲛ̀ϫⲉ ⲡⲉⲕⲗⲁⲟⲥ: ⲫⲁⲓ ⲉ̀ⲧⲁⲕϫ̀ⲫⲟϥ.\n\n+ Ⲁ̀ⲛⲓⲧⲟⲩ ⲉ̀ϧⲟⲩⲛ ⲧⲟϫⲟⲩ ϩⲓϫⲉⲛ ⲟⲩⲧⲱⲟⲩ ⲛ̀ⲧⲉ ⲧⲉⲕⲕ̀ⲗⲏⲣⲟⲛⲟⲙⲓⲁ: ⲛⲉⲙ ⲉ̀ϧⲟⲩⲛ ⲉ̀ⲡⲉⲕⲙⲁⲛ̀ϣⲱⲡⲓ ⲉⲧⲥⲉⲃⲧⲱⲧ: ⲫⲁⲓ ⲉ̀ⲧⲁⲕⲉⲣϩⲱⲃ ⲉ̀ⲣⲟϥ Ⲡ̀ϭⲟⲓⲥ.\n\nⲠⲉⲕⲙⲁ ⲉⲑⲟⲩⲁⲃ Ⲡ̀ϭⲟⲓⲥ ⲫⲏⲉ̀ⲧⲁⲩⲥⲉⲃⲧⲱⲧϥ ⲛ̀ϫⲉ ⲛⲉⲕϫⲓϫ: Ⲡ̀ϭⲟⲓⲥ ⲉⲕⲟⲓ ⲛ̀ⲟⲩⲣⲟ ϣⲁ ⲉ̀ⲛⲉϩ ⲛⲉⲙ ⲓⲥϫⲉⲛ ⲡ̀ⲉ̀ⲛⲉϩ ⲟⲩⲟϩ ⲉ̀ⲧⲓ.\n\n+ Ϫⲉ ⲁⲩⲓ̀ ⲉ̀ϧⲟⲩⲛ ⲉ̀ⲫ̀ⲓⲟⲙ ⲛ̀ϫⲉ ⲛⲓϩ̀ⲑⲱⲣ ⲛ̀ⲧⲉ Ⲫⲁⲣⲁⲱ̀: ⲛⲉⲙ ⲛⲉϥⲃⲉⲣⲉϭⲱⲟⲩⲧⲥ ⲛⲉⲙ ⲛⲉϥϭⲁⲥⲓϩ̀ⲑⲟ.\n\nⲀ̀ Ⲡ̀ϭⲟⲓⲥ ⲉⲛ ⲡⲓⲙⲱⲟⲩ ⲛ̀ⲧⲉ ⲫ̀ⲓⲟⲙ ⲉ̀ϩ̀ⲣⲏⲓ ⲉ̀ϫⲱⲟⲩ: ⲛⲉⲛϣⲏⲣⲓ ⲇⲉ ⲙ̀Ⲡⲓⲥⲣⲁⲏⲗ ⲛⲁⲩⲙⲟϣⲓ ϧⲉⲛ ⲡⲉⲧϣⲟⲩⲱ̀ⲟⲩ ϧⲉⲛ ⲑ̀ⲙⲏϯ ⲙ̀ⲫ̀ⲓⲟⲙ.\n\n+ Ⲁⲥϭⲓ ⲇⲉ ⲛⲁⲥ ⲛ̀ϫⲉ Ⲙⲁⲣⲓⲁⲙ ϯⲡ̀ⲣⲟⲫⲏⲧⲏⲥ ⲧ̀ⲥⲱⲛⲓ ⲛ̀Ⲁ̀ⲁ̀ⲣⲱⲛ ⲙ̀ⲡⲓⲕⲉⲙⲕⲉⲙ ϧⲉⲛ ⲛⲉⲥϫⲓϫ: ⲟⲩⲟϩ ⲁⲩⲓ̀ ⲉ̀ⲃⲟⲗ ⲥⲁⲙⲉⲛϩⲏⲥ ⲛ̀ϫⲉ ⲛⲓϩⲓⲟⲙⲓ ⲧⲏⲣⲟⲩ ϧⲉⲛ ϩⲁⲛⲕⲉⲙⲕⲉⲙ ⲛⲉⲙ ϩⲁⲛϩⲱⲥ.\n\nⲀⲥⲉⲣϩⲏⲧⲥ ⲇⲉ ϧⲁϫⲱⲟⲩ ⲛ̀ϫⲉ Ⲙⲁⲣⲓⲁⲙ ⲉⲥϫⲱ ⲙ̀ⲙⲟⲥ: ϫⲉ ⲙⲁⲣⲉⲛϩⲱⲥ ⲉ̀Ⲡ̀ϭⲟⲓⲥ: ϫⲉ ϧⲉⲛ ⲟⲩⲱ̀ⲟⲩ ⲅⲁⲣ ⲁϥϭⲓⲱ̀ⲟⲩ.\n\n+ Ⲟⲩϩ̀ⲑⲟ ⲛⲉⲙ ⲟⲩϭⲁⲥⲓϩ̀ⲑⲟ: ⲁϥⲉⲣⲃⲱⲣⲟⲩ ⲉ̀ⲫ̀ⲓⲟⲙ. Ϫⲉ ⲙⲁⲣⲉⲛϩⲱⲥ ⲉ̀Ⲡ̀ϭⲟⲓⲥ: ϫⲉ ϧⲉⲛ ⲟⲩⲱ̀ⲟⲩ ⲅⲁⲣ ⲁϥϭⲓⲱ̀ⲟⲩ.',
+            },
+            {
+              language: 'englishCoptic',
+              text: 'Amen Allelouia, Kyrie eleison, Kyrie eleison, Kyrie eleison.\n\nTote af-hos enje Moysis nem nen-shiri em-Pi-Israil e-tai-odi ente Ep-shois ouoh af-jos ethrou-jos: je maren-hos e-Ep-shois je khen ou-o-ou gar af-chi-o-ou.\n\n+ Ou-ehtho nem ou-chasi-ehtho af-ver-voro-ou e-efiom. Ou-voithos nem ou-ref-hovs evol hijoi: af-shopi nii en-ou-sotiria.\n\nFai pe Pa-nouti ti-na-ti-o-ou naf: Ef-nouti em-pa-iot ti-na-chasf.\n\n+ Ep-shois pet-khomkhem en-ni-vots: Ep-shois pe pef-ran. Ni-vere-cho-outs ente Farao nem tef-jom tirs af-ver-voro-ou e-efiom.\n\nHan-sotp en-ana-vatis en-tristatis af-jolkou khen efiom en-shari.\n\n+ Af-hovs e-ehri ejo-ou enje pi-mo-ou: av-oms e-ekhri e-pet-shik em-efrit en-ou-oni.\n\nTek-ouinam Ep-shois as-chi-o-ou khen ou-jom. Tek-jij en-ouinam Pa-nouti as-take nek-jaji.\n\n+ Khen ep-ashai ente pek-o-ou: ak-khomkhem en-ni-et-ti-ouvin: ak-ouorp em-pek-jont: af-ouomou em-efrit en-han-ro-oui.\n\nEvol hiten pi-epnevma ente pek-emvon af-ohi e-ratf enje pi-mo-ou: av-chisi enje ni-mo-ou em-efrit en-ou-sovt: av-chos enje ni-jol khen ethmiti em-efiom.\n\n+ Af-jos gar enje pi-jaji: je ti-na-choji en-ta-taho: en-ta-fosh en-han-shol: en-ta-et-sio en-ta-psykhi: en-ta-khoteb khen ta-sifi ente ta-jij er-chois.\n\nAk-ouorp em-pek-epnevma: af-hovsou enje efiom: av-oms e-pesit em-efrit en-ou-tath khen han-mo-ou ev-osh.\n\n+ Nim et-oni emmok khen ni-nouti Ep-shois. Nim et-oni emmok: e-av-ti-o-ou nak khen ni-ethouab entak: ev-er-eshfiri emmok khen ou-o-ou: ek-iri en-han-eshfiri.\n\nAk-souten tek-ouinam evol af-omkou enje ep-kahi. Ak-chimoit khajof em-pek-laos khen ou-methmi: fai eta-ksotpf: ak-ti-jom naf khen tek-nomti: e-ou-ma en-emton ef-ouab nak.\n\n+ Av-sotem enje han-ethnos ouoh av-jont: han-nak-hi av-chi en-ni-et-shop khen Ni-fylistim.\n\nTote av-iis emmo-ou enje ni-higemon ente Edom: ni-arkhon ente Ni-moavitis ou-ester-ter pe eta-fchitou.\n\n+ Av-vol evol enje ouon niven et-shop khen Khanaan: af-i e-ehri ejo-ou enje ou-ester-ter nem ou-hoti.\n\nKhen ep-ashai ente pek-ekfoi marou-er-oni: sha-tef-sini enje pek-laos Ep-shois: sha-tef-sini enje pek-laos: fai eta-k-ekfof.\n\n+ Aniitou e-khoun tojou hijen ou-to-ou ente tek-eklironomia: nem e-khoun e-pek-man-eshopi et-sevtot: fai eta-k-erhov erof Ep-shois.\n\nPek-ma ethouab Ep-shois fi-etav-sevtotf enje nek-jij: Ep-shois ek-oi en-ouro sha eneh nem isjen ep-eneh ouoh eti.\n\n+ Je av-i e-khoun e-efiom enje ni-ehthor ente Farao: nem nef-vere-cho-outs nem nef-chasi-ehtho.\n\nA Ep-shois en pi-mo-ou ente efiom e-ehri ejo-ou: nen-shiri de em-Pi-Israil nav-moshi khen pet-shou-o-ou khen ethmiti em-efiom.\n\n+ As-chi de nas enje Mariam ti-epro-fitis et-soni en-Aaron em-pi-kem-kem khen nes-jij: ouoh av-i evol samen-his enje ni-hiomi tirou khen han-kem-kem nem han-hos.\n\nAs-er-hits de khajo-ou enje Mariam es-jo emmos: je maren-hos e-Ep-shois: je khen ou-o-ou gar af-chi-o-ou.\n\n+ Ou-ehtho nem ou-chasi-ehtho: af-er-voro-ou e-efiom. Je maren-hos e-Ep-shois: je khen ou-o-ou gar af-chi-o-ou.',
+            },
+            {
+              language: 'english',
+              text: 'Amen Alleluia, Kyrie eleison, Kyrie eleison, Kyrie eleison.\n\nThen Moses and the children of Israel sang this song to the Lord, and spoke saying, "Let us sing to the Lord for He has triumphed gloriously."\n\n+ The horse and its rider He has thrown into the sea, the Lord is my strength and song, and He has become my salvation.\n\nHe is my God and I will glorify Him, my father\'s God and I will exalt Him.\n\n+ The Lord is a Man of war, the Lord is His name. Pharaoh\'s chariots and his army He has cast into the sea.\n\nHis chosen captains also drowned, in the Red Sea.\n\n+ The depths have covered them, they sank to the bottom like a stone.\n\nYour right hand O Lord, has become glorious in power. Your right hand O Lord, has dashed the enemy in pieces.\n\n+ And in the greatness of Your excellence, You have overthrown those who rose against You. You sent forth Your wrath, it consumed them like stubble.\n\nAnd with the blast of Your nostrils the waters were gathered together, the flood stood upright like a heap, and the depths congealed in the heart of the sea.\n\n+ The enemy said, "I will pursue, I will overtake, I will divide the spoil, my desire shall be satisfied on them, I will draw my sword, and my hand shall destroy them."\n\nYou blew with Your wind, the sea covered them, they sank like lead in the mighty waters.\n\n+ Who is like You O Lord, among the gods. Who is like You, glorified in His saints, amazing in glory, performing wonders.\n\nYou stretched out Your right hand, the earth swallowed them. You in Your mercy, have led forth the people whom You have redeemed. You have guided them in Your strength, to Your holy habitation.\n\n+ The people will hear and be afraid, sorrow will take hold of the inhabitants of Palestine.\n\nThen the chiefs of Edom will be dismayed, the mighty men of Moab trembling, will take hold of them.\n\n+ All the inhabitants of Canaan will melt away, fear and dread will fall on them.\n\nBy the greatness of Your arm, they will be as still as a stone, till Your people pass over O Lord, till Your people pass over, whom You have purchased.\n\n+ You will bring them in, and plant them in the mountain of Your inheritance, in the place O Lord, which You have made for Your own dwelling.\n\nYour sanctuary O Lord, which Your hands have established, the Lord shall reign forever and ever.\n\n+ For the horses of Pharaoh, went with his chariots and his horsemen into the sea.\n\nAnd the Lord brought back the waters of the sea on them, but the children of Israel went on dry land, in the midst of the sea.\n\n+ Then Miriam the prophetess, the sister of Aaron, took the timbrel in her hand, and all the women went out after her, with timbrels and with praises.\n\nAnd Miriam answered them saying, "Let us sing to the Lord, for He has triumphed gloriously."\n\n+ The horse and its rider He has thrown into the sea. "Let us sing to the Lord, for He has triumphed gloriously."',
+            },
+            {
+              language: 'englishArabic',
+              text: 'Amin halleluia, Kyrie eleison, Kyrie eleison, Kyrie eleison.\n\nHina\'idhin sabbah Mousa wa banou Isra\'eel bi-hadhihi et-tasbiha lir-Rabb wa qalou, "Falnusabbih lir-Rabb li-annahu bil-majd qad tamajjad."\n\n+ El-faras wa rakibahu tarahahuma fil-bahr. Mu\'eeni wa satiri, sara li khalasan.\n\nHadha huwa ilahi fa-umajjiduhu, ilah abi fa-arfa\'uhu.\n\n+ Er-Rabb mukassir el-hurub, er-Rabb ismuhu. Markabat Fir\'awn wa kull quwwatihi tarahahuma fil-bahr.\n\nRukbanan muntakhabin dhi thalath junubat gharraqahum fil-bahr el-ahmar.\n\n+ Ghattahum el-ma\', inghamasou ila el-\'umq mithl el-hajar.\n\nYameenuka ya Rabb tamajjadat bil-quwwa. Yaduka el-yumna ya ilahi ahlakat a\'da\'ak.\n\n+ Bi-kathrat majdik, sahaqta alladhina yuqawimounana, arsalta ghadabak, fa-akalahum mithl el-hasheem.\n\nWa bi-rouh ghadabak waqaf el-ma\', wartafa\'at el-ma\' mithl es-sour, wa jamadat el-amwaj fi wasat el-bahr.\n\n+ Qal el-\'aduww, "Inni usri\' fa-udrik, wa uqassim el-ghana\'im, wa ushbi\' nafsi, wa aqtul bi-sayfi wa yadi tatasallat."\n\nArsalta rouhak, fa-ghattahum el-bahr, wa ghatasou ila asfal kar-rasas fi miyah kathira.\n\n+ Man yushbihuka fil-aliha. Ya Rabb man yushbihuka, mumajjadan fi qiddiseek, muta\'ajjaban minka bil-majd, sani\'an \'aja\'ib.\n\nMadadta yameenaka fa-ibtala\'athum el-ard. Hadayta sha\'bak bil-haqiqa, hadha alladhi ikhtartahu, wa qawwaytahu bi-ta\'ziyatik, ila mawdi\' rahat qudsik.\n\n+ Sami\'at el-umam wa ghadibat, wal-makhad akhadh sukkan Filistin.\n\nHina\'idhin asra\' wulat Adoum, wa ru\'asa\' el-Mu\'abiyyin akhadhathum er-ra\'da.\n\n+ Dhab kull sukkan Kan\'an, wa atat \'alayhim er-ra\'da wal-khawf.\n\nBi-kathrat sa\'idik falyasirou kal-hajar, hatta yajtaz sha\'buka ya Rabb, hatta yajtaz sha\'buka hadha alladhi iqtanaytahu.\n\n+ Adkhilhum wa aghrishum \'ala jabal mirathik, wa fi maskanik el-mu\'add, hadha alladhi sana\'tahu ya Rabb.\n\nMawdi\'uka el-muqaddas ya Rabb alladhi a\'addathu yadak, ya Rabb tamlik mundhu el-azal wal-an wa ila el-abad.\n\n+ Li-annahu qad dakhal ila el-bahr khayl Fir\'awn wa markabatuhu wa fursanuhu.\n\nWer-Rabb ghamarahum bi-miyah el-bahr, amma banou Isra\'eel fa-kanou yamshoun \'ala el-yabisa fi wasat el-bahr.\n\n+ Fa-akhadhat Maryam en-nabiyya, ukht Haroun, ed-duff bi-yadayha, wa kharajat fi ithriha jamee\' en-niswa bid-dufouf wat-tasabeeh.\n\nWa bada\'at Maryam fi muqaddimatihinn taqoul, "Falnusabbih er-Rabb, li-annahu bil-majd qad tamajjad."\n\n+ El-faras wa rakib el-faras, tarahahuma fil-bahr. "Falnusabbih er-Rabb, li-annahu bil-majd qad tamajjad."',
+            },
+            {
+              language: 'arabic',
+              text: 'آمين هلليلويا، كيرياليسون، كيرياليسون، كيرياليسون.\n\nحينئذ سبح موسى وبنو إسرائيل بهذه التسبحة للرب وقالوا، "فلنسبح للرب لأنه بالمجد قد تمجد."\n\n+ الفَرس وراكبه طرحهما في البحر. مُعيني وساتري، صار لي خلاصاً.\n\nهذا هو إلهي فأمجده، إله أبي فأرفعه.\n\n+ الرب مكسر الحروب، الرب إسمه. مركبات فرعون وكل قوته طرحهما في البحر.\n\nركباناً منتخبين ذي ثلاث جنبات غرقهم في البحر الأحمر.\n\n+ غطاهم الماء، إنغمسوا إلى العمق مثل الحجر.\n\nيمينك يا رب تمجدت بالقوة. يدك اليمنى يا إلهي أهلكت أعداءك.\n\n+ بكثرة مجدك، سحقت الذين يقاوموننا، أرسلت غضبك، فأكلهم مثل الهشيم.\n\nوبروح غضبك وقف الماء، وإرتفعت الماء مثل السور، وجمدت الأمواج في وسط البحر.\n\n+ قال العدو، "إني أسرع فأدرك، وأقسم الغنائم، وأشبع نفسي، وأقتل بسيفي ويدي تتسلط."\n\nأرسلت روحك، فغطاهم البحر، وغطسوا إلى أسفل كالرصاص في مياه كثيرة.\n\n+ من يشبهك في الآلهة. يا رب من يشبهك، مُمجداً في قديسيك، متعجباً منك بالمجد، صانعاً عجائب.\n\nمددت يمينك فإبتلعتهم الأرض. هديت شعبك بالحقيقة، هذا الذي إخترته، وقويته بتعزيتك، إلى موضع راحة قدسك.\n\n+ سمعت الأمم وغضبت، والمخاض أخذ سكان فلسطين.\n\nحينئذ أسرع وُلاة أدوم، ورؤساء المؤابيين أخذتهم الرعدة.\n\n+ ذاب كل سكان كنعان، وأتت عليهم الرعدة والخوف.\n\nبكثرة ساعدك فليصيروا كالحجر، حتى يجتاز شعبك يا رب، حتى يجتاز شعبك هذا الذي إقتنيته.\n\n+ أدخلهم وأغرسهم على جبل ميراثك، وفي مسكنك المُعَد، هذا الذي صنعته يا رب.\n\nموضعك المقدس يا رب الذي أعددته يداك، يا رب تمَلك منذ الأزل والآن وإلى الأبد.\n\n+ لأنه قد دخل إلى البحر خيل فرعون ومركباته وفرسانه.\n\nوالرب غمرهم بمياه البحر، أما بنو إسرائيل فكانوا يمشون على اليابسة في وسط البحر.\n\n+ فأخذت مريم النبية، أخت هرون، الدُف بيديها، وخرج في إثرها جميع النسوة بالدُفوف والتسابيح.\n\nوبدأت مريم في مقدمتهنَّ تقول، "فلنسبح الرب، لأنه بالمجد قد تمجد."\n\n+ الفرس ورُاكب الفرس، طرحهما في البحر. "فلنسبح الرب، لأنه بالمجد قد تمجد."',
+            },
+          ],
+        },
         {
           id: 'annual-midnight-first-canticle-lobsh',
           title: 'Ϧⲉⲛ ⲟⲩϣⲱⲧ ⲁϥϣⲱⲧ (Lobsh of the First Canticle)',
@@ -2131,6 +2156,32 @@ if (annualMidnight) {
           ],
         },
         {
+          id: 'annual-midnight-arihoo-chasf',
+          title: 'Ⲁ̀ⲣⲓϩⲟⲩⲟ̀ ϭⲁⲥϥ (Arihoo Chasf)',
+          versions: [
+            {
+              language: 'coptic',
+              text: 'Ⲥ̀ⲙⲟⲩ ⲉ̀Ⲡ̀ϭⲟⲓⲥ ⲛⲏⲉⲧⲉⲣⲥⲉⲃⲉⲥⲑⲉ ⲙ̀Ⲡ̀ϭⲟⲓⲥ Ⲫ̀ⲛⲟⲩϯ ⲛ̀ⲧⲉ ⲛⲉⲛⲓⲟϯ: ϩⲱⲥ ⲉ̀ⲣⲟϥ ⲁ̀ⲣⲓϩⲟⲩⲟ̀ ϭⲁⲥϥ ϣⲁ ⲛⲓⲉ̀ⲛⲉϩ.',
+            },
+            {
+              language: 'englishCoptic',
+              text: 'Esmo Epshois, ni-etir-se-veste Emipshois ente nenyoti, hos erof ari-ho-oo chasf sha ni-eneh.',
+            },
+            {
+              language: 'english',
+              text: 'Bless the Lord O you who worship the Lord the God of our fathers, praise Him and exalt Him above all forever.',
+            },
+            {
+              language: 'englishArabic',
+              text: 'Barikoo er-Rabb ya \'abidi er-Rabb ilah aba\'ina, sabbihouhu wa zeedouhu \'uluwwan ila el-abad.',
+            },
+            {
+              language: 'arabic',
+              text: 'باركوا الرب يا عابدي الرب إله أبائنا، سبحوه وزيدوه علواً إلى الآباد.',
+            },
+          ],
+        },
+        {
           id: 'annual-midnight-greek-psali-watos',
           title: 'Ⲁ̀ⲣⲓⲯⲁⲗⲓⲛ (Greek Psali, Watos)',
           versions: [
@@ -2239,7 +2290,32 @@ if (annualMidnight) {
           title: 'Doxologies',
           versions: [],
           children: [
-            { id: 'annual-midnight-doxology-virgin-mary', title: 'Doxology for St Virgin Mary', versions: [] },
+            {
+              id: 'annual-midnight-doxology-virgin-mary',
+              title: 'Ⲧⲉⲙⲉⲧⲛⲓϣϯ (Doxology for St Virgin Mary)',
+              versions: [
+                {
+                  language: 'coptic',
+                  text: 'Ⲧⲉⲙⲉⲧⲛⲓϣϯ ⲱ̀ Ⲙⲁⲣⲓⲁ: Ϯⲡⲁⲣⲑⲉⲛⲟⲥ ⲛ̀ⲁⲧⲑⲱⲗⲉⲃ: ⲥ̀ⲟⲛⲓ ⲙ̀ⲡⲓϭⲓⲥⲓ ⲙ̀ⲡⲓⲃⲉⲛⲓ: ⲉ̀ⲧⲁ Ⲥⲟⲗⲟⲙⲱⲛ ⲥⲁϫⲓ ⲉⲑⲃⲏⲧϥ.\n\nⲚ̀ⲑⲟ ⲧⲉ ϯⲙⲟⲩⲙⲓ ⲙ̀ⲙⲱⲟⲩ ⲛ̀ⲱⲛϧ: ⲉⲧϧⲁϯ ⲙ̀Ⲡⲓⲗⲓⲃⲁⲛⲟⲥ: ⲉ̀ⲧⲁ ⲡⲓϩ̀ⲙⲟⲧ ⲛ̀ⲧⲉ ϯⲙⲉⲑⲛⲟⲩϯ: ⲃⲉⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ ⲛ̀ϧⲏⲧⲥ.\n\nⲀ̀ⲣⲉⲙⲓⲥⲓ ⲛⲁⲛ ⲛ̀Ⲉⲙⲙⲁⲛⲟⲩⲏⲗ: ϧⲉⲛ ⲧⲉⲙⲏⲧⲣⲁ ⲙ̀ⲡⲁⲣⲑⲉⲛⲓⲕⲓ: ⲁϥⲁⲓⲧⲉⲛ ⲛ̀ⲕⲗⲏⲣⲟⲛⲟⲙⲟⲥ: ⲛ̀ϧ̀ⲣⲏⲓ ϧⲉⲛ ⲑ̀ⲙⲉⲧⲟⲩⲣⲟ ⲛ̀ⲛⲓⲫⲏⲟⲩⲓ̀.\n\nⲔⲁⲧⲁ ⲡⲓⲱϣ ⲉ̀ⲧⲁϥⲱϣ ⲙ̀ⲙⲟϥ: ⲛ̀ⲧⲉ ⲡⲉⲛⲓⲱⲧ ⲙ̀ⲡⲁⲧⲣⲓⲁⲣⲭⲏⲥ: ⲉ̀ⲧⲉ ⲫⲁⲓ ⲡⲉ ⲡ̀ⲟⲩⲣⲟ Ⲇⲁⲩⲓⲇ: ⲁϥⲓ̀ ⲁϥϫⲟⲕϥ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ.\n\nⲬⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ϯⲟⲩⲣⲱ ⲙ̀ⲙⲏⲓ ⲛ̀ⲁ̀ⲗⲏⲑⲓⲛⲏ: ⲭⲉⲣⲉ ⲡ̀ϣⲟⲩϣⲟⲩ ⲛ̀ⲧⲉ ⲡⲉⲛⲅⲉⲛⲟⲥ: ⲁ̀ⲣⲉⲭ̀ⲫⲟ ⲛⲁⲛ ⲛ̀Ⲉⲙⲙⲁⲛⲟⲩⲏⲗ.\n\nⲦⲉⲛϯϩⲟ ⲁ̀ⲣⲓⲡⲉⲛⲙⲉⲩⲓ̀: ⲱ̀ ϯⲡ̀ⲣⲟⲥⲧⲁⲧⲏⲥ ⲉ̀ⲧⲉⲛϩⲟⲧ: ⲛⲁϩⲣⲉⲛ Ⲡⲉⲛϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ.',
+                },
+                {
+                  language: 'englishCoptic',
+                  text: 'Te-metnishti o Maria: ti-parthenos en-at-tholev: esoni em-pi-chisi em-pi-veni: eta Solomon saji ethvitf.\n\nEntho te ti-moumi em-mo-ou en-onkh: et-khati em-pi-Livanos: eta pi-ehmot ente ti-methnouti: vevi nan evol en-khits.\n\nAremisi nan en-Emmanouil: khen te-mitra em-parthenikee: af-aiten en-klironomos: en-khri khen ethmet-ouro en-ni-fi-oui.\n\nKata pi-oosh eta-foosh emmof: ente pen-iot em-patriarkhis: ete fai pe ep-ouro Dawid: af-i af-jokf nan evol.\n\nShere ne o ti-parthenos: ti-ouro emmi en-alithini: shere ep-shoushou ente pen-genos: are-kfo nan en-Emmanouil.\n\nTentiho aripenmevi: o ti-prostatis eten-hot: nahren Pen-Chois Isous Pi-Christos: entef-kha nen-novi nan evol.',
+                },
+                {
+                  language: 'english',
+                  text: 'Your greatness O Mary: the undefiled Virgin: is likened to the height of the palm tree: spoken of by Solomon.\n\nYou are the spring of living water: that flows from Lebanon: for of you sprang unto us: the grace of the divinity.\n\nYou gave birth to Emmanuel: out of your virginal womb: He has made us heirs: to the Kingdom of Heaven.\n\nAccording to the promise: He promised to our father: King David the patriarch: He came and fulfilled to us.\n\nHail to you O Virgin: the right and true Queen: hail to the pride of our race: who bore to us Emmanuel.\n\nWe ask you to remember us: O our faithful advocate: before our Lord Jesus Christ: that He may forgive us our sins.',
+                },
+                {
+                  language: 'englishArabic',
+                  text: '\'Azamatuki ya Maryam, el-\'adhra\' ghayr ed-danisa, tushbih \'uluw en-nakhla, allati takallam \'anha Sulayman.\n\nAnti yanbou\' ma\' el-hayah, el-fa\'id min Lubnan, allati naba\'at lana minhu, ni\'mat el-lahout.\n\nWaladti lana \'Immanu\'il, min ahsha\'iki el-batoul, wa sayyartina warithin, fi malakout es-samawat.\n\nKal-wa\'d allazi wa\'ada bihi, abana ra\'is el-aba\', allazi huwa el-malik Dawud, ata wa akmalahu lana.\n\nEs-salam laki ayyatuha el-\'adhra\', el-malika el-haqiqiya el-haqqaniya, es-salam li-fakhr jinsina, waladti lana \'Immanu\'il.\n\nNas\'aluki an tadhkurina, ayyatuha esh-shafi\'a el-mu\'tamana, amam Rabbina Yasou\' el-Masih, li-yaghfir lana khatayana.',
+                },
+                {
+                  language: 'arabic',
+                  text: 'عظمتك يا مريم، العذراء غير الدنسة، تشبه عُلو النخلة التي، تكلم عنها سليمان.\n\nأنتِ ينبوع ماء الحياة، الفائض من لبنان، التي نبعت لنا منه، نعمة اللاهوت.\n\nولدتِ لنا عمانوئيل، من أحشائِك البتول، وصيرنا وارثين، في ملكوت السموات.\n\nكالوعد الذي وعد به، أبانا رئيس الآباء، الذي هو الملك داود، أتى وأكمله لنا.\n\nالسلام لكِ أيتها العذراء، الملكة الحقيقية الحقانية، السلام لفخر جنسنا، ولدت لنا عمانوئيل.\n\nنسألك أن تذكرينا، أيتها الشفيعة المؤتمنة، أمام ربنا يسوع المسيح، ليغفر لنا خطايانا.',
+                },
+              ],
+            },
             { id: 'annual-midnight-doxology-archangel-gabriel', title: 'Doxology for Archangel Gabriel', versions: [] },
             { id: 'annual-midnight-doxology-michael-gabriel', title: 'Doxology for Archangels Michael and Gabriel', versions: [] },
             { id: 'annual-midnight-doxology-heavenly-beings', title: 'Doxology for All the Heavenly Beings', versions: [] },
@@ -2297,4 +2373,24 @@ if (annualMidnight) {
     midnightDay('friday', 'Friday', 'Friday Psali (Adam)', 7, [watosPsaliConclusion('friday')]),
     midnightDay('saturday', 'Saturday', 'Psali (Watos) for the Annunciation', 9, [watosPsaliConclusion('saturday')]),
   ];
+}
+
+// ---- Audio: Annual > Midnight Praises (Coptic recordings, also played with the English-Coptic text) ----
+const midnightAudio: Record<string, string> = {
+  'annual-midnight-first-canticle': 'midnight-first-canticle.mp3',
+  'annual-midnight-first-canticle-lobsh': 'midnight-first-canticle-lobsh.mp3',
+  'annual-midnight-second-canticle': 'midnight-second-canticle.mp3',
+  'annual-midnight-second-canticle-lobsh': 'midnight-second-canticle-lobsh.mp3',
+  'annual-midnight-third-canticle': 'midnight-third-canticle.mp3',
+  'annual-midnight-greek-psali-watos': 'midnight-aripsalin.mp3',
+  'annual-midnight-doxology-virgin-mary': 'midnight-doxology-virgin-mary.m4a',
+};
+for (const hymn of annualMidnight ? flattenHymns(annualMidnight.hymns) : []) {
+  const audio = midnightAudio[hymn.id];
+  if (!audio) continue;
+  for (const version of hymn.versions) {
+    if (version.language === 'coptic' || version.language === 'englishCoptic') {
+      version.audio = audio;
+    }
+  }
 }
