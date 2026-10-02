@@ -1,15 +1,13 @@
 import { Redirect, useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 
-import { copticFont, createAlhanStyles, goBackOrHome, openHymnPage, ScreenShell } from '@/components/alhan-ui';
+import { copticFont, goBackOrHome, openHymnPage, ScreenShell } from '@/components/alhan-ui';
 import { learnStrings, LessonId, lessonIds } from '@/components/learn-strings';
+import { useLessonStyles } from '@/components/lesson-styles';
 import { QuizRound } from '@/components/quiz-round';
-import { AlhanPalette } from '@/constants/alhan-colors';
-import { arabicAlphabet, arabicForms, arabicMarks } from '@/data/arabic-lessons';
 import { displayTitle } from '@/data/arabic-titles';
 import { buildQuiz, copticAlphabet, copticWords, getPracticeVerses, readingRules } from '@/data/coptic-lessons';
-import { useThemedStyles } from '@/hooks/use-alhan-colors';
 import { AppLanguage, useSettings } from '@/hooks/use-settings';
 
 type LessonProps = { lang: AppLanguage };
@@ -29,23 +27,10 @@ export default function LessonScreen() {
       {id === 'words' ? <Words lang={lang} /> : null}
       {id === 'quiz' ? <Quiz lang={lang} /> : null}
       {id === 'practice' ? <Practice lang={lang} /> : null}
-      {id === 'arabic' ? <ArabicAlphabet lang={lang} /> : null}
     </ScreenShell>
   );
 }
 
-function useLessonStyles(lang: AppLanguage) {
-  const styles = useThemedStyles(createStyles);
-  const shared = useThemedStyles(createAlhanStyles);
-  const isRTL = lang === 'ar';
-  return {
-    styles,
-    shared,
-    isRTL,
-    rowDirection: isRTL ? shared.rowReverse : shared.row,
-    textAlign: isRTL ? shared.alignRight : shared.alignLeft,
-  };
-}
 
 function Alphabet({ lang }: LessonProps) {
   const t = learnStrings[lang];
@@ -96,85 +81,6 @@ function Alphabet({ lang }: LessonProps) {
           </View>
         ))}
       </View>
-    </>
-  );
-}
-
-function ArabicAlphabet({ lang }: LessonProps) {
-  const t = learnStrings[lang];
-  const { styles, shared, textAlign, rowDirection } = useLessonStyles(lang);
-  const [selected, setSelected] = useState(0);
-  const letter = arabicAlphabet[selected];
-  const forms = arabicForms(letter);
-  const formCells: [string, string][] = [
-    [t.formAlone, forms.alone],
-    [t.formStart, forms.start],
-    [t.formMiddle, forms.middle],
-    [t.formEnd, forms.end],
-  ];
-
-  return (
-    <>
-      <View style={styles.card}>
-        <Text style={styles.arabicLetter}>{letter.letter}</Text>
-        <Text style={styles.letterName}>{letter.name[lang]}</Text>
-        <Text style={[styles.label, textAlign]}>{t.sounds}</Text>
-        <Text style={[styles.value, textAlign]}>{letter.sound[lang]}</Text>
-        <Text style={[styles.label, textAlign]}>{t.inEnglishLetters}</Text>
-        <Text style={[styles.value, textAlign]}>{letter.latin}</Text>
-        {letter.coptic ? (
-          <>
-            <Text style={[styles.label, textAlign]}>{t.copticLetter}</Text>
-            <Text style={[styles.coptic, textAlign]}>{letter.coptic}</Text>
-          </>
-        ) : null}
-        <Text style={[styles.label, textAlign]}>{t.forms}</Text>
-        {/* Right to left, the way the word is read */}
-        <View style={[styles.forms, shared.rowReverse]}>
-          {formCells.map(([label, form]) => (
-            <View key={label} style={styles.formCell}>
-              <Text style={styles.formLetter}>{form}</Text>
-              <Text style={styles.tileName}>{label}</Text>
-            </View>
-          ))}
-        </View>
-        <Text style={[styles.label, textAlign]}>{t.example}</Text>
-        <Text style={[styles.arabicWord, textAlign]}>{letter.example}</Text>
-        <Text style={[styles.sound, textAlign]}>{letter.exampleSound}</Text>
-        <Text style={[styles.note, textAlign]}>{letter.meaning[lang]}</Text>
-      </View>
-      <Text style={[shared.subtitle, textAlign]}>{t.tapLetter}</Text>
-      <View style={[styles.grid, rowDirection]}>
-        {arabicAlphabet.map((l, i) => (
-          <View key={l.letter} style={styles.gridCell}>
-            <Pressable
-              onPress={() => setSelected(i)}
-              accessibilityRole="button"
-              accessibilityLabel={l.name[lang]}
-              accessibilityState={{ selected: i === selected }}
-              style={({ pressed }) => [styles.tile, i === selected && styles.tileActive, pressed && shared.pressed]}>
-              <Text style={[styles.tileArabic, i === selected && styles.tileLetterActive]}>{l.letter}</Text>
-              <Text style={[styles.tileName, i === selected && styles.tileLetterActive]} numberOfLines={1}>
-                {l.name[lang]}
-              </Text>
-            </Pressable>
-          </View>
-        ))}
-      </View>
-      <Text style={[styles.sectionTitle, textAlign]}>{t.marksTitle}</Text>
-      {arabicMarks.map((m) => (
-        <View key={m.mark} style={styles.card}>
-          <View style={[rowDirection, styles.markHeader]}>
-            <Text style={styles.markGlyph}>{m.mark}</Text>
-            <Text style={[styles.cardTitle, styles.markName, textAlign]}>{m.name[lang]}</Text>
-          </View>
-          <Text style={[styles.body, textAlign]}>{m.body[lang]}</Text>
-          <View style={styles.exampleRow}>
-            <Text style={[styles.arabicWord, textAlign]}>{m.example}</Text>
-            <Text style={[styles.sound, textAlign]}>{m.exampleSound}</Text>
-          </View>
-        </View>
-      ))}
     </>
   );
 }
@@ -252,6 +158,7 @@ function Quiz({ lang }: LessonProps) {
       build={() => buildQuiz(lang)}
       strings={t}
       questionText={(q) => (q.kind === 'letter' ? t.whatLetter : t.whatWord)}
+      promptFont={copticFont}
     />
   );
 }
@@ -313,77 +220,3 @@ function Practice({ lang }: LessonProps) {
     </>
   );
 }
-
-const createStyles = (colors: AlhanPalette) =>
-  StyleSheet.create({
-    card: {
-      backgroundColor: colors.surface,
-      borderRadius: 20,
-      borderWidth: 1,
-      borderColor: colors.border,
-      borderTopWidth: 3,
-      borderTopColor: colors.gold,
-      padding: 20,
-      marginBottom: 16,
-    },
-    cardTitle: { fontSize: 22, fontWeight: '800', color: colors.gold, marginBottom: 8 },
-    body: { fontSize: 17, lineHeight: 26, color: colors.text, marginBottom: 8 },
-    label: { fontSize: 14, fontWeight: '700', color: colors.muted, letterSpacing: 0.5, marginTop: 12 },
-    value: { fontSize: 20, fontWeight: '700', color: colors.text, marginTop: 2 },
-    note: { fontSize: 15, lineHeight: 22, color: colors.muted, marginTop: 6 },
-    bigLetter: { fontSize: 56, lineHeight: 72, fontFamily: copticFont, color: colors.gold, textAlign: 'center' },
-    letterName: { fontSize: 24, fontWeight: '800', color: colors.text, textAlign: 'center', marginBottom: 4 },
-    copticName: { fontSize: 20, fontFamily: copticFont, color: colors.muted, textAlign: 'center', marginBottom: 4 },
-    coptic: { fontSize: 26, lineHeight: 36, fontFamily: copticFont, color: colors.text, marginTop: 2 },
-    sound: { fontSize: 16, color: colors.gold, fontWeight: '600' },
-    meaning: { fontSize: 17, fontWeight: '600', color: colors.text, maxWidth: '45%', textAlign: 'center' },
-    hidden: { color: colors.muted, fontWeight: '400', fontSize: 14 },
-    exampleRow: { borderTopWidth: 1, borderTopColor: colors.border, paddingTop: 10, marginTop: 10 },
-
-    grid: { flexDirection: 'row', flexWrap: 'wrap', marginHorizontal: -4, marginBottom: 24 },
-    gridCell: { width: '25%', padding: 4 },
-    tile: {
-      aspectRatio: 1,
-      borderRadius: 14,
-      borderWidth: 1,
-      borderColor: colors.border,
-      backgroundColor: colors.surface,
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    tileActive: { backgroundColor: colors.gold, borderColor: colors.gold },
-    tileLetter: { fontSize: 30, lineHeight: 38, fontFamily: copticFont, color: colors.text },
-    tileName: { fontSize: 12, color: colors.muted },
-    tileLetterActive: { color: colors.onGold },
-
-    toggle: { flex: 0, marginBottom: 14 },
-
-
-    primary: {
-      marginTop: 12,
-      minHeight: 52,
-      borderRadius: 14,
-      backgroundColor: colors.gold,
-      alignItems: 'center',
-      justifyContent: 'center',
-      alignSelf: 'stretch',
-    },
-    primaryText: { fontSize: 18, fontWeight: '800', color: colors.onGold },
-    secondary: { flex: 0, marginTop: 12 },
-    buttonRow: { marginBottom: 4 },
-
-    verse: { fontSize: 26, lineHeight: 40, fontFamily: copticFont, color: colors.text },
-
-    // Arabic alphabet
-    arabicLetter: { fontSize: 64, lineHeight: 96, color: colors.gold, textAlign: 'center' },
-    tileArabic: { fontSize: 30, lineHeight: 44, color: colors.text },
-    arabicWord: { fontSize: 28, lineHeight: 44, color: colors.text, writingDirection: 'rtl' },
-    forms: { justifyContent: 'space-between', marginTop: 6 },
-    formCell: { alignItems: 'center', flex: 1 },
-    formLetter: { fontSize: 30, lineHeight: 46, color: colors.gold },
-    sectionTitle: { fontSize: 20, fontWeight: '800', color: colors.text, marginBottom: 12 },
-    markHeader: { alignItems: 'center', gap: 14, marginBottom: 4 },
-    markGlyph: { fontSize: 40, lineHeight: 58, color: colors.gold, minWidth: 48, textAlign: 'center' },
-    markName: { marginBottom: 0, flex: 1 },
-    verseSound: { fontSize: 18, lineHeight: 28, color: colors.gold, marginTop: 12 },
-  });

@@ -13,7 +13,7 @@ import {
   strings,
   withoutNumber,
 } from '../components/alhan-ui';
-import { learnStrings } from '../components/learn-strings';
+import { learnArabicStrings, learnStrings } from '../components/learn-strings';
 import { guideStrings } from '../data/deacon-guide';
 import { displayTitle } from '../data/arabic-titles';
 import {
@@ -188,6 +188,27 @@ export default function HomeScreen() {
     </Pressable>
   );
 
+  // A tile in a two-column grid; `lead` is an icon or a number in a circle
+  const tile = (key: string, title: string, onPress: () => void, lead?: string, desc?: string) => (
+    <Pressable
+      key={key}
+      onPress={onPress}
+      accessibilityRole="button"
+      style={({ pressed }) => [styles.tile, !desc && styles.tileSmall, pressed && styles.rowCardPressed]}>
+      {lead ? (
+        <View style={[styles.tileIcon, isRTL && styles.selfEnd]}>
+          <Text style={styles.tileIconText}>{lead}</Text>
+        </View>
+      ) : null}
+      <View>
+        <Text style={[styles.tileTitle, textAlign]}>{title}</Text>
+        {desc ? <Text style={[styles.tileDesc, textAlign]}>{desc}</Text> : null}
+      </View>
+    </Pressable>
+  );
+
+  const tileGrid = (children: ReactNode) => <View style={[styles.tileGrid, rowDirection]}>{children}</View>;
+
   const sectionHeader = (key: string, title: string) => (
     <View key={key} style={[styles.sectionHeader, rowDirection]}>
       <Text style={styles.sectionHeaderText}>{title}</Text>
@@ -322,28 +343,20 @@ export default function HomeScreen() {
               ))}
             </View>
 
-            {[
+            {tileGrid([
               { key: 'hymns', title: displayTitle(mainCategories[1], lang), icon: '♫', desc: t.hymnsDesc, view: 'seasons-home' as const },
               { key: 'responses', title: displayTitle(mainCategories[0], lang), icon: '✝', desc: t.responsesDesc, view: 'responses-home' as const },
               { key: 'playlist', title: t.playlistTitle, icon: '☰', desc: t.playlistDesc(playlist.length), view: 'playlist' as const },
               { key: 'guide', title: guideStrings[lang].title, icon: '✠', desc: guideStrings[lang].subtitle, view: null, href: '/guide' as const },
               { key: 'learn', title: learnStrings[lang].title, icon: 'Ⲁ', desc: learnStrings[lang].subtitle, view: null, href: '/learn' as const },
-            ].map(({ key, title, icon, desc, view, href }) => (
-              <Pressable
-                key={key}
-                onPress={() => (view ? setCurrentView(view) : href && router.push(href))}
-                accessibilityRole="button"
-                style={({ pressed }) => [styles.homeCard, rowDirection, pressed && styles.rowCardPressed]}>
-                <View style={styles.homeIcon}>
-                  <Text style={styles.homeIconText}>{icon}</Text>
-                </View>
-                <View style={styles.rowTextWrap}>
-                  <Text style={[styles.homeCardTitle, textAlign]}>{title}</Text>
-                  <Text style={[styles.homeCardDesc, textAlign]}>{desc}</Text>
-                </View>
-                <Text style={styles.chevron}>{isRTL ? '‹' : '›'}</Text>
-              </Pressable>
-            ))}
+              // Learn Arabic is for English speakers
+              ...(lang === 'en'
+                ? [{ key: 'learn-arabic', title: learnArabicStrings.title, icon: 'ع', desc: learnArabicStrings.subtitle, view: null, href: '/learn-arabic' as const }]
+                : []),
+            ].map(({ key, title, icon, desc, view, href }) =>
+                tile(key, title, () => (view ? setCurrentView(view) : href && router.push(href)), icon, desc)
+              )
+            )}
           </View>
         </ScrollView>
         <MiniPlayer lang={lang} />
@@ -518,8 +531,10 @@ export default function HomeScreen() {
     return screen(
       displayTitle(selectedSeason, lang),
       t.chooseService,
-      selectedSeason.services.map((service) =>
-        row(service.id, displayTitle(service, lang), () => setSelectedService(service))
+      tileGrid(
+        selectedSeason.services.map((service, index) =>
+          tile(service.id, displayTitle(service, lang), () => setSelectedService(service), localDigits(index + 1))
+        )
       )
     );
   }
@@ -528,13 +543,9 @@ export default function HomeScreen() {
     return screen(
       t.seasonsTitle,
       t.chooseSeason,
-      seasons.map((season, index) =>
-        row(
-          season.id,
-          withoutNumber(displayTitle(season, lang)),
-          () => setSelectedSeason(season),
-          undefined,
-          index + 1
+      tileGrid(
+        seasons.map((season, index) =>
+          tile(season.id, withoutNumber(displayTitle(season, lang)), () => setSelectedSeason(season), localDigits(index + 1))
         )
       )
     );
@@ -549,8 +560,10 @@ export default function HomeScreen() {
     return screen(
       displayTitle(selectedDeaconCategory, lang),
       t.chooseService,
-      selectedDeaconCategory.services.map((service) =>
-        row(service.id, displayTitle(service, lang), () => setSelectedDeaconService(service))
+      tileGrid(
+        selectedDeaconCategory.services.map((service, index) =>
+          tile(service.id, displayTitle(service, lang), () => setSelectedDeaconService(service), localDigits(index + 1))
+        )
       )
     );
   }
@@ -558,7 +571,11 @@ export default function HomeScreen() {
   return screen(
     t.responsesTitle,
     t.chooseCategory,
-    deaconCategories.map((cat) => row(cat.id, displayTitle(cat, lang), () => setSelectedDeaconCategory(cat)))
+    tileGrid(
+      deaconCategories.map((cat, index) =>
+        tile(cat.id, displayTitle(cat, lang), () => setSelectedDeaconCategory(cat), localDigits(index + 1))
+      )
+    )
   );
 }
 

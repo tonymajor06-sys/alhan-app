@@ -26,12 +26,15 @@ export function QuizRound({
   build,
   strings: t,
   questionText,
+  promptFont,
 }: {
   lang: AppLanguage;
   build: () => QuizQuestion[];
   strings: QuizStrings;
   // The question to show when a question has none written out
   questionText?: (q: QuizQuestion) => string;
+  // Font for the large prompt, e.g. the Coptic font for Coptic letters
+  promptFont?: string;
 }) {
   const styles = useThemedStyles(createStyles);
   const shared = useThemedStyles(createAlhanStyles);
@@ -79,7 +82,7 @@ export function QuizRound({
         {n(index + 1)} / {n(questions.length)}
       </Text>
       <Text style={[styles.question, textAlign]}>{q.question ?? questionText?.(q)}</Text>
-      {q.prompt ? <Text style={styles.prompt}>{q.prompt}</Text> : null}
+      {q.prompt ? <Text style={[styles.prompt, promptFont ? { fontFamily: promptFont, fontWeight: 'normal' } : null]}>{q.prompt}</Text> : null}
       {q.options.map((option, i) => {
         const isAnswer = picked !== null && i === q.answer;
         const isWrong = picked === i && i !== q.answer;

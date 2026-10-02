@@ -1,4 +1,6 @@
 import type { Bilingual } from './coptic-lessons';
+import { deaconCategories, flattenHymns, Hymn, seasons } from './hymns';
+import { makeQuestion, QuizQuestion, shuffle } from './quiz';
 
 // The Arabic alphabet, for reading the Arabic text of the hymns (and its English-letter spelling in the app)
 
@@ -387,3 +389,103 @@ export const arabicMarks: ArabicMark[] = [
     exampleSound: 'er-Rooh el-Qudus',
   },
 ];
+
+// ---- Words from the hymns ----
+
+export interface ArabicWord {
+  arabic: string;
+  sound: string;
+  meaning: string;
+}
+
+export const arabicWords: ArabicWord[] = [
+  { arabic: 'الله', sound: 'Allah', meaning: 'God' },
+  { arabic: 'الرب', sound: 'er-Rabb', meaning: 'the Lord' },
+  { arabic: 'يسوع', sound: "Yasou'", meaning: 'Jesus' },
+  { arabic: 'المسيح', sound: 'el-Maseeh', meaning: 'Christ' },
+  { arabic: 'مريم', sound: 'Maryam', meaning: 'Mary' },
+  { arabic: 'العذراء', sound: "el-'adhra'", meaning: 'the Virgin' },
+  { arabic: 'والدة الإله', sound: 'walidat el-ilah', meaning: 'Mother of God (Theotokos)' },
+  { arabic: 'الآب', sound: 'el-Ab', meaning: 'the Father' },
+  { arabic: 'الابن', sound: 'el-Ibn', meaning: 'the Son' },
+  { arabic: 'الروح القدس', sound: 'er-Rooh el-Qudus', meaning: 'the Holy Spirit' },
+  { arabic: 'الثالوث', sound: 'eth-thalouth', meaning: 'the Trinity' },
+  { arabic: 'السلام', sound: 'es-salam', meaning: 'peace, hail' },
+  { arabic: 'المجد', sound: 'el-majd', meaning: 'glory' },
+  { arabic: 'قدوس', sound: 'quddous', meaning: 'holy' },
+  { arabic: 'ارحمنا', sound: 'irhamna', meaning: 'have mercy on us' },
+  { arabic: 'خلاص', sound: 'khalas', meaning: 'salvation' },
+  { arabic: 'خطايانا', sound: 'khatayana', meaning: 'our sins' },
+  { arabic: 'غفران', sound: 'ghufran', meaning: 'forgiveness' },
+  { arabic: 'نور', sound: 'nour', meaning: 'light' },
+  { arabic: 'السماء', sound: "es-sama'", meaning: 'heaven' },
+  { arabic: 'الأرض', sound: 'el-ard', meaning: 'the earth' },
+  { arabic: 'ملاك', sound: 'malak', meaning: 'angel' },
+  { arabic: 'ملك', sound: 'malik', meaning: 'king' },
+  { arabic: 'شعب', sound: "sha'b", meaning: 'people' },
+  { arabic: 'نسبح', sound: 'nusabbih', meaning: 'we praise' },
+  { arabic: 'باركوا', sound: 'barikoo', meaning: 'bless (all of you)' },
+  { arabic: 'محب البشر', sound: 'muhibb el-bashar', meaning: 'Lover of Mankind' },
+  { arabic: 'إلى الأبد', sound: 'ila el-abad', meaning: 'forever' },
+  { arabic: 'هلليلويا', sound: 'halleluia', meaning: 'alleluia' },
+  { arabic: 'آمين', sound: 'ameen', meaning: 'Amen' },
+  { arabic: 'يا رب ارحم', sound: 'ya Rabb irham', meaning: 'Lord have mercy' },
+];
+
+// A round mixing "what is this letter called" and "what does this word mean"
+export function buildArabicQuiz(count = 10, random: () => number = Math.random): QuizQuestion[] {
+  const letterNames = arabicAlphabet.map((l) => l.name.en);
+  const meanings = arabicWords.map((w) => w.meaning);
+  const letters = shuffle(arabicAlphabet, random).map((l) =>
+    makeQuestion(l.name.en, letterNames, random, { prompt: l.letter, kind: 'letter' })
+  );
+  const words = shuffle(arabicWords, random).map((w) =>
+    makeQuestion(w.meaning, meanings, random, { prompt: w.arabic, kind: 'word' })
+  );
+  const half = Math.ceil(count / 2);
+  return shuffle([...letters.slice(0, half), ...words.slice(0, count - half)], random);
+}
+
+// ---- Reading practice: real Arabic verses from the app's hymns ----
+
+export interface ArabicPracticeVerse {
+  hymn: Hymn;
+  arabic: string;
+  sound: string;
+  meaning: string | null;
+}
+
+const splitVerses = (text: string) =>
+  text
+    .split(/(?:\\n|\n){2,}/)
+    .map((v) => v.replace(/^\+\s*/, '').trim())
+    .filter(Boolean);
+
+let arabicPracticeVerses: ArabicPracticeVerse[] | null = null;
+
+// Verses whose Arabic and Arabic-in-English-letters line up one to one, short enough for a beginner
+export function getArabicPracticeVerses(): ArabicPracticeVerse[] {
+  if (arabicPracticeVerses) return arabicPracticeVerses;
+  const all = [
+    ...seasons.flatMap((s) => s.services.flatMap((sv) => flattenHymns(sv.hymns))),
+    ...deaconCategories.flatMap((c) => c.services.flatMap((sv) => flattenHymns(sv.hymns))),
+  ];
+  const seen = new Set<string>();
+  arabicPracticeVerses = [];
+  for (const hymn of all) {
+    const arabic = hymn.versions.find((v) => v.language === 'arabic')?.text;
+    const sound = hymn.versions.find((v) => v.language === 'englishArabic')?.text;
+    if (!arabic || !sound) continue;
+    const a = splitVerses(arabic);
+    const s = splitVerses(sound);
+    if (a.length !== s.length) continue;
+    const english = hymn.versions.find((v) => v.language === 'english')?.text;
+    const e = english ? splitVerses(english) : [];
+    a.forEach((verse, i) => {
+      if (verse.length > 140 || seen.has(verse)) return;
+      seen.add(verse);
+      arabicPracticeVerses!.push({ hymn, arabic: verse, sound: s[i], meaning: e.length === a.length ? e[i] : null });
+    });
+  }
+  return arabicPracticeVerses;
+}

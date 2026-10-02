@@ -669,6 +669,50 @@ export const createAlhanStyles = (colors: AlhanPalette) => StyleSheet.create({
     lineHeight: 21,
   },
 
+  // Two tiles per row (home sections, seasons, services); an odd last tile stretches across
+  tileGrid: {
+    flexWrap: 'wrap',
+    gap: 12,
+  },
+  tile: {
+    flexBasis: '40%',
+    flexGrow: 1,
+    minHeight: 132,
+    backgroundColor: colors.surface,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: colors.border,
+    padding: 16,
+    gap: 10,
+  },
+  tileSmall: {
+    minHeight: 96,
+    justifyContent: 'space-between',
+  },
+  tileIcon: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: colors.goldSoft,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  tileIconText: {
+    fontSize: 21,
+    color: colors.gold,
+  },
+  tileTitle: {
+    fontSize: 17,
+    fontWeight: '700',
+    color: colors.text,
+    lineHeight: 23,
+  },
+  tileDesc: {
+    fontSize: 13,
+    color: colors.muted,
+    lineHeight: 18,
+  },
+
   // Screen header
   backButton: {
     alignSelf: 'flex-start',
