@@ -2188,6 +2188,32 @@ if (annualMidnight) {
           ],
         },
         {
+          id: 'annual-midnight-esmou-epchois-melismatic',
+          title: 'Ⲥ̀ⲙⲟⲩ ⲉ̀Ⲡ̀ϭⲟⲓⲥ (Esmou Epchois, Melismatic)',
+          versions: [
+            {
+              language: 'coptic',
+              text: 'Ⲥ̀ⲙⲟⲩ ⲉ̀Ⲡ̀ϭⲟⲓⲥ Ⲁ̀ⲛⲁⲛⲓⲁⲥ Ⲁ̀ⲍⲁⲣⲓⲁⲥ Ⲙⲓⲥⲁⲏⲗ ⲕⲉ Ⲇⲁⲛⲓⲏⲗ: ϩⲱⲥ ⲉ̀ⲣⲟϥ ⲁ̀ⲣⲓϩⲟⲩⲟ̀ ϭⲁⲥϥ ϣⲁ ⲛⲓⲉ̀ⲛⲉϩ.\n\n+ Ⲥ̀ⲙⲟⲩ ⲉ̀Ⲡ̀ϭⲟⲓⲥ ⲛⲏⲉⲧⲉⲣⲥⲉⲃⲉⲥⲑⲉ ⲙ̀Ⲡ̀ϭⲟⲓⲥ Ⲫ̀ⲛⲟⲩϯ ⲛ̀ⲧⲉ ⲛⲉⲛⲓⲟϯ: ϩⲱⲥ ⲉ̀ⲣⲟϥ ⲁ̀ⲣⲓϩⲟⲩⲟ̀ ϭⲁⲥϥ ϣⲁ ⲛⲓⲉ̀ⲛⲉϩ.',
+            },
+            {
+              language: 'englishCoptic',
+              text: 'Esmo Epshois, Ananeias, Azareias, Misaeil ke Daneiel, hos erof ari-ho-oo chasf sha ni-eneh.\n\n+ Esmo Epshois, ni-etir-se-veste Emipshois ente nenyoti, hos erof ari-ho-oo chasf sha ni-eneh.',
+            },
+            {
+              language: 'english',
+              text: 'Bless the Lord O Hananiah Azariah Mishael and Daniel, praise Him and exalt Him above all forever.\n\n+ Bless the Lord O you who worship the Lord the God of our fathers, praise Him and exalt Him above all forever.',
+            },
+            {
+              language: 'englishArabic',
+              text: 'Barikoo er-Rabb ya Hananiya wa \'Azariya wa Misa\'eel wa Daniyal, sabbihouhu wa zeedouhu \'uluwwan ila el-abad.\n\n+ Barikoo er-Rabb ya \'abidi er-Rabb ilah aba\'ina, sabbihouhu wa zeedouhu \'uluwwan ila el-abad.',
+            },
+            {
+              language: 'arabic',
+              text: 'باركوا الرب يا حنانيا وعزاريا وميصائيل ودانيال، سبحوه وزيدوه علواً إلى الآباد.\n\n+ باركوا الرب يا عابدي الرب إله أبائنا، سبحوه وزيدوه علواً إلى الآباد.',
+            },
+          ],
+        },
+        {
           id: 'annual-midnight-arihoo-chasf',
           title: 'Ⲁ̀ⲣⲓϩⲟⲩⲟ̀ ϭⲁⲥϥ (Arihoo Chasf)',
           versions: [
@@ -2411,9 +2437,13 @@ if (annualMidnight) {
 const midnightAudio: Record<string, string> = {
   'annual-midnight-first-canticle': 'midnight-first-canticle.mp3',
   'annual-midnight-first-canticle-lobsh': 'midnight-first-canticle-lobsh.mp3',
+  'annual-midnight-sunday-theotokion-7': 'midnight-sunday-theotokion-7.mp3',
   'annual-midnight-second-canticle': 'midnight-second-canticle.mp3',
   'annual-midnight-second-canticle-lobsh': 'midnight-second-canticle-lobsh.mp3',
   'annual-midnight-third-canticle': 'midnight-third-canticle.mp3',
+  'annual-midnight-esmou-epchois-melismatic': 'midnight-esmou-epchois-melismatic.mp3',
+  'annual-midnight-arihoo-chasf': 'midnight-arihoo-chasf.mp3',
+  'annual-midnight-fourth-canticle': 'midnight-fourth-canticle.mp3',
   'annual-midnight-greek-psali-watos': 'midnight-aripsalin.mp3',
   'annual-midnight-doxology-virgin-mary': 'midnight-doxology-virgin-mary.m4a',
 };
