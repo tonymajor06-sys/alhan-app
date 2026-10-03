@@ -2,7 +2,7 @@ import { Redirect, useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
-import { goBackOrHome, openHymnPage, ScreenShell } from '@/components/alhan-ui';
+import { goBackOrHome, openHymnPage, ScreenShell, withCopticFont } from '@/components/alhan-ui';
 import { ArabicLessonId, arabicLessonIds, learnArabicStrings as t } from '@/components/learn-strings';
 import { useLessonStyles } from '@/components/lesson-styles';
 import { QuizRound } from '@/components/quiz-round';
@@ -184,7 +184,7 @@ function Practice() {
         {showSound ? <Text style={[styles.verseSound, shared.alignLeft]}>{verse.sound}</Text> : null}
         {showMeaning && verse.meaning ? <Text style={[styles.body, shared.alignLeft]}>{verse.meaning}</Text> : null}
         <Text style={[styles.note, shared.alignLeft]}>
-          {t.from} {verse.hymn.title}
+          {t.from} {withCopticFont(verse.hymn.title)}
         </Text>
       </View>
       <View style={[shared.audioControls, shared.row, styles.buttonRow]}>

@@ -244,6 +244,26 @@ export const readerFont = Platform.select({ ios: 'Georgia', android: 'serif', de
 // It only has Coptic letters, digits and punctuation, so anything else falls back to the system font.
 export const copticFont = 'AvvaShenouda';
 
+// A run of Coptic words: Coptic letters with their marks, plus the spaces and punctuation between them
+const copticRun = /([\u2C80-\u2CFF\u03E2-\u03EF](?:[\u2C80-\u2CFF\u03E2-\u03EF\u0300-\u036F\uFE20-\uFE2F:.,]|\s(?=[\u2C80-\u2CFF\u03E2-\u03EF]))*)/;
+
+// For titles and labels that mix scripts: the Coptic part in Avva Shenouda, the rest in the surrounding font.
+// Use inside a <Text>, e.g. <Text>{withCopticFont(title)}</Text>
+export function withCopticFont(text: string): ReactNode {
+  if (!copticRun.test(text)) return text;
+  return text.split(copticRun).map((part, i) =>
+    i % 2 ? (
+      <Text key={i} style={copticTitleStyle}>
+        {part}
+      </Text>
+    ) : (
+      part
+    )
+  );
+}
+
+const copticTitleStyle = { fontFamily: copticFont, fontWeight: 'normal' } as const;
+
 // One line of chips that scrolls sideways instead of wrapping onto several rows.
 // Right-to-left starts scrolled to the right edge so the first chip is visible.
 export function ChipScroller({
@@ -332,7 +352,7 @@ export function MiniPlayer({ lang, hideFor }: { lang: AppLanguage; hideFor?: str
             {hasQueue ? ` · ${queue.index + 1}/${queue.tracks.length}` : ''}
           </Text>
           <Text style={[styles.miniTitle, textAlign]} numberOfLines={1}>
-            {nowPlaying.title}
+            {withCopticFont(nowPlaying.title)}
           </Text>
         </Pressable>
         {hasQueue ? (
@@ -416,7 +436,7 @@ export function ScreenShell({
           <Text style={styles.backArrow}>{isRTL ? '›' : '‹'}</Text>
           <Text style={styles.backText}>{t.back}</Text>
         </Pressable>
-        <Text style={[styles.headerTitle, textAlign]}>{title}</Text>
+        <Text style={[styles.headerTitle, textAlign]}>{withCopticFont(title)}</Text>
         {subtitle ? <Text style={[styles.subtitle, textAlign]}>{subtitle}</Text> : null}
         {children}
       </ScrollView>

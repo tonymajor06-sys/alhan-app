@@ -42,6 +42,7 @@ import {
   strings,
   toVerses,
   Verse,
+  withCopticFont,
   withoutNumber,
 } from './alhan-ui';
 
@@ -109,7 +110,7 @@ export function HymnReader({
           {end ? `${label} ${arrow}` : `${arrow} ${label}`}
         </Text>
         <Text style={[styles.hymnNavTitle, end ? styles.alignRight : styles.alignLeft]} numberOfLines={2}>
-          {displayTitle(h, lang)}
+          {withCopticFont(displayTitle(h, lang))}
         </Text>
       </Pressable>
     ) : (

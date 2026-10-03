@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { Platform, Pressable, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { copticFont, goBackOrHome, KeepScreenAwake, languageLabels, readerFont, strings, toVerses, Verse } from '@/components/alhan-ui';
+import { copticFont, goBackOrHome, KeepScreenAwake, languageLabels, readerFont, strings, toVerses, Verse, withCopticFont } from '@/components/alhan-ui';
 import { hymnPlainText } from '@/components/hymn-reader';
 import { alhanColors } from '@/constants/alhan-colors';
 import { displayTitle } from '@/data/arabic-titles';
@@ -164,7 +164,7 @@ export default function PresentScreen() {
               <Text style={styles.buttonText}>✕ {t.exit}</Text>
             </Pressable>
             <Text style={styles.title} numberOfLines={1}>
-              {displayTitle(hymn, appLang)}
+              {withCopticFont(displayTitle(hymn, appLang))}
             </Text>
             <Text style={styles.counter}>
               {digits(current + 1)} / {digits(count)}

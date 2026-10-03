@@ -11,6 +11,7 @@ import {
   openHymnPage,
   ScreenShell,
   strings,
+  withCopticFont,
   withoutNumber,
 } from '../components/alhan-ui';
 import { learnArabicStrings, learnStrings } from '../components/learn-strings';
@@ -177,7 +178,7 @@ export default function HomeScreen() {
         </View>
       ) : null}
       <View style={styles.rowTextWrap}>
-        <Text style={[styles.rowTitle, textAlign]}>{title}</Text>
+        <Text style={[styles.rowTitle, textAlign]}>{withCopticFont(title)}</Text>
         {badge ? (
           <View style={[styles.badge, isRTL && styles.selfEnd]}>
             <Text style={styles.badgeText}>♪ {badge}</Text>
@@ -201,7 +202,7 @@ export default function HomeScreen() {
         </View>
       ) : null}
       <View>
-        <Text style={[styles.tileTitle, textAlign]}>{title}</Text>
+        <Text style={[styles.tileTitle, textAlign]}>{withCopticFont(title)}</Text>
         {desc ? <Text style={[styles.tileDesc, textAlign]}>{desc}</Text> : null}
       </View>
     </Pressable>
@@ -211,7 +212,7 @@ export default function HomeScreen() {
 
   const sectionHeader = (key: string, title: string) => (
     <View key={key} style={[styles.sectionHeader, rowDirection]}>
-      <Text style={styles.sectionHeaderText}>{title}</Text>
+      <Text style={styles.sectionHeaderText}>{withCopticFont(title)}</Text>
       <View style={styles.sectionLine} />
     </View>
   );
@@ -423,7 +424,7 @@ export default function HomeScreen() {
                   style={({ pressed }) => [styles.rowTextWrap, pressed && styles.pressed]}>
                   <Text style={[styles.rowTitle, textAlign]}>
                     {isCurrent ? (queue.status.playing ? '♪ ' : '❚❚ ') : `${index + 1}. `}
-                    {displayTitle(hymn, lang)}
+                    {withCopticFont(displayTitle(hymn, lang))}
                   </Text>
                   <Text style={[styles.playlistMeta, textAlign]}>{languageLabel}</Text>
                 </Pressable>
@@ -501,7 +502,7 @@ export default function HomeScreen() {
                 accessibilityRole="button"
                 style={({ pressed }) => [styles.rowCard, rowDirection, pressed && styles.rowCardPressed]}>
                 <View style={styles.rowTextWrap}>
-                  <Text style={[styles.rowTitle, textAlign]}>{displayTitle(hymn, lang)}</Text>
+                  <Text style={[styles.rowTitle, textAlign]}>{withCopticFont(displayTitle(hymn, lang))}</Text>
                   <Text style={[styles.playlistMeta, textAlign]} numberOfLines={1}>
                     {where} · {matchedIn}
                   </Text>

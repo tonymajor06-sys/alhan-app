@@ -43,6 +43,7 @@ const arabicTitles: Record<string, string> = {
   'annual-distribution-listen-o-christs-congregation': 'إسمعوا يا شعب المسيح',
   'annual-matins-intro-doxologies': 'مقدمة الذكصولوجيات',
   'annual-matins-doxology-virgin-mary': 'ذكصولوجية السيدة العذراء',
+  'annual-vespers-doxology-virgin-mary': 'ذكصولوجية السيدة العذراء (عشية)',
   'annual-matins-doxology-archangel-michael': 'ذكصولوجية رئيس الملائكة ميخائيل',
   'annual-matins-doxology-heavenly-beings': 'ذكصولوجية السمائيين',
   'annual-matins-doxology-apostles': 'ذكصولوجية الرسل',
@@ -54,8 +55,10 @@ const arabicTitles: Record<string, string> = {
   'annual-matins-doxology-patriarch-bishop': 'ذكصولوجية البطريرك أو الأسقف',
   'annual-matins-doxology-conclusion': 'ختام الذكصولوجيات',
   'annual-matins-psalm-trailer': 'ذيل المزمور',
+  'annual-liturgy-psalm-trailer': 'ذيل المزمور',
   'annual-matins-psalm-trailer-pope-bishop': 'ذيل المزمور في حضور البابا أو الأسقف',
   'annual-matins-gospel-response': 'مرد الإنجيل',
+  'annual-liturgy-gospel-response': 'مرد الإنجيل',
   'annual-liturgy-offering-blessed-are-you': 'مبارك أنت بالحقيقة',
   'annual-liturgy-offering-hymn-of-blessing': 'نسجد لآب النور',
   'annual-liturgy-offering-hail-to-mary': 'السلام لمريم الملكة',
@@ -72,6 +75,10 @@ const arabicTitles: Record<string, string> = {
   'annual-liturgy-agios': 'قدوس الله',
   'annual-liturgy-blessed-are-they': 'طوباهم بالحقيقة',
   'annual-liturgy-hiten-ni-presvia-eleos': 'بشفاعات والدة الإله (رحمة السلام)',
+  'annual-liturgy-the-cherubim-worship-you': 'الشاروبيم يسجدون لك',
+  'annual-liturgy-kata-to-eleos': 'كرحمتك يارب',
+  'annual-liturgy-amen-ton-thanaton': 'آمين آمين آمين بموتك يارب نبشر',
+  'annual-liturgy-may-their-holy-blessings': 'بركتهم المقدسة تكون معنا',
 
   // Annual > Midnight Praises
   'annual-midnight-general': 'عام',
@@ -79,6 +86,7 @@ const arabicTitles: Record<string, string> = {
   'annual-midnight-first-canticle': 'الهوس الأول',
   'annual-midnight-first-canticle-lobsh': 'لبش الهوس الأول',
   'annual-midnight-sunday-theotokion-7': 'ثيئوطوكية الأحد (٧)',
+  'annual-midnight-semouti-ero-dikeos': 'مدعوة أنت بالحقيقة',
   'annual-midnight-sunday-theotokion-8': 'ثيئوطوكية الأحد (٨)',
   'annual-midnight-sunday-theotokion-9': 'ثيئوطوكية الأحد (٩)',
   'annual-midnight-second-canticle': 'الهوس الثاني',
@@ -89,6 +97,7 @@ const arabicTitles: Record<string, string> = {
   'annual-midnight-psali-watos-three-holy-youth': 'إبصالية واطس للثلاثة فتية القديسين',
   'annual-midnight-commemoration': 'المجمع',
   'annual-midnight-doxologies': 'الذكصولوجيات',
+  'annual-midnight-doxology-archangel-michael': 'ذكصولوجية رئيس الملائكة ميخائيل',
   'annual-midnight-doxology-virgin-mary': 'ذكصولوجية السيدة العذراء',
   'annual-midnight-doxology-archangel-gabriel': 'ذكصولوجية الملاك غبريال',
   'annual-midnight-doxology-michael-gabriel': 'ذكصولوجية الملاكين ميخائيل وغبريال',
@@ -103,6 +112,7 @@ const arabicTitles: Record<string, string> = {
   'annual-midnight-doxology-st-mena': 'ذكصولوجية مار مينا العجايبي',
   'annual-midnight-doxology-anba-abraam': 'ذكصولوجية الأنبا أبرآم',
   'annual-midnight-doxology-pope-kyrillos': 'ذكصولوجية البابا كيرلس السادس',
+  'annual-midnight-doxology-patriarch-bishop': 'ذكصولوجية البطريرك أو الأسقف',
   'annual-midnight-doxology-conclusion': 'ختام الذكصولوجيات',
   'annual-midnight-fourth-canticle': 'الهوس الرابع',
   'annual-midnight-psali-watos-virgin-mary-21st': 'إبصالية واطس للسيدة العذراء (يوم ٢١ من الشهر القبطي)',
@@ -211,6 +221,10 @@ const toArabicDigits = (n: string) => n.replace(/\d/g, (d) => '٠١٢٣٤٥٦٧�
 export function displayTitle(item: { id: string; title: string }, lang: AppLanguage): string {
   if (lang !== 'ar') return item.title;
   if (arabicTitles[item.id]) return arabicTitles[item.id];
+
+  // Vespers shares its hymns and deacon responses with Matins
+  const matinsId = item.id.replace(/^(d-)?annual-vespers-/, '$1annual-matins-');
+  if (arabicTitles[matinsId]) return arabicTitles[matinsId];
   if (serviceTitles[item.title]) return serviceTitles[item.title];
 
   // Theotokia parts, e.g. "annual-midnight-monday-theotokia-part-3" → "ثيئوطوكية الاثنين (القطعة ٣)"
