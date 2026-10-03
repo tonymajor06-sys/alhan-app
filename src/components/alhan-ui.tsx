@@ -172,6 +172,7 @@ export const languageLabels: Record<AppLanguage, { key: LanguageType; label: str
   en: [
     { key: 'coptic', label: 'Coptic' },
     { key: 'englishCoptic', label: 'Coptic (English letters)' },
+    { key: 'arabicCoptic', label: 'Coptic (Arabic letters)' },
     { key: 'english', label: 'English' },
     { key: 'englishArabic', label: 'Arabic (English letters)' },
     { key: 'arabic', label: 'Arabic' },
@@ -181,6 +182,7 @@ export const languageLabels: Record<AppLanguage, { key: LanguageType; label: str
     { key: 'coptic', label: 'قبطي' },
     { key: 'englishArabic', label: 'عربي بحروف إنجليزية' },
     { key: 'englishCoptic', label: 'قبطي بحروف إنجليزية' },
+    { key: 'arabicCoptic', label: 'قبطي بحروف عربية' },
     { key: 'english', label: 'إنجليزي' },
   ],
 };

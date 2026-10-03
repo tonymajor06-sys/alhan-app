@@ -146,7 +146,7 @@ export function HymnReader({
 
   const textFor = (language: LanguageType) => hymnPlainText(hymn, language) || t.notAvailable;
   const rawText = hymn.versions.find((v) => v.language === effectiveLanguage)?.text || t.notAvailable;
-  const isArabicText = effectiveLanguage === 'arabic' || rawText === strings.ar.notAvailable;
+  const isArabicText = effectiveLanguage === 'arabic' || effectiveLanguage === 'arabicCoptic' || rawText === strings.ar.notAvailable;
   const fontSize = 20 * settings.textScale;
   const progress = status.duration > 0 ? Math.min(1, status.currentTime / status.duration) : 0;
   const repeatOne = queue.repeat === 'one';
@@ -162,7 +162,11 @@ export function HymnReader({
     null;
   const showSideBySide = settings.sideBySide && compareLanguage !== null;
   const columnStyle = (language: LanguageType) =>
-    language === 'arabic' ? styles.arabicText : language === 'coptic' ? [styles.alignLeft, styles.copticText] : styles.alignLeft;
+    language === 'arabic' || language === 'arabicCoptic'
+      ? styles.arabicText
+      : language === 'coptic'
+        ? [styles.alignLeft, styles.copticText]
+        : styles.alignLeft;
   const copticStyle = effectiveLanguage === 'coptic' ? styles.copticText : null;
   // Verse by verse, so each line sits next to its translation
   const verses = toVerses(textFor(effectiveLanguage));

@@ -11,7 +11,7 @@ import { hymnSlug, locateHymn } from '@/data/search';
 import { useThemedStyles } from '@/hooks/use-alhan-colors';
 import { useSettings } from '@/hooks/use-settings';
 
-const languages: LanguageType[] = ['coptic', 'englishCoptic', 'english', 'englishArabic', 'arabic'];
+const languages: LanguageType[] = ['coptic', 'englishCoptic', 'arabicCoptic', 'english', 'englishArabic', 'arabic'];
 
 // Every hymn gets its own page in the web version, so search engines can find each one
 export async function generateStaticParams(): Promise<Record<string, string>[]> {
