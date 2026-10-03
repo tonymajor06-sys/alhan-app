@@ -85,7 +85,13 @@ const arabicTitles: Record<string, string> = {
   'annual-midnight-arise-o-children': 'قوموا يا بني النور',
   'annual-midnight-first-canticle': 'الهوس الأول',
   'annual-midnight-first-canticle-lobsh': 'لبش الهوس الأول',
+  'annual-midnight-friday-psali': 'إبصالية واطس ليوم الجمعة',
   'annual-midnight-sunday-theotokion-7': 'ثيئوطوكية الأحد (٧)',
+  'annual-vesper-praises-thursday-psali-apatir-irini': 'إبصالية واطس لاستشهاد القديسين أبادير وإيريني أخته (إيرائي)',
+  'annual-vesper-praises-friday-psali-29th': 'إبصالية واطس لـ٢٩ من كل شهر قبطي',
+  'annual-vesper-praises-friday-exposition-29th': 'طرح واطس اليوم التاسع والعشرين من كل شهر',
+  'annual-vesper-praises-friday-exposition': 'طرح واطس',
+  'annual-vesper-praises-saturday-psali-virgin-mary': 'إبصالية واطس للسيدة العذراء',
   'annual-midnight-semouti-ero-dikeos': 'مدعوة أنت بالحقيقة',
   'annual-midnight-sunday-theotokion-8': 'ثيئوطوكية الأحد (٨)',
   'annual-midnight-sunday-theotokion-9': 'ثيئوطوكية الأحد (٩)',
@@ -196,6 +202,7 @@ const arabicTitles: Record<string, string> = {
 
 // Service names are shared across seasons, so match on the English title
 const serviceTitles: Record<string, string> = {
+  'Vesper Praises': 'تسبحة عشية',
   'Morning Praises': 'تسبحة باكر',
   Matins: 'رفع بخور باكر',
   Liturgy: 'القداس الإلهي',
@@ -221,6 +228,14 @@ const toArabicDigits = (n: string) => n.replace(/\d/g, (d) => '٠١٢٣٤٥٦٧�
 export function displayTitle(item: { id: string; title: string }, lang: AppLanguage): string {
   if (lang !== 'ar') return item.title;
   if (arabicTitles[item.id]) return arabicTitles[item.id];
+
+  // Vesper Praises shares its hymns with Midnight Praises
+  if (/^annual-vesper-praises-[a-z]+day-our-father$/.test(item.id)) return 'أبانا الذي';
+  if (item.id.startsWith('annual-vesper-praises-')) {
+    const midnightId = item.id.replace(/^annual-vesper-praises-(?:[a-z]+day-fourth-canticle)$/, 'annual-midnight-fourth-canticle').replace('annual-vesper-praises-', 'annual-midnight-');
+    const shared = displayTitle({ ...item, id: midnightId }, lang);
+    if (shared !== item.title) return shared;
+  }
 
   // Vespers shares its hymns and deacon responses with Matins
   const matinsId = item.id.replace(/^(d-)?annual-vespers-/, '$1annual-matins-');
