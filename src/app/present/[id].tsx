@@ -122,7 +122,7 @@ export default function PresentScreen() {
         {ordered.map((l, i) => {
           const verse = versesBy.get(l)?.[current];
           if (!verse) return null;
-          const arabic = l === 'arabic' || l === 'arabicCoptic';
+          const arabic = l === 'arabic' || l === 'arabicCoptic' || l === 'arabicEnglish';
           return (
             <View key={l} style={[styles.block, i > 0 && styles.blockDivider]}>
               <Text

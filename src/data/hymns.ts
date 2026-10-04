@@ -1,6 +1,7 @@
 import { addArabicCoptic } from './arabic-coptic';
+import { addArabicEnglish } from './arabic-english';
 
-export type LanguageType = 'coptic' | 'englishCoptic' | 'arabicCoptic' | 'english' | 'englishArabic' | 'arabic';
+export type LanguageType = 'coptic' | 'englishCoptic' | 'arabicCoptic' | 'english' | 'arabicEnglish' | 'englishArabic' | 'arabic';
 
 export interface LanguageVersion {
   language: LanguageType;
@@ -121,6 +122,10 @@ const generateHymns = (seasonId: string, serviceName: string): Hymn[] => {
           {
             language: 'english',
             text: 'Lord have mercy.\n\nWe worship the Father and the Son, and the Holy Spirit, the holy and co-essential, Trinity.\n\nHail to the Church, the house of the angels, Hail to the Virgin, who gave birth to our Savior.\n\nHail to you O Mary, the beautiful dove, who has borne to us, God the Logos.\n\nHail to you O Mary, with a holy hail, Hail to you O Mary, the Mother of the Holy One.\n\nHail to Michael: the great archangel: Hail to Gabriel: the chosen announcer.\n\nHail to Michael: the great archangel: hail to the chief commander: of the army of the heavens!\n\nHail to the cherubim: hail to the seraphim: hail to all: the heavenly orders.\n\nHail to John: the great forerunner: hail to the priest: the kinsman of Emmanuel.\n\nHail to my lords, and fathers the apostles, hail to the disciples, of our Lord Jesus Christ.\n\nHail to you O martyr: hail to the Evangelist: hail to the Apostle: Mark the Beholder of God.\n\nHail to you, O martyr: hail to the courageous hero: hail to the struggle-mantled, my Lord Prince George.\n\nHail to you O martyr: hail to the courageous hero: hail to the struggle bearer: Philopater Mercurius.\n\nHail to you, O martyr: hail to the noble hero: hail to the struggle-bearer, saint Abba Mina.\n\nBlessed are you indeed: our holy father the patriarch: Abba Kyrillos the sixth: the beloved of Christ.\n\nBlessed are you indeed, our holy and righteous father, Abba Abraam the bishop, the beloved of Christ.\n\nHail to you O saint: the beloved of Christ: Abouna Pishoy Kamel: the hegumen.\n\nWe ask You O Son of God, to keep the life of our patriarch, Pope Abba (…) the high priest, confirm him upon his throne.\n\nAnd his partner in the liturgy, our holy righteous father, Abba (…) the bishop (metropolitan), confirm him upon his throne.\n\nThrough the intercessions, of the Theotokos Saint Mary, O Lord grant us, the forgiveness of our sins.\n\nThat we may praise You: with Your good Father: and the Holy Spirit: for You have come and saved us. Have mercy on us.',
+          },
+          {
+            language: 'englishArabic',
+            text: 'Ya Rabbu irham.\n\nNasgud lil-Ab wal-Ibn war-Rouh el-Qudus eth-Thalouth el-Quddous el-musawi fil-gawhar.\n\nEs-salam lil-kanisa beit el-mala\'ika es-salam lil-\'Adhra\' allati waladat mukhallisana.\n\nEs-salam laki ya Maryam el-hamama el-hasana allati waladat lana, Allah el-Kalima.\n\nEs-salam laki ya Maryam, salaman muqaddasan es-salam laki ya Maryam umm el-Quddous.\n\nEs-salam li-Mikha\'eel ra\'is el-mala\'ika el-\'azim. Es-salam li-Ghubriyal el-mubashshir el-mukhtar.\n\nEs-salam li-Mikha\'eel ra\'is el-mala\'ika el-\'azim. Es-salam li-ra\'is gunoud quwwat es-samawat.\n\nEs-salam lish-Sharoubim, es-salam lis-Sarafim es-salam li-gami\' et-tughmat es-sama\'iya.\n\nEs-salam li-Youhanna es-sabiq el-\'azim es-salam lil-kahin nasib \'Immanu\'eel.\n\nEs-salam li-sadati el-aba\', er-rusul. Es-salam li-talameedh Rabbina Yasou\' el-Maseeh.\n\nEs-salam laka ayyuha esh-shahid es-salam lil-Ingeeli es-salam lir-rasoul Marqos nazir el-Ilah.\n\nEs-salam laka ayyuha esh-shahid, es-salam lish-shuga\' el-mugahid, es-salam li-labis el-gihad, sayyidi el-malik Gi\'orgiyous.\n\nEs-salam laka ayyuha esh-shahid. Es-salam lish-shuga\' el-batal. Es-salam lil-mugahid muhibb el-Ab Marqouriyous.\n\nEs-salam laka ayyuha esh-shahid. Es-salam lish-shuga\' el-batal. Es-salam lil-mugahid el-qiddis Aba Mina.\n\nToubaka bil-haqiqa, ya abana el-qiddis el-batriyark, el-Anba Kirillos es-sadis, habib el-Maseeh.\n\nToubaka bil-haqiqa ya abana el-qiddis el-barr Anba Abra\'am el-usquf habib el-Maseeh.\n\nEs-salam laka ayyuha el-qiddis: habib el-Maseeh: abouna el-qummus: Bishoy Kamel.\n\nNas\'aluka ya Ibn Allah, an tahfaz hayat batriyarkina, el-Baba Anba (...) ra\'is el-kahana, thabbithu \'ala kursiyyihi.\n\nWa sharikahu fil-khidma er-rasouliya, abana el-qiddis el-barr, Anba (...) el-usquf (el-matran), thabbithu \'ala kursiyyihi.\n\nBi-shafa\'at walidat el-Ilah el-qiddisa Maryam, ya Rabb an\'im \'alayna bi-maghfirat khatayana.\n\nLikay nusabbihak, ma\'a abik es-salih, war-Rouh el-Qudus, li-annaka atayta wa khallastana irhamna.',
           },
           {
             language: 'arabic',
@@ -995,27 +1000,27 @@ if (annualMatins) {
       ],
     },    {
       id: 'annual-matins-psalm-trailer',
-      title: 'Ⲫ̀ϯ ⲉϥⲉ̀ϣⲉⲛϩⲏⲧ (Psalm Trailer)',
+      title: 'Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ (Psalm Trailer)',
       versions: [
         {
           language: 'coptic',
-          text: 'Ⲫ̀ϯ ⲉϥⲉ̀ϣⲉⲛϩⲏⲧ ϧⲁⲣⲟⲛ ⲉϥⲉ̀ⲥ̀ⲙⲟⲩ ⲉ̀ⲣⲟⲛ: ⲉϥⲉ̀ⲟⲩⲱⲛϩ Ⲙ̀ⲡⲉϥϩⲟ ⲉ̀ϧⲣⲏⲓ ⲉ̀ϫⲱⲛ ⲟⲩⲟϩ ⲉϥⲉ̀ⲛⲁⲓ ⲛⲁⲛ\\n\\nⲈ̀ⲡ̀ϫⲓⲛⲥⲟⲩⲉⲛ Ⲙ̀ⲡⲉⲕⲙⲱⲓⲧ ϩⲓϫⲉⲛ ⲡ̀ⲕⲁϩⲓ: ⲛⲉⲙ ⲡⲉⲕⲟⲩϫⲁⲓ ϧⲉⲛ ⲛⲓⲉⲑⲛⲟⲥ ⲧⲏⲣⲟⲩ',
+          text: 'Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ ⲁ̀ⲗⲗⲏⲗⲟⲩⲓⲁ.',
         },
         {
           language: 'englishCoptic',
-          text: 'Efnouti efeshenhēt kharon efe-esmou eron: efeouōnh Empefho ekhrēi ejōn ouoh efenai nan\\n\\nE-epjinsouen Empekmōit hijen epkahi: nem pekoujai khen niethnos tērou',
+          text: 'Allēlouia allēlouia.',
         },
         {
           language: 'english',
-          text: 'God shall pity us, and bless us: and reveal His face upon us and have mercy on us;\\n\\nthat Your way may be known on the earth: Your salvation among all nations.',
+          text: 'Alleluia, alleluia.',
         },
         {
           language: 'englishArabic',
-          text: 'Li-yatara\'afi-llahu \'alayna wal-yubarikna: wal-yudi\' bi-waghihi \'alayna\\n\\nLi-kay yu\'rafa fil-ardi tareequk: wa yabayyana bayna gami\'il-umami khalasuk',
+          text: 'Halleluia, halleluia.',
         },
         {
           language: 'arabic',
-          text: 'لِيَتَرَّأفِ اللهُ عَلَيْنَا وَلْيُبَارِكْنَا: وَلْيُضِيءْ بِوَجْهِهِ عَلَيْنَا\\n\\nلِكَيْ يُعْرَفَ فِي الأَرْضِ طَرِيقُكَ: وَ يَبَيْنَ جَمِيعِ الأُمَمِ خَلاَصُكَ',
+          text: 'هلليلويا هلليلويا.',
         },
       ],
     },
@@ -1321,7 +1326,7 @@ if (annualLiturgy) {
     },
     {
       id: 'annual-liturgy-hymn-of-intercessions',
-      title: 'Ϩⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ (Hymn of the Intercessions)',
+      title: 'Ϩⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ (Long Hitens)',
       versions: [
         {
           language: 'coptic',
@@ -1491,25 +1496,29 @@ if (annualLiturgy && matinsPsalmTrailerPopeBishop) {
   });
 }
 
-// ---- Annual > Matins > Gospel Response audio; Liturgy gets the same response (Vespers copies Matins below) ----
+// ---- Annual > Matins > Gospel Response audio (Vespers copies Matins below) ----
 const matinsGospelResponse = annualMatins?.hymns.find((h) => h.id === 'annual-matins-gospel-response');
 for (const version of matinsGospelResponse?.versions ?? []) {
   if (version.language === 'coptic' || version.language === 'englishCoptic') {
     version.audio = 'gospel-response-annual.m4a';
   }
 }
-if (annualLiturgy && matinsGospelResponse) {
-  annualLiturgy.hymns.push({
-    ...matinsGospelResponse,
-    id: 'annual-liturgy-gospel-response',
-    versions: matinsGospelResponse.versions.map((v) => ({ ...v })),
-  });
+
+// Matins (and Vespers, which copies Matins) has its own wording of the Gospel Response
+if (matinsGospelResponse) {
+  matinsGospelResponse.versions = [
+    { language: 'coptic', audio: 'gospel-response-annual.m4a', text: 'Ⲡⲓⲗⲁⲟⲥ:\n\nⲘⲁⲣⲉⲛⲟⲩⲱϣⲧ ⲙ̀Ⲡⲉⲛⲥⲱⲧⲏⲣ: Ⲡⲓⲙⲁⲓⲣⲱⲙⲓ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ: ϫⲉ ⲛ̀ⲑⲟϥ ⲁϥϣⲉⲛϩⲏⲧ ϧⲁⲣⲟⲛ: ⲁϥⲓ̀ ⲟⲩⲟϩ ⲁϥⲥⲱϯ ⲙ̀ⲙⲟⲛ.\n\nⲀ̀ⲣⲓⲡ̀ⲣⲉⲥⲃⲉⲩⲓⲛ ⲉ̀ϩ̀ⲣⲏⲓ ⲉ̀ϫⲱⲛ: ⲱ̀ ⲧⲉⲛϭⲟⲓⲥ ⲛ̀ⲛⲏⲃ ⲧⲏⲣⲉⲛ Ϯⲑⲉⲟ̀ⲧⲟⲕⲟⲥ: Ⲙⲁⲣⲓⲁ Ⲑ̀ⲙⲁⲩ ⲙ̀Ⲡⲉⲛⲥⲱⲧⲏⲣ: ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ.\n\nϪⲉ ϥ̀ⲥ̀ⲙⲁⲣⲱⲟⲩⲧ ⲛ̀ϫⲉ Ⲫⲓⲱⲧ ⲛⲉⲙ Ⲡϣⲏⲣⲓ: ⲛⲉⲙ Ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ ⲉⲑⲟⲩⲁⲃ: ϯⲧ̀ⲣⲓⲁⲥ ⲉⲧϫⲏⲕ ⲉ̀ⲃⲟⲗ: ⲧⲉⲛⲟⲩⲱϣⲧ ⲙ̀ⲙⲟⲥ ⲧⲉⲛϯⲱ̀ⲟⲩ ⲛⲁⲥ.' },
+    { language: 'englishCoptic', audio: 'gospel-response-annual.m4a', text: 'Pi-laos:\n\nMarenouōsht em-Pensōtēr: Pimairōmi enagathos: je enthof afshenhēt kharon: afi ouoh afsōti emmon.\n\nAri-epresveuin e-ehrēi ejōn: ō tentshois ennēb tēren Tithe-otokos: Maria Ethmau em-Pensōtēr: entefkha nennovi nan evol.\n\nJe efesmarōout enje Fiōt nem Pshēri: nem Pi-epneuma ethouab: ti-etrias etjēk evol: tenouōsht emmos tenti-ōou nas.' },
+    { language: 'english', text: 'People:\n\nLet us worship our Savior, the good Lover of Mankind, for He had compassion on us, He has come and saved us.\n\nIntercede on our behalf, O the Lady of us all the Theotokos, Mary the Mother of our Savior, that He may forgive us our sins.\n\nBlessed be the Father and the Son and the Holy Spirit, the perfect Trinity. We worship Him and glorify Him.' },
+    { language: 'englishArabic', text: 'Esh-sha\'b:\n\nFal-nasgud li-mukhallisina, muhibb el-bashar es-salih, li-annahu tara\'af \'alayna, ata wa khallasana.\n\nIshfa\'i fina amam er-Rabb, ya sayyidatana kullina es-sayyida walidat el-Ilah, Maryam umm mukhallisina, li-yaghfir lana khatayana.\n\nLi-annahu mubarakun el-Ab wal-Ibn war-Rouh el-Qudus, eth-Thalouth el-kamil, nasgud lahu wa numaggiduhu.' },
+    { language: 'arabic', text: 'الشعب:\n\nفلنسجد لمخلصنا، محب البشر الصالح، لأنه تراءف علينا، أتى وخلصنا.\n\nإشفعي فينا أمام الرب، يا سيدتنا كلنا السيدة والدة الإله، مريم أم مخلصنا، ليغفر لنا خطايانا.\n\nلأنه مباركٌ الآب والابن والروح القدس، الثالوث الكامل، نسجد له ونمجده.' },
+  ];
 }
 
 // ---- Annual > Liturgy: after the Gospel Response ----
 annualLiturgy?.hymns.push({
   id: 'annual-liturgy-blessed-are-they',
-  title: 'Ⲱⲟⲩⲛⲓⲁⲧⲟⲩ ϧⲉⲛ ⲟⲩⲙⲉⲑⲙⲏⲓ',
+  title: 'Ⲱⲟⲩⲛⲓⲁⲧⲟⲩ ϧⲉⲛ ⲟⲩⲙⲉⲑⲙⲏⲓ (Gospel Response)',
   versions: [
     {
       language: 'coptic',
@@ -1606,6 +1615,17 @@ annualLiturgy?.hymns.push(
       { language: 'english', text: 'May their holy blessings be with us. Amen.' },
       { language: 'englishArabic', text: 'Barakatuhum el-muqaddasa takoonu ma\'ana. Ameen.' },
       { language: 'arabic', text: 'برَكَتُهم المقدسةُ تكونُ معنا. آمين.' },
+    ],
+  },
+  {
+    id: 'annual-liturgy-in-christ-jesus-bow-your-heads',
+    title: 'Ϧⲉⲛ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲉⲛϭⲟⲓⲥ (In Christ Jesus Our Lord)',
+    versions: [
+      { language: 'coptic', text: 'Ⲡⲓⲗⲁⲟⲥ:\n\nϦⲉⲛ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲉⲛϭⲟⲓⲥ.\n\nⲠⲓⲇⲓⲁⲕⲱⲛ:\n\nⲦⲁⲥ ⲕⲉⲫⲁⲗⲁⲥ ⲩ̀ⲙⲱⲛ ⲧⲱ ⲕⲩⲣⲓⲱ ⲕ̀ⲗⲓⲛⲁⲧⲉ.\n\nⲠⲓⲗⲁⲟⲥ:\n\nⲈⲛⲱⲡⲓⲟⲛ ⲥⲟⲩ Ⲕⲩⲣⲓⲉ.\n\nⲠⲓⲇⲓⲁⲕⲱⲛ:\n\nⲠ̀ⲣⲟⲥⲭⲱⲙⲉⲛ Ⲑⲉⲟⲩ ⲙⲉⲧⲁ ⲫⲟⲃⲟⲩ: ⲁ̀ⲙⲏⲛ.\n\nⲠⲓⲟⲩⲏⲃ:\n\nⲒⲣⲏⲛⲏ ⲡⲁⲥⲓ.\n\nⲠⲓⲗⲁⲟⲥ:\n\nⲔⲉ ⲧⲱ ⲡ̀ⲛⲉⲩⲙⲁⲧⲓ ⲥⲟⲩ.' },
+      { language: 'englishCoptic', text: 'Pi-laos:\n\nKhen Pi-ekhristos Iēsous Pentshois.\n\nPi-diakon:\n\nTas kefalas umōn tō kuriō eklinate.\n\nPi-laos:\n\nEnōpion sou Kurie.\n\nPi-diakon:\n\nEproskhōmen Theou meta fovou: amēn.\n\nPi-ouib:\n\nIrēnē pasi.\n\nPi-laos:\n\nKe tō epneumati sou.' },
+      { language: 'english', text: 'People:\n\nIn Christ Jesus our Lord.\n\nDeacon:\n\nBow your heads to the Lord.\n\nPeople:\n\nBefore You, O Lord.\n\nDeacon:\n\nLet us attend in the fear of God. Amen.\n\nPriest:\n\nPeace be with all.\n\nPeople:\n\nAnd with your spirit.' },
+      { language: 'englishArabic', text: 'Esh-sha\'b:\n\nBil-Maseeh Yasou\' Rabbina.\n\nEsh-shammas:\n\nIhnou ru\'ousakum lir-Rabb.\n\nEsh-sha\'b:\n\nAmamak ya Rabb.\n\nEsh-shammas:\n\nAnsitou bi-khawf Allah. Ameen.\n\nEl-kahin:\n\nEs-salam lil-kull.\n\nEsh-sha\'b:\n\nWa li-rouhika aydan.' },
+      { language: 'arabic', text: 'الشعب:\n\nبالمسيحِ يسوع ربنا.\n\nالشماس:\n\nإحنوا رؤوسَكم للربِ.\n\nالشعب:\n\nأمامك ياربُ.\n\nالشماس:\n\nأنصتوا بخوفِ الله. آمين.\n\nالكاهن:\n\nالسلامُ للكلِّ.\n\nالشعب:\n\nولروحِكَ أيضاً.' },
     ],
   },
 );
@@ -1992,6 +2012,18 @@ if (deaconAnnualLiturgyWord) {
     ...fromMatins('d-annual-matins-pray-for-the-gospel', 'd-annual-liturgy-word-pray-for-the-gospel'),
     ...fromMatins('d-annual-matins-stand-in-the-fear-of-god', 'd-annual-liturgy-word-stand-in-the-fear-of-god'),
   ];
+}
+
+// ---- Annual > Matins (and Vespers): everything else comes before the Doxologies ----
+if (annualMatins) {
+  const doxologyStart = annualMatins.hymns.findIndex((h) => h.id === 'annual-matins-doxologies-header');
+  const isDoxology = (h: Hymn) => h.id === 'annual-matins-doxologies-header' || /doxolog/.test(h.id);
+  if (doxologyStart >= 0) {
+    annualMatins.hymns = [
+      ...annualMatins.hymns.filter((h) => !isDoxology(h)),
+      ...annualMatins.hymns.filter(isDoxology),
+    ];
+  }
 }
 
 // ---- Annual > Vespers: the same hymns and deacon responses as Matins, with its own doxology for the Virgin ----
@@ -3668,6 +3700,48 @@ if (annualVesperPraises) {
   ];
 }
 
-// Keep this last: gives every hymn that has Coptic text a "Coptic in Arabic letters" version (see arabic-coptic.ts),
+// ---- Annual > Liturgy: the Hitens, before the long Hitens (same words, its own recording) ----
+if (annualLiturgy) {
+  const at = annualLiturgy.hymns.findIndex((h) => h.id === 'annual-liturgy-hymn-of-intercessions');
+  const long = annualLiturgy.hymns[at];
+  if (long) {
+    annualLiturgy.hymns.splice(at, 0, {
+      ...long,
+      id: 'annual-liturgy-hitens',
+      title: 'Ϩⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ (Hitens)',
+      versions: long.versions.map((v) => ({ ...v })),
+    });
+  }
+}
+
+// ---- Audio: Annual > Liturgy > Taishori (The Golden Censer) and the Hymn of the Intercessions ----
+for (const [id, audio] of [
+  ['annual-liturgy-offering-golden-censer', 'liturgy-taishori.m4a'],
+  ['annual-liturgy-hymn-of-intercessions', 'liturgy-hitens.m4a'],
+  ['annual-liturgy-hitens', 'liturgy-hitens-annual.m4a'],
+  ['annual-liturgy-offering-alleluia-thought-of-man', 'liturgy-je-fmevi.m4a'],
+  ['annual-liturgy-agios', 'liturgy-agios.m4a'],
+  ['annual-liturgy-blessed-are-they', 'liturgy-gospel-response.m4a'],
+]) {
+  for (const version of annualLiturgy?.hymns.find((h) => h.id === id)?.versions ?? []) {
+    if (version.language === 'coptic' || version.language === 'englishCoptic') {
+      version.audio = audio;
+    }
+  }
+}
+
+// ---- Annual > Liturgy: the Liturgy of the Word starts with Taishori, the Liturgy of the Faithful after the Psalm Trailers ----
+if (annualLiturgy) {
+  const before = (id: string, header: Hymn) => {
+    const at = annualLiturgy.hymns.findIndex((h) => h.id === id);
+    if (at >= 0) annualLiturgy.hymns.splice(at, 0, header);
+  };
+  before('annual-liturgy-offering-golden-censer', { id: 'annual-liturgy-word-header', title: 'Liturgy of the Word', versions: [], isSectionHeader: true });
+  before('annual-liturgy-blessed-are-they', { id: 'annual-liturgy-faithful-header', title: 'Liturgy of the Faithful', versions: [], isSectionHeader: true });
+}
+
+// Keep these last: give every hymn a "Coptic in Arabic letters" and an "English in Arabic letters" version
+// (see arabic-coptic.ts and arabic-english.ts),
 // so it must run after all the changes above
 addArabicCoptic([...seasons, ...deaconCategories]);
+addArabicEnglish([...seasons, ...deaconCategories]);

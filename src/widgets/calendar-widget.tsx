@@ -30,11 +30,11 @@ export type CalendarWidgetProps = {
 
 const CalendarWidget = (props: CalendarWidgetProps, environment: WidgetEnvironment) => {
   'widget';
-  const bg = '#0e1322';
+  const bg = '#1a0a0e';
   const gold = '#d9ad55';
   const fastColor = '#a79ff0';
   const text = '#f6f1e7';
-  const muted = '#a4abc0';
+  const muted = '#c4a9a6';
   const onGold = '#1a1408';
 
   const fullColor = (environment.widgetRenderingMode ?? 'fullColor') === 'fullColor';

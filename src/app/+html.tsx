@@ -9,10 +9,10 @@ export default function Root({ children }: PropsWithChildren) {
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="theme-color" content="#0e1322" />
+        <meta name="theme-color" content="#1a0a0e" />
         <meta property="og:site_name" content="Alhan" />
         <ScrollViewStyleReset />
-        <style dangerouslySetInnerHTML={{ __html: 'body{background-color:#0e1322}@media (prefers-color-scheme: light){body{background-color:#f6f1e6}}' }} />
+        <style dangerouslySetInnerHTML={{ __html: 'body{background-color:#1a0a0e}@media (prefers-color-scheme: light){body{background-color:#f4e8d2}}' }} />
       </head>
       <body>{children}</body>
     </html>

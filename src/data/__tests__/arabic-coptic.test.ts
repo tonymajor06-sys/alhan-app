@@ -73,7 +73,7 @@ describe('Kiahk Praises & Season > Distribution', () => {
   it('has the lyrics of each melody, with the same number of verses in every version', () => {
     const melodies = service.hymns.find((h) => h.title === 'Melodies')!.children!;
     expect(melodies.map((m) => m.versions.map((v) => v.language))).toEqual(
-      melodies.map(() => ['english', 'englishArabic', 'arabic'])
+      melodies.map(() => ['english', 'englishArabic', 'arabic', 'arabicEnglish'])
     );
     // a verse is a paragraph; the melodies have 24, 28, 53 and 26
     expect(melodies.map((m) => m.versions[0].text.split(/\n\s*\n/).length)).toEqual([24, 28, 53, 26]);

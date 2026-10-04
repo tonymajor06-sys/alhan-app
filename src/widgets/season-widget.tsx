@@ -29,11 +29,11 @@ export type SeasonWidgetProps = {
 
 const SeasonWidget = (props: SeasonWidgetProps, environment: WidgetEnvironment) => {
   'widget';
-  const background = '#0e1322';
+  const background = '#1a0a0e';
   const gold = '#d9ad55';
   const fastColor = '#a79ff0';
   const text = '#f6f1e7';
-  const muted = '#a4abc0';
+  const muted = '#c4a9a6';
 
   // Lock Screen and tinted widgets are recoloured by the system, so only use
   // our palette when drawing in full colour.
