@@ -82,7 +82,7 @@ const loadTrack = (index: number, autoplay: boolean) => {
     // Also keeps Android's foreground service alive; without it background audio stops after ~3 minutes
     player.setActiveForLockScreen(
       true,
-      { title: track.title, artist: 'Alhan' },
+      { title: track.title, artist: 'Coptic Hymns' },
       { showSeekBackward: true, showSeekForward: true }
     );
   } catch {

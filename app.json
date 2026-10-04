@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Alhan",
+    "name": "Coptic Hymns",
     "slug": "alhan-app",
     "version": "1.0.0",
     "orientation": "default",
@@ -8,7 +8,7 @@
     "scheme": "alhanapp",
     "userInterfaceStyle": "automatic",
     "ios": {
-      "icon": "./assets/expo.icon",
+      "icon": "./assets/images/icon.png",
       "bundleIdentifier": "com.anthonymansour.alhanapp"
     },
     "android": {

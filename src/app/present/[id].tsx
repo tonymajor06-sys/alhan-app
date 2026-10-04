@@ -111,7 +111,7 @@ export default function PresentScreen() {
   return (
     <View style={styles.root}>
       <Head>
-        <title>{`${hymn.title} · Projector | Alhan`}</title>
+        <title>{`${hymn.title} · Projector | Coptic Hymns`}</title>
         <meta name="robots" content="noindex" />
       </Head>
       <StatusBar hidden />

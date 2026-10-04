@@ -42,7 +42,7 @@ const strings = {
     reminders: 'Feast reminders',
     remindersOn: 'On · the evening before each feast and fast',
     remindersOff: 'Off · tap to get a reminder the evening before',
-    remindersDenied: 'Notifications are turned off for Alhan. You can allow them in Settings.',
+    remindersDenied: 'Notifications are turned off for Coptic Hymns. You can allow them in Settings.',
   },
   ar: {
     back: 'رجوع',
@@ -60,7 +60,7 @@ const strings = {
     reminders: 'تذكير بالأعياد',
     remindersOn: 'مفعّل · مساء اليوم السابق لكل عيد وصوم',
     remindersOff: 'متوقف · اضغط لتصلك رسالة تذكير مساء اليوم السابق',
-    remindersDenied: 'الإشعارات متوقفة لتطبيق ألحان. يمكنك السماح بها من الإعدادات.',
+    remindersDenied: 'الإشعارات متوقفة لتطبيق الألحان القبطية. يمكنك السماح بها من الإعدادات.',
   },
 };
 

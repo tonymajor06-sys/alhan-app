@@ -3520,6 +3520,7 @@ const midnightAudio: Record<string, string> = {
   'annual-midnight-first-canticle-lobsh': 'midnight-first-canticle-lobsh.m4a',
   'annual-midnight-sunday-theotokion-7': 'midnight-sunday-theotokion-7.m4a',
   'annual-midnight-sunday-theotokia-part-7': 'midnight-sunday-theotokion-7.m4a',
+  'annual-midnight-semouti-ero-dikeos': 'midnight-semouti-ero-dikeos.m4a',
   'annual-midnight-sunday-theotokion-8': 'midnight-sunday-theotokion-8.m4a',
   'annual-midnight-sunday-theotokia-part-8': 'midnight-sunday-theotokion-8.m4a',
   'annual-midnight-second-canticle': 'midnight-second-canticle.m4a',

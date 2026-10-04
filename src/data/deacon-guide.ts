@@ -93,10 +93,6 @@ export const guideSections: GuideSection[] = [
         text: { en: 'Leads the deacons and arranges their service.', ar: 'يقود الشمامسة وينظم خدمتهم.' },
       },
     ],
-    note: {
-      en: 'How each rank wears the stole (badrashil) differs from church to church. Follow your church.',
-      ar: 'طريقة لبس البدرشيل لكل رتبة تختلف من كنيسة لأخرى. اتبع ترتيب كنيستك.',
-    },
   },
   {
     id: 'altar',
@@ -106,8 +102,8 @@ export const guideSections: GuideSection[] = [
     items: [
       {
         text: {
-          en: "Come early, wear a clean white tonia, and get the bishop's or priest's blessing before putting on the stole.",
-          ar: 'احضر مبكراً، والبس تونية بيضاء نظيفة، وخذ بركة الأب الأسقف أو الكاهن قبل لبس البدرشيل.',
+          en: "Come early with a clean white tonia, and get the bishop's or priest's blessing before putting it on.",
+          ar: 'احضر مبكراً ومعك تونية بيضاء نظيفة، وخذ بركة الأب الأسقف أو الكاهن قبل لبسها.',
         },
       },
       {
@@ -249,7 +245,7 @@ export const guideSections: GuideSection[] = [
     title: { en: 'What to Bring', ar: 'ماذا تحضر معك' },
     desc: { en: 'Be ready before the service starts', ar: 'كن مستعداً قبل بدء الصلاة' },
     items: [
-      { text: { en: 'Your tonia and stole, clean and folded.', ar: 'تونيتك وبدرشيلك، نظيفين ومطويين.' } },
+      { text: { en: 'Your tonia, clean and folded.', ar: 'تونيتك، نظيفة ومطوية.' } },
       {
         text: {
           en: 'The Psalmody or this app, and know the hymns ahead of time.',
@@ -318,10 +314,6 @@ export const guideSections: GuideSection[] = [
     desc: { en: 'Words you will hear in church', ar: 'كلمات ستسمعها في الكنيسة' },
     items: [
       { title: { en: 'Tonia', ar: 'التونية' }, text: { en: 'The white robe deacons wear.', ar: 'الثوب الأبيض الذي يلبسه الشمامسة.' } },
-      {
-        title: { en: 'Badrashil', ar: 'البدرشيل' },
-        text: { en: 'The stole, worn over the tonia according to rank.', ar: 'الشريط الذي يُلبس فوق التونية حسب الرتبة.' },
-      },
       { title: { en: 'Shoria', ar: 'الشورية' }, text: { en: 'The censer.', ar: 'المبخرة.' } },
       { title: { en: 'Katameros', ar: 'القطمارس' }, text: { en: "The book of the day's readings.", ar: 'كتاب قراءات اليوم.' } },
       {
@@ -359,7 +351,6 @@ const deacon = b('Deacon', 'دياكون');
 const archdeacon = b('Archdeacon', 'أرشيدياكون');
 const glossary = {
   tonia: b('The white robe deacons wear', 'الثوب الأبيض الذي يلبسه الشمامسة'),
-  badrashil: b('The stole', 'الشريط الذي يُلبس فوق التونية'),
   shoria: b('The censer', 'المبخرة'),
   katameros: b("The book of the day's readings", 'كتاب قراءات اليوم'),
   agpeya: b('The book of the seven daily prayers', 'كتاب صلوات السواعي السبع'),
@@ -425,7 +416,7 @@ const guideQuestions: GuideQuestion[] = [
     wrong: [b('Any deacon', 'أي شماس'), b('Only the archdeacon', 'رئيس الشمامسة فقط'), b('The Epsaltos', 'الأبصالتس')],
   },
   {
-    q: b('What do you do before putting on your stole?', 'ماذا تفعل قبل لبس البدرشيل؟'),
+    q: b('What do you do before putting on your tonia?', 'ماذا تفعل قبل لبس التونية؟'),
     right: b("Get the bishop's or priest's blessing", 'تأخذ بركة الأب الأسقف أو الكاهن'),
     wrong: [
       b('Light the coal', 'تشعل الفحم'),
@@ -543,7 +534,6 @@ const guideQuestions: GuideQuestion[] = [
   ...(
     [
       [b('What is the Tonia?', 'ما هي التونية؟'), glossary.tonia],
-      [b('What is the Badrashil?', 'ما هو البدرشيل؟'), glossary.badrashil],
       [b('What is the Shoria?', 'ما هي الشورية؟'), glossary.shoria],
       [b('What is the Katameros?', 'ما هو القطمارس؟'), glossary.katameros],
       [b('What is the Agpeya?', 'ما هي الأجبية؟'), glossary.agpeya],

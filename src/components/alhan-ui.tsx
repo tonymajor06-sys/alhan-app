@@ -15,8 +15,8 @@ import { AppLanguage } from '../hooks/use-settings';
 
 export const strings = {
   en: {
-    appTitle: 'Alhan',
-    appSubtitle: 'Coptic hymns & responses',
+    appTitle: 'Coptic Hymns',
+    appSubtitle: 'Hymns & responses in Coptic, English and Arabic',
     languagePrompt: 'App language',
     back: 'Back',
     chooseSeason: 'Choose a season',
@@ -81,7 +81,7 @@ export const strings = {
       'Tap “Mark verses”, play the recording and tap the button each time a new verse begins. After that the verse being sung lights up, and you can tap a verse to jump to it or repeat it.',
     learnReady: 'Tap a verse to jump to it.',
     markingProgress: (n: number, total: number) => `Verse ${n} of ${total}`,
-    getApp: 'Get the Alhan app',
+    getApp: 'Get the Coptic Hymns app',
     notFound: 'This hymn could not be found.',
     goHome: 'Go to the home screen',
     exit: 'Exit',
@@ -91,8 +91,8 @@ export const strings = {
     shownLanguages: 'Show',
   },
   ar: {
-    appTitle: 'ألحان',
-    appSubtitle: 'الألحان والمردات القبطية',
+    appTitle: 'الألحان القبطية',
+    appSubtitle: 'الألحان والمردات بالقبطي والعربي والإنجليزي',
     languagePrompt: 'لغة التطبيق',
     back: 'رجوع',
     chooseSeason: 'اختر المناسبة',
@@ -157,7 +157,7 @@ export const strings = {
       'اضغط «حدّد المقاطع» وشغّل التسجيل واضغط الزر كلما بدأ مقطع جديد. بعد ذلك يُضاء المقطع الذي يُرتّل، ويمكنك الضغط على أي مقطع للانتقال إليه أو تكراره.',
     learnReady: 'اضغط على أي مقطع للانتقال إليه.',
     markingProgress: (n: number, total: number) => `المقطع ${n} من ${total}`,
-    getApp: 'حمّل تطبيق ألحان',
+    getApp: 'حمّل تطبيق الألحان القبطية',
     notFound: 'لم يتم العثور على هذا اللحن.',
     goHome: 'اذهب إلى الصفحة الرئيسية',
     exit: 'خروج',
@@ -595,9 +595,8 @@ export const createAlhanStyles = (colors: AlhanPalette) => StyleSheet.create({
     marginBottom: 14,
   },
   heroCross: {
-    fontSize: 40,
-    lineHeight: 46,
-    color: colors.gold,
+    width: 54,
+    height: 54,
   },
   heroTitle: {
     fontSize: 40,

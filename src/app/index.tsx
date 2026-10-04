@@ -1,7 +1,7 @@
 import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
 import Head from 'expo-router/head';
 import { ReactNode, useCallback, useEffect, useRef, useState } from 'react';
-import { Alert, BackHandler, Pressable, ScrollView, Text, TextInput, View } from 'react-native';
+import { Alert, BackHandler, Image, Pressable, ScrollView, Text, TextInput, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import {
@@ -260,7 +260,7 @@ export default function HomeScreen() {
     return (
       <View style={styles.root}>
         <Head>
-          <title>Alhan · Coptic Hymns & Responses · ألحان</title>
+          <title>Coptic Hymns & Responses · الألحان القبطية</title>
           <meta
             name="description"
             content="Coptic Orthodox hymns, Tasbeha (Midnight Praises) and deacon responses in Coptic, English and Arabic, with transliteration, audio and the Coptic calendar. ألحان وتسبحة ومردات الكنيسة القبطية."
@@ -317,7 +317,7 @@ export default function HomeScreen() {
           <View style={styles.homeBody}>
             <View style={styles.hero}>
               <View style={styles.heroMedallion}>
-                <Text style={styles.heroCross}>☩</Text>
+                <Image source={require('../../assets/images/coptic-cross.png')} style={styles.heroCross} accessibilityIgnoresInvertColors />
               </View>
               <Text style={styles.heroTitle}>{t.appTitle}</Text>
               <Text style={styles.heroSubtitle}>{t.appSubtitle}</Text>

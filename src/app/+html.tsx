@@ -10,7 +10,7 @@ export default function Root({ children }: PropsWithChildren) {
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="theme-color" content="#1a0a0e" />
-        <meta property="og:site_name" content="Alhan" />
+        <meta property="og:site_name" content="Coptic Hymns" />
         <ScrollViewStyleReset />
         <style dangerouslySetInnerHTML={{ __html: 'body{background-color:#1a0a0e}@media (prefers-color-scheme: light){body{background-color:#f4e8d2}}' }} />
       </head>
