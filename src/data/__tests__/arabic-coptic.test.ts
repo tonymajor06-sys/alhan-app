@@ -85,3 +85,10 @@ describe('Kiahk Praises & Season > Distribution', () => {
     }
   });
 });
+
+describe('copticToArabic: Ⲭⲉⲣⲉ', () => {
+  it('writes Ⲭⲉⲣⲉ with ش, as it is said', () => {
+    expect(copticToArabic('Ⲭⲉⲣⲉ').startsWith('ش')).toBe(true);
+    expect(copticToArabic('ⲭⲉⲣⲉ ⲛⲉ').startsWith('ش')).toBe(true);
+  });
+});

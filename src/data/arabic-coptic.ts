@@ -138,6 +138,8 @@ function convertWord(core: string): string {
 
 export function copticToArabic(text: string): string {
   return text
+    // Ⲭⲉⲣⲉ (hail) is said "shere", so it is written with ش like ϣ
+    .replace(/([Ⲭⲭ])(ⲉⲣⲉ)(?![Ⲁ-⳿Ϣ-ϯ])/g, (_m, x: string, rest: string) => (x === 'Ⲭ' ? 'Ϣ' : 'ϣ') + rest)
     .split('\n')
     .map((line) =>
       line
