@@ -34,6 +34,14 @@ const getPlayer = (): AudioPlayer => {
   if (player) return player;
   player = createAudioPlayer(null, { updateInterval: 500 });
   player.addListener('playbackStatusUpdate', onStatus);
+  if (typeof window !== 'undefined' && typeof window.addEventListener === 'function') {
+    // On web expo-audio drops the promise from <audio>.play(), so a recording that can't load (not pushed yet,
+    // offline) becomes an uncaught error. The player already reports it as stopped, so just swallow it.
+    window.addEventListener('unhandledrejection', (event) => {
+      const name = (event.reason as { name?: string } | undefined)?.name;
+      if (name === 'NotSupportedError' || name === 'NotAllowedError' || name === 'AbortError') event.preventDefault();
+    });
+  }
   setAudioModeAsync({
     playsInSilentMode: true,
     shouldPlayInBackground: true,

@@ -82,7 +82,7 @@ const arabicTitles: Record<string, string> = {
   'annual-liturgy-kata-to-eleos': 'كرحمتك يارب',
   'annual-liturgy-amen-ton-thanaton': 'آمين آمين آمين بموتك يارب نبشر',
   'annual-liturgy-may-their-holy-blessings': 'بركتهم المقدسة تكون معنا',
-  'annual-liturgy-in-christ-jesus-bow-your-heads': 'بالمسيح يسوع ربنا',
+  'd-annual-liturgy-faithful-in-christ-jesus-our-lord': 'بالمسيح يسوع ربنا',
 
   // Annual > Midnight Praises
   'annual-midnight-general': 'عام',

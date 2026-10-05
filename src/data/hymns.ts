@@ -2475,17 +2475,6 @@ annualLiturgy?.hymns.push(
       { language: 'arabic', text: 'برَكَتُهم المقدسةُ تكونُ معنا. آمين.' },
     ],
   },
-  {
-    id: 'annual-liturgy-in-christ-jesus-bow-your-heads',
-    title: 'Ϧⲉⲛ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲉⲛϭⲟⲓⲥ (In Christ Jesus Our Lord)',
-    versions: [
-      { language: 'coptic', text: 'Ⲡⲓⲗⲁⲟⲥ:\n\nϦⲉⲛ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲉⲛϭⲟⲓⲥ.\n\nⲠⲓⲇⲓⲁⲕⲱⲛ:\n\nⲦⲁⲥ ⲕⲉⲫⲁⲗⲁⲥ ⲩ̀ⲙⲱⲛ ⲧⲱ ⲕⲩⲣⲓⲱ ⲕ̀ⲗⲓⲛⲁⲧⲉ.\n\nⲠⲓⲗⲁⲟⲥ:\n\nⲈⲛⲱⲡⲓⲟⲛ ⲥⲟⲩ Ⲕⲩⲣⲓⲉ.\n\nⲠⲓⲇⲓⲁⲕⲱⲛ:\n\nⲠ̀ⲣⲟⲥⲭⲱⲙⲉⲛ Ⲑⲉⲟⲩ ⲙⲉⲧⲁ ⲫⲟⲃⲟⲩ: ⲁ̀ⲙⲏⲛ.\n\nⲠⲓⲟⲩⲏⲃ:\n\nⲒⲣⲏⲛⲏ ⲡⲁⲥⲓ.\n\nⲠⲓⲗⲁⲟⲥ:\n\nⲔⲉ ⲧⲱ ⲡ̀ⲛⲉⲩⲙⲁⲧⲓ ⲥⲟⲩ.' },
-      { language: 'englishCoptic', text: 'Pi-laos:\n\nKhen Pi-ekhristos Iēsous Pentshois.\n\nPi-diakon:\n\nTas kefalas umōn tō kuriō eklinate.\n\nPi-laos:\n\nEnōpion sou Kurie.\n\nPi-diakon:\n\nEproskhōmen Theou meta fovou: amēn.\n\nPi-ouib:\n\nIrēnē pasi.\n\nPi-laos:\n\nKe tō epneumati sou.' },
-      { language: 'english', text: 'People:\n\nIn Christ Jesus our Lord.\n\nDeacon:\n\nBow your heads to the Lord.\n\nPeople:\n\nBefore You, O Lord.\n\nDeacon:\n\nLet us attend in the fear of God. Amen.\n\nPriest:\n\nPeace be with all.\n\nPeople:\n\nAnd with your spirit.' },
-      { language: 'englishArabic', text: 'Esh-sha\'b:\n\nBil-Maseeh Yasou\' Rabbina.\n\nEsh-shammas:\n\nIhnou ru\'ousakum lir-Rabb.\n\nEsh-sha\'b:\n\nAmamak ya Rabb.\n\nEsh-shammas:\n\nAnsitou bi-khawf Allah. Ameen.\n\nEl-kahin:\n\nEs-salam lil-kull.\n\nEsh-sha\'b:\n\nWa li-rouhika aydan.' },
-      { language: 'arabic', text: 'الشعب:\n\nبالمسيحِ يسوع ربنا.\n\nالشماس:\n\nإحنوا رؤوسَكم للربِ.\n\nالشعب:\n\nأمامك ياربُ.\n\nالشماس:\n\nأنصتوا بخوفِ الله. آمين.\n\nالكاهن:\n\nالسلامُ للكلِّ.\n\nالشعب:\n\nولروحِكَ أيضاً.' },
-    ],
-  },
 );
 
 // ---- Audio: Annual > Liturgy > Psalm Trailer for the Pope or a Bishop ----
@@ -2869,6 +2858,27 @@ if (deaconAnnualLiturgyWord) {
     ...fromMatins('d-annual-matins-stand-up-for-prayer', 'd-annual-liturgy-word-stand-up-for-prayer'),
     ...fromMatins('d-annual-matins-pray-for-the-gospel', 'd-annual-liturgy-word-pray-for-the-gospel'),
     ...fromMatins('d-annual-matins-stand-in-the-fear-of-god', 'd-annual-liturgy-word-stand-in-the-fear-of-god'),
+  ];
+}
+
+// ---- Deacon Responses > Annual > Liturgy of the Faithful: the people and deacon at the end ----
+const deaconAnnualLiturgyFaithful = deaconCategories
+  .find((c) => c.id === 'deacon-annual')
+  ?.services.find((s) => s.id === 'd-annual-liturgy-faithful');
+
+if (deaconAnnualLiturgyFaithful) {
+  deaconAnnualLiturgyFaithful.hymns = [
+    {
+      id: 'd-annual-liturgy-faithful-in-christ-jesus-our-lord',
+      title: 'Ϧⲉⲛ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲉⲛϭⲟⲓⲥ (In Christ Jesus Our Lord)',
+      versions: [
+        { language: 'coptic', text: 'Ⲡⲓⲗⲁⲟⲥ:\n\nϦⲉⲛ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲉⲛϭⲟⲓⲥ.\n\nⲠⲓⲇⲓⲁⲕⲱⲛ:\n\nⲦⲁⲥ ⲕⲉⲫⲁⲗⲁⲥ ⲩ̀ⲙⲱⲛ ⲧⲱ ⲕⲩⲣⲓⲱ ⲕ̀ⲗⲓⲛⲁⲧⲉ.\n\nⲠⲓⲗⲁⲟⲥ:\n\nⲈⲛⲱⲡⲓⲟⲛ ⲥⲟⲩ Ⲕⲩⲣⲓⲉ.\n\nⲠⲓⲇⲓⲁⲕⲱⲛ:\n\nⲠ̀ⲣⲟⲥⲭⲱⲙⲉⲛ Ⲑⲉⲟⲩ ⲙⲉⲧⲁ ⲫⲟⲃⲟⲩ: ⲁ̀ⲙⲏⲛ.\n\nⲠⲓⲟⲩⲏⲃ:\n\nⲒⲣⲏⲛⲏ ⲡⲁⲥⲓ.\n\nⲠⲓⲗⲁⲟⲥ:\n\nⲔⲉ ⲧⲱ ⲡ̀ⲛⲉⲩⲙⲁⲧⲓ ⲥⲟⲩ.' },
+        { language: 'englishCoptic', text: 'Pi-laos:\n\nKhen Pi-ekhristos Iēsous Pentshois.\n\nPi-diakon:\n\nTas kefalas umōn tō kuriō eklinate.\n\nPi-laos:\n\nEnōpion sou Kurie.\n\nPi-diakon:\n\nEproskhōmen Theou meta fovou: amēn.\n\nPi-ouib:\n\nIrēnē pasi.\n\nPi-laos:\n\nKe tō epneumati sou.' },
+        { language: 'english', text: 'People:\n\nIn Christ Jesus our Lord.\n\nDeacon:\n\nBow your heads to the Lord.\n\nPeople:\n\nBefore You, O Lord.\n\nDeacon:\n\nLet us attend in the fear of God. Amen.\n\nPriest:\n\nPeace be with all.\n\nPeople:\n\nAnd with your spirit.' },
+        { language: 'englishArabic', text: 'Esh-sha\'b:\n\nBil-Maseeh Yasou\' Rabbina.\n\nEsh-shammas:\n\nIhnou ru\'ousakum lir-Rabb.\n\nEsh-sha\'b:\n\nAmamak ya Rabb.\n\nEsh-shammas:\n\nAnsitou bi-khawf Allah. Ameen.\n\nEl-kahin:\n\nEs-salam lil-kull.\n\nEsh-sha\'b:\n\nWa li-rouhika aydan.' },
+        { language: 'arabic', text: 'الشعب:\n\nبالمسيحِ يسوع ربنا.\n\nالشماس:\n\nإحنوا رؤوسَكم للربِ.\n\nالشعب:\n\nأمامك ياربُ.\n\nالشماس:\n\nأنصتوا بخوفِ الله. آمين.\n\nالكاهن:\n\nالسلامُ للكلِّ.\n\nالشعب:\n\nولروحِكَ أيضاً.' },
+      ],
+    },
   ];
 }
 
@@ -4059,7 +4069,17 @@ if (annualMidnight) {
             { language: 'arabic', text: 'تعالَوا جميعاً بتهليلٍ، أيها القطيعُ الناطِقُ، الذي للمسيحِ عِمّانوئيلَ، الراعي الحقيقيِّ.\n\nحِلُّوا مِنْ قُلوبِكُم الأفكارَ الرديئةَ، لكي أنطِقَ بطيبِ قلبٍ، مِنْ أجلِ العروسِ الكُلِّيَّةِ القداسةِ.\n\n+ كلُّ جنسِ البَشرِ فازوا بالخلاصِ، مِنْ أجلِ مَلِكةِ النِساءِ، مريمَ أُمِّ الرَحومِ.\n\n+ لأنَّ داودَ المُرتِّلَ هكذا يقولُ بالرُّوحِ القُدُسِ، "الربُّ سيظهرُ في صِهيَونَ".\n\nأعني هذه العذراءَ، ابنةَ يواقيمَ، مريمَ والِدةَ الإلهِ، التي هي أعلى مِنَ الشاروبيمِ.\n\nكثيرةٌ هي مدائحُكِ، التي ذكرها الأنبياءُ، بثباتٍ وتدقيقٍ، ومعقولاتٍ لائقةٍ.\n\n+ إشعياءُ يقولُ بصَوتِ التهليلِ، "هوذا فتاةٌ عذراءُ ستلدُ عِمّانوئيلَ".\n\n+ "اللهُ الرَحومُ، القويُّ والمتسلطُ، أظهرَ محبَّتَهُ للبَشرِ، وصارَ لنا وسيطاً".\n\nحِزْقيالُ شهِدَ، مِنْ أجلِ المِثالِ الذي رآهُ، قالَ "إنِّي نظرتُ باباً، ولم يدخلْهُ أحدٌ".\n\n"ربُّ الحِكمةِ دخلَ وخرجَ، بتدبيرٍ عظيمٍ، ولم يحِلَّ الختمَ".\n\n+ وأيضاً إرميا في أولِ كلامِهِ، قالَ "يأتي مسيَّا مِنْ زرعِ داودَ".\n\n+ موسى الوديعُ، والقاضي في الشعبِ، المُشترِعُ الذي أخذَ الناموسَ.\n\nهو رأى العُلَّيقةَ، والنارَ مشتعِلةً فيها، التي هي العذراءُ، التي تجسّدَ المسيحُ مِنْها.\n\nوأيضاً مِنْ بعدِ هؤلاءِ، دانيآلُ النبيُّ دعاها بالحقيقةِ، "الجبلَ العقليَّ".\n\n+ وداودُ وجدعونُ قالا، "أنتِ جزةُ الصوفِ النقيِّ، التي نزلَ عليها الثلجُ"، الذي هو الكَلِمةُ.\n\n+ أبونا يعقوبُ إسرائيلُ دعاها "السلَّمَ الحقيقيَّ"، الذي جلسَ عليهِ إلهُنا عِمّانوئيلُ بالحقيقةِ.\n\nفمُ الصِدّيقِ زكريّا مدحَها قائلاً، "المنارةُ النقيّةُ التي وُضِعَ السراجُ المملوءُ عليها".\n\nسُليمانُ يُذكِّرُنا في نشيدِ الأنشادِ قائلاً، "أختي وصَديقتي، المُلتحِفةُ بالطهارةِ".\n\n+ نعطيكِ السلامَ قائلين مع غبريال، "السلامُ لكِ أيتها العذراءُ، لأنَّكِ ولدتِ لنا عِمّانوئيلَ".\n\n+ ابنُ اللهِ أتى مِنَ العلاءِ، وحلَّ في بَتوليَّتِكِ، وقوّةُ العليِّ ظلّلتْكِ يا مريمُ.\n\nاللهُ الخالِقُ، غَيرُ المَحويّ الرَحومُ، أخذَ جسداً مِنَ العذراءِ ليبذِلَهُ للخلاصِ.\n\nالسلامُ لكِ أيتها العذراءُ، التي خلَّصَتْ حوّاءَ، السلامُ لفخرِ جنسِنا، وفرَحِ الأجيالِ.\n\n+ كلُّ أنفُسِ آبائنا وإخوتِنا الذين رقدوا، نيِّحْها يا مُخلِّصَنا في حِضنِ أبينا إبراهيمَ.\n\n+ يا مَنْ ولدْتِ مُحِبَّ البَشرِ بسرٍّ خفيٍّ، أُطلُبي عن حقارتِنا، ليحسِبَنا مع خرافِهِ.' },
           ],
         },
-        titleOnly('annual-midnight-psalmody-conclusion', 'Conclusion of the Midnight Psalmody'),
+        {
+          id: 'annual-midnight-psalmody-conclusion',
+          title: 'Ⲕⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ (Conclusion of the Midnight Psalmody)',
+          versions: [
+            { language: 'coptic', text: 'Ⲁ̀ⲙⲏⲛ.\n\nⲔⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ (ⲅ︦)\nⲪ̀ⲛⲟⲩϯ ⲛⲁⲓ ⲛⲁⲛ.\n\nⲔⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ (ⲅ︦)\nⲪ̀ⲛⲟⲩϯ ⲥⲱⲧⲉⲙ ⲉ̀ⲣⲟⲛ.\n\nⲔⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ (ⲅ︦)\nⲪ̀ⲛⲟⲩϯ ⲥⲟⲙⲥ ⲉ̀ⲣⲟⲛ.\n\nⲔⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ (ⲅ︦)\nⲪ̀ⲛⲟⲩϯ ϫⲟⲩϣⲧ ⲉ̀ⲣⲟⲛ.\n\nⲔⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ (ⲅ︦)\nⲪ̀ⲛⲟⲩϯ ϣⲉⲛϩⲏⲧ ϧⲁⲣⲟⲛ.\n\nⲔⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ (ⲅ︦)\nⲀ̀ⲛⲟⲛ ϧⲁ ⲡⲉⲕⲗⲁⲟⲥ.\n\nⲔⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ (ⲅ︦)\nⲀ̀ⲛⲟⲛ ϧⲁ ⲡⲉⲕⲡ̀ⲗⲁⲥⲙⲁ.\n\nⲔⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ (ⲅ︦)\nⲚⲁϩⲙⲉⲛ ⲉ̀ⲃⲟⲗ ϧⲉⲛ ⲛⲉⲛϫⲁϫⲓ.\n\nⲔⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ (ⲅ︦)\nⲚⲁϩⲙⲉⲛ ⲉ̀ⲃⲟⲗ ϩⲁ ⲟⲩϩ̀ⲃⲱⲛ.\n\nⲔⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ (ⲅ︦)\nⲀ̀ⲛⲟⲛ ϧⲁ ⲛⲉⲕⲉ̀ⲃⲓⲁⲓⲕ.\n\nⲔⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ (ⲅ︦)\nⲨ̀ⲓⲟⲥ Ⲑⲉⲟⲥ ⲛ̀ⲑⲟⲕ.\n\nⲔⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ (ⲅ︦)\nⲀⲛⲛⲁϩϯ ⲉ̀ⲣⲟⲕ.\n\nⲔⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ (ⲅ︦)\nϪⲉ ⲁⲕⲓ̀ ⲁⲕⲥⲱϯ ⲙ̀ⲙⲟⲛ.\n\nⲔⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ (ⲅ︦)\nϪⲉⲙⲡⲉⲛϣⲓⲛⲓ ϧⲉⲛ ⲡⲉⲕⲟⲩϫⲁⲓ.\n\nⲔⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ (ⲅ︦)\nⲞⲩⲟϩ ⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ.\n\nⲔⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ.' },
+            { language: 'englishCoptic', text: 'Amēn.\n\nKurie eleēson (3)\nEfnouti nai nan.\n\nKurie eleēson (3)\nEfnouti sōtem eron.\n\nKurie eleēson (3)\nEfnouti soms eron.\n\nKurie eleēson (3)\nEfnouti jousht eron.\n\nKurie eleēson (3)\nEfnouti shenhēt kharon.\n\nKurie eleēson (3)\nAnon kha peklaos.\n\nKurie eleēson (3)\nAnon kha pekeplasma.\n\nKurie eleēson (3)\nNahmen evol khen nenjaji.\n\nKurie eleēson (3)\nNahmen evol ha ouehvōn.\n\nKurie eleēson (3)\nAnon kha nekeviaik.\n\nKurie eleēson (3)\nUios Theos enthok.\n\nKurie eleēson (3)\nAnnahti erok.\n\nKurie eleēson (3)\nJe aki aksōti emmon.\n\nKurie eleēson (3)\nJempenshini khen pekoujai.\n\nKurie eleēson (3)\nOuoh kha nennovi nan evol.\n\nKurie eleēson.' },
+            { language: 'english', text: 'Amen.\n\nLord have mercy (3).\nO God have mercy on us.\n\nLord have mercy (3).\nO God hear us.\n\nLord have mercy (3).\nO God behold us.\n\nLord have mercy (3).\nO God look to us.\n\nLord have mercy (3).\nO God have compassion on us.\n\nLord have mercy (3).\nWe are Your people.\n\nLord have mercy (3).\nWe are Your creation.\n\nLord have mercy (3).\nDeliver us from our enemies.\n\nLord have mercy (3).\nDeliver us from inflation.\n\nLord have mercy (3).\nWe are Your servants.\n\nLord have mercy (3).\nYou are the Son of God.\n\nLord have mercy (3).\nWe believe in You.\n\nLord have mercy (3).\nFor You have come and saved us.\n\nLord have mercy (3).\nVisit us with Your salvation.\n\nLord have mercy (3).\nAnd forgive us our sins.\n\nLord have mercy.' },
+            { language: 'englishArabic', text: 'Ameen.\n\nYa Rabb irham (3)\nYa Allah irhamna.\n\nYa Rabb irham (3)\nYa Allah isma\'na.\n\nYa Rabb irham (3)\nYa Allah unzur ilayna.\n\nYa Rabb irham (3)\nYa Allah ittali\' \'alayna.\n\nYa Rabb irham (3)\nYa Allah tara\'af \'alayna.\n\nYa Rabb irham (3)\nNahnu sha\'bak.\n\nYa Rabb irham (3)\nNahnu gabeelatak.\n\nYa Rabb irham (3)\nNaggina min a\'da\'ina.\n\nYa Rabb irham (3)\nNaggina min el-ghala\'.\n\nYa Rabb irham (3)\nNahnu \'abeedak.\n\nYa Rabb irham (3)\nAnta Ibn Allah.\n\nYa Rabb irham (3)\nAmanna bik.\n\nYa Rabb irham (3)\nLi-annaka ataita wa khallastana.\n\nYa Rabb irham (3)\nTa\'ahhadna bi-khalasak.\n\nYa Rabb irham (3)\nWa ighfir lana khatayana.\n\nYa Rabb irham.' },
+            { language: 'arabic', text: 'آمين.\n\nيا ربُّ إرحَم (٣)\nيا الله إرحمنا.\n\nيا ربُّ إرحَم (٣)\nيا الله إسمعنا.\n\nيا ربُّ إرحَم (٣)\nيا الله أُنظر إلينا.\n\nيا ربُّ إرحَم (٣)\nيا الله إطَّلع علينا.\n\nيا ربُّ إرحَم (٣)\nيا الله تراءف علينا.\n\nيا ربُّ إرحَم (٣)\nنحن شعبك.\n\nيا ربُّ إرحَم (٣)\nنحن جبلتك.\n\nيا ربُّ إرحَم (٣)\nنجنا من أعدائنا.\n\nيا ربُّ إرحَم (٣)\nنجنا من الغلاء.\n\nيا ربُّ إرحَم (٣)\nنحن عبيدك.\n\nيا ربُّ إرحَم (٣)\nأنت إبن الله.\n\nيا ربُّ إرحَم (٣)\nآمنا بك.\n\nيا ربُّ إرحَم (٣)\nلأنك أتيت وخلَّصتنا.\n\nيا ربُّ إرحَم (٣)\nتعهدنا بخلاصك.\n\nيا ربُّ إرحَم (٣)\nوإغفر لنا خطايانا.\n\nيا ربُّ إرحَم.' },
+          ],
+        },
         titleOnly('annual-midnight-concluding-hymn', 'Concluding Hymn'),
       ],
     },
@@ -4387,6 +4407,11 @@ const midnightAudio: Record<string, string> = {
   'annual-midnight-semouti-ero-dikeos': 'midnight-semouti-ero-dikeos.m4a',
   'annual-midnight-sunday-theotokion-8': 'midnight-sunday-theotokion-8.m4a',
   'annual-midnight-sunday-theotokia-part-8': 'midnight-sunday-theotokion-8.m4a',
+  'annual-midnight-sunday-theotokion-9': 'midnight-sunday-theotokion-9.m4a',
+  'annual-midnight-sunday-theotokia-part-9': 'midnight-sunday-theotokion-9.m4a',
+  'annual-midnight-sunday-theotokia-part-16': 'midnight-sunday-theotokion-16.m4a',
+  'annual-midnight-sunday-theotokia-part-17': 'midnight-sunday-theotokion-17.m4a',
+  'annual-midnight-sunday-theotokia-part-18': 'midnight-sunday-theotokion-18.m4a',
   'annual-midnight-second-canticle': 'midnight-second-canticle.m4a',
   'annual-midnight-second-canticle-lobsh': 'midnight-second-canticle-lobsh.m4a',
   'annual-midnight-third-canticle': 'midnight-third-canticle.m4a',
@@ -4397,6 +4422,10 @@ const midnightAudio: Record<string, string> = {
   'annual-midnight-arihoo-chasf': 'midnight-arihoo-chasf.m4a',
   'annual-midnight-fourth-canticle': 'midnight-fourth-canticle.m4a',
   'annual-midnight-greek-psali-watos': 'midnight-aripsalin.m4a',
+  'annual-midnight-psalmody-conclusion': 'midnight-psalmody-conclusion.m4a',
+  'annual-midnight-sunday-adam-theotokias-conclusion': 'midnight-adam-theotokias-conclusion.m4a',
+  'annual-midnight-monday-adam-theotokias-conclusion': 'midnight-adam-theotokias-conclusion.m4a',
+  'annual-midnight-tuesday-adam-theotokias-conclusion': 'midnight-adam-theotokias-conclusion.m4a',
   'annual-midnight-three-holy-children': 'midnight-tenen.m4a',
   'annual-midnight-doxology-virgin-mary': 'midnight-doxology-virgin-mary.m4a',
   'annual-midnight-doxology-heavenly-beings': 'midnight-doxology-heavenly-beings.m4a',
