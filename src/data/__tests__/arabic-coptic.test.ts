@@ -53,11 +53,11 @@ describe('Coptic in Arabic letters for every hymn', () => {
 describe('Kiahk Praises & Season > Midnight Praises', () => {
   const service = seasons.find((s) => s.id === 'kiahk')!.services.find((s) => s.id === 'kiahk-midnight')!;
 
-  it('lists the 79 titles of the service, in order, with no placeholders left', () => {
-    expect(service.hymns).toHaveLength(79);
+  it('lists the 80 titles of the service, in order, with no placeholders left', () => {
+    expect(service.hymns).toHaveLength(80);
     expect(service.hymns[0].title).toBe('Holy God');
-    expect(service.hymns[78].title).toBe('Conclusion in the presence of the Pope or a Bishop');
-    expect(new Set(service.hymns.map((h) => h.id)).size).toBe(79);
+    expect(service.hymns[79].title).toBe('Conclusion in the presence of the Pope or a Bishop');
+    expect(new Set(service.hymns.map((h) => h.id)).size).toBe(80);
     expect(service.hymns.some((h) => /Hymn #\d+$/.test(h.title))).toBe(false);
   });
 
@@ -75,6 +75,7 @@ describe('Kiahk Praises & Season > Midnight Praises', () => {
     const pairs: [string, string][] = [
       ['The Second Canticle', 'annual-midnight-second-canticle'],
       ['The Sunday Theotokion (3)', 'annual-midnight-sunday-theotokia-part-3'],
+      ['The Sunday Theotokion (4)', 'annual-midnight-sunday-theotokia-part-4'],
       ['Concluding Hymn', 'annual-midnight-concluding-hymn'],
     ];
     for (const [title, annualId] of pairs) {
@@ -91,13 +92,12 @@ describe('Kiahk Praises & Season > Midnight Praises', () => {
     expect(text(sevens[0], 'coptic')).not.toBe(text(sevens[1], 'coptic'));
     // a hymn that has no lyrics yet is left for later
     expect(service.hymns.find((h) => h.title === 'Antiphonary')).toBeUndefined();
-    expect(service.hymns.find((h) => h.title === 'The Fifth Explanation')?.versions).toEqual([]);
+    expect(service.hymns.find((h) => h.title === 'Rejoice O Mary')?.versions).toEqual([]);
     expect(service.hymns.find((h) => h.title === 'Luke 1: 46-50')).toBeUndefined();
     expect(service.hymns.find((h) => h.title === 'Luke 1:51-55')).toBeUndefined();
     for (const gone of ['Luke 1:68-72', 'Luke 1:73-77', 'Luke 1:78-79', 'Gospel According to St. Luke']) {
       expect(service.hymns.find((h) => h.title === gone)).toBeUndefined();
     }
-    expect(service.hymns.find((h) => h.title === 'The Sunday Theotokion (4)')).toBeUndefined();
   });
 
   it('has the lyrics of Holy God, 53 verses in English and in Arabic', () => {
@@ -296,6 +296,48 @@ describe('Kiahk Praises & Season > Midnight Praises', () => {
     expect(text(firstExplanation, 'arabic').split(/\n\s*\n/)).toHaveLength(16);
     expect(text(firstExplanation, 'english').startsWith('(1/16) In the Name of God')).toBe(true);
     expect(firstExplanation.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+    // Exposition on Seven Times Every Day: 12 paragraphs (Hail to you, O Mary litany)
+    const sevenTimes = service.hymns.find((h) => h.title === 'Exposition on Seven Times Every Day')!;
+    expect(text(sevenTimes, 'english').split(/\n\s*\n/)).toHaveLength(12);
+    expect(text(sevenTimes, 'arabic').split(/\n\s*\n/)).toHaveLength(12);
+    expect(text(sevenTimes, 'english').startsWith('Come, O faithful, to praise Christ')).toBe(true);
+    expect(sevenTimes.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+    // Kiahk Melody on Eighth Part of Sunday Theotokia: its own 24 verses (Hail to you Mary)
+    const eighthMelody = service.hymns.find((h) => h.title === 'Kiahk Melody on Eighth Part of Sunday Theotokia')!;
+    expect(text(eighthMelody, 'english').split(/\n\s*\n/)).toHaveLength(24);
+    expect(text(eighthMelody, 'arabic').split(/\n\s*\n/)).toHaveLength(24);
+    expect(text(eighthMelody, 'english').startsWith('(1/24) Hail to you Mary: I start my praise')).toBe(true);
+    expect(eighthMelody.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+    // The Seventh Explanation: its own 14 verses (Moses' dome, the golden vessel)
+    const seventhExplanation = service.hymns.find((h) => h.title === 'The Seventh Explanation')!;
+    expect(text(seventhExplanation, 'english').split(/\n\s*\n/)).toHaveLength(14);
+    expect(text(seventhExplanation, 'arabic').split(/\n\s*\n/)).toHaveLength(14);
+    expect(text(seventhExplanation, 'english').startsWith('(1/14) O Theotokos')).toBe(true);
+    expect(seventhExplanation.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+    // Exposition on the Second "You are Called": 8 paragraphs (Rejoice litany)
+    const youAreCalledSecond = service.hymns.find((h) => h.title === 'Exposition on the Second "You are Called"')!;
+    expect(text(youAreCalledSecond, 'english').split(/\n\s*\n/)).toHaveLength(8);
+    expect(text(youAreCalledSecond, 'arabic').split(/\n\s*\n/)).toHaveLength(8);
+    expect(text(youAreCalledSecond, 'english').startsWith('Blessed are You, O Mary the Virgin')).toBe(true);
+    expect(youAreCalledSecond.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+    // Exposition on First "You are Called": 8 paragraphs (second dome, censer)
+    const youAreCalledFirst = service.hymns.find((h) => h.title === 'Exposition on First "You are Called"')!;
+    expect(text(youAreCalledFirst, 'english').split(/\n\s*\n/)).toHaveLength(8);
+    expect(text(youAreCalledFirst, 'arabic').split(/\n\s*\n/)).toHaveLength(8);
+    expect(text(youAreCalledFirst, 'english').startsWith('You are called, O Virgin Mary, the second dome')).toBe(true);
+    expect(youAreCalledFirst.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+    // The Sixth Explanation: its own 16 verses (the censer)
+    const sixthExplanation = service.hymns.find((h) => h.title === 'The Sixth Explanation')!;
+    expect(text(sixthExplanation, 'english').split(/\n\s*\n/)).toHaveLength(16);
+    expect(text(sixthExplanation, 'arabic').split(/\n\s*\n/)).toHaveLength(16);
+    expect(text(sixthExplanation, 'english').startsWith('(1/16) The aroma spread')).toBe(true);
+    expect(sixthExplanation.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+    // The Fifth Explanation: its own 16 verses (the lampstand)
+    const fifthExplanation = service.hymns.find((h) => h.title === 'The Fifth Explanation')!;
+    expect(text(fifthExplanation, 'english').split(/\n\s*\n/)).toHaveLength(16);
+    expect(text(fifthExplanation, 'arabic').split(/\n\s*\n/)).toHaveLength(16);
+    expect(text(fifthExplanation, 'english').startsWith('(1/16) God spoke to Moses')).toBe(true);
+    expect(fifthExplanation.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
     // The Fourth Explanation: its own 16 verses (the golden vessel)
     const fourthExplanation = service.hymns.find((h) => h.title === 'The Fourth Explanation')!;
     expect(text(fourthExplanation, 'english').split(/\n\s*\n/)).toHaveLength(16);
