@@ -189,6 +189,86 @@ describe('Kiahk Praises & Season > Midnight Praises', () => {
     expect(verses('arabic')[19].startsWith('(٢٠/٢٠)')).toBe(true);
     expect(hymn.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
   });
+
+  it('has the lyrics of Kiahk Praise for the Holy Trinity, 20 verses in English and in Arabic', () => {
+    const hymn = service.hymns[13];
+    expect(hymn.title).toBe('Kiahk Praise for the Holy Trinity');
+    const verses = (language: string) => hymn.versions.find((v) => v.language === language)!.text.split(/\n\s*\n/);
+    expect(verses('english')).toHaveLength(20);
+    expect(verses('arabic')).toHaveLength(20);
+    expect(verses('english')[0].startsWith('(1/20) Worship befits the Holy Trinity')).toBe(true);
+    expect(verses('arabic')[19].startsWith('(٢٠/٢٠)')).toBe(true);
+    expect(hymn.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+  });
+
+  it('has the lyrics of Kiahk Praise for the Holy Trinity (English Revised), with the same Arabic as the first', () => {
+    const first = service.hymns[13];
+    const hymn = service.hymns[14];
+    expect(hymn.title).toBe('Kiahk Praise for the Holy Trinity (English Revised)');
+    const text = (h: Hymn, language: string) => h.versions.find((v) => v.language === language)!.text;
+    expect(text(hymn, 'english').split(/\n\s*\n/)).toHaveLength(20);
+    expect(text(hymn, 'arabic')).toBe(text(first, 'arabic'));
+    expect(text(hymn, 'english')).not.toBe(text(first, 'english'));
+    // number 18, Hymn After Praise of the Three Young Men: 36 verses, each ending with the same refrain line
+    const youths = service.hymns[17];
+    expect(youths.title).toBe('Hymn After Praise of the Three Young Men');
+    expect(text(youths, 'english').split(/\n\s*\n/)).toHaveLength(36);
+    expect(text(youths, 'arabic').split(/\n\s*\n/)).toHaveLength(36);
+    expect(text(youths, 'english').split(/\n\s*\n/).every((v) => v.endsWith('Praise Him and exalt Him above all'))).toBe(true);
+    expect(text(youths, 'arabic').split(/\n\s*\n/).every((v) => v.endsWith('هوس ايروف آرى هوؤو تشاسف'))).toBe(true);
+    expect(youths.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+    // number 22, Exposition on the Third Canticle: 16 paragraphs in English and in Arabic
+    const exposition = service.hymns[21];
+    expect(exposition.title).toBe('Exposition on the Third Canticle');
+    expect(text(exposition, 'english').split(/\n\s*\n/)).toHaveLength(16);
+    expect(text(exposition, 'arabic').split(/\n\s*\n/)).toHaveLength(16);
+    expect(text(exposition, 'english')).toContain('King Nebuchadnezzar');
+    expect(exposition.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+    // number 24, Praise for St. Anthony the Great: 21 verses in English and in Arabic
+    const anthony = service.hymns[23];
+    expect(anthony.title).toBe('Praise for St. Anthony the Great');
+    expect(text(anthony, 'english').split(/\n\s*\n/)).toHaveLength(21);
+    expect(text(anthony, 'arabic').split(/\n\s*\n/)).toHaveLength(21);
+    expect(text(anthony, 'english').split(/\n\s*\n/).every((v) => v.endsWith('Our Father Abba Anthony'))).toBe(true);
+    expect(anthony.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+    // number 25, Praise for St. Maximos and St. Dometios: 18 verses in English and in Arabic
+    const maximos = service.hymns[24];
+    expect(maximos.title).toBe('Praise for St. Maximos and St. Dometios');
+    expect(text(maximos, 'english').split(/\n\s*\n/)).toHaveLength(18);
+    expect(text(maximos, 'arabic').split(/\n\s*\n/)).toHaveLength(18);
+    expect(text(maximos, 'english')).toContain('Maximos and Dometios');
+    expect(maximos.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+    // number 26, Praise for St. Moses The Strong: 42 verses in English and in Arabic
+    const moses = service.hymns[25];
+    expect(moses.title).toBe('Praise for St. Moses The Strong');
+    expect(text(moses, 'english').split(/\n\s*\n/)).toHaveLength(42);
+    expect(text(moses, 'arabic').split(/\n\s*\n/)).toHaveLength(42);
+    expect(text(moses, 'english').split(/\n\s*\n/)[41].startsWith('(42/42) The mention of your name')).toBe(true);
+    expect(moses.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+    // number 27, Praise for St. Samuel the Confessor: 30 verses in English and in Arabic
+    const samuel = service.hymns[26];
+    expect(samuel.title).toBe('Praise for St. Samuel the Confessor');
+    expect(text(samuel, 'english').split(/\n\s*\n/)).toHaveLength(30);
+    expect(text(samuel, 'arabic').split(/\n\s*\n/)).toHaveLength(30);
+    expect(text(samuel, 'english').split(/\n\s*\n/)[29]).toContain('Through the prayers of Abba Samuel');
+    expect(samuel.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+    // number 29, Exposition on the Commemoration of the Saints: 21 paragraphs in English and in Arabic
+    const commemoration = service.hymns[28];
+    expect(commemoration.title).toBe('Exposition on the Commemoration of the Saints');
+    expect(text(commemoration, 'english').split(/\n\s*\n/)).toHaveLength(21);
+    expect(text(commemoration, 'arabic').split(/\n\s*\n/)).toHaveLength(21);
+    expect(text(commemoration, 'english').endsWith('forever. Amen.')).toBe(true);
+    expect(commemoration.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+    // number 19 was pasted with exactly the same text as number 18
+    const another = service.hymns[18];
+    expect(another.title).toBe('Another Hymn After Praise of the Three Young Men');
+    expect(text(another, 'english')).toBe(text(youths, 'english'));
+    expect(text(another, 'arabic')).toBe(text(youths, 'arabic'));
+    expect(text(hymn, 'english').split(/\n\s*\n/)[0]).toBe(
+      '(1/20) Worship befits the Holy Trinity, • Father, Son, and Holy Spirit. • We worship, praise, and sanctify • the one God, creator of souls. •'
+    );
+    expect(hymn.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+  });
 });
 
 describe('Kiahk Praises & Season > Distribution', () => {
