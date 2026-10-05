@@ -4631,6 +4631,7 @@ const liturgyLanguageAudio: [string, string, LanguageType[]][] = [
   ['annual-liturgy-kata-to-eleos', 'liturgy-kata-to-eleos-arabic.m4a', ['arabic', 'englishArabic']],
   ['annual-liturgy-kata-to-eleos', 'liturgy-kata-to-eleos-english.m4a', ['english']],
   ['annual-liturgy-amen-ton-thanaton', 'liturgy-amen-ton-thanaton-coptic.m4a', ['coptic', 'englishCoptic']],
+  ['annual-liturgy-amen-ton-thanaton', 'liturgy-amen-ton-thanaton-arabic.m4a', ['arabic', 'englishArabic']],
 ];
 for (const [id, audio, languages] of liturgyLanguageAudio) {
   for (const version of annualLiturgy?.hymns.find((h) => h.id === id)?.versions ?? []) {
