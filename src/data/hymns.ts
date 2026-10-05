@@ -2199,17 +2199,6 @@ annualLiturgy?.hymns.push(
       { language: 'arabic', text: 'برَكَتُهم المقدسةُ تكونُ معنا. آمين.' },
     ],
   },
-  {
-    id: 'annual-liturgy-in-christ-jesus-bow-your-heads',
-    title: 'Ϧⲉⲛ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲉⲛϭⲟⲓⲥ (In Christ Jesus Our Lord)',
-    versions: [
-      { language: 'coptic', text: 'Ⲡⲓⲗⲁⲟⲥ:\n\nϦⲉⲛ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲉⲛϭⲟⲓⲥ.\n\nⲠⲓⲇⲓⲁⲕⲱⲛ:\n\nⲦⲁⲥ ⲕⲉⲫⲁⲗⲁⲥ ⲩ̀ⲙⲱⲛ ⲧⲱ ⲕⲩⲣⲓⲱ ⲕ̀ⲗⲓⲛⲁⲧⲉ.\n\nⲠⲓⲗⲁⲟⲥ:\n\nⲈⲛⲱⲡⲓⲟⲛ ⲥⲟⲩ Ⲕⲩⲣⲓⲉ.\n\nⲠⲓⲇⲓⲁⲕⲱⲛ:\n\nⲠ̀ⲣⲟⲥⲭⲱⲙⲉⲛ Ⲑⲉⲟⲩ ⲙⲉⲧⲁ ⲫⲟⲃⲟⲩ: ⲁ̀ⲙⲏⲛ.\n\nⲠⲓⲟⲩⲏⲃ:\n\nⲒⲣⲏⲛⲏ ⲡⲁⲥⲓ.\n\nⲠⲓⲗⲁⲟⲥ:\n\nⲔⲉ ⲧⲱ ⲡ̀ⲛⲉⲩⲙⲁⲧⲓ ⲥⲟⲩ.' },
-      { language: 'englishCoptic', text: 'Pi-laos:\n\nKhen Pi-ekhristos Iēsous Pentshois.\n\nPi-diakon:\n\nTas kefalas umōn tō kuriō eklinate.\n\nPi-laos:\n\nEnōpion sou Kurie.\n\nPi-diakon:\n\nEproskhōmen Theou meta fovou: amēn.\n\nPi-ouib:\n\nIrēnē pasi.\n\nPi-laos:\n\nKe tō epneumati sou.' },
-      { language: 'english', text: 'People:\n\nIn Christ Jesus our Lord.\n\nDeacon:\n\nBow your heads to the Lord.\n\nPeople:\n\nBefore You, O Lord.\n\nDeacon:\n\nLet us attend in the fear of God. Amen.\n\nPriest:\n\nPeace be with all.\n\nPeople:\n\nAnd with your spirit.' },
-      { language: 'englishArabic', text: 'Esh-sha\'b:\n\nBil-Maseeh Yasou\' Rabbina.\n\nEsh-shammas:\n\nIhnou ru\'ousakum lir-Rabb.\n\nEsh-sha\'b:\n\nAmamak ya Rabb.\n\nEsh-shammas:\n\nAnsitou bi-khawf Allah. Ameen.\n\nEl-kahin:\n\nEs-salam lil-kull.\n\nEsh-sha\'b:\n\nWa li-rouhika aydan.' },
-      { language: 'arabic', text: 'الشعب:\n\nبالمسيحِ يسوع ربنا.\n\nالشماس:\n\nإحنوا رؤوسَكم للربِ.\n\nالشعب:\n\nأمامك ياربُ.\n\nالشماس:\n\nأنصتوا بخوفِ الله. آمين.\n\nالكاهن:\n\nالسلامُ للكلِّ.\n\nالشعب:\n\nولروحِكَ أيضاً.' },
-    ],
-  },
 );
 
 // ---- Audio: Annual > Liturgy > Psalm Trailer for the Pope or a Bishop ----
@@ -2593,6 +2582,27 @@ if (deaconAnnualLiturgyWord) {
     ...fromMatins('d-annual-matins-stand-up-for-prayer', 'd-annual-liturgy-word-stand-up-for-prayer'),
     ...fromMatins('d-annual-matins-pray-for-the-gospel', 'd-annual-liturgy-word-pray-for-the-gospel'),
     ...fromMatins('d-annual-matins-stand-in-the-fear-of-god', 'd-annual-liturgy-word-stand-in-the-fear-of-god'),
+  ];
+}
+
+// ---- Deacon Responses > Annual > Liturgy of the Faithful: the people and deacon at the end ----
+const deaconAnnualLiturgyFaithful = deaconCategories
+  .find((c) => c.id === 'deacon-annual')
+  ?.services.find((s) => s.id === 'd-annual-liturgy-faithful');
+
+if (deaconAnnualLiturgyFaithful) {
+  deaconAnnualLiturgyFaithful.hymns = [
+    {
+      id: 'd-annual-liturgy-faithful-in-christ-jesus-our-lord',
+      title: 'Ϧⲉⲛ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲉⲛϭⲟⲓⲥ (In Christ Jesus Our Lord)',
+      versions: [
+        { language: 'coptic', text: 'Ⲡⲓⲗⲁⲟⲥ:\n\nϦⲉⲛ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲉⲛϭⲟⲓⲥ.\n\nⲠⲓⲇⲓⲁⲕⲱⲛ:\n\nⲦⲁⲥ ⲕⲉⲫⲁⲗⲁⲥ ⲩ̀ⲙⲱⲛ ⲧⲱ ⲕⲩⲣⲓⲱ ⲕ̀ⲗⲓⲛⲁⲧⲉ.\n\nⲠⲓⲗⲁⲟⲥ:\n\nⲈⲛⲱⲡⲓⲟⲛ ⲥⲟⲩ Ⲕⲩⲣⲓⲉ.\n\nⲠⲓⲇⲓⲁⲕⲱⲛ:\n\nⲠ̀ⲣⲟⲥⲭⲱⲙⲉⲛ Ⲑⲉⲟⲩ ⲙⲉⲧⲁ ⲫⲟⲃⲟⲩ: ⲁ̀ⲙⲏⲛ.\n\nⲠⲓⲟⲩⲏⲃ:\n\nⲒⲣⲏⲛⲏ ⲡⲁⲥⲓ.\n\nⲠⲓⲗⲁⲟⲥ:\n\nⲔⲉ ⲧⲱ ⲡ̀ⲛⲉⲩⲙⲁⲧⲓ ⲥⲟⲩ.' },
+        { language: 'englishCoptic', text: 'Pi-laos:\n\nKhen Pi-ekhristos Iēsous Pentshois.\n\nPi-diakon:\n\nTas kefalas umōn tō kuriō eklinate.\n\nPi-laos:\n\nEnōpion sou Kurie.\n\nPi-diakon:\n\nEproskhōmen Theou meta fovou: amēn.\n\nPi-ouib:\n\nIrēnē pasi.\n\nPi-laos:\n\nKe tō epneumati sou.' },
+        { language: 'english', text: 'People:\n\nIn Christ Jesus our Lord.\n\nDeacon:\n\nBow your heads to the Lord.\n\nPeople:\n\nBefore You, O Lord.\n\nDeacon:\n\nLet us attend in the fear of God. Amen.\n\nPriest:\n\nPeace be with all.\n\nPeople:\n\nAnd with your spirit.' },
+        { language: 'englishArabic', text: 'Esh-sha\'b:\n\nBil-Maseeh Yasou\' Rabbina.\n\nEsh-shammas:\n\nIhnou ru\'ousakum lir-Rabb.\n\nEsh-sha\'b:\n\nAmamak ya Rabb.\n\nEsh-shammas:\n\nAnsitou bi-khawf Allah. Ameen.\n\nEl-kahin:\n\nEs-salam lil-kull.\n\nEsh-sha\'b:\n\nWa li-rouhika aydan.' },
+        { language: 'arabic', text: 'الشعب:\n\nبالمسيحِ يسوع ربنا.\n\nالشماس:\n\nإحنوا رؤوسَكم للربِ.\n\nالشعب:\n\nأمامك ياربُ.\n\nالشماس:\n\nأنصتوا بخوفِ الله. آمين.\n\nالكاهن:\n\nالسلامُ للكلِّ.\n\nالشعب:\n\nولروحِكَ أيضاً.' },
+      ],
+    },
   ];
 }
 
@@ -4111,6 +4121,7 @@ const midnightAudio: Record<string, string> = {
   'annual-midnight-semouti-ero-dikeos': 'midnight-semouti-ero-dikeos.m4a',
   'annual-midnight-sunday-theotokion-8': 'midnight-sunday-theotokion-8.m4a',
   'annual-midnight-sunday-theotokia-part-8': 'midnight-sunday-theotokion-8.m4a',
+  'annual-midnight-sunday-theotokia-part-16': 'midnight-sunday-theotokion-16.m4a',
   'annual-midnight-second-canticle': 'midnight-second-canticle.m4a',
   'annual-midnight-second-canticle-lobsh': 'midnight-second-canticle-lobsh.m4a',
   'annual-midnight-third-canticle': 'midnight-third-canticle.m4a',
