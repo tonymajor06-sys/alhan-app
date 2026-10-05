@@ -720,19 +720,13 @@ if (kiahkMidnight) {
     'The First Explanation',
     'The Sunday Theotokion (2)',
     'The Second Explanation',
-    'Luke 1:51-55',
     'The Sunday Theotokion (3)',
     'The Third Explanation',
-    'Luke 1:68-72',
-    'The Sunday Theotokion (4)',
     'The Fourth Explanation',
-    'Luke 1:73-77',
     'The Sunday Theotokion (5)',
     'The Fifth Explanation',
-    'Luke 1:78-79',
     'The Sunday Theotokion (6)',
     'The Sixth Explanation',
-    'Gospel According to St. Luke',
     'The Sunday Theotokion (7)',
     'Exposition on First "You are Called"',
     'The Sunday Theotokion (7)',
@@ -1125,6 +1119,32 @@ if (kiahkMidnight) {
       {
         language: 'arabic',
         text: '(١٦/١) قال الرب لموسى / بصوت عالى يناديه / قم إصنع لى تابوتاً / وبالذهب إطليه\n\n(١٦/٢) لأضع سرى فيه / وأجعل عهدى فيه / من خشب لا يسوس / وبالذهب تطلون\n\n(١٦/٣) تشبهت يا مريم / بتابوت العهد المطلى / وفيه القسط الذهب / بالمن العقلى\n\n(١٦/٤) مديحك فى فمى / أحلى من العسل / نقرئك كل سلام / يا ابنة صهيون\n\n(١٦/٥) يا نجمة تضوى / كمصباح النور / حملت إبن الله / الحى الغير المنظور\n\n(١٦/٦) وأنقذ آدم / بعد أن كان مأسور / وعاد هو وبنوه / إلى الفردوس فرحون\n\n(١٦/٧) نورت العالم / بعد ان كان ظلمة / وحملت فى أحشاك / إبن الله الكلمة\n\n(١٦/٨) انت هى تابوت / انت هى الحكمة / انت هى قوتنا / وفرح الصديقون\n\n(١٦/٩) لما أراد الله / وشاء واختارك / وأرسل إليك الكلمة / بروح قدسه زانك\n\n(١٦/١٠) وحملت فى أحشاك / الرب إلهك / ولدتيه ورضع لبنك / كسائر البشريين\n\n(١٦/١١) حزقيال تنبأ / فى رؤياه وقال / رأيت باباً فى المشرق / مقفولا بالأقفال\n\n(١٦/١٢) دخل فيه وخرج / الملك المتعال / ولم يمسه ضرر / وبحاله مختومين\n\n(١٦/١٣) وكم شهدوا عنك / فى نبوات وأمثال / سوف يظهر منك / الرب المتعال\n\n(١٦/١٤) ويخلص شعبه / فى آخر الأجيال / بابنك نلنا الغفران / يا شورية هارون\n\n(١٦/١٥) (قرار) السلام لك يا مريم / يا مملوءة نعمة / يا مشتملة بالانوار / يا ام الرحمة\n\n(١٦/١٦) إشفعى فينا / في يوم الزحمة / بابنك نلنا الخلاص / يا إبنة صهيون',
+      },
+    ];
+  }
+  const kiahkThirdExplanation = kiahkMidnight.hymns.find((h) => h.title === 'The Third Explanation');
+  if (kiahkThirdExplanation) {
+    kiahkThirdExplanation.versions = [
+      {
+        language: 'english',
+        text: '(1/16) Mary you became / Table of showbread / Upon your altar / Christ\'s Body instead.\n\n(2/16) It is God the Word / Who gives forgiveness / To every person / Who lives in watchfulness.\n\n(3/16) You are the altar / That is shining bright / Filling all the earth / With the Divine\'s Light.\n\n(4/16) Your light O Mary / Greater than the sun / You are higher than / All of the creation.\n\n(5/16) More than the four beasts / And all the elders / Exceeding the thrones / And all the powers.\n\n(6/16) You held the Lord God / Creator of all / breathing life to every / Creature great and small.\n\n(7/16) Flower of incense / Your aroma spread / O star shining bright / Bearing living Bread.\n\n(8/16) O you full of Grace / You are our Joy / Your Son granted us / Paradise of Joy.\n\n(9/16) Daniel prophesied / A throne shining bright / Carrying the Lord / A beautiful sight.\n\n(10/16) And around the Lord / Stand thousands praising / To the holy King / Praising chanting.\n\n(11/16) You were likened to / The Creator\'s throne / Mary you did bear / The most precious Stone.\n\n(12/16) The Fathers have called / You the eastern door / O Virgin and bride / Bore the Creator.\n\n(13/16) The Lord chose you from / The root of Jesse / Pure and holy seed / You lived piously.\n\n(14/16) Bore Him in your womb / Nursed the Son of God / O Virgin and bride / You are Aaron\'s Rod.\n\n(15/16) (Refrain) Hail to you Mary / Engulfed in pure light / Mother of Mercy / Your splendor is bright.\n\n(16/16) Intercede for us / On the Judgement Day / Your Son has saved us / Daughter of Zion.',
+      },
+      {
+        language: 'arabic',
+        text: '(١٦/١) يا مريم صرت / مذبح للغفران / وعليه المايدة ذهب / وفيه الجسد قربان\n\n(١٦/٢) هو إبن الله الحى / المعطى الغفران / لكل نقى طاهر / يسكن نعيم الفردوس\n\n(١٦/٣) أنت هى المذبح العالى / المشتملة بالانوار / ونوره يتلألأ / ملأ كل الاقطار\n\n(١٦/٤) وضوئك يا مريم / فاق كل شموس وأقمار / فقت كل مراتب / وسائر كل طقوس\n\n(١٦/٥) فقت الرؤساء / والأربعة الحيوانات / وأيضاً الكراسى / والأرباب والقوات\n\n(١٦/٦) حملت ابن الله / خالق كل المخلوقات / معطى كل حياة / لكل جسد ونفوس\n\n(١٦/٧) يا زهرة الأطياب / بخورك عنبر فاح / يا نجمة تضوى / تضىء كالمصباح\n\n(١٦/٨) يا مملوءة نعمة / يا بدء الافراح / بابنك نلنا الخلاص / ونعيم الفردوس\n\n(١٦/٩) دانيال تنبأ / فى رؤياه بثبات / قال رأيت كرسياً مع نور / وعليه رب القوات\n\n(١٦/١٠) وحوله ألوف وألوف / ربوات مع طغمات / يسبحون الله / الملك القدوس\n\n(١٦/١١) تشبهت يا مريم / بكرسى الله الخالق / وحملت ابن الله / الحى الناطق\n\n(١٦/١٢) سماك الآباء / باب المشارق / وكم وصفوا عنك / يا بكرة وعروس\n\n(١٦/١٣) الرب إختارك / من أصل يسى / من نسل نقى طاهر / بيت النبوة والرؤساء\n\n(١٦/١٤) وحملتيه فى أحشاك / يا بكرة وعروس / ولدتيه ورضع لبنك / هوس رومى إنتى ليوس\n\n(١٦/١٥) (قرار) السلام لك يا مريم / يا مملوءة نعمة / يا مشتملة بالانوار / يا ام الرحمة\n\n(١٦/١٦) إشفعى فينا / في يوم الزحمة / بابنك نلنا الخلاص / يا إبنة صهيون',
+      },
+    ];
+  }
+  const kiahkFourthExplanation = kiahkMidnight.hymns.find((h) => h.title === 'The Fourth Explanation');
+  if (kiahkFourthExplanation) {
+    kiahkFourthExplanation.versions = [
+      {
+        language: 'english',
+        text: '(1/16) O golden vessel / Who bore the Logos / Who is the Manna / O Theotokos\n\n(2/16) O the precious gem / Ship of Salvation / Blessed is Mary / Daughter of Zion.\n\n(3/16) Ladder of Jacob / The Judge dwelt in you / You bore Jesus Christ / We have been renewed.\n\n(4/16) He healed all the sick / Restored the blind\'s sight / And He raised the dead / Instilled in them His might.\n\n(5/16) You are Aaron\'s rod / That buds with flowers / You are Moses\' dome / Filled with all power.\n\n(6/16) You are the vineyard / That has borne the Fruit / Granting forgiveness / To the destitute.\n\n(7/16) David\'s psalm did say / To it we refer/ The Lord chose Zion / He has dwelt in her.\n\n(8/16) These are all symbols / That resemble you / Daughter of Zion / Let us now praise you.\n\n(9/16) You are beautiful / The Lord God chose you / he dwelt in your womb / And was nursed by you.\n\n(10/16) Higher than Heaven / And all of ranks / You are more righteous / To you we give thanks.\n\n(11/16) O pride of virgins / Above the cherubim / You are higher than / All the seraphim.\n\n(12/16) Born of Joachim / From the upright seed / Your Son saved Adam / And from bondage freed.\n\n(13/16) O you full of grace / You are beautiful / Brighter than all light / Bore the Merciful.\n\n(14/16) Your Son Shone on us / Through the Baptism / We have become heirs / Confirmed by Chrism.\n\n(15/16) (Refrain) Hail to you Mary / Engulfed in pure light / Mother of Mercy / Your splendor is bright.\n\n(16/16) Intercede for us / On the Judgement Day / Your Son has saved us / Daughter of Zion.',
+      },
+      {
+        language: 'arabic',
+        text: '(١٦/١) يا قسط ذهب غالى / والمن مخفى فيه / رمزاً وإشارة / عليك ياوالدة الإله\n\n(١٦/٢) يا حجر الجوهر / يا سفينة النجاة / طوباك يا مريم / يا إبنة صهيون\n\n(١٦/٣) يا سلم يعقوب / حملت الديان / وصار فى أحشاك المحجوب / وولدت ابن الانسان\n\n(١٦/٤) وشفى كل المرضى / وفتح أعين العميان / وأقام الميت / بعد أن كان مدفون\n\n(١٦/٥) يا عصاة هارون / نورت الازهار / يا قبة موسى / المملوءة أنوار\n\n(١٦/٦) وكرمة مغروسة / حاملة الأثمار / وبابنك نلنا الغفران / يا جوهر مكنون\n\n(١٦/٧) داود قال فى المزمور / وقال على القيثارات / الرب اختار صهيون / وسكن فيها بثبات\n\n(١٦/٨) هذا كله مثال / ورمزاً واشارات / عليك يا مريم / يا إبنة صهيون\n\n(١٦/٩) الرب اختار حسنك / فسكن فيك الإله / ولدته ورضع لبن / ثدييك بفيه\n\n(١٦/١٠) ارتفعت جداً / وصرت كأعلا سماه / فقت كل الرؤساء / والأبرار والصديقون\n\n(١٦/١١) فقت الشاروبيم / يا ست الأبكار / وأيضاً السيرافيم / المملوءة أنوار\n\n(١٦/١٢) يا إبنة يواقيم / من نسل الأبرار / ابنك خلص آدم / بعد أن كان مسجون\n\n(١٦/١٣) يا مملوءة نعمة / ياطهر الأطهار / يا أم الرحمة / يا نور الأنوار\n\n(١٦/١٤) بابنك زالت الظلمة / وقد صرنا أحرار / وورثنا الملكوت / بعمادنا بالميرون\n\n(١٦/١٥) (قرار) السلام لك يا مريم / يا مملوءة نعمة / يا مشتملة بالانوار / يا ام الرحمة\n\n(١٦/١٦) إشفعى فينا / في يوم الزحمة / بابنك نلنا الخلاص / يا إبنة صهيون',
       },
     ];
   }
@@ -4304,7 +4324,6 @@ const kiahkMidnightCopies: Record<string, string[]> = {
   'The Sunday Theotokion (1)': ['annual-midnight-sunday-theotokia-part-1'],
   'The Sunday Theotokion (2)': ['annual-midnight-sunday-theotokia-part-2'],
   'The Sunday Theotokion (3)': ['annual-midnight-sunday-theotokia-part-3'],
-  'The Sunday Theotokion (4)': ['annual-midnight-sunday-theotokia-part-4'],
   'The Sunday Theotokion (5)': ['annual-midnight-sunday-theotokia-part-5'],
   'The Sunday Theotokion (6)': ['annual-midnight-sunday-theotokia-part-6'],
   // listed twice: Ⲭⲉⲣⲉ ⲛⲉ Ⲙⲁⲣⲓⲁ, then Ⲥⲉⲙⲟⲩϯ ⲉ̀ⲣⲟ ⲇⲓⲕⲉⲟⲥ

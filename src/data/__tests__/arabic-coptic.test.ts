@@ -53,11 +53,11 @@ describe('Coptic in Arabic letters for every hymn', () => {
 describe('Kiahk Praises & Season > Midnight Praises', () => {
   const service = seasons.find((s) => s.id === 'kiahk')!.services.find((s) => s.id === 'kiahk-midnight')!;
 
-  it('lists the 85 titles of the service, in order, with no placeholders left', () => {
-    expect(service.hymns).toHaveLength(85);
+  it('lists the 79 titles of the service, in order, with no placeholders left', () => {
+    expect(service.hymns).toHaveLength(79);
     expect(service.hymns[0].title).toBe('Holy God');
-    expect(service.hymns[84].title).toBe('Conclusion in the presence of the Pope or a Bishop');
-    expect(new Set(service.hymns.map((h) => h.id)).size).toBe(85);
+    expect(service.hymns[78].title).toBe('Conclusion in the presence of the Pope or a Bishop');
+    expect(new Set(service.hymns.map((h) => h.id)).size).toBe(79);
     expect(service.hymns.some((h) => /Hymn #\d+$/.test(h.title))).toBe(false);
   });
 
@@ -91,8 +91,13 @@ describe('Kiahk Praises & Season > Midnight Praises', () => {
     expect(text(sevens[0], 'coptic')).not.toBe(text(sevens[1], 'coptic'));
     // a hymn that has no lyrics yet is left for later
     expect(service.hymns.find((h) => h.title === 'Antiphonary')).toBeUndefined();
-    expect(service.hymns.find((h) => h.title === 'The Third Explanation')?.versions).toEqual([]);
+    expect(service.hymns.find((h) => h.title === 'The Fifth Explanation')?.versions).toEqual([]);
     expect(service.hymns.find((h) => h.title === 'Luke 1: 46-50')).toBeUndefined();
+    expect(service.hymns.find((h) => h.title === 'Luke 1:51-55')).toBeUndefined();
+    for (const gone of ['Luke 1:68-72', 'Luke 1:73-77', 'Luke 1:78-79', 'Gospel According to St. Luke']) {
+      expect(service.hymns.find((h) => h.title === gone)).toBeUndefined();
+    }
+    expect(service.hymns.find((h) => h.title === 'The Sunday Theotokion (4)')).toBeUndefined();
   });
 
   it('has the lyrics of Holy God, 53 verses in English and in Arabic', () => {
@@ -291,6 +296,20 @@ describe('Kiahk Praises & Season > Midnight Praises', () => {
     expect(text(firstExplanation, 'arabic').split(/\n\s*\n/)).toHaveLength(16);
     expect(text(firstExplanation, 'english').startsWith('(1/16) In the Name of God')).toBe(true);
     expect(firstExplanation.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+    // The Fourth Explanation: its own 16 verses (the golden vessel)
+    const fourthExplanation = service.hymns.find((h) => h.title === 'The Fourth Explanation')!;
+    expect(text(fourthExplanation, 'english').split(/\n\s*\n/)).toHaveLength(16);
+    expect(text(fourthExplanation, 'arabic').split(/\n\s*\n/)).toHaveLength(16);
+    expect(text(fourthExplanation, 'english').startsWith('(1/16) O golden vessel')).toBe(true);
+    expect(fourthExplanation.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+    // The Third Explanation: its own 16 verses (Mary as the altar and table of showbread)
+    const thirdExplanation = service.hymns.find((h) => h.title === 'The Third Explanation')!;
+    // number 45 before "Luke 1:51-55" (number 43) was removed, so number 44 now
+    expect(service.hymns[43]).toBe(thirdExplanation);
+    expect(text(thirdExplanation, 'english').split(/\n\s*\n/)).toHaveLength(16);
+    expect(text(thirdExplanation, 'arabic').split(/\n\s*\n/)).toHaveLength(16);
+    expect(text(thirdExplanation, 'english').startsWith('(1/16) Mary you became')).toBe(true);
+    expect(thirdExplanation.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
     // The Second Explanation: its own 16 verses (the ark of the covenant), different from The First Explanation
     const secondExplanation = service.hymns.find((h) => h.title === 'The Second Explanation')!;
     expect(text(secondExplanation, 'english').split(/\n\s*\n/)).toHaveLength(16);
