@@ -174,7 +174,14 @@ const arabicTitles: Record<string, string> = {
   'annual-midnight-friday-watos-theotokia-conclusion': 'ختام الثيئوطوكيات الواطس',
   'annual-midnight-saturday-watos-theotokia-conclusion': 'ختام الثيئوطوكيات الواطس',
   'annual-midnight-psalmody-conclusion': 'ختام التسبحة',
-  'annual-midnight-concluding-hymn': 'اللحن الختامي',
+  'annual-midnight-concluding-hymn': 'قانون ختام الصلوات الإجتماعية',
+  'annual-midnight-conclusion-pope-bishop': 'الختام في وجود الأب البطريرك أو الأسقف',
+  'annual-distribution-concluding-hymn': 'قانون ختام الصلوات الإجتماعية',
+  'annual-distribution-conclusion-pope-bishop': 'الختام في وجود الأب البطريرك أو الأسقف',
+  'annual-matins-concluding-hymn': 'قانون ختام الصلوات الإجتماعية',
+  'annual-matins-conclusion-pope-bishop': 'الختام في وجود الأب البطريرك أو الأسقف',
+  'annual-vespers-concluding-hymn': 'قانون ختام الصلوات الإجتماعية',
+  'annual-vespers-conclusion-pope-bishop': 'الختام في وجود الأب البطريرك أو الأسقف',
 
   // Deacon Responses > Annual > Matins
   'd-annual-matins-stand-up-for-prayer': 'للصلاة قفوا',

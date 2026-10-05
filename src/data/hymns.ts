@@ -3748,6 +3748,85 @@ if (annualLiturgy) {
   before('annual-liturgy-blessed-are-they', { id: 'annual-liturgy-faithful-header', title: 'Liturgy of the Faithful', versions: [], isSectionHeader: true });
 }
 
+// ---- Annual: the Concluding Hymn and the Conclusion for the Pope or a Bishop, at the end of Distribution, Matins,
+// Vespers and Midnight Praises (each service gets its own copy) ----
+const annualConcludingHymn = (id: string): Hymn => ({
+  id,
+  title: 'Concluding Hymn',
+  versions: [
+    {
+      language: 'coptic',
+      text: 'Ⲡⲓⲗⲁⲟⲥ:\n\nⲀⲙⲏⲛ: ⲁⲗⲗⲏⲗⲟⲩⲓⲁ ⲇⲟⲝⲁ Ⲡⲁⲧⲣⲓ ⲕⲉ Ⲩⲓⲱ ⲕⲉ ⲁ̀ⲅⲓⲱ Ⲡⲛⲉⲩⲙⲁⲧⲓ: ⲕⲉ ⲛⲩⲛ ⲕⲉ ⲁ̀ⲓ̀ ⲕⲉ ⲓⲥ ⲧⲟⲩⲥ ⲉ̀ⲱ̀ⲛⲁⲥ ⲧⲱⲛ ⲉ̀ⲱ̀ⲛⲱⲛ: ⲁ̀ⲙⲏⲛ.\n\nⲦⲉⲛⲱϣ ⲉ̀ⲃⲟⲗ ⲉⲛϫⲱ ⲙ̀ⲙⲟⲥ: ϫⲉ ⲱ̀ Ⲡⲉⲛϭⲟⲓⲥ Ⲓⲏ︦ⲥ︦ Ⲡⲭ︦ⲥ︦: Ⲥⲙⲟⲩ ⲉ̀ⲛⲓⲙⲱⲟⲩ ⲙ̀ⲫ̀ⲓⲁⲣⲟⲩ: ⲙⲁⲣⲉ ⲡⲉⲕⲛⲁⲓ ⲛⲉⲙ ⲧⲉⲕϩⲓⲣⲏⲛⲏ ⲟⲓ ⲛ̀ⲥⲟⲃⲧ ⲙ̀ⲡⲉⲕⲗⲁⲟⲥ: Ⲥⲱϯ ⲙ̀ⲙⲟⲛ ⲟⲩⲟϩ ⲛⲁⲓ ⲛⲁⲛ.\n\nⲔⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ: Ⲕⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ: Ⲕⲩⲣⲓⲉ ⲉⲩⲗⲟⲅⲏⲥⲟⲛ: ⲁ̀ⲙⲏⲛ.\n\nⲤⲙⲟⲩ ⲉⲣⲟⲓ: (ⲥ̀ⲙⲟⲩ ⲉⲣⲟⲓ) ⲓⲥ ϯⲙⲉⲧⲁⲛⲟⲓⲁ: ⲭⲱ ⲛⲏⲓ ⲉ̀ⲃⲟⲗ: ϫⲱ ⲙ̀ⲡⲓⲥ̀ⲙⲟⲩ.',
+    },
+    {
+      language: 'englishCoptic',
+      text: 'Pi-laos:\n\nAmēn: allēlouia doksa Patri ke Uiō ke agiō Pneumati: ke nun ke ai ke is tous eōnas tōn eōnōn: amēn.\n\nTenōsh evol enjō emmos: je ō Pentshois Iēsous Pikhristos: Smou enimōou emefiarou: mare peknai nem tekhirēnē oi ensobt empeklaos: Sōti emmon ouoh nai nan.\n\nKurie eleēson: Kurie eleēson: Kurie eulogēson: amēn.\n\nSmou eroi: (esmou eroi) is timetanoia: khō nēi evol: jō empiesmou.',
+    },
+    {
+      language: 'english',
+      text: 'People:\n\nAmen. Alleluia. Glory to the Father, and to the Son, and to the Holy Spirit. Now and ever and unto the ages of the ages. Amen.\n\nWe proclaim and say, O our Lord Jesus Christ, bless the waters of the rivers. May Your mercy and Your peace be a fortress unto Your people. Save us and have mercy on us.\n\nLord have mercy. Lord have mercy. Lord bless us. Amen.\n\nBless me, bless me. Behold, my repentance (metanoia). Forgive me. Say the blessing.',
+    },
+    {
+      language: 'englishArabic',
+      text: 'Esh-sha\'b:\n\nAmeen. Halleluya. El-magdu lil-Ab wal-Ibn war-Rooh el-Qudus, el-aana wa kulla awaan wa ila dahri ed-duhoor. Ameen.\n\nNasrukh qaa-ileen: ya rabbana Yasoo el-Maseeh, barik miyaah en-nahr, wal-takun rahmatuka wa salamuka hisnan li-sha\'bik, khallisna warhamna.\n\nYa rab irham, ya rab irham, ya rab barik, ameen.\n\nBarikoo alayya, barikoo alayya, ha mataniya, ighfiroo lee, qul el-baraka.',
+    },
+    {
+      language: 'arabic',
+      text: 'الشعب:\n\nآمين. هلليلويا. المجدُ للآب والابن والروح القدس، الآن وكل أوان وإلى دهرِ الدهورِ. آمين.\n\nنصرخ قائلين: يا ربنا يسوع المسيح بارك مياه النهر، ولتكن رحمتُكَ وسلامُكَ حصناً لشعبِك، خلصنا وارحَمنا.\n\nيا ربُ إرحَم. يا ربُ إرحَم. يا ربُ بارك. آمين.\n\nباركوا عليَّ. باركوا عليَّ. ها مطانية. اغفروا لي. قُل البركةَ.',
+    },
+  ],
+});
+
+const annualPopeBishopConclusion = (id: string): Hymn => ({
+  id,
+  title: 'Conclusion in the presence of the Pope or a Bishop',
+  versions: [
+    {
+      language: 'coptic',
+      text: 'Ⲡⲓⲗⲁⲟⲥ:\n\nⲀⲙⲏⲛ: ⲁⲗⲗⲏⲗⲟⲩⲓⲁ ⲇⲟⲝⲁ Ⲡⲁⲧⲣⲓ ⲕⲉ Ⲩⲓⲱ ⲕⲉ ⲁ̀ⲅⲓⲱ Ⲡⲛⲉⲩⲙⲁⲧⲓ: ⲕⲉ ⲛⲩⲛ ⲕⲉ ⲁ̀ⲓ̀ ⲕⲉ ⲓⲥ ⲧⲟⲩⲥ ⲉ̀ⲱ̀ⲛⲁⲥ ⲧⲱⲛ ⲉ̀ⲱ̀ⲛⲱⲛ: ⲁ̀ⲙⲏⲛ.\n\nⲦⲉⲛⲱϣ ⲉ̀ⲃⲟⲗ ⲉⲛϫⲱ ⲙ̀ⲙⲟⲥ: ϫⲉ ⲱ̀ Ⲡⲉⲛϭⲟⲓⲥ Ⲓⲏ︦ⲥ︦ Ⲡⲭ︦ⲥ︦: Ⲥⲙⲟⲩ ⲉ̀ⲛⲓⲙⲱⲟⲩ ⲙ̀ⲫ̀ⲓⲁⲣⲟⲩ: ⲙⲁⲣⲉ ⲡⲉⲕⲛⲁⲓ ⲛⲉⲙ ⲧⲉⲕϩⲓⲣⲏⲛⲏ ⲟⲓ ⲛ̀ⲥⲟⲃⲧ ⲙ̀ⲡⲉⲕⲗⲁⲟⲥ: Ⲥⲱϯ ⲙ̀ⲙⲟⲛ ⲟⲩⲟϩ ⲛⲁⲓ ⲛⲁⲛ.\n\nⲀⲕϭⲓ ⲧ̀ⲭⲁⲣⲓⲥ ⲙ̀Ⲙⲱⲩ̀ⲥⲏⲥ: ϯⲙⲉⲧⲟⲩⲏⲃ ⲛ̀ⲧⲉ Ⲙⲉⲗⲭⲓⲥⲉⲇⲉⲕ ϯⲙⲉⲧϧⲉⲗⲗⲟ ⲛ̀ⲧⲉ Ⲓⲁⲕⲱⲃ: ⲡⲓⲛⲟϫ ⲛ̀ⲁ̀ϩⲓ ⲛ̀ⲧⲉ Ⲙⲁⲑⲟⲩⲥⲁⲗⲁ: ⲡⲓⲕⲁϯ ⲉⲧⲥⲱⲧⲡ ⲛ̀ⲧⲉ Ⲇⲁⲩⲓⲇ: ϯⲥⲟⲫⲓⲁ̀ ⲛ̀ⲧⲉ Ⲥⲟⲗⲟⲙⲟⲛ: Ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ ⲙ̀ⲡⲁⲣⲁⲕⲗⲏⲧⲟⲛ ⲫⲏⲉⲧⲁϥⲓ̀ ⲉ̀ϫⲉⲛ ⲛⲓⲁ̀ⲡⲟⲥⲧⲟⲗⲟⲥ.\n\nⲠϭⲟⲓⲥ ⲉϥⲉ̀ⲁⲣⲉϩ ⲉ̀ⲡ̀ⲱⲛϧ ⲛⲉⲙ ⲡ̀ⲧⲁϩⲟ ⲉ̀ⲣⲁⲧϥ ⲙ̀ⲡⲉⲛⲓⲱⲧ ⲉⲧⲧⲁⲓⲏⲟⲩⲧ ⲛ̀ⲁⲣⲭⲓⲉ̀ⲣⲉⲩⲥ ⲡⲁⲡⲁ ⲁⲃⲃⲁ (ⲛⲓⲙ): ⲛⲉⲙ ⲡⲉⲛⲓⲱⲧ ⲛ̀ⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲥ (ⲙ̀ⲙⲉⲧⲣⲟⲡⲟⲗⲓⲧⲏⲥ) ⲁⲃⲃⲁ (ⲛⲓⲙ) ⲓⲉ (ⲛⲏⲉⲧⲭⲏ ⲛⲉⲙⲁⲛ)\n\nⲪϯ ⲛ̀ⲧⲉ ⲧ̀ⲫⲉ ⲉϥⲉ̀ⲧⲁϫⲣⲱⲟⲩ ϩⲓϫⲉⲛ ⲛⲟⲩⲑ̀ⲣⲟⲛⲟⲥ: ⲛ̀ϩⲁⲛⲙⲏϣ ⲛ̀ⲣⲟⲙⲡⲓ ⲛⲉⲙ ϩⲁⲛⲥⲏⲟⲩ ⲛ̀ϩⲓⲣⲏⲛⲓⲕⲟⲛ: ⲛ̀ⲧⲉϥⲑⲉⲃⲓⲟ ⲛ̀ⲛⲟⲩϫⲁϫⲓ ⲧⲏⲣⲟⲩ ⲥⲁⲡⲉⲥⲏⲧ ⲛ̀ⲛⲟⲩϭⲁⲗⲁⲩϫ ⲛ̀ⲭⲱⲗⲉⲙ.\n\nⲦⲱⲃϩ ⲉ̀Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ ⲉ̀ϩ̀ⲣⲏⲓ ⲉ̀ϫⲱⲛ ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ ϧⲉⲛ ⲟⲩϩⲓⲣⲏⲛⲏ ⲕⲁⲧⲁ ⲡⲉϥⲛⲓϣϯ ⲛ̀ⲛⲁⲓ.\n\nⲔⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ: Ⲕⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ: Ⲕⲩⲣⲓⲉ ⲉⲩⲗⲟⲅⲏⲥⲟⲛ: ⲁ̀ⲙⲏⲛ.\n\nⲤⲙⲟⲩ ⲉⲣⲟⲓ: (ⲥ̀ⲙⲟⲩ ⲉⲣⲟⲓ) ⲓⲥ ϯⲙⲉⲧⲁⲛⲟⲓⲁ: ⲭⲱ ⲛⲏⲓ ⲉ̀ⲃⲟⲗ: ϫⲱ ⲙ̀ⲡⲓⲥ̀ⲙⲟⲩ.',
+    },
+    {
+      language: 'englishCoptic',
+      text: 'Pi-laos:\n\nAmēn: allēlouia doksa Patri ke Uiō ke agiō Pneumati: ke nun ke ai ke is tous eōnas tōn eōnōn: amēn.\n\nTenōsh evol enjō emmos: je ō Pentshois Iēsous Pikhristos: Smou enimōou emefiarou: mare peknai nem tekhirēnē oi ensobt empeklaos: Sōti emmon ouoh nai nan.\n\nAktshi etkharis em-Mōusēs: timetouēb ente Melkhisedek timetkhello ente Iakōb: pinoj enahi ente Mathousala: pikati etsōtp ente Dauid: tisofia ente Solomon: Pi-epneuma emparaklēton fēetafi ejen niapostolos.\n\nPtshois efeareh e-epōnkh nem eptaho eratf empeniōt ettaiēout enarkhiereus papa abba (nim): nem peniōt enepiskopos (emmetropolitēs) abba (nim) ie (nēetkhē neman)\n\nFti ente etfe efetajrōou hijen nou-ethronos: enhanmēsh enrompi nem hansēou enhirēnikon: entefthevio ennoujaji tērou sapesēt ennoutshalauj enkhōlem.\n\nTōbh e-Pi-ekhristos e-ehrēi ejōn entefkha nennovi nan evol khen ouhirēnē kata pefnishti ennai.\n\nKurie eleēson: Kurie eleēson: Kurie eulogēson: amēn.\n\nSmou eroi: (esmou eroi) is timetanoia: khō nēi evol: jō empiesmou.',
+    },
+    {
+      language: 'english',
+      text: 'People:\n\nAmen. Alleluia. Glory to the Father, and to the Son, and to the Holy Spirit. Now and ever and unto the ages of the ages. Amen.\n\nWe proclaim and say, O our Lord Jesus Christ, bless the waters of the rivers. May Your mercy and Your peace be a fortress unto Your people. Save us and have mercy on us.\n\nYou have received the grace of Moses, the priesthood of Melchizedek, the old age of Jacob, the long life of Methuselah, the excellent understanding of David, the wisdom of Solomon, and the Spirit, the Paraclete who came upon the apostles.\n\nMay the Lord preserve the life and rising of our honored father, the archpriest, Pope Abba ___, and our father(s) the bishop(s) (metropolitan), Abba ___, (who are with us.)\n\nMay the God of heaven confirm them on their thrones for many years and peaceful times. May He subdue all of their enemies under their feet speedily.\n\nPray to Christ on our behalf that He may forgive us our sins, in peace, according to His great mercy.\n\nLord have mercy. Lord have mercy. Lord bless us. Amen.\n\nBless me, bless me. Behold, my repentance (metanoia). Forgive me. Say the blessing.',
+    },
+    {
+      language: 'englishArabic',
+      text: 'Esh-sha\'b:\n\nAmeen. Halleluya. El-magdu lil-Ab wal-Ibn war-Rooh el-Qudus, el-aana wa kulla awaan wa ila dahri ed-duhoor. Ameen.\n\nNasrukh qaa-ileen: ya rabbana Yasoo el-Maseeh, barik miyaah en-nahr, wal-takun rahmatuka wa salamuka hisnan li-sha\'bik, khallisna warhamna.\n\nNilta nimata Moosa, wa kahnootha Malki-sadiq, wa sheikhookhata Yaqoob, wa toola umri Mutawshalih, wal-fahma el-mukhtara elli li-Dawood, wa hikmata Sulayman, war-Rooha el-muazzi elli halla ala er-rusul.\n\nEr-rab yahfazu hayata wa qiyama abeena el-mukarram raees el-kahana el-Baba Anba ___ wa abeena el-usquf (el-matran) el-Anba ___\n\nIlahu es-samaa yuthabbituhuma ala kursiyyihima, sineena katheera wa azmina salima, wa yakhdau gamee-a aadaa-ihima taht aqdamihima sareean.\n\nUtlubaa min el-Maseeh anna li-yaghfira lana khataayana bi-salam ka-azeem rahmatihi.\n\nYa rab irham, ya rab irham, ya rab barik, ameen.\n\nBarikoo alayya, barikoo alayya, ha mataniya, ighfiroo lee, qul el-baraka.',
+    },
+    {
+      language: 'arabic',
+      text: 'الشعب:\n\nآمين. هلليلويا. المجدُ للآب والابن والروح القدس، الآن وكل أوان وإلى دهرِ الدهورِ. آمين.\n\nنصرخ قائلين: يا ربنا يسوع المسيح بارك مياه النهر، ولتكن رحمتُكَ وسلامُكَ حصناً لشعبِك، خلصنا وارحَمنا.\n\nنلت نعمةَ موسى، وكهنوتَ ملكي صادق، وشيخوخةَ يعقوب، وطولَ عمرِ متوشالح، والفهمَ المختارَ الذي لداود، وحكمةَ سليمان، والروحَ المعزي الذي حلَّ على الرسلِ.\n\nالرب يحفظُ حياةَ وقيامَ أبينا المكرم رئيس الكهنة البابا أنبا ___ وأبينا الأسقف (المطران) الأنبا ___\n\nإله السماءِ يثبتهما على كرسيهما، سنينَ كثيرة وأزمنةَ سالمة، ويخضعُ جميعَ أعدائهما تحت أقدامهما سريعاً.\n\nأطلبا من المسيح عنا ليغفر لنا خطايانا بسلام كعظيم رحمته.\n\nيا ربُ إرحَم. يا ربُ إرحَم. يا ربُ بارك. آمين.\n\nباركوا عليَّ. باركوا عليَّ. ها مطانية. اغفروا لي. قُل البركةَ.',
+    },
+  ],
+});
+
+for (const service of [annualDistribution, annualMatins, annualVespers]) {
+  service?.hymns.push(
+    annualConcludingHymn(`${service.id}-concluding-hymn`),
+    annualPopeBishopConclusion(`${service.id}-conclusion-pope-bishop`),
+  );
+}
+
+// Midnight Praises already lists the Concluding Hymn (at the end of the Psalmody): fill it in and put the Pope or Bishop one after it
+const fillMidnightConclusion = (hymns: Hymn[]): boolean => {
+  const at = hymns.findIndex((h) => h.id === 'annual-midnight-concluding-hymn');
+  if (at >= 0) {
+    hymns.splice(
+      at,
+      1,
+      annualConcludingHymn('annual-midnight-concluding-hymn'),
+      annualPopeBishopConclusion('annual-midnight-conclusion-pope-bishop'),
+    );
+    return true;
+  }
+  return hymns.some((h) => h.children && fillMidnightConclusion(h.children));
+};
+if (annualMidnight) fillMidnightConclusion(annualMidnight.hymns);
+
 // Keep these last: give every hymn a "Coptic in Arabic letters" and an "English in Arabic letters" version
 // (see arabic-coptic.ts and arabic-english.ts),
 // so it must run after all the changes above
