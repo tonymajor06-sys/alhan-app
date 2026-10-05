@@ -122,6 +122,73 @@ describe('Kiahk Praises & Season > Midnight Praises', () => {
     expect(verses('english')[0]).toContain('The Lord said to Moses');
     expect(hymn.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
   });
+
+  it('has the lyrics of Exposition on the First Canticle, 15 paragraphs in English and in Arabic', () => {
+    const hymn = service.hymns[5];
+    expect(hymn.title).toBe('Exposition on the First Canticle');
+    const verses = (language: string) => hymn.versions.find((v) => v.language === language)!.text.split(/\n\s*\n/);
+    expect(verses('english')).toHaveLength(15);
+    expect(verses('arabic')).toHaveLength(15);
+    expect(hymn.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+  });
+
+  it('has the lyrics of Adam Psali on the Second Canticle, 29 verses in Coptic, English and Arabic', () => {
+    const hymn = service.hymns[6];
+    expect(hymn.title).toContain('Adam Psali on the Second Canticle');
+    const verses = (language: string) => hymn.versions.find((v) => v.language === language)!.text.split(/\n\s*\n/);
+    for (const language of ['coptic', 'english', 'arabic', 'arabicCoptic']) expect(verses(language)).toHaveLength(29);
+    expect(verses('english')[28]).toBe('(29/29) O our Master remember us / In Your heavenly kingdom / O Holy Trinity / have mercy upon us.');
+    expect(verses('arabic')[0].startsWith('(٢٩/١)')).toBe(true);
+    // every verse ends with the same refrain line
+    expect(verses('coptic').every((v) => v.endsWith('ⲁ̀ⲅⲓⲁ̀ ⲧ̀ⲣⲓⲁⲥ: ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ ⲏ̀ⲙⲁⲥ.'))).toBe(true);
+    expect(hymn.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+  });
+
+  it('has the lyrics of Hymn After Second Canticle, 26 verses in English and in Arabic', () => {
+    const hymn = service.hymns[9];
+    expect(hymn.title).toBe('Hymn After Second Canticle');
+    const verses = (language: string) => hymn.versions.find((v) => v.language === language)!.text.split(/\n\s*\n/);
+    expect(verses('english')).toHaveLength(26);
+    expect(verses('arabic')).toHaveLength(26);
+    expect(verses('english').every((v) => v.endsWith('His mercy endures forever.'))).toBe(true);
+    expect(verses('arabic')[25].startsWith('(٢٦/٢٦)')).toBe(true);
+    expect(hymn.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+  });
+
+  it('has the lyrics of Exposition on the Second Canticle, 17 paragraphs in English and in Arabic', () => {
+    const hymn = service.hymns[10];
+    expect(hymn.title).toBe('Exposition on the Second Canticle');
+    const verses = (language: string) => hymn.versions.find((v) => v.language === language)!.text.split(/\n\s*\n/);
+    expect(verses('english')).toHaveLength(17);
+    expect(verses('arabic')).toHaveLength(17);
+    expect(verses('english')[16]).toContain('forgiveness of our sins');
+    expect(hymn.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+  });
+
+  it('has the lyrics of Adam Psali on Third Canticle, 20 verses in Coptic, English and Arabic', () => {
+    const hymn = service.hymns[11];
+    expect(hymn.title).toBe('Adam Psali on Third Canticle');
+    const verses = (language: string) => hymn.versions.find((v) => v.language === language)!.text.split(/\n\s*\n/);
+    for (const language of ['coptic', 'english', 'arabic', 'arabicCoptic']) expect(verses(language)).toHaveLength(20);
+    expect(verses('english').every((v) => v.includes('I thank You, O God of Israel: '))).toBe(true);
+    expect(verses('coptic')[0]).toContain('Ⲫ̀ⲛⲟⲩϯ');
+    expect(verses('coptic')[1]).toContain('Ⲫ̀ϯ');
+    expect(verses('arabic')[19].startsWith('(٢٠/٢٠)')).toBe(true);
+    expect(hymn.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+  });
+
+  it('has the lyrics of Adam Psali on Third Canticle (English Revised), 20 verses in Coptic, English and Arabic', () => {
+    const hymn = service.hymns[12];
+    expect(hymn.title).toBe('Adam Psali on Third Canticle (English Revised)');
+    const verses = (language: string) => hymn.versions.find((v) => v.language === language)!.text.split(/\n\s*\n/);
+    for (const language of ['coptic', 'english', 'arabic', 'arabicCoptic']) expect(verses(language)).toHaveLength(20);
+    expect(verses('english').every((v) => v.includes('I thank You O God, of Israel, '))).toBe(true);
+    // the overlines are Avva Shenouda's own (U+0305), not U+FE26
+    expect(hymn.versions.find((v) => v.language === 'coptic')!.text).not.toContain('︦');
+    expect(verses('coptic')[0]).toContain('ⲡⲓⲥ̅ⲗ̅');
+    expect(verses('arabic')[19].startsWith('(٢٠/٢٠)')).toBe(true);
+    expect(hymn.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+  });
 });
 
 describe('Kiahk Praises & Season > Distribution', () => {
