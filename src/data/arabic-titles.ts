@@ -78,6 +78,7 @@ const arabicTitles: Record<string, string> = {
   'annual-liturgy-blessed-are-they': 'طوباهم بالحقيقة (مرد الإنجيل)',
   'annual-liturgy-hiten-ni-presvia-eleos': 'بشفاعات والدة الإله (رحمة السلام)',
   'annual-liturgy-the-cherubim-worship-you': 'الشاروبيم يسجدون لك',
+  'annual-liturgy-aspasmos-watos': 'أسبسمس واطس (يا رب إله القوات)',
   'annual-liturgy-kata-to-eleos': 'كرحمتك يارب',
   'annual-liturgy-amen-ton-thanaton': 'آمين آمين آمين بموتك يارب نبشر',
   'annual-liturgy-may-their-holy-blessings': 'بركتهم المقدسة تكون معنا',
@@ -240,7 +241,6 @@ export function displayTitle(item: { id: string; title: string }, lang: AppLangu
   if (arabicTitles[item.id]) return arabicTitles[item.id];
 
   // Vesper Praises shares its hymns with Midnight Praises
-  if (/^annual-vesper-praises-[a-z]+day-our-father$/.test(item.id)) return 'أبانا الذي';
   if (item.id.startsWith('annual-vesper-praises-')) {
     const midnightId = item.id.replace(/^annual-vesper-praises-(?:[a-z]+day-fourth-canticle)$/, 'annual-midnight-fourth-canticle').replace('annual-vesper-praises-', 'annual-midnight-');
     const shared = displayTitle({ ...item, id: midnightId }, lang);
