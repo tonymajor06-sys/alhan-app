@@ -4624,6 +4624,20 @@ for (const [id, audio] of [
   }
 }
 
+// ---- Audio: Annual > Liturgy responses recorded in one language ----
+// Arabic also plays on Arabic in English letters; English also plays on English in Arabic letters (copied there later)
+const liturgyLanguageAudio: [string, string, LanguageType[]][] = [
+  ['annual-liturgy-the-cherubim-worship-you', 'liturgy-cherubim-arabic.m4a', ['arabic', 'englishArabic']],
+  ['annual-liturgy-kata-to-eleos', 'liturgy-kata-to-eleos-arabic.m4a', ['arabic', 'englishArabic']],
+  ['annual-liturgy-kata-to-eleos', 'liturgy-kata-to-eleos-english.m4a', ['english']],
+  ['annual-liturgy-amen-ton-thanaton', 'liturgy-amen-ton-thanaton-coptic.m4a', ['coptic', 'englishCoptic']],
+];
+for (const [id, audio, languages] of liturgyLanguageAudio) {
+  for (const version of annualLiturgy?.hymns.find((h) => h.id === id)?.versions ?? []) {
+    if (languages.includes(version.language)) version.audio = audio;
+  }
+}
+
 // ---- Annual > Liturgy: the Liturgy of the Word starts with Taishori, the Liturgy of the Faithful after the Psalm Trailers ----
 if (annualLiturgy) {
   const before = (id: string, header: Hymn) => {
