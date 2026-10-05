@@ -53,17 +53,17 @@ describe('Coptic in Arabic letters for every hymn', () => {
 describe('Kiahk Praises & Season > Midnight Praises', () => {
   const service = seasons.find((s) => s.id === 'kiahk')!.services.find((s) => s.id === 'kiahk-midnight')!;
 
-  it('lists the 87 titles of the service, in order, with no placeholders left', () => {
-    expect(service.hymns).toHaveLength(87);
+  it('lists the 85 titles of the service, in order, with no placeholders left', () => {
+    expect(service.hymns).toHaveLength(85);
     expect(service.hymns[0].title).toBe('Holy God');
-    expect(service.hymns[86].title).toBe('Conclusion in the presence of the Pope or a Bishop');
-    expect(new Set(service.hymns.map((h) => h.id)).size).toBe(87);
+    expect(service.hymns[84].title).toBe('Conclusion in the presence of the Pope or a Bishop');
+    expect(new Set(service.hymns.map((h) => h.id)).size).toBe(85);
     expect(service.hymns.some((h) => /Hymn #\d+$/.test(h.title))).toBe(false);
   });
 
   it('leaves out the prayers that are not hymns', () => {
     const titles = service.hymns.map((h) => h.title);
-    for (const title of ['Antiphonary', 'Introduction To The Creed', 'The Orthodox Creed', 'Holy Holy Holy', 'Our Father', 'The Short Blessing', 'Priest Absolution']) {
+    for (const title of ['Antiphonary', 'Introduction To The Creed', 'The Orthodox Creed', 'Holy Holy Holy', 'Our Father', 'The Short Blessing', 'Priest Absolution', 'The Sunday Theotokia']) {
       expect(titles).not.toContain(title);
     }
   });
@@ -91,7 +91,8 @@ describe('Kiahk Praises & Season > Midnight Praises', () => {
     expect(text(sevens[0], 'coptic')).not.toBe(text(sevens[1], 'coptic'));
     // a hymn that has no lyrics yet is left for later
     expect(service.hymns.find((h) => h.title === 'Antiphonary')).toBeUndefined();
-    expect(service.hymns.find((h) => h.title === 'The First Explanation')?.versions).toEqual([]);
+    expect(service.hymns.find((h) => h.title === 'The Third Explanation')?.versions).toEqual([]);
+    expect(service.hymns.find((h) => h.title === 'Luke 1: 46-50')).toBeUndefined();
   });
 
   it('has the lyrics of Holy God, 53 verses in English and in Arabic', () => {
@@ -123,12 +124,27 @@ describe('Kiahk Praises & Season > Midnight Praises', () => {
     expect(hymn.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
   });
 
-  it('has the lyrics of Exposition on the First Canticle, 15 paragraphs in English and in Arabic', () => {
+  it('has the lyrics of Exposition on the First Canticle, 14 paragraphs with each English paragraph beside its own Arabic', () => {
     const hymn = service.hymns[5];
     expect(hymn.title).toBe('Exposition on the First Canticle');
     const verses = (language: string) => hymn.versions.find((v) => v.language === language)!.text.split(/\n\s*\n/);
-    expect(verses('english')).toHaveLength(15);
-    expect(verses('arabic')).toHaveLength(15);
+    const english = verses('english');
+    const arabic = verses('arabic');
+    expect(english).toHaveLength(14);
+    expect(arabic).toHaveLength(14);
+    // the sentences that were out of step in the paste now sit together
+    expect(english[6]).toContain('the waters returned and drowned the Egyptians');
+    expect(arabic[6]).toContain('فرجع الماء');
+    expect(arabic[6]).toContain('وغرق الجميع');
+    expect(english[7]).toContain('walked on the dry land');
+    expect(arabic[7]).toContain('يمشون على اليبس');
+    expect(english[8]).toContain('like a barrier');
+    expect(arabic[8]).toContain('مثل السور');
+    expect(english[9]).toContain('When Israel saw this great wonder');
+    expect(arabic[9]).toContain('فلما رأي إسرائيل');
+    expect(english[10]).toContain('The entire congregation feared the Lord');
+    expect(english[10]).toContain('all the people feared the Lord');
+    expect(arabic[10]).toContain('فخاف الرب جميع الشعب');
     expect(hymn.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
   });
 
@@ -259,11 +275,75 @@ describe('Kiahk Praises & Season > Midnight Praises', () => {
     expect(text(commemoration, 'arabic').split(/\n\s*\n/)).toHaveLength(21);
     expect(text(commemoration, 'english').endsWith('forever. Amen.')).toBe(true);
     expect(commemoration.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
-    // number 19 was pasted with exactly the same text as number 18
+    // number 30, Adam Psali on the Fourth Canticle: 24 verses in English and in Arabic
+    const fourthCanticlePsali = service.hymns[29];
+    expect(fourthCanticlePsali.title).toBe('Adam Psali on the Fourth Canticle (You bore tribulation for me...)');
+    expect(text(fourthCanticlePsali, 'english').split(/\n\s*\n/)).toHaveLength(24);
+    expect(text(fourthCanticlePsali, 'arabic').split(/\n\s*\n/)).toHaveLength(24);
+    expect(text(fourthCanticlePsali, 'english').startsWith('(1/24) You bore tribulation for me')).toBe(true);
+    expect(text(fourthCanticlePsali, 'english')).not.toBe(text(commemoration, 'english'));
+    expect(fourthCanticlePsali.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+    // number 40 is now The First Explanation (number 39, The Sunday Theotokia, was removed): 16 verses in English and in Arabic
+    const firstExplanation = service.hymns[39];
+    expect(firstExplanation.title).toBe('The First Explanation');
+    expect(service.hymns[38].title).toBe('The Sunday Theotokion (1)');
+    expect(text(firstExplanation, 'english').split(/\n\s*\n/)).toHaveLength(16);
+    expect(text(firstExplanation, 'arabic').split(/\n\s*\n/)).toHaveLength(16);
+    expect(text(firstExplanation, 'english').startsWith('(1/16) In the Name of God')).toBe(true);
+    expect(firstExplanation.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+    // The Second Explanation: its own 16 verses (the ark of the covenant), different from The First Explanation
+    const secondExplanation = service.hymns.find((h) => h.title === 'The Second Explanation')!;
+    expect(text(secondExplanation, 'english').split(/\n\s*\n/)).toHaveLength(16);
+    expect(text(secondExplanation, 'arabic').split(/\n\s*\n/)).toHaveLength(16);
+    expect(text(secondExplanation, 'english').startsWith('(1/16) The Lord told Moses')).toBe(true);
+    expect(text(secondExplanation, 'english')).not.toBe(text(firstExplanation, 'english'));
+    expect(secondExplanation.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+    // number 37, Adam Psali on "You are Called": 24 verses, each ending with the same refrain line
+    const youAreCalled = service.hymns[36];
+    expect(youAreCalled.title).toContain('You are Called');
+    expect(text(youAreCalled, 'english').split(/\n\s*\n/)).toHaveLength(24);
+    expect(text(youAreCalled, 'arabic').split(/\n\s*\n/)).toHaveLength(24);
+    expect(text(youAreCalled, 'english').split(/\n\s*\n/).every((v) => v.endsWith('Mary the Virgin.'))).toBe(true);
+    expect(text(youAreCalled, 'arabic').split(/\n\s*\n/).every((v) => v.endsWith('مريم العذراء.'))).toBe(true);
+    expect(youAreCalled.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+    // number 36, I Open my Mouth with Praise: 52 verses in English and in Arabic
+    const openMouth = service.hymns[35];
+    expect(openMouth.title).toBe('I Open my Mouth with Praise');
+    expect(text(openMouth, 'english').split(/\n\s*\n/)).toHaveLength(52);
+    expect(text(openMouth, 'arabic').split(/\n\s*\n/)).toHaveLength(52);
+    expect(text(openMouth, 'english').split(/\n\s*\n/)[51].startsWith('(52/52) We ask You O Our King')).toBe(true);
+    expect(openMouth.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+    // number 34, Adam Praise on Sunday Psali Aikoti: 29 verses, each ending with the same refrain line
+    const aikotiPraise = service.hymns[33];
+    expect(aikotiPraise.title).toBe('Adam Praise on Sunday Psali Aikoti');
+    expect(text(aikotiPraise, 'english').split(/\n\s*\n/)).toHaveLength(29);
+    expect(text(aikotiPraise, 'arabic').split(/\n\s*\n/)).toHaveLength(29);
+    expect(text(aikotiPraise, 'english').split(/\n\s*\n/).every((v) => v.endsWith('Hail to you O Mary'))).toBe(true);
+    expect(text(aikotiPraise, 'arabic').split(/\n\s*\n/).every((v) => v.endsWith('السلام لك يا مريم'))).toBe(true);
+    expect(aikotiPraise.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+    // number 33, Adam Psali before Aikotee: 32 verses in English and in Arabic
+    const aikotee = service.hymns[32];
+    expect(aikotee.title).toBe('Adam Psali before Aikotee');
+    expect(text(aikotee, 'english').split(/\n\s*\n/)).toHaveLength(32);
+    expect(text(aikotee, 'arabic').split(/\n\s*\n/)).toHaveLength(32);
+    expect(text(aikotee, 'english').startsWith('(1/32) I sought after You')).toBe(true);
+    expect(aikotee.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+    // number 32, Exposition on the Fourth Canticle: 6 paragraphs in English and in Arabic
+    const fourthCanticleExposition = service.hymns[31];
+    expect(fourthCanticleExposition.title).toBe('Exposition on the Fourth Canticle');
+    expect(text(fourthCanticleExposition, 'english').split(/\n\s*\n/)).toHaveLength(6);
+    expect(text(fourthCanticleExposition, 'arabic').split(/\n\s*\n/)).toHaveLength(6);
+    expect(text(fourthCanticleExposition, 'english')).toContain('ten stringed harp of David');
+    expect(text(fourthCanticleExposition, 'english')).not.toBe(text(commemoration, 'english'));
+    expect(fourthCanticleExposition.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+    // number 19, Another Hymn After Praise of the Three Young Men: 36 English verses (no Arabic given yet)
     const another = service.hymns[18];
     expect(another.title).toBe('Another Hymn After Praise of the Three Young Men');
-    expect(text(another, 'english')).toBe(text(youths, 'english'));
-    expect(text(another, 'arabic')).toBe(text(youths, 'arabic'));
+    expect(text(another, 'english').split(/\n\s*\n/)).toHaveLength(36);
+    expect(text(another, 'english').split(/\n\s*\n/).every((v) => v.endsWith('Praise Him and exalt Him above all.'))).toBe(true);
+    expect(text(another, 'english')).not.toBe(text(youths, 'english'));
+    expect(another.versions.some((v) => v.language === 'arabic')).toBe(false);
+    expect(another.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
     expect(text(hymn, 'english').split(/\n\s*\n/)[0]).toBe(
       '(1/20) Worship befits the Holy Trinity, • Father, Son, and Holy Spirit. • We worship, praise, and sanctify • the one God, creator of souls. •'
     );
