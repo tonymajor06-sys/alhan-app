@@ -671,6 +671,116 @@ if (kiahkDistribution) {
   });
 }
 
+// ---- Kiahk > Midnight Praises: the titles of the service, as in the service book (titles only for now) ----
+const kiahkMidnight = seasons
+  .find((s) => s.id === 'kiahk')
+  ?.services.find((s) => s.id === 'kiahk-midnight');
+
+if (kiahkMidnight) {
+  const kiahkMidnightTitles = [
+    'Holy God',
+    'Psali Adam on First Canticle',
+    'The First Canticle (Exodus 15)',
+    'The First Canticle Lobsh',
+    'Hymn after First Canticle',
+    'Exposition on the First Canticle',
+    'Adam Psali on the Second Canticle Ⲁⲡⲁϩⲏⲓⲧ ⲛⲉⲙ ⲡⲁⲗⲁⲥ',
+    'The Second Canticle',
+    'The Second Canticle Lobsh',
+    'Hymn After Second Canticle',
+    'Exposition on the Second Canticle',
+    'Adam Psali on Third Canticle',
+    'Adam Psali on Third Canticle (English Revised)',
+    'Kiahk Praise for the Holy Trinity',
+    'Kiahk Praise for the Holy Trinity (English Revised)',
+    'The Third Canticle',
+    'Greek Psali Watos for the Three Holy Youth',
+    'Hymn After Praise of the Three Young Men',
+    'Another Hymn After Praise of the Three Young Men',
+    'The Song of the Three Holy Youth',
+    'Psali Watos for the Three Holy Youth',
+    'Exposition on the Third Canticle',
+    'The Commemoration of the Saints',
+    'Praise for St. Anthony the Great',
+    'Praise for St. Maximos and St. Dometios',
+    'Praise for St. Moses The Strong',
+    'Praise for St. Samuel the Confessor',
+    'Doxologies',
+    'Exposition on the Commemoration of the Saints',
+    'Adam Psali on the Fourth Canticle (You bore tribulation for me...)',
+    'The Fourth Canticle',
+    'Exposition on the Fourth Canticle',
+    'Adam Psali before Aikotee',
+    'Adam Praise on Sunday Psali Aikoti',
+    'The Adam Psali for the Lord Jesus before the Sunday Theotokia',
+    'I Open my Mouth with Praise',
+    'Adam Psali on "You are Called" (Come, O you people)/',
+    'Conclusion of the Adam Psali',
+    'The Sunday Theotokia',
+    'The Sunday Theotokion (1)',
+    'The First Explanation',
+    'Luke 1: 46-50',
+    'The Sunday Theotokion (2)',
+    'The Second Explanation',
+    'Luke 1:51-55',
+    'The Sunday Theotokion (3)',
+    'The Third Explanation',
+    'Luke 1:68-72',
+    'The Sunday Theotokion (4)',
+    'The Fourth Explanation',
+    'Luke 1:73-77',
+    'The Sunday Theotokion (5)',
+    'The Fifth Explanation',
+    'Luke 1:78-79',
+    'The Sunday Theotokion (6)',
+    'The Sixth Explanation',
+    'Gospel According to St. Luke',
+    'The Sunday Theotokion (7)',
+    'Exposition on First "You are Called"',
+    'The Sunday Theotokion (7)',
+    'Exposition on the Second "You are Called"',
+    'The Seventh Explanation',
+    'Kiahk Melody on Eighth Part of Sunday Theotokia',
+    'The Sunday Theotokion (8)',
+    'Exposition on Seven Times Every Day',
+    'Rejoice O Mary',
+    'O Mary',
+    'O Daughter of David',
+    'The Sunday Theotokion (9)',
+    'Exposition on You are Called',
+    'You are Worthy',
+    'I Praise the Virgin',
+    'The Sunday Theotokion (10)',
+    'The Sunday Theotokion (11)',
+    'The Sunday Theotokion (12)',
+    'The Sunday Theotokion (13)',
+    'The Sunday Theotokion (14)',
+    'The Sunday Theotokion (15)',
+    'Exposition of the Laborers',
+    'Conclusion to the Exposition of the Laborers',
+    'Your Mercies O My God',
+    'Antiphonary',
+    'The Conclusion of the Adam Theotokia',
+    'Exposition on "Your Mercies, O my God"',
+    'Concluding Prayer',
+    'Introduction To The Creed',
+    'The Orthodox Creed',
+    'Conclusion of the Midnight Psalmody',
+    'Holy Holy Holy',
+    'Our Father',
+    'Concluding Hymn',
+    'Conclusion in the presence of the Pope or a Bishop',
+    'The Short Blessing',
+    'Our Father',
+    'Priest Absolution',
+  ];
+  kiahkMidnight.hymns = kiahkMidnightTitles.map((title, index) => ({
+    id: `kiahk-midnight-hymn-${index + 1}`,
+    title,
+    versions: [],
+  }));
+}
+
 // ---- Annual > Matins: add "Doxologies" divider + Introduction to the Doxologies ----
 const annualMatins = seasons
   .find((s) => s.id === 'annual')
@@ -3826,6 +3936,52 @@ const fillMidnightConclusion = (hymns: Hymn[]): boolean => {
   return hymns.some((h) => h.children && fillMidnightConclusion(h.children));
 };
 if (annualMidnight) fillMidnightConclusion(annualMidnight.hymns);
+
+// ---- Kiahk > Midnight Praises: copy the lyrics of the hymns that are already in Annual > Midnight Praises ----
+// The Kiahk title is kept. This has to run once Annual > Midnight Praises is complete, so it sits here.
+const kiahkMidnightCopies: Record<string, string[]> = {
+  'The First Canticle (Exodus 15)': ['annual-midnight-first-canticle'],
+  'The First Canticle Lobsh': ['annual-midnight-first-canticle-lobsh'],
+  'The Second Canticle': ['annual-midnight-second-canticle'],
+  'The Second Canticle Lobsh': ['annual-midnight-second-canticle-lobsh'],
+  'The Third Canticle': ['annual-midnight-third-canticle'],
+  'Greek Psali Watos for the Three Holy Youth': ['annual-midnight-greek-psali-watos'],
+  'The Song of the Three Holy Youth': ['annual-midnight-three-holy-children'],
+  'Psali Watos for the Three Holy Youth': ['annual-midnight-psali-watos-three-holy-youth'],
+  'The Commemoration of the Saints': ['annual-midnight-commemoration'],
+  'The Fourth Canticle': ['annual-midnight-fourth-canticle'],
+  'The Adam Psali for the Lord Jesus before the Sunday Theotokia': ['annual-midnight-sunday-psali-lord-jesus'],
+  'Conclusion of the Adam Psali': ['annual-midnight-sunday-adam-psali-conclusion'],
+  'The Sunday Theotokion (1)': ['annual-midnight-sunday-theotokia-part-1'],
+  'The Sunday Theotokion (2)': ['annual-midnight-sunday-theotokia-part-2'],
+  'The Sunday Theotokion (3)': ['annual-midnight-sunday-theotokia-part-3'],
+  'The Sunday Theotokion (4)': ['annual-midnight-sunday-theotokia-part-4'],
+  'The Sunday Theotokion (5)': ['annual-midnight-sunday-theotokia-part-5'],
+  'The Sunday Theotokion (6)': ['annual-midnight-sunday-theotokia-part-6'],
+  // listed twice: Ⲭⲉⲣⲉ ⲛⲉ Ⲙⲁⲣⲓⲁ, then Ⲥⲉⲙⲟⲩϯ ⲉ̀ⲣⲟ ⲇⲓⲕⲉⲟⲥ
+  'The Sunday Theotokion (7)': ['annual-midnight-sunday-theotokia-part-7', 'annual-midnight-semouti-ero-dikeos'],
+  'The Sunday Theotokion (8)': ['annual-midnight-sunday-theotokia-part-8'],
+  'The Sunday Theotokion (9)': ['annual-midnight-sunday-theotokia-part-9'],
+  'The Sunday Theotokion (11)': ['annual-midnight-sunday-theotokia-part-11'],
+  'The Sunday Theotokion (12)': ['annual-midnight-sunday-theotokia-part-12'],
+  'The Sunday Theotokion (13)': ['annual-midnight-sunday-theotokia-part-13'],
+  'The Sunday Theotokion (14)': ['annual-midnight-sunday-theotokia-part-14'],
+  'The Sunday Theotokion (15)': ['annual-midnight-sunday-theotokia-part-15'],
+  'The Conclusion of the Adam Theotokia': ['annual-midnight-sunday-adam-theotokias-conclusion'],
+  'Concluding Hymn': ['annual-midnight-concluding-hymn'],
+  'Conclusion in the presence of the Pope or a Bishop': ['annual-midnight-conclusion-pope-bishop'],
+};
+if (kiahkMidnight && annualMidnight) {
+  const annualMidnightById = new Map(flattenHymns(annualMidnight.hymns).map((h) => [h.id, h]));
+  const timesSeen: Record<string, number> = {};
+  for (const hymn of kiahkMidnight.hymns) {
+    const sources = kiahkMidnightCopies[hymn.title];
+    if (!sources) continue;
+    timesSeen[hymn.title] = (timesSeen[hymn.title] ?? 0) + 1;
+    const source = annualMidnightById.get(sources[timesSeen[hymn.title] - 1] ?? '');
+    if (source) hymn.versions = source.versions.map((version) => ({ ...version }));
+  }
+}
 
 // Keep these last: give every hymn a "Coptic in Arabic letters" and an "English in Arabic letters" version
 // (see arabic-coptic.ts and arabic-english.ts),

@@ -50,6 +50,43 @@ describe('Coptic in Arabic letters for every hymn', () => {
   });
 });
 
+describe('Kiahk Praises & Season > Midnight Praises', () => {
+  const service = seasons.find((s) => s.id === 'kiahk')!.services.find((s) => s.id === 'kiahk-midnight')!;
+
+  it('lists the 95 titles of the service, in order, with no placeholders left', () => {
+    expect(service.hymns).toHaveLength(95);
+    expect(service.hymns[0].title).toBe('Holy God');
+    expect(service.hymns[94].title).toBe('Priest Absolution');
+    expect(new Set(service.hymns.map((h) => h.id)).size).toBe(95);
+    expect(service.hymns.some((h) => /Hymn #\d+$/.test(h.title))).toBe(false);
+  });
+
+  it('has the same lyrics as Annual Midnight Praises for the hymns that are in both', () => {
+    const annual = seasons.find((s) => s.id === 'annual')!.services.find((s) => s.id === 'annual-midnight')!;
+    const annualHymns = flattenHymns(annual.hymns);
+    const text = (h: Hymn, language: string) => h.versions.find((v) => v.language === language)?.text;
+    const pairs: [string, string][] = [
+      ['The Second Canticle', 'annual-midnight-second-canticle'],
+      ['The Sunday Theotokion (3)', 'annual-midnight-sunday-theotokia-part-3'],
+      ['Concluding Hymn', 'annual-midnight-concluding-hymn'],
+    ];
+    for (const [title, annualId] of pairs) {
+      const kiahk = service.hymns.find((h) => h.title === title)!;
+      const original = annualHymns.find((h) => h.id === annualId)!;
+      expect(text(kiahk, 'coptic')).toBeTruthy();
+      expect(text(kiahk, 'coptic')).toBe(text(original, 'coptic'));
+      expect(text(kiahk, 'english')).toBe(text(original, 'english'));
+      expect(text(kiahk, 'arabic')).toBe(text(original, 'arabic'));
+    }
+    // the two Theotokion (7)s are different hymns
+    const sevens = service.hymns.filter((h) => h.title === 'The Sunday Theotokion (7)');
+    expect(sevens).toHaveLength(2);
+    expect(text(sevens[0], 'coptic')).not.toBe(text(sevens[1], 'coptic'));
+    // a hymn that has no lyrics anywhere else is left for later
+    expect(service.hymns.find((h) => h.title === 'Holy God')?.versions).toEqual([]);
+  });
+});
+
 describe('Kiahk Praises & Season > Distribution', () => {
   const service = seasons.find((s) => s.id === 'kiahk')!.services.find((s) => s.id === 'kiahk-distribution')!;
 
