@@ -68,6 +68,19 @@ describe('Kiahk Praises & Season > Midnight Praises', () => {
     }
   });
 
+  it('gives every hymn that has Coptic a Coptic-English and Coptic-Arabic version, and every hymn that has English an Arabic-English one', () => {
+    for (const hymn of service.hymns) {
+      const languages = hymn.versions.map((v) => v.language);
+      if (languages.includes('coptic')) {
+        expect([hymn.title, languages.includes('englishCoptic')]).toEqual([hymn.title, true]);
+        expect([hymn.title, languages.includes('arabicCoptic')]).toEqual([hymn.title, true]);
+        const paragraphs = (language: string) => hymn.versions.find((v) => v.language === language)!.text.split(/\n\s*\n/).length;
+        expect([hymn.title, paragraphs('englishCoptic')]).toEqual([hymn.title, paragraphs('coptic')]);
+      }
+      if (languages.includes('english')) expect([hymn.title, languages.includes('arabicEnglish')]).toEqual([hymn.title, true]);
+    }
+  });
+
   it('has the same lyrics as Annual Midnight Praises for the hymns that are in both', () => {
     const annual = seasons.find((s) => s.id === 'annual')!.services.find((s) => s.id === 'annual-midnight')!;
     const annualHymns = flattenHymns(annual.hymns);
@@ -92,7 +105,7 @@ describe('Kiahk Praises & Season > Midnight Praises', () => {
     expect(text(sevens[0], 'coptic')).not.toBe(text(sevens[1], 'coptic'));
     // a hymn that has no lyrics yet is left for later
     expect(service.hymns.find((h) => h.title === 'Antiphonary')).toBeUndefined();
-    expect(service.hymns.find((h) => h.title === 'Rejoice O Mary')?.versions).toEqual([]);
+    expect(service.hymns.find((h) => h.title === 'Concluding Prayer')?.versions).toEqual([]);
     expect(service.hymns.find((h) => h.title === 'Luke 1: 46-50')).toBeUndefined();
     expect(service.hymns.find((h) => h.title === 'Luke 1:51-55')).toBeUndefined();
     for (const gone of ['Luke 1:68-72', 'Luke 1:73-77', 'Luke 1:78-79', 'Gospel According to St. Luke']) {
@@ -296,6 +309,122 @@ describe('Kiahk Praises & Season > Midnight Praises', () => {
     expect(text(firstExplanation, 'arabic').split(/\n\s*\n/)).toHaveLength(16);
     expect(text(firstExplanation, 'english').startsWith('(1/16) In the Name of God')).toBe(true);
     expect(firstExplanation.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+    // Conclusion of the Midnight Psalmody: 17 stanzas in Coptic, Coptic-English, English and Arabic
+    const psalmodyConclusion = service.hymns.find((h) => h.title === 'Conclusion of the Midnight Psalmody')!;
+    for (const language of ['coptic', 'englishCoptic', 'english', 'arabic']) {
+      expect(text(psalmodyConclusion, language).split(/\n\s*\n/)).toHaveLength(17);
+    }
+    expect(text(psalmodyConclusion, 'coptic').startsWith('Ⲁ̀ⲙⲏⲛ.')).toBe(true);
+    expect(text(psalmodyConclusion, 'english').startsWith('Amen.')).toBe(true);
+    expect(text(psalmodyConclusion, 'coptic')).toContain('Ⲕⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ (ⲅ︦)');
+    expect(text(psalmodyConclusion, 'englishCoptic')).toContain('Kurie ele-ēson (3)');
+    // the number under the line (ⲅ︦) is written as a number in Arabic letters too, not as the letter gamma
+    expect(text(psalmodyConclusion, 'arabicCoptic')).toContain('(٣)');
+    expect(text(psalmodyConclusion, 'arabicCoptic')).not.toContain('(ج)');
+    expect(psalmodyConclusion.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+    // Conclusion to the Exposition of the Laborers: one stanza in Coptic, Coptic-English, English and Arabic
+    const laborersConclusion = service.hymns.find((h) => h.title === 'Conclusion to the Exposition of the Laborers')!;
+    for (const language of ['coptic', 'englishCoptic', 'english', 'arabic']) {
+      expect(text(laborersConclusion, language).split(/\n\s*\n/)).toHaveLength(1);
+    }
+    expect(text(laborersConclusion, 'coptic').startsWith('Ⲡⲭ︦ⲥ︦ ⲡⲉⲛⲥ︦ⲱ︦ⲣ︦')).toBe(true);
+    expect(text(laborersConclusion, 'englishCoptic').startsWith('Pi-ekhristos pensōtēr')).toBe(true);
+    expect(text(laborersConclusion, 'english').startsWith('O Christ our Savior')).toBe(true);
+    // Your Mercies O My God: its own 16 verses
+    const yourMercies = service.hymns.find((h) => h.title === 'Your Mercies O My God')!;
+    expect(text(yourMercies, 'english').split(/\n\s*\n/)).toHaveLength(16);
+    expect(text(yourMercies, 'arabic').split(/\n\s*\n/)).toHaveLength(16);
+    expect(text(yourMercies, 'english').startsWith('(1/16) Your mercies O my God')).toBe(true);
+    expect(yourMercies.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+    // Exposition on "Your Mercies, O my God": 17 paragraphs
+    const mercyExposition = service.hymns.find((h) => h.title === 'Exposition on "Your Mercies, O my God"')!;
+    expect(text(mercyExposition, 'english').split(/\n\s*\n/)).toHaveLength(17);
+    expect(text(mercyExposition, 'arabic').split(/\n\s*\n/)).toHaveLength(17);
+    expect(text(mercyExposition, 'english').startsWith('Your mercies, O my God, are countless.')).toBe(true);
+    expect(mercyExposition.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+    // Exposition of the Laborers: its own 22 verses
+    const laborers = service.hymns.find((h) => h.title === 'Exposition of the Laborers')!;
+    expect(text(laborers, 'english').split(/\n\s*\n/)).toHaveLength(22);
+    expect(text(laborers, 'arabic').split(/\n\s*\n/)).toHaveLength(22);
+    expect(text(laborers, 'english').startsWith('(1/22) The Master of the vineyard')).toBe(true);
+    expect(laborers.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+    // The Sunday Theotokion (14): the pasted text (14 stanzas in Coptic, English and Arabic), not the Annual Midnight copy
+    const theotokion14 = service.hymns.find((h) => h.title === 'The Sunday Theotokion (14)')!;
+    for (const language of ['coptic', 'english', 'arabic']) {
+      expect(text(theotokion14, language).split(/\n\s*\n/)).toHaveLength(14);
+    }
+    expect(text(theotokion14, 'coptic').startsWith('Ⲁⲕⲥⲟⲗⲥⲉⲗ')).toBe(true);
+    expect(text(theotokion14, 'english').startsWith('You decorated our souls')).toBe(true);
+    expect(theotokion14.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+    // The Sunday Theotokion (13): the pasted text (7 stanzas in Coptic, English and Arabic), not the Annual Midnight copy
+    const theotokion13 = service.hymns.find((h) => h.title === 'The Sunday Theotokion (13)')!;
+    for (const language of ['coptic', 'english', 'arabic']) {
+      expect(text(theotokion13, language).split(/\n\s*\n/)).toHaveLength(7);
+    }
+    expect(text(theotokion13, 'coptic').startsWith('Ⲟⲩⲥ̀ⲕⲏⲛⲏ ⲙ̀ⲙⲏⲓ')).toBe(true);
+    expect(text(theotokion13, 'english').startsWith('A true tabernacle')).toBe(true);
+    expect(theotokion13.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+    // The Sunday Theotokion (12): the pasted text (5 stanzas in Coptic, English and Arabic), not the Annual Midnight copy
+    const theotokion12 = service.hymns.find((h) => h.title === 'The Sunday Theotokion (12)')!;
+    for (const language of ['coptic', 'english', 'arabic']) {
+      expect(text(theotokion12, language).split(/\n\s*\n/)).toHaveLength(5);
+    }
+    expect(text(theotokion12, 'coptic').startsWith('Ⲡⲉⲱ̀ⲟⲩ Ⲙⲁⲣⲓⲁ')).toBe(true);
+    expect(text(theotokion12, 'english').startsWith('Your glory O Mary')).toBe(true);
+    expect(theotokion12.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+    // The Sunday Theotokion (11): the pasted text (4 stanzas in Coptic, English and Arabic), not the Annual Midnight copy
+    const theotokion11 = service.hymns.find((h) => h.title === 'The Sunday Theotokion (11)')!;
+    for (const language of ['coptic', 'english', 'arabic']) {
+      expect(text(theotokion11, language).split(/\n\s*\n/)).toHaveLength(4);
+    }
+    expect(text(theotokion11, 'coptic').startsWith('Ⲣⲁⲛ ⲛⲓⲃⲉⲛ ⲉⲧϭⲟⲥⲓ')).toBe(true);
+    expect(text(theotokion11, 'english').startsWith('All the high names')).toBe(true);
+    expect(text(theotokion11, 'arabic')).not.toContain('+');
+    expect(theotokion11.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+    // The Sunday Theotokion (10): 6 stanzas in Coptic, English and Arabic
+    const theotokion10 = service.hymns.find((h) => h.title === 'The Sunday Theotokion (10)')!;
+    for (const language of ['coptic', 'english', 'arabic']) {
+      expect(text(theotokion10, language).split(/\n\s*\n/)).toHaveLength(6);
+    }
+    expect(text(theotokion10, 'coptic').startsWith('Ⲧⲉⲟⲓ ⲛ̀ϩⲓⲕⲁⲛⲟⲥ')).toBe(true);
+    expect(text(theotokion10, 'english').startsWith('You are more worthy')).toBe(true);
+    expect(theotokion10.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+    // I Praise the Virgin: its own 33 verses (every few verses the refrain comes back)
+    const praiseVirgin = service.hymns.find((h) => h.title === 'I Praise the Virgin')!;
+    expect(text(praiseVirgin, 'english').split(/\n\s*\n/)).toHaveLength(33);
+    expect(text(praiseVirgin, 'arabic').split(/\n\s*\n/)).toHaveLength(33);
+    expect(text(praiseVirgin, 'english').startsWith('(1/33) I praise the Virgin')).toBe(true);
+    expect(praiseVirgin.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+    // You are Worthy: its own 24 verses
+    const youAreWorthy = service.hymns.find((h) => h.title === 'You are Worthy')!;
+    expect(text(youAreWorthy, 'english').split(/\n\s*\n/)).toHaveLength(24);
+    expect(text(youAreWorthy, 'arabic').split(/\n\s*\n/)).toHaveLength(24);
+    expect(text(youAreWorthy, 'english').startsWith('(1/24) I praise with power')).toBe(true);
+    expect(youAreWorthy.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+    // Exposition on You are Called: 7 paragraphs (Rejoice litany)
+    const youAreCalledExposition = service.hymns.find((h) => h.title === 'Exposition on You are Called')!;
+    expect(text(youAreCalledExposition, 'english').split(/\n\s*\n/)).toHaveLength(7);
+    expect(text(youAreCalledExposition, 'arabic').split(/\n\s*\n/)).toHaveLength(7);
+    expect(text(youAreCalledExposition, 'english').startsWith('My weak and sinful tongue')).toBe(true);
+    expect(youAreCalledExposition.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+    // O Daughter of David: its own 56 verses
+    const daughterOfDavid = service.hymns.find((h) => h.title === 'O Daughter of David')!;
+    expect(text(daughterOfDavid, 'english').split(/\n\s*\n/)).toHaveLength(56);
+    expect(text(daughterOfDavid, 'arabic').split(/\n\s*\n/)).toHaveLength(56);
+    expect(text(daughterOfDavid, 'english').startsWith('(1/56) O daughter of David')).toBe(true);
+    expect(daughterOfDavid.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+    // O Mary: its own 24 verses (the English carries the (n/24) numbers, the Arabic has none)
+    const oMary = service.hymns.find((h) => h.title === 'O Mary')!;
+    expect(text(oMary, 'english').split(/\n\s*\n/)).toHaveLength(24);
+    expect(text(oMary, 'arabic').split(/\n\s*\n/)).toHaveLength(24);
+    expect(text(oMary, 'english').startsWith('(1/24) O Mary / Lady of virgins')).toBe(true);
+    expect(oMary.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+    // Rejoice O Mary: its own 15 verses
+    const rejoiceOMary = service.hymns.find((h) => h.title === 'Rejoice O Mary')!;
+    expect(text(rejoiceOMary, 'english').split(/\n\s*\n/)).toHaveLength(15);
+    expect(text(rejoiceOMary, 'arabic').split(/\n\s*\n/)).toHaveLength(15);
+    expect(text(rejoiceOMary, 'english').startsWith('(1/15) Rejoice O Mary: Adam became')).toBe(true);
+    expect(rejoiceOMary.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
     // Exposition on Seven Times Every Day: 12 paragraphs (Hail to you, O Mary litany)
     const sevenTimes = service.hymns.find((h) => h.title === 'Exposition on Seven Times Every Day')!;
     expect(text(sevenTimes, 'english').split(/\n\s*\n/)).toHaveLength(12);

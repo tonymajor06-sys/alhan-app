@@ -46,9 +46,23 @@ const ABBREVIATIONS: Record<string, string> = {
   'ⲡⲓⲉⲑⲩ': 'ⲡⲓⲉⲑⲟⲩⲁⲃ',
   'ⲡⲉⲛⲟⲥ': 'ⲡⲉⲛϭⲟⲓⲥ',
   'ⲡⲟⲥ': 'ⲡ̀ϭⲟⲓⲥ',
+  'ⲡⲉⲛⲥⲱⲣ': 'ⲡⲉⲛⲥⲱⲧⲏⲣ',
   'ⲓⲏⲥ': 'ⲓⲏⲥⲟⲩⲥ',
   'ⲡⲭⲥ': 'ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ',
   'ⲭⲉ': 'ⲭⲉⲣⲉ ⲛⲉ ⲱ ϯⲡⲁⲣⲑⲉⲛⲟⲥ',
+};
+
+const NUMERALS: Record<string, string> = {
+  'ⲁ': '١',
+  'ⲃ': '٢',
+  'ⲅ': '٣',
+  'ⲇ': '٤',
+  'ⲉ': '٥',
+  'ⲋ': '٦',
+  'ⲍ': '٧',
+  'ⲏ': '٨',
+  'ⲑ': '٩',
+  'ⲓ': '١٠',
 };
 
 interface Letter {
@@ -66,6 +80,8 @@ function convertWord(core: string): string {
   if (OVERLINES.test(core)) {
     const full = ABBREVIATIONS[plain];
     if (full) return full.split(' ').map(convertWord).join(' ');
+    // a single letter with a line over it is a number: ⲁ̅ = 1, ⲃ̅ = 2, ⲅ̅ = 3 ...
+    if (NUMERALS[plain]) return NUMERALS[plain];
   }
   // The Lord's symbol is not in the Coptic font; it stands for ⲡ̀ϭⲟⲓⲥ
   if (core.includes('⳪')) return convertWord(core.replace('⳪', 'ϭⲟⲓⲥ'));
