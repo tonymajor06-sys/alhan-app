@@ -3530,6 +3530,7 @@ const midnightAudio: Record<string, string> = {
   'annual-midnight-arihoo-chasf': 'midnight-arihoo-chasf.m4a',
   'annual-midnight-fourth-canticle': 'midnight-fourth-canticle.m4a',
   'annual-midnight-greek-psali-watos': 'midnight-aripsalin.m4a',
+  'annual-midnight-three-holy-children': 'midnight-tenen.m4a',
   'annual-midnight-doxology-virgin-mary': 'midnight-doxology-virgin-mary.m4a',
   'annual-midnight-doxology-heavenly-beings': 'midnight-doxology-heavenly-beings.m4a',
   'annual-midnight-doxology-st-mark': 'midnight-doxology-st-mark.m4a',
@@ -3715,7 +3716,7 @@ if (annualLiturgy) {
   }
 }
 
-// ---- Audio: Annual > Liturgy > Taishori, Tishori and the Hymn of the Intercessions ----
+// ---- Audio: Annual > Liturgy ----
 for (const [id, audio] of [
   ['annual-liturgy-offering-golden-censer', 'liturgy-taishori.m4a'],
   ['annual-liturgy-offering-golden-censer-virgin', 'liturgy-tishori.m4a'],
@@ -3724,6 +3725,11 @@ for (const [id, audio] of [
   ['annual-liturgy-offering-alleluia-thought-of-man', 'liturgy-je-fmevi.m4a'],
   ['annual-liturgy-agios', 'liturgy-agios.m4a'],
   ['annual-liturgy-blessed-are-they', 'liturgy-gospel-response.m4a'],
+  ['annual-liturgy-offering-blessed-are-you', 'liturgy-ksmarout.m4a'],
+  ['annual-liturgy-offering-all-the-wise-men', 'liturgy-nisavev.m4a'],
+  ['annual-liturgy-pihmot-gar', 'liturgy-pihmot-gar.m4a'],
+  ['annual-liturgy-praxis-response', 'liturgy-praxis-response.m4a'],
+  ['annual-liturgy-hiten-ni-presvia-eleos', 'liturgy-faithful-hitens.m4a'],
 ]) {
   for (const version of annualLiturgy?.hymns.find((h) => h.id === id)?.versions ?? []) {
     if (version.language === 'coptic' || version.language === 'englishCoptic') {
