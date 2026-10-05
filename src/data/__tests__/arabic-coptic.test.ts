@@ -53,12 +53,19 @@ describe('Coptic in Arabic letters for every hymn', () => {
 describe('Kiahk Praises & Season > Midnight Praises', () => {
   const service = seasons.find((s) => s.id === 'kiahk')!.services.find((s) => s.id === 'kiahk-midnight')!;
 
-  it('lists the 95 titles of the service, in order, with no placeholders left', () => {
-    expect(service.hymns).toHaveLength(95);
+  it('lists the 87 titles of the service, in order, with no placeholders left', () => {
+    expect(service.hymns).toHaveLength(87);
     expect(service.hymns[0].title).toBe('Holy God');
-    expect(service.hymns[94].title).toBe('Priest Absolution');
-    expect(new Set(service.hymns.map((h) => h.id)).size).toBe(95);
+    expect(service.hymns[86].title).toBe('Conclusion in the presence of the Pope or a Bishop');
+    expect(new Set(service.hymns.map((h) => h.id)).size).toBe(87);
     expect(service.hymns.some((h) => /Hymn #\d+$/.test(h.title))).toBe(false);
+  });
+
+  it('leaves out the prayers that are not hymns', () => {
+    const titles = service.hymns.map((h) => h.title);
+    for (const title of ['Antiphonary', 'Introduction To The Creed', 'The Orthodox Creed', 'Holy Holy Holy', 'Our Father', 'The Short Blessing', 'Priest Absolution']) {
+      expect(titles).not.toContain(title);
+    }
   });
 
   it('has the same lyrics as Annual Midnight Praises for the hymns that are in both', () => {
@@ -82,8 +89,38 @@ describe('Kiahk Praises & Season > Midnight Praises', () => {
     const sevens = service.hymns.filter((h) => h.title === 'The Sunday Theotokion (7)');
     expect(sevens).toHaveLength(2);
     expect(text(sevens[0], 'coptic')).not.toBe(text(sevens[1], 'coptic'));
-    // a hymn that has no lyrics anywhere else is left for later
-    expect(service.hymns.find((h) => h.title === 'Holy God')?.versions).toEqual([]);
+    // a hymn that has no lyrics yet is left for later
+    expect(service.hymns.find((h) => h.title === 'Antiphonary')).toBeUndefined();
+    expect(service.hymns.find((h) => h.title === 'The First Explanation')?.versions).toEqual([]);
+  });
+
+  it('has the lyrics of Holy God, 53 verses in English and in Arabic', () => {
+    const holyGod = service.hymns.find((h) => h.title === 'Holy God')!;
+    const verses = (language: string) => holyGod.versions.find((v) => v.language === language)!.text.split(/\n\s*\n/);
+    expect(verses('english')).toHaveLength(53);
+    expect(verses('arabic')).toHaveLength(53);
+    expect(verses('english')[0]).toBe('(1/53) Holy God / Holy Mighty / Holy Immortal / Amen Alleluia');
+    expect(verses('arabic')[52]).toContain('(٥٣/٥٣)');
+    expect(holyGod.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+  });
+
+  it('has the lyrics of Psali Adam on First Canticle, 26 verses in English and in Arabic', () => {
+    expect(service.hymns[1].title).toBe('Psali Adam on First Canticle');
+    const verses = (language: string) => service.hymns[1].versions.find((v) => v.language === language)!.text.split(/\n\s*\n/);
+    expect(verses('english')).toHaveLength(26);
+    expect(verses('arabic')).toHaveLength(26);
+    expect(verses('english')[0]).toContain('The Lord has reigned');
+    expect(service.hymns[1].versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+  });
+
+  it('has the lyrics of Hymn after First Canticle, 33 verses in English and in Arabic', () => {
+    const hymn = service.hymns[4];
+    expect(hymn.title).toBe('Hymn after First Canticle');
+    const verses = (language: string) => hymn.versions.find((v) => v.language === language)!.text.split(/\n\s*\n/);
+    expect(verses('english')).toHaveLength(33);
+    expect(verses('arabic')).toHaveLength(33);
+    expect(verses('english')[0]).toContain('The Lord said to Moses');
+    expect(hymn.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
   });
 });
 
