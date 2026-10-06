@@ -556,7 +556,7 @@ describe('Kiahk Praises & Season > Matins', () => {
       'Ⲉ̀ⲧⲁ ⲡⲓⲱⲡ (Fifth Doxology for Kiahk)',
       'Ϥ̀ⲉⲙⲡ̀ϣⲁ ⲅⲁⲣ (Sixth Doxology for Kiahk)',
       'Ⲛ̀ⲑⲟⲕ ⲟⲩⲛⲓϣϯ (Kiahk Doxology for Archangel Gabriel)',
-      'The Conclusion of the Doxologies',
+      'Ϣⲱⲡⲓ Ⲛ̀ⲑⲟ (The Conclusion of the Doxologies)',
       '',
       'Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ',
       'Ⲥⲱⲧⲉⲙ ⲧⲁϣⲉⲣⲓ (Psalm Trailer)',
@@ -592,7 +592,25 @@ describe('Kiahk Praises & Season > Matins', () => {
     expect(text(fatherSon, 'englishCoptic')).toContain('patshois epouro Ge-ōrgios');
     expect(text(fatherSon, 'arabicCoptic')).toContain('پاتشُيس إپورُ');
     expect(new Set(service.hymns.map((h) => h.id)).size).toBe(service.hymns.length);
-    for (const hymn of service.hymns) expect([hymn.title, hymn.versions.length]).toEqual([hymn.title, 0]);
+    // only the Introduction and the Conclusion of the Doxologies have lyrics so far (copied from Annual Matins)
+    const copied = ['Ϧⲉⲛ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ (Introduction to the Doxologies)', 'Ϣⲱⲡⲓ Ⲛ̀ⲑⲟ (The Conclusion of the Doxologies)'];
+    for (const hymn of service.hymns) {
+      if (copied.includes(hymn.title)) expect(hymn.versions.length).toBeGreaterThan(0);
+      else expect([hymn.title, hymn.versions.length]).toEqual([hymn.title, 0]);
+    }
+    const annualMatins = seasons.find((s) => s.id === 'annual')!.services.find((s) => s.id === 'annual-matins')!;
+    const baseLanguages = ['coptic', 'englishCoptic', 'english', 'arabic'];
+    for (const [title, annualId] of [[copied[0], 'annual-matins-intro-doxologies'], [copied[1], 'annual-matins-doxology-conclusion']]) {
+      const kiahk = service.hymns.find((h) => h.title === title)!;
+      const original = annualMatins.hymns.find((h) => h.id === annualId)!;
+      for (const language of baseLanguages) {
+        const text = (h: Hymn) => h.versions.find((v) => v.language === language)?.text;
+        expect([title, language, text(kiahk)]).toEqual([title, language, text(original)]);
+        expect(text(kiahk)).toBeTruthy();
+      }
+      expect(kiahk.versions.some((v) => v.language === 'arabicCoptic')).toBe(true);
+      expect(kiahk.versions.some((v) => v.language === 'arabicEnglish')).toBe(true);
+    }
   });
 });
 

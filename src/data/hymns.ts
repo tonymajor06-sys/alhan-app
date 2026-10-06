@@ -1535,7 +1535,7 @@ if (kiahkMatins) {
     'Ⲉ̀ⲧⲁ ⲡⲓⲱⲡ (Fifth Doxology for Kiahk)',
     'Ϥ̀ⲉⲙⲡ̀ϣⲁ ⲅⲁⲣ (Sixth Doxology for Kiahk)',
     'Ⲛ̀ⲑⲟⲕ ⲟⲩⲛⲓϣϯ (Kiahk Doxology for Archangel Gabriel)',
-    'The Conclusion of the Doxologies',
+    'Ϣⲱⲡⲓ Ⲛ̀ⲑⲟ (The Conclusion of the Doxologies)',
     '', // a divider with no name, like the line after the Doxologies in the list
     'Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ',
     'Ⲥⲱⲧⲉⲙ ⲧⲁϣⲉⲣⲓ (Psalm Trailer)',
@@ -5207,6 +5207,18 @@ if (greatLent) {
     { id: 'lent-weekday', title: 'Weekdays', hymns: serviceGroups('weekday') },
     { id: 'lent-weekend', title: 'Weekends (Saturday and Sunday)', hymns: serviceGroups('weekend') },
   ];
+}
+
+// ---- Kiahk > Matins: the Introduction and the Conclusion of the Doxologies are the same as in Annual Matins ----
+if (kiahkMatins && annualMatins) {
+  const kiahkMatinsFromAnnual: Record<string, string> = {
+    'Ϧⲉⲛ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ (Introduction to the Doxologies)': 'annual-matins-intro-doxologies',
+    'Ϣⲱⲡⲓ Ⲛ̀ⲑⲟ (The Conclusion of the Doxologies)': 'annual-matins-doxology-conclusion',
+  };
+  for (const hymn of kiahkMatins.hymns) {
+    const source = annualMatins.hymns.find((h) => h.id === kiahkMatinsFromAnnual[hymn.title]);
+    if (source) hymn.versions = source.versions.map((version) => ({ ...version }));
+  }
 }
 
 // Keep these last: give every hymn a "Coptic in Arabic letters" and an "English in Arabic letters" version
