@@ -1518,6 +1518,86 @@ if (kiahkMidnight) {
   }
 }
 
+// ---- Kiahk > Matins: the titles only (the lyrics come later) ----
+const kiahkMatins = seasons
+  .find((s) => s.id === 'kiahk')
+  ?.services.find((s) => s.id === 'kiahk-matins');
+
+if (kiahkMatins) {
+  const kiahkMatinsTitles = [
+    'Verses of the Cymbals',
+    'Doxologies',
+    'Ϧⲉⲛ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ (Introduction to the Doxologies)',
+    'Ⲕⲉ ⲅⲁⲣ ⲁⲓϣⲁⲛⲥⲁϫⲓ (First Doxology for Kiahk)',
+    'Ⲉ̀ⲣⲉ ⲡ̀ⲥⲟⲗⲥⲉⲗ ⲛ̀Ϯⲡⲁⲣⲑⲉⲛⲟⲥ (Second Doxology for Kiahk)',
+    'Ⲅⲁⲃⲓⲣⲏⲗ ⲡⲓⲁⲅⲅⲉⲗⲟⲥ (Third Doxology for Kiahk)',
+    'Ϧⲉⲛ ⲡⲓⲁ̀ⲃⲟⲧ (Fourth Doxology for Kiahk)',
+    'Ⲉ̀ⲧⲁ ⲡⲓⲱⲡ (Fifth Doxology for Kiahk)',
+    'Ϥ̀ⲉⲙⲡ̀ϣⲁ ⲅⲁⲣ (Sixth Doxology for Kiahk)',
+    'Ⲛ̀ⲑⲟⲕ ⲟⲩⲛⲓϣϯ (Kiahk Doxology for Archangel Gabriel)',
+    'The Conclusion of the Doxologies',
+    '', // a divider with no name, like the line after the Doxologies in the list
+    'Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ',
+    'Ⲥⲱⲧⲉⲙ ⲧⲁϣⲉⲣⲓ (Psalm Trailer)',
+    'Ⲧⲉⲛϯ ⲛⲉ ⲙ̀ⲡⲓⲭⲉⲣⲉⲧⲓⲥⲙⲟⲥ (Gospel Response)',
+    'Concluding Hymn',
+  ];
+  // "Doxologies" and the blank one are dividers (like the "Doxologies" divider in Annual Matins); numbering starts again after each
+  kiahkMatins.hymns = kiahkMatinsTitles.map((title, index) =>
+    title === 'Doxologies'
+      ? { id: 'kiahk-matins-doxologies-header', title, versions: [], isSectionHeader: true }
+      : title === ''
+        ? { id: 'kiahk-matins-divider', title, versions: [], isSectionHeader: true }
+        : { id: `kiahk-matins-hymn-${index + 1}`, title, versions: [] }
+  );
+  // "Verses of the Cymbals" is a group: it opens its own list of two hymns (titles only for now) instead of the reader
+  const kiahkMatinsCymbals = kiahkMatins.hymns.find((h) => h.title === 'Verses of the Cymbals');
+  if (kiahkMatinsCymbals) {
+    kiahkMatinsCymbals.children = ['Ⲧⲉⲛⲟⲩⲱϣⲧ ⲙ̀Ⲫⲓⲱⲧ ⲛⲉⲙ Ⲡϣⲏⲣⲓ', 'Ⲁⲙⲱⲓⲛⲓ ⲙⲁⲣⲉⲛⲟⲩⲱϣⲧ'].map((title, index) => ({
+      id: `kiahk-matins-verses-of-cymbals-${index + 1}`,
+      title,
+      versions: [],
+    }));
+    const [kiahkCymbalsFatherSon, kiahkCymbalsCome] = kiahkMatinsCymbals.children;
+    kiahkCymbalsFatherSon.versions = [
+      {
+        language: 'coptic',
+        text: 'Ⲕⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ.\n\nⲦⲉⲛⲟⲩⲱϣⲧ ⲙ̀Ⲫⲓⲱⲧ ⲛⲉⲙ Ⲡϣⲏⲣⲓ: ⲛⲉⲙ Ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ ⲉⲑⲟⲩⲁⲃ: Ϯⲧⲣⲓⲁⲥ ⲉⲑⲟⲩⲁⲃ: ⲛ̀ⲟ̀ⲙⲟⲟⲩⲥⲓⲟⲥ.\n\nⲬⲉⲣⲉ ϯⲉⲕⲕⲗⲏⲥⲓⲁ: ⲡ̀ⲏⲓ ⲛ̀ⲧⲉ ⲛⲓⲁⲅⲅⲉⲗⲟⲥ: ⲭⲉⲣⲉ ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ⲉ̀ⲧⲁⲥⲙⲉⲥ Ⲡⲉⲛⲥⲱⲧⲏⲣ.\n\nⲬⲉⲣⲉ ⲛⲉ Ⲙⲁⲣⲓⲁ: ϯϭⲣⲟⲙⲡⲓ ⲉⲑⲛⲉⲥⲱⲥ: ⲑⲏⲉ̀ⲧⲁⲥⲙⲓⲥⲓ ⲛⲁⲛ: ⲙ̀Ⲫⲛⲟⲩϯ ⲡⲓⲗⲟⲅⲟⲥ.\n\nⲬⲉⲣⲉ ⲛⲉ Ⲙⲁⲣⲓⲁ: ϧⲉⲛ ⲟⲩⲭⲉⲣⲉ ⲉϥⲟⲩⲁⲃ: ⲭⲉⲣⲉ ⲛⲉ Ⲙⲁⲣⲓⲁ: ⲑ̀ⲙⲁⲩ ⲙ̀ⲫⲏⲉⲑⲟⲩⲁⲃ.\n\nⲬⲉⲣⲉ Ⲅⲁⲃⲣⲓⲏⲗ: ⲡⲓⲛⲓϣϯ ⲛ̀ⲁⲣⲭⲏⲁⲅⲅⲉⲗⲟⲥ: ⲭⲉⲣⲉ ⲫⲏⲉ̀ⲧⲁϥϩⲓϣⲉⲛⲛⲟⲩϥⲓ: ⲙ̀Ⲙⲁⲣⲓⲁ ϯⲡⲁⲣⲑⲉⲛⲟⲥ.\n\nⲬⲉⲣⲉ ⲛⲓⲭⲉⲣⲟⲩⲃⲓⲙ: ⲭⲉⲣⲉ ⲛⲓⲥⲉⲣⲁⲫⲓⲙ: ⲭⲉⲣⲉ ⲛⲓⲧⲁⲅⲙⲁ ⲧⲏⲣⲟⲩ: ⲛ̀ⲉ̀ⲡⲟⲩⲣⲁⲛⲓⲟⲛ.\n\nⲬⲉⲣⲉ Ⲓⲱⲁⲛⲛⲏⲥ: ⲡⲓⲛⲓϣϯ ⲙ̀ⲡ̀ⲣⲟⲇⲣⲟⲙⲟⲥ: ⲭⲉⲣⲉ ⲡⲓⲟⲩⲏⲃ ⲡ̀ⲥⲩⲅⲅⲉⲛⲏⲥ ⲛ̀Ⲉⲙⲙⲁⲛⲟⲩⲏⲗ\n\nⲬⲉⲣⲉ ⲛⲁϭⲟⲓⲥ ⲛ̀ⲓⲟϯ: ⲛ̀ⲁ̀ⲡⲟⲥⲧⲟⲗⲟⲥ: ⲭⲉⲣⲉ ⲛⲓⲙⲁⲑⲏⲧⲏⲥ: ⲛ̀ⲧⲉ Ⲡⲉⲛϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ.\n\nⲬⲉⲣⲉ ⲛⲁⲕ ⲱ̀ⲡⲓⲙⲁⲣⲧⲩⲣⲟⲥ: ⲭⲉⲣⲉ ⲡⲓⲉ̀ⲩⲁ̀ⲅⲅⲉⲗⲓⲥⲧⲏⲥ: ⲭⲉⲣⲉ ⲡⲓⲁ̀ⲡⲟⲥⲧⲟⲗⲟⲥ: ⲁⲃⲃⲁ Ⲙⲁⲣⲕⲟⲥ ⲡⲓⲑⲉⲱ̀ⲣⲓⲙⲟⲥ.\n\nⲬⲉⲣⲉ ⲛⲁⲕ ⲱ̀ ⲡⲓⲙⲁⲣⲧⲩⲣⲟⲥ: ⲭⲉⲣⲉ ⲡⲓϣⲱⲓϫ ⲛ̀ⲅⲉⲛⲛⲉⲟⲥ: ⲭⲉⲣⲉ ⲡⲓⲁ̀ⲑⲗⲟⲫⲟⲣⲟⲥ: ⲡⲁⲟ︦ⲥ︦ ⲡ̀ⲟⲩⲣⲟ Ⲅⲉⲱ̀ⲣⲅⲓⲟⲥ.\n\nⲬⲉⲣⲉ ⲛⲁⲕ ⲱ̀ ⲛⲓⲙⲁⲣⲧⲩⲣⲟⲥ: ⲭⲉⲣⲉ ⲡⲓϣⲱⲓϫ ⲛ̀ⲅⲉⲛⲛⲉⲟⲥ: ⲭⲉⲣⲉ ⲡⲓⲁⲑⲗⲟⲫⲟⲣⲟⲥ: Ⲫⲓⲗⲟⲡⲁⲧⲏⲣ Ⲙⲉⲣⲕⲟⲩⲣⲓⲟⲥ.\n\nⲬⲉⲣⲉ ⲛⲁⲕ ⲱ̀ ⲡⲓⲙⲁⲣⲧⲩⲣⲟⲥ: ⲭⲉⲣⲉ ⲡⲓϣⲱⲓϫ ⲛ̀ⲅⲉⲛⲛⲉⲟⲥ: ⲭⲉⲣⲉ ⲡⲓⲁ̀ⲑⲗⲟⲫⲟⲣⲟⲥ: ⲡⲓⲁ̀ⲅⲓⲟⲥ ⲁ̀ⲡⲁ Ⲙⲏⲛⲁ.\n\nⲰⲟⲩⲛⲓⲁⲧⲕ ϧⲉⲛ ⲟⲩⲙⲉⲑⲙⲏⲓ: Ⲡⲉⲛⲓⲱⲧ ⲉ︦ⲑ︦ⲩ︦ ⲙ̀ⲡⲁⲧⲣⲓⲁⲣⲭⲏⲥ: Ⲡⲁⲡⲁ Ⲁⲃⲃⲁ Ⲕⲩⲣⲓⲗⲗⲟⲥ Ⲡⲓⲙⲁϩⲥⲟⲟϩ: ⲡⲓⲙⲉⲛⲣⲓⲧ ⲛ̀ⲧⲉ Ⲡⲭ︦ⲥ︦.\n\nⲰⲟⲩⲛⲓⲁⲧⲕ ϧⲉⲛ ⲟⲩⲙⲉⲑⲙⲏⲓ: ⲡⲉⲛⲓⲱⲧ ⲉⲑⲟⲩⲁⲃ ⲛ̀ⲇⲓⲕⲉⲟⲥ: ⲁⲃⲃⲁ Ⲁⲃⲣⲁⲁⲙ ⲡⲓⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲥ: ⲡⲓⲙⲉⲛⲣⲓⲧ ⲛ̀ⲧⲉ Ⲡⲭ︦ⲥ︦.\n\nⲦⲉⲛϯϩⲟ ⲉ̀ⲣⲟⲕ ⲱ̀ Ⲩ̀ⲓⲟⲥ Ⲑⲉⲟⲥ: ⲉⲑⲣⲉⲕⲁ̀ⲣⲉϩ ⲉ̀ⲡ̀ⲱⲛϧ ⲙ̀ⲡⲉⲛⲡⲁⲧⲣⲓⲁⲣⲭⲏⲥ: ⲡⲁⲡⲁ Ⲁⲃⲃⲁ (...) ⲡⲓⲁⲣⲭⲏⲉ̀ⲣⲉⲩⲥ: ⲙⲁⲧⲁϫⲣⲟϥ ϩⲓϫⲉⲛ ⲡⲉϥⲑ̀ⲣⲟⲛⲟⲥ.\n\nⲚⲉⲙ ⲡⲉϥⲕⲉϣ̀ⲫⲏⲣ ⲛ̀ⲗⲓⲧⲟⲩⲣⲅⲟⲥ: ⲡⲉⲛⲓⲱⲧ ⲉⲑⲟⲩⲁⲃ ⲛ̀ⲇⲓⲕⲉⲟⲥ Ⲁⲃⲃⲁ (...) ⲡⲓⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲥ (ⲡⲓⲙⲏⲧⲣⲟⲡⲟⲗⲓⲧⲏⲥ): ⲙⲁⲧⲁϫⲣⲟϥ ϩⲓϫⲉⲛ ⲡⲉϥⲑ̀ⲣⲟⲛⲟⲥ.\n\nϨⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ: ⲛ̀ⲧⲉ Ϯⲑⲉⲟ̀ⲧⲟⲕⲟⲥ ⲉⲑⲟⲩⲁⲃ Ⲙⲁⲣⲓⲁ: Ⲡ̀ϭⲟⲓⲥ ⲁ̀ⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ: ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.\n\nⲈⲑⲣⲉⲛϩⲱⲥ ⲉ̀ⲣⲟⲕ: ⲛⲉⲙ Ⲡⲉⲕⲓⲱⲧ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ: ⲛⲉⲙ Ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ ⲉⲑⲟⲩⲁⲃ: ϫⲉ ⲁⲕⲓ̀ ⲁⲕⲥⲱϯ ⲙ̀ⲙⲟⲛ ⲛⲁⲓ ⲛⲁⲛ.',
+      },
+      {
+        language: 'englishCoptic',
+        text: 'Kurie ele-ēson.\n\nTenouōsht em-Fiōt nem Pshēri: nem Pi-epneuma ethouab: Titrias ethouab: enomoousios.\n\nKhere tiekklēsia: epēi ente niaggelos: khere tiparthenos: etasmes Pensōtēr.\n\nKhere ne Maria: titshrompi ethnesōs: thē-etasmisi nan: em-Fnouti pilogos.\n\nKhere ne Maria: khen oukhere efouab: khere ne Maria: ethmau emfēethouab.\n\nKhere Gabriēl: pinishti enarkhēaggelos: khere fē-etafhishennoufi: em-Maria tiparthenos.\n\nKhere nikherouvim: khere niserafim: khere nitagma tērou: enepouranion.\n\nKhere Iōannēs: pinishti emeprodromos: khere piouēb epsuggenēs en-Emmanouēl\n\nKhere natshois enioti: enapostolos: khere nimathētēs: ente Pentshois Iēsous Pi-ekhristos.\n\nKhere nak ōpimarturos: khere pi-eu-aggelistēs: khere pi-apostolos: abba Markos pithe-ōrimos.\n\nKhere nak ō pimarturos: khere pishōij engenneos: khere pi-athloforos: patshois epouro Ge-ōrgios.\n\nKhere nak ō nimarturos: khere pishōij engenneos: khere piathloforos: Filopatēr Merkourios.\n\nKhere nak ō pimarturos: khere pishōij engenneos: khere pi-athloforos: pi-agios apa Mēna.\n\nŌouniatk khen oumethmēi: Peniōt ethouab empatriarkhēs: Papa Abba Kurillos Pimahsooh: pimenrit ente Pi-ekhristos.\n\nŌouniatk khen oumethmēi: peniōt ethouab endikeos: abba Abraam pi-episkopos: pimenrit ente Pi-ekhristos.\n\nTentiho erok ō Uios Theos: ethrekareh e-epōnkh empenpatriarkhēs: papa Abba (...) piarkhē-ereus: matajrof hijen pefethronos.\n\nNem pefke-eshfēr enlitourgos: peniōt ethouab endikeos Abba (...) pi-episkopos (pimētropolitēs): matajrof hijen pefethronos.\n\nHiten ni-epresvia: ente Tithe-otokos ethouab Maria: Eptshois ari-ehmot nan: empikhō evol ente nennovi.\n\nEthrenhōs erok: nem Pekiōt enagathos: nem Pi-epneuma ethouab: je aki aksōti emmon nai nan.',
+      },
+      {
+        language: 'english',
+        text: 'Lord have mercy.\n\nWe worship the Father and the Son, and the Holy Spirit, the holy and co-essential, Trinity.\n\nHail to the Church, the house of the angels, Hail to the Virgin, who gave birth to our Savior.\n\nHail to you O Mary, the beautiful dove, who has borne to us, God the Logos.\n\nHail to you O Mary, with a holy hail, Hail to you O Mary, the Mother of the Holy One.\n\nHail to Gabriel: the great archangel: hail to him who announced glad tidings: to the Virgin Mary.\n\nHail to the cherubim: hail to the seraphim: hail to all: the heavenly orders.\n\nHail to John: the great forerunner: hail to the priest: the kinsman of Emmanuel.\n\nHail to my lords, and fathers the apostles, hail to the disciples, of our Lord Jesus Christ.\n\nHail to you O martyr: hail to the Evangelist: hail to the Apostle: Mark the Beholder of God.\n\nHail to you, O martyr: hail to the courageous hero: hail to the struggle-mantled, my Lord Prince George.\n\nHail to you O martyr: hail to the courageous hero: hail to the struggle bearer: Philopater Mercurius.\n\nHail to you, O martyr: hail to the noble hero: hail to the struggle-bearer, saint Abba Mina.\n\nBlessed are you indeed: our holy father the patriarch: Abba Kyrillos the sixth: the beloved of Christ.\n\nBlessed are you indeed, our holy and righteous father, Abba Abraam the bishop, the beloved of Christ.\n\nWe ask You O Son of God, to keep the life of our patriarch, Pope Abba (...) the high priest, confirm him upon his throne.\n\nAnd his partner in the liturgy, our holy righteous father, Abba (...) the bishop (metropolitan), confirm him upon his throne.\n\nThrough the intercessions, of the Theotokos Saint Mary, O Lord grant us, the forgiveness of our sins.\n\nThat we may praise You: with Your good Father: and the Holy Spirit: for You have come and saved us. Have mercy on us.',
+      },
+      {
+        language: 'arabic',
+        text: 'ياربُ إرحَم.\n\nنسجد للآب والإبن والروح القدس الثالوث القدوس المساوي في الجوهر.\n\nالسلام للكنيسة بيت الملائكة السلام للعذراء التي ولدت مخلصنا.\n\nالسلام لك يا مريم الحمامة الحسنة التي ولدت لنا، الله الكلمة.\n\nالسلام لك يا مريم، سلاماً مقدساً السلام لك يا مريم أم القدوس.\n\nالسلام لغبريال رئيس الملائكة العظيم: السلام للذي بشر: مريم العذراء.\n\nالسلام للشاروبيم، السلام للسِّرافيم السلام لجميع الطغمات السمائية.\n\nالسلام ليوحنا السابق العظيم السلام للكاهن نسيب عمانوئيل.\n\nالسلام لسادتي الآباء، الرسل. السلام لتلاميذ ربنا يسوع المسيح.\n\nالسلا لك أيها الشهيد السلام للانجيلي السلام للرسول مرقس ناظر الإله.\n\nالسلام لك أيها الشهيد، السلام للشجاع المجاهد، السلام لللابس الجهاد، سيدي الملك جيؤرجيوس.\n\nالسلام لك أيها الشهيد. السلام للشجاع البطل. السلام للمجاهد محب الآب مرقوريوس.\n\nالسلام لك أيها الشهيد. السلام للشجاع البطل. السلام للمجاهد القديس أبا مينا.\n\nطوباك بالحقيقة، يا أبانا القديس البطريرك، الانبا كيرلس السادس، حبيب المسيح.\n\nطوباك بالحقيقة يا أبانا القديس البار انبا ابرآم الاسقف حبيب المسيح.\n\nنسألك يا إبن الله، أن تحفظ حياة بطريركنا، البابا أنبا (...) رئيسُ الكهنة، ثبته على كرسيه.\n\nوشريكه في الخدمة الرسولية، أبانا القديس البار، أنبا (...) الأسقف (المطران)، ثبته على كرسيه.\n\nبشفاعات والدة الإله القديسة مريم، يارب أنعم علينا بمغفرة خطايانا.\n\nلكي نُسبِّحك، مع أبيك الصالح، والروح القدس، لأنك أتيت وخلَّصتنا إرحمنا.',
+      },
+    ];
+    kiahkCymbalsCome.versions = [
+      {
+        language: 'coptic',
+        text: 'Ⲕⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ.\n\nⲀⲙⲱⲓⲛⲓ ⲙⲁⲣⲉⲛⲟⲩⲱϣⲧ: ⲛ̀Ϯⲧ̀ⲣⲓⲁⲥ ⲉⲑⲟⲩⲁⲃ: ⲉ̀ⲧⲉ Ⲫⲓⲱⲧ ⲛⲉⲙ Ⲡϣⲏⲣⲓ: ⲛⲉⲙ Ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ Ⲉⲑⲟⲩⲁⲃ.\n\nⲀⲛⲟⲛ ϧⲁ ⲛⲓⲗⲁⲟⲥ: ⲛ̀ⲭ̀ⲣⲓⲥⲧⲓⲁⲛⲟⲥ: ⲫⲁⲓ ⲅⲁⲣ ⲡⲉ Ⲡⲉⲛⲛⲟⲩϯ: ⲛ̀ⲁ̀ⲗⲏⲑⲓⲛⲟⲥ.\n\nⲞⲩⲟⲛ ⲟⲩϩⲉⲗⲡⲓⲥ ⲛ̀ⲧⲁⲛ: ϧⲉⲛ ⲑⲏⲉⲑⲟⲩⲁⲃ Ⲙⲁⲣⲓⲁ: ⲉ̀ⲣⲉ Ⲫϯ ⲛⲁⲓ ⲛⲁⲛ: ϩⲓⲧⲉⲛ ⲛⲉⲥⲡ̀ⲣⲉⲥⲃⲓⲁ.\n\nⲞⲩⲟⲛ ⲟⲩⲙⲉⲧⲥⲉⲙⲛⲟⲥ: ⲛ̀ϩ̀ⲣⲏⲓ ϧⲉⲛ ⲡⲁⲓⲕⲟⲥⲙⲟⲥ ⲉ̀ⲃⲟⲗϩⲓⲧⲉⲛ ⲡⲓϣ̀ⲗⲏⲗ: ⲛ̀ⲧⲉ ϯⲁ̀ⲅⲓⲁ Ⲙⲁⲣⲓⲁ ϯⲡⲁⲣⲑⲉⲛⲟⲥ.\n\nⲬⲉⲣⲉ ⲛⲉ Ⲙⲁⲣⲓⲁ: ϯϭⲣⲟⲙⲡⲓ ⲉⲑⲛⲉⲥⲱⲥ: ⲑⲏⲉ̀ⲧⲁⲥⲙⲓⲥⲓ ⲛⲁⲛ: ⲙ̀Ⲫⲛⲟⲩϯ ⲡⲓⲗⲟⲅⲟⲥ.\n\nⲬⲉⲣⲉ ⲛⲉ Ⲙⲁⲣⲓⲁ: ϧⲉⲛ ⲟⲩⲭⲉⲣⲉ ⲉϥⲟⲩⲁⲃ: ⲭⲉⲣⲉ ⲛⲉ Ⲙⲁⲣⲓⲁ: ⲑ̀ⲙⲁⲩ ⲙ̀ⲫⲏⲉⲑⲟⲩⲁⲃ.\n\nⲬⲉⲣⲉ Ⲅⲁⲃⲣⲓⲏⲗ: ⲡⲓⲛⲓϣϯ ⲛ̀ⲁⲣⲭⲏⲁⲅⲅⲉⲗⲟⲥ: ⲭⲉⲣⲉ ⲫⲏⲉ̀ⲧⲁϥϩⲓϣⲉⲛⲛⲟⲩϥⲓ: ⲙ̀Ⲙⲁⲣⲓⲁ ϯⲡⲁⲣⲑⲉⲛⲟⲥ.\n\nⲬⲉⲣⲉ ⲛⲓⲭⲉⲣⲟⲩⲃⲓⲙ: ⲭⲉⲣⲉ ⲛⲓⲥⲉⲣⲁⲫⲓⲙ: ⲭⲉⲣⲉ ⲛⲓⲧⲁⲅⲙⲁ ⲧⲏⲣⲟⲩ: ⲛ̀ⲉ̀ⲡⲟⲩⲣⲁⲛⲓⲟⲛ.\n\nⲬⲉⲣⲉ Ⲓⲱⲁⲛⲛⲏⲥ: ⲡⲓⲛⲓϣϯ ⲙ̀ⲡ̀ⲣⲟⲇⲣⲟⲙⲟⲥ: ⲭⲉⲣⲉ ⲡⲓⲟⲩⲏⲃ ⲡ̀ⲥⲩⲅⲅⲉⲛⲏⲥ ⲛ̀Ⲉⲙⲙⲁⲛⲟⲩⲏⲗ\n\nⲬⲉⲣⲉ ⲛⲁϭⲟⲓⲥ ⲛ̀ⲓⲟϯ: ⲛ̀ⲁ̀ⲡⲟⲥⲧⲟⲗⲟⲥ: ⲭⲉⲣⲉ ⲛⲓⲙⲁⲑⲏⲧⲏⲥ: ⲛ̀ⲧⲉ Ⲡⲉⲛϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ.\n\nⲬⲉⲣⲉ ⲛⲁⲕ ⲱ̀ⲡⲓⲙⲁⲣⲧⲩⲣⲟⲥ: ⲭⲉⲣⲉ ⲡⲓⲉ̀ⲩⲁ̀ⲅⲅⲉⲗⲓⲥⲧⲏⲥ: ⲭⲉⲣⲉ ⲡⲓⲁ̀ⲡⲟⲥⲧⲟⲗⲟⲥ: ⲁⲃⲃⲁ Ⲙⲁⲣⲕⲟⲥ ⲡⲓⲑⲉⲱ̀ⲣⲓⲙⲟⲥ.\n\nⲬⲉⲣⲉ ⲛⲁⲕ ⲱ̀ ⲡⲓⲙⲁⲣⲧⲩⲣⲟⲥ: ⲭⲉⲣⲉ ⲡⲓϣⲱⲓϫ ⲛ̀ⲅⲉⲛⲛⲉⲟⲥ: ⲭⲉⲣⲉ ⲡⲓⲁ̀ⲑⲗⲟⲫⲟⲣⲟⲥ: ⲡⲁⲟ︦ⲥ︦ ⲡ̀ⲟⲩⲣⲟ Ⲅⲉⲱ̀ⲣⲅⲓⲟⲥ.\n\nⲬⲉⲣⲉ ⲛⲁⲕ ⲱ̀ ⲛⲓⲙⲁⲣⲧⲩⲣⲟⲥ: ⲭⲉⲣⲉ ⲡⲓϣⲱⲓϫ ⲛ̀ⲅⲉⲛⲛⲉⲟⲥ: ⲭⲉⲣⲉ ⲡⲓⲁⲑⲗⲟⲫⲟⲣⲟⲥ: Ⲫⲓⲗⲟⲡⲁⲧⲏⲣ Ⲙⲉⲣⲕⲟⲩⲣⲓⲟⲥ.\n\nⲬⲉⲣⲉ ⲛⲁⲕ ⲱ̀ ⲡⲓⲙⲁⲣⲧⲩⲣⲟⲥ: ⲭⲉⲣⲉ ⲡⲓϣⲱⲓϫ ⲛ̀ⲅⲉⲛⲛⲉⲟⲥ: ⲭⲉⲣⲉ ⲡⲓⲁ̀ⲑⲗⲟⲫⲟⲣⲟⲥ: ⲡⲓⲁ̀ⲅⲓⲟⲥ ⲁ̀ⲡⲁ Ⲙⲏⲛⲁ.\n\nⲰⲟⲩⲛⲓⲁⲧⲕ ϧⲉⲛ ⲟⲩⲙⲉⲑⲙⲏⲓ: Ⲡⲉⲛⲓⲱⲧ ⲉ︦ⲑ︦ⲩ︦ ⲙ̀ⲡⲁⲧⲣⲓⲁⲣⲭⲏⲥ: Ⲡⲁⲡⲁ Ⲁⲃⲃⲁ Ⲕⲩⲣⲓⲗⲗⲟⲥ Ⲡⲓⲙⲁϩⲥⲟⲟϩ: ⲡⲓⲙⲉⲛⲣⲓⲧ ⲛ̀ⲧⲉ Ⲡⲭ︦ⲥ︦.\n\nⲰⲟⲩⲛⲓⲁⲧⲕ ϧⲉⲛ ⲟⲩⲙⲉⲑⲙⲏⲓ: ⲡⲉⲛⲓⲱⲧ ⲉⲑⲟⲩⲁⲃ ⲛ̀ⲇⲓⲕⲉⲟⲥ: ⲁⲃⲃⲁ Ⲁⲃⲣⲁⲁⲙ ⲡⲓⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲥ: ⲡⲓⲙⲉⲛⲣⲓⲧ ⲛ̀ⲧⲉ Ⲡⲭ︦ⲥ︦.\n\nⲦⲉⲛϯϩⲟ ⲉ̀ⲣⲟⲕ ⲱ̀ Ⲩ̀ⲓⲟⲥ Ⲑⲉⲟⲥ: ⲉⲑⲣⲉⲕⲁ̀ⲣⲉϩ ⲉ̀ⲡ̀ⲱⲛϧ ⲙ̀ⲡⲉⲛⲡⲁⲧⲣⲓⲁⲣⲭⲏⲥ: ⲡⲁⲡⲁ Ⲁⲃⲃⲁ (...) ⲡⲓⲁⲣⲭⲏⲉ̀ⲣⲉⲩⲥ: ⲙⲁⲧⲁϫⲣⲟϥ ϩⲓϫⲉⲛ ⲡⲉϥⲑ̀ⲣⲟⲛⲟⲥ.\n\nⲚⲉⲙ ⲡⲉϥⲕⲉϣ̀ⲫⲏⲣ ⲛ̀ⲗⲓⲧⲟⲩⲣⲅⲟⲥ: ⲡⲉⲛⲓⲱⲧ ⲉⲑⲟⲩⲁⲃ ⲛ̀ⲇⲓⲕⲉⲟⲥ Ⲁⲃⲃⲁ (...) ⲡⲓⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲥ (ⲡⲓⲙⲏⲧⲣⲟⲡⲟⲗⲓⲧⲏⲥ): ⲙⲁⲧⲁϫⲣⲟϥ ϩⲓϫⲉⲛ ⲡⲉϥⲑ̀ⲣⲟⲛⲟⲥ.\n\nϨⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ: ⲛ̀ⲧⲉ Ϯⲑⲉⲟ̀ⲧⲟⲕⲟⲥ ⲉⲑⲟⲩⲁⲃ Ⲙⲁⲣⲓⲁ: Ⲡ̀ϭⲟⲓⲥ ⲁ̀ⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ: ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.\n\nⲈⲑⲣⲉⲛϩⲱⲥ ⲉ̀ⲣⲟⲕ: ⲛⲉⲙ Ⲡⲉⲕⲓⲱⲧ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ: ⲛⲉⲙ Ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ ⲉⲑⲟⲩⲁⲃ: ϫⲉ ⲁⲕⲓ̀ ⲁⲕⲥⲱϯ ⲙ̀ⲙⲟⲛ ⲛⲁⲓ ⲛⲁⲛ.',
+      },
+      {
+        language: 'englishCoptic',
+        text: 'Kurie ele-ēson.\n\nAmōini marenouōsht: en-Ti-etrias ethouab: ete Fiōt nem Pshēri: nem Pi-epneuma Ethouab.\n\nAnon kha nilaos: enekhristianos: fai gar pe Pennouti: enalēthinos.\n\nOuon ouhelpis entan: khen thēethouab Maria: ere Fti nai nan: hiten nesepresvia.\n\nOuon oumetsemnos: enehrēi khen paikosmos evolhiten pi-eshlēl: ente ti-agia Maria tiparthenos.\n\nKhere ne Maria: titshrompi ethnesōs: thē-etasmisi nan: em-Fnouti pilogos.\n\nKhere ne Maria: khen oukhere efouab: khere ne Maria: ethmau emfēethouab.\n\nKhere Gabriēl: pinishti enarkhēaggelos: khere fē-etafhishennoufi: em-Maria tiparthenos.\n\nKhere nikherouvim: khere niserafim: khere nitagma tērou: enepouranion.\n\nKhere Iōannēs: pinishti emeprodromos: khere piouēb epsuggenēs en-Emmanouēl\n\nKhere natshois enioti: enapostolos: khere nimathētēs: ente Pentshois Iēsous Pi-ekhristos.\n\nKhere nak ōpimarturos: khere pi-eu-aggelistēs: khere pi-apostolos: abba Markos pithe-ōrimos.\n\nKhere nak ō pimarturos: khere pishōij engenneos: khere pi-athloforos: patshois epouro Ge-ōrgios.\n\nKhere nak ō nimarturos: khere pishōij engenneos: khere piathloforos: Filopatēr Merkourios.\n\nKhere nak ō pimarturos: khere pishōij engenneos: khere pi-athloforos: pi-agios apa Mēna.\n\nŌouniatk khen oumethmēi: Peniōt ethouab empatriarkhēs: Papa Abba Kurillos Pimahsooh: pimenrit ente Pi-ekhristos.\n\nŌouniatk khen oumethmēi: peniōt ethouab endikeos: abba Abraam pi-episkopos: pimenrit ente Pi-ekhristos.\n\nTentiho erok ō Uios Theos: ethrekareh e-epōnkh empenpatriarkhēs: papa Abba (...) piarkhē-ereus: matajrof hijen pefethronos.\n\nNem pefke-eshfēr enlitourgos: peniōt ethouab endikeos Abba (...) pi-episkopos (pimētropolitēs): matajrof hijen pefethronos.\n\nHiten ni-epresvia: ente Tithe-otokos ethouab Maria: Eptshois ari-ehmot nan: empikhō evol ente nennovi.\n\nEthrenhōs erok: nem Pekiōt enagathos: nem Pi-epneuma ethouab: je aki aksōti emmon nai nan.',
+      },
+      {
+        language: 'english',
+        text: 'Lord have mercy.\n\nO come let us worship, the Holy Trinity, the Father and the Son, and the Holy Spirit.\n\nWe are the Christian people, for He is, our true God.\n\nWe have hope, in Saint Mary, that God will have mercy on us, through her intercession.\n\nAll calmness: in this world: is through the prayers: of Saint Mary the Virgin.\n\nHail to you O Mary, the beautiful dove, who has borne to us, God the Logos.\n\nHail to you O Mary, with a holy hail, Hail to you O Mary, the Mother of the Holy One.\n\nHail to Gabriel: the great archangel: hail to him who announced glad tidings: to the Virgin Mary.\n\nHail to the cherubim: hail to the seraphim: hail to all: the heavenly orders.\n\nHail to John: the great forerunner: hail to the priest: the kinsman of Emmanuel.\n\nHail to my lords, and fathers the apostles, hail to the disciples, of our Lord Jesus Christ.\n\nHail to you O martyr: hail to the Evangelist: hail to the Apostle: Mark the Beholder of God.\n\nHail to you, O martyr: hail to the courageous hero: hail to the struggle-mantled, my Lord Prince George.\n\nHail to you O martyr: hail to the courageous hero: hail to the struggle bearer: Philopater Mercurius.\n\nHail to you, O martyr: hail to the noble hero: hail to the struggle-bearer, saint Abba Mina.\n\nBlessed are you indeed: our holy father the patriarch: Abba Kyrillos the sixth: the beloved of Christ.\n\nBlessed are you indeed, our holy and righteous father, Abba Abraam the bishop, the beloved of Christ.\n\nWe ask You O Son of God, to keep the life of our patriarch, Pope Abba (...) the high priest, confirm him upon his throne.\n\nAnd his partner in the liturgy, our holy righteous father, Abba (...) the bishop (metropolitan), confirm him upon his throne.\n\nThrough the intercessions, of the Theotokos Saint Mary, O Lord grant us, the forgiveness of our sins.\n\nThat we may praise You: with Your good Father: and the Holy Spirit: for You have come and saved us. Have mercy on us.',
+      },
+      {
+        language: 'arabic',
+        text: 'ياربُ إرحَم.\n\nتعالوا فلنسجد للثالوث القدوس الذي هو الأب والإبن والروح القدس.\n\nنحن الشعوب المسيحيين لأن هذا هو إلهنا الحقيقي.\n\nلنا رجاء، في القديسة مريم. الله يرحمنا بشفاعاتها.\n\nكل هدوء، في العالم من قبل صلاة القديسة مريم العذراء.\n\nالسلام لك يا مريم الحمامة الحسنة التي ولدت لنا، الله الكلمة.\n\nالسلام لك يا مريم، سلاماً مقدساً السلام لك يا مريم أم القدوس.\n\nالسلام لغبريال رئيس الملائكة العظيم: السلام للذي بشر: مريم العذراء.\n\nالسلام للشاروبيم، السلام للسِّرافيم السلام لجميع الطغمات السمائية.\n\nالسلام ليوحنا السابق العظيم السلام للكاهن نسيب عمانوئيل.\n\nالسلام لسادتي الآباء، الرسل. السلام لتلاميذ ربنا يسوع المسيح.\n\nالسلا لك أيها الشهيد السلام للانجيلي السلام للرسول مرقس ناظر الإله.\n\nالسلام لك أيها الشهيد، السلام للشجاع المجاهد، السلام لللابس الجهاد، سيدي الملك جيؤرجيوس.\n\nالسلام لك أيها الشهيد. السلام للشجاع البطل. السلام للمجاهد محب الآب مرقوريوس.\n\nالسلام لك أيها الشهيد. السلام للشجاع البطل. السلام للمجاهد القديس أبا مينا.\n\nطوباك بالحقيقة، يا أبانا القديس البطريرك، الانبا كيرلس السادس، حبيب المسيح.\n\nطوباك بالحقيقة يا أبانا القديس البار انبا ابرآم الاسقف حبيب المسيح.\n\nنسألك يا إبن الله، أن تحفظ حياة بطريركنا، البابا أنبا (...) رئيسُ الكهنة، ثبته على كرسيه.\n\nوشريكه في الخدمة الرسولية، أبانا القديس البار، أنبا (...) الأسقف (المطران)، ثبته على كرسيه.\n\nبشفاعات والدة الإله القديسة مريم، يارب أنعم علينا بمغفرة خطايانا.\n\nلكي نُسبِّحك، مع أبيك الصالح، والروح القدس، لأنك أتيت وخلَّصتنا إرحمنا.',
+      },
+    ];
+  }
+}
+
 // ---- Annual > Matins: add "Doxologies" divider + Introduction to the Doxologies ----
 const annualMatins = seasons
   .find((s) => s.id === 'annual')

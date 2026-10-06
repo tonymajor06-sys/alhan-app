@@ -541,6 +541,61 @@ describe('Kiahk Praises & Season > Midnight Praises', () => {
   });
 });
 
+describe('Kiahk Praises & Season > Matins', () => {
+  const service = seasons.find((s) => s.id === 'kiahk')!.services.find((s) => s.id === 'kiahk-matins')!;
+
+  it('lists only the titles, in order, with the Doxologies as a divider and no lyrics yet', () => {
+    expect(service.hymns.map((h) => h.title)).toEqual([
+      'Verses of the Cymbals',
+      'Doxologies',
+      'Ϧⲉⲛ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ (Introduction to the Doxologies)',
+      'Ⲕⲉ ⲅⲁⲣ ⲁⲓϣⲁⲛⲥⲁϫⲓ (First Doxology for Kiahk)',
+      'Ⲉ̀ⲣⲉ ⲡ̀ⲥⲟⲗⲥⲉⲗ ⲛ̀Ϯⲡⲁⲣⲑⲉⲛⲟⲥ (Second Doxology for Kiahk)',
+      'Ⲅⲁⲃⲓⲣⲏⲗ ⲡⲓⲁⲅⲅⲉⲗⲟⲥ (Third Doxology for Kiahk)',
+      'Ϧⲉⲛ ⲡⲓⲁ̀ⲃⲟⲧ (Fourth Doxology for Kiahk)',
+      'Ⲉ̀ⲧⲁ ⲡⲓⲱⲡ (Fifth Doxology for Kiahk)',
+      'Ϥ̀ⲉⲙⲡ̀ϣⲁ ⲅⲁⲣ (Sixth Doxology for Kiahk)',
+      'Ⲛ̀ⲑⲟⲕ ⲟⲩⲛⲓϣϯ (Kiahk Doxology for Archangel Gabriel)',
+      'The Conclusion of the Doxologies',
+      '',
+      'Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ',
+      'Ⲥⲱⲧⲉⲙ ⲧⲁϣⲉⲣⲓ (Psalm Trailer)',
+      'Ⲧⲉⲛϯ ⲛⲉ ⲙ̀ⲡⲓⲭⲉⲣⲉⲧⲓⲥⲙⲟⲥ (Gospel Response)',
+      'Concluding Hymn',
+    ]);
+    // two dividers: "Doxologies" and a blank one after the Conclusion of the Doxologies
+    expect(service.hymns.filter((h) => h.isSectionHeader).map((h) => h.title)).toEqual(['Doxologies', '']);
+    const dividers = service.hymns.map((h, i) => (h.isSectionHeader ? i : -1)).filter((i) => i >= 0);
+    expect(dividers).toEqual([1, 11]);
+    // the Verses of the Cymbals open a list of two titles
+    expect(service.hymns[0].children?.map((h) => h.title)).toEqual(['Ⲧⲉⲛⲟⲩⲱϣⲧ ⲙ̀Ⲫⲓⲱⲧ ⲛⲉⲙ Ⲡϣⲏⲣⲓ', 'Ⲁⲙⲱⲓⲛⲓ ⲙⲁⲣⲉⲛⲟⲩⲱϣⲧ']);
+    const [fatherSon, come] = service.hymns[0].children!;
+    const text = (h: Hymn, language: string) => h.versions.find((v) => v.language === language)?.text ?? '';
+    const stanzasOf = (h: Hymn, language: string) => text(h, language).split(/\n\s*\n/);
+    for (const [hymn, count] of [[fatherSon, 19], [come, 21]] as [Hymn, number][]) {
+      for (const language of ['coptic', 'englishCoptic', 'english', 'arabic', 'arabicCoptic', 'arabicEnglish']) {
+        expect([hymn.title, language, stanzasOf(hymn, language).length]).toEqual([hymn.title, language, count]);
+      }
+      expect(hymn.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+    }
+    expect(stanzasOf(fatherSon, 'coptic').slice(0, 2)).toEqual([
+      'Ⲕⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ.',
+      'Ⲧⲉⲛⲟⲩⲱϣⲧ ⲙ̀Ⲫⲓⲱⲧ ⲛⲉⲙ Ⲡϣⲏⲣⲓ: ⲛⲉⲙ Ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ ⲉⲑⲟⲩⲁⲃ: Ϯⲧⲣⲓⲁⲥ ⲉⲑⲟⲩⲁⲃ: ⲛ̀ⲟ̀ⲙⲟⲟⲩⲥⲓⲟⲥ.',
+    ]);
+    expect(stanzasOf(fatherSon, 'english')[1]).toBe('We worship the Father and the Son, and the Holy Spirit, the holy and co-essential, Trinity.');
+    expect(stanzasOf(come, 'english')[1]).toBe('O come let us worship, the Holy Trinity, the Father and the Son, and the Holy Spirit.');
+    // the last 16 stanzas, from "Hail to you O Mary, the beautiful dove" on, are the same in both hymns
+    for (const language of ['coptic', 'english', 'arabic']) {
+      expect(stanzasOf(fatherSon, language).slice(-16)).toEqual(stanzasOf(come, language).slice(-16));
+    }
+    // the shortened "my Lord" (ⲡⲁⲟ︦ⲥ︦) is written out in English and Arabic letters
+    expect(text(fatherSon, 'englishCoptic')).toContain('patshois epouro Ge-ōrgios');
+    expect(text(fatherSon, 'arabicCoptic')).toContain('پاتشُيس إپورُ');
+    expect(new Set(service.hymns.map((h) => h.id)).size).toBe(service.hymns.length);
+    for (const hymn of service.hymns) expect([hymn.title, hymn.versions.length]).toEqual([hymn.title, 0]);
+  });
+});
+
 describe('Kiahk Praises & Season > Distribution', () => {
   const service = seasons.find((s) => s.id === 'kiahk')!.services.find((s) => s.id === 'kiahk-distribution')!;
 
