@@ -4436,7 +4436,6 @@ const midnightAudio: Record<string, string> = {
   'annual-midnight-saturday-watos-psali-conclusion': 'midnight-saturday-watos-psali-conclusion.m4a',
   'annual-midnight-saturday-watos-lobsh-1': 'midnight-saturday-watos-lobsh-1.m4a',
   'annual-midnight-saturday-watos-lobsh-2': 'midnight-saturday-watos-lobsh-2.m4a',
-  'annual-midnight-saturday-watos-theotokia-conclusion': 'midnight-saturday-watos-theotokia-conclusion.m4a',
   'annual-midnight-saturday-theotokia-part-1': 'midnight-saturday-theotokion-1.m4a',
   'annual-midnight-saturday-theotokia-part-2': 'midnight-saturday-theotokion-2.m4a',
   'annual-midnight-saturday-theotokia-part-3': 'midnight-saturday-theotokion-3.m4a',
@@ -4452,6 +4451,20 @@ for (const hymn of annualMidnight ? flattenHymns(annualMidnight.hymns) : []) {
   if (!audio) continue;
   for (const version of hymn.versions) {
     if (version.language === 'coptic' || version.language === 'englishCoptic') {
+      version.audio = audio;
+    }
+  }
+}
+
+// Midnight Praises recordings sung in English and Arabic, not Coptic (English in Arabic letters copies the English later)
+const midnightEnglishArabicAudio: Record<string, string> = {
+  'annual-midnight-saturday-watos-theotokia-conclusion': 'midnight-saturday-watos-theotokia-conclusion.m4a',
+};
+for (const hymn of annualMidnight ? flattenHymns(annualMidnight.hymns) : []) {
+  const audio = midnightEnglishArabicAudio[hymn.id];
+  if (!audio) continue;
+  for (const version of hymn.versions) {
+    if (version.language === 'english' || version.language === 'arabic' || version.language === 'englishArabic') {
       version.audio = audio;
     }
   }
