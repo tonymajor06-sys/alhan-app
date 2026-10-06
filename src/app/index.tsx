@@ -167,44 +167,22 @@ export default function HomeScreen() {
     </ScreenShell>
   );
 
-  const row = (key: string, title: string, onPress: () => void, badge?: string, number?: number) => (
-    <Pressable
-      key={key}
-      onPress={onPress}
-      accessibilityRole="button"
-      style={({ pressed }) => [styles.rowCard, rowDirection, pressed && styles.rowCardPressed]}>
-      {number !== undefined ? (
-        <View style={styles.rowNumber}>
-          <Text style={styles.rowNumberText}>{isRTL ? toArabicDigits(number) : number}</Text>
-        </View>
-      ) : null}
-      <View style={styles.rowTextWrap}>
-        <Text style={[styles.rowTitle, textAlign]}>{withCopticFont(title)}</Text>
-        {badge ? (
-          <View style={[styles.badge, isRTL && styles.selfEnd]}>
-            <Text style={styles.badgeText}>♪ {badge}</Text>
-          </View>
-        ) : null}
-      </View>
-      <Text style={styles.chevron}>{isRTL ? '‹' : '›'}</Text>
-    </Pressable>
-  );
-
-  // A tile in a two-column grid; `lead` is an icon or a number in a circle
-  const tile = (key: string, title: string, onPress: () => void, lead?: string, desc?: string) => (
+  // A tile in a two-column grid; `lead` is a small mark or number above the title
+  const tile = (key: string, title: string, onPress: () => void, lead?: string, desc?: string, badge?: string) => (
     <Pressable
       key={key}
       onPress={onPress}
       accessibilityRole="button"
       style={({ pressed }) => [styles.tile, !desc && styles.tileSmall, pressed && styles.rowCardPressed]}>
-      {lead ? (
-        <View style={[styles.tileIcon, isRTL && styles.selfEnd]}>
-          <Text style={styles.tileIconText}>{lead}</Text>
-        </View>
-      ) : null}
+      {lead ? <Text style={[styles.tileLead, textAlign]}>{lead}</Text> : null}
       <View>
         <Text style={[styles.tileTitle, textAlign]}>{withCopticFont(title)}</Text>
         {desc ? <Text style={[styles.tileDesc, textAlign]}>{desc}</Text> : null}
+        {badge ? (
+          <View style={[styles.badge, isRTL && styles.selfEnd]}>
+            <Text style={styles.badgeText}>♪ {badge}</Text>
+          </View>
+        ) : null}
       </View>
     </Pressable>
   );
@@ -218,26 +196,39 @@ export default function HomeScreen() {
     </View>
   );
 
-  // Numbered in order, starting again from 1 after each section header
+  // Two by two, numbered in order, starting again from 1 after each section header
   const hymnList = (hymns: Hymn[], onSelect: (h: Hymn) => void) => {
+    const out: ReactNode[] = [];
+    let tiles: ReactNode[] = [];
     let number = 0;
-    return hymns.map((hymn) => {
+    const flush = (key: string) => {
+      if (tiles.length) out.push(<View key={`grid-${key}`}>{tileGrid(tiles)}</View>);
+      tiles = [];
+    };
+    for (const hymn of hymns) {
       if (hymn.isSectionHeader) {
+        flush(hymn.id);
         number = 0;
-        return sectionHeader(hymn.id, displayTitle(hymn, lang));
+        out.push(sectionHeader(hymn.id, displayTitle(hymn, lang)));
+        continue;
       }
       number += 1;
       const hasAudio = (hymn.children ? flattenHymns(hymn.children) : [hymn]).some((h) =>
         h.versions.some((v) => v.audio)
       );
-      return row(
-        hymn.id,
-        displayTitle(hymn, lang),
-        () => (hymn.children ? setOpenGroups([...openGroups, hymn]) : onSelect(hymn)),
-        hasAudio ? t.hasAudio : undefined,
-        number
+      tiles.push(
+        tile(
+          hymn.id,
+          displayTitle(hymn, lang),
+          () => (hymn.children ? setOpenGroups([...openGroups, hymn]) : onSelect(hymn)),
+          localDigits(number),
+          undefined,
+          hasAudio ? t.hasAudio : undefined
+        )
       );
-    });
+    }
+    flush('end');
+    return out;
   };
 
   // A service's list, or the list of the innermost group opened inside it
@@ -317,19 +308,14 @@ export default function HomeScreen() {
 
           <View style={styles.homeBody}>
             <View style={styles.hero}>
-              <View style={styles.heroMedallion}>
+              <View style={[styles.heroTitleRow, rowDirection]}>
                 <Image source={require('../../assets/images/coptic-cross.png')} style={styles.heroCross} accessibilityIgnoresInvertColors />
+                <Text style={[styles.heroTitle, textAlign]}>{t.appTitle}</Text>
               </View>
-              <Text style={styles.heroTitle}>{t.appTitle}</Text>
-              <Text style={styles.heroSubtitle}>{t.appSubtitle}</Text>
-              <View style={styles.ornament}>
-                <View style={styles.ornamentLine} />
-                <Text style={styles.ornamentMark}>✦</Text>
-                <View style={styles.ornamentLine} />
-              </View>
+              <Text style={[styles.heroSubtitle, textAlign]}>{t.appSubtitle}</Text>
             </View>
 
-            <Text style={styles.languagePrompt}>{t.languagePrompt}</Text>
+            <Text style={[styles.languagePrompt, textAlign]}>{t.languagePrompt}</Text>
             <View style={styles.segmented}>
               {(['en', 'ar'] as AppLanguage[]).map((option) => (
                 <Pressable
@@ -346,22 +332,22 @@ export default function HomeScreen() {
             </View>
 
             {tileGrid([
-              { key: 'hymns', title: displayTitle(mainCategories[1], lang), icon: '♫', desc: t.hymnsDesc, view: 'seasons-home' as const },
-              { key: 'responses', title: displayTitle(mainCategories[0], lang), icon: '✝', desc: t.responsesDesc, view: 'responses-home' as const },
-              { key: 'playlist', title: t.playlistTitle, icon: '☰', desc: t.playlistDesc(playlist.length), view: 'playlist' as const },
-              { key: 'guide', title: guideStrings[lang].title, icon: '✠', desc: guideStrings[lang].subtitle, view: null, href: '/guide' as const },
-              { key: 'faith', title: faithStrings[lang].title, icon: '☦', desc: faithStrings[lang].subtitle, view: null, href: '/faith' as const },
-              { key: 'learn', title: learnStrings[lang].title, icon: 'Ⲁ', desc: learnStrings[lang].subtitle, view: null, href: '/learn' as const },
+              { key: 'hymns', title: displayTitle(mainCategories[1], lang), desc: t.hymnsDesc, view: 'seasons-home' as const },
+              { key: 'responses', title: displayTitle(mainCategories[0], lang), desc: t.responsesDesc, view: 'responses-home' as const },
+              { key: 'playlist', title: t.playlistTitle, desc: t.playlistDesc(playlist.length), view: 'playlist' as const },
+              { key: 'guide', title: guideStrings[lang].title, desc: guideStrings[lang].subtitle, view: null, href: '/guide' as const },
+              { key: 'faith', title: faithStrings[lang].title, desc: faithStrings[lang].subtitle, view: null, href: '/faith' as const },
+              { key: 'learn', title: learnStrings[lang].title, desc: learnStrings[lang].subtitle, view: null, href: '/learn' as const },
               // Learn Arabic is for English speakers
               ...(lang === 'en'
-                ? [{ key: 'learn-arabic', title: learnArabicStrings.title, icon: 'ع', desc: learnArabicStrings.subtitle, view: null, href: '/learn-arabic' as const }]
+                ? [{ key: 'learn-arabic', title: learnArabicStrings.title, desc: learnArabicStrings.subtitle, view: null, href: '/learn-arabic' as const }]
                 : []),
               // Learn English is for Arabic speakers
               ...(lang === 'ar'
-                ? [{ key: 'learn-english', title: learnEnglishStrings.title, icon: 'A', desc: learnEnglishStrings.subtitle, view: null, href: '/learn-english' as const }]
+                ? [{ key: 'learn-english', title: learnEnglishStrings.title, desc: learnEnglishStrings.subtitle, view: null, href: '/learn-english' as const }]
                 : []),
-            ].map(({ key, title, icon, desc, view, href }) =>
-                tile(key, title, () => (view ? setCurrentView(view) : href && router.push(href)), icon, desc)
+            ].map(({ key, title, desc, view, href }) =>
+                tile(key, title, () => (view ? setCurrentView(view) : href && router.push(href)), undefined, desc)
               )
             )}
           </View>
