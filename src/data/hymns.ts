@@ -4423,9 +4423,6 @@ const midnightAudio: Record<string, string> = {
   'annual-midnight-fourth-canticle': 'midnight-fourth-canticle.m4a',
   'annual-midnight-greek-psali-watos': 'midnight-aripsalin.m4a',
   'annual-midnight-psalmody-conclusion': 'midnight-psalmody-conclusion.m4a',
-  'annual-midnight-sunday-adam-theotokias-conclusion': 'midnight-adam-theotokias-conclusion.m4a',
-  'annual-midnight-monday-adam-theotokias-conclusion': 'midnight-adam-theotokias-conclusion.m4a',
-  'annual-midnight-tuesday-adam-theotokias-conclusion': 'midnight-adam-theotokias-conclusion.m4a',
   'annual-midnight-three-holy-children': 'midnight-tenen.m4a',
   'annual-midnight-doxology-virgin-mary': 'midnight-doxology-virgin-mary.m4a',
   'annual-midnight-doxology-heavenly-beings': 'midnight-doxology-heavenly-beings.m4a',
@@ -4453,6 +4450,16 @@ for (const hymn of annualMidnight ? flattenHymns(annualMidnight.hymns) : []) {
   for (const version of hymn.versions) {
     if (version.language === 'coptic' || version.language === 'englishCoptic') {
       version.audio = audio;
+    }
+  }
+}
+
+// The Neknai recording is sung in English and Arabic, not Coptic (English in Arabic letters copies the English later)
+for (const hymn of annualMidnight ? flattenHymns(annualMidnight.hymns) : []) {
+  if (!/^annual-midnight-(sunday|monday|tuesday)-adam-theotokias-conclusion$/.test(hymn.id)) continue;
+  for (const version of hymn.versions) {
+    if (version.language === 'english' || version.language === 'arabic' || version.language === 'englishArabic') {
+      version.audio = 'midnight-adam-theotokias-conclusion.m4a';
     }
   }
 }
