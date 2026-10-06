@@ -4,14 +4,6 @@ export type LessonId = 'alphabet' | 'reading' | 'words' | 'quiz' | 'practice';
 
 export const lessonIds: LessonId[] = ['alphabet', 'reading', 'words', 'quiz', 'practice'];
 
-export const lessonIcons: Record<LessonId, string> = {
-  alphabet: 'Ⲁ',
-  reading: 'ⲛ̀',
-  words: 'Ⲡ̀ϭ',
-  quiz: '?',
-  practice: '♫',
-};
-
 export const learnStrings = {
   en: {
     title: 'Learn Coptic',
@@ -91,14 +83,6 @@ export type ArabicLessonId = 'alphabet' | 'marks' | 'words' | 'quiz' | 'practice
 
 export const arabicLessonIds: ArabicLessonId[] = ['alphabet', 'marks', 'words', 'quiz', 'practice'];
 
-export const arabicLessonIcons: Record<ArabicLessonId, string> = {
-  alphabet: 'ا',
-  marks: 'بَ',
-  words: 'رب',
-  quiz: '?',
-  practice: '♫',
-};
-
 export const learnArabicStrings = {
   ...learnStrings.en,
   title: 'Learn Arabic',
@@ -125,14 +109,6 @@ export const learnArabicStrings = {
 export type EnglishLessonId = 'alphabet' | 'sounds' | 'words' | 'quiz' | 'practice';
 
 export const englishLessonIds: EnglishLessonId[] = ['alphabet', 'sounds', 'words', 'quiz', 'practice'];
-
-export const englishLessonIcons: Record<EnglishLessonId, string> = {
-  alphabet: 'A',
-  sounds: 'th',
-  words: 'God',
-  quiz: '?',
-  practice: '♫',
-};
 
 export const learnEnglishStrings = {
   ...learnStrings.ar,

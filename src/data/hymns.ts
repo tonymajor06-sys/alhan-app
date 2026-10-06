@@ -3501,13 +3501,6 @@ const adamTheotokiasConclusion = (day: string): Hymn => ({
   ).map((v) => ({ language: v.language, text: v.text })),
 });
 
-// Sung after Arise O Children of the Light on Sundays and Fridays
-const resurrectionHymn = (day: string): Hymn => ({
-  id: `annual-midnight-${day}-resurrection-hymn`,
-  title: 'Ⲡⲓⲃⲱϩⲉⲙ ⲛ̀ⲧⲉ Ϯⲁ̀ⲛⲁⲥⲧⲁⲥⲓⲥ (The Hymn of the Resurrection)',
-  versions: [],
-});
-
 // A hymn whose text has not come in yet
 const titleOnly = (id: string, title: string): Hymn => ({ id, title, versions: [] });
 
@@ -4191,7 +4184,6 @@ if (annualMidnight) {
         texts: sundayTheotokiaTexts,
       },
       [
-        resurrectionHymn('sunday'),
         {
           id: 'annual-midnight-sunday-psali',
           title: 'Ⲁⲓⲛⲁϩϯ ⲉⲑⲃⲉ ⲫⲁⲓ (The Adam Sunday Psali)',
@@ -4420,7 +4412,6 @@ if (annualMidnight) {
         texts: fridayTheotokiaTexts,
       },
       [
-        resurrectionHymn('friday'),
         {
           id: 'annual-midnight-friday-psali',
           title: 'Ⲁ̀ⲗⲏⲑⲱⲥ ⲅⲁⲣ ⲁⲓϯ ⲙ̀ⲡⲁⲑⲟⲩⲓ (The Friday Watos Psali)',
@@ -4432,9 +4423,6 @@ if (annualMidnight) {
             { language: 'arabic', text: 'بالحقيقة قد تقدمت إلى رأس عظيم هو إسم الخلاص الذي لربنا يسوع المسيح.\n\nربنا يسوع المسيح أعطى علامة لعبيده الذين يخافونه لكي يهربوا من وجه القوس.\n\n+ ربنا يسوع المسيح أعطى علامة لعبيده الذين يخافونه لكي يسدوا أفواه الأسود.\n\n+ ربنا يسوع المسيح أعطى علامة لعبيده الذين يخافونه لكي يطفئوا قوة النار.\n\nربنا يسوع المسيح أعطى علامة لعبيده الذين يخافونه لكي يُخرجوا الشياطين.\n\nربنا يسوع المسيح أعطى علامة لعبيده الذين يخافونه لكي يتسلطوا على أعدائهم.\n\n+ ربنا يسوع المسيح أعطى علامة لعبيده الذين يخافونه أن يشفوا كل مرض.\n\n+ من أجل هذا نمجد ربنا يسوع المسيح مع أبيه الصالح والروح القدس.\n\nوهذا هو اسم الخلاص الذي لربنا يسوع المسيح وصليبه المحيي الذي صُلب عليه.\n\nطوبى للإنسان الذي يترك عنه هذا العمر واهتماماته المملوءة تعباً القاتلة للنفس.\n\n+ ويحمل صليبه يوماً فيوماً ويلصق عقله وقلبه باسم الخلاص الذي لربنا يسوع المسيح.\n\n+ يفرح قلبنا ويتهلل لساننا إذا ما تلونا اسم الخلاص الذي لربنا يسوع المسيح.' },
           ],
         },
-        titleOnly('annual-midnight-friday-psali-annunciation', 'Psali Watos for the Annunciation'),
-        titleOnly('annual-midnight-friday-psali-nativity', 'Watos Nativity Psali on the Friday Theotokia'),
-        titleOnly('annual-midnight-friday-psali-holy-fifty', 'Ⲁ̀ⲗⲏⲑⲱⲥ ⲧⲉⲛⲛⲁϩϯ ⲁ̀ⲛⲟⲛ (Psali Watos for the Holy Fifty Days)'),
         watosPsaliConclusion('friday'),
       ],
       [
@@ -4742,7 +4730,7 @@ if (annualLiturgy) {
   before('annual-liturgy-blessed-are-they', { id: 'annual-liturgy-faithful-header', title: 'Liturgy of the Faithful', versions: [], isSectionHeader: true });
 }
 
-// ---- Annual: the Concluding Hymn and the Conclusion for the Pope or a Bishop, at the end of Distribution, Matins,
+// ---- Annual: the Concluding Hymn and the Conclusion for the Pope or a Bishop, in Distribution, Matins,
 // Vespers and Midnight Praises (each service gets its own copy) ----
 const annualConcludingHymn = (id: string): Hymn => ({
   id,
@@ -4798,8 +4786,13 @@ const annualPopeBishopConclusion = (id: string): Hymn => ({
   ],
 });
 
+// They go just before the Doxologies (Matins, Vespers) or the Melodies (Distribution)
 for (const service of [annualDistribution, annualMatins, annualVespers]) {
-  service?.hymns.push(
+  if (!service) continue;
+  const at = service.hymns.findIndex((h) => /-(doxologies|melodies)-header$/.test(h.id));
+  service.hymns.splice(
+    at >= 0 ? at : service.hymns.length,
+    0,
     annualConcludingHymn(`${service.id}-concluding-hymn`),
     annualPopeBishopConclusion(`${service.id}-conclusion-pope-bishop`),
   );
@@ -4861,6 +4854,359 @@ if (kiahkMidnight && annualMidnight) {
     const source = annualMidnightById.get(sources[timesSeen[hymn.title] - 1] ?? '');
     if (source) hymn.versions = source.versions.map((version) => ({ ...version }));
   }
+}
+
+// ---- Great Lent > Matins and Vespers: the same as Annual, except for their own Verses of the Cymbals ----
+const lentVersesOfCymbals: LanguageVersion[] = [
+  { language: 'coptic', text: 'Ⲕⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ.\n\nⲀⲙⲱⲓⲛⲓ ⲙⲁⲣⲉⲛⲟⲩⲱϣⲧ: ⲛ̀Ϯⲧ̀ⲣⲓⲁⲥ ⲉⲑⲟⲩⲁⲃ: ⲉ̀ⲧⲉ Ⲫⲓⲱⲧ ⲛⲉⲙ Ⲡϣⲏⲣⲓ: ⲛⲉⲙ Ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ Ⲉⲑⲟⲩⲁⲃ.\n\nⲀⲛⲟⲛ ϧⲁ ⲛⲓⲗⲁⲟⲥ: ⲛ̀ⲭ̀ⲣⲓⲥⲧⲓⲁⲛⲟⲥ: ⲫⲁⲓ ⲅⲁⲣ ⲡⲉ Ⲡⲉⲛⲛⲟⲩϯ: ⲛ̀ⲁ̀ⲗⲏⲑⲓⲛⲟⲥ.\n\nⲞⲩⲟⲛ ⲟⲩϩⲉⲗⲡⲓⲥ ⲛ̀ⲧⲁⲛ: ϧⲉⲛ ⲑⲏⲉⲑⲟⲩⲁⲃ Ⲙⲁⲣⲓⲁ: ⲉ̀ⲣⲉ Ⲫϯ ⲛⲁⲓ ⲛⲁⲛ: ϩⲓⲧⲉⲛ ⲛⲉⲥⲡ̀ⲣⲉⲥⲃⲓⲁ.\n\nⲞⲩⲟⲛ ⲟⲩⲙⲉⲧⲥⲉⲙⲛⲟⲥ: ⲛ̀ϩ̀ⲣⲏⲓ ϧⲉⲛ ⲡⲁⲓⲕⲟⲥⲙⲟⲥ: ⲉ̀ⲃⲟⲗϩⲓⲧⲉⲛ ⲡⲓϣ̀ⲗⲏⲗ: ⲛ̀ⲧⲉ ϯⲁ̀ⲅⲓⲁ Ⲙⲁⲣⲓⲁ ϯⲡⲁⲣⲑⲉⲛⲟⲥ.\n\nⲬⲉⲣⲉ ⲛⲉ Ⲙⲁⲣⲓⲁ: ϯϭⲣⲟⲙⲡⲓ ⲉⲑⲛⲉⲥⲱⲥ: ⲑⲏⲉ̀ⲧⲁⲥⲙⲓⲥⲓ ⲛⲁⲛ: ⲙ̀Ⲫⲛⲟⲩϯ ⲡⲓⲗⲟⲅⲟⲥ.\n\nⲬⲉⲣⲉ ⲛⲉ Ⲙⲁⲣⲓⲁ: ϧⲉⲛ ⲟⲩⲭⲉⲣⲉ ⲉϥⲟⲩⲁⲃ: ⲭⲉⲣⲉ ⲛⲉ Ⲙⲁⲣⲓⲁ: ⲑ̀ⲙⲁⲩ ⲙ̀ⲫⲏⲉⲑⲟⲩⲁⲃ.\n\nⲬⲉⲣⲉ Ⲙⲓⲭⲁⲏⲗ: ⲡⲓⲛⲓϣϯ ⲛ̀ⲁⲣⲭⲏⲁⲅⲅⲉⲗⲟⲥ: ⲭⲉⲣⲉ Ⲅⲁⲃⲣⲓⲏⲗ: ⲡⲓⲥⲟⲧⲡ ⲙ̀ⲡⲓϥⲁⲓϣⲉⲛⲛⲟⲩϥⲓ.\n\nⲬⲉⲣⲉ Ⲙⲓⲭⲁⲏⲗ: ⲡⲓⲛⲓϣϯ ⲛ̀ⲁⲣⲭⲏⲁⲅⲅⲉⲗⲟⲥ: ⲭⲉⲣⲉ ⲡⲓⲁⲣⲭⲏⲥ̀ⲧⲣⲁⲧⲓⲅⲟⲥ: ⲛ̀ⲧⲉ ⲧ̀ϫⲟⲙ ⲛ̀ⲛⲓⲫⲏⲟⲩⲓ.\n\nⲬⲉⲣⲉ ⲛⲓⲭⲉⲣⲟⲩⲃⲓⲙ: ⲭⲉⲣⲉ ⲛⲓⲥⲉⲣⲁⲫⲓⲙ: ⲭⲉⲣⲉ ⲛⲓⲧⲁⲅⲙⲁ ⲧⲏⲣⲟⲩ: ⲛ̀ⲉ̀ⲡⲟⲩⲣⲁⲛⲓⲟⲛ.\n\nⲬⲉⲣⲉ Ⲓⲱⲁⲛⲛⲏⲥ: ⲡⲓⲛⲓϣϯ ⲙ̀ⲡ̀ⲣⲟⲇⲣⲟⲙⲟⲥ: ⲭⲉⲣⲉ ⲡⲓⲟⲩⲏⲃ ⲡ̀ⲥⲩⲅⲅⲉⲛⲏⲥ ⲛ̀Ⲉⲙⲙⲁⲛⲟⲩⲏⲗ.\n\nⲬⲉⲣⲉ ⲛⲁϭⲟⲓⲥ ⲛ̀ⲓⲟϯ: ⲛ̀ⲁ̀ⲡⲟⲥⲧⲟⲗⲟⲥ: ⲭⲉⲣⲉ ⲛⲓⲙⲁⲑⲏⲧⲏⲥ: ⲛ̀ⲧⲉ Ⲡⲉⲛϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ.\n\nⲬⲉⲣⲉ ⲛⲁⲕ ⲱ̀ ⲡⲓⲙⲁⲣⲧⲩⲣⲟⲥ: ⲭⲉⲣⲉ ⲡⲓⲉ̀ⲩⲁ̀ⲅⲅⲉⲗⲓⲥⲧⲏⲥ: ⲭⲉⲣⲉ ⲡⲓⲁ̀ⲡⲟⲥⲧⲟⲗⲟⲥ: ⲁⲃⲃⲁ Ⲙⲁⲣⲕⲟⲥ ⲡⲓⲑⲉⲱ̀ⲣⲓⲙⲟⲥ.\n\nⲬⲉⲣⲉ ⲛⲁⲕ ⲱ̀ ⲡⲓⲙⲁⲣⲧⲩⲣⲟⲥ: ⲭⲉⲣⲉ ⲡⲓϣⲱⲓϫ ⲛ̀ⲅⲉⲛⲛⲉⲟⲥ: ⲭⲉⲣⲉ ⲡⲓⲁ̀ⲑⲗⲟⲫⲟⲣⲟⲥ: ⲡⲁⲟ︦ⲥ︦ ⲡ̀ⲟⲩⲣⲟ Ⲅⲉⲱ̀ⲣⲅⲓⲟⲥ.\n\nⲬⲉⲣⲉ ⲛⲁⲕ ⲱ̀ ⲡⲓⲙⲁⲣⲧⲩⲣⲟⲥ: ⲭⲉⲣⲉ ⲡⲓϣⲱⲓϫ ⲛ̀ⲅⲉⲛⲛⲉⲟⲥ: ⲭⲉⲣⲉ ⲡⲓⲁⲑⲗⲟⲫⲟⲣⲟⲥ: Ⲫⲓⲗⲟⲡⲁⲧⲏⲣ Ⲙⲉⲣⲕⲟⲩⲣⲓⲟⲥ.\n\nⲬⲉⲣⲉ ⲛⲁⲕ ⲱ̀ ⲡⲓⲙⲁⲣⲧⲩⲣⲟⲥ: ⲭⲉⲣⲉ ⲡⲓϣⲱⲓϫ ⲛ̀ⲅⲉⲛⲛⲉⲟⲥ: ⲭⲉⲣⲉ ⲡⲓⲁ̀ⲑⲗⲟⲫⲟⲣⲟⲥ: ⲡⲓⲁ̀ⲅⲓⲟⲥ ⲁ̀ⲡⲁ Ⲙⲏⲛⲁ.\n\nⲰⲟⲩⲛⲓⲁⲧⲕ ϧⲉⲛ ⲟⲩⲙⲉⲑⲙⲏⲓ: Ⲡⲉⲛⲓⲱⲧ ⲉ︦ⲑ︦ⲩ︦ ⲙ̀ⲡⲁⲧⲣⲓⲁⲣⲭⲏⲥ: Ⲡⲁⲡⲁ Ⲁⲃⲃⲁ Ⲕⲩⲣⲓⲗⲗⲟⲥ Ⲡⲓⲙⲁϩⲥⲟⲟϩ: ⲡⲓⲙⲉⲛⲣⲓⲧ ⲛ̀ⲧⲉ Ⲡⲭ︦ⲥ︦.\n\nⲰⲟⲩⲛⲓⲁⲧⲕ ϧⲉⲛ ⲟⲩⲙⲉⲑⲙⲏⲓ: ⲡⲉⲛⲓⲱⲧ ⲉⲑⲟⲩⲁⲃ ⲛ̀ⲇⲓⲕⲉⲟⲥ: ⲁⲃⲃⲁ Ⲁⲃⲣⲁⲁⲙ ⲡⲓⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲥ: ⲡⲓⲙⲉⲛⲣⲓⲧ ⲛ̀ⲧⲉ Ⲡⲭ︦ⲥ︦.\n\nⲬⲉⲣⲉ ⲛⲁⲕ ⲱ̀ ⲫⲏⲉⲑⲟⲩⲁⲃ: ⲡⲓⲙⲉⲛⲣⲓⲧ ⲛ̀ⲧⲉ Ⲡⲭ︦ⲥ︦: ⲡⲉⲛⲓⲱⲧ Ⲡⲓϣⲱⲓ ⲕⲁⲙⲉⲗ: ⲡⲓϩⲏⲅⲟⲩⲙⲉⲛⲟⲥ.\n\nⲦⲉⲛϯϩⲟ ⲉ̀ⲣⲟⲕ ⲱ̀ Ⲩ̀ⲓⲟⲥ Ⲑⲉⲟⲥ: ⲉⲑⲣⲉⲕⲁ̀ⲣⲉϩ ⲉ̀ⲡ̀ⲱⲛϧ ⲙ̀ⲡⲉⲛⲡⲁⲧⲣⲓⲁⲣⲭⲏⲥ: ⲡⲁⲡⲁ Ⲁⲃⲃⲁ (...) ⲡⲓⲁⲣⲭⲏⲉ̀ⲣⲉⲩⲥ: ⲙⲁⲧⲁϫⲣⲟϥ ϩⲓϫⲉⲛ ⲡⲉϥⲑ̀ⲣⲟⲛⲟⲥ.\n\nⲚⲉⲙ ⲡⲉϥⲕⲉϣ̀ⲫⲏⲣ ⲛ̀ⲗⲓⲧⲟⲩⲣⲅⲟⲥ: ⲡⲉⲛⲓⲱⲧ ⲉⲑⲟⲩⲁⲃ ⲛ̀ⲇⲓⲕⲉⲟⲥ Ⲁⲃⲃⲁ (...) ⲡⲓⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲥ (ⲡⲓⲙⲏⲧⲣⲟⲡⲟⲗⲓⲧⲏⲥ): ⲙⲁⲧⲁϫⲣⲟϥ ϩⲓϫⲉⲛ ⲡⲉϥⲑ̀ⲣⲟⲛⲟⲥ.\n\nϨⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ: ⲛ̀ⲧⲉ Ϯⲑⲉⲟ̀ⲧⲟⲕⲟⲥ ⲉⲑⲟⲩⲁⲃ Ⲙⲁⲣⲓⲁ: Ⲡ̀ϭⲟⲓⲥ ⲁ̀ⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ: ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.\n\nⲈⲑⲣⲉⲛϩⲱⲥ ⲉ̀ⲣⲟⲕ: ⲛⲉⲙ Ⲡⲉⲕⲓⲱⲧ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ: ⲛⲉⲙ Ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ ⲉⲑⲟⲩⲁⲃ: ϫⲉ ⲁⲕⲓ̀ ⲁⲕⲥⲱϯ ⲙ̀ⲙⲟⲛ ⲛⲁⲓ ⲛⲁⲛ.' },
+  { language: 'englishCoptic', text: 'Kurie eleēson.\n\nAmōini marenouōsht: enti-etrias ethouab: ete Fiōt nem Pshēri: nem Pi-epneuma ethouab.\n\nAnon kha nilaos: enekhristianos: fai gar pe Pennouti: enalēthinos.\n\nOuon ouhelpis entan: khen thēethouab Maria: ere Efnouti nai nan: hiten nesepresvia.\n\nOuon oumetsemnos: enehrēi khen paikosmos: evolhiten pi-eshlēl: ente ti-agia Maria tiparthenos.\n\nShere ne Maria: titshrompi ethnesōs: thē-etasmisi nan: em-Fnouti pilogos.\n\nShere ne Maria: khen oushere efouab: shere ne Maria: ethmau emfēethouab.\n\nShere Mikhaēl: pinishti enarkhēaggelos: shere Gabriēl: pisotp empifaishennoufi.\n\nShere Mikhaēl: pinishti enarkhēaggelos: shere piarkhē-estratigos: ente etjom ennifēoui.\n\nShere nikherouvim: shere niserafim: shere nitagma tērou: enepouranion.\n\nShere Iōannēs: pinishti emeprodromos: shere piouēb epsuggenēs en-Emmanouēl.\n\nShere natshois enioti: enapostolos: shere nimathētēs: ente Pentshois Iēsous Pi-ekhristos.\n\nShere nak ō pimarturos: shere pi-eu-aggelistēs: shere pi-apostolos: abba Markos pitheōrimos.\n\nShere nak ō pimarturos: shere pishōij engenneos: shere pi-athloforos: Patshois epouro Geōrgios.\n\nShere nak ō pimarturos: shere pishōij engenneos: shere piathloforos: Filopatēr Merkourios.\n\nShere nak ō pimarturos: shere pishōij engenneos: shere pi-athloforos: pi-agios apa Mēna.\n\nŌouniatk khen oumethmēi: Peniōt ethouab empatriarkhēs: Papa Abba Kurillos Pimahsooh: pimenrit ente Pikhristos.\n\nŌouniatk khen oumethmēi: peniōt ethouab endikeos: abba Abraam pi-episkopos: pimenrit ente Pikhristos.\n\nShere nak ō fēethouab: pimenrit ente Pikhristos: peniōt Pishōi Kamel: pihēgoumenos.\n\nTentiho erok ō Uios Theos: ethrekareh e-epōnkh empenpatriarkhēs: papa Abba (...) piarkhē-ereus: matajrof hijen pefethronos.\n\nNem pefkeshfēr enliturgos: peniōt ethouab endikeos Abba (...) pi-episkopos (pimētropolitēs): matajrof hijen pefethronos.\n\nHiten ni-epresvia: ente Tithe-otokos ethouab Maria: Eptshois ari-ehmot nan: empikhō evol ente nennovi.\n\nEthrenhōs erok: nem Pekiōt enagathos: nem Pi-epneuma ethouab: je aki aksōti emmon nai nan.' },
+  { language: 'english', text: 'Lord have mercy.\n\nO come let us worship, the Holy Trinity, the Father and the Son, and the Holy Spirit.\n\nWe are the Christian people, for He is, our true God.\n\nWe have hope, in Saint Mary, that God will have mercy on us, through her intercession.\n\nAll calmness, in this world, is through the prayers, of Saint Mary the Virgin.\n\nHail to you O Mary, the beautiful dove, who has borne to us, God the Logos.\n\nHail to you O Mary, with a holy hail, Hail to you O Mary, the Mother of the Holy One.\n\nHail to Michael, the great archangel, Hail to Gabriel, the chosen announcer.\n\nHail to Michael, the great archangel, hail to the chief commander, of the army of the heavens!\n\nHail to the cherubim, hail to the seraphim, hail to all, the heavenly orders.\n\nHail to John, the great forerunner, hail to the priest, the kinsman of Emmanuel.\n\nHail to my lords, and fathers the apostles, hail to the disciples, of our Lord Jesus Christ.\n\nHail to you O martyr, hail to the Evangelist, hail to the Apostle, Mark the Beholder of God.\n\nHail to you, O martyr, hail to the courageous hero, hail to the struggle-mantled, my Lord Prince George.\n\nHail to you O martyr, hail to the courageous hero, hail to the struggle bearer, Philopater Mercurius.\n\nHail to you, O martyr, hail to the noble hero, hail to the struggle-bearer, saint Abba Mina.\n\nBlessed are you indeed, our holy father the patriarch, Abba Kyrillos the sixth, the beloved of Christ.\n\nBlessed are you indeed, our holy and righteous father, Abba Abraam the bishop, the beloved of Christ.\n\nHail to you O saint, the beloved of Christ, Abouna Pishoy Kamel, the hegumen.\n\nWe ask You O Son of God, to keep the life of our patriarch, Pope Abba (...) the high priest, confirm him upon his throne.\n\nAnd his partner in the liturgy, our holy righteous father, Abba (...) the bishop (metropolitan), confirm him upon his throne.\n\nThrough the intercessions, of the Theotokos Saint Mary, O Lord grant us, the forgiveness of our sins.\n\nThat we may praise You, with Your good Father, and the Holy Spirit, for You have come and saved us. Have mercy on us.' },
+  { language: 'englishArabic', text: 'Ya Rabbu irham.\n\nTa\'alaw fal-nasgud lith-Thalouth el-Quddous, alladhi huwa el-Ab wal-Ibn war-Rouh el-Qudus.\n\nNahnu esh-shu\'oub el-maseehiyyeen, li-anna hadha huwa ilahuna el-haqiqi.\n\nLana raga\', fil-qiddisa Maryam, Allah yarhamna bi-shafa\'atiha.\n\nKull hudou\', fil-\'alam min qibal salat el-qiddisa Maryam el-\'Adhra\'.\n\nEs-salam laki ya Maryam el-hamama el-hasana allati waladat lana, Allah el-Kalima.\n\nEs-salam laki ya Maryam, salaman muqaddasan, es-salam laki ya Maryam umm el-Quddous.\n\nEs-salam li-Mikha\'eel ra\'ees el-mala\'ika el-\'azeem, es-salam li-Ghabriyal el-mubashshir el-mukhtar.\n\nEs-salam li-Mikha\'eel ra\'ees el-mala\'ika el-\'azeem, es-salam li-ra\'ees gunoud quwwat es-samawat.\n\nEs-salam lish-Sharoubeem, es-salam lis-Sarafeem, es-salam li-gamee\' et-tughmat es-sama\'iyya.\n\nEs-salam li-Youhanna es-sabiq el-\'azeem, es-salam lil-kahin naseeb \'Immanoueel.\n\nEs-salam li-sadati el-aba\', er-rusul, es-salam li-talameedh Rabbina Yasou\' el-Maseeh.\n\nEs-salam laka ayyuha esh-shaheed, es-salam lil-Ingeeli, es-salam lir-rasoul Marqus nazir el-Ilah.\n\nEs-salam laka ayyuha esh-shaheed, es-salam lish-shuga\' el-mugahid, es-salam lil-labis el-gihad, sayyidi el-malik Gewargios.\n\nEs-salam laka ayyuha esh-shaheed, es-salam lish-shuga\' el-batal, es-salam lil-mugahid Muhibb el-Ab Marqourios.\n\nEs-salam laka ayyuha esh-shaheed, es-salam lish-shuga\' el-batal, es-salam lil-mugahid el-qiddis Aba Mina.\n\nToubaka bil-haqiqa, ya abana el-qiddis el-batriyark, el-Anba Kyrillos es-sadis, habeeb el-Maseeh.\n\nToubaka bil-haqiqa ya abana el-qiddis el-barr Anba Abraam el-usquf habeeb el-Maseeh.\n\nEs-salam laka ayyuha el-qiddis, habeeb el-Maseeh, abouna el-qummus Bishoy Kamel.\n\nNas\'aluka ya Ibn Allah, an tahfaz hayat batriyarkina, el-Baba Anba (...) ra\'ees el-kahana, thabbithu \'ala kursiyyih.\n\nWa shareekuhu fil-khidma er-rasouliyya, abana el-qiddis el-barr, Anba (...) el-usquf (el-matran), thabbithu \'ala kursiyyih.\n\nBi-shafa\'at walidat el-Ilah el-qiddisa Maryam, ya Rabb an\'im \'alayna bi-maghfirat khatayana.\n\nLikay nusabbihak, ma\'a abeeka es-salih, war-Rouh el-Qudus, li-annaka ataita wa khallastana irhamna.' },
+  { language: 'arabic', text: 'يا ربُ إرحَم.\n\nتعالوا فلنسجد للثالوث القدوس الذي هو الآب والإبن والروح القدس.\n\nنحن الشعوب المسيحيين لأن هذا هو إلهنا الحقيقي.\n\nلنا رجاء، في القديسة مريم. الله يرحمنا بشفاعاتها.\n\nكل هدوء، في العالم من قبل صلاة القديسة مريم العذراء.\n\nالسلام لكِ يا مريم الحمامة الحسنة التي ولدت لنا، الله الكلمة.\n\nالسلام لكِ يا مريم، سلاماً مقدساً السلام لكِ يا مريم أم القدوس.\n\nالسلام لميخائيل رئيس الملائكة العظيم. السلام لغبريال المبشر المختار.\n\nالسلام لميخائيل رئيس الملائكة العظيم. السلام لرئيس جنود قوات السَّمَوات.\n\nالسلام للشاروبيم، السلام للسِّرافيم السلام لجميع الطغمات السمائية.\n\nالسلام ليوحنا السابق العظيم السلام للكاهن نسيب عمانوئيل.\n\nالسلام لسادتي الآباء، الرسل. السلام لتلاميذ ربنا يسوع المسيح.\n\nالسلام لك أيها الشهيد السلام للإنجيلي السلام للرسول مرقس ناظر الإله.\n\nالسلام لك أيها الشهيد، السلام للشجاع المجاهد، السلام للابس الجهاد، سيدي الملك جيؤرجيوس.\n\nالسلام لك أيها الشهيد. السلام للشجاع البطل. السلام للمجاهد محب الآب مرقوريوس.\n\nالسلام لك أيها الشهيد. السلام للشجاع البطل. السلام للمجاهد القديس أبا مينا.\n\nطوباك بالحقيقة، يا أبانا القديس البطريرك، الأنبا كيرلس السادس، حبيب المسيح.\n\nطوباك بالحقيقة يا أبانا القديس البار أنبا إبرآم الأسقف حبيب المسيح.\n\nالسلام لك أيها القديس، حبيب المسيح، أبونا القمص بيشوي كامل.\n\nنسألك يا إبن الله، أن تحفظ حياة بطريركنا، البابا أنبا (...) رئيسُ الكهنة، ثبته على كرسيه.\n\nوشريكه في الخدمة الرسولية، أبانا القديس البار، أنبا (...) الأسقف (المطران)، ثبته على كرسيه.\n\nبشفاعات والدة الإله القديسة مريم، يارب أنعم علينا بمغفرة خطايانا.\n\nلكي نُسبِّحك، مع أبيك الصالح، والروح القدس، لأنك أتيت وخلَّصتنا إرحمنا.' },
+];
+const copyForService = (hymn: Hymn, from: string, to: string): Hymn => ({
+  ...hymn,
+  id: hymn.id.replace(from, to),
+  versions: hymn.versions.map((version) => ({ ...version })),
+  children: hymn.children?.map((child) => copyForService(child, from, to)),
+});
+const greatLent = seasons.find((s) => s.id === 'great-lent');
+for (const annualService of [annualMatins, annualVespers]) {
+  const lentService = greatLent?.services.find((s) => s.id === annualService?.id.replace('annual-', 'lent-'));
+  if (!annualService || !lentService) continue;
+  lentService.hymns = annualService.hymns.map((hymn) =>
+    hymn.id.endsWith('-verse-of-cymbals')
+      ? {
+          id: `${lentService.id}-verse-of-cymbals`,
+          title: 'Ⲁⲙⲱⲓⲛⲓ ⲙⲁⲣⲉⲛⲟⲩⲱϣⲧ (Verses of the Cymbals)',
+          versions: lentVersesOfCymbals.map((version) => ({ ...version })),
+        }
+      : copyForService(hymn, annualService.id, lentService.id)
+  );
+}
+
+// ---- Great Lent > Liturgy: the Offering of the Lamb as in Annual, with His Foundation in place of All the Wise Men and Saved. Amen. ----
+const annualLiturgyService = seasons.find((s) => s.id === 'annual')?.services.find((s) => s.id === 'annual-liturgy');
+const lentLiturgy = greatLent?.services.find((s) => s.id === 'lent-liturgy');
+if (annualLiturgyService && lentLiturgy) {
+  const start = annualLiturgyService.hymns.findIndex((h) => h.id === 'annual-liturgy-offering-header');
+  const end = annualLiturgyService.hymns.findIndex((h) => h.id === 'annual-liturgy-word-header');
+  const offering = annualLiturgyService.hymns.slice(start, end);
+  lentLiturgy.hymns = offering.flatMap((hymn): Hymn[] => {
+    if (hymn.id === 'annual-liturgy-offering-sotis-amen') return [];
+    if (hymn.id === 'annual-liturgy-offering-all-the-wise-men') {
+      return [
+        {
+          id: 'lent-liturgy-offering-his-foundation',
+          title: 'Ⲛⲉϥⲥⲉⲛϯ (His Foundation)',
+          versions: [
+            { language: 'coptic', text: 'Ⲡⲓⲗⲁⲟⲥ:\n\nⲚⲉϥⲥⲉⲛϯ ϧⲉⲛ ⲛⲓⲧⲱⲟ̀ⲩ ⲉⲑ︦ⲩ︦. Ⲁ̀Ⲡⲟ︦ⲥ︦ ⲙⲉⲓ ⲛ̀ⲛⲓⲡⲩⲗⲏ ⲛ̀ⲧⲉ Ⲥⲓⲱⲛ: ⲉ̀ϩⲟⲧⲉ ⲛⲓⲙⲁ ⲛ̀ϣⲱⲡⲓ ⲧⲏⲣⲟⲩ ⲛ̀ⲧⲉ Ⲓⲁⲕⲱⲃ. Ⲁϥⲥⲁϫⲓ ⲉ̀ⲑⲃⲏϯ ⲛ̀ϩⲁⲛϩ̀ⲃⲏⲟⲩⲓ̀ ⲉⲩⲧⲁⲓⲏⲟⲩⲧ: ϯⲃⲁⲕⲓ ⲛ̀ⲧⲉ Ⲫϯ. Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ.\n\nⲤⲓⲱⲛ ϯⲙⲁⲩ ⲛⲁϫⲟⲥ: ϫⲉ ⲟ̀ⲩⲣⲱⲙⲓ ⲛⲉⲙ ⲟ̀ⲩⲣⲱⲙⲓ ⲁϥϣⲱⲡⲓ ⲛ̀ϧⲏⲧⲥ: ⲟⲩⲟϩ ⲛ̀ⲑⲟϥ Ⲡⲉⲧϭ̀ⲟⲥⲓ: ⲁϥϩⲓⲥⲉⲛϯ ⲙ̀ⲙⲟⲥ ϣⲁ ⲉ̀ⲛⲉϩ. Ⲁ̀ⲗⲗⲏⲗⲟⲩⲓⲁ.' },
+            { language: 'englishCoptic', text: 'Pi-laos:\n\nNefsenti khen nitōou ethouab. A-Eptshois mei ennipulē ente Siōn: ehote nima enshōpi tērou ente Iakōb. Afsaji ethvēti enhanehvēou-i eutaiēout: tivaki ente Efnouti. Allēlouia.\n\nSiōn timau najos: je ourōmi nem ourōmi afshōpi enkhēts: ouoh enthof Petetshosi: afhisenti emmos sha eneh. Allēlouia.' },
+            { language: 'english', text: 'People:\n\nHis foundation is in the holy mountains. The Lord loves the gates of Zion, more than all the dwellings of Jacob. Glorious things are spoken of you, O city of God. Alleluia.\n\nAnd of Zion it will be said, "This one and that one were born in her, and the Most High Himself shall establish her." Alleluia.' },
+            { language: 'englishArabic', text: 'Esh-sha\'b:\n\nAsasatuhu fil-gibal el-muqaddasa. Yuhibb er-Rabb abwab Sahyoun, afdal min gamee\' masakin Ya\'qoub. A\'mal magida qad qeelat \'anki ya madinat Allah. Halleluya.\n\nSahyoun el-umm taqoul inna insanan wa insanan wulida fiha, wa huwa el-\'Aliyy alladhi assasaha ila el-abad. Halleluya.' },
+            { language: 'arabic', text: 'الشعب:\n\nأساساته في الجبال المقدسة. يحب الرب أبواب صهيون، أفضل من جميع مساكن يعقوب. أعمال مجيدة قد قيلت عنك يا مدينة الله. هلليلويا.\n\nصهيون الأم تقول إن إنساناً وإنساناً وُلد فيها، وهو العلي الذي أسسها إلى الأبد. هلليلويا.' },
+          ],
+        },
+      ];
+    }
+    return [copyForService(hymn, 'annual-liturgy', 'lent-liturgy')];
+  });
+}
+
+// ---- Great Lent > Matins: the Doxologies (weekdays and weekends) ----
+// Each verse: English, Coptic, Arabic, Coptic in English letters, Arabic in English letters
+type DoxologyVerse = [string, string, string, string, string];
+const doxologyVersions = (verses: DoxologyVerse[]): LanguageVersion[] =>
+  (['english', 'coptic', 'arabic', 'englishCoptic', 'englishArabic'] as LanguageType[]).map((language, i) => ({
+    language,
+    text: verses.map((verse) => verse[i]).join('\n\n'),
+  }));
+const lentDoxologies: { key: string; title: string; verses: DoxologyVerse[] }[] = [
+  {
+    key: "sat-sun",
+    title: "Ⲛⲉⲕⲛⲁⲓ ⲱ̀ ⲡⲁϬⲟⲓⲥ (Doxology for Saturdays and Sundays of Great Lent)",
+    verses: [
+      ["Your mercies O my Lord I will praise, forever and ever, and from generation to generation, I will declare Your truth out of my mouth.", "Ⲛⲉⲕⲛⲁⲓ ⲱ̀ ⲡⲁϬⲟⲓⲥ ϯⲛⲁϩⲱⲥ ⲙ̀ⲙⲱⲟ̀ⲩ: ϣⲁ ⲉ̀ⲛⲉϩ ⲛ̀ⲧⲉ ⲡⲓⲉ̀ⲛⲉϩ: ⲟⲩⲟϩ ⲓⲥϫⲉⲛ ϫⲱⲟ̀ⲩ ϣⲁ ϫⲱⲟ̀ⲩ: ϯⲛⲁϫⲱ ⲛ̀ⲧⲉⲕⲙⲉⲑⲙⲏⲓ ϧⲉⲛ ⲣⲱⲓ.", "أسبح مراحمك يا ربي، إلى أبد الأبد، ومن جيل إلى جيل، بفمي أخبر بحقك.", "Neknai ō Patshois tinahōs emmōou: sha eneh ente pi-eneh: ouoh isjen jōou sha jōou: tinajō entekmethmēi khen rōi.", "Usabbih marahimak ya Rabbi, ila abad el-abad, wa min geel ila geel, bi-fami ukhbir bi-haqqik."],
+      ["My iniquities have covered my head, and have overburdened me, O God hear my sighs, and cast them away from me.", "Ⲛⲁⲁ̀ⲛⲟⲙⲓⲁ ⲁⲩϭⲓⲥⲓ ⲉ̀ⲧⲁⲁ̀ⲫⲉ: ⲟⲩⲟϩ ⲁⲩϩ̀ⲣⲟϣ ⲉ̀ϩ̀ⲣⲏⲓ ⲉ̀ϫⲱⲓ: Ⲫ̀ϯ ⲥⲱⲧⲉⲙ ⲉ̀ⲡⲁϥⲓⲁϩⲟⲙ: ϩⲓⲟ̀ⲩⲓ̀ ⲙ̀ⲙⲱⲟ̀ⲩ ⲉ̀ⲃⲟⲗϩⲁⲣⲟⲓ.", "آثامي علت على رأسي، وثقلت عليّ، يا الله اسمع تنهدي، واطرحها عني.", "Na-anomia autshisi eta-afe: ouoh au-ehrosh e-ehrēi ejōi: Efnouti sōtem epafiahom: hiou-i emmōou evolharoi.", "Athami 'alat 'ala ra'si, wa thaqulat 'alayya, ya Allah isma' tanahhudi, watrahha 'anni."],
+      ["Make me like the publican, who has sinned against You, You had compassion upon him, and forgave him his sins.", "Ⲁ̀ⲣⲓⲧⲧ ⲙ̀ⲫ̀ⲣⲏϯ ⲙ̀ⲡⲓⲧⲉⲗⲱⲛⲏⲥ: ⲫⲏⲉ̀ⲧⲁϥⲉ̀ⲣⲛⲟⲃⲓ ⲉ̀ⲣⲟⲕ: ⲁⲕϣⲉⲛϩⲏⲧ ⲉ̀ϩ̀ⲣⲏⲓ ⲉ̀ϫⲱϥ: ⲁⲕⲭⲁ ⲛⲉϥⲛⲟⲃⲓ ⲛⲁϥ ⲉ̀ⲃⲟⲗ.", "اجعلني مثل العشار، الذي أخطأ إليك، وتراءفت عليه، وغفرت له خطاياه.", "Aritt emefrēti empitelōnēs: fē-etafernovi erok: akshenhēt e-ehrēi ejōf: akkha nefnovi naf evol.", "Ig'alni mithl el-'ashshar, alladhi akhta' ilayk, wa tara'aft 'alayh, wa ghafart lahu khatayah."],
+      ["Make me like the adulteress, whom You have redeemed, You have saved and rescued her, for she pleased You.", "Ⲁ̀ⲣⲓⲧⲧ ⲙ̀ⲫ̀ⲣⲏϯ ⲛ̀ϯⲡⲟⲣⲛⲏ: ⲑⲏⲉ̀ⲧⲁⲕⲥⲱϯ ⲙ̀ⲙⲟⲥ ⲉ̀ⲃⲟⲗ: ⲁⲕⲧⲟⲩⲛⲟⲥ ⲁⲕⲛⲟϩⲉⲙ ⲙ̀ⲙⲟⲥ: ϫⲉ ⲁⲥⲣⲁⲛⲁⲕ ⲙ̀ⲡⲉⲕⲙ̀ⲑⲟ.", "اجعلني مثل الزانية، التي خلصتها، وأنقذتها ونجيتها، لأنها أرضتك أمامك.", "Aritt emefrēti entipornē: thē-etaksōti emmos evol: aktounos aknohem emmos: je asranak empekemtho.", "Ig'alni mithl ez-zaniya, allati khallastaha, wa anqadhtaha wa naggaytaha, li-annaha ardatka amamak."],
+      ["Make me like the thief, who was crucified upon Your right hand, he confessed to You, and likewise said.", "Ⲁ̀ⲣⲓⲧⲧ ⲙ̀ⲫ̀ⲣⲏϯ ⲙ̀ⲡⲓⲥⲟⲛⲓ: ⲫⲏⲉ̀ⲧⲁⲩⲁ̀ϣϥ ⲛ̀ⲥⲁ ⲧⲉⲕⲟ̀ⲩⲓ̀ⲛⲁⲙ: ⲁϥⲉ̀ⲣⲟ̀ⲙⲟⲗⲟⲅⲓⲛ ⲙ̀ⲙⲟⲕ: ⲙ̀ⲡⲁⲓⲣⲏϯ ⲉϥϫⲱ ⲙ̀ⲙⲟⲥ.", "اجعلني مثل اللص، الذي صُلب عن يمينك، واعترف بك، هكذا قائلاً.", "Aritt emefrēti empisoni: fē-etauashf ensa tekou-inam: aferomologin emmok: empairēti efjō emmos.", "Ig'alni mithl el-liss, alladhi sulib 'an yameenak, wa'taraf bik, hakadha qa'ilan."],
+      ["\"Remember me O my Lord, remember me O my God, remember me O my King, when You come into Your kingdom.\"", "Ϫⲉ ⲁ̀ⲣⲓⲡⲁⲙⲉⲩⲓ̀ ⲱ̀ ⲡⲁϬⲟⲓⲥ: ⲁ̀ⲣⲓⲡⲁⲙⲉⲩⲓ̀ ⲱ̀ ⲡⲁⲚⲟⲩϯ: ⲁ̀ⲣⲓⲡⲁⲙⲉⲩⲓ̀ ⲱ̀ ⲡⲁⲞ̀ⲩⲣⲟ: ⲁⲕϣⲁⲛⲓ̀ ϧⲉⲛ ⲧⲉⲕⲙⲉⲧⲟ̀ⲩⲣⲟ.", "\"اذكرني يا ربي، اذكرني يا إلهي، اذكرني يا ملكي، متى جئت في ملكوتك.\"", "Je aripameu-i ō Patshois: aripameu-i ō PaNouti: aripameu-i ō PaOuro: akshani khen tekmetouro.", "\"Udhkurni ya Rabbi, udhkurni ya Ilahi, udhkurni ya Maliki, mata gi'ta fi malakoutak.\""],
+      ["For You O my Savior, have accepted his confession, You were compassionate to him, and sent him to paradise.", "Ⲛ̀ⲑⲟⲕ ⲇⲉ ⲱ̀ ⲡⲁⲤⲱⲧⲏⲣ: ⲁⲕϣⲱⲡ ⲉ̀ⲣⲟⲕ ⲛ̀ⲧⲉϥⲟ̀ⲙⲟⲗⲟⲅⲓⲁ: ⲁⲕϣⲉⲛϩⲏⲧ ⲉ̀ϩ̀ⲣⲏⲓ ⲉ̀ϫⲱϥ: ⲁⲕⲟ̀ⲩⲟ̀ⲣⲡϥ ⲉ̀ⲡⲓⲡⲁⲣⲁⲇⲓⲥⲟⲥ.", "فأنت يا مخلصي، قبلت إليك اعترافه، وتراءفت عليه، وأرسلته إلى الفردوس.", "Enthok de ō PaSōtēr: akshōp erok entefomologia: akshenhēt e-ehrēi ejōf: akouorpf epiparadisos.", "Fa-anta ya mukhallisi, qabilta ilayka i'tirafahu, wa tara'aft 'alayh, wa arsaltahu ila el-firdaws."],
+      ["Likewise I the sinner, Jesus my true King and God, have compassion upon me, and make me as one of them.", "Ⲁ̀ⲛⲟⲕ ϩⲱ ϧⲁ ⲡⲓⲣⲉϥⲉ̀ⲣⲛⲟⲃⲓ: Ⲓⲏ︦ⲥ︦ ⲡⲁⲚⲟⲩϯ ⲡⲁⲞ̀ⲩⲣⲟ ⲙ̀ⲙⲏⲓ: ϣⲁⲛⲁϩ̀ⲑⲏⲕ ⲉ̀ϩ̀ⲣⲏⲓ ⲉ̀ϫⲱⲓ: ⲁ̀ⲣⲓⲧⲧ ⲙ̀ⲫ̀ⲣⲏϯ ⲛ̀ⲟ̀ⲩⲁⲓ ⲛ̀ⲛⲁⲓ.", "وأنا أيضاً الخاطئ، يا يسوع إلهي وملكي الحقيقي، تحنن عليّ واجعلني، كأحد هؤلاء.", "Anok hō kha pirefernovi: Iēsous PaNouti PaOuro emmēi: shanahethēk e-ehrēi ejōi: aritt emefrēti enouai ennai.", "Wa ana aydan el-khati', ya Yasou' Ilahi wa Maliki el-haqiqi, tahannan 'alayya wag'alni, ka-ahad ha'ula'."],
+      ["For I know that You are good, compassionate and patient, remember me in Your mercy, forever and ever.", "Ϯⲥⲱⲟ̀ⲩⲛ ϫⲉ Ⲛ̀ⲑⲟⲕ ⲟ̀ⲩⲁ̀ⲅⲁⲑⲟⲥ: ⲛ̀ⲣⲉϥϣⲉⲛϩⲏⲧ ⲟⲩⲟϩ ⲛ̀ⲛⲁⲏ̀ⲧ: ⲁ̀ⲣⲓⲡⲁⲙⲉⲩ̀ⲓ̀ ϧⲉⲛ ⲡⲉⲕⲛⲁⲓ: ϣⲁ ⲉ̀ⲛⲉϩ ⲛ̀ⲧⲉ ⲡⲓⲉ̀ⲛⲉϩ.", "أنا أعرف أنك صالح، رؤوف ورحيم، اذكرني برحمتك، إلى أبد الأبد.", "Tisōoun je enthok ouagathos: enrefshenhēt ouoh ennaēt: aripameu-i khen peknai: sha eneh ente pi-eneh.", "Ana a'rif annaka salih, ra'ouf wa raheem, udhkurni bi-rahmatik, ila abad el-abad."],
+      ["I ask You O my Lord Jesus, do not destroy me in Your anger, and likewise also in Your wrath, do not chasten me for my ignorance.", "Ϯⲧⲱⲃϩ ⲙ̀ⲙⲟⲕ ⲱ̀ ⲡⲁϬⲟⲓⲥ Ⲓⲏ︦ⲥ︦: ⲙ̀ⲡⲉⲣⲥⲟϩⲓ ⲙ̀ⲙⲟⲓ ϧⲉⲛ ⲡⲉⲕϫⲱⲛⲧ: ⲟ̀ⲩⲇⲉ ⲟⲛ ϧⲉⲛ ⲡⲉⲕⲙ̀ⲃⲟⲛ: ⲙ̀ⲡⲉⲣϯⲥ̀ⲃⲱ ⲛ̀ⲧⲁⲙⲉⲧⲁⲧⲉ̀ⲙⲓ.", "أطلب إليك يا ربي يسوع، أن لا تبكتني بغضبك، ولا برجزك، تؤدب جهالتي.", "Titōbh emmok ō Patshois Iēsous: empersohi emmoi khen pekjōnt: oude on khen pekembon: empertiesbō entametatemi.", "Atlub ilayka ya Rabbi Yasou', an la tubakkitani bi-ghadabik, wa la bi-rigzik, tu'addib gahalati."],
+      ["For You do not desire the sinner's death, rather he returns and lives, have pity upon my weakness, and do not look at me in anger.", "Ϫⲉ ⲭ̀ⲟ̀ⲩⲱ̀ϣ ⲙ̀ⲫ̀ⲙⲟⲩ ⲁⲛ ⲙ̀ⲡⲓⲣⲉϥⲉ̀ⲣⲛⲟⲃⲓ: ⲙ̀ⲫ̀ⲣⲏϯ ⲛ̀ⲧⲉϥⲕⲟⲧϥ ⲟⲩⲟϩ ⲛ̀ⲧⲉϥⲱ̀ⲛϧ: ϣⲁⲛⲁϩ̀ⲑⲏⲕ ϧⲁ ⲧⲁⲙⲉⲧϫⲱⲃ: ⲙ̀ⲡⲉⲣⲥⲟⲙⲥ ⲉ̀ⲣⲟⲓ ϧⲉⲛ ⲟ̀ⲩⲙ̀ⲃⲟⲛ.", "لأنك لا تشاء موت الخاطئ، مثل أن يرجع ويحيا، تراءف على ضعفي، ولا تنظر إليّ بغضب.", "Je ekouōsh emefmou an empirefernovi: emefrēti entefkotf ouoh entefōnkh: shanahethēk kha tametjōb: empersoms eroi khen ouembon.", "Li-annaka la tasha' mawt el-khati', mithl an yarga' wa yahya, tara'af 'ala da'fi, wa la tanzur ilayya bi-ghadab."],
+      ["I have sinned Jesus my Lord, I have sinned Jesus my God, O King do not count the sins, which I have committed.", "Ⲁⲓⲉ̀ⲣⲛⲟⲃⲓ Ⲓⲏ︦ⲥ︦ ⲡⲁϬⲟⲓⲥ: ⲁⲓⲉ̀ⲣⲛⲟⲃⲓ Ⲓⲏ︦ⲥ︦ ⲡⲁⲚⲟⲩϯ: ⲡⲁⲞ̀ⲩⲣⲟ ⲙ̀ⲡⲉⲣⲱⲡ ⲉ̀ⲣⲟⲓ: ⲛ̀ⲛⲓⲛⲟⲃⲓ ⲉ̀ⲧⲁⲓⲁ̀ⲓⲧⲟⲩ.", "أخطأت يا يسوع ربي، أخطأت يا يسوع إلهي، يا ملكي لا تحسب عليّ، الخطايا التي صنعتها.", "Aiernovi Iēsous Patshois: aiernovi Iēsous PaNouti: PaOuro emperōp eroi: enninovi etaiaitou.", "Akhta'tu ya Yasou' Rabbi, akhta'tu ya Yasou' Ilahi, ya Maliki la tahsib 'alayya, el-khataya allati sana'tuha."],
+      ["I ask You O my Savior, let Your mercies come to me, and save me from the troubles, that come to my soul.", "Ϯϯϩⲟ ⲉ̀ⲣⲟⲕ ⲱ̀ ⲡⲁⲤⲱⲧⲏⲣ: ⲙⲁⲣⲉ ⲛⲉⲕⲙⲉⲑⲛⲁⲏ̀ⲧ ⲧⲁϩⲟⲓ: ⲛ̀ⲧⲟⲩⲛⲟϩⲉⲙ ⲙ̀ⲙⲟⲓ ϧⲉⲛ ⲛⲓⲁ̀ⲛⲁⲅⲕⲏ: ⲉⲧϯ ⲟ̀ⲩⲃⲉ ⲉ̀ⲧⲁⲯ̀ⲩⲭⲏ.", "أسألك يا مخلصي، فلتدركني مراحمك، لتخلصني من الشدائد، المضادة لنفسي.", "Titiho erok ō PaSōtēr: mare nekmethnaēt tahoi: entounohem emmoi khen nianagkē: etti ouve etaepsukhē.", "As'aluk ya mukhallisi, faltudrikni marahimak, li-tukhallisani min esh-shada'id, el-mudadda li-nafsi."],
+      ["Do not send me to the fire, for my ignorance like Sodom, and likewise do not destroy me, like Gomorrah.", "Ⲙ̀ⲡⲉⲣϩⲓ ⲭ̀ⲣⲱⲙ ⲉ̀ⲧⲁⲙⲉⲧⲁⲧⲥⲱⲟ̀ⲩⲛ: ⲙ̀ⲫ̀ⲣⲏϯ ϩⲱϥ ⲛ̀Ⲥⲟⲇⲟⲙⲁ: ⲟ̀ⲩⲇⲉ ⲟⲛ ⲙ̀ⲡⲉⲣⲧⲁⲕⲟⲓ: ⲙ̀ⲫ̀ⲣⲏϯ ϩⲱϥ ⲛ̀Ⲅⲟⲙⲟⲣⲣⲁ.", "لا تحرق عدم معرفتي، مثل سدوم، ولا تهلكني أيضاً، مثل عمورة.", "Emperhi ekhrōm etametatsōoun: emefrēti hōf en-Sodoma: oude on empertakoi: emefrēti hōf en-Gomorra.", "La tahriq 'adam ma'rifati, mithl Sadoum, wa la tuhlikni aydan, mithl 'Amoura."],
+      ["But O my Lord deal with me, like the people of Nineveh, those who have repented, and You forgave them their sins.", "Ⲁⲗⲗⲁ ⲡⲁϬⲟⲓⲥ ⲁ̀ⲣⲓⲟ̀ⲩⲓ̀ ⲛⲉⲙⲏⲓ: ⲙ̀ⲫ̀ⲣⲏϯ ⲛ̀ⲛⲓⲣⲉⲙⲚⲓⲛⲉⲩⲏ̀: ⲛⲁⲓ ⲉ̀ⲧⲁⲩⲉ̀ⲣⲙⲉⲧⲁⲛⲟⲓⲛ: ⲁⲕⲭⲁ ⲛⲟⲩⲛⲟⲃⲓ ⲛⲱⲟ̀ⲩ ⲉ̀ⲃⲟⲗ.", "لكن يا ربي اصنع معي، مثل أهل نينوى، الذين تابوا، فغفرت لهم خطاياهم.", "Alla Patshois ariou-i nemēi: emefrēti enniremNineuē: nai etauermetanoin: akkha nounovi nōou evol.", "Lakin ya Rabbi isna' ma'i, mithl ahl Neenawa, alladheen tabou, fa-ghafart lahum khatayahum."],
+      ["But may Your mercies, come unto me quickly, that I may proclaim with those people, with an unceasing voice.", "Ⲁⲗⲗⲁ ⲙⲁⲣⲉ ⲛⲉⲕⲙⲉⲑⲛⲁⲏ̀ⲧ: ⲧⲁϩⲟⲓ ⲡⲁϬⲟⲓⲥ ϧⲉⲛ ⲟ̀ⲩⲓⲏⲥ: ⲛ̀ⲧⲁⲱ̀ϣ ⲉ̀ⲃⲟⲗ ⲛⲉⲙ ⲡⲁⲓⲗⲁⲟ̀ⲥ: ϧⲉⲛ ⲟ̀ⲩⲥ̀ⲙⲏ ⲛ̀ⲁ̀ⲧⲭⲁⲣⲱⲥ.", "لكن فلتدركني سريعاً، مراحمك يا ربي، لأصرخ مع هذا الشعب، بصوت لا يسكت.", "Alla mare nekmethnaēt: tahoi Patshois khen ouiēs: entaōsh evol nem pailaos: khen ouesmē enatkharōs.", "Lakin faltudrikni saree'an, marahimak ya Rabbi, li-asrukh ma'a hadha esh-sha'b, bi-sawt la yaskut."],
+      ["Wherefore I entreat You, O Lord God my Savior, do not judge me, I the weak and sinful.", "Ⲉⲑⲃⲉ ⲫⲁⲓ ϯⲧⲱⲃϩ ⲙ̀ⲙⲟⲕ: Ⲡ̀ⲟ︦ⲥ︦ Ⲫ̀ϯ ⲡⲁⲤⲱⲧⲏⲣ: ⲙ̀ⲡⲉⲣⲓ̀ⲣⲓ ⲛ̀ⲟ̀ⲩϩⲁⲡ ⲛⲉⲙⲏⲓ: ⲁ̀ⲛⲟⲕ ϧⲁ ⲡⲓϫⲱⲃ ⲛ̀ⲣⲉϥⲉ̀ⲣⲛⲟⲃⲓ.", "من أجل هذا أطلب إليك، أيها الرب الإله مخلصي، لا تحاكمني، أنا الضعيف الخاطئ.", "Ethve fai titōbh emmok: Eptshois Efnouti PaSōtēr: emperiri enouhap nemēi: anok kha pijōb enrefernovi.", "Min agl hadha atlub ilayk, ayyuha er-Rabb el-Ilah mukhallisi, la tuhakimni, ana ed-da'eef el-khati'."],
+      ["But rather absolve and remit, my many iniquities, as a good One and Lover of mankind, have mercy upon us according to Your great mercy.", "Ⲁⲗⲗⲁ ⲃⲱⲗ ⲉ̀ⲃⲟⲗ ⲭⲱ ⲛⲏⲓ ⲉ̀ⲃⲟⲗ: ⲛ̀ⲛⲁⲡⲁⲣⲁⲡⲧⲱⲙⲁ ⲉⲧⲟ̀ϣ: ϩⲱⲥ Ⲁ̀ⲅⲁⲑⲟⲥ ⲟⲩⲟϩ ⲙ̀Ⲙⲁⲓⲣⲱⲙⲓ: ⲛⲁⲓ ⲛⲁⲛ ⲕⲁⲧⲁ ⲡⲉⲕⲛⲓϣϯ ⲛ̀ⲛⲁⲓ.", "لكن حُلَّ واغفر، لي زلاتي الكثيرة، كصالح ومحب البشر، ارحمنا كعظيم رحمتك.", "Alla vōl evol khō nēi evol: ennaparaptōma etosh: hōs Agathos ouoh emMairōmi: nai nan kata peknishti ennai.", "Lakin hill waghfir, li zallati el-katheera, ka-salih wa muhibb el-bashar, irhamna ka-'azeem rahmatik."],
+    ],
+  },
+  {
+    key: "weekday-lent",
+    title: "Ϯⲛⲏⲥⲧⲓⲁ ⲛⲉⲙ ⲡⲓϣ̀ⲗⲏⲗ (Doxology for Weekdays of Great Lent)",
+    verses: [
+      ["Fasting and prayer, are the salvation for our souls, purity and righteousness, they are what please God.", "Ϯⲛⲏⲥⲧⲓⲁ ⲛⲉⲙ ⲡⲓϣ̀ⲗⲏⲗ: ⲛ̀ⲑⲱⲟ̀ⲩ ⲡⲉ ⲡ̀ⲥⲱϯ ⲛ̀ⲛⲉⲛⲯ̀ⲩⲭⲏ: ⲡⲓⲧⲟⲩⲃⲟ ⲛⲉⲙ ϯⲙⲉⲑⲙⲏⲓ: ⲛ̀ⲑⲱⲟ̀ⲩ ⲡⲉ ϣⲁⲩⲣⲁⲛⲁϥ ⲙ̀Ⲫ̀ϯ.", "الصوم والصلاة، هما خلاص نفوسنا، والطهارة والبر، هما اللذان يرضيان الله.", "Tinēstia nem pi-eshlēl: enthōou pe epsōti ennenepsukhē: pitouvo nem timethmēi: enthōou pe shauranaf em-Efnouti.", "Es-sawm wes-salah, huma khalas nufousina, wet-tahara wal-birr, huma alladhan yurdiyan Allah."],
+      ["Fasting has raised Moses, up to the mountain, until he received the Law for us, from the Lord our God.", "Ϯⲛⲏⲥⲧⲓⲁ ⲑⲏⲉ̀ⲧⲁⲥⲱ̀ⲗⲓ: ⲙ̀Ⲙⲱⲩⲥⲏⲥ ϩⲓϫⲉⲛ ⲡⲓⲧⲱⲟ̀ⲩ: ϣⲁⲛ̀ⲧⲉϥϭⲓ ⲙ̀ⲡⲓⲚⲟⲙⲟⲥ ⲛⲁⲛ: ⲉ̀ⲃⲟⲗ ϩⲓⲧⲉⲛ Ⲡ̀ⲟ︦ⲥ︦ Ⲫ̀ϯ.", "الصوم هو الذي رفع، موسى على الجبل، حتى أخذ لنا الناموس، من قبل الرب الإله.", "Tinēstia thē-etasōli: em-Mōusēs hijen pitōou: shantefetshi empinomos nan: evol hiten Eptshois Efnouti.", "Es-sawm huwa alladhi rafa', Mousa 'ala el-gabal, hatta akhadh lana en-namous, min qibal er-Rabb el-Ilah."],
+      ["Fasting has raised Elijah, up to heaven, and has saved Daniel, from the den of lions.", "Ϯⲛⲏⲥⲧⲓⲁ ⲑⲏⲉ̀ⲧⲁⲥⲱ̀ⲗⲓ: ⲛ̀Ⲏ̀ⲗⲓⲁⲥ ⲉ̀ⲡ̀ϣⲱⲓ ⲉ̀ⲧ̀ⲫⲉ: ⲟⲩⲟϩ ⲁⲥⲛⲟϩⲉⲙ ⲛ̀Ⲇⲁⲛⲓⲏⲗ: ⲉ̀ⲃⲟⲗϧⲉⲛ ⲫ̀ⲗⲁⲕⲕⲟⲥ ⲛ̀ⲛⲓⲙⲟⲩⲓ̀.", "الصوم هو الذي رفع، إيليا إلى السماء، وخلص دانيال، من جُب الأسود.", "Tinēstia thē-etasōli: en-Ēlias e-epshōi e-etfe: ouoh asnohem en-Daniēl: evolkhen eflakkos ennimou-i.", "Es-sawm huwa alladhi rafa', Iliya ila es-sama', wa khallas Daniyal, min gubb el-usoud."],
+      ["Our Lord Jesus Christ, has fasted for us, forty days and forty nights, to save us from our sins.", "Ⲁ̀ ⲡⲉⲛⲟ︦ⲥ︦ Ⲓⲏ︦ⲥ︦ Ⲡⲭ︦ⲥ︦: ⲉⲣⲛⲏⲥⲧⲉⲩⲓⲛ ⲉ̀ϩ̀ⲣⲏⲓ ⲉ̀ϫⲱⲛ: ⲛ̀ϩ̀ⲙⲉ ⲛ̀ⲉ̀ϩⲟⲟ̀ⲩ ⲛⲉⲙ ϩ̀ⲙⲉ ⲛ̀ⲉ̀ϫⲱⲣϩ: ϣⲁ ⲛ̀ⲧⲉϥⲥⲟⲧⲧⲉⲛ ϧⲉⲛ ⲛⲉⲛⲛⲟⲃⲓ.", "ربنا يسوع المسيح، صام عنا، أربعين يوماً وأربعين ليلة، حتى خلصنا من خطايانا.", "A Pentshois Iēsous Pikhristos: ernēsteuin e-ehrēi ejōn: enehme ene-ehoou nem ehme ene-jōrh: sha entefsotten khen nennovi.", "Rabbuna Yasou' el-Maseeh, sama 'anna, arba'een yawman wa arba'een layla, hatta khallasana min khatayana."],
+      ["And we too should also fast, with purity and righteousness, and let us also pray, proclaiming and saying.", "Ⲁ̀ⲛⲟⲛ ϩⲱⲛ ⲙⲁⲣⲉⲛⲉ̀ⲣⲛⲏⲥⲧⲉⲩⲓⲛ: ϧⲉⲛ ⲟ̀ⲩⲧⲟⲩⲃⲟ ⲛⲉⲙ ⲟ̀ⲩⲙⲉⲑⲙⲏⲓ: ⲟⲩⲟϩ ⲛ̀ⲧⲉⲛⲉ̀ⲣⲡ̀ⲣⲟⲥⲉ̀ⲩⲭⲉⲥⲑⲉ: ⲉⲛⲱ̀ϣ ⲉ̀ⲃⲟⲗ ⲉⲛϫⲱ ⲙ̀ⲙⲟⲥ.", "ونحن أيضاً فلنصُم، بطهارة وبر، ونُصلِّي، صارخين قائلين.", "Anon hōn marenernēsteuin: khen outouvo nem oumethmēi: ouoh entenereproseukhesthe: enōsh evol enjō emmos.", "Wa nahnu aydan fal-nasum, bi-tahara wa birr, wa nusalli, sarikheen qa'ileen."],
+      ["\"Our Father who art in heaven, hallowed be Your name, may Your kingdom come, for Yours is the glory forever. Amen.\"", "Ϫⲉ ⲡⲉⲛⲒⲱⲧ ⲉⲧϧⲉⲛ ⲛⲓⲫⲏⲟ̀ⲩⲓ̀: ⲙⲁⲣⲉϥⲧⲟⲩⲃⲟ ⲛ̀ϫⲉ ⲡⲉⲕⲣⲁⲛ: ⲙⲁⲣⲉⲥⲓ̀ ⲛ̀ϫⲉ ⲧⲉⲕⲙⲉⲧⲟ̀ⲩⲣⲟ: ϫⲉ ⲫⲱⲕ ⲡⲉ ⲡⲓⲱ̀ⲟ̀ⲩ ϣⲁ ⲛⲓⲉ̀ⲛⲉϩ ⲁ̀ⲙⲏⲛ.", "\"أبانا الذي في السموات، ليتقدس اسمك، ليأتِ ملكوتك، لأن لك المجد إلى الأبد. آمين.\"", "Je Peniōt etkhen nifēou-i: mareftouvo enje pekran: maresi enje tekmetouro: je fōk pe pi-ōou sha ni-eneh amēn.", "\"Abana alladhi fis-samawat, liyataqaddas ismuk, liya'ti malakoutuk, li-anna lakal-magd ila el-abad. Ameen.\""],
+    ],
+  },
+  {
+    key: "lent-2",
+    title: "Ⲁ̀ⲙⲱⲓⲛⲓ ⲁ̀ⲛⲁⲩ (Second Doxology for Great Lent)",
+    verses: [
+      ["Come see our Savior, the Good Lover of mankind, He performed the work of fasting, with His great humility.", "Ⲁ̀ⲙⲱⲓⲛⲓ ⲁ̀ⲛⲁⲩ ⲉ̀ⲡⲉⲛⲤⲱⲧⲏⲣ: ⲡⲓⲙⲁⲓⲣⲱⲙⲓ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ: ⲁϥⲓ̀ⲣⲓ ⲙ̀ⲡ̀ϩⲱⲃ ⲛ̀ϯⲛⲏⲥⲧⲓⲁ: ⲛⲉⲙ ⲡⲉϥⲛⲓϣϯ ⲛ̀ⲑⲉⲃⲓⲟ.", "تعالوا انظروا مخلصنا، محب البشر الصالح، صنع فعل الصوم، بتواضعه العظيم.", "Amōini anau epenSōtēr: pimairōmi enagathos: afiri empehōb entinēstia: nem pefnishti enthevio.", "Ta'alaw unzurou mukhallisana, muhibb el-bashar es-salih, sana' fi'l es-sawm, bi-tawadu'ihi el-'azeem."],
+      ["He was above the high mountains, with bodily discipline, He taught us the way in order, that we may walk like Him.", "Ⲥⲁⲡ̀ϣⲱⲓ ⲛ̀ⲛⲓⲧⲱⲟ̀ⲩ ⲉⲧϭⲟⲥⲓ: ϧⲉⲛ ⲟ̀ⲩⲱ̀ⲣϥ ⲛ̀ⲥⲁⲣⲕⲓⲕⲟⲛ: ⲁϥⲧⲁⲙⲟⲛ ⲉ̀ⲡⲓⲙⲁ ⲙ̀ⲙⲟϣⲓ: ϩⲓⲛⲁ ⲛ̀ⲧⲉⲛⲙⲟϣⲓ ⲙ̀ⲡⲉϥⲣⲏϯ.", "فوق الجبال العالية، بانفراد جسدي، وعلمنا المسلك، لكي نسلك مثله.", "Sa-epshōi ennitōou ettshosi: khen ouōrf ensarkikon: aftamon epima emmoshi: hina entenmoshi empefrēti.", "Fawq el-gibal el-'aliya, bi-infirad gasadi, wa 'allamana el-maslak, likay nasluk mithlahu."],
+      ["He conquered the enemy's strength, his snares and his deceptions, He embarrassed, the tempter before Him.", "Ⲁϥⲕⲱⲣϥ ⲛ̀ⲧ̀ϫⲟⲙ ⲛ̀ⲧⲉ ⲡⲓϫⲁϫⲓ: ⲛⲉⲙ ⲛⲉϥⲕⲟⲧⲥ ⲛⲉⲙ ⲛⲉϥⲕⲉⲗⲱⲓϫⲓ: ⲟⲩⲟϩ ⲡⲓⲣⲉϥⲉⲣⲡⲓⲣⲁⲍⲓⲛ: ⲁϥϭⲓϣⲓⲡⲓ ⲙ̀ⲡⲉϥⲙ̀ⲑⲟ.", "أبطل قوة العدو، وحيله وحججه، وافتضح المجرب، أمامه.", "Afkōrf entejom ente pijaji: nem nefkots nem nefkelōiji: ouoh pireferpirazin: aftshishipi empefemtho.", "Abtal quwwat el-'adou, wa hiyalahu wa hugagahu, waftadah el-mugarrib, amamahu."],
+      ["His own disciples, and holy apostles, witnessed His victory, over the enemy's snares.", "Ⲛⲏⲉ̀ⲧⲉ ⲛⲟⲩϥ ⲙ̀ⲙⲁⲑⲏⲧⲏⲥ: ⲟⲩⲟϩ ⲛ̀ⲁ̀ⲡⲟⲥⲧⲟⲗⲟⲥ ⲉ︦ⲑ︦ⲩ︦: ⲉⲩⲉ̀ⲣⲙⲉⲑⲣⲉ ⲉ̀ⲡⲉϥϭⲣⲟ: ⲉ̀ϫⲉⲛ ⲛⲓⲗⲱⲓϫⲓ ⲛ̀ⲧⲉ ⲡⲓϫⲁϫⲓ.", "والتلاميذ خواصه، والرسل الأطهار، شهدوا بغلبته، على حجج العدو.", "Nēete nouf emmathētēs: ouoh enapostolos ethouab: euermethre epeftshro: ejen nilōiji ente pijaji.", "Wat-talameedh khawassuhu, war-rusul el-at-har, shahidou bi-ghalabatihi, 'ala hugag el-'adou."],
+      ["A great, plenteous profit, is found in fasting, it purges sins and covers, those who are defiled.", "Ⲟ̀ⲩⲛⲓϣϯ ⲛ̀ϩⲏⲟⲩ ⲉ̀ⲛⲁϣⲱϥ: ϥ̀ϣⲟⲡ ⲉ̀ⲃⲟⲗϧⲉⲛ ϯⲛⲏⲥⲧⲓⲁ: ϥ̀ⲛⲁϥⲱϯ ⲛ̀ⲛⲓⲛⲟⲃⲓ: ϥ̀ⲉ̀ⲣⲥ̀ⲕⲉⲡⲁⲍⲓⲛ ⲛ̀ⲛⲏⲉ̀ⲧϭⲁϧⲉⲙ.", "ربح عظيم كثير، كائن في الصوم، يمحو الخطايا، ويستر للذين تدنسوا.", "Ounishti enhēou enashōf: efshop evolkhen tinēstia: efnafōti enninovi: efereskepazin ennēettshakhem.", "Ribh 'azeem katheer, ka'in fis-sawm, yamhou el-khataya, wa yastur lilladheen tadannasou."],
+      ["Forsake laziness, and be watchful, seek after brotherly kindness, and pursue Christian love.", "Ⲭⲱ ⲙ̀ϯⲙⲉⲧⲁⲙⲉⲗⲏⲥ: ⲟⲩⲟϩ ϭⲓ ⲛ̀ϯⲙⲉⲧⲓⲏⲥ: ⲕⲱϯ ⲛ̀ⲥⲁ ϯⲙⲉⲧⲙⲁⲓⲥⲟⲛ: ⲟⲩⲟϩ ϭⲟϫⲓ ⲛ̀ⲥⲁ ϯⲁ̀ⲅⲁⲡⲏ.", "اتركوا الكسل، وتنشطوا، اطلبوا المحبة الأخوية، واسعوا نحو المودة.", "Khō emtimetamelēs: ouoh tshi entimetiēs: kōti ensa timetmaison: ouoh tshoji ensa ti-agapē.", "Utrukou el-kasal, wa tanashshatou, utlubou el-mahabba el-akhawiyya, was'aw nahwa el-mawadda."],
+      ["The perfection of humility, the truth of piety, and the forgiveness of iniquities, come from fasting.", "Ⲡ̀ϫⲱⲕ ⲙ̀ⲡⲓⲑⲉⲃⲓⲟ ⲉ̀ⲃⲟⲗ: ⲟⲩⲟϩ ϯⲙⲉⲑⲙⲏⲓ ⲛ̀ϯⲙⲉⲧⲉⲩⲥⲉⲃⲏⲥ: ⲡ̀ⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲛⲓⲁ̀ⲛⲟⲙⲓⲁ: ⲉ̀ⲃⲟⲗ ϩⲓⲧⲟⲧⲥ ⲛ̀ϯⲛⲏⲥⲧⲓⲁ.", "كمال التواضع، وبر التقوى، وغفران الآثام، من قِبَل الصوم.", "Epjōk empithevio evol: ouoh timethmēi entimeteusevēs: epkhō evol enni-anomia: evol hitots entinēstia.", "Kamal et-tawadu', wa birr et-taqwa, wa ghufran el-atham, min qibal es-sawm."],
+      ["To those who follow, fasting and prayer, swords and weapons, endure in their hands.", "Ⲛⲏⲉ̀ⲑⲛⲁⲁ̀ⲙⲟⲛⲓ ⲛ̀ⲧⲟⲧⲥ: ⲛ̀ϯⲛⲏⲥⲧⲓⲁ ⲛⲉⲙ ⲡⲓϣ̀ⲗⲏⲗ: ⲉ̀ⲣⲉ ϩⲁⲛⲥⲏϥⲓ ⲛⲉⲙ ϩⲁⲛϩⲟⲡⲗⲟⲛ: ⲉⲩⲙⲏⲛ ⲉ̀ⲃⲟⲗ ϧⲉⲛ ⲛⲟⲩϫⲓϫ.", "المتمسكون، بالصوم والصلاة دائماً، بأيديهم سيوف، وأسلحة.", "Nēethna-amoni entots: entinēstia nem pi-eshlēl: ere hansēfi nem hanhoplon: eumēn evol khen noujij.", "El-mutamassikoun, bis-sawm wes-salah da'iman, bi-aydeehim suyouf, wa asliha."],
+      ["O King of peace, our Lord Jesus Christ, bless fasting and all, those who participate in it.", "Ⲡ̀Ⲟⲩⲣⲟ ⲛ̀ⲧⲉ ϯϩⲓⲣⲏⲛⲏ: ⲡⲉⲛⲟ︦ⲥ︦ Ⲓⲏ︦ⲥ︦ Ⲡⲭ︦ⲥ︦: ⲉⲣⲙⲁⲕⲁⲣⲓⲍⲓⲛ ⲛ̀ϯⲛⲏⲥⲧⲓⲁ: ⲛⲉⲙ ⲟ̀ⲩⲟ̀ⲛ ⲛⲓⲃⲉⲛ ⲉ̀ⲧⲁⲩⲓ̀ⲣⲓ ⲙ̀ⲙⲟⲥ.", "ربنا يسوع المسيح، ملك السلام، يغبط الصوم، وكل من مارسه.", "Epouro ente tihirēnē: Pentshois Iēsous Pikhristos: ermakarizin entinēstia: nem ouon niven etauiri emmos.", "Rabbuna Yasou' el-Maseeh, malik es-salam, yaghbit es-sawm, wa kull man marasahu."],
+      ["All kinds of evil, flee and are destroyed, through prayer and fasting, and supplications.", "Ⲡ̀ⲅⲉⲛⲟⲥ ⲛ̀ⲛⲓⲡⲟⲛⲏⲣⲟⲥ: ϣⲁⲩⲫⲱⲧ ϣⲁⲩⲧⲁⲕⲟ: ⲉ̀ⲃⲟⲗϩⲓⲧⲉⲛ ϯⲡ̀ⲣⲟⲥⲉ̀ⲩⲭⲏ: ⲛⲉⲙ ϯⲛⲏⲥⲧⲓⲁ ⲛⲉⲙ ⲛⲓⲧⲱⲃϩ.", "جنس الأشرار، يهربون ويهلكون، بواسطة الصلاة، والطلبات مع الصوم.", "Epgenos enniponēros: shaufōt shautako: evolhiten tiproseukhē: nem tinēstia nem nitōbh.", "Gins el-ashrar, yahrubouna wa yahlikoun, bi-wasitat es-salah, wat-talabat ma'a es-sawm."],
+      ["Christ's martyrs, defeated the sufferings, through fasting and the patience, that comes with it.", "Ⲛⲓⲙⲁⲣⲧⲩⲣⲟⲥ ⲛ̀ⲧⲉ Ⲡⲭ︦ⲥ︦: ⲁⲩϭⲣⲟ ⲛ̀ⲛⲓⲃⲁⲥⲁⲛⲟⲥ: ⲉ̀ⲃⲟⲗ ϩⲓⲧⲟⲧⲥ ⲛ̀ϯⲛⲏⲥⲧⲓⲁ ⲛⲉⲙ ⲡ̀ϥⲁⲓ ⲛ̀ⲧⲉⲥϩⲩⲡⲟⲙⲟⲛⲏ.", "شهداء المسيح، تغلبوا على العذاب، بواسطة الصوم، واحتمال صبره.", "Nimarturos ente Pikhristos: autshro ennivasanos: evol hitots entinēstia nem epfai entes-hupomonē.", "Shuhada' el-Maseeh, taghallabou 'ala el-'adhab, bi-wasitat es-sawm, wahtimal sabrih."],
+      ["The wise virgins, who are clothed with purity, carry their lamps full of oil, through prayer and fasting.", "Ⲛⲓⲥⲁⲃⲉⲩ ⲙ̀ⲡⲁⲣⲑⲉⲛⲟⲥ: ⲛⲏⲉ̀ⲧϫⲟⲗϩ ⲙ̀ⲡⲓⲧⲟⲩⲃⲟ: ⲛⲟⲩⲗⲁⲙⲡⲁⲥ ⲛⲁⲩⲙⲉϩ ⲛ̀ⲛⲉϩ: ⲉⲑⲃⲉ ⲡⲓϣ̀ⲗⲏⲗ ⲛⲉⲙ ϯⲛⲏⲥⲧⲓⲁ.", "العذارى الحكيمات، المتسربلات بالطهارة، كانت مصابيحهن مملوءة زيتاً، بالصلاة والصوم.", "Nisaveu emparthenos: nēetjolh empitouvo: noulampas naumeh enneh: ethve pi-eshlēl nem tinēstia.", "El-'adhara el-hakeemat, el-mutasarbilat bit-tahara, kanat masabeehuhunna mamlou'a zaytan, bis-salah wes-sawm."],
+      ["Those who please the Lord God, with their good works, love the beauty of fasting, and the patience that comes with it.", "Ⲛⲏⲉ̀ⲧⲁⲩⲣⲁⲛⲁϥ ⲙ̀Ⲡ̀ⲟ︦ⲥ︦ Ⲫ̀ϯ: ϧⲉⲛ ⲛⲟⲩϩ̀ⲃⲏⲟ̀ⲩⲓ̀ ⲉⲑⲛⲁⲛⲉⲩ: ⲁⲩⲙⲉⲛⲣⲉ ⲡ̀ⲥⲁⲓ ⲛ̀ϯⲛⲏⲥⲧⲓⲁ: ⲛⲉⲙ ⲡ̀ⲥⲁⲓ ⲛ̀ⲧⲉⲥϩⲩⲡⲟⲙⲟⲛⲏ.", "الذين أرضوا الرب الإله، بأعمالهم الصالحة، أحبوا بهاء الصوم، واحتمال صبره.", "Nēetauranaf em-Eptshois Efnouti: khen nouehvēou-i ethnaneu: aumenre epsai entinēstia: nem epsai entes-hupomonē.", "Alladheen ardou er-Rabb el-Ilah, bi-a'malihim es-saliha, ahabbou baha' es-sawm, wahtimal sabrih."],
+      ["David proclaimed, in the holy psaltery saying, \"I will decorate my soul, before You with fasting.\"", "Ⲁϥⲱ̀ϣ ⲉ̀ⲃⲟⲗ ⲛ̀ϫⲉ Ⲇⲁⲩⲓⲇ: ϧⲉⲛ ⲡⲓⲯ̀ⲁⲗⲧⲏⲣⲓⲟⲛ ⲉ︦ⲑ︦ⲩ︦: ϫⲉ ϯⲛⲁⲕⲟⲗϫ ⲛ̀ⲧⲁⲯ̀ⲩⲭⲏ: ⲙ̀ⲡⲉⲕⲙ̀ⲑⲟ ϧⲉⲛ ⲟ̀ⲩⲛⲏⲥⲧⲓⲁ.", "صرخ داود في سفر، المزامير المقدس قائلاً، \"إني أحنيت نفسي، أمامك بالصوم.\"", "Afōsh evol enje Dauid: khen pi-epsaltērion ethouab: je tinakolj entaepsukhē: empekemtho khen ounēstia.", "Sarakh Dawood fi sifr, el-mazameer el-muqaddas qa'ilan, \"inni ahnaytu nafsi, amamak bis-sawm.\""],
+      ["Paul the Apostle, the fragrant tongue says, \"In fasting and watchfulness, through the days and nights.\"", "Ⲡⲁⲩⲗⲟⲥ ⲡⲓⲁ̀ⲡⲟⲥⲧⲟⲗⲟⲥ: ⲟⲩⲟϩ ⲫ̀ⲗⲁⲥ ⲙ̀ⲡⲓⲥ̀ⲑⲟⲓⲛⲟⲩϥⲓ: ϫⲉ ϧⲉⲛ ⲟ̀ⲩⲛⲏⲥⲧⲓⲁ ⲛⲉⲙ ⲟ̀ⲩϣ̀ⲣⲱⲓⲥ: ϧⲉⲛ ϩⲁⲛⲉ̀ϩⲟⲟ̀ⲩ ⲛⲉⲙ ϩⲁⲛⲉ̀ϫⲱⲣϩ.", "وبولس الرسول، لسان العطر يقول، \"إني بصوم وسهر، في الأيام والليالي.\"", "Paulos pi-apostolos: ouoh eflas empi-esthoinoufi: je khen ounēstia nem ou-eshrōis: khen han-ehoou nem han-ejōrh.", "Wa Boulus er-rasoul, lisan el-'itr yaqoul, \"inni bi-sawm wa sahar, fil-ayyam wal-layali.\""],
+      ["\"Our Father who art in heaven, hallowed be Thy name, Thy kingdom come, for Thine is the glory forever.\"", "Ϫⲉ ⲡⲉⲛⲒⲱⲧ ⲉⲧϧⲉⲛ ⲛⲓⲫⲏⲟ̀ⲩⲓ̀: ⲙⲁⲣⲉϥⲧⲟⲩⲃⲟ ⲛ̀ϫⲉ ⲡⲉⲕⲣⲁⲛ: ⲙⲁⲣⲉⲥⲓ̀ ⲛ̀ϫⲉ ⲧⲉⲕⲙⲉⲧⲟ̀ⲩⲣⲟ: ϫⲉ ⲫⲱⲕ ⲡⲉ ⲡⲓⲱ̀ⲟ̀ⲩ ϣⲁ ⲛⲓⲉ̀ⲛⲉϩ.", "\"أبانا الذي في السموات، ليتقدس اسمك، ليأتِ ملكوتك، لأن لك المجد إلى الأبد. آمين.\"", "Je Peniōt etkhen nifēou-i: mareftouvo enje pekran: maresi enje tekmetouro: je fōk pe pi-ōou sha ni-eneh.", "\"Abana alladhi fis-samawat, liyataqaddas ismuk, liya'ti malakoutuk, li-anna lakal-magd ila el-abad. Ameen.\""],
+    ],
+  },
+  {
+    key: "lent-3",
+    title: "Ⲡⲓⲙⲁⲓⲣⲱⲙⲓ (Third Doxology for Great Lent)",
+    verses: [
+      ["The good One and Lover of mankind, my Lord Jesus, I ask You, do not place me on Your left, along with the goats, the sinners.", "Ⲡⲓⲙⲁⲓⲣⲱⲙⲓ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ: ⲡⲁⲟ︦ⲥ︦ Ⲓⲏ︦ⲥ︦ ϯϯϩⲟ ⲉ̀ⲣⲟⲕ: ⲙ̀ⲡⲉⲣϩⲓⲧ ⲥⲁϫⲁϭⲏ ⲙ̀ⲙⲟⲕ: ⲛⲉⲙ ⲛⲓⲃⲁⲉ̀ⲙⲡⲓ ⲛ̀ⲣⲉϥⲉ̀ⲣⲛⲟⲃⲓ.", "يا سيدي يسوع محب البشر، الصالح أسألك، لا تطرحني على شمالك، مع الجداء الخطاة.", "Pimairōmi enagathos: Patshois Iēsous titiho erok: emperhit sajatshē emmok: nem nivaempi enrefernovi.", "Ya sayyidi Yasou' muhibb el-bashar, es-salih as'aluk, la tatrahni 'ala shimalak, ma'a el-gida' el-khutah."],
+      ["And do not tell me, \"I do not know you, get away from Me, you who are ready for eternal fire.\"", "Ⲟ̀ⲩⲇⲉ ⲟⲛ ⲙ̀ⲡⲉⲣϫⲟⲥ ⲛⲏⲓ: ϫⲉ ϯⲥⲱⲟ̀ⲩⲛ ⲙ̀ⲙⲟⲕ ⲁⲛ: ⲙⲁϣⲉⲛⲁⲕ ⲉ̀ⲃⲟⲗ ϩⲁⲣⲟⲓ: ⲫⲏⲉ̀ⲧⲥⲉⲃⲧⲱⲧ ⲙ̀ⲡⲓⲭ̀ⲣⲱⲙ ⲛ̀ⲉ̀ⲛⲉϩ.", "ولا تقل لي أيضاً، \"إني ما أعرفك، اذهب عني أيها المُعَد، للنار الأبدية.\"", "Oude on emperjos nēi: je tisōoun emmok an: mashenak evol haroi: fēetsebtōt empi-ekhrōm ene-eneh.", "Wa la taqul li aydan, \"inni ma a'rifuk, idhhab 'anni ayyuha el-mu'add, lin-nar el-abadiyya.\""],
+      ["For I know in truth, that I am a sinner, and all my deeds which are bad, are present before You.", "Ϯⲉ̀ⲙⲓ ⲅⲁⲣ ϧⲉⲛ ⲟ̀ⲩⲙⲉⲑⲙⲏⲓ: ϫⲉ ⲁ̀ⲛⲟⲕ ⲟ̀ⲩⲣⲉϥⲉ̀ⲣⲛⲟⲃⲓ: ⲟⲩⲟϩ ⲛⲁϩ̀ⲃⲏⲟ̀ⲩⲓ̀ ⲧⲏⲣⲟⲩ ⲉⲧϩⲱⲟ̀ⲩ: ⲥⲉⲟ̀ⲩⲱ̀ⲛϩ ⲉ̀ⲃⲟⲗ ⲙ̀ⲡⲉⲕⲙ̀ⲑⲟ.", "لأني أعلم بالحقيقة، إني خاطئ، وأعمالي الرديئة كلها، ظاهرة أمامك.", "Ti-emi gar khen oumethmēi: je anok ourefernovi: ouoh na-ehvēou-i tērou ethōou: se-ouōnh evol empekemtho.", "Li-anni a'lam bil-haqiqa, inni khati', wa a'mali er-radee'a kulluha, zahira amamak."],
+      ["I speak with the voice of the publican, crying out saying, \"O God forgive me, for I am a sinner.\"", "Ϯϫⲱ ⲛ̀ⲧ̀ⲥ̀ⲙⲏ ⲛ̀ⲧⲉ ⲡⲓⲧⲉⲗⲱⲛⲏⲥ: ⲉⲓⲱ̀ϣ ⲉ̀ⲃⲟⲗ ⲉⲓϫⲱ ⲙ̀ⲙⲟⲥ: ϫⲉ Ⲫ̀ϯ ⲭⲱ ⲛⲏⲓ ⲉ̀ⲃⲟⲗ: ϫⲉ ⲁ̀ⲛⲟⲕ ⲟ̀ⲩⲣⲉϥⲉ̀ⲣⲛⲟⲃⲓ.", "أقول بصوت العشار، صارخاً قائلاً، \"اللهم اغفر لي، أنا الخاطئ.\"", "Tijō entesmē ente pitelōnēs: eiōsh evol eijō emmos: je Efnouti khō nēi evol: je anok ourefernovi.", "Aqoul bi-sawt el-'ashshar, sarikhan qa'ilan, \"Allahumma ighfir li, ana el-khati'.\""],
+      ["I have sinned, I have sinned, My Lord Jesus forgive me, for there is no servant without sin, nor a master without forgiveness.", "Ⲁⲓⲉ̀ⲣⲛⲟⲃⲓ ⲁⲓⲉ̀ⲣⲛⲟⲃⲓ: ⲡⲁⲟ︦ⲥ︦ Ⲓⲏ︦ⲥ︦ ⲭⲱ ⲛⲏⲓ ⲉ̀ⲃⲟⲗ: ϫⲉ ⲙ̀ⲙⲟⲛ ⲃⲱⲕ ⲛ̀ⲁ̀ⲧⲉ̀ⲣⲛⲟⲃⲓ: ⲟ̀ⲩⲇⲉ ⲙ̀ⲙⲟⲛ ϭ̀ⲟⲓⲥ ⲛ̀ⲁ̀ⲧⲭⲱ ⲉ̀ⲃⲟⲗ.", "أخطأت أخطأت، يا ربي يسوع اغفر لي، لأنه ليس عبد بلا خطية، ولا سيد بلا مغفرة.", "Aiernovi aiernovi: Patshois Iēsous khō nēi evol: je emmon vōk enaternovi: oude emmon etshois enatkhō evol.", "Akhta'tu akhta'tu, ya Rabbi Yasou' ighfir li, li-annahu laysa 'abd bila khatiyya, wa la sayyid bila maghfira."],
+      ["Give me, O Lord, repentance, in order that I may repent, before death shuts me, within the gates of Hades.", "Ⲙⲟⲓ ⲛⲏⲓ Ⲡ̀ⲟ︦ⲥ︦ ⲛ̀ⲟ̀ⲩⲙⲉⲧⲁⲛⲟⲓⲁ: ⲉ̀ⲡ̀ϫⲓⲛⲧⲁⲉ̀ⲣⲙⲉⲧⲁⲛⲟⲓⲛ: ⲙ̀ⲡⲁⲧⲉ ⲫ̀ⲙⲟⲩ ⲙⲁϣ̀ⲑⲁⲙ ⲛ̀ⲣⲱⲓ: ϧⲉⲛ ⲛⲓⲡⲩⲗⲏ ⲛ̀ⲧⲉ Ⲁ̀ⲙⲉⲛϯ.", "أعطني يا رب توبة، لكي أتوب، قبل أن يسد الموت فمي، في أبواب الجحيم.", "Moi nēi Eptshois enoumetanoia: epjintaermetanoin: empate efmou mashetham enrōi: khen nipulē ente Amenti.", "A'tini ya Rabb tawba, likay atoub, qabl an yasudd el-mawt fami, fi abwab el-gaheem."],
+      ["Also give me an answer, for all that I did, the righteous Judge, Jesus, He will judge me.", "Ⲟⲩⲟϩ ⲟⲛ ⲛ̀ⲧⲁϯⲗⲟⲅⲟⲥ: ϧⲁ ⲛⲁⲓ ⲧⲏⲣⲟⲩ ⲉ̀ⲧⲁⲓⲁ̀ⲓⲧⲟⲩ: ⲡⲓⲔ̀ⲣⲓⲧⲏⲥ ⲙ̀ⲙⲏⲓ Ⲓⲏ︦ⲥ︦: ⲛ̀ⲑⲟϥ ⲉⲑⲛⲁϯϩⲁⲡ ⲉ̀ⲣⲟⲓ.", "ولكي أعطي أيضاً جواباً، عن كل ما فعلته، يسوع القاضي العادل، هو يُدينني.", "Ouoh on entatilogos: kha nai tērou etaiaitou: pi-Ekritēs emmēi Iēsous: enthof ethnatihap eroi.", "Wa likay u'ti aydan gawaban, 'an kull ma fa'altuh, Yasou' el-qadi el-'adil, huwa yudeenuni."],
+      ["My Savior is merciful, and compassionate toward His people, He is the good One and Lover of mankind, have mercy on us according to Your great mercy.", "Ⲟ̀ⲩⲢⲉϥϣⲉⲛϩⲏⲧ ⲡⲉ ⲡⲁⲤⲱⲧⲏⲣ: ⲉϥⲉ̀ϣⲉⲛϩⲏⲧ ϧⲁ ⲡⲉϥⲗⲁⲟ̀ⲥ: ϩⲱⲥ ⲁ̀ⲅⲁⲑⲟⲥ ⲟⲩⲟϩ ⲙ̀ⲙⲁⲓⲣⲱⲙⲓ: ⲛⲁⲓ ⲛⲁⲛ ⲕⲁⲧⲁ ⲡⲉⲕⲛⲓϣϯ ⲛ̀ⲛⲁⲓ.", "رؤوف هو مخلصي، يترأف على شعبه، كصالح ومحب البشر، ارحمنا كعظيم رحمتك.", "OuRefshenhēt pe paSōtēr: efeshenhēt kha peflaos: hōs agathos ouoh emmairōmi: nai nan kata peknishti ennai.", "Ra'ouf huwa mukhallisi, yatara'af 'ala sha'bih, ka-salih wa muhibb el-bashar, irhamna ka-'azeem rahmatik."],
+    ],
+  },
+  {
+    key: "lent-4",
+    title: "Ϯⲛⲏⲥⲧⲓⲁ ⲛⲉⲙ ⲡⲓϣ̀ⲗⲏⲗ (Fourth Doxology for Great Lent)",
+    verses: [
+      ["Fasting and prayer, in purity and chastity, and love without pretense, are what please Christ.", "Ϯⲛⲏⲥⲧⲓⲁ ⲛⲉⲙ ⲡⲓϣ̀ⲗⲏⲗ: ϧⲉⲛ ⲟ̀ⲩⲧⲟⲩⲃⲟ ⲛⲉⲙ ⲟ̀ⲩⲙⲉⲧⲥⲉⲙⲛⲟⲥ: ⲛⲉⲙ ⲟ̀ⲩⲁ̀ⲅⲁⲡⲏ ⲛ̀ⲁ̀ⲧⲇⲟⲗⲟⲥ: ⲛⲁⲓ ⲛⲉ ⲛⲏⲉ̀ϣⲁⲩⲣⲁⲛⲁϥ ⲙ̀Ⲡⲭ︦ⲥ︦.", "الصوم والصلاة، بطهارة وعفاف، ومحبة بغير غش، هما اللذان يرضيان المسيح.", "Tinēstia nem pi-eshlēl: khen outouvo nem oumetsemnos: nem ouagapē enatdolos: nai ne nēeshauranaf em-Pikhristos.", "Es-sawm wes-salah, bi-tahara wa 'afaf, wa mahabba bighayr ghish, huma alladhan yurdiyan el-Maseeh."],
+      ["Fasting and prayer, with weeping and mourning, and unpretentious love, are what please the Sinless One.", "Ϯⲛⲏⲥⲧⲓⲁ ⲛⲉⲙ ⲡⲓϣ̀ⲗⲏⲗ: ϧⲉⲛ ⲟ̀ⲩⲛⲉϩⲡⲓ ⲛⲉⲙ ⲟ̀ⲩⲣⲓⲙⲓ: ⲛⲉⲙ ⲟ̀ⲩⲁ̀ⲅⲁⲡⲏ ⲛ̀ⲁ̀ⲧⲙⲉⲧϣⲟⲃⲓ: ⲛⲁⲓ ⲛⲉ ⲛⲏⲉ̀ϣⲁⲩⲣⲁⲛⲁϥ ⲙ̀ⲡⲓⲀ̀ⲑⲛⲟⲃⲓ.", "الصوم والصلاة، بنحيب وبكاء، ومحبة بغير رياء، هما اللذان يرضيان الذي بلا خطية.", "Tinēstia nem pi-eshlēl: khen ounehpi nem ourimi: nem ouagapē enatmetshovi: nai ne nēeshauranaf empi-Athnovi.", "Es-sawm wes-salah, bi-naheeb wa buka', wa mahabba bighayr riya', huma alladhan yurdiyan alladhi bila khatiyya."],
+      ["Fasting and prayer, with a contrite heart, and a contrite spirit, are what please the Holy One.", "Ϯⲛⲏⲥⲧⲓⲁ ⲛⲉⲙ ⲡⲓϣ̀ⲗⲏⲗ: ϧⲉⲛ ⲟ̀ⲩϩⲏⲧ ⲉϥⲑⲉⲃⲓⲏⲟⲩⲧ: ⲛⲉⲙ ⲟ̀ⲩⲡ̀ⲛⲉⲩⲙⲁ ⲉϥⲧⲉⲛⲛⲏⲟⲩⲧ: ⲛⲁⲓ ⲛⲉ ⲛⲏⲉ̀ϣⲁⲩⲣⲁⲛⲁϥ ⲙ̀ⲫⲏⲉ̀ⲧⲧⲟⲩⲃⲏⲟⲩⲧ.", "الصوم والصلاة، بقلب متواضع، وروح منسحق، هما اللذان يرضيان الطاهر.", "Tinēstia nem pi-eshlēl: khen ouhēt efthevi-ēout: nem ou-epneuma eftennēout: nai ne nēeshauranaf emfēettouvēout.", "Es-sawm wes-salah, bi-qalb mutawadi', wa rouh munsahiq, huma alladhan yurdiyan et-tahir."],
+      ["Fasting and prayer, are those which saved the three saintly children, Shadrach, Meshach and Abednego, from the fiery furnace.", "Ϯⲛⲏⲥⲧⲓⲁ ⲛⲉⲙ ⲡⲓϣ̀ⲗⲏⲗ: ⲛⲏⲉ̀ⲧⲁⲩⲛⲟϩⲉⲙ ⲙ̀ⲡⲓϣⲟⲙⲧ ⲛ̀ⲁ̀ⲗⲟⲩ ⲛ̀ⲁ̀ⲅⲓⲟⲥ: Ⲥⲉⲇⲣⲁⲕ Ⲙⲓⲥⲁⲕ Ⲁⲃⲇⲉⲛⲁⲅⲱ: ⲉ̀ⲃⲟⲗϧⲉⲛ ϯϩ̀ⲣⲱ ⲛ̀ⲥⲁⲧⲉ.", "الصوم والصلاة، هما اللذان خلصا الثلاثة فتية القديسين، سدراك وميساك وأبدناغو، من أتون اللهيب.", "Tinēstia nem pi-eshlēl: nēetaunohem empishomt enalou enagios: Sedrak Misak Abdenagō: evolkhen ti-ehrō ensate.", "Es-sawm wes-salah, huma alladhan khallasa eth-thalatha fitya el-qiddiseen, Sadrak wa Meesak wa Abednagho, min atoun el-laheeb."],
+      ["Fasting and prayer, are the weapons of victory, and the life which, the Christians continue in.", "Ϯⲛⲏⲥⲧⲓⲁ ⲛⲉⲙ ⲡⲓϣ̀ⲗⲏⲗ: ⲛ̀ⲑⲱⲟ̀ⲩ ⲡⲉ ⲡ̀ϩⲟⲡⲗⲟⲛ ⲙ̀ⲡⲓϭⲣⲟ: ⲛ̀ⲑⲱⲟ̀ⲩ ⲛⲉ ⲛⲏⲉ̀ⲧⲟⲩⲙⲟϣⲓ ⲛ̀ϧⲏⲧⲟⲩ: ⲛ̀ϫⲉ ⲛⲓⲬ̀ⲣⲓⲥⲧⲓⲁⲛⲟⲥ.", "الصوم والصلاة، هما سلاح الغلبة، وهما اللذان يسلك، فيهما المسيحيون.", "Tinēstia nem pi-eshlēl: enthōou pe ephoplon empitshro: enthōou ne nēetoumoshi enkhētou: enje ni-Ekhristianos.", "Es-sawm wes-salah, huma silah el-ghalaba, wa huma alladhan yasluk, feehima el-maseehiyyoun."],
+      ["Through fasting and prayer, Abraham was made worthy, to host God, with His holy angels.", "Ϩⲓⲧⲉⲛ ϯⲛⲏⲥⲧⲓⲁ ⲛⲉⲙ ⲡⲓϣ̀ⲗⲏⲗ: ⲁϥⲉ̀ⲣⲡ̀ⲉ̀ⲙⲡ̀ϣⲁ ⲛ̀ϫⲉ Ⲁⲃⲣⲁⲁⲙ: ⲉⲑⲣⲉ Ⲫ̀ϯ ϫⲱⲓⲗⲓ ⲉ̀ⲣⲟϥ: ⲛⲉⲙ ⲛⲉϥⲁ̀ⲅⲅⲉⲗⲟⲥ ⲉ︦ⲑ︦ⲩ︦.", "بالصوم والصلاة، استحق إبراهيم، أن يضيف الله عنده، مع ملائكته الأطهار.", "Hiten tinēstia nem pi-eshlēl: afer-epemepsha enje Abraam: ethre Efnouti jōili erof: nem nefaggelos ethouab.", "Bis-sawm wes-salah, istahaqq Ibraheem, an yudeef Allah 'indahu, ma'a mala'ikatihi el-at-har."],
+      ["Through fasting and prayer, Isaac was offered up, as a pure sacrifice, as a symbol of Christ.", "Ϩⲓⲧⲉⲛ ϯⲛⲏⲥⲧⲓⲁ ⲛⲉⲙ ⲡⲓϣ̀ⲗⲏⲗ: ⲁϥⲓ̀ⲛⲓ ⲉ̀ⲡ̀ϣⲱⲓ ⲛ̀Ⲓ̀ⲥⲁⲁⲕ: ⲛ̀ⲟ̀ⲩⲑⲩⲥⲓⲁ ⲉⲥⲧⲟⲩⲃⲏⲟⲩⲧ: ⲁϥϯⲙⲏⲓⲛⲓ ⲉ̀Ⲡⲭ︦ⲥ︦.", "بالصوم والصلاة، أصعد إسحق، ذبيحة طاهرة، معطياً إشارة للمسيح.", "Hiten tinēstia nem pi-eshlēl: afini e-epshōi en-Isaak: enouthusia estouvēout: aftimēini e-Pikhristos.", "Bis-sawm wes-salah, as'ad Ishaq, dhabeeha tahira, mu'tiyan ishara lil-Maseeh."],
+      ["Through fasting and prayer, Jacob was saved, from his brother Esau, and received the blessing from his father.", "Ϩⲓⲧⲉⲛ ϯⲛⲏⲥⲧⲓⲁ ⲛⲉⲙ ⲡⲓϣ̀ⲗⲏⲗ: ⲁϥⲛⲟϩⲉⲙ ⲛ̀ϫⲉ Ⲓⲁⲕⲱⲃ: ⲉ̀ⲃⲟⲗϧⲉⲛ ⲡⲉϥⲥⲟⲛ Ⲏ̀ⲥⲁⲩ: ⲟⲩⲟϩ ⲁϥϭⲓ ⲛ̀ⲟ̀ⲩⲥ̀ⲙⲟⲩ ⲉ̀ⲃⲟⲗϧⲉⲛ ⲡⲉϥⲓⲱⲧ.", "بالصوم والصلاة، خلص يعقوب، من عيسو أخيه، وأخذ بركة من أبيه.", "Hiten tinēstia nem pi-eshlēl: afnohem enje Iakōb: evolkhen pefson Ēsau: ouoh aftshi enouesmou evolkhen pefiōt.", "Bis-sawm wes-salah, khalas Ya'qoub, min 'Eesu akheeh, wa akhadh baraka min abeeh."],
+      ["Through fasting and prayer, the Lord had compassion on His servant, the good and righteous Job, He gave him healing.", "Ϩⲓⲧⲉⲛ ϯⲛⲏⲥⲧⲓⲁ ⲛⲉⲙ ⲡⲓϣ̀ⲗⲏⲗ: ⲁ̀ Ⲡ̀ⲟ︦ⲥ︦ ϣⲉⲛϩⲏⲧ ϧⲁ ⲡⲉϥⲃⲱⲕ: ⲡⲓⲁ̀ⲅⲁⲑⲟⲥ Ⲓⲱⲃ ⲡⲓⲑ̀ⲙⲏⲓ: ⲟⲩⲟϩ ⲁϥϯ ⲛⲁϥ ⲛ̀ⲟ̀ⲩⲧⲁⲗϭⲟ.", "بالصوم والصلاة، تراءف الرب على عبده، الصالح البار أيوب، ومنحه الشفاء.", "Hiten tinēstia nem pi-eshlēl: a Eptshois shenhēt kha pefvōk: pi-agathos Iōb pi-ethmēi: ouoh afti naf enoutaltsho.", "Bis-sawm wes-salah, tara'af er-Rabb 'ala 'abdih, es-salih el-barr Ayyoub, wa manahahu esh-shifa'."],
+      ["Through fasting and prayer, Joseph was raised, he ruled over Egypt, and was saved from the adulteress.", "Ϩⲓⲧⲉⲛ ϯⲛⲏⲥⲧⲓⲁ ⲛⲉⲙ ⲡⲓϣ̀ⲗⲏⲗ: ⲁⲩⲱ̀ⲗⲓ ⲛ̀Ⲓⲱⲥⲏⲫ: ⲁϥⲉ̀ⲣⲟ̀ⲩⲣⲟ ⲉ̀ϫⲉⲛ Ⲭⲏⲙⲓ: ⲟⲩⲟϩ ⲁⲩⲛⲟϩⲉⲙ ⲉ̀ⲃⲟⲗϧⲉⲛ ϯⲡⲟⲣⲛⲏ.", "بالصوم والصلاة، ارتفع يوسف، وملك على مصر، وخلص من الزانية.", "Hiten tinēstia nem pi-eshlēl: auōli en-Iōsēf: aferouro ejen Khēmi: ouoh aunohem evolkhen tipornē.", "Bis-sawm wes-salah, irtafa' Yousef, wa malak 'ala Misr, wa khalas min ez-zaniya."],
+      ["Through fasting and prayer, God lifted His anger, from the people of Nineveh, and forgave them their sins.", "Ϩⲓⲧⲉⲛ ϯⲛⲏⲥⲧⲓⲁ ⲛⲉⲙ ⲡⲓϣ̀ⲗⲏⲗ: ⲁ̀ Ⲫ̀ϯ ⲱ̀ⲗⲓ ⲙ̀ⲡⲉϥϫⲱⲛⲧ: ⲉ̀ⲃⲟⲗϩⲁ ⲛⲓⲣⲉⲙⲚⲓⲛⲉⲩⲏ̀: ⲟⲩⲟϩ ⲁϥⲛⲁϩⲙⲟⲩ ⲉ̀ⲃⲟⲗϧⲉⲛ ⲛⲟⲩⲛⲟⲃⲓ.", "بالصوم والصلاة، رفع الله غضبه، عن أهل نينوى، وخلصهم من خطاياهم.", "Hiten tinēstia nem pi-eshlēl: a Efnouti ōli empefjōnt: evolha niremNineuē: ouoh afnahmou evolkhen nounovi.", "Bis-sawm wes-salah, rafa' Allah ghadabahu, 'an ahl Neenawa, wa khallasahum min khatayahum."],
+      ["Through fasting and prayer, the prophets and the righteous, all have prophesied, concerning Him in many ways.", "Ϩⲓⲧⲉⲛ ϯⲛⲏⲥⲧⲓⲁ ⲛⲉⲙ ⲡⲓϣ̀ⲗⲏⲗ: ⲛⲓⲡ̀ⲣⲟⲫⲏⲧⲏⲥ ⲛⲉⲙ ⲛⲓⲑ̀ⲙⲏⲓ: ⲁⲩⲉ̀ⲣⲡ̀ⲣⲟⲫⲏⲉⲧⲩⲓⲛ ⲧⲏⲣⲟⲩ: ⲉⲑⲃⲏⲧϥ ϧⲉⲛ ⲟ̀ⲩⲑⲟ ⲛ̀ⲣⲏϯ.", "بالصوم والصلاة، تنبأ جميع الأنبياء، والأبرار من أجله، بأنواع كثيرة.", "Hiten tinēstia nem pi-eshlēl: ni-eprofētēs nem ni-ethmēi: auer-eprofēteuin tērou: ethvētf khen outho enrēti.", "Bis-sawm wes-salah, tanabba' gamee' el-anbiya', wal-abrar min aglih, bi-anwa' katheera."],
+      ["Through fasting and prayer, He sent the saintly apostles, to preach unto, the whole world.", "Ϩⲓⲧⲉⲛ ϯⲛⲏⲥⲧⲓⲁ ⲛⲉⲙ ⲡⲓϣ̀ⲗⲏⲗ: ⲛⲓⲁ̀ⲡⲟⲥⲧⲟⲗⲟⲥ ⲛ̀ⲁ̀ⲅⲓⲟⲥ: ⲁϥⲟ̀ⲩⲟ̀ⲣⲡⲟⲩ ⲉⲩⲉ̀ⲣⲕⲩⲣⲓⲍⲓⲛ: ϧⲉⲛ ϯⲟⲓⲕⲟⲩⲙⲉⲛⲏ ⲧⲏⲣⲥ.", "بالصوم والصلاة، أرسل الرسل القديسين، ليكرزوا في، جميع المسكونة.", "Hiten tinēstia nem pi-eshlēl: niapostolos enagios: afouorpou euerkurizin: khen tioikoumenē tērs.", "Bis-sawm wes-salah, arsal er-rusul el-qiddiseen, liyakrizou fi, gamee' el-maskouna."],
+      ["Through fasting and prayer, God has revealed, great mysteries to, the cross-bearers and the just.", "Ϩⲓⲧⲉⲛ ϯⲛⲏⲥⲧⲓⲁ ⲛⲉⲙ ⲡⲓϣ̀ⲗⲏⲗ: ⲛⲓⲥ̀ⲧⲁⲩⲣⲟⲫⲟⲣⲟⲥ ⲛⲉⲙ ⲛⲓⲇⲓⲕⲉⲟⲥ: ⲛⲁⲓ ⲁ̀Ⲫ̀ϯ ϭⲱⲣⲡ ⲛⲱⲟ̀ⲩ: ⲛ̀ϩⲁⲛⲛⲓϣϯ ⲙ̀ⲙⲩⲥⲧⲏⲣⲓⲟⲛ.", "بالصوم والصلاة، كشف الله أسراراً، عظيمة للصديقين، ولابسي الصليب.", "Hiten tinēstia nem pi-eshlēl: ni-estauroforos nem nidikeos: nai a-Efnouti tshōrp nōou: enhannishti emmustērion.", "Bis-sawm wes-salah, kashaf Allah asraran, 'azeema lis-siddiqeen, wa labisi es-saleeb."],
+      ["Through fasting and prayer, the struggling martyrs, wore the unfading, crown of martyrdom.", "Ϩⲓⲧⲉⲛ ϯⲛⲏⲥⲧⲓⲁ ⲛⲉⲙ ⲡⲓϣ̀ⲗⲏⲗ: ⲛⲓⲁ̀ⲑⲗⲏⲧⲏⲥ ⲙ̀ⲙⲁⲣⲧⲩⲣⲟⲥ: ⲁⲩⲉ̀ⲣⲫⲟⲣⲓⲛ ⲡⲓⲭ̀ⲗⲟⲙ ⲛ̀ⲁ̀ⲧⲗⲱⲙ: ⲛ̀ⲧⲉ ϯⲙⲉⲧⲙⲁⲣⲧⲩⲣⲟⲥ.", "بالصوم والصلاة، نال الشهداء، المجاهدون، الإكليل غير المضمحل.", "Hiten tinēstia nem pi-eshlēl: niathlētēs emmarturos: auerforin pi-ekhlom enatlōm: ente timetmarturos.", "Bis-sawm wes-salah, nal esh-shuhada', el-mugahidoun, el-ikleel ghayr el-mudmahill."],
+      ["Daniel fasted, and closed the mouths of the lions, they did not touch his body, because of prayer and fasting.", "Ⲇⲁⲛⲓⲏⲗ ⲁϥⲉ̀ⲣⲛⲏⲥⲧⲉⲩⲓⲛ: ⲁϥϣ̀ⲑⲁⲙ ⲛ̀ⲣⲱⲟ̀ⲩ ⲛ̀ⲛⲓⲙⲟⲩⲓ̀: ⲙ̀ⲡⲟⲩϭⲓⲛⲉⲙ ⲡⲉϥⲥⲱⲙⲁ: ⲉⲑⲃⲉ ⲡⲓϣ̀ⲗⲏⲗ ⲛⲉⲙ ϯⲛⲏⲥⲧⲓⲁ.", "صام دانيال، فأغلق أفواه الأسود، فلم تمس جسده، من أجل الصلاة والصوم.", "Daniēl afernēsteuin: afeshtham enrōou ennimou-i: empoutshinem pefsōma: ethve pi-eshlēl nem tinēstia.", "Sam Daniyal, fa-aghlaq afwah el-usoud, fa-lam tamass gasadahu, min agl es-salah wes-sawm."],
+      ["Our good Savior fasted, forty days and forty nights, to teach us the way, through which we may be saved.", "ⲠⲉⲛⲤⲱⲧⲏⲣ ⲁϥⲉ̀ⲣⲛⲏⲥⲧⲉⲩⲓⲛ: ⲛ̀ϩ̀ⲙⲉ ⲛ̀ⲉ̀ϩⲟⲟ̀ⲩ ⲛⲉⲙ ϩ̀ⲙⲉ ⲛ̀ⲉ̀ϫⲱⲣϩ: ϣⲁⲛ̀ⲧⲉϥⲧ̀ⲥⲁⲃⲟⲛ ⲙ̀ⲡⲓⲙⲱⲓⲧ: ⲉ̀ⲧⲉⲛⲛⲁⲟ̀ⲩϫⲁⲓ ⲉ̀ⲃⲟⲗϩⲓⲧⲟⲧϥ.", "صام مخلصنا، أربعين يوماً وأربعين ليلة، حتى علمنا الطريق، التي نخلص بواسطتها.", "PenSōtēr afernēsteuin: enehme ene-ehoou nem ehme ene-jōrh: shantefetsavon empimōit: etennaoujai evolhitotf.", "Sam mukhallisuna, arba'een yawman wa arba'een layla, hatta 'allamana et-tareeq, allati nakhlus bi-wasitatiha."],
+      ["Let us pray and fast, in purity and righteousness, with thoughts of love, proclaiming and saying.", "Ⲙⲁⲣⲉⲛϣ̀ⲗⲏⲗ ⲛ̀ⲧⲉⲛⲉ̀ⲣⲛⲏⲥⲧⲉⲩⲓⲛ: ϧⲉⲛ ⲟ̀ⲩⲙⲉⲑⲙⲏⲓ ⲛⲉⲙ ⲟ̀ⲩⲧⲟⲩⲃⲟ: ⲟ̀ⲩⲙⲉⲩⲓ̀ ⲛⲉⲙ ⲟ̀ⲩⲁ̀ⲅⲁⲡⲏ: ⲉⲛⲱ̀ϣ ⲉ̀ⲃⲟⲗ ⲉⲛϫⲱ ⲙ̀ⲙⲟⲥ.", "فلنصم ونصلي، ببر وطهارة، وضمير ومحبة، صارخين قائلين.", "Mareneshlēl entenernēsteuin: khen oumethmēi nem outouvo: oumeu-i nem ouagapē: enōsh evol enjō emmos.", "Fal-nasum wa nusalli, bi-birr wa tahara, wa dameer wa mahabba, sarikheen qa'ileen."],
+      ["Our Father who art in heaven, who knows my thoughts, remember me in Your kingdom, according to Your mercy.", "Ϫⲉ ⲡⲉⲛⲒⲱⲧ ⲉⲧϧⲉⲛ ⲛⲓⲫⲏⲟ̀ⲩⲓ̀: ⲫⲏⲉ̀ⲧⲥⲱⲟ̀ⲩⲛ ⲛ̀ⲛⲁⲙⲉⲩⲓ̀: ⲕⲁⲧⲁ ⲡⲉⲕⲛⲁⲓ ⲁ̀ⲣⲓⲡⲁⲙⲉⲩⲓ̀: ⲛ̀ϩ̀ⲣⲏⲓ ϧⲉⲛ ⲑ̀ⲙⲉⲧⲟ̀ⲩⲣⲟ ⲛ̀ⲛⲓⲫⲏⲟ̀ⲩⲓ̀.", "أبانا الذي في السموات، العارف أفكاري، اذكرني في ملكوت، السموات كرحمتك.", "Je Peniōt etkhen nifēou-i: fēetsōoun ennameu-i: kata peknai aripameu-i: enehrēi khen ethmetouro ennifēou-i.", "Abana alladhi fis-samawat, el-'arif afkari, udhkurni fi malakout, es-samawat ka-rahmatik."],
+      ["Our Father who art in heaven, hallowed be Your name, may Your kingdom come, for Yours is the glory and the honor.", "Ϫⲉ ⲡⲉⲛⲒⲱⲧ ⲉⲧϧⲉⲛ ⲛⲓⲫⲏⲟ̀ⲩⲓ̀: ⲙⲁⲣⲉϥⲧⲟⲩⲃⲟ ⲛ̀ϫⲉ ⲡⲉⲕⲣⲁⲛ: ⲙⲁⲣⲉⲥⲓ̀ ⲛ̀ϫⲉ ⲧⲉⲕⲙⲉⲧⲟ̀ⲩⲣⲟ: ϫⲉ ⲫⲱⲕ ⲡⲉ ⲡⲓⲱ̀ⲟ̀ⲩ ⲛⲉⲙ ⲡⲓⲧⲁⲓⲟ.", "أبانا الذي في السموات، ليتقدس اسمك، ليأتِ ملكوتك، لأن لك المجد والإكرام.", "Je Peniōt etkhen nifēou-i: mareftouvo enje pekran: maresi enje tekmetouro: je fōk pe pi-ōou nem pitaio.", "Abana alladhi fis-samawat, liyataqaddas ismuk, liya'ti malakoutuk, li-anna lakal-magd wal-ikram."],
+      ["Our Father who art in heaven, who carries the sin of the world, do not lead us into temptation, but deliver us from the evil one.", "Ϫⲉ ⲡⲉⲛⲒⲱⲧ ⲉⲧϧⲉⲛ ⲛⲓⲫⲏⲟ̀ⲩⲓ̀: ⲫⲏⲉⲧⲱ̀ⲗⲓ ⲙ̀ⲫ̀ⲛⲟⲃⲓ ⲙ̀ⲡⲓⲕⲟⲥⲙⲟⲥ: ⲙ̀ⲡⲉⲣⲉⲛⲧⲉⲛ ⲉ̀ϧⲟⲩⲛ ⲉ̀ⲡⲓⲣⲁⲥⲙⲟⲥ: ⲁⲗⲗⲁ ⲛⲁϩⲙⲉⲛ ⲉ̀ⲃⲟⲗϩⲁ ⲡⲓⲡⲟⲛⲏⲣⲟⲥ.", "أبانا الذي في السموات، يا حامل خطية العالم، لا تدخلنا في تجربة، لكن نجنا من الشرير.", "Je Peniōt etkhen nifēou-i: fēetōli emefnovi empikosmos: emperenten ekhoun epirasmos: alla nahmen evolha piponēros.", "Abana alladhi fis-samawat, ya hamil khatiyyat el-'alam, la tudkhilna fi tagriba, lakin naggina min esh-shirreer."],
+      ["Our Father who art in heaven, who carries the sins, who is blessed with His good Father, may we hear the joyful voice.", "Ϫⲉ ⲡⲉⲛⲒⲱⲧ ⲉⲧϧⲉⲛ ⲛⲓⲫⲏⲟ̀ⲩⲓ̀: ⲉⲕⲉ̀ⲑⲣⲉⲛⲥⲱⲧⲉⲙ ⲉ̀ⲡⲓϧ̀ⲣⲱⲟ̀ⲩ ⲙ̀ⲡⲓⲣⲁϣⲓ: ⲫⲏⲉⲧⲱ̀ⲗⲓ ⲙ̀ⲫ̀ⲛⲟⲃⲓ ⲉⲧⲥ̀ⲙⲁⲣⲱⲟ̀ⲩⲧ: ⲛⲉⲙ Ⲡⲉⲕⲓⲱⲧ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ.", "أبانا الذي في السموات، أسمعنا صوت الفرح، يا حامل الخطية المبارك، مع أبيك الصالح.", "Je Peniōt etkhen nifēou-i: ekethrensōtem epi-ekhrōou empirashi: fēetōli emefnovi etesmarōout: nem Pekiōt enagathos.", "Abana alladhi fis-samawat, asmi'na sawt el-farah, ya hamil el-khatiyya el-mubarak, ma'a abeeka es-salih."],
+      ["Our Father who art in heaven, have mercy on us, according to Your great mercy, and grant us the Spirit of the prophets.", "Ϫⲉ ⲡⲉⲛⲒⲱⲧ ⲉⲧϧⲉⲛ ⲛⲓⲫⲏⲟ̀ⲩⲓ̀: ⲛⲁⲓ ⲛⲁⲛ ⲕⲁⲧⲁ ⲡⲉⲕⲛⲓϣϯ ⲛ̀ⲛⲁⲓ: ⲟⲩⲟϩ ⲙⲟⲓ ⲛⲁⲛ ⲙ̀ⲡⲓⲠ̀ⲛⲉⲩⲙⲁ: ⲛ̀ⲧⲉ ⲛⲓⲡ̀ⲣⲟⲫⲏⲧⲏⲥ.", "أبانا الذي في السموات، ارحمنا كعظيم رحمتك، وأعطنا، روح الأنبياء.", "Je Peniōt etkhen nifēou-i: nai nan kata peknishti ennai: ouoh moi nan empi-Epneuma: ente ni-eprofētēs.", "Abana alladhi fis-samawat, irhamna ka-'azeem rahmatik, wa a'tina, rouh el-anbiya'."],
+      ["Our Father who art in heaven, we praise You O Good One, proclaiming and saying, \"Holy, O God.\"", "Ϫⲉ ⲡⲉⲛⲒⲱⲧ ⲉⲧϧⲉⲛ ⲛⲓⲫⲏⲟ̀ⲩⲓ̀: ⲧⲉⲛϩⲱⲥ ⲉ̀ⲣⲟⲕ ⲱ̀ ⲡⲓⲀ̀ⲅⲁⲑⲟⲥ: ⲉⲛⲱ̀ϣ ⲉ̀ⲃⲟⲗ ⲉⲛϫⲱ ⲙ̀ⲙⲟⲥ: ϫⲉ ⲁ̀ⲅⲓⲟⲥ ⲟ̀ Ⲑⲉⲟ̀ⲥ.", "أبانا الذي في السموات، نسبحك أيها الصالح، صارخين قائلين، قدوس الله.", "Je Peniōt etkhen nifēou-i: tenhōs erok ō pi-Agathos: enōsh evol enjō emmos: je agios o Theos.", "Abana alladhi fis-samawat, nusabbihak ayyuha es-salih, sarikheen qa'ileen, quddous Allah."],
+      ["Our Father who art in heaven, forgive us, our sinful thoughts, through Your love for mankind.", "Ϫⲉ ⲡⲉⲛⲒⲱⲧ ⲉⲧϧⲉⲛ ⲛⲓⲫⲏⲟ̀ⲩⲓ̀: ⲭⲱ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ ⲛ̀ⲛⲉⲛⲙⲉⲩⲓ̀: ⲁ̀ⲛⲟⲛ ϧⲁ ⲛⲓⲣⲉϥⲉ̀ⲣⲛⲟⲃⲓ: ⲉ̀ⲃⲟⲗϩⲓⲧⲉⲛ ⲧⲉⲕⲙⲉⲧⲙⲁⲓⲣⲱⲙⲓ.", "أبانا الذي في السموات، اغفر أفكارنا الخاطئة، من قبل محبتك، للبشر.", "Je Peniōt etkhen nifēou-i: khō nan evol ennenmeu-i: anon kha nirefernovi: evolhiten tekmetmairōmi.", "Abana alladhi fis-samawat, ighfir afkarana el-khati'a, min qibal mahabbatik, lil-bashar."],
+      ["Yes our Master, hear us and be with us, we who are not worthy, to entreat Your name.", "Ⲥⲉ ⲡⲉⲛⲚⲏⲃ ⲥⲱⲧⲉⲙ ⲉ̀ⲣⲟⲛ: ⲟⲩⲟϩ ϣⲱⲡⲓ ⲛⲉⲙⲁⲛ: ⲁ̀ⲛⲟⲛ ϧⲁ ⲛⲏⲉ̀ⲧⲉ̀ⲙⲡ̀ϣⲁ ⲁⲛ: ⲉⲑⲣⲉⲛⲧⲱⲃϩ ⲟ̀ⲩⲃⲉ ⲡⲉⲕⲣⲁⲛ.", "نعم يا سيدنا اسمعنا، وكن معنا، نحن غير المستحقين، أن نتضرع إلى اسمك.", "Se penNēb sōtem eron: ouoh shōpi neman: anon kha nēetemepsha an: ethrentōbh ouve pekran.", "Na'am ya sayyidana isma'na, wa kun ma'ana, nahnu ghayr el-mustahiqqeen, an natadarra' ila ismik."],
+      ["Yes our Master the Compassionate, who has treasuries of mercy, do not abandon us to the ignorant, and the vain evil thoughts.", "Ⲥⲉ ⲡⲉⲛⲚⲏⲃ ⲡⲓⲢⲉϥϣⲉⲛϩⲏⲧ: ⲫⲁ ⲛⲓⲁ̀ϩⲱⲣ ⲛ̀ϯⲙⲉⲑⲛⲁⲏ̀ⲧ: ⲙ̀ⲡⲉⲣⲭⲁⲛ ϧⲉⲛ ⲛⲓⲙⲉⲧⲁ̀ⲧϩⲏⲧ: ⲛⲉⲙ ⲛⲓⲙⲉⲩⲓ̀ ⲉⲧϩⲱⲟ̀ⲩ ⲛ̀ϣⲟⲩⲓⲧ.", "نعم يا سيدنا الرؤوف، صاحب كنوز التحنن، لا تتركنا في الجهالات، والأفكار الرديئة الباطلة.", "Se penNēb piRefshenhēt: fa ni-ahōr entimethnaēt: emperkhan khen nimetathēt: nem nimeu-i ethōou enshouit.", "Na'am ya sayyidana er-ra'ouf, sahib kunouz et-tahannun, la tatrukna fil-gahalat, wal-afkar er-radee'a el-batila."],
+      ["Yes our Master accept us to You, and grant us our Christian perfection, that pleases You, and an inheritance with all Your saints.", "Ⲥⲉ ⲡⲉⲛⲚⲏⲃ ϣⲟⲡⲧⲉⲛ ⲉ̀ⲣⲟⲕ: ⲟⲩⲟϩ ⲙⲟⲓ ⲛⲁⲛ ⲙ̀ⲡⲉⲛϫⲱⲕ ⲛ̀Ⲭ̀ⲣⲓⲥⲧⲓⲁⲛⲟⲥ: ⲉϥⲣⲁⲛⲁⲕ ⲛⲉⲙ ⲟ̀ⲩⲕ̀ⲗⲏⲣⲟⲥ: ⲛⲉⲙ ⲛⲏⲉ︦ⲑ︦ⲩ︦ ⲧⲏⲣⲟⲩ ⲛ̀ⲧⲁⲕ.", "نعم يا سيدنا اقبلنا إليك، وأعطنا كمالاً، مسيحياً يرضيك ونصيباً، مع جميع قديسيك.", "Se penNēb shopten erok: ouoh moi nan empenjōk en-Ekhristianos: efranak nem oueklēros: nem nēethouab tērou entak.", "Na'am ya sayyidana iqbalna ilayk, wa a'tina kamalan, maseehiyyan yurdeek wa naseeban, ma'a gamee' qiddiseek."],
+      ["Yes our Master accept us to You, and give joy to our souls, through the remembrance of Your name, O our Lord Jesus Christ.", "Ⲥⲉ ⲡⲉⲛⲚⲏⲃ ϣⲟⲡⲧⲉⲛ ⲉ̀ⲣⲟⲕ: ⲙⲁ ⲡ̀ⲟ̀ⲩⲛⲟϥ ⲛ̀ⲛⲉⲛⲯ̀ⲩⲭⲏ: ϩⲓⲧⲉⲛ ⲡ̀ⲉ̀ⲣⲫ̀ⲙⲉⲩⲓ̀ ⲙ̀ⲡⲉⲕⲣⲁⲛ: ⲱ̀ ⲡⲉⲛⲟ︦ⲥ︦ Ⲓⲏ︦ⲥ︦ Ⲡⲭ︦ⲥ︦.", "نعم يا سيدنا اقبلنا إليك، وأعطِ فرحاً لنفوسنا، من قبل تذكار اسمك، يا ربنا يسوع المسيح.", "Se penNēb shopten erok: ma epounof ennenepsukhē: hiten ep-erefmeu-i empekran: ō Pentshois Iēsous Pikhristos.", "Na'am ya sayyidana iqbalna ilayk, wa a'ti farahan li-nufousina, min qibal tidhkar ismik, ya Rabbana Yasou' el-Maseeh."],
+      ["Yes O our Master accept us to You, You are truly worthy, of the glory and honor, with Your good Father.", "Ⲥⲉ ⲡⲉⲛⲚⲏⲃ ϣⲟⲡⲧⲉⲛ ⲉ̀ⲣⲟⲕ: ⲇⲓⲕⲉⲱ̀ⲥ ⲕ̀ⲉ̀ⲙⲡ̀ϣⲁ: ⲙ̀ⲡ̀ⲱ̀ⲟ̀ⲩ ⲛⲉⲙ ⲡ̀ⲧⲁⲓⲟ: ⲛⲉⲙ Ⲡⲉⲕⲓⲱⲧ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ.", "نعم يا سيدنا اقبلنا إليك، بالحقيقة أنت مستحق، المجد والإكرام، مع أبيك الصالح.", "Se penNēb shopten erok: dikeōs ekemepsha: empōou nem eptaio: nem Pekiōt enagathos.", "Na'am ya sayyidana iqbalna ilayk, bil-haqiqa anta mustahiqq, el-magd wal-ikram, ma'a abeeka es-salih."],
+      ["Yes our Master who has authority, we praise You with hymns, we worship You in the churches, from now to the end.", "Ⲥⲉ ⲡⲉⲛⲚⲏⲃ ⲫⲁ ϯⲉ̀ⲝⲟⲩⲥⲓⲁ: ⲧⲉⲛϩⲱⲥ ⲉ̀ⲣⲟⲕ ϧⲉⲛ ⲛⲓⲉ̀ⲩⲫⲟⲙⲓⲁ: ⲧⲉⲛⲟ̀ⲩⲱ̀ϣⲧ ⲙ̀ⲙⲟⲕ ϧⲉⲛ ⲛⲓⲉ̀ⲕⲕⲗⲏⲥⲓⲁ: ⲓⲥϫⲉⲛ ϯⲛⲟⲩ ϣⲁ ϯⲥⲩⲛⲧⲉⲗⲓⲁ.", "نعم يا سيدنا يا ذا السلطان، نسبحك بالمدائح، ونسجد لك في الكنائس، من الآن وإلى الانقضاء.", "Se penNēb fa tieksousia: tenhōs erok khen nieufomia: tenouōsht emmok khen niekklēsia: isjen tinou sha tisuntelia.", "Na'am ya sayyidana ya dha es-sultan, nusabbihak bil-mada'ih, wa nasgud laka fil-kana'is, min el-an wa ila el-inqida'."],
+      ["Then our mouths will not get tired, and our tongues will not be silent, when we declare the honor, of fasting and prayer.", "Ⲧⲟⲧⲉ ⲣⲱⲛ ⲛⲁϧⲓⲥⲓ ⲁⲛ: ⲟⲩⲟϩ ⲡⲉⲛⲗⲁⲥ ⲛⲁⲭⲁⲣⲱϥ ⲁⲛ: ⲉⲛⲥⲁϫⲓ ⲙ̀ⲡ̀ⲧⲁⲓⲟ: ⲛ̀ⲧⲉ ϯⲛⲏⲥⲧⲓⲁ ⲛⲉⲙ ⲡⲓϣ̀ⲗⲏⲗ.", "حينئذ لا يتعب فمنا، ولا يسكت لساننا، إذ ننطق بكرامة، الصوم والصلاة.", "Tote rōn nakhisi an: ouoh penlas nakharōf an: ensaji emeptaio: ente tinēstia nem pi-eshlēl.", "Hina'idhin la yat'ab famuna, wa la yaskut lisanuna, idh nantiq bi-karamat, es-sawm wes-salah."],
+      ["Lord have mercy, Lord have mercy, save us we are Your creation, and have mercy on us all, O heavenly King.", "Ⲕⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏⲥⲟⲛ Ⲕⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏⲥⲟⲛ: ⲁ̀ⲛⲟⲛ ϧⲁ ⲡⲉⲕⲡ̀ⲗⲁⲥⲙⲁ ⲥⲟⲧⲧⲟⲛ: ⲟⲩⲟϩ ⲛⲁⲓ ⲛⲁⲛ ⲧⲏⲣⲉⲛ: ⲱ̀ ⲡⲓⲞ̀ⲩⲣⲟ ⲛ̀ⲉ̀ⲡⲟⲩⲣⲁⲛⲓⲟⲛ.", "يا رب ارحم يا رب ارحم، نحن جبلتك خلصنا، وارحمنا كلنا، أيها الملك السمائي.", "Kurie eleēson Kurie eleēson: anon kha pekeplasma sotton: ouoh nai nan tēren: ō piOuro enepouranion.", "Ya Rabb irham ya Rabb irham, nahnu gabeelatak khallisna, warhamna kullana, ayyuha el-malik es-sama'i."],
+      ["Lord have mercy, Lord have mercy, perfect us in the upright faith, and also make us worthy, to partake of Your sacraments.", "Ⲕⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏⲥⲟⲛ Ⲕⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏⲥⲟⲛ: ϫⲟⲕⲧⲉⲛ ϧⲉⲛ ⲡⲓⲛⲁϩϯ ⲉⲧⲥⲟⲩⲧⲱⲛ: ⲟⲩⲟϩ ⲁ̀ⲣⲓⲧⲉⲛ ⲛ̀ⲉ̀ⲙⲡ̀ϣⲁ ⲗⲟⲓⲡⲟⲛ ⲉⲑⲣⲉⲛϭⲓ: ⲉ̀ⲃⲟⲗϧⲉⲛ ⲛⲉⲕⲙⲩⲥⲧⲏⲣⲓⲟⲛ.", "يا رب ارحم يا رب ارحم، كملنا في الإيمان المستقيم، واجعلنا أيضاً مستحقين، أن نتناول من أسرارك.", "Kurie eleēson Kurie eleēson: jokten khen pinahti etsoutōn: ouoh ariten enemepsha loipon ethrentshi: evolkhen nekmustērion.", "Ya Rabb irham ya Rabb irham, kammilna fil-iman el-mustaqeem, wag'alna aydan mustahiqqeen, an natanawal min asrarik."],
+      ["Lord have mercy, Lord have mercy, do not take away Your mercy, nor Your Spirit of Comfort from us, but have patience with us.", "Ⲕⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏⲥⲟⲛ Ⲕⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏⲥⲟⲛ: ⲙ̀ⲡⲉⲣⲱ̀ⲗⲓ ⲙ̀ⲡⲉⲕⲛⲁⲓ ⲉ̀ⲃⲟⲗϩⲁⲣⲟⲛ: ⲟ̀ⲩⲇⲉ ⲠⲉⲕⲠ̀ⲛⲉⲩⲙⲁ ⲙ̀Ⲡⲁⲣⲁⲕⲗⲏⲧⲟⲛ: ⲁⲗⲗⲁ ⲱ̀ⲟ̀ⲩⲛ̀ϩⲏⲧ ⲉ̀ϫⲱⲛ.", "يا رب ارحم يا رب ارحم، لا تنزع عنا رحمتك، ولا روحك المعزي، بل تأنَّ علينا.", "Kurie eleēson Kurie eleēson: emperōli empeknai evolharon: oude PekEpneuma emParaklēton: alla ōouenhēt ejōn.", "Ya Rabb irham ya Rabb irham, la tanza' 'anna rahmatak, wa la Rouhak el-mu'azzi, bal ta'anna 'alayna."],
+      ["Let us worship our Savior, the Good Lover of mankind, because He had compassion on us, He came and saved us.", "Ⲙⲁⲣⲉⲛⲟ̀ⲩⲱ̀ϣⲧ ⲙ̀ⲡⲉⲛⲤⲱⲧⲏⲣ: ⲡⲓⲘⲁⲓⲣⲱⲙⲓ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ: ϫⲉ Ⲛ̀ⲑⲟϥ ⲁϥϣⲉⲛϩⲏⲧ ϧⲁⲣⲟⲛ: ⲁϥⲓ̀ ⲟⲩⲟϩ ⲁϥⲥⲱϯ ⲙ̀ⲙⲟⲛ.", "فلنسجد لمخلصنا، الصالح محب البشر، لأنه تراءف علينا، أتى وخلصنا.", "Marenouōsht empenSōtēr: piMairōmi enagathos: je enthof afshenhēt kharon: afi ouoh afsōti emmon.", "Fal-nasgud li-mukhallisina, es-salih muhibb el-bashar, li-annahu tara'af 'alayna, ata wa khallasana."],
+    ],
+  },
+  {
+    key: "st-john",
+    title: "Ⲙ̀ⲡⲉ ⲟⲩⲟⲛ ⲧⲱⲛϥ (Doxology for St John the Baptist)",
+    verses: [
+      ["Among those born of women, no one is like you, you are great among the saints, O John the Baptist.", "Ⲙ̀ⲡⲉ ⲟⲩⲟⲛ ⲧⲱⲛϥ ϧⲉⲛ ⲛⲓϫⲓⲛⲙⲓⲥⲓ: ⲛ̀ⲧⲉ ⲛⲓϩⲓⲟⲙⲓ ⲉϥⲟⲛⲓ ⲙ̀ⲙⲟⲕ: ⲛ̀ⲑⲟⲕ ⲟⲩⲛⲓϣϯ ϧⲉⲛ ⲛⲏⲉ︦ⲑ︦ⲩ︦ ⲧⲏⲣⲟⲩ: Ⲓⲱⲁⲛⲛⲏⲥ ⲡⲓⲣⲉϥϯⲱⲙⲥ.", "لم يقم في مواليد النساء من يشبهك. أنت عظيم في جميع القديسين يا يوحنا المعمدان.", "Empe ouon tōnf khen nijinmisi: ente nihiomi efoni emmok: enthok ounishti khen nēethouab tērou: Iōannēs pireftiōms.", "Lam yaqum fi mawaleed en-nisa' man yushbihuk, anta 'azeem fi gamee' el-qiddiseen ya Youhanna el-ma'madan."],
+      ["You are much more than a prophet, you were righteously exalted, you are the friend of the Bridegroom, the Lamb of God.", "Ⲛ̀ⲑⲟⲕ ⲟⲩϩⲟⲩⲟ̀ ⲙ̀ⲡ̀ⲣⲟⲫⲏⲧⲏⲥ: ⲁⲕϭⲓⲥⲓ ϧⲉⲛ ϯⲙⲉⲑⲙⲏⲓ: ⲛ̀ⲑⲟⲕ ⲡⲉ ⲡ̀ϣ̀ⲫⲏⲣ ⲙ̀ⲡⲓⲡⲁⲧϣⲉⲗⲉⲧ: ⲡⲓϩⲓⲏⲃ ⲛ̀ⲧⲉ Ⲫϯ.", "أنت أفضل من نبي. تعاليت في البر. أنت هو صديق الختن حمل الله.", "Enthok ouhou-o emeprofētēs: aktshisi khen timethmēi: enthok pe epeshfēr empipatshelet: pihiēb ente Efnouti.", "Anta afdal min nabi, ta'alayta fil-birr, anta huwa sadeeq el-khatan hamal Allah."],
+      ["You have witnessed to the true Light, which came into the world, those who believed in His Name, became children of the Light.", "Ⲁⲕⲉⲣⲙⲉⲑⲣⲉ ϧⲁ ⲡⲓⲟⲩⲱⲓⲛⲓ: ⲛ̀ⲧⲁⲫ̀ⲙⲏⲓ ⲉⲧⲁϥⲓ̀ ⲉ̀ⲡⲓⲕⲟⲥⲙⲟⲥ: ⲛⲏⲉ̀ⲑⲛⲁϩϯ ⲉ̀ⲡⲉϥⲣⲁⲛ: ⲁⲩϣⲱⲡⲓ ⲛ̀ϣⲏⲣⲓ ⲛ̀ⲧⲉ ⲡⲓⲟⲩⲱⲓⲛⲓ.", "شهدت للنور الحقيقي الذي أتى إلى العالم. والذين يؤمنون باسمه صاروا أبناء النور.", "Akermethre kha piouōini: entafmēi etafi epikosmos: nēethnahti epefran: aushōpi enshēri ente piouōini.", "Shahidta lin-nour el-haqiqi alladhi ata ila el-'alam, walladheen yu'minoun bismih sarou abna' en-nour."],
+      ["Intercede on our behalf, O forerunner and baptizer, John the Baptist, that He may forgive us our sins.", "Ⲁⲣⲓⲡ̀ⲣⲉⲥⲃⲉⲩⲓⲛ ⲉ̀ϩ̀ⲣⲏⲓ ⲉ̀ϫⲱⲛ: ⲱ̀ ⲡⲓⲡ̀ⲣⲟⲇⲣⲟⲙⲟⲥ ⲙ̀ⲃⲁⲡⲧⲓⲥⲧⲏⲥ: Ⲓⲱⲁⲛⲛⲏⲥ ⲡⲓⲣⲉϥϯⲱⲙⲥ: ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ.", "اشفع فينا أمام الرب أيها السابق الصابغ يوحنا المعمدان ليغفر لنا خطايانا.", "Ari-epresveuin e-ehrēi ejōn: ō pi-eprodromos embaptistēs: Iōannēs pireftiōms: entefkha nennovi nan evol.", "Ishfa' feena amam er-Rabb ayyuha es-sabiq es-sabigh Youhanna el-ma'madan liyaghfir lana khatayana."],
+    ],
+  },
+  {
+    key: "st-john-2",
+    title: "Ⲁϥⲉⲣⲙⲉⲑⲣⲉ ⲛ̀ϫⲉ Ⲓⲱⲁⲛⲛⲏⲥ (Another Doxology for St John the Baptist)",
+    verses: [
+      ["John has witnessed, in the four Gospels, saying, \"I have baptized my Savior, in the waters of the Jordan.\"", "Ⲁϥⲉⲣⲙⲉⲑⲣⲉ ⲛ̀ϫⲉ Ⲓⲱⲁⲛⲛⲏⲥ: ϧⲉⲛ ⲡⲓϥ̀ⲧⲟⲟⲩ ⲛ̀ⲉ̀ⲩⲁ̀ⲅⲅⲉⲗⲓⲟⲛ: ϫⲉ ⲁⲓϯⲱⲙⲥ ⲙ̀Ⲡⲁⲥⲱⲧⲏⲣ: ϧⲉⲛ ⲛⲓⲙⲱⲟⲩ ⲛ̀ⲧⲉ ⲡⲓⲒⲟⲣⲇⲁⲛⲏⲥ.", "شهد يوحنا في الأناجيل الأربعة أني عمدت مخلصي في مياه الأردن.", "Afermethre enje Iōannēs: khen pieftoou eneu-aggelion: je aitiōms em-Pasōtēr: khen nimōou ente pi-Iordanēs.", "Shahid Youhanna fil-anageel el-arba'a anni 'ammadtu mukhallisi fi miyah el-Urdunn."],
+      ["\"I saw the Holy Spirit, come down from heaven, I heard the voice of the Father, proclaiming and saying.\"", "Ⲁⲓⲛⲁⲩ ⲉ̀ⲡⲓⲠ̀ⲛⲉⲩⲙⲁ ⲉ︦ⲑ︦ⲩ︦: ⲉⲧⲁϥⲓ̀ ⲉⲡⲉⲥⲏⲧ ⲉ̀ⲃⲟⲗϧⲉⲛ ⲧ̀ⲫⲉ: ⲁⲓⲥⲱⲧⲉⲙ ⲉ̀ⲧ̀ⲥ̀ⲙⲏ ⲛ̀ⲧⲉ Ⲫ̀ⲓⲱⲧ: ⲉⲥⲱϣ ⲉⲃⲟⲗ ⲉⲥϫⲱ ⲙ̀ⲙⲟⲥ.", "ونظرت الروح القدس عندما نزل من السماء. وسمعت صوت الآب صارخاً قائلاً.", "Ainau epi-Epneuma ethouab: etafi epesēt evolkhen etfe: aisōtem etesmē ente Efiōt: esōsh evol esjō emmos.", "Wa nazartu er-Rouh el-Qudus 'indama nazal min es-sama', wa sami'tu sawt el-Ab sarikhan qa'ilan."],
+      ["\"This is My beloved Son, with whom My soul is well pleased, He does My will, hear Him, for He is the Life-Giver.\"", "Ϫⲉ ⲫⲁⲓ ⲡⲉ Ⲡⲁϣⲏⲣⲓ ⲡⲁⲙⲉⲛⲣⲓⲧ: ⲉ̀ⲧⲁ ⲧⲁⲯⲩⲭⲏ ϯⲙⲁϯ ⲛ̀ϧⲏⲧϥ: ⲁϥⲉⲣ ⲡⲁⲟⲩⲱϣ ⲥⲱⲧⲉⲙ ⲛ̀ⲥⲱϥ: ϫⲉ ⲛ̀ⲑⲟϥ ⲡⲉ ⲡⲓⲣⲉϥⲧⲁⲛϧⲟ.", "هذا هو ابني حبيبي الذي سرت به نفسي وصنع مشيئتي. اسمعوا له لأنه هو المحيي.", "Je fai pe Pashēri pamenrit: eta tapsukhē timati enkhētf: afer paouōsh sōtem ensōf: je enthof pe pireftankho.", "Hadha huwa ibni habeebi alladhi surrat bihi nafsi wa sana' mashee'ati, isma'ou lahu li-annahu huwa el-muhyi."],
+      ["Intercede on our behalf, O forerunner and baptizer, John the Baptist, that He may forgive us our sins.", "Ⲁⲣⲓⲡ̀ⲣⲉⲥⲃⲉⲩⲓⲛ ⲉ̀ϩ̀ⲣⲏⲓ ⲉ̀ϫⲱⲛ: ⲱ̀ ⲡⲓⲡ̀ⲣⲟⲇⲣⲟⲙⲟⲥ ⲙ̀ⲃⲁⲡⲧⲓⲥⲧⲏⲥ: Ⲓⲱⲁⲛⲛⲏⲥ ⲡⲓⲣⲉϥϯⲱⲙⲥ: ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ.", "اشفع فينا أمام الرب أيها السابق الصابغ يوحنا المعمدان ليغفر لنا خطايانا.", "Ari-epresveuin e-ehrēi ejōn: ō pi-eprodromos embaptistēs: Iōannēs pireftiōms: entefkha nennovi nan evol.", "Ishfa' feena amam er-Rabb ayyuha es-sabiq es-sabigh Youhanna el-ma'madan liyaghfir lana khatayana."],
+    ],
+  },
+];
+
+// ---- Great Lent: tapping it offers Weekdays and Weekends, each with the five services ----
+// What is already filled in (Matins, Vespers and the Offering of the Lamb, from Annual) is for the weekends.
+// No recordings or doxologies yet for Great Lent.
+if (greatLent) {
+  const byId = new Map(greatLent.services.map((service) => [service.id, service]));
+  const isDoxology = (h: Hymn) => /-doxolog/.test(h.id);
+  const withoutAudio = (hymn: Hymn): Hymn => ({
+    ...hymn,
+    versions: hymn.versions.map(({ audio: _audio, ...version }) => version),
+    children: hymn.children?.map(withoutAudio),
+  });
+  // The Lent Gospel Response, for Matins and Vespers on weekdays and weekends
+  const lentGospelResponse = (id: string): Hymn => ({
+    id,
+    title: 'Ϫⲉ ⲡⲉⲛⲓⲱⲧ (Gospel Response)',
+    versions: [
+      { language: 'coptic', text: 'Ⲡⲓⲗⲁⲟⲥ:\n\nϪⲉ ⲡⲉⲛⲓⲱⲧ ⲉⲧϧⲉⲛ ⲛⲓⲫⲏⲟ̀ⲩⲓ̀: ⲙⲁⲣⲉϥⲧⲟⲩⲃⲟ ⲛ̀ϫⲉ ⲡⲉⲕⲣⲁⲛ: ⲙⲁⲣⲉⲥⲓ ⲛ̀ϫⲉ ⲧⲉⲕⲙⲉⲧⲟ̀ⲩⲣⲟ: ϫⲉ ⲫⲱⲕ ⲡⲉ ⲡⲓⲱ̀ⲟ̀ⲩ ϣⲁ ⲛⲓⲉ̀ⲛⲉϩ.\n\nϪⲉ ϥ̀ⲥ̀ⲙⲁⲣⲱⲟⲩⲧ ⲛ̀ϫⲉ Ⲫⲓⲱⲧ ⲛⲉⲙ Ⲡϣⲏⲣⲓ: ⲛⲉⲙ Ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ ⲉⲑⲟⲩⲁⲃ: ϯⲧ̀ⲣⲓⲁⲥ ⲉⲧϫⲏⲕ ⲉ̀ⲃⲟⲗ: ⲧⲉⲛⲟⲩⲱϣⲧ ⲙ̀ⲙⲟⲥ ⲧⲉⲛϯⲱ̀ⲟⲩ ⲛⲁⲥ.' },
+      { language: 'englishCoptic', text: 'Pi-laos:\n\nJe Peniōt etkhen nifēou-i: mareftouvo enje pekran: maresi enje tekmetouro: je fōk pe pi-ōou sha ni-eneh.\n\nJe efesmarōout enje Fiōt nem Pshēri: nem Pi-epneuma ethouab: ti-etrias etjēk evol: tenouōsht emmos tenti-ōou nas.' },
+      { language: 'english', text: 'People:\n\nOur Father who art in heaven, hallowed be Thy name, Thy kingdom come, for Thine is the glory forever.\n\nBlessed be the Father and the Son and the Holy Spirit, the perfect Trinity. We worship Him and glorify Him.' },
+      { language: 'englishArabic', text: "Esh-sha'b:\n\nAbana alladhi fis-samawat, liyataqaddas ismuk, liya'ti malakoutuk, li-anna lakal-magd ila el-abad.\n\nLi-annahu mubarakun el-Ab wal-Ibn war-Rouh el-Qudus, eth-Thalouth el-kamil, nasgud lahu wa numaggiduh." },
+      { language: 'arabic', text: 'الشعب:\n\nأبانا الذي في السموات، ليتقدس اسمك، ليأتِ ملكوتك، لأن لك المجد إلى الأبد.\n\nلأنه مباركٌ الآب والابن والروح القدس، الثالوث الكامل، نسجد له ونمجده.' },
+    ],
+  });
+  // Weekday Verses of the Cymbals: Lord have mercy, the prayers for the Pope and the bishop, and "That we may praise You",
+  // the same words as those verses of the weekend's
+  const weekdayCymbals = (id: string): Hymn => ({
+    id,
+    title: 'Ⲕⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ (Verses of the Cymbals)',
+    versions: lentVersesOfCymbals.map((version) => {
+      const verses = version.text.split('\n\n');
+      return { language: version.language, text: [0, 19, 20, 22].map((i) => verses[i]).join('\n\n') };
+    }),
+  });
+  // The Lent conclusions: as in Annual, but "We proclaim and say" is about the Lord's forty-day fast
+  const lentProclaim: Partial<Record<LanguageType, string>> = {
+    coptic: 'Ⲧⲉⲛⲱ̀ϣ ⲉ̀ⲃⲟⲗ ⲉⲛϫⲱ ⲙ̀ⲙⲟⲥ: ϫⲉ ⲱ̀ ⲡⲉⲛⲟ︦ⲥ︦ Ⲓⲏ︦ⲥ︦ Ⲡⲭ︦ⲥ︦: ϫⲉ ⲫⲏⲉ̀ⲧⲁϥⲉ̀ⲣⲛⲏⲥⲧⲉⲩⲓⲛ ⲉ̀ϩ̀ⲣⲏⲓ ⲉ̀ϫⲱⲛ: ⲛ̀ϩ̀ⲙⲉ ⲛ̀ⲉ̀ϩⲟⲟ̀ⲩ ⲛⲉⲙ ϩ̀ⲙⲉ ⲛ̀ⲉ̀ϫⲱⲣϩ: ϣⲁ ⲛ̀ⲧⲉϥⲥⲱⲧⲧⲉⲛ ϧⲉⲛ ⲛⲉⲛⲛⲟⲃⲓ. Ⲥⲱϯ ⲙ̀ⲙⲟⲛ ⲟⲩⲟϩ ⲛⲁⲓ ⲛⲁⲛ.',
+    englishCoptic: 'Tenōsh evol enjō emmos: je ō Pentshois Iēsous Pikhristos: je fē-etafernēsteuin e-ehrēi ejōn: enehme ene-ehoou nem ehme ene-jōrh: sha entefsōtten khen nennovi. Sōti emmon ouoh nai nan.',
+    english: 'We proclaim and say: O our Lord Jesus Christ, who fasted for us, forty days and forty nights, to save us from our sins. Save us and have mercy on us.',
+    englishArabic: "Nasrukh qa'ileen: ya Rabbana Yasou' el-Maseeh, alladhi sama 'anna, arba'een yawman wa arba'een layla, hatta khallasana min khatayana. Khallisna warhamna.",
+    arabic: 'نصرخ قائلين: يا ربنا يسوع المسيح، الذي صام عنا، أربعين يوماً وأربعين ليلة، حتى خلصنا من خطايانا. خلصنا وارحمنا.',
+  };
+  // The third paragraph (after "People:" and "Amen. Alleluia...") is the one that changes
+  const lentConclusion = (annual: Hymn): Hymn => ({
+    ...annual,
+    versions: annual.versions.map((version) => {
+      const verses = version.text.split('\n\n');
+      verses[2] = lentProclaim[version.language] ?? verses[2];
+      return { ...version, text: verses.join('\n\n') };
+    }),
+  });
+  const lentConclusions = (prefix: string): Hymn[] => [
+    lentConclusion(annualConcludingHymn(`${prefix}-concluding-hymn`)),
+    lentConclusion(annualPopeBishopConclusion(`${prefix}-conclusion-pope-bishop`)),
+  ];
+  // Weekdays have their own Concluding Hymn (sung after communion), and the Pope or Bishop conclusion
+  // without the "Amen. Alleluia" and "We proclaim" verses that open it on weekends
+  const weekdayConcludingHymn = (id: string): Hymn => ({
+    id,
+    title: 'Ⲥⲱⲙⲁⲧⲟⲥ (Concluding Hymn)',
+    versions: [
+      { language: 'coptic', text: 'Ⲥⲱⲙⲁⲧⲟⲥ ⲕⲉ Ⲉ̀ⲙⲁⲧⲟⲥ ⲙⲟⲛⲟⲅⲉⲛⲏⲥ Ⲑⲉⲟ̀ⲩ: ⲙⲉⲧ ⲁ̀ⲗⲁⲃⲟⲛⲧⲉⲥ ⲁⲩⲧⲱ: ⲉⲩⲭⲁⲣⲓⲥⲧⲏⲥⲱⲙⲉⲛ.\n\nⲆⲟⲝⲁ Ⲡⲁⲧⲣⲓ ⲕⲉ Ⲩ̀ⲓⲱ ⲕⲉ Ⲁ̀ⲅⲓⲟ Ⲡ̀ⲛⲉⲩⲙⲁⲧⲓ.\n\nⲤⲱⲙⲁⲧⲟⲥ ⲕⲉ Ⲉ̀ⲙⲁⲧⲟⲥ ⲙⲟⲛⲟⲅⲉⲛⲏⲥ Ⲑⲉⲟ̀ⲩ: ⲙⲉⲧ ⲁ̀ⲗⲁⲃⲟⲛⲧⲉⲥ ⲁⲩⲧⲱ: ⲉⲩⲭⲁⲣⲓⲥⲧⲏⲥⲱⲙⲉⲛ.\n\nⲔⲉ ⲛⲩⲛ ⲕⲉ ⲁ̀ⲓ̀ ⲕⲉ ⲓⲥ ⲧⲟⲩⲥ ⲉ̀ⲱ̀ⲛⲁⲥ ⲧⲟⲛ ⲉ̀ⲱ̀ⲛⲱⲛ. Ⲁ̀ⲙⲏⲛ.\n\nⲪⲁⲓ ⲡⲉ ⲡⲓⲤⲱⲙⲁ ⲛⲉⲙ ⲡⲓⲤ̀ⲛⲟϥ ⲛ̀ⲧⲉ ⲡⲓⲙⲟⲛⲟⲅⲉⲛⲏⲥ ⲛ̀Ⲛⲟⲩϯ: ⲛⲁⲓ ⲉ̀ⲧⲁⲛϭⲓ ⲉ̀ⲃⲟⲗ ⲛ̀ϧⲏⲧⲟⲩ. Ⲙⲁⲣⲉⲛϣⲉⲡϩ̀ⲙⲟⲧ ⲛ̀ⲧⲟⲧϥ: ⲙⲁⲣⲉⲛϩⲱⲥ ⲛⲉⲙ ⲛⲓⲁ̀ⲅⲅⲉⲗⲟⲥ ⲛⲉⲙ ⲛⲓⲧⲁⲅⲙⲁ ⲛ̀ⲧⲉ ⲡ̀ϭⲓⲥⲓ ⲛⲉⲙ ⲡ̀ⲭⲟⲣⲟⲥ ⲛ̀ⲧⲉ ⲛⲓⲑ̀ⲙⲏⲓ ⲉⲛⲟ̀ϣ ⲉ̀ⲃⲟⲗ ⲉⲛϫⲱ ⲙ̀ⲙⲟⲥ: ϫⲉ ⲫⲏⲉ̀ⲧⲁϥⲉ̀ⲣⲛⲏⲥⲧⲉⲩⲓⲛ ⲉ̀ϩ̀ⲣⲏⲓ ⲉ̀ϫⲱⲛ ⲛ̀ϩ̀ⲙⲉ ⲛ̀ⲉ̀ϩⲟⲟ̀ⲩ ⲛⲉⲙ ϩ̀ⲙⲉ ⲛ̀ⲉ̀ϫⲟⲣϩ: ϣⲟⲡ ⲉ̀ⲣⲟⲕ ⲛ̀ⲧⲉⲛⲛⲏⲥⲧⲓⲁ ⲭⲱ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ ⲛ̀ⲛⲉⲛⲁ̀ⲛⲟⲙⲓⲁ: ϩⲓⲧⲉⲛ ⲛⲉⲛⲧⲟⲃϩ ⲛⲉⲙ ⲛⲉⲛⲡ̀ⲣⲉⲥⲃⲓⲁ ⲛ̀ⲧⲉ ⲧⲁϭⲟⲓⲥ ⲛ̀ⲛⲏⲃ Ⲙⲁⲣⲓⲁ. Ⲥⲱϯ ⲙ̀ⲙⲟⲛ ⲟⲩⲟϩ ⲛⲁⲓ ⲛⲁⲛ.' },
+      { language: 'englishCoptic', text: 'Sōmatos ke Ematos monogenēs The-ou: met alavontes autō: eukharistēsōmen.\n\nDoksa Patri ke Uiō ke Agio Epneumati.\n\nSōmatos ke Ematos monogenēs The-ou: met alavontes autō: eukharistēsōmen.\n\nKe nun ke ai ke is tous eōnas ton eōnōn. Amēn.\n\nFai pe pi-Sōma nem pi-Esnof ente pimonogenēs en-Nouti: nai etantshi evol enkhētou. Marenshep-ehmot entotf: marenhōs nem niaggelos nem nitagma ente eptshisi nem epkhoros ente ni-ethmēi enosh evol enjō emmos: je fē-etafernēsteuin e-ehrēi ejōn enehme ene-ehoou nem ehme ene-jorh: shop erok entennēstia khō nan evol ennenanomia: hiten nentobh nem nenepresvia ente tatshois ennēb Maria. Sōti emmon ouoh nai nan.' },
+      { language: 'english', text: 'The Body and Blood of the only-begotten God; having partaken, let us give thanks to Him.\n\nGlory to the Father, and the Son, and the Holy Spirit.\n\nThe Body and Blood of the only-begotten God; having partaken, let us give thanks to Him.\n\nNow and ever and unto the age of ages. Amen.\n\nThis is the Body and Blood of the only-begotten God, having partaken, let us give thanks to Him. Let us sing praises with the angels and the orders of the Highest and the choir of the righteous, proclaiming and saying, "O You who fasted for us forty days and forty nights, accept our fasting and forgive us our iniquities, through the prayers and intercessions of our lady St. Mary." Save us and have mercy on us.' },
+      { language: 'englishArabic', text: "Gasad wa damm el-Ilah el-waheed, alladhan tanawalna minhuma, fal-nashkurhu.\n\nEl-magd lil-Ab wal-Ibn war-Rouh el-Qudus.\n\nGasad wa damm el-Ilah el-waheed, alladhan tanawalna minhuma, fal-nashkurhu.\n\nEl-an wa kulla awan wa ila dahr ed-duhour. Ameen.\n\nHadha huwa gasad wa damm el-Ilah el-waheed alladhan tanawalna minhuma. Fal-nashkurhu, wal-nusabbih ma'a el-mala'ika wa tughmat el-'ula wa sufouf el-abrar sarikheen qa'ileen, \"ya man sama 'anna arba'een yawman wa arba'een layla, iqbal ilayka sawmana waghfir lana athamana, bi-talibat wa shafa'at sayyidati el-qiddisa Maryam.\" Khallisna warhamna." },
+      { language: 'arabic', text: 'جسد ودم الإله الوحيد، اللذان تناولنا منهما، فلنشكره.\n\nالمجد للآب والإبن والروح القدس.\n\nجسد ودم الإله الوحيد، اللذان تناولنا منهما، فلنشكره.\n\nالآن وكل أوان وإلى دهر الدهور. آمين.\n\nهذا هو جسد ودم الإله الوحيد اللذان تناولنا منهما. فلنشكره، ولنسبح مع الملائكة وطغمات العلا وصفوف الأبرار صارخين قائلين، "يا من صام عنا أربعين يوماً وأربعين ليلة، اقبل إليك صومنا واغفر لنا آثامنا، بطلبات وشفاعات سيدتي القديسة مريم." خلصنا وارحمنا.' },
+    ],
+  });
+  const weekdayPopeBishopConclusion = (id: string): Hymn => {
+    const annual = annualPopeBishopConclusion(id);
+    return {
+      ...annual,
+      versions: annual.versions.map((version) => ({
+        ...version,
+        text: version.text
+          .split('\n\n')
+          .filter((_, i) => i !== 1 && i !== 2)
+          .join('\n\n'),
+      })),
+    };
+  };
+  const weekdayConclusions = (prefix: string): Hymn[] => [
+    weekdayConcludingHymn(`${prefix}-concluding-hymn`),
+    weekdayPopeBishopConclusion(`${prefix}-conclusion-pope-bishop`),
+  ];
+  // Weekdays have no Vespers (and no Vesper Praises)
+  const partServices = {
+    weekday: ['matins', 'liturgy', 'distribution', 'midnight'],
+    weekend: ['matins', 'liturgy', 'distribution', 'vespers', 'midnight'],
+  } as const;
+  const serviceGroups = (part: 'weekday' | 'weekend'): Hymn[] =>
+    partServices[part].map((name) => {
+      const service = byId.get(`lent-${name}`);
+      const id = `lent-${part}-${name}`;
+      let children: Hymn[] = [];
+      // The Introduction, the Virgin Mary (Matins) and the Heavenly Beings are the same as Annual Matins
+      const fromAnnualMatins = (name: string): Hymn[] => {
+        const hymn = annualMatins?.hymns.find((h) => h.id === `annual-matins-${name}`);
+        return hymn ? [withoutAudio({ ...hymn, id: `${id}-${name}` })] : [];
+      };
+      const lentDoxology = (key: string): Hymn[] =>
+        lentDoxologies
+          .filter((d) => d.key === key)
+          .map((d) => ({ id: `${id}-doxology-${d.key}`, title: d.title, versions: doxologyVersions(d.verses) }));
+      const doxologiesHeader: Hymn = { id: `${id}-doxologies-header`, title: 'Doxologies', versions: [], isSectionHeader: true };
+      if (part === 'weekend' && service && ['matins', 'liturgy', 'vespers'].includes(name)) {
+        children = service.hymns
+          .filter((h) => !isDoxology(h))
+          .map(withoutAudio)
+          .map((h) => (h.id.endsWith('-gospel-response') ? lentGospelResponse(h.id) : h))
+          .filter((h) => !/-(concluding-hymn|conclusion-pope-bishop)$/.test(h.id));
+        if (name !== 'liturgy') children.push(...lentConclusions(`lent-${name}`));
+        if (name === 'matins') {
+          children.push(
+            doxologiesHeader,
+            ...fromAnnualMatins('intro-doxologies'),
+            ...lentDoxology('sat-sun'),
+            ...lentDoxology('weekday-lent'),
+            ...lentDoxology('lent-2'),
+            ...lentDoxology('lent-3'),
+            ...lentDoxology('lent-4'),
+            ...fromAnnualMatins('doxology-virgin-mary'),
+            ...fromAnnualMatins('doxology-heavenly-beings')
+          );
+        }
+      }
+      if (part === 'weekday' && name === 'matins') {
+        children = [
+          weekdayCymbals(`${id}-verse-of-cymbals`),
+          lentGospelResponse(`${id}-gospel-response`),
+          ...weekdayConclusions(id),
+          doxologiesHeader,
+          ...fromAnnualMatins('intro-doxologies'),
+          ...lentDoxology('weekday-lent'),
+          ...lentDoxology('lent-2'),
+          ...lentDoxology('lent-3'),
+          ...lentDoxology('lent-4'),
+          ...fromAnnualMatins('doxology-virgin-mary'),
+          ...fromAnnualMatins('doxology-heavenly-beings'),
+          ...lentDoxology('st-john'),
+          ...lentDoxology('st-john-2'),
+        ];
+      }
+      if (part === 'weekday' && (name === 'distribution' || name === 'midnight')) children = weekdayConclusions(id);
+      return { id, title: service?.title ?? name, versions: [], children };
+    });
+  greatLent.services = [
+    { id: 'lent-weekday', title: 'Weekdays', hymns: serviceGroups('weekday') },
+    { id: 'lent-weekend', title: 'Weekends (Saturday and Sunday)', hymns: serviceGroups('weekend') },
+  ];
 }
 
 // Keep these last: give every hymn a "Coptic in Arabic letters" and an "English in Arabic letters" version

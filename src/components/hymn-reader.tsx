@@ -32,7 +32,6 @@ import {
   ChipScroller,
   createAlhanStyles,
   defaultHymnLanguage,
-  formatTime,
   goBackOrHome,
   hymnHref,
   KeepScreenAwake,
@@ -45,6 +44,7 @@ import {
   withCopticFont,
   withoutNumber,
 } from './alhan-ui';
+import { SeekBar } from './seek-bar';
 
 const SPEEDS = [0.5, 0.75, 1];
 
@@ -148,7 +148,6 @@ export function HymnReader({
   const rawText = hymn.versions.find((v) => v.language === effectiveLanguage)?.text || t.notAvailable;
   const isArabicText = effectiveLanguage === 'arabic' || effectiveLanguage === 'arabicCoptic' || effectiveLanguage === 'arabicEnglish' || rawText === strings.ar.notAvailable;
   const fontSize = 20 * settings.textScale;
-  const progress = status.duration > 0 ? Math.min(1, status.currentTime / status.duration) : 0;
   const repeatOne = queue.repeat === 'one';
   const inPlaylist = isInPlaylist(playlist, readerItem);
   const isDownloading = !!currentAudio && downloads.downloading.has(currentAudio);
@@ -298,28 +297,26 @@ export function HymnReader({
         <View style={styles.readerChips} />
       )}
 
-      {/* Share, projector and learning mode */}
-      <ChipScroller rtl={isRTL} contentStyle={styles.actionChips}>
-        {actionChip(t.share, share)}
-        {actionChip(t.present, () =>
-          router.push({ pathname: '/present/[id]', params: { id: hymnSlug(hymn.id), lang: effectiveLanguage } })
-        )}
-        {currentAudio ? actionChip(t.learn, () => setLearning(!learning), learning) : null}
-      </ChipScroller>
-
-      {/* Reading tools: side by side on one end, text size on the other */}
+      {/* One row of tools: share, projector, learning and side by side scroll; text size stays at the end */}
       <View style={[styles.toolbar, rowDirection]}>
-        {compareOptions.length > 0 ? (
-          <Pressable
-            onPress={() => updateSettings({ sideBySide: !settings.sideBySide })}
-            accessibilityRole="switch"
-            accessibilityState={{ checked: showSideBySide }}
-            style={[styles.chip, styles.chipSmall, showSideBySide && styles.controlButtonActive]}>
-            <Text style={[styles.chipText, showSideBySide && styles.controlTextActive]}>{t.sideBySide}</Text>
-          </Pressable>
-        ) : (
-          <View />
-        )}
+        <View style={styles.toolbarChips}>
+          <ChipScroller rtl={isRTL} endFlush contentStyle={styles.actionChips}>
+            {actionChip(t.share, share)}
+            {actionChip(t.present, () =>
+              router.push({ pathname: '/present/[id]', params: { id: hymnSlug(hymn.id), lang: effectiveLanguage } })
+            )}
+            {currentAudio ? actionChip(t.learn, () => setLearning(!learning), learning) : null}
+            {compareOptions.length > 0 ? (
+              <Pressable
+                onPress={() => updateSettings({ sideBySide: !settings.sideBySide })}
+                accessibilityRole="switch"
+                accessibilityState={{ checked: showSideBySide }}
+                style={[styles.chip, styles.chipSmall, showSideBySide && styles.controlButtonActive]}>
+                <Text style={[styles.chipText, showSideBySide && styles.controlTextActive]}>{t.sideBySide}</Text>
+              </Pressable>
+            ) : null}
+          </ChipScroller>
+        </View>
         <View style={[styles.textSizeButtons, rowDirection]}>
           <Pressable
             onPress={() => changeTextScale(-0.15)}
@@ -367,12 +364,7 @@ export function HymnReader({
               <Text style={styles.playIcon}>{status.playing ? '❚❚' : '▶'}</Text>
             </Pressable>
             <View style={styles.rowTextWrap}>
-              <View style={styles.progressTrack}>
-                <View style={[styles.progressFill, { width: `${progress * 100}%` }]} />
-              </View>
-              <Text style={styles.audioTime}>
-                {formatTime(status.currentTime)} / {formatTime(status.duration)}
-              </Text>
+              <SeekBar currentTime={status.currentTime} duration={status.duration} onSeek={seekTo} label={t.position} />
             </View>
           </View>
           <View style={[styles.audioControls, rowDirection]}>

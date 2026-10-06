@@ -16,6 +16,33 @@ const arabicTitles: Record<string, string> = {
   theophany: 'عيد الغطاس المجيد',
   jonah: 'صوم وفصح يونان (نينوى)',
   'great-lent': 'الصوم الكبير',
+  'lent-weekday': 'أيام الأسبوع',
+  'lent-weekend': 'السبوت والآحاد',
+  'lent-matins-verse-of-cymbals': 'أرباع الناقوس',
+  'lent-weekday-matins-verse-of-cymbals': 'يا رب ارحم (أرباع الناقوس)',
+  'lent-weekday-matins-gospel-response': 'مرد الإنجيل',
+  'lent-weekday-matins-concluding-hymn': 'قانون ختام الصلوات الإجتماعية',
+  'lent-weekday-matins-conclusion-pope-bishop': 'الختام في وجود الأب البطريرك أو الأسقف',
+  'lent-weekday-matins-doxology-sat-sun': 'ذكصولوجية سبوت وآحاد الصوم الكبير',
+  'lent-weekday-matins-doxology-weekday-lent': 'ذكصولوجية أيام الصوم الكبير',
+  'lent-weekday-matins-doxology-lent-2': 'الذكصولوجية الثانية للصوم الكبير',
+  'lent-weekday-matins-doxology-lent-3': 'الذكصولوجية الثالثة للصوم الكبير',
+  'lent-weekday-matins-doxology-lent-4': 'الذكصولوجية الرابعة للصوم الكبير',
+  'lent-weekday-matins-doxology-st-john': 'ذكصولوجية القديس يوحنا المعمدان',
+  'lent-weekday-matins-doxology-st-john-2': 'ذكصولوجية أخرى للقديس يوحنا المعمدان',
+  'lent-weekend-matins-doxology-sat-sun': 'ذكصولوجية سبوت وآحاد الصوم الكبير',
+  'lent-weekend-matins-doxology-weekday-lent': 'ذكصولوجية أيام الصوم الكبير',
+  'lent-weekend-matins-doxology-lent-2': 'الذكصولوجية الثانية للصوم الكبير',
+  'lent-weekend-matins-doxology-lent-3': 'الذكصولوجية الثالثة للصوم الكبير',
+  'lent-weekend-matins-doxology-lent-4': 'الذكصولوجية الرابعة للصوم الكبير',
+  'lent-weekend-matins-doxology-st-john': 'ذكصولوجية القديس يوحنا المعمدان',
+  'lent-weekend-matins-doxology-st-john-2': 'ذكصولوجية أخرى للقديس يوحنا المعمدان',
+  'lent-weekday-distribution-concluding-hymn': 'قانون ختام الصلوات الإجتماعية',
+  'lent-weekday-distribution-conclusion-pope-bishop': 'الختام في وجود الأب البطريرك أو الأسقف',
+  'lent-weekday-midnight-concluding-hymn': 'قانون ختام الصلوات الإجتماعية',
+  'lent-weekday-midnight-conclusion-pope-bishop': 'الختام في وجود الأب البطريرك أو الأسقف',
+  'lent-vespers-verse-of-cymbals': 'أرباع الناقوس',
+  'lent-liturgy-offering-his-foundation': 'أساساته',
   'palm-sunday': 'أحد الشعانين',
   'holy-week': 'أسبوع الآلام (البصخة المقدسة)',
   pentecost: 'القيامة والخماسين المقدسة',
@@ -146,13 +173,8 @@ const arabicTitles: Record<string, string> = {
   'annual-midnight-tuesday-psali': 'إبصالية آدام ليوم الثلاثاء',
   'annual-midnight-wednesday-psali': 'إبصالية واطس ليوم الأربعاء',
   'annual-midnight-thursday-psali': 'إبصالية واطس ليوم الخميس',
-  'annual-midnight-friday-psali-annunciation': 'إبصالية واطس للبشارة',
-  'annual-midnight-friday-psali-nativity': 'إبصالية واطس للميلاد على ثيئوطوكية الجمعة',
-  'annual-midnight-friday-psali-holy-fifty': 'إبصالية واطس للخماسين المقدسة',
   'annual-midnight-saturday-watos-psali': 'إبصالية واطس ليوم السبت',
   'annual-midnight-sunday-psali-lord-jesus': 'إبصالية آدام للرب يسوع (أيكوتي إنسوك)',
-  'annual-midnight-sunday-resurrection-hymn': 'لحن القيامة',
-  'annual-midnight-friday-resurrection-hymn': 'لحن القيامة',
   'annual-midnight-sunday-theotokia': 'ثيئوطوكية الأحد',
   'annual-midnight-monday-theotokia': 'ثيئوطوكية الاثنين',
   'annual-midnight-tuesday-theotokia': 'ثيئوطوكية الثلاثاء',
@@ -245,6 +267,12 @@ export function displayTitle(item: { id: string; title: string }, lang: AppLangu
     const midnightId = item.id.replace(/^annual-vesper-praises-(?:[a-z]+day-fourth-canticle)$/, 'annual-midnight-fourth-canticle').replace('annual-vesper-praises-', 'annual-midnight-');
     const shared = displayTitle({ ...item, id: midnightId }, lang);
     if (shared !== item.title) return shared;
+  }
+
+  // Great Lent Matins, Vespers and the Offering of the Lamb are copies of Annual's
+  if (/^lent-(weekday-|weekend-)?(matins|vespers|liturgy|distribution|midnight)-/.test(item.id)) {
+    const annual = displayTitle({ ...item, id: item.id.replace(/^lent-(weekday-|weekend-)?/, 'annual-') }, lang);
+    if (annual !== item.title) return annual;
   }
 
   // Vespers shares its hymns and deacon responses with Matins

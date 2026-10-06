@@ -30,6 +30,7 @@ export const strings = {
     responsesDesc: 'Responses between the priest, deacons and congregation',
     play: 'Play',
     pause: 'Pause',
+    position: 'Position in the recording',
     repeat: 'Repeat',
     textSize: 'Text size',
     notAvailable: 'Text not available in this language.',
@@ -106,6 +107,7 @@ export const strings = {
     responsesDesc: 'المردات بين الكاهن والشمامسة والشعب',
     play: 'تشغيل',
     pause: 'إيقاف',
+    position: 'الموضع في التسجيل',
     repeat: 'تكرار',
     textSize: 'حجم الخط',
     notAvailable: 'النص غير متوفر بهذه اللغة.',
@@ -273,10 +275,13 @@ const copticTitleStyle = { fontFamily: copticFont, fontWeight: 'normal' } as con
 export function ChipScroller({
   rtl,
   contentStyle,
+  endFlush,
   children,
 }: {
   rtl: boolean;
   contentStyle?: StyleProp<ViewStyle>;
+  // Stops at the content's end edge instead of running to the screen edge (something sits beside it)
+  endFlush?: boolean;
   children: ReactNode;
 }) {
   const ref = useRef<ScrollView>(null);
@@ -288,10 +293,11 @@ export function ChipScroller({
       onContentSizeChange={() => {
         if (rtl) ref.current?.scrollToEnd({ animated: false });
       }}
-      style={chipScrollerStyles.scroller}
+      style={[chipScrollerStyles.scroller, endFlush && (rtl ? { marginLeft: 0 } : { marginRight: 0 })]}
       contentContainerStyle={[
         chipScrollerStyles.content,
         { flexDirection: rtl ? 'row-reverse' : 'row' },
+        endFlush && (rtl ? { paddingLeft: 0 } : { paddingRight: 0 }),
         contentStyle,
       ]}>
       {children}
@@ -474,11 +480,9 @@ export const createAlhanStyles = (colors: AlhanPalette) => StyleSheet.create({
     paddingHorizontal: 20,
     flexGrow: 1,
   },
-  // Everything below the top bar, centered in the space that is left
+  // Everything below the top bar
   homeBody: {
-    flexGrow: 1,
-    justifyContent: 'center',
-    paddingTop: 28,
+    paddingTop: 32,
   },
   topBar: {
     alignItems: 'flex-start',
@@ -580,56 +584,30 @@ export const createAlhanStyles = (colors: AlhanPalette) => StyleSheet.create({
     color: colors.gold,
   },
   hero: {
-    alignItems: 'center',
-    marginBottom: 32,
+    marginBottom: 28,
   },
-  heroMedallion: {
-    width: 76,
-    height: 76,
-    borderRadius: 38,
-    borderWidth: 1,
-    borderColor: colors.gold,
-    backgroundColor: colors.goldSoft,
+  heroTitleRow: {
     alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 14,
+    gap: 12,
   },
   heroCross: {
-    width: 54,
-    height: 54,
+    width: 40,
+    height: 40,
   },
   heroTitle: {
-    fontSize: 40,
+    fontSize: 34,
     fontWeight: '800',
     color: colors.text,
-    letterSpacing: 1,
   },
   heroSubtitle: {
-    fontSize: 17,
+    fontSize: 16,
     color: colors.muted,
     marginTop: 6,
   },
-  ornament: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-    marginTop: 18,
-  },
-  ornamentLine: {
-    width: 44,
-    height: 1,
-    backgroundColor: colors.gold,
-    opacity: 0.5,
-  },
-  ornamentMark: {
-    fontSize: 12,
-    color: colors.gold,
-  },
   languagePrompt: {
-    fontSize: 15,
+    fontSize: 14,
     color: colors.muted,
-    textAlign: 'center',
-    marginBottom: 10,
+    marginBottom: 8,
   },
   segmented: {
     flexDirection: 'row',
@@ -658,39 +636,6 @@ export const createAlhanStyles = (colors: AlhanPalette) => StyleSheet.create({
   segmentTextActive: {
     color: colors.onGold,
   },
-  homeCard: {
-    alignItems: 'center',
-    gap: 16,
-    backgroundColor: colors.surface,
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: colors.border,
-    padding: 20,
-    marginBottom: 14,
-  },
-  homeIcon: {
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    backgroundColor: colors.goldSoft,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  homeIconText: {
-    fontSize: 26,
-    color: colors.gold,
-  },
-  homeCardTitle: {
-    fontSize: 21,
-    fontWeight: '700',
-    color: colors.text,
-    marginBottom: 4,
-  },
-  homeCardDesc: {
-    fontSize: 15,
-    color: colors.muted,
-    lineHeight: 21,
-  },
 
   // Two tiles per row (home sections, seasons, services); an odd last tile stretches across
   tileGrid: {
@@ -700,28 +645,20 @@ export const createAlhanStyles = (colors: AlhanPalette) => StyleSheet.create({
   tile: {
     flexBasis: '40%',
     flexGrow: 1,
-    minHeight: 132,
     backgroundColor: colors.surface,
-    borderRadius: 20,
-    borderWidth: 1,
+    borderRadius: 14,
+    borderWidth: StyleSheet.hairlineWidth,
     borderColor: colors.border,
-    padding: 16,
-    gap: 10,
+    paddingVertical: 16,
+    paddingHorizontal: 16,
+    gap: 6,
   },
   tileSmall: {
-    minHeight: 96,
-    justifyContent: 'space-between',
+    minHeight: 76,
   },
-  tileIcon: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    backgroundColor: colors.goldSoft,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  tileIconText: {
-    fontSize: 21,
+  tileLead: {
+    fontSize: 15,
+    fontWeight: '700',
     color: colors.gold,
   },
   tileTitle: {
@@ -875,11 +812,11 @@ export const createAlhanStyles = (colors: AlhanPalette) => StyleSheet.create({
   },
   audioCard: {
     backgroundColor: colors.surface,
-    borderRadius: 20,
-    borderWidth: 1,
+    borderRadius: 14,
+    borderWidth: StyleSheet.hairlineWidth,
     borderColor: colors.border,
     padding: 16,
-    marginBottom: 14,
+    marginBottom: 8,
   },
   audioTopRow: {
     alignItems: 'center',
@@ -907,12 +844,6 @@ export const createAlhanStyles = (colors: AlhanPalette) => StyleSheet.create({
   progressFill: {
     height: '100%',
     backgroundColor: colors.gold,
-  },
-  audioTime: {
-    marginTop: 8,
-    fontSize: 15,
-    color: colors.muted,
-    fontVariant: ['tabular-nums'],
   },
   audioControls: {
     gap: 8,
@@ -1151,9 +1082,11 @@ export const createAlhanStyles = (colors: AlhanPalette) => StyleSheet.create({
   },
   toolbar: {
     alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: 12,
-    marginBottom: 14,
+    gap: 10,
+    marginBottom: 16,
+  },
+  toolbarChips: {
+    flex: 1,
   },
   sizeButton: {
     width: 52,
@@ -1176,14 +1109,11 @@ export const createAlhanStyles = (colors: AlhanPalette) => StyleSheet.create({
     color: colors.text,
   },
   textCard: {
-    backgroundColor: colors.surface,
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderTopWidth: 3,
+    borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor: colors.gold,
-    paddingHorizontal: 22,
-    paddingVertical: 24,
+    paddingTop: 22,
+    paddingBottom: 8,
+    paddingHorizontal: 2,
   },
   hymnText: {
     color: colors.text,
@@ -1203,7 +1133,7 @@ export const createAlhanStyles = (colors: AlhanPalette) => StyleSheet.create({
   },
   // Share / projector / learn
   actionChips: {
-    paddingBottom: 14,
+    paddingVertical: 2,
   },
   learnPanel: {
     marginTop: 14,
