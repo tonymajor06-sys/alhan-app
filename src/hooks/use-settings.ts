@@ -13,6 +13,8 @@ export interface Settings {
   compareLanguage: LanguageType | null;
   // A notification the evening before each feast and fast (phone apps only)
   feastReminders: boolean;
+  // When a hymn's recording ends, play the next hymn in the service that has one and open its words
+  playNext: boolean;
 }
 
 const STORAGE_KEY = 'alhan-settings';
@@ -20,7 +22,7 @@ export const TEXT_SCALE_MIN = 0.85;
 export const TEXT_SCALE_MAX = 1.9;
 
 const loadSettings = (): Settings => {
-  const defaults: Settings = { language: 'en', textScale: 1, sideBySide: false, compareLanguage: null, feastReminders: false };
+  const defaults: Settings = { language: 'en', textScale: 1, sideBySide: false, compareLanguage: null, feastReminders: false, playNext: true };
   try {
     const raw = readSetting(STORAGE_KEY);
     return raw ? { ...defaults, ...JSON.parse(raw) } : defaults;

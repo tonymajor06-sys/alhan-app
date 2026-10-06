@@ -34,13 +34,16 @@ const getPlayer = (): AudioPlayer => {
   if (player) return player;
   player = createAudioPlayer(null, { updateInterval: 500 });
   player.addListener('playbackStatusUpdate', onStatus);
-  if (typeof window !== 'undefined' && typeof window.addEventListener === 'function') {
-    // On web expo-audio drops the promise from <audio>.play(), so a recording that can't load (not pushed yet,
-    // offline) becomes an uncaught error. The player already reports it as stopped, so just swallow it.
-    window.addEventListener('unhandledrejection', (event) => {
-      const name = (event.reason as { name?: string } | undefined)?.name;
-      if (name === 'NotSupportedError' || name === 'NotAllowedError' || name === 'AbortError') event.preventDefault();
-    });
+  // On web expo-audio drops the promise from <audio>.play(), so a recording that can't load (not online yet,
+  // or no internet) becomes an "Uncaught Error". Give every play() a handler; the player already shows it as stopped.
+  if (typeof HTMLMediaElement !== 'undefined' && !(HTMLMediaElement.prototype as { alhanSafePlay?: boolean }).alhanSafePlay) {
+    const play = HTMLMediaElement.prototype.play;
+    HTMLMediaElement.prototype.play = function (this: HTMLMediaElement) {
+      const result = play.call(this);
+      result?.catch?.(() => {});
+      return result;
+    };
+    (HTMLMediaElement.prototype as { alhanSafePlay?: boolean }).alhanSafePlay = true;
   }
   setAudioModeAsync({
     playsInSilentMode: true,
@@ -114,6 +117,12 @@ export function playQueue(tracks: QueueTrack[], startIndex = 0, origin: QueueSta
   if (tracks.length === 0) return;
   setState({ tracks, origin });
   loadTrack(Math.min(Math.max(0, startIndex), tracks.length - 1), true);
+}
+
+// Play next: add hymns after the current one, or drop the ones still waiting
+export function queueAfterCurrent(tracks: QueueTrack[]) {
+  if (state.tracks.length === 0) return;
+  setState({ tracks: [...state.tracks.slice(0, state.index + 1), ...tracks] });
 }
 
 export function togglePlay() {

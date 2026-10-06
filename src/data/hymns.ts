@@ -4475,6 +4475,25 @@ const midnightAudio: Record<string, string> = {
   'annual-midnight-semouti-ero-dikeos': 'midnight-semouti-ero-dikeos.m4a',
   'annual-midnight-sunday-theotokion-8': 'midnight-sunday-theotokion-8.m4a',
   'annual-midnight-sunday-theotokia-part-8': 'midnight-sunday-theotokion-8.m4a',
+  'annual-midnight-saturday-watos-psali-conclusion': 'midnight-saturday-watos-psali-conclusion.m4a',
+  'annual-midnight-saturday-theotokia-part-1': 'midnight-saturday-theotokion-1.m4a',
+  'annual-midnight-saturday-theotokia-part-2': 'midnight-saturday-theotokion-2.m4a',
+  'annual-midnight-saturday-theotokia-part-3': 'midnight-saturday-theotokion-3.m4a',
+  'annual-midnight-saturday-theotokia-part-4': 'midnight-saturday-theotokion-4.m4a',
+  'annual-midnight-saturday-theotokia-part-5': 'midnight-saturday-theotokion-5.m4a',
+  'annual-midnight-saturday-theotokia-part-6': 'midnight-saturday-theotokion-6.m4a',
+  'annual-midnight-saturday-theotokia-part-7': 'midnight-saturday-theotokion-7.m4a',
+  'annual-midnight-saturday-theotokia-part-8': 'midnight-saturday-theotokion-8.m4a',
+  'annual-midnight-saturday-theotokia-part-9': 'midnight-saturday-theotokion-9.m4a',
+  'annual-midnight-sunday-theotokia-part-1': 'midnight-sunday-theotokion-1.m4a',
+  'annual-midnight-sunday-theotokia-part-2': 'midnight-sunday-theotokion-2.m4a',
+  'annual-midnight-sunday-theotokia-part-3': 'midnight-sunday-theotokion-3.m4a',
+  'annual-midnight-sunday-theotokia-part-4': 'midnight-sunday-theotokion-4.m4a',
+  'annual-midnight-sunday-theotokia-part-5': 'midnight-sunday-theotokion-5.m4a',
+  'annual-midnight-sunday-theotokia-part-6': 'midnight-sunday-theotokion-6.m4a',
+  'annual-midnight-sunday-adam-psali-conclusion': 'midnight-adam-psali-conclusion.m4a',
+  'annual-midnight-monday-adam-psali-conclusion': 'midnight-adam-psali-conclusion.m4a',
+  'annual-midnight-tuesday-adam-psali-conclusion': 'midnight-adam-psali-conclusion.m4a',
   'annual-midnight-sunday-theotokion-9': 'midnight-sunday-theotokion-9.m4a',
   'annual-midnight-sunday-theotokia-part-9': 'midnight-sunday-theotokion-9.m4a',
   'annual-midnight-sunday-theotokia-part-16': 'midnight-sunday-theotokion-16.m4a',
@@ -4501,18 +4520,8 @@ const midnightAudio: Record<string, string> = {
   'annual-midnight-doxology-philopater-mercurius': 'midnight-doxology-philopater-mercurius.m4a',
   'annual-midnight-doxology-st-mena': 'midnight-doxology-st-mena.m4a',
   'annual-midnight-doxology-conclusion': 'midnight-doxology-conclusion.m4a',
-  'annual-midnight-saturday-watos-psali-conclusion': 'midnight-saturday-watos-psali-conclusion.m4a',
   'annual-midnight-saturday-watos-lobsh-1': 'midnight-saturday-watos-lobsh-1.m4a',
   'annual-midnight-saturday-watos-lobsh-2': 'midnight-saturday-watos-lobsh-2.m4a',
-  'annual-midnight-saturday-theotokia-part-1': 'midnight-saturday-theotokion-1.m4a',
-  'annual-midnight-saturday-theotokia-part-2': 'midnight-saturday-theotokion-2.m4a',
-  'annual-midnight-saturday-theotokia-part-3': 'midnight-saturday-theotokion-3.m4a',
-  'annual-midnight-saturday-theotokia-part-4': 'midnight-saturday-theotokion-4.m4a',
-  'annual-midnight-saturday-theotokia-part-5': 'midnight-saturday-theotokion-5.m4a',
-  'annual-midnight-saturday-theotokia-part-6': 'midnight-saturday-theotokion-6.m4a',
-  'annual-midnight-saturday-theotokia-part-7': 'midnight-saturday-theotokion-7.m4a',
-  'annual-midnight-saturday-theotokia-part-8': 'midnight-saturday-theotokion-8.m4a',
-  'annual-midnight-saturday-theotokia-part-9': 'midnight-saturday-theotokion-9.m4a',
 };
 for (const hymn of annualMidnight ? flattenHymns(annualMidnight.hymns) : []) {
   const audio = midnightAudio[hymn.id];
@@ -4856,6 +4865,14 @@ if (kiahkMidnight && annualMidnight) {
   }
 }
 
+// ---- Audio: Annual > Matins and Vespers > Psalm Trailer for the Pope or a Bishop ----
+for (const service of [annualMatins, annualVespers]) {
+  const hymn = service?.hymns.find((h) => h.id.endsWith('-psalm-trailer-pope-bishop'));
+  for (const version of hymn?.versions ?? []) {
+    if (version.language === 'coptic' || version.language === 'englishCoptic') version.audio = 'matins-psalm-trailer-pope-bishop.m4a';
+  }
+}
+
 // ---- Great Lent > Matins and Vespers: the same as Annual, except for their own Verses of the Cymbals ----
 const lentVersesOfCymbals: LanguageVersion[] = [
   { language: 'coptic', text: 'Ⲕⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ.\n\nⲀⲙⲱⲓⲛⲓ ⲙⲁⲣⲉⲛⲟⲩⲱϣⲧ: ⲛ̀Ϯⲧ̀ⲣⲓⲁⲥ ⲉⲑⲟⲩⲁⲃ: ⲉ̀ⲧⲉ Ⲫⲓⲱⲧ ⲛⲉⲙ Ⲡϣⲏⲣⲓ: ⲛⲉⲙ Ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ Ⲉⲑⲟⲩⲁⲃ.\n\nⲀⲛⲟⲛ ϧⲁ ⲛⲓⲗⲁⲟⲥ: ⲛ̀ⲭ̀ⲣⲓⲥⲧⲓⲁⲛⲟⲥ: ⲫⲁⲓ ⲅⲁⲣ ⲡⲉ Ⲡⲉⲛⲛⲟⲩϯ: ⲛ̀ⲁ̀ⲗⲏⲑⲓⲛⲟⲥ.\n\nⲞⲩⲟⲛ ⲟⲩϩⲉⲗⲡⲓⲥ ⲛ̀ⲧⲁⲛ: ϧⲉⲛ ⲑⲏⲉⲑⲟⲩⲁⲃ Ⲙⲁⲣⲓⲁ: ⲉ̀ⲣⲉ Ⲫϯ ⲛⲁⲓ ⲛⲁⲛ: ϩⲓⲧⲉⲛ ⲛⲉⲥⲡ̀ⲣⲉⲥⲃⲓⲁ.\n\nⲞⲩⲟⲛ ⲟⲩⲙⲉⲧⲥⲉⲙⲛⲟⲥ: ⲛ̀ϩ̀ⲣⲏⲓ ϧⲉⲛ ⲡⲁⲓⲕⲟⲥⲙⲟⲥ: ⲉ̀ⲃⲟⲗϩⲓⲧⲉⲛ ⲡⲓϣ̀ⲗⲏⲗ: ⲛ̀ⲧⲉ ϯⲁ̀ⲅⲓⲁ Ⲙⲁⲣⲓⲁ ϯⲡⲁⲣⲑⲉⲛⲟⲥ.\n\nⲬⲉⲣⲉ ⲛⲉ Ⲙⲁⲣⲓⲁ: ϯϭⲣⲟⲙⲡⲓ ⲉⲑⲛⲉⲥⲱⲥ: ⲑⲏⲉ̀ⲧⲁⲥⲙⲓⲥⲓ ⲛⲁⲛ: ⲙ̀Ⲫⲛⲟⲩϯ ⲡⲓⲗⲟⲅⲟⲥ.\n\nⲬⲉⲣⲉ ⲛⲉ Ⲙⲁⲣⲓⲁ: ϧⲉⲛ ⲟⲩⲭⲉⲣⲉ ⲉϥⲟⲩⲁⲃ: ⲭⲉⲣⲉ ⲛⲉ Ⲙⲁⲣⲓⲁ: ⲑ̀ⲙⲁⲩ ⲙ̀ⲫⲏⲉⲑⲟⲩⲁⲃ.\n\nⲬⲉⲣⲉ Ⲙⲓⲭⲁⲏⲗ: ⲡⲓⲛⲓϣϯ ⲛ̀ⲁⲣⲭⲏⲁⲅⲅⲉⲗⲟⲥ: ⲭⲉⲣⲉ Ⲅⲁⲃⲣⲓⲏⲗ: ⲡⲓⲥⲟⲧⲡ ⲙ̀ⲡⲓϥⲁⲓϣⲉⲛⲛⲟⲩϥⲓ.\n\nⲬⲉⲣⲉ Ⲙⲓⲭⲁⲏⲗ: ⲡⲓⲛⲓϣϯ ⲛ̀ⲁⲣⲭⲏⲁⲅⲅⲉⲗⲟⲥ: ⲭⲉⲣⲉ ⲡⲓⲁⲣⲭⲏⲥ̀ⲧⲣⲁⲧⲓⲅⲟⲥ: ⲛ̀ⲧⲉ ⲧ̀ϫⲟⲙ ⲛ̀ⲛⲓⲫⲏⲟⲩⲓ.\n\nⲬⲉⲣⲉ ⲛⲓⲭⲉⲣⲟⲩⲃⲓⲙ: ⲭⲉⲣⲉ ⲛⲓⲥⲉⲣⲁⲫⲓⲙ: ⲭⲉⲣⲉ ⲛⲓⲧⲁⲅⲙⲁ ⲧⲏⲣⲟⲩ: ⲛ̀ⲉ̀ⲡⲟⲩⲣⲁⲛⲓⲟⲛ.\n\nⲬⲉⲣⲉ Ⲓⲱⲁⲛⲛⲏⲥ: ⲡⲓⲛⲓϣϯ ⲙ̀ⲡ̀ⲣⲟⲇⲣⲟⲙⲟⲥ: ⲭⲉⲣⲉ ⲡⲓⲟⲩⲏⲃ ⲡ̀ⲥⲩⲅⲅⲉⲛⲏⲥ ⲛ̀Ⲉⲙⲙⲁⲛⲟⲩⲏⲗ.\n\nⲬⲉⲣⲉ ⲛⲁϭⲟⲓⲥ ⲛ̀ⲓⲟϯ: ⲛ̀ⲁ̀ⲡⲟⲥⲧⲟⲗⲟⲥ: ⲭⲉⲣⲉ ⲛⲓⲙⲁⲑⲏⲧⲏⲥ: ⲛ̀ⲧⲉ Ⲡⲉⲛϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ.\n\nⲬⲉⲣⲉ ⲛⲁⲕ ⲱ̀ ⲡⲓⲙⲁⲣⲧⲩⲣⲟⲥ: ⲭⲉⲣⲉ ⲡⲓⲉ̀ⲩⲁ̀ⲅⲅⲉⲗⲓⲥⲧⲏⲥ: ⲭⲉⲣⲉ ⲡⲓⲁ̀ⲡⲟⲥⲧⲟⲗⲟⲥ: ⲁⲃⲃⲁ Ⲙⲁⲣⲕⲟⲥ ⲡⲓⲑⲉⲱ̀ⲣⲓⲙⲟⲥ.\n\nⲬⲉⲣⲉ ⲛⲁⲕ ⲱ̀ ⲡⲓⲙⲁⲣⲧⲩⲣⲟⲥ: ⲭⲉⲣⲉ ⲡⲓϣⲱⲓϫ ⲛ̀ⲅⲉⲛⲛⲉⲟⲥ: ⲭⲉⲣⲉ ⲡⲓⲁ̀ⲑⲗⲟⲫⲟⲣⲟⲥ: ⲡⲁⲟ︦ⲥ︦ ⲡ̀ⲟⲩⲣⲟ Ⲅⲉⲱ̀ⲣⲅⲓⲟⲥ.\n\nⲬⲉⲣⲉ ⲛⲁⲕ ⲱ̀ ⲡⲓⲙⲁⲣⲧⲩⲣⲟⲥ: ⲭⲉⲣⲉ ⲡⲓϣⲱⲓϫ ⲛ̀ⲅⲉⲛⲛⲉⲟⲥ: ⲭⲉⲣⲉ ⲡⲓⲁⲑⲗⲟⲫⲟⲣⲟⲥ: Ⲫⲓⲗⲟⲡⲁⲧⲏⲣ Ⲙⲉⲣⲕⲟⲩⲣⲓⲟⲥ.\n\nⲬⲉⲣⲉ ⲛⲁⲕ ⲱ̀ ⲡⲓⲙⲁⲣⲧⲩⲣⲟⲥ: ⲭⲉⲣⲉ ⲡⲓϣⲱⲓϫ ⲛ̀ⲅⲉⲛⲛⲉⲟⲥ: ⲭⲉⲣⲉ ⲡⲓⲁ̀ⲑⲗⲟⲫⲟⲣⲟⲥ: ⲡⲓⲁ̀ⲅⲓⲟⲥ ⲁ̀ⲡⲁ Ⲙⲏⲛⲁ.\n\nⲰⲟⲩⲛⲓⲁⲧⲕ ϧⲉⲛ ⲟⲩⲙⲉⲑⲙⲏⲓ: Ⲡⲉⲛⲓⲱⲧ ⲉ︦ⲑ︦ⲩ︦ ⲙ̀ⲡⲁⲧⲣⲓⲁⲣⲭⲏⲥ: Ⲡⲁⲡⲁ Ⲁⲃⲃⲁ Ⲕⲩⲣⲓⲗⲗⲟⲥ Ⲡⲓⲙⲁϩⲥⲟⲟϩ: ⲡⲓⲙⲉⲛⲣⲓⲧ ⲛ̀ⲧⲉ Ⲡⲭ︦ⲥ︦.\n\nⲰⲟⲩⲛⲓⲁⲧⲕ ϧⲉⲛ ⲟⲩⲙⲉⲑⲙⲏⲓ: ⲡⲉⲛⲓⲱⲧ ⲉⲑⲟⲩⲁⲃ ⲛ̀ⲇⲓⲕⲉⲟⲥ: ⲁⲃⲃⲁ Ⲁⲃⲣⲁⲁⲙ ⲡⲓⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲥ: ⲡⲓⲙⲉⲛⲣⲓⲧ ⲛ̀ⲧⲉ Ⲡⲭ︦ⲥ︦.\n\nⲬⲉⲣⲉ ⲛⲁⲕ ⲱ̀ ⲫⲏⲉⲑⲟⲩⲁⲃ: ⲡⲓⲙⲉⲛⲣⲓⲧ ⲛ̀ⲧⲉ Ⲡⲭ︦ⲥ︦: ⲡⲉⲛⲓⲱⲧ Ⲡⲓϣⲱⲓ ⲕⲁⲙⲉⲗ: ⲡⲓϩⲏⲅⲟⲩⲙⲉⲛⲟⲥ.\n\nⲦⲉⲛϯϩⲟ ⲉ̀ⲣⲟⲕ ⲱ̀ Ⲩ̀ⲓⲟⲥ Ⲑⲉⲟⲥ: ⲉⲑⲣⲉⲕⲁ̀ⲣⲉϩ ⲉ̀ⲡ̀ⲱⲛϧ ⲙ̀ⲡⲉⲛⲡⲁⲧⲣⲓⲁⲣⲭⲏⲥ: ⲡⲁⲡⲁ Ⲁⲃⲃⲁ (...) ⲡⲓⲁⲣⲭⲏⲉ̀ⲣⲉⲩⲥ: ⲙⲁⲧⲁϫⲣⲟϥ ϩⲓϫⲉⲛ ⲡⲉϥⲑ̀ⲣⲟⲛⲟⲥ.\n\nⲚⲉⲙ ⲡⲉϥⲕⲉϣ̀ⲫⲏⲣ ⲛ̀ⲗⲓⲧⲟⲩⲣⲅⲟⲥ: ⲡⲉⲛⲓⲱⲧ ⲉⲑⲟⲩⲁⲃ ⲛ̀ⲇⲓⲕⲉⲟⲥ Ⲁⲃⲃⲁ (...) ⲡⲓⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲥ (ⲡⲓⲙⲏⲧⲣⲟⲡⲟⲗⲓⲧⲏⲥ): ⲙⲁⲧⲁϫⲣⲟϥ ϩⲓϫⲉⲛ ⲡⲉϥⲑ̀ⲣⲟⲛⲟⲥ.\n\nϨⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ: ⲛ̀ⲧⲉ Ϯⲑⲉⲟ̀ⲧⲟⲕⲟⲥ ⲉⲑⲟⲩⲁⲃ Ⲙⲁⲣⲓⲁ: Ⲡ̀ϭⲟⲓⲥ ⲁ̀ⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ: ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.\n\nⲈⲑⲣⲉⲛϩⲱⲥ ⲉ̀ⲣⲟⲕ: ⲛⲉⲙ Ⲡⲉⲕⲓⲱⲧ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ: ⲛⲉⲙ Ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ ⲉⲑⲟⲩⲁⲃ: ϫⲉ ⲁⲕⲓ̀ ⲁⲕⲥⲱϯ ⲙ̀ⲙⲟⲛ ⲛⲁⲓ ⲛⲁⲛ.' },
@@ -5063,7 +5080,6 @@ const lentDoxologies: { key: string; title: string; verses: DoxologyVerse[] }[] 
 // No recordings or doxologies yet for Great Lent.
 if (greatLent) {
   const byId = new Map(greatLent.services.map((service) => [service.id, service]));
-  const isDoxology = (h: Hymn) => /-doxolog/.test(h.id);
   const withoutAudio = (hymn: Hymn): Hymn => ({
     ...hymn,
     versions: hymn.versions.map(({ audio: _audio, ...version }) => version),
@@ -5162,26 +5178,112 @@ if (greatLent) {
           .filter((d) => d.key === key)
           .map((d) => ({ id: `${id}-doxology-${d.key}`, title: d.title, versions: doxologyVersions(d.verses) }));
       const doxologiesHeader: Hymn = { id: `${id}-doxologies-header`, title: 'Doxologies', versions: [], isSectionHeader: true };
-      if (part === 'weekend' && service && ['matins', 'liturgy', 'vespers'].includes(name)) {
-        children = service.hymns
-          .filter((h) => !isDoxology(h))
-          .map(withoutAudio)
-          .map((h) => (h.id.endsWith('-gospel-response') ? lentGospelResponse(h.id) : h))
-          .filter((h) => !/-(concluding-hymn|conclusion-pope-bishop)$/.test(h.id));
-        if (name !== 'liturgy') children.push(...lentConclusions(`lent-${name}`));
-        if (name === 'matins') {
-          children.push(
-            doxologiesHeader,
-            ...fromAnnualMatins('intro-doxologies'),
-            ...lentDoxology('sat-sun'),
-            ...lentDoxology('weekday-lent'),
-            ...lentDoxology('lent-2'),
-            ...lentDoxology('lent-3'),
-            ...lentDoxology('lent-4'),
-            ...fromAnnualMatins('doxology-virgin-mary'),
-            ...fromAnnualMatins('doxology-heavenly-beings')
-          );
-        }
+      // Weekends follow the church's order, hymns only (prayers, litanies, readings and the Creed are left out).
+      // Hymns that are the same as Annual are copied from it; the Lent ones have their titles until their text comes in.
+      const fromLent = (key: string): Hymn[] => {
+        const hymn = service?.hymns.find((h) => h.id === `lent-${name}-${key}`);
+        return hymn ? [withoutAudio(hymn)] : [];
+      };
+      const fromAnnual = (list: Hymn[] | undefined, annualId: string, key: string, title?: string): Hymn[] => {
+        const hymn = list?.find((h) => h.id === annualId);
+        return hymn ? [withoutAudio({ ...hymn, id: `${id}-${key}`, ...(title ? { title } : {}) })] : [];
+      };
+      const header = (key: string, title: string): Hymn => ({ id: `${id}-${key}`, title, versions: [], isSectionHeader: true });
+      if (part === 'weekend' && (name === 'matins' || name === 'vespers')) {
+        children = [
+          titleOnly(`${id}-thanksgiving-response`, 'Ⲧⲱⲃϩ ϩⲓⲛⲁ (Thanksgiving Prayer Response in the Presence of the Pope or a Bishop)'),
+          ...fromLent('verse-of-cymbals'),
+          // The Gloria, the Trisagion and the Doxologies are said at Matins
+          ...(name === 'matins'
+            ? [
+                titleOnly(`${id}-gloria`, 'Ⲡⲓϩⲱⲥ ⲛ̀ⲧⲉ ⲛⲓⲁⲅⲅⲉⲗⲟⲥ (The Gloria, the Hymn of the Angels)'),
+                ...fromAnnual(annualLiturgy?.hymns, 'annual-liturgy-agios', 'trisagion', 'Ⲁⲅⲓⲟⲥ ⲟ̀ Ⲑⲉⲟⲥ (Trisagion)'),
+                {
+                  id: `${id}-doxologies`,
+                  title: 'Doxologies',
+                  versions: [],
+                  children: [
+                    ...fromAnnualMatins('intro-doxologies'),
+                    ...lentDoxology('sat-sun'),
+                    ...lentDoxology('weekday-lent'),
+                    ...lentDoxology('lent-2'),
+                    ...lentDoxology('lent-3'),
+                    ...lentDoxology('lent-4'),
+                    ...fromAnnualMatins('doxology-virgin-mary'),
+                    ...fromAnnualMatins('doxology-heavenly-beings'),
+                  ],
+                },
+              ]
+            : []),
+          titleOnly(`${id}-creed-introduction`, 'Introduction to the Creed'),
+          titleOnly(`${id}-god-have-mercy`, 'Ⲫ̀ⲛⲟⲩϯ ⲛⲁⲓ ⲛⲁⲛ (God Have Mercy)'),
+          titleOnly(`${id}-veneration`, 'Veneration'),
+          titleOnly(`${id}-psalm-chant`, name === 'matins' ? 'Matins Psalm Chant' : 'Vespers Psalm Chant'),
+          ...fromLent('psalm-trailer'),
+          ...fromLent('psalm-trailer-pope-bishop'),
+          lentGospelResponse(`lent-${name}-gospel-response`),
+          ...lentConclusions(`lent-${name}`),
+        ];
+      }
+      if (part === 'weekend' && name === 'liturgy') {
+        children = [
+          // Offering of the Lamb, copied above from Annual with His Foundation
+          ...(service?.hymns.map(withoutAudio) ?? []),
+          header('word-header', 'Liturgy of the Word'),
+          ...fromAnnual(annualLiturgy?.hymns, 'annual-liturgy-offering-golden-censer-virgin', 'hymn-of-the-censer', 'Ϯϣⲟⲩⲣⲏ (Hymn of the Censer)'),
+          ...fromAnnual(annualLiturgy?.hymns, 'annual-liturgy-hitens', 'hymn-of-intercessions', 'Ϩⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ (Hymn of the Intercessions)'),
+          titleOnly(`${id}-pauline-conclusion`, 'Ⲡⲓϩ̀ⲙⲟⲧ ⲅⲁⲣ (Conclusion to the Coptic Pauline Epistle)'),
+          titleOnly(`${id}-pauline-response`, 'Ⲡⲓϩ̀ⲙⲟⲧ ⲅⲁⲣ (Response to the Pauline Epistle)'),
+          titleOnly(`${id}-pauline-great-response`, 'Ⲡⲓϩ̀ⲙⲟⲧ ⲅⲁⲣ (Great Response to the Pauline Epistle)'),
+          titleOnly(`${id}-pauline-alternate-response`, 'Ⲏ̀ ⲁ̀ⲅⲁⲡⲏ (Alternate Response to the Pauline Epistle)'),
+          titleOnly(`${id}-hymn-of-the-virtues`, 'Ϯⲙⲏⲧ ⲥ̀ⲛⲟⲩϯ (Hymn of the Virtues)'),
+          titleOnly(`${id}-the-blessed`, 'Ⲧⲟⲩ Ⲙⲁⲕⲁⲣⲓⲱ (The Blessed)'),
+          ...fromAnnual(annualLiturgy?.hymns, 'annual-liturgy-perfect-is-the-blessing', 'perfect-is-the-blessing', 'Ⲁ̀ ⲡⲉⲧϫⲏⲕ ⲉ̀ⲃⲟⲗ (Perfect is the Blessing)'),
+          titleOnly(`${id}-praxis-response`, 'Praxis Response'),
+          titleOnly(`${id}-the-great-high-priest`, 'Ⲙⲉⲅⲁⲗⲟⲩ (The Great High Priest)'),
+          titleOnly(`${id}-paralex`, 'Ⲁ̀ⲡⲉⲛϭⲟⲓⲥ (Paralex)'),
+          titleOnly(`${id}-veneration`, 'Veneration'),
+          ...fromAnnual(annualLiturgy?.hymns, 'annual-liturgy-agios', 'trisagion', 'Ⲁⲅⲓⲟⲥ ⲟ̀ Ⲑⲉⲟⲥ (Trisagion)'),
+          titleOnly(`${id}-psalm-chant`, 'Psalm Chant'),
+          ...fromAnnual(annualLiturgy?.hymns, 'annual-liturgy-psalm-trailer-pope-bishop', 'psalm-trailer-pope-bishop'),
+          header('faithful-header', 'Liturgy of the Faithful'),
+          lentGospelResponse(`${id}-gospel-response`),
+          titleOnly(`${id}-adam-aspasmos`, 'Ϫⲉ ⲭ̀ⲟⲩⲱϣ (Adam Aspasmos, For You Do Not)'),
+          titleOnly(`${id}-adam-aspasmos-rejoice`, 'Ⲟⲩⲛⲟϥ ⲙ̀ⲙⲟ (Standard Adam Aspasmos, Rejoice)'),
+          titleOnly(`${id}-adam-aspasmos-greet-with`, 'Ⲁⲣⲓⲁⲥⲡⲁⲍⲉⲥⲑⲉ (A Second Standard Adam Aspasmos, Greet With)'),
+          titleOnly(`${id}-adam-aspasmos-o-christ`, 'Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ (A Third Standard Adam Aspasmos, O Christ Our Savior)'),
+          titleOnly(`${id}-watos-aspasmos-i-know`, 'Ϯⲥⲱⲟⲩⲛ (Watos Aspasmos, I Know)'),
+          ...fromAnnual(annualLiturgy?.hymns, 'annual-liturgy-aspasmos-watos', 'aspasmos-watos'),
+          titleOnly(`${id}-watos-aspasmos-let-us-praise`, 'Ⲙⲁⲣⲉⲛϩⲱⲥ (A Second Standard Watos Aspasmos, Let Us Praise)'),
+          titleOnly(`${id}-watos-aspasmos-mary`, 'Ⲙⲁⲣⲓⲁ ϯϭ̀ⲣⲟⲙⲡⲓ (A Third Standard Watos Aspasmos, Mary the Beautiful Dove)'),
+          // "Agios Agios Agios": the people's part after the deacon's "The Cherubim worship You"
+          ...fromAnnual(annualLiturgy?.hymns, 'annual-liturgy-the-cherubim-worship-you', 'the-cherubim-worship-you'),
+          // The people's responses in the Institution Narrative
+          ...fromAnnual(annualLiturgy?.hymns, 'annual-liturgy-amen-ton-thanaton', 'amen-ton-thanaton'),
+          titleOnly(`${id}-yes-we-ask-you`, 'Yes We Ask You'),
+          titleOnly(`${id}-for-your-people`, 'For Your People'),
+          titleOnly(`${id}-commemoration`, 'Commemoration of the Saints'),
+          ...fromAnnual(annualLiturgy?.hymns, 'annual-liturgy-may-their-holy-blessings', 'may-their-holy-blessings'),
+          titleOnly(`${id}-those-o-lord`, 'Ⲟⲩⲟϩ ⲛⲁⲓ ⲛⲉⲙ (Those, O Lord)'),
+          ...fromAnnual(annualLiturgy?.hymns, 'annual-liturgy-kata-to-eleos', 'kata-to-eleos'),
+          titleOnly(`${id}-through-the-prayers`, 'Ⲉⲩⲭⲉⲥ (Through the Prayers)'),
+          titleOnly(`${id}-abba-antony`, 'Ⲡⲓⲛⲓϣϯ (The Great Abba Antony)'),
+          titleOnly(`${id}-as-it-was`, 'As It Was and Is'),
+        ];
+      }
+      if (part === 'weekend' && name === 'distribution') {
+        children = [
+          ...fromAnnual(annualDistribution?.hymns, 'annual-distribution-psalm-150', 'psalm-150'),
+          titleOnly(`${id}-a-great-mystery`, 'Ⲟⲩⲛⲓϣϯ (A Great Mystery)'),
+          titleOnly(`${id}-veneration`, 'Veneration'),
+          {
+            id: `${id}-melodies`,
+            title: 'Melodies',
+            versions: [],
+            children: [titleOnly(`${id}-melody-preparation-first-sunday`, 'Melody for Preparation and First Sunday (by Cantor Abou El Saad El-Aboutigi)')],
+          },
+          ...lentConclusions(`lent-${name}`),
+        ];
       }
       if (part === 'weekday' && name === 'matins') {
         children = [
@@ -5201,6 +5303,37 @@ if (greatLent) {
         ];
       }
       if (part === 'weekday' && (name === 'distribution' || name === 'midnight')) children = weekdayConclusions(id);
+      // Weekday Liturgy of the Word: the Hymn of the Censer in place of Tishori, then the weekday Hymn of the Intercessions
+      if (part === 'weekday' && name === 'liturgy') {
+        children = [
+          { id: `${id}-word-header`, title: 'Liturgy of the Word', versions: [], isSectionHeader: true },
+          {
+            id: `${id}-hymn-of-the-censer`,
+            title: 'Ⲛ̀ⲑⲟ ⲧⲉ ϯϣⲟⲩⲣⲏ (Hymn of the Censer)',
+            versions: [
+              { language: 'coptic', text: 'Ⲡⲓⲗⲁⲟⲥ:\n\nⲚ̀ⲑⲟ ⲧⲉ ϯϣⲟⲩⲣⲏ ⲛ̀ⲛⲟⲩⲃ ⲛ̀ⲕⲁⲑⲁⲣⲟⲥ: ⲉⲧϥⲁⲓ ϧⲁ ⲡⲓϫⲉⲃⲥ ⲛ̀ⲭ̀ⲣⲱⲙ ⲉⲧⲥ̀ⲙⲁⲣⲱⲟⲩⲧ.\n\nⲦⲉⲛⲟⲩⲱϣⲧ ⲙ̀ⲙⲟⲕ ⲱ̀ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: ⲛⲉⲙ Ⲡⲉⲕⲓⲱⲧ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ: ⲛⲉⲙ Ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ ⲉⲑⲟⲩⲁⲃ: ϫⲉ ⲁⲕⲓ̀ ⲁⲕⲥⲱϯ ⲙ̀ⲙⲟⲛ ⲛⲁⲓ ⲛⲁⲛ.' },
+              { language: 'englishCoptic', text: 'Pi-laos:\n\nEntho te tishourē ennoub enkatharos: etfai kha pijebs en-ekhrōm etesmarōout.\n\nTenouōsht emmok ō Pi-ekhristos: nem Pekiōt enagathos: nem Pi-epneuma ethouab: je aki aksōti emmon nai nan.' },
+              { language: 'english', text: 'People:\n\nYou are the censer made of pure gold, carrying the blessed and live coal.\n\nWe worship You, O Christ, with Your Good Father and the Holy Spirit, for You have come and saved us. Have mercy on us.' },
+              { language: 'englishArabic', text: "Esh-sha'b:\n\nAnti hiya el-mighmara edh-dhahab en-naqi, hamilat gamr en-nar el-mubaraka.\n\nNasgud laka ayyuha el-Maseeh, ma'a abeeka es-salih, war-Rouh el-Qudus, li-annaka ataita wa khallastana. Irhamna." },
+              { language: 'arabic', text: 'الشعب:\n\nأنت هي المجمرة الذهب النقي، حاملة جمر النار المباركة.\n\nنسجدُ لكَ أيها المسيح، مع أبيكَ الصالح، والروح القدس، لأنك أتيتَ وخلصتنا. ارحمنا.' },
+            ],
+          },
+          {
+            id: `${id}-hymn-of-intercessions`,
+            title: 'Ϩⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ (Hymn of the Intercessions)',
+            versions: doxologyVersions([
+              ["People:", "Ⲡⲓⲗⲁⲟⲥ:", "الشعب:", "Pi-laos:", "Esh-sha'b:"],
+              ["Through the intercessions, of the Theotokos, Saint Mary, O Lord grant us, the forgiveness of our sins.", "Ϩⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ: ⲛ̀ⲧⲉ ϯⲑⲉⲟ̀ⲧⲟⲕⲟⲥ ⲉⲑⲟⲩⲁⲃ Ⲙⲁⲣⲓⲁ: Ⲡϭⲟⲓⲥ ⲁⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ: ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.", "بشفاعات والدة الإله القديسة مريم، يا ربُّ أنعم علينا بمغفرة خطايانا.", "Hiten ni-epresvia: ente Tithe-otokos ethouab Maria: Ptshois ari-ehmot nan: empikhō evol ente nennovi.", "Bi-shafa'at walidat el-Ilah el-qiddisa Maryam, ya Rabbu an'im 'alayna bi-maghfirat khatayana."],
+              ["Through the intercessions of the seven archangels, and the heavenly orders, O Lord, grant us the forgiveness of our sins.", "Ϩⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ ⲛ̀ⲧⲉ ⲡⲓϣⲁϣϥ ⲛ̀ⲁⲣⲭⲓⲁⲅⲅⲉⲗⲟⲥ ⲛⲉⲙ ⲛⲓⲧⲁⲅⲙⲁ ⲛ̀ⲉ̀ⲡⲟⲩⲣⲁⲛⲓⲟⲛ: Ⲡϭⲟⲓⲥ ⲁⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.", "بشفاعات رؤساء الملائكة السبعة والطغمات السمائية، يا ربُّ أنعم علينا بمغفرة خطايانا.", "Hiten ni-epresvia ente pishashf enarkhiaggelos nem nitagma enepouranion: Ptshois ari-ehmot nan empikhō evol ente nennovi.", "Bi-shafa'at ru'asa' el-mala'ika es-sab'a wet-tughmat es-sama'iyya, ya Rabbu an'im 'alayna bi-maghfirat khatayana."],
+              ["Through the prayers of my lords and fathers the apostles, and the rest of the disciples, O Lord, grant us the forgiveness of our sins.", "Ϩⲓⲧⲉⲛ ⲛⲓⲉⲩⲭⲏ ⲛ̀ⲧⲉ ⲛⲁϭⲟⲓⲥ ⲛ̀ⲓⲟϯ ⲛ̀ⲁ̀ⲡⲟⲥⲧⲟⲗⲟⲥ ⲛⲉⲙ ⲡ̀ⲥⲉⲡⲓ ⲛ̀ⲧⲉ ⲛⲓⲙⲁⲑⲏⲧⲏⲥ: Ⲡϭⲟⲓⲥ ⲁⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.", "بصلوات سادتي الآباء الرسل وبقية التلاميذ، يا ربُّ أنعم علينا بمغفرة خطايانا.", "Hiten nieukhē ente natshois enioti enapostolos nem epsepi ente nimathētēs: Ptshois ari-ehmot nan empikhō evol ente nennovi.", "Bi-salawat sadati el-aba' er-rusul wa baqiyyat et-talameedh, ya Rabbu an'im 'alayna bi-maghfirat khatayana."],
+              ["Through the prayers of the saints of this day, each one according to their name, O Lord, grant us the forgiveness of our sins.", "Ϩⲓⲧⲉⲛ ⲛⲓⲉⲩⲭⲏ ⲛ̀ⲧⲉ ⲛⲏⲉⲑⲟⲩⲁⲃ ⲛ̀ⲧⲉ ⲡⲁⲓⲉ̀ϩⲟⲟⲩ ⲡⲓⲟⲩⲁⲓ ⲡⲓⲟⲩⲁⲓ ⲕⲁⲧⲁ ⲡⲉϥⲣⲁⲛ: Ⲡϭⲟⲓⲥ ⲁⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.", "بصلوات قديسي هذا اليوم، كل واحد باسمه، يا ربُّ أنعم علينا بمغفرة خطايانا.", "Hiten nieukhē ente nēethouab ente pai-ehoou piouai piouai kata pefran: Ptshois ari-ehmot nan empikhō evol ente nennovi.", "Bi-salawat qiddisi hadha el-yawm, kull wahid bismih, ya Rabbu an'im 'alayna bi-maghfirat khatayana."],
+              ["Through their prayers, keep the life of our honored father, the archpriest Pope Abba ___. O Lord, grant us the forgiveness of our sins.", "Ϩⲓⲧⲉⲛ ⲛⲟⲩⲉⲩⲭⲏ ⲁ̀ⲣⲉϩ ⲉ̀ⲡ̀ⲱⲛϧ ⲙ̀ⲡⲉⲛⲓⲱⲧ ⲉⲧⲧⲁⲓⲏⲟⲩⲧ ⲛ̀ⲁⲣⲭⲓⲉ̀ⲣⲉⲩⲥ ⲡⲁⲡⲁ ⲁⲃⲃⲁ (ⲛⲓⲙ): Ⲡϭⲟⲓⲥ ⲁⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.", "بصلواتهم احفظ حياة أبينا المكرم رئيس الكهنة البابا الأنبا ___، يا ربُّ أنعم علينا بمغفرة خطايانا.", "Hiten noueukhē areh e-epōnkh empeniōt ettaiēout enarkhiereus papa abba (nim): Ptshois ari-ehmot nan empikhō evol ente nennovi.", "Bi-salawatihim ihfaz hayat abeena el-mukarram ra'ees el-kahana el-Baba el-Anba ___, ya Rabbu an'im 'alayna bi-maghfirat khatayana."],
+              ["Through their prayers, keep the life of our honored and righteous father, Abba ___ the bishop (metropolitan), O Lord, grant us the forgiveness of our sins.", "Ϩⲓⲧⲉⲛ ⲛⲟⲩⲉⲩⲭⲏ ⲁ̀ⲣⲉϩ ⲉ̀ⲡ̀ⲱⲛϧ ⲙ̀ⲡⲉⲛⲓⲱⲧ ⲉⲧⲧⲁⲓⲏⲟⲩⲧ ⲛ̀ⲇⲓⲕⲉⲟⲥ ⲁⲃⲃⲁ (ⲛⲓⲙ) ⲡⲓⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲥ (ⲡⲓⲙⲏⲧⲣⲟⲡⲟⲗⲓⲧⲏⲥ): Ⲡϭⲟⲓⲥ ⲁⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.", "بصلواتهم احفظ حياة أبينا المكرم البار أنبا ___ الأسقف (المطران)، يا ربُّ أنعم علينا بمغفرة خطايانا.", "Hiten noueukhē areh e-epōnkh empeniōt ettaiēout endikeos abba (nim) pi-episkopos (pimētropolitēs): Ptshois ari-ehmot nan empikhō evol ente nennovi.", "Bi-salawatihim ihfaz hayat abeena el-mukarram el-barr Anba ___ el-usquf (el-matran), ya Rabbu an'im 'alayna bi-maghfirat khatayana."],
+              ["We worship You, O Christ, with Your Good Father and the Holy Spirit, for You have come and saved us. Have mercy on us.", "Ⲧⲉⲛⲟⲩⲱϣⲧ ⲙ̀ⲙⲟⲕ ⲱ̀ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: ⲛⲉⲙ Ⲡⲉⲕⲓⲱⲧ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ: ⲛⲉⲙ Ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ ⲉⲑⲟⲩⲁⲃ: ϫⲉ ⲁⲕⲓ̀ ⲁⲕⲥⲱϯ ⲙ̀ⲙⲟⲛ ⲛⲁⲓ ⲛⲁⲛ.", "نسجدُ لكَ أيها المسيح، مع أبيكَ الصالح، والروح القدس، لأنك أتيتَ وخلصتنا. ارحمنا.", "Tenouōsht emmok ō Pi-ekhristos: nem Pekiōt enagathos: nem Pi-epneuma ethouab: je aki aksōti emmon nai nan.", "Nasgud laka ayyuha el-Maseeh, ma'a abeeka es-salih, war-Rouh el-Qudus, li-annaka ataita wa khallastana. Irhamna."],
+            ]),
+          },
+        ];
+      }
       return { id, title: service?.title ?? name, versions: [], children };
     });
   greatLent.services = [
