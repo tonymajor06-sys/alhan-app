@@ -59,6 +59,8 @@ export default function RootLayout() {
         <Stack.Screen name="learn-arabic/[lesson]" />
         <Stack.Screen name="guide/index" />
         <Stack.Screen name="guide/[section]" />
+        <Stack.Screen name="faith/index" />
+        <Stack.Screen name="faith/[section]" />
         <Stack.Screen
           name="present/[id]"
           options={{ orientation: 'all', animation: 'fade', contentStyle: { backgroundColor: '#000' } }}

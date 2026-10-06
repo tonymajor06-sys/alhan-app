@@ -16,6 +16,7 @@ import {
 } from '../components/alhan-ui';
 import { learnArabicStrings, learnStrings } from '../components/learn-strings';
 import { guideStrings } from '../data/deacon-guide';
+import { faithStrings } from '../data/faith-guide';
 import { displayTitle } from '../data/arabic-titles';
 import {
   copticMonths,
@@ -349,6 +350,7 @@ export default function HomeScreen() {
               { key: 'responses', title: displayTitle(mainCategories[0], lang), icon: '✝', desc: t.responsesDesc, view: 'responses-home' as const },
               { key: 'playlist', title: t.playlistTitle, icon: '☰', desc: t.playlistDesc(playlist.length), view: 'playlist' as const },
               { key: 'guide', title: guideStrings[lang].title, icon: '✠', desc: guideStrings[lang].subtitle, view: null, href: '/guide' as const },
+              { key: 'faith', title: faithStrings[lang].title, icon: '☦', desc: faithStrings[lang].subtitle, view: null, href: '/faith' as const },
               { key: 'learn', title: learnStrings[lang].title, icon: 'Ⲁ', desc: learnStrings[lang].subtitle, view: null, href: '/learn' as const },
               // Learn Arabic is for English speakers
               ...(lang === 'en'

@@ -343,7 +343,7 @@ export const guideSections: GuideSection[] = [
 
 // ---- Quiz: every question comes from the sections above ----
 
-interface GuideQuestion {
+export interface GuideQuestion {
   q: Bilingual;
   right: Bilingual;
   // Three of these are offered with the right answer
@@ -556,7 +556,17 @@ const guideQuestions: GuideQuestion[] = [
 
 // A round of random questions from the guide
 export function buildGuideQuiz(lang: 'en' | 'ar', count = 10, random: () => number = Math.random): QuizQuestion[] {
-  return shuffle(guideQuestions, random)
+  return buildQuiz(guideQuestions, lang, count, random);
+}
+
+// A round of random questions from a list (also used by Our Faith)
+export function buildQuiz(
+  questions: GuideQuestion[],
+  lang: 'en' | 'ar',
+  count = 10,
+  random: () => number = Math.random
+): QuizQuestion[] {
+  return shuffle(questions, random)
     .slice(0, count)
     .map((g) => makeQuestion(g.right[lang], g.wrong.map((w) => w[lang]), random, { question: g.q[lang] }));
 }
