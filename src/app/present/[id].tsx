@@ -11,8 +11,13 @@ import { alhanColors } from '@/constants/alhan-colors';
 import { displayTitle } from '@/data/arabic-titles';
 import { LanguageType } from '@/data/hymns';
 import { toArabicDigits } from '@/data/coptic-calendar';
-import { locateHymn } from '@/data/search';
+import { allHymnSlugs, locateHymn } from '@/data/search';
 import { useSettings } from '@/hooks/use-settings';
+
+// Built for every hymn, so refreshing projector mode on the website works
+export async function generateStaticParams(): Promise<Record<string, string>[]> {
+  return allHymnSlugs().map((id) => ({ id }));
+}
 
 // Projector mode: one verse at a time, in up to three languages at once, big enough for a church screen.
 // Always dark, whatever the phone's theme, because light text on black reads best on a projector.

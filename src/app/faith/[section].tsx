@@ -6,6 +6,11 @@ import { QuizRound } from '@/components/quiz-round';
 import { buildFaithQuiz, faithSections, faithStrings } from '@/data/faith-guide';
 import { useSettings } from '@/hooks/use-settings';
 
+// Build every page ahead of time, so a shared link or a refresh on the website works
+export async function generateStaticParams(): Promise<Record<string, string>[]> {
+  return [...faithSections.map((s) => s.id), 'quiz'].map((section) => ({ section }));
+}
+
 export default function FaithSectionScreen() {
   const { section: id } = useLocalSearchParams<{ section: string }>();
   const { language: lang } = useSettings();

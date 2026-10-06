@@ -6,8 +6,8 @@ import { createAlhanStyles, goBackOrHome, ScreenShell, strings, toVerses } from 
 import { hymnPlainText, HymnReader } from '@/components/hymn-reader';
 import { APP_STORE_URL, hymnWebUrl, PLAY_STORE_URL } from '@/constants/site';
 import { displayTitle } from '@/data/arabic-titles';
-import { deaconCategories, flattenHymns, Hymn, LanguageType, seasons } from '@/data/hymns';
-import { hymnSlug, locateHymn } from '@/data/search';
+import { Hymn, LanguageType } from '@/data/hymns';
+import { allHymnSlugs, locateHymn } from '@/data/search';
 import { useThemedStyles } from '@/hooks/use-alhan-colors';
 import { useSettings } from '@/hooks/use-settings';
 
@@ -15,12 +15,7 @@ const languages: LanguageType[] = ['coptic', 'englishCoptic', 'arabicCoptic', 'e
 
 // Every hymn gets its own page in the web version, so search engines can find each one
 export async function generateStaticParams(): Promise<Record<string, string>[]> {
-  const ids = new Set(
-    [...seasons, ...deaconCategories].flatMap((group) =>
-      group.services.flatMap((service) => flattenHymns(service.hymns).map((h) => hymnSlug(h.id)))
-    )
-  );
-  return [...ids].map((id) => ({ id }));
+  return allHymnSlugs().map((id) => ({ id }));
 }
 
 // Title and opening words for search results and link previews

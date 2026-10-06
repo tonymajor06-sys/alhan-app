@@ -57,6 +57,16 @@ let locations: Map<string, { hymn: Hymn; location: HymnLocation }> | null = null
 // A hymn's id as it appears in links: a few generated ids contain spaces, which become dashes
 export const hymnSlug = (id: string) => id.replace(/\s+/g, '-');
 
+// Every hymn's slug, once each: the hymn and projector pages are built for each one on the website
+export const allHymnSlugs = (): string[] =>
+  [
+    ...new Set(
+      [...seasons, ...deaconCategories].flatMap((group) =>
+        group.services.flatMap((service) => flattenHymns(service.hymns).map((h) => hymnSlug(h.id)))
+      )
+    ),
+  ];
+
 // Where a hymn lives (season or category, then service), found by its id or its link slug
 export function locateHymn(id: string): { hymn: Hymn; location: HymnLocation } | undefined {
   if (!locations) {

@@ -6,6 +6,11 @@ import { QuizRound } from '@/components/quiz-round';
 import { buildGuideQuiz, guideSections, guideStrings } from '@/data/deacon-guide';
 import { useSettings } from '@/hooks/use-settings';
 
+// Build every page ahead of time, so a shared link or a refresh on the website works
+export async function generateStaticParams(): Promise<Record<string, string>[]> {
+  return [...guideSections.map((s) => s.id), 'quiz'].map((section) => ({ section }));
+}
+
 export default function GuideSectionScreen() {
   const { section: id } = useLocalSearchParams<{ section: string }>();
   const { language: lang } = useSettings();

@@ -15,6 +15,11 @@ import {
   getArabicPracticeVerses,
 } from '@/data/arabic-lessons';
 
+// Build every page ahead of time, so a shared link or a refresh on the website works
+export async function generateStaticParams(): Promise<Record<string, string>[]> {
+  return arabicLessonIds.map((lesson) => ({ lesson }));
+}
+
 // Learn Arabic is for English speakers, so its lessons are always in English
 export default function ArabicLessonScreen() {
   const { lesson } = useLocalSearchParams<{ lesson: string }>();

@@ -10,6 +10,11 @@ import { displayTitle } from '@/data/arabic-titles';
 import { buildQuiz, copticAlphabet, copticWords, getPracticeVerses, readingRules } from '@/data/coptic-lessons';
 import { AppLanguage, useSettings } from '@/hooks/use-settings';
 
+// Build every page ahead of time, so a shared link or a refresh on the website works
+export async function generateStaticParams(): Promise<Record<string, string>[]> {
+  return lessonIds.map((lesson) => ({ lesson }));
+}
+
 type LessonProps = { lang: AppLanguage };
 
 export default function LessonScreen() {

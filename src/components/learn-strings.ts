@@ -119,3 +119,34 @@ export const learnArabicStrings = {
   formEnd: 'End',
   scoreKeepGoing: 'Keep going. Review the alphabet and try again.',
 };
+
+// ---- Learn English: for Arabic speakers reading the English text of the hymns ----
+
+export type EnglishLessonId = 'alphabet' | 'sounds' | 'words' | 'quiz' | 'practice';
+
+export const englishLessonIds: EnglishLessonId[] = ['alphabet', 'sounds', 'words', 'quiz', 'practice'];
+
+export const englishLessonIcons: Record<EnglishLessonId, string> = {
+  alphabet: 'A',
+  sounds: 'th',
+  words: 'God',
+  quiz: '?',
+  practice: '♫',
+};
+
+export const learnEnglishStrings = {
+  ...learnStrings.ar,
+  title: 'تعلّم الإنجليزية',
+  subtitle: 'اقرأ النص الإنجليزي للألحان خطوة بخطوة',
+  lessons: {
+    alphabet: { title: 'الحروف الإنجليزية', desc: 'كل حرف واسمه ونطقه' },
+    sounds: { title: 'أصوات وقواعد', desc: 'th و sh و ch والحروف التي لا تُنطق' },
+    words: { title: 'كلمات من الألحان', desc: 'أكثر الكلمات الإنجليزية في الكنيسة' },
+    quiz: { title: 'اختبار', desc: 'اختبر نفسك في الحروف والكلمات' },
+    practice: { title: 'اقرأ ربعاً', desc: 'أرباع إنجليزية حقيقية من ألحان التطبيق' },
+  } as Record<EnglishLessonId, { title: string; desc: string }>,
+  inArabicLetters: 'بالحروف العربية',
+  arabicLetter: 'الحرف العربي الأقرب',
+  letterName: 'اسم الحرف',
+  scoreKeepGoing: 'استمر. راجع الحروف وحاول مرة أخرى.',
+};

@@ -14,7 +14,7 @@ import {
   withCopticFont,
   withoutNumber,
 } from '../components/alhan-ui';
-import { learnArabicStrings, learnStrings } from '../components/learn-strings';
+import { learnArabicStrings, learnEnglishStrings, learnStrings } from '../components/learn-strings';
 import { guideStrings } from '../data/deacon-guide';
 import { faithStrings } from '../data/faith-guide';
 import { displayTitle } from '../data/arabic-titles';
@@ -355,6 +355,10 @@ export default function HomeScreen() {
               // Learn Arabic is for English speakers
               ...(lang === 'en'
                 ? [{ key: 'learn-arabic', title: learnArabicStrings.title, icon: 'ع', desc: learnArabicStrings.subtitle, view: null, href: '/learn-arabic' as const }]
+                : []),
+              // Learn English is for Arabic speakers
+              ...(lang === 'ar'
+                ? [{ key: 'learn-english', title: learnEnglishStrings.title, icon: 'A', desc: learnEnglishStrings.subtitle, view: null, href: '/learn-english' as const }]
                 : []),
             ].map(({ key, title, icon, desc, view, href }) =>
                 tile(key, title, () => (view ? setCurrentView(view) : href && router.push(href)), icon, desc)
