@@ -1540,6 +1540,7 @@ if (kiahkMatins) {
     'Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ',
     'Ⲥⲱⲧⲉⲙ ⲧⲁϣⲉⲣⲓ (Psalm Trailer)',
     'Ⲧⲉⲛϯ ⲛⲉ ⲙ̀ⲡⲓⲭⲉⲣⲉⲧⲓⲥⲙⲟⲥ (Gospel Response)',
+    'Ⲧⲉⲛϭⲓⲥⲓ ⲙ̀ⲙⲟ ϧⲉⲛ ⲟⲩⲉⲙⲡ̀ϣⲁ (Gospel Response)',
     'Concluding Hymn',
   ];
   // "Doxologies" and the blank one are dividers (like the "Doxologies" divider in Annual Matins); numbering starts again after each
@@ -1593,6 +1594,237 @@ if (kiahkMatins) {
       {
         language: 'arabic',
         text: 'ياربُ إرحَم.\n\nتعالوا فلنسجد للثالوث القدوس الذي هو الأب والإبن والروح القدس.\n\nنحن الشعوب المسيحيين لأن هذا هو إلهنا الحقيقي.\n\nلنا رجاء، في القديسة مريم. الله يرحمنا بشفاعاتها.\n\nكل هدوء، في العالم من قبل صلاة القديسة مريم العذراء.\n\nالسلام لك يا مريم الحمامة الحسنة التي ولدت لنا، الله الكلمة.\n\nالسلام لك يا مريم، سلاماً مقدساً السلام لك يا مريم أم القدوس.\n\nالسلام لغبريال رئيس الملائكة العظيم: السلام للذي بشر: مريم العذراء.\n\nالسلام للشاروبيم، السلام للسِّرافيم السلام لجميع الطغمات السمائية.\n\nالسلام ليوحنا السابق العظيم السلام للكاهن نسيب عمانوئيل.\n\nالسلام لسادتي الآباء، الرسل. السلام لتلاميذ ربنا يسوع المسيح.\n\nالسلا لك أيها الشهيد السلام للانجيلي السلام للرسول مرقس ناظر الإله.\n\nالسلام لك أيها الشهيد، السلام للشجاع المجاهد، السلام لللابس الجهاد، سيدي الملك جيؤرجيوس.\n\nالسلام لك أيها الشهيد. السلام للشجاع البطل. السلام للمجاهد محب الآب مرقوريوس.\n\nالسلام لك أيها الشهيد. السلام للشجاع البطل. السلام للمجاهد القديس أبا مينا.\n\nطوباك بالحقيقة، يا أبانا القديس البطريرك، الانبا كيرلس السادس، حبيب المسيح.\n\nطوباك بالحقيقة يا أبانا القديس البار انبا ابرآم الاسقف حبيب المسيح.\n\nنسألك يا إبن الله، أن تحفظ حياة بطريركنا، البابا أنبا (...) رئيسُ الكهنة، ثبته على كرسيه.\n\nوشريكه في الخدمة الرسولية، أبانا القديس البار، أنبا (...) الأسقف (المطران)، ثبته على كرسيه.\n\nبشفاعات والدة الإله القديسة مريم، يارب أنعم علينا بمغفرة خطايانا.\n\nلكي نُسبِّحك، مع أبيك الصالح، والروح القدس، لأنك أتيت وخلَّصتنا إرحمنا.',
+      },
+    ];
+  }
+  const kiahkFirstDoxology = kiahkMatins.hymns.find((h) => h.title === 'Ⲕⲉ ⲅⲁⲣ ⲁⲓϣⲁⲛⲥⲁϫⲓ (First Doxology for Kiahk)');
+  if (kiahkFirstDoxology) {
+    kiahkFirstDoxology.versions = [
+      {
+        language: 'coptic',
+        text: 'Ⲕⲉ ⲅⲁⲣ ⲁⲓϣⲁⲛⲥⲁϫⲓ ⲉⲑⲃⲏϯ: ⲱ̀ ⲡⲓϩⲁⲣⲙⲁ ⲛ̀ⲭⲉⲣⲟⲩⲃⲓⲙⲓⲕⲟⲛ: ⲡⲁⲗⲁⲥ ⲛⲁϧⲓⲥⲓ ⲁⲛ ⲉ̀ⲛⲉϩ: ⲧⲉⲛⲉⲣⲙⲁⲕⲁⲣⲓⲍⲓⲛ ⲙ̀ⲙⲟ.\n\nϪⲉ ⲟⲛⲧⲱⲥ ⲅⲁⲣ ϯⲛⲁϣⲉⲛⲏⲓ: ϣⲁ ⲛⲓⲁⲩⲗⲉⲏⲟⲩ ⲛ̀ⲧⲉ ⲡ̀ⲏⲓ ⲛ̀Ⲇⲁⲩⲓⲇ: ⲛ̀ⲧⲁϭⲓ ⲛ̀ⲟⲩⲥ̀ⲙⲏ ⲉ̀ⲃⲟⲗ ϩⲓⲧⲟⲧϥ: ⲉⲑⲣⲓⲥⲁϫⲓ ⲙ̀ⲡⲉⲧⲁⲓⲟ.\n\nϪⲉ ⲁ̀ Ⲫ̀ⲛⲟⲩϯ ⲟ̀ϩⲓ ⲉ̀ⲣⲁⲧϥ: ϧⲉⲛ ⲛⲓⲑⲱϣ ⲛ̀ⲧⲉ Ϯⲓⲟⲩⲇⲉⲁ̀: ⲁϥϯ ⲛ̀ⲧⲉϥⲥ̀ⲙⲏ ϧⲉⲛ ⲟⲩⲑⲉⲗⲏⲗ: ⲁ̀ ⲧ̀ⲫⲩⲗⲏ ⲛ̀Ⲓⲟⲩⲇⲁ ϣⲟⲡϥ ⲉ̀ⲣⲟⲥ.\n\nⲦ̀ⲫⲩⲗⲏ ⲛ̀Ⲓⲟⲩⲇⲁ ⲧⲉ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ⲑⲏⲉ̀ⲧⲁⲥⲙⲓⲥⲓ ⲙ̀Ⲡⲉⲛⲥⲱⲧⲏⲣ: ⲟⲩⲟϩ ⲟⲛ ⲙⲉⲛⲉⲛⲥⲁ ⲑ̀ⲣⲉⲥⲙⲁⲥϥ: ⲁⲥⲟ̀ϩⲓ ⲉⲥⲟⲓ ⲙ̀ⲡⲁⲣⲑⲉⲛⲟⲥ.\n\nⲈ̀ⲃⲟⲗ ⲅⲁⲣ ϩⲓⲧⲉⲛ ϯⲫⲱⲛⲏ: ⲛ̀ⲧⲉ Ⲅⲁⲃⲣⲓⲏⲗ ⲡⲓⲁⲅⲅⲉⲗⲟⲥ: ⲧⲉⲛϯ ⲛⲉ ⲙ̀ⲡⲓⲭⲉⲣⲉⲧⲓⲥⲙⲟⲥ: ⲱ̀ Ϯⲑⲉⲟ̀ⲧⲟⲕⲟⲥ Ⲙⲁⲣⲓⲁ.\n\nⲬⲉⲣⲉ ⲛⲉ ⲉ̀ⲃⲟⲗ ϩⲓⲧⲉⲛ Ⲫ̀ⲛⲟⲩϯ: ⲭⲉⲣⲉ ⲛⲉ ⲉ̀ⲃⲟⲗ ϩⲓⲧⲉⲛ Ⲅⲁⲃⲣⲓⲏⲗ: ⲭⲉⲣⲉ ⲛⲉ ⲉ̀ⲃⲟⲗ ϩⲓⲧⲟⲧⲉⲛ: ϫⲉ ⲭⲉⲣⲉ ⲛⲉ ⲧⲉⲛϭⲓⲥⲓ ⲙ̀ⲙⲟ.\n\nⲠⲓⲁⲅⲅⲉⲗⲟⲥ ⲉⲑⲟⲩⲁⲃ Ⲅⲁⲃⲣⲓⲏⲗ: ⲁϥϩⲓϣⲉⲛⲛⲟⲩϥⲓ ⲛ̀Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ⲙⲉⲛⲉⲛⲥⲁ ⲡⲓⲁⲥⲡⲁⲥⲙⲟⲥ: ⲁϥⲧⲁϫⲣⲟ ⲙ̀ⲙⲟⲥ ϧⲉⲛ ⲡⲉϥⲥⲁϫⲓ.\n\nϪⲉ ⲙ̀ⲡⲉⲣⲉⲣϩⲟϯ Ⲙⲁⲣⲓⲁⲙ: ⲁ̀ⲣⲉϫⲓⲙⲓ ⲅⲁⲣ ⲛ̀ⲟⲩϩ̀ⲙⲟⲧ: ϧⲁⲧⲉⲛ Ⲫ̀ⲛⲟⲩϯ ϩⲏⲡⲡⲉ ⲅⲁⲣ ⲧⲉⲣⲁⲉⲣⲃⲟⲕⲓ: ⲟⲩⲟϩ ⲛ̀ⲧⲉⲙⲓⲥⲓ ⲛ̀Ⲟⲩϣⲏⲣⲓ.\n\nⲈϥⲉ̀ϯ ⲛⲁϥ ⲛ̀ϫⲉ Ⲡ̀ϭⲟⲓⲥ Ⲫ̀ⲛⲟⲩϯ: ⲙ̀ⲡⲓⲑ̀ⲣⲟⲛⲟⲥ ⲛ̀ⲧⲉ Ⲇⲁⲩⲓⲇ ⲡⲉϥⲓⲱⲧ: ϥ̀ⲛⲁⲉⲣⲟⲩⲣⲟ ⲉ̀ϫⲉⲛ ⲡ̀ⲏⲓ ⲛ̀Ⲓⲁⲕⲱⲃ: ϣⲁ ⲉ̀ⲛⲉϩ ⲛ̀ⲧⲉ ⲡⲓⲉ̀ⲛⲉϩ.\n\nⲈⲑⲃⲉ ⲫⲁⲓ ⲧⲉⲛϯⲱ̀ⲟⲩ ⲛⲉ: ϩⲱⲥ Ⲑⲉⲟ̀ⲧⲟⲕⲟⲥ ⲛ̀ⲥⲏⲟⲩ ⲛⲓⲃⲉⲛ: ⲙⲁϯϩⲟ ⲉ̀Ⲡ̀ϭⲟⲓⲥ ⲉ̀ϩ̀ⲣⲏⲓ ⲉ̀ϫⲱⲛ: ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ.\n\nⲬⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ϯⲟⲩⲣⲱ ⲙ̀ⲙⲏⲓ ⲛ̀ⲁ̀ⲗⲏⲑⲓⲛⲏ: ⲭⲉⲣⲉ ⲡ̀ϣⲟⲩϣⲟⲩ ⲛ̀ⲧⲉ ⲡⲉⲛⲅⲉⲛⲟⲥ: ⲁ̀ⲣⲉϫ̀ⲫⲟ ⲛⲁⲛ ⲛ̀Ⲉⲙⲙⲁⲛⲟⲩⲏⲗ.\n\nⲦⲉⲛϯϩⲟ ⲁ̀ⲣⲉⲡⲉⲛⲙⲉⲩⲓ̀: ⲱ̀ ϯⲡ̀ⲣⲟⲥⲧⲁⲧⲏⲥ ⲉ̀ⲧⲉⲛϩⲟⲧ: ⲛⲁϩⲣⲉⲛ Ⲡⲉⲛϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ.',
+      },
+      {
+        language: 'englishCoptic',
+        text: 'Ke gar aishansaji ethvēti: ō piharma enkherouvimikon: palas nakhisi an eneh: tenermakarizin emmo.\n\nJe ontōs gar tinashenēi: sha niauleēou ente epēi en-Dauid: entatshi enou-esmē evol hitotf: ethrisaji empetaio.\n\nJe a Efnouti ohi eratf: khen nithōsh ente Tiioude-a: afti entefesmē khen outhelēl: a etfulē en-Iouda shopf eros.\n\nEtfulē en-Iouda te Tiparthenos: thē-etasmisi em-Pensōtēr: ouoh on menensa ethresmasf: asohi esoi emparthenos.\n\nEvol gar hiten tifōnē: ente Gabriēl piaggelos: tenti ne empikheretismos: ō Tithe-otokos Maria.\n\nKhere ne evol hiten Efnouti: khere ne evol hiten Gabriēl: khere ne evol hitoten: je khere ne tentshisi emmo.\n\nPiaggelos ethouab Gabriēl: afhishennoufi en-Tiparthenos: menensa piaspasmos: aftajro emmos khen pefsaji.\n\nJe empererhoti Mariam: arejimi gar enou-ehmot: khaten Efnouti hēppe gar teraervoki: ouoh entemisi en-Oushēri.\n\nEfeti naf enje Eptshois Efnouti: empi-ethronos ente Dauid pefiōt: efnaerouro ejen epēi en-Iakōb: sha eneh ente pi-eneh.\n\nEthve fai tenti-ōou ne: hōs The-otokos ensēou niven: matiho e-Eptshois e-ehrēi ejōn: entefkha nennovi nan evol.\n\nKhere ne ō Tiparthenos: tiourō emmēi enalēthinē: khere epshoushou ente pengenos: are-ejfo nan en-Emmanouēl.\n\nTentiho arepenmeu-i: ō ti-eprostatēs etenhot: nahren Pentshois Iēsous Pi-ekhristos: entefkha nennovi nan evol.',
+      },
+      {
+        language: 'english',
+        text: 'For when I speak about you: O cherubic throne: my tongue never wearies: from blessing you.\n\nFor indeed I will go: to the house of David: to acquire a voice by which: I can speak of your honor.\n\nFor God has stood: at the borders of Judea: and joyfully granted His voice: which the tribe of Judah accepted.\n\nThe tribe of Judah is the Virgin: who gave birth to our Savior: and after His Birth: she remained a virgin.\n\nAlong with the voice: of Gabriel the angel: we send you greetings: O Mary the Theotokos.\n\nHail to you from God: hail to you from Gabriel: hail to you from us: we magnify you saying "Hail, to you."\n\nThe holy angel Gabriel: announced to the Virgin: and after the greeting: he strengthened her saying.\n\n"Do not be afraid Mary: for you have found favor with God: behold you shall conceive: and bring forth a Son.\n\nAnd the Lord God shall give Him: the throne of His father David: and He shall reign over the house of Jacob: forever and ever."\n\nWherefore we glorify you: as the ever-Theotokos: ask the Lord on our behalf: that He may forgive us our sins.\n\nHail to you O Virgin: the very and true queen: hail to the pride of our race: who bore to us Emmanuel.\n\nWe ask you to remember us: O our faithful advocate: before our Lord Jesus Christ: that He may forgive us our sins.',
+      },
+      {
+        language: 'arabic',
+        text: 'لأني إذا ما تكلمت من أجلِك، أيتها المركبة الشاروبيمية، فإن لساني لا يتعب، أبداً نُغبطكِ.\n\nلأني حقاً أمضي، إلى ديار بيت داود، لأخذ صوتاً من قبله، لكي أنطق بكرامتِك.\n\nلأن الله وقف، في حدود اليهودية، وأعطى صوته بتهليل، وسبط يهوذا قبله إليه.\n\nسبط يهوذا هو العذراء، التي ولدت مخلصنا، وأيضاً بعدما ولادته، بقيت عذراء.\n\nفمن قِبَل صوت، غبريـال الملاك، نُعطيكِ السلام، يا والدة الإله مريم.\n\nالسلام لكِ من قِبَل الله، السلام لكِ من قِبَل غبريـال، السلام لكِ من قِبَلنا، قائلين "السلام لكِ نرفعك."\n\nالملاك المقدس غبريـال، بشَّر العذراء، وبعد السلام، قوَّاها بقوله.\n\n"لا تخافي يا مريم، لأنكِ وجدتِ نعمة، عند الله ها ستحبلين، وتلدين إبناً.\n\nويعطيه الرب الإله، كرسي داود أبيه، ويملك على بيت يعقوب، إلى أبد الأبد."\n\nمن أجل هذا نمجدِك، كوالدة الإله كل حين، إسألي الرب عنا، ليغفر لنا خطايانا.\n\nالسلام لكِ أيتها العذراء، الملكة الحقيقية الحقانية، السلام لفخر جنسنا، ولدتِ لنا عمانوئيل.\n\nنسألِك أن تذكرينا، أيتها الشفيعة المؤتمنة، أمام ربنا يسوع المسيح، ليغفر لنا خطايانا.',
+      },
+    ];
+  }
+  const kiahkSecondDoxology = kiahkMatins.hymns.find((h) => h.title === 'Ⲉ̀ⲣⲉ ⲡ̀ⲥⲟⲗⲥⲉⲗ ⲛ̀Ϯⲡⲁⲣⲑⲉⲛⲟⲥ (Second Doxology for Kiahk)');
+  if (kiahkSecondDoxology) {
+    kiahkSecondDoxology.versions = [
+      {
+        language: 'coptic',
+        text: 'Ⲉ̀ⲣⲉ ⲡ̀ⲥⲟⲗⲥⲉⲗ ⲛ̀Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: Ⲙⲁⲣⲓⲁ ⲧ̀ϣⲉⲣⲓ ⲙ̀ⲡ̀ⲟⲩⲣⲟ Ⲇⲁⲩⲓⲇ: ⲥⲁⲟⲩⲓ̀ⲛⲁⲙ ⲛ̀Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: Ⲡ̀ϣⲏⲣⲓ ⲙ̀Ⲫ̀ⲛⲟⲩϯ Ⲡⲓⲙⲉⲛⲣⲓⲧ.\n\nⲔⲁⲧⲁ ⲡ̀ⲥⲁϫⲓ ⲛ̀Ⲇⲁⲩⲓⲇ ⲡ̀ⲟⲩⲣⲟ: ⲡⲓϩⲩⲙⲛⲟⲇⲟⲥ ϧⲉⲛ ⲡⲓⲯⲁⲗⲙⲟⲥ: ϫⲉ ⲁⲥⲟ̀ϩⲓ ⲉ̀ⲣⲁⲧⲥ ⲛ̀ϫⲉ ϯⲟⲩⲣⲱ: ⲥⲁⲟⲩⲓ̀ⲛⲁⲙ ⲙ̀ⲡⲓⲑ̀ⲣⲟⲛⲟⲥ.\n\nⲦⲉϭⲟⲥⲓ ⲉ̀Ⲛⲓⲭⲉⲣⲟⲩⲃⲓⲙ: ⲱ̀ Ⲑ̀ⲙⲁⲩ ⲙ̀Ⲫ̀ⲛⲟⲩϯ ⲫⲁ ⲡⲓⲁ̀ⲙⲁϩⲓ: ⲧⲉⲧⲁⲓⲏⲟⲩⲧ ⲉ̀Ⲛⲓⲥⲉⲣⲁⲫⲓⲙ: ϧⲉⲛ ⲧ̀ⲫⲉ ⲛⲉⲙ ϩⲓϫⲉⲛ ⲡⲓⲕⲁϩⲓ.\n\nⲰ̀ⲟⲩⲛⲓⲁϯ ⲛ̀ⲑⲟ Ⲙⲁⲣⲓⲁ: ϫⲉ ⲁ̀ⲣⲉϫ̀ⲫⲟ ⲙ̀Ⲡⲓⲁ̀ⲗⲏⲑⲓⲛⲟⲥ: ⲉⲥⲧⲟⲃ ⲛ̀ϫⲉ ⲧⲉⲡⲁⲣⲑⲉⲛⲓⲁ: ⲉ̀ⲣⲉⲟ̀ϩⲓ ⲉ̀ⲣⲉⲟⲓ ⲙ̀ⲡⲁⲣⲑⲉⲛⲟⲥ.\n\nⲔⲁⲧⲁ ⲫ̀ⲣⲏϯ ⲉ̀ⲧⲁϥϫⲟⲥ: ⲛ̀ϫⲉ Ⲏ̀ⲥⲁⲏ̀ⲁⲥ ϧⲉⲛ ⲟⲩⲥ̀ⲙⲏ ⲛ̀ⲑⲉⲗⲏⲗ: ϫⲉ ⲓⲥ ⲁ̀ⲗⲟⲩ ⲙ̀ⲡⲁⲣⲑⲉⲛⲟⲥ: ⲉⲥⲉ̀ⲙⲓⲥⲓ ⲛⲁⲛ ⲛ̀Ⲉⲙⲙⲁⲛⲟⲩⲏⲗ.\n\nⲦⲉⲛϭⲓⲥⲓ ⲙ̀ⲙⲟ ⲙ̀ⲙⲏⲛⲓ ⲙ̀ⲙⲏⲛⲓ: ⲉⲛϫⲱ ⲙ̀ⲙⲟⲥ ⲛⲉⲙ Ⲅⲁⲃⲣⲓⲏⲗ: ϫⲉ ⲭⲉⲣⲉ ⲕⲉ ⲭⲁⲣⲓⲧⲱⲙⲉⲛⲏ: ⲟ̀ Ⲕⲩⲣⲓⲟⲥ ⲙⲉⲧⲁ ⲥⲟⲩ.\n\nⲬⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ⲧⲉⲛⲉⲣⲙⲁⲕⲁⲣⲓⲍⲓⲛ ⲙ̀ⲙⲟ: ⲛⲉⲙ Ⲅⲁⲃⲣⲓⲏⲗ ⲡⲓⲁ̀ⲅⲅⲉⲗⲟⲥ: ⲟⲩⲟϩ Ⲡ̀ϭⲟⲓⲥ ϣⲟⲡ ⲛⲉⲙⲉ.\n\nⲦⲉⲛϯϩⲟ ⲁ̀ⲣⲉⲡⲉⲛⲙⲉⲩⲓ̀: ⲱ̀ ϯⲡ̀ⲣⲟⲥⲧⲁⲧⲏⲥ ⲉ̀ⲧⲉⲛϩⲟⲧ: ⲛⲁϩⲣⲉⲛ Ⲡⲉⲛϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ.',
+      },
+      {
+        language: 'englishCoptic',
+        text: 'Ere epsolsel en-Tiparthenos: Maria etsheri emepouro Dauid: saou-inam en-Iēsous Pi-ekhristos: Epshēri em-Efnouti Pimenrit.\n\nKata epsaji en-Dauid epouro: pihumnodos khen pipsalmos: je asohi erats enje tiourō: saou-inam empi-ethronos.\n\nTetshosi e-Nikherouvim: ō Ethmau em-Efnouti fa pi-amahi: tetaiēout e-Niserafim: khen etfe nem hijen pikahi.\n\nŌouniati entho Maria: je are-ejfo em-Pi-alēthinos: estob enje teparthenia: ere-ohi ereoi emparthenos.\n\nKata efrēti etafjos: enje Ēsa-ēas khen ou-esmē enthelēl: je is alou emparthenos: esemisi nan en-Emmanouēl.\n\nTentshisi emmo emmēni emmēni: enjō emmos nem Gabriēl: je khere ke kharitōmenē: o Kurios meta sou.\n\nKhere ne ō Tiparthenos: tenermakarizin emmo: nem Gabriēl pi-aggelos: ouoh Eptshois shop neme.\n\nTentiho arepenmeu-i: ō ti-eprostatēs etenhot: nahren Pentshois Iēsous Pi-ekhristos: entefkha nennovi nan evol.',
+      },
+      {
+        language: 'english',
+        text: 'The adornment of the Virgin: Mary the daughter of King David: at the right hand of Jesus Christ: the beloved Son of God.\n\nAs King David has said: in a hymn of the psalm: "The Queen did stand: at the right hand of the throne."\n\nYou are exalted more than the Cherubim: O Mother of the mighty God: and more honored than the Seraphim: in heaven and on earth.\n\nBlessed are you O Mary: for you have borne the True One: while remaining a virgin: and your virginity was sealed.\n\nAs Isaiah has said: with a voice of joy: "Behold a young virgin shall conceive: and bring forth to us Emmanuel."\n\nWe exalt you day by day: saying with Gabriel: "Hail to you O full of grace: the Lord is with you."\n\nHail to you O Virgin: we bless you: with Gabriel the angel: the Lord is with you.\n\nWe ask you to remember us: O our faithful advocate: before our Lord Jesus Christ: that He may forgive us our sins.',
+      },
+      {
+        language: 'arabic',
+        text: 'زينة العذراء يا مريم، إبنة الملك داود، عن يمين يسوع المسيح، إبن الله الحبيب.\n\nكقول داود الملك، المرتل في المزمور، "قامت الملكة، عن يمين العرش."\n\nأنتِ أرفع من الشاروبيم، يا أم الله ذي العزة، وأكرم من السارافيم، في السماء وعلى الأرض.\n\nطوباكِ أنتِ يا مريم، لأنكِ ولدتِ الحقيقي، وبتوليتِك مختومة، وأنتِ باقية عذراء.\n\nكما قال أشعياء، بصوت التهليل، "ها فتاه عذراء، ستلد لنا عمانوئيل."\n\nنرفعُكِ يوماً فيوماً، قائلين مع غبريـال، "إفرحي يا ممتلئة نعمة، الرب معكِ."\n\nالسلام لكِ أيتها العذراء، نطوبكِ، مع غبريـال الملاك، الرب معكِ.\n\nنسألِك أن تذكرينا، أيتها الشفيعة المؤتمنة، أمام ربنا يسوع المسيح، ليغفر لنا خطايانا.',
+      },
+    ];
+  }
+  const kiahkThirdDoxology = kiahkMatins.hymns.find((h) => h.title === 'Ⲅⲁⲃⲓⲣⲏⲗ ⲡⲓⲁⲅⲅⲉⲗⲟⲥ (Third Doxology for Kiahk)');
+  if (kiahkThirdDoxology) {
+    kiahkThirdDoxology.versions = [
+      {
+        language: 'coptic',
+        text: 'Ⲅⲁⲃⲓⲣⲏⲗ ⲡⲓⲁⲅⲅⲉⲗⲟⲥ: ⲁϥϩⲓϣⲉⲛⲟⲩϥⲓ ⲛ̀Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ⲁϥⲉⲣϩⲏⲧⲥ ⲙ̀ⲡⲓⲁⲥⲡⲁⲥⲙⲟⲥ: ϫⲉ ⲭⲉⲣⲉ ⲑⲏⲉⲑⲙⲉϩ ⲛ̀ϩ̀ⲙⲟⲧ.\n\nⲈ̀ⲧⲁⲥⲥⲱⲧⲉⲙ ⲉ̀ⲧⲉϥⲥ̀ⲙⲏ: ⲛ̀ϫⲉ ϯⲁ̀ⲗⲟⲩ ⲛ̀ⲥⲉⲙⲛⲉ: ⲁⲥⲉⲣⲟⲩⲱ̀ ϧⲉⲛ ⲟⲩⲙⲉⲧⲥⲁⲃⲉ: ⲟⲩⲟϩ ⲁⲥⲙⲟⲕⲙⲉⲕ ϫⲉ ⲟⲩ ⲡⲉ ⲫⲁⲓ.\n\nⲠⲉϫⲁϥ ⲛⲁⲥ ⲛ̀ϫⲉ ⲡⲓⲁⲅⲅⲉⲗⲟⲥ: ⲡⲓϣⲁϩ ⲛ̀ⲭ̀ⲣⲱⲙ ⲛ̀ⲁ̀ⲥⲱⲙⲁⲧⲟⲥ: ϫⲉ ⲧⲁϭⲟⲓⲥ ⲙ̀Ⲡⲁⲣⲑⲉⲛⲟⲥ: ⲣⲉⲕ ⲡⲉⲙⲁϣϫ ⲥⲱⲧⲉⲙ ⲉ̀ⲣⲟⲓ.\n\nⲘ̀ⲡⲉⲣⲉⲣϩⲟϯ ⲟⲩⲇⲉ ⲙ̀ⲡⲉⲣⲕⲓⲙ: Ⲙⲁⲣⲓⲁ ⲧ̀ϣⲉⲣⲓ ⲛ̀Ⲓⲱⲁⲕⲓⲙ: Ⲡ̀ϭⲟⲓⲥ Ⲫ̀ⲛⲟⲩϯ ⲛ̀Ⲛⲓⲥⲉⲣⲁⲫⲓⲙ: ⲁϥⲥⲱⲧⲡ ⲙ̀ⲙⲟ ⲉⲩⲙⲁ ⲛ̀ϣⲱⲡⲓ ⲛⲁϥ.\n\nⲀ̀ⲗⲏⲑⲱⲥ ⲧⲉⲣⲁⲉⲣⲃⲟⲕⲓ: ⲙ̀Ⲡⲓⲗⲟⲅⲟⲥ ⲉ̀ⲧⲁϥⲉⲣϩⲏⲕⲓ: ⲉⲑⲃⲏⲧⲉⲛ ⲁ̀ⲛⲟⲛ ϧⲁ ⲛⲓϩⲏⲕⲓ: ϣⲁ ⲛ̀ⲧⲉϥⲁⲓⲧⲉⲛ ⲛ̀ⲣⲁⲙⲁⲟ̀.\n\nⲠⲱⲥ ⲫⲁⲓ ⲛⲁϣⲱⲡⲓ ⲙ̀ⲙⲟⲓ: ⲙ̀ⲡⲉ ϩ̀ⲗⲓ ϣⲉ ⲉ̀ϧⲟⲩⲛ ⲉ̀ⲣⲟⲓ: ϯϯϩⲟ ⲉ̀ⲣⲟⲕ ⲙⲁⲧⲁⲙⲟⲓ: ⲙ̀ⲡⲉⲣϩⲱⲡ ⲛ̀ϩ̀ⲗⲓ ⲉ̀ϫⲱⲓ.\n\nⲠⲓⲡ̀ⲛⲉⲩⲙⲁ Ⲉⲑⲟⲩⲁⲃ ⲉⲑⲛⲏⲟⲩ ⲉ̀ϫⲱ: ⲟⲩϫⲟⲙ ⲛ̀ⲧⲉ Ⲫⲏⲉⲧϭⲟⲥⲓ ⲉⲑⲛⲁⲉⲣϧⲏⲓⲃⲓ ⲉ̀ⲣⲟ: ⲛⲓⲁⲅⲅⲉⲗⲟⲥ ⲥⲉϩⲱⲥ ⲉ̀ⲣⲟ: ⲉⲑⲃⲉ ⲧ̀ϩⲟϯ ⲙ̀Ⲡⲟⲩⲣⲉϥⲥⲱⲛⲧ.\n\nⲦⲉⲣⲁⲙⲓⲥⲓ ⲙ̀Ⲡ̀ϣⲏⲣⲓ ⲙ̀Ⲫ̀ⲛⲟⲩϯ: ⲟⲩⲟϩ Ϯⲥⲟⲫⲓⲁ ⲛ̀ⲧⲉ Ⲫ̀ⲛⲟⲩϯ: ϫⲉ ⲛ̀ⲑⲟϥ ⲡⲉ Ⲫ̀ⲛⲟⲩϯ ⲛ̀ⲧⲉ ⲛⲉⲛⲓⲟϯ: ⲙ̀ⲙⲟⲛ ⲕⲉ ⲟⲩⲁⲓ ⲉ̀ⲃⲏⲗ ⲉ̀ⲣⲟϥ.\n\nⲀⲓⲛⲁϣⲉ ⲛⲏⲓ ⲉ̀ⲃⲟⲗ ϩⲓⲧⲟϯ: Ⲡ̀ϣⲏⲣⲓ ⲙ̀Ⲫ̀ⲛⲟⲩϯ ⲛⲁϣⲱⲡⲓ ϧⲉⲛ ⲧⲟϯ: ⲁ̀ⲛⲁⲩ ⲟⲩⲛ ⲙ̀ⲡⲉⲣⲉⲣϩⲟϯ: ϫⲉ ⲡ̀ⲧⲏⲣϥ ⲛⲁⲛⲟϩⲉⲙ ⲉ̀ⲃⲟⲗ ϩⲓⲧⲟϯ.\n\nϮⲡⲁⲣⲑⲉⲛⲟⲥ Ⲙⲁⲣⲓⲁⲙ: ϧⲉⲛ ⲡⲓⲥ̀ⲡⲉⲣⲙⲁ ⲛ̀Ⲁⲃⲣⲁⲁⲙ: ⲑⲏⲉ̀ⲧⲁⲥⲛⲟϩⲉⲙ ⲛ̀Ⲁ̀ⲇⲁⲙ: ⲉ̀ⲃⲟⲗ ϩⲁ ⲡ̀ⲥⲁϩⲟⲩⲓ̀ ⲛ̀ⲧⲉ ⲫ̀ⲛⲟⲃⲓ.\n\nⲬⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ϯⲟⲩⲣⲱ ⲙ̀ⲙⲏⲓ ⲛ̀ⲁ̀ⲗⲏⲑⲓⲛⲏ: ⲭⲉⲣⲉ ⲡ̀ϣⲟⲩϣⲟⲩ ⲛ̀ⲧⲉ ⲡⲉⲛⲅⲉⲛⲟⲥ: ⲁ̀ⲣⲉϫ̀ⲫⲟ ⲛⲁⲛ ⲛ̀Ⲉⲙⲙⲁⲛⲟⲩⲏⲗ.\n\nⲦⲉⲛϯϩⲟ ⲁ̀ⲣⲉⲡⲉⲛⲙⲉⲩⲓ̀: ⲱ̀ ϯⲡ̀ⲣⲟⲥⲧⲁⲧⲏⲥ ⲉ̀ⲧⲉⲛϩⲟⲧ: ⲛⲁϩⲣⲉⲛ Ⲡⲉⲛϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ.',
+      },
+      {
+        language: 'englishCoptic',
+        text: 'Gavirēl piaggelos: afhishenoufi en-Tiparthenos: aferhēts empiaspasmos: je khere thēethmeh enehmot.\n\nEtassōtem etefesmē: enje ti-alou ensemne: aserou-ō khen oumetsave: ouoh asmokmek je ou pe fai.\n\nPejaf nas enje piaggelos: pishah enekhrōm enasōmatos: je tatshois em-Parthenos: rek pemashj sōtem eroi.\n\nEmpererhoti oude emperkim: Maria etsheri en-Iōakim: Eptshois Efnouti en-Niserafim: afsōtp emmo euma enshōpi naf.\n\nAlēthōs teraervoki: em-Pilogos etaferhēki: ethvēten anon kha nihēki: sha entefaiten enrama-o.\n\nPōs fai nashōpi emmoi: empe ehli she ekhoun eroi: titiho erok matamoi: emperhōp enehli ejōi.\n\nPi-epneuma Ethouab ethnēou ejō: oujom ente Fēettshosi ethnaerkhēivi ero: niaggelos sehōs ero: ethve ethoti em-Pourefsōnt.\n\nTeramisi em-Epshēri em-Efnouti: ouoh Tisofia ente Efnouti: je enthof pe Efnouti ente nenioti: emmon ke ouai evēl erof.\n\nAinashe nēi evol hitoti: Epshēri em-Efnouti nashōpi khen toti: anau oun empererhoti: je eptērf nanohem evol hitoti.\n\nTiparthenos Mariam: khen pi-esperma en-Abraam: thē-etasnohem en-Adam: evol ha epsahou-i ente efnovi.\n\nKhere ne ō Tiparthenos: tiourō emmēi enalēthinē: khere epshoushou ente pengenos: are-ejfo nan en-Emmanouēl.\n\nTentiho arepenmeu-i: ō ti-eprostatēs etenhot: nahren Pentshois Iēsous Pi-ekhristos: entefkha nennovi nan evol.',
+      },
+      {
+        language: 'english',
+        text: 'Gabriel the angel: announced to the Virgin: and greeted her saying: "Hail to you O full of grace."\n\nWhen the chaste child: heard his voice: she responded in wisdom: "What can this be?"\n\nThe angel said to her: he who is of incorporeal fire: "O my Lady the Virgin: incline your ear and hear me.\n\nDo not fear or tremble: O Mary daughter of Joachim: the Lord God of the Seraphim: chose you as His dwelling."\n\nTruly you will conceive: the Word who became poor: for us the poor ones: to make us rich.\n\n"How can this be: no man has entered unto me: I ask you to tell me: do not hide anything from me."\n\n"The Holy Spirit will come upon you: the power of the Most High will overshadow you: the angels praise you: because of the fear of their Creator."\n\nYou will give birth to the Son of God: and the Wisdom of God: for He is the God of our fathers: and none other but Him.\n\n"Through you the Son of God: will come in the womb: look and do not be afraid: for everyone will be saved through you."\n\nThe Virgin Mary: of the seed of Abraham: she saved Adam: from the curse of sin.\n\nHail to you O Virgin: the very and true queen: hail to the pride of our race: who gave birth to Emmanuel.\n\nWe ask you to remember us: O our faithful advocate: before our Lord Jesus Christ: that He may forgive us our sins.',
+      },
+      {
+        language: 'arabic',
+        text: 'جبرائيل الملاك، بشَّر العذراء، وإبتدأ بالسلام قائلاً، "السلام لكِ يا ممتلئة نعمة."\n\nفلما سمعت صوته، الفتاة العفيفة، أجابت بحكمة، وفكرت "ما هو هذا؟"\n\nفقال لها الملاك، الملتهب ناراً الغير الجسداني، "يا سيدتي العذراء، أميلي سمعِك وإسمعي مني.\n\nلا تخافِ ولا تتزعزعي، يا مريم إبنة يواقيم، الرب إله السيرافيم، إختاركِ مسكناً له."\n\nبالحقيقة تحبلين، بالكلمة الذي إفتقر، لأجلنا نحن الفقراء، حتى يجعلنا أغنياء.\n\n"كيف يكون لي هذا، لو لم يدخل إليَّ أحد، أسألك أخبرني، ولا تخف عني شيئاً."\n\n"الروح القدس يحل عليكِ، وقوة العليْ تظلكِ، الملائكة تسبحكِ، من أجل خوف خالقهم."\n\nستلدين إبن الله، وحكمة الله، لأنه هو إله آبائنا، وليس آخر سواه.\n\n"(أذهب بالقول إنه من قبلِك)، إبن الله يصير في المستودع، فأنظري لا تخافي، لأن الكل يخلص من قِبَلكِ."\n\nالعذراء مريم، من زرع إبراهيم، التي خلَّصت آدم، من لعنة الخطية.\n\nالسلام لكِ أيتها العذراء، الملكة الحقيقية الحقانية، السلام لفخر جنسنا، ولدتِ لنا عمانوئيل.\n\nنسألِك أن تذكرينا، أيتها الشفيعة المؤتمنة، أمام ربنا يسوع المسيح، ليغفر لنا خطايانا.',
+      },
+    ];
+  }
+  const kiahkFourthDoxology = kiahkMatins.hymns.find((h) => h.title === 'Ϧⲉⲛ ⲡⲓⲁ̀ⲃⲟⲧ (Fourth Doxology for Kiahk)');
+  if (kiahkFourthDoxology) {
+    kiahkFourthDoxology.versions = [
+      {
+        language: 'coptic',
+        text: 'Ϧⲉⲛ ⲡⲓⲁ̀ⲃⲟⲧ ⲙ̀ⲙⲁϩⲥⲟⲟⲩ: ⲁⲩⲟⲩⲱⲣⲡ ⲛ̀Ⲅⲁⲃⲣⲓⲏⲗ: ϧⲉⲛ ⲡⲓⲉⲩⲁⲅⲅⲉⲗⲓⲟⲛ ⲉⲑⲟⲩⲁⲃ: ⲁϥϩⲓϣⲉⲛⲛⲟⲩϥⲓ ⲙ̀Ⲙⲁⲣⲓⲁ.\n\nⲀⲩⲟⲩⲱⲣⲡ ⲛ̀Ⲅⲁⲃⲣⲓⲏⲗ: ⲁϥⲉⲣⲇⲓⲁⲕⲟⲛⲓⲛ ⲙ̀ⲡⲓⲟⲩϫⲁⲓ: ⲁⲩⲟⲩⲱⲣⲡ ⲙ̀ⲡⲓⲃⲱⲕ ⲛ̀ⲁ̀ⲥⲱⲙⲁⲧⲟⲥ: ϣⲁ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ ⲛ̀ⲁⲧⲑⲱⲗⲉⲃ.\n\nⲀⲩⲟⲩⲱⲣⲡ ⲛ̀Ⲅⲁⲃⲣⲓⲏⲗ: ⲁϥⲧⲟⲩⲛⲟⲥⲧⲉⲛ ϧⲉⲛ ⲡⲓⲑⲱϩⲉⲙ ⲙ̀ⲃⲉⲣⲓ: ⲁⲩⲟⲩⲱⲣⲡ ⲙ̀ⲡⲓⲉ̀ⲗⲉⲩⲑⲉⲣⲟⲥ: ϣⲁ ϯⲁ̀ⲗⲟⲩ ⲛ̀ⲥⲉⲙⲛⲉ.\n\nⲀⲩⲟⲩⲱⲣⲡ ⲛ̀Ⲅⲁⲃⲣⲓⲏⲗ: ⲉ̀ⲥⲉⲃⲧⲉ Ⲡⲓⲛⲩⲙⲫⲓⲟⲥ ⲙ̀ⲙⲏⲓ: ⲁⲩⲟⲩⲱⲣⲡ ⲛ̀Ⲅⲁⲃⲣⲓⲏⲗ: ϣⲁ ⲡⲁⲗⲁⲧⲓⲟⲛ ⲙ̀ⲡ̀ϭⲓⲥⲓⲓ̀ⲕⲟⲛ.\n\nⲞⲩⲙⲩⲥⲧⲏⲣⲓⲟⲛ ⲛ̀ϣ̀ⲫⲏⲣⲓ: ⲟⲩⲟϩ ⲙ̀ⲡⲁⲣⲁⲇⲟⲝⲟⲛ ⲉⲧϭⲟⲥⲓ: ϫⲉ Ⲡⲓⲗⲟⲅⲟⲥ ⲛ̀ⲧⲉ Ⲫ̀ⲓⲱⲧ: ⲁϥϣⲱⲡⲓ ⲛⲉⲙ ⲛⲓⲣⲱⲙⲓ.\n\nⲦⲉⲛⲟⲩⲱϣⲧ ⲙ̀ⲙⲟϥ ⲧⲉⲛϯⲱ̀ⲟⲩ ⲛⲁϥ: ⲛⲉⲙ Ⲡⲉϥⲓⲱⲧ ⲛ̀ⲁⲧϣ̀ⲧⲁϩⲟϥ: ⲛⲉⲙ Ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ ⲙ̀ⲡⲁⲣⲁⲕⲗⲏⲧⲟⲛ: ϫⲉ ⲁϥⲓ̀ ⲁϥⲥⲱϯ ⲙ̀ⲙⲟⲛ.',
+      },
+      {
+        language: 'englishCoptic',
+        text: 'Khen pi-avot emmahsoou: auouōrp en-Gabriēl: khen pieuaggelion ethouab: afhishennoufi em-Maria.\n\nAuouōrp en-Gabriēl: aferdiakonin empioujai: auouōrp empivōk enasōmatos: sha Tiparthenos enatthōleb.\n\nAuouōrp en-Gabriēl: aftounosten khen pithōhem emveri: auouōrp empi-eleutheros: sha ti-alou ensemne.\n\nAuouōrp en-Gabriēl: esebte Pinumfios emmēi: auouōrp en-Gabriēl: sha palation emeptshisi-ikon.\n\nOumustērion eneshfēri: ouoh emparadokson ettshosi: je Pilogos ente Efiōt: afshōpi nem nirōmi.\n\nTenouōsht emmof tenti-ōou naf: nem Pefiōt enateshtahof: nem Pi-epneuma emparaklēton: je afi afsōti emmon.',
+      },
+      {
+        language: 'english',
+        text: 'On the sixth month: Gabriel was sent: according to the Holy Gospel: and announced to Mary.\n\nGabriel was sent: the servant of salvation: the incorporeal servant was sent: to the undefiled Virgin.\n\nGabriel was sent: he raised us with the new calling: the free one was sent: to the chaste girl.\n\nGabriel was sent: to prepare for the true Bridegroom: Gabriel was sent: to the high palace.\n\nA wonderful mystery: and an exalted wonder: for the Word of the Father: dwelt among men.\n\nWe worship Him and glorify Him: with His incomprehensible Father: and the Spirit of comfort: for He has come and saved us.',
+      },
+      {
+        language: 'arabic',
+        text: 'في الشهر السادس، أُرسِلَ جبرائيل، كما في الإنجيل المقدس، بشر [العذراء] مريم.\n\nأُرسِلَ جبرائيل، خادم الخلاص، أُرسِلَ العبد الغير الجسداني، إلى العذراء الغير الدنسة.\n\nأُرسِلَ جبرائيل، أقامنا بالدعوة الجديدة، أُرسِلَ الحر، إلى الفتاة العفيفية.\n\nأُرسِلَ جبرائيل، ليهيئ الخدر الحقيقي، أُرسِلَ غبريـال، إلى البلاط العلوي.\n\nسر عجيب، ومعجز مرتفع، لأن كلمة الآب، صار مع البشر.\n\nنسجد له ونمجده، مع أبيه الغير المدرك، والروح المعزي، لأنه أتى وخلصنا.',
+      },
+    ];
+  }
+  const kiahkFifthDoxology = kiahkMatins.hymns.find((h) => h.title === 'Ⲉ̀ⲧⲁ ⲡⲓⲱⲡ (Fifth Doxology for Kiahk)');
+  if (kiahkFifthDoxology) {
+    kiahkFifthDoxology.versions = [
+      {
+        language: 'coptic',
+        text: 'Ⲉ̀ⲧⲁ ⲡⲓⲱⲡ ⲓ̀ ⲉ̀Ⲍⲁⲭⲁⲣⲓⲁⲥ: ⲉ̀ⲧⲁⲗⲉ ⲟⲩⲥ̀ⲑⲟⲓⲛⲟⲩϥⲓ ⲉ̀ⲡ̀ϣⲱⲓ: ⲁϥϣⲉ ⲉ̀ϧⲟⲩⲛ ⲉ̀ⲡⲓⲉⲣⲫⲉⲓ: ⲁϥϫⲱⲕ ⲙ̀ⲡⲉϥϣⲉⲙϣⲓ ⲉ̀ⲃⲟⲗ.\n\nⲞⲩⲁⲅⲅⲉⲗⲟⲥ ⲁϥⲟⲩⲟⲛϩϥ ⲉ̀ⲣⲟϥ: ⲥⲁⲟⲩⲓ̀ⲛⲁⲙ ⲙ̀ⲡⲓⲙⲁ ⲛ̀ⲉⲣϣⲱⲟⲩϣⲓ: ⲉϥⲧⲁⲗⲉ ⲟⲩⲥ̀ⲑⲟⲓⲛⲟⲩϥⲓ ⲉ̀ⲡ̀ϣⲱⲓ: ϫⲉ ⲙ̀ⲡⲉⲣⲉⲣϩⲟϯ Ⲍⲁⲭⲁⲣⲓⲁⲥ.\n\nⲀϥⲛⲁⲩ ⲅⲁⲣ ⲉ̀ⲡⲉⲕⲧⲁⲓⲟ: ⲟⲩⲟϩ ⲧⲉⲕⲥ̀ϩⲓⲙⲓ Ⲉ̀ⲗⲓⲥⲁⲃⲉⲧ: ⲉⲥⲉ̀ⲙⲓⲥⲓ ⲛⲁⲕ ⲛ̀ⲟⲩϣⲏⲣⲓ: ⲉⲕⲉ̀ⲙⲟⲩϯ ⲉ̀ⲡⲉϥⲣⲁⲛ ϫⲉ Ⲓⲱⲁⲛⲛⲏⲥ.\n\nⲞⲩⲟϩ Ⲍⲁⲭⲁⲣⲓⲁⲥ ⲡⲓⲟⲩⲏⲃ: ⲥⲁⲟⲩⲓ̀ⲛⲁⲙ ⲙ̀ⲡⲓⲙⲁ ⲛ̀ⲉⲣϣⲱⲟⲩϣⲓ: ⲉϥⲭⲱ ⲙ̀ⲡⲓⲥ̀ⲑⲟⲓⲛⲟⲩϥⲓ: Ⲅⲁⲃⲣⲓⲏⲗ ⲁϥⲥⲁϫⲓ ⲛⲉⲙⲁϥ.\n\nϪⲉ ⲧⲉⲕⲥ̀ϩⲓⲙⲓ Ⲉ̀ⲗⲓⲥⲁⲃⲉⲧ: ⲉⲥⲉ̀ⲙⲓⲥⲓ ⲛⲁⲕ ⲛ̀ⲟⲩϣⲏⲣⲓ: ⲉ̀ⲣⲉ ⲟⲩⲣⲁϣⲓ ϣⲱⲡⲓ ⲛⲁⲕ: ⲛⲉⲙ ⲟⲩⲑⲉⲗⲏⲗ ϧⲉⲛ ⲡⲉϥϫⲓⲛⲙⲓⲥⲓ.\n\nϪⲉ ⲡⲱⲥ ⲫⲁⲓ ⲛⲁϣⲱⲡⲓ ⲙ̀ⲙⲟⲓ: ⲉ̀ⲡⲓⲇⲏ ⲁⲓⲉⲣϧⲉⲗⲗⲟ: ⲟⲩⲟϩ ⲧⲁⲥ̀ϩⲓⲙⲓ Ⲉ̀ⲗⲓⲥⲁⲃⲉⲧ: ⲟⲩⲁϭⲣⲏⲛ ⲧⲉ ⲉⲥⲉ̀ⲙⲓⲥⲓ ⲁⲛ.\n\nⲈⲕⲉ̀ϣⲱⲡⲓ ⲉⲕⲭⲱ ⲛ̀ⲣⲱⲕ: ϣⲁ ⲧⲟⲩⲙⲓⲥⲓ ⲙ̀ⲡⲓⲁ̀ⲗⲟⲩ: ⲁⲩϣⲁⲛⲛⲁⲩ ⲛ̀ϫⲉ ⲛⲉⲕⲃⲁⲗ: ⲭ̀ⲛⲁϯⲱ̀ⲟⲩ ⲙ̀Ⲫ̀ⲛⲟⲩϯ ⲙ̀Ⲡⲓⲥⲣⲁⲏⲗ.\n\nⲀⲩⲟⲩⲱⲣⲡ ⲛ̀Ⲅⲁⲃⲣⲓⲏⲗ: ⲉ̀ⲃⲟⲗ ϩⲓⲧⲉⲛ Ⲡ̀ⲟⲩⲣⲟ ⲛ̀ⲧⲉ ⲡ̀ⲱ̀ⲟⲩ: ⲉ̀ⲟⲩⲃⲁⲕⲓ ⲛ̀ⲧⲉ Ϯⲅⲁⲗⲓⲗⲉⲁ̀: ⲉ̀ⲡⲉⲥⲣⲁⲛ ⲡⲉ Ⲛⲁⲍⲁⲣⲉⲑ.\n\nϨⲁ ⲟⲩⲁ̀ⲗⲟⲩ ⲙ̀ⲡⲁⲣⲑⲉⲛⲟⲥ: ⲉ̀ⲃⲟⲗ ϧⲉⲛ ⲡ̀ⲏⲓ ⲛ̀Ⲇⲁⲩⲓⲇ: ⲉ̀ⲡⲉⲥⲣⲁⲛ ⲡⲉ Ⲙⲁⲣⲓⲁⲙ: ⲧ̀ϣⲉⲣⲓ ⲙ̀ⲡ̀ⲟⲩⲣⲟ Ⲇⲁⲩⲓⲇ.\n\nⲀⲕϣⲱⲡⲓ ⲉⲕϯⲛⲟⲙϯ ⲛⲁⲥ: ϫⲉ ⲣⲁϣⲓ ⲟⲩⲛⲟϥ ⲙ̀ⲙⲟ: ϫⲉ ⲭⲉⲣⲉ ⲑⲏⲉⲑⲙⲉϩ ⲛ̀ϩ̀ⲙⲟⲧ: ⲟⲩⲟϩ Ⲡ̀ϭⲟⲓⲥ ϣⲟⲡ ⲛⲉⲙⲉ.\n\nⲬⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ϯⲟⲩⲣⲱ ⲙ̀ⲙⲏⲓ ⲛ̀ⲁ̀ⲗⲏⲑⲓⲛⲏ: ⲭⲉⲣⲉ ⲡ̀ϣⲟⲩϣⲟⲩ ⲛ̀ⲧⲉ ⲡⲉⲛⲅⲉⲛⲟⲥ: ⲁ̀ⲣⲉϫ̀ⲫⲟ ⲛⲁⲛ ⲛ̀Ⲉⲙⲙⲁⲛⲟⲩⲏⲗ.\n\nⲦⲉⲛϯϩⲟ ⲁ̀ⲣⲉⲡⲉⲛⲙⲉⲩⲓ̀: ⲱ̀ ϯⲡ̀ⲣⲟⲥⲧⲁⲧⲏⲥ ⲉ̀ⲧⲉⲛϩⲟⲧ: ⲛⲁϩⲣⲉⲛ Ⲡⲉⲛϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ.',
+      },
+      {
+        language: 'englishCoptic',
+        text: 'Eta piōp i e-Zakharias: etale ou-esthoinoufi e-epshōi: afshe ekhoun epierfei: afjōk empefshemshi evol.\n\nOuaggelos afouonhf erof: saou-inam empima enershōoushi: eftale ou-esthoinoufi e-epshōi: je empererhoti Zakharias.\n\nAfnau gar epektaio: ouoh tekeshimi Elisavet: esemisi nak enoushēri: ekemouti epefran je Iōannēs.\n\nOuoh Zakharias piouēb: saou-inam empima enershōoushi: efkhō empi-esthoinoufi: Gabriēl afsaji nemaf.\n\nJe tekeshimi Elisavet: esemisi nak enoushēri: ere ourashi shōpi nak: nem outhelēl khen pefjinmisi.\n\nJe pōs fai nashōpi emmoi: epidē aierkhello: ouoh ta-eshimi Elisavet: ouatshrēn te esemisi an.\n\nEkeshōpi ekkhō enrōk: sha toumisi empi-alou: aushannau enje nekval: ekhnati-ōou em-Efnouti em-Pisraēl.\n\nAuouōrp en-Gabriēl: evol hiten Epouro ente epōou: eouvaki ente Tigalile-a: epesran pe Nazareth.\n\nHa ou-alou emparthenos: evol khen epēi en-Dauid: epesran pe Mariam: etsheri emepouro Dauid.\n\nAkshōpi ektinomti nas: je rashi ounof emmo: je khere thēethmeh enehmot: ouoh Eptshois shop neme.\n\nKhere ne ō Tiparthenos: tiourō emmēi enalēthinē: khere epshoushou ente pengenos: are-ejfo nan en-Emmanouēl.\n\nTentiho arepenmeu-i: ō ti-eprostatēs etenhot: nahren Pentshois Iēsous Pi-ekhristos: entefkha nennovi nan evol.',
+      },
+      {
+        language: 'english',
+        text: 'When the lot fell on Zacharias: to raise incense: he entered the temple: and completed his service.\n\nAn angel appeared to him: on the right side of the altar: while he raised incense: saying "Do not fear O Zacharias.\n\nHe looked upon your honor: and your wife Elizabeth: will bear you a son: and you shall call his name John."\n\nAnd Zacharias the priest: at the right side of the altar: while placing the incense: Gabriel spoke with him.\n\n"Your wife Elizabeth: will bear you a son: you will have joy and gladness: through his birth."\n\n"How shall I know this: for I am an old man: and my wife Elizabeth: is barren with no child."\n\n"You will be mute: until the child is born: and when your eyes see: you will glorify the God of Israel."\n\nGabriel was sent: by the King of glory: to a city of Galilee: named Nazareth.\n\nTo a virgin child: from the house of David: her name was Mary: the daughter of King David.\n\nYou comforted her saying: "Rejoice and be glad: hail to you O full of grace: the Lord is with you."\n\nHail to you O Virgin: the very and true Queen: hail to the pride of our race: who gave birth to Emmanuel.\n\nWe ask you to remember us: O our faithful advocate: before our Lord Jesus Christ: that He may forgive us our sins.',
+      },
+      {
+        language: 'arabic',
+        text: 'لما وقعت القرعة، على زكريا أن يرفع بخوراً، دخل إلى الهيكل، وأكمل خدمته.\n\nفظهر له ملاك، عن يمين المذبح، وهو يرفع البخور، قائلاً "لا تخف يا زكريا.\n\nلأنه قد نُظِرَ إلى كرامتك، وإمرأتك أليصابات، ستلد لك إبناً، وتدعوا إسمه يوحنا."\n\nوزكريا الكاهن، عن يمين المذبح، يضع البخور، غبريـال كلَّمَه.\n\n"إن إمرأتك أليصابات، ستلد لك إبناً، ويكون لك فرح، وتهليل بمولده."\n\nقال "كيف يكون لي هذا، لأني قد شخت، وإمرأتي أليصابات، عاقر لا تلد."\n\n"أنت تكون صامتاً، حتى يولد الصبي، ومتى أبصرت عيناك، تمجد الله إسرائيل."\n\nأُرسِلَ جبرائيل، من قِبَل ملك المجد، إلى مدينة من الجليل، إسمها ناصرة.\n\nإلى فتاة عذراء، من بيت داود، إسمها مريم، إبنة الملك داود.\n\nصرت تعزيها، قائلاً "إفرحي وإبتهجي، السلام لكِ يا ممتلئة نعمة، الرب معكِ."\n\nالسلام لكِ أيتها العذراء، الملكة الحقيقية الحقانية، السلام لفخر جنسنا، ولدتِ لنا عمانوئيل.\n\nنسألكِ أن تذكرينا، أيتها الشفيعة المؤتمنة، أمام ربنا يسوع المسيح، ليغفر لنا خطايانا.',
+      },
+    ];
+  }
+  const kiahkSixthDoxology = kiahkMatins.hymns.find((h) => h.title === 'Ϥ̀ⲉⲙⲡ̀ϣⲁ ⲅⲁⲣ (Sixth Doxology for Kiahk)');
+  if (kiahkSixthDoxology) {
+    kiahkSixthDoxology.versions = [
+      {
+        language: 'coptic',
+        text: 'Ϥ̀ⲉⲙⲡ̀ϣⲁ ⲅⲁⲣ ϧⲉⲛ ⲟⲩⲙⲉⲑⲙⲏⲓ: ⲟⲩⲟϩ ⲟⲩⲇⲓⲕⲉⲟⲛⲡⲉ: ⲉⲑⲣⲉⲛϩⲟⲥ ⲉ̀Ⲫϯ ⲛ̀ⲧⲁⲫ̀ⲙⲏⲓ: Ⲡⲟ︦ⲥ︦ ⲫⲏⲉⲧϣⲟⲡ ϧⲉⲛ ⲧⲫⲉ.\n\nⲠⲉϥⲣⲁⲛ ϩⲟⲗϫ ⲟⲩⲟϩ ϥ̀ⲥ̀ⲙⲁⲣⲱⲟⲩⲧ: ϧⲉⲛ ⲣⲱⲟⲩ ⲛ̀ⲛⲏⲉⲑ︦ⲩ︦: ⲉ̀ⲧⲉ ⲫⲁⲓ ⲡⲉ Ⲫϯ ⲫ̀ⲓⲱⲧ: ⲛⲉⲙ Ⲡ̀ϣⲏⲣⲓ ⲛⲉⲙ Ⲡⲡ︦ⲛ︦ⲁ ⲉ︦ⲑ︦ⲩ.\n\nⲞⲩⲟϩ ⲛ̀ⲧⲉⲛϯⲱⲟ̀ⲩ ⲛ̀ⲧⲥⲉⲙⲛⲉ: Ⲙⲁⲣⲓⲁ̀ Ϯⲑⲉⲟⲧⲟⲕⲟⲥ: ϯⲙⲁϩⲥ̀ⲛⲟⲩϯ ⲛ̀ⲥ̀ⲕⲏⲛⲏ: ⲡⲓⲁ̀ϩⲟ ⲛ̀ⲁ̀ⲗⲏⲑⲓⲛⲟⲥ.\n\nⲞⲩⲟϩ ⲛ̀ⲧⲉⲛⲱϣ ⲉ̀ⲃⲟⲗ ⲣⲏⲧⲱⲥ: ϧⲉⲛ ⲩⲟⲛⲓϣϯ ⲙ̀ⲙⲉⲧⲥⲁⲓⲥ: ϫⲉ ⲭⲉⲣⲉ ⲛⲉ ⲱ̀ ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ⲟⲩⲟϩ Ⲡⲟ︦ⲥ︦ ϣⲟⲡ ⲛⲉⲙⲉ.\n\nⲬⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ⲡ̀ⲥⲱⲧ ⲛ̀Ⲁⲇⲁⲙ ⲛⲉⲙ Ⲉⲩⲁ̀: Ⲭⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ⲡ̀ⲟⲩⲛⲟϥ ⲛ̀ⲛⲓⲅⲉⲛⲉⲁ̀.\n\nⲬⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ⲫ̀ⲣⲁϣⲓ ⲛ̀Ⲁ̀ⲃⲉⲗ ⲡⲓⲑ̀ⲙⲏⲓ: Ⲭⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ⲉⲧⲥⲁⲡϣ̀ⲱⲓ ⲉ̀ⲡⲓⲣⲫⲉⲓ.\n\nⲬⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ϯⲕⲓⲃⲱⲧⲟⲥ ⲛ̀ⲧⲉ Ⲛⲱⲉ̀: Ⲭⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ϣⲁ ⲡⲓⲛⲓϥⲓ ⲛ̀ϧⲁⲉ̀.\n\nⲬⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ⲡⲓϩ̀ⲙⲟⲧ ⲛ̀Ⲁⲃⲣⲁⲁⲙ ⲡⲉⲛⲓⲱⲧ: Ⲭⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ϯⲡ̀ⲣ̀ⲟⲥⲧⲁⲧⲏⲥ ⲉ̀ⲧⲉⲛϩⲟⲧ.\n\nⲬⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ⲡ̀ⲥⲱϯ ⲛ̀Ⲓⲥⲁⲁⲕ ⲡⲓⲉⲑ︦ⲩ︦: Ⲭⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ⲑ̀ⲙⲁⲩ ⲙ̀ⲫⲉⲑ︦ⲩ︦.\n\nⲬⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ⲡ̀ⲑⲉⲗⲏⲗ ⲙ̀ⲡⲉⲛⲓⲱⲧ Ⲓⲁⲕⲱⲃ: Ⲭⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ϩⲁⲛⲁⲛϣⲟ ⲛⲉⲙ ϩⲁⲛⲑ̀ⲃⲁ ⲛ̀ⲕⲱⲃ.\n\nⲬⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ⲡ̀ϣⲟⲩϣⲟⲩ ⲛ̀Ⲓⲟⲩⲇⲁ ⲛⲉⲙ ⲛⲉϥⲥ̀ⲛⲏⲟⲩ: Ⲭⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ϣⲁ ⲡ̀ϫⲱⲕ ⲉ̀ⲃⲟⲗ ⲛ̀ⲛⲓⲥⲏⲟⲩ.\n\nⲬⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ϯⲑⲉⲱ̀ⲣⲓⲁ ⲛ̀ⲧⲉ Ⲙⲱⲩ̀ⲥⲏⲥ: Ⲭⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ⲑ̀ⲙⲁⲩ ⲙ̀ⲡⲓⲇⲉⲥⲡⲟⲧⲏⲥ.\n\nⲬⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ⲧ̀ϫⲟⲙ ⲛ̀Ⲓⲏⲥⲟⲩ ⲛⲉⲙ Ⲅⲉⲇⲉⲱⲛ: Ⲭⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ⲡⲓϭ̀ⲣⲟ ⲙ̀Ⲃⲁⲣⲁⲕ ⲛⲉⲙ Ⲥⲁⲙⲯⲱⲛ.\n\nⲬⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ⲑ̀ⲙⲉⲧϫⲱⲣⲓ ⲛ̀Ⲥⲁⲙⲟⲩⲏⲗ: Ⲭⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ϯⲟⲩⲣⲱ ⲙ̀ⲡⲒⲥⲣⲁⲏⲗ.\n\nⲬⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ϯϩⲩⲡⲟⲙⲟⲛⲏ ⲛ̀ⲧⲉ Ⲓⲱⲃ: Ⲭⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ϧⲉⲛ ⲟⲩⲑⲟ ⲛ̀ⲣⲏϯ ⲛⲉⲙ ⲟⲩⲙⲏϣ ⲛ̀ⲥⲟⲡ.\n\nⲬⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ⲧ̀ϣⲉⲣⲓ ⲛ̀Ⲇⲁⲩⲓⲇ ⲡ̀ⲟⲩⲣⲟ: Ⲭⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ⲑⲏⲉⲧϫⲟⲗϩ ⲙ̀ⲡⲓⲧⲟⲩⲃⲟ.\n\nⲬⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ϯϣ̀ⲫⲉⲣⲓ ⲛ̀Ⲥⲟⲗⲟⲙⲱⲛ: Ⲭⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ⲡⲓϣ̀ⲃⲱⲧ ⲛ̀ϣⲉ ⲙ̀ⲡⲉⲩⲕⲓⲛⲱⲛ.\n\nⲬⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ϯⲡ̀ⲣⲟⲫⲏⲧⲓⲁ ⲛ̀Ⲏⲥⲁⲏ̀ⲁⲥ: Ⲭⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ⲡ̀ⲧⲁⲥⲑⲟ ⲛ̀Ⲓⲉⲣⲉⲙⲓⲁⲥ.\n\nⲬⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ⲡ̀ϩⲁⲣⲙⲁ ⲛ̀Ⲓⲉⲍⲉⲕⲓⲏⲗ: Ⲭⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ϯϩⲟⲣⲁⲥⲓⲥ ⲛ̀Ⲇⲁⲛⲓⲏⲗ.\n\nⲬⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ⲡ̀ϭⲓⲥⲓ ⲛ̀Ⲏⲗⲓⲁⲥ: Ⲭⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ⲑⲏⲉ̀ⲧⲁⲥⲙⲓⲥⲓ ⲙ̀Ⲙⲁⲥⲓⲁⲥ.\n\nⲬⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ⲡⲓϩ̀ⲙⲟⲧ ⲛ̀Ⲉⲗⲓⲥⲉⲟⲥ: Ⲭⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ϯϣⲉⲗⲉⲧ ⲛ̀ⲕⲁⲑⲁⲣⲟⲥ.\n\nⲬⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ⲫ̀ⲣⲁϣⲓ ⲛ̀ⲛⲓⲁⲅⲅⲉⲗⲟⲥ: Ⲭⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ⲡ̀ⲟⲩⲛⲟϥ ⲛ̀ⲛⲓⲁⲣⲭⲓⲁⲅⲅⲉⲗⲟⲥ.\n\nⲬⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ⲡ̀ⲧⲁⲓⲟ ⲛ̀ⲛⲓⲡⲁⲧⲣⲓⲁⲣⲭⲏⲥ: Ⲭⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: Ⲯ ⲡ̀ϩⲓⲱⲓϣ ⲛ̀ⲧⲉ ⲛⲓⲡ̀ⲣⲟⲫⲏⲧⲏⲥ.\n\nⲬⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ⲫ̀ⲗⲁⲥ ⲛ̀ⲛⲓⲁ̀ⲡⲟⲥⲧⲟⲗⲟⲥ: Ⲭⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ⲡ̀ⲧⲟⲩⲃⲟ ⲛ̀ⲛⲓⲡⲁⲣⲑⲉⲛⲟⲥ.\n\nⲬⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ⲡⲓⲭ̀ⲗⲟⲙ ⲛ̀ⲛⲓⲙⲁⲣⲧⲩⲣⲟⲥ: Ⲭⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ⲡ̀ⲑⲉⲗⲏⲗ ⲛ̀ⲛⲓⲇⲓⲕⲉⲟⲥ.\n\nⲬⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ⲡ̀ⲧⲁϫⲣⲟ ⲛ̀ⲛⲓⲉⲕⲕ̀ⲗⲏⲥⲓⲁ: Ⲭⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ϯⲁⲅⲓⲁ ⲙ̀ⲙⲏⲓ Ⲙⲁⲣⲓⲁ.\n\nⲬⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ϯⲙⲟⲩⲙⲓ ⲛ̀ⲱⲛϧ ⲉ̀ⲧⲁⲥⲃⲉⲃⲓ: Ⲭⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ⲡ̀ⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲓⲛⲟⲃⲓ.\n\nⲬⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ⲡⲓⲥⲡ̀ⲉⲣⲙⲁ ⲛ̀ⲧⲉ ⲡⲒⲥⲣⲁⲏⲗ: Ⲭⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ⲁ̀ⲣⲉϫ̀ⲫⲟ ⲛⲁⲛ ⲛ̀Ⲉⲙⲁⲛⲛⲟⲩ-ⲏⲗ.\n\nⲬⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ⲧ̀ϩⲉⲃⲥⲱ ⲛ̀ⲛⲓⲥ̀ⲧⲁⲩⲣⲟⲫⲟⲣⲟⲥ: Ⲭⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ϯϩⲉⲗⲡⲓⲥ ⲛ̀ⲛⲓⲭ̀ⲣⲓⲥⲧⲓⲁⲛⲟⲥ.\n\nⲦⲉⲛϯϩⲟ ⲁ̀ⲣⲓⲡⲉⲛⲙⲉⲩⲓ̀: ⲱ̀ ϯⲡ̀ⲣⲟⲥⲧⲁⲧⲏⲥ ⲉ̀ⲧⲉⲛϩⲟⲧ: ⲛⲁϩⲣⲉⲛ Ⲡ̀ϭⲟⲓⲥ ⲫⲏⲉ̀ⲧⲁϥⲉⲣⲣⲱⲙⲓ: ⲟⲩⲟϩ ⲁϥϯⲛⲁⲛ ⲙ̀ⲡⲉϥϩ̀ⲙⲟⲧ.\n\nⲈⲑⲣⲉϥⲧⲁϫⲣⲟⲛ ϧⲉⲛ ⲡⲓⲛⲁϩϯ: ⲁ̀ⲛⲟⲛ ⲧⲏⲣⲉⲛ ϧⲁ ⲛⲉϥⲉ̀ⲥⲱⲟⲩ: ⲛ̀ⲧⲉϥϭⲓⲙⲱⲓⲧ ⲛⲁⲛ ϧⲉⲛ ⲡⲉϥϯⲙⲁϯ: ϣⲁ ⲡ̀ϫⲱⲕ ⲉ̀ⲃⲟⲗ ⲛ̀ⲛⲓⲉ̀ϩⲟⲟⲩ.\n\nⲚⲧⲉϥⲁ̀ⲣⲉϩ ⲉ̀ⲡⲉⲛⲙⲁⲛⲉ̀ⲥⲱⲟⲩ: ⲁⲃⲃⲁ (...) ⲉϥⲉ̀ϭⲓⲥⲓ ⲙ̀ⲡⲉϥⲱ̀ⲟⲩ: ⲉⲑⲣⲉϥⲁ̀ⲙⲟⲛⲓ ⲙ̀ⲡⲉϥⲗⲁⲟⲥ: ⲛⲉⲙ ⲛⲉⲛⲓⲟϯ ⲛ̀ⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲥ.\n\nⲚⲧⲉϥϣⲱⲡ ⲉ̀ⲣⲟϥ ⲛ̀ⲛⲉⲛⲉⲩⲭⲏ: ⲛ̀ⲧⲉϥϣⲱⲡⲓ ⲛⲁⲛ ⲛ̀ⲟⲩⲙⲁⲙ̀ⲫⲱⲧ: ⲛ̀ⲧⲉϥϯⲙ̀ⲧⲟⲛ ⲛ̀ⲛⲓⲯⲩⲭⲏ: ⲛ̀ⲛⲓ-ⲭ̀ⲣⲓⲥⲧⲓⲁⲛⲟⲥ ⲉ̀ⲧⲁⲩⲉⲛⲕⲟⲧ.\n\nⲚⲧⲉϥϯ ⲛⲁⲛ ⲛ̀ⲟⲩⲡⲁⲣⲣⲏⲥⲓⲁ: ϩⲓⲧⲉⲛ ⲛⲓⲧⲱⲃϩ ⲛⲉⲙ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ: ⲛ̀ⲧⲉ ⲧⲉⲛϭⲟⲓⲥ ⲛ̀ⲛⲏⲃ Ⲙⲁⲣⲓⲁ: ϣⲁ ⲡ̀ϫⲱⲕ ⲉ̀ⲃⲟⲗ ⲛ̀ⲛⲓⲥⲩⲛⲧⲉⲗⲓⲁ.\n\nⲦⲉⲛϯⲱ̀ⲟⲩ ⲛⲉ ⲱ̀ ⲑⲏⲉ̀ⲧⲉⲛϩⲟⲧ: ⲛⲉⲙ ⲡⲓⲁⲅⲅⲉⲗⲟⲥ ⲛ̀ⲧⲉ ⲡⲓⲥ̀ⲙⲟⲩ: ϫⲉ ⲭⲉⲣⲉ ⲑⲏⲉⲑⲙⲉϩ ⲛ̀ϩ̀ⲙⲟⲧ: ⲟ̀ Ⲕⲩⲣⲓⲟⲥ ⲙⲉⲧⲁ ⲥⲟⲩ.\n\nⲀⲣⲓⲡ̀ⲣⲉⲥⲃⲉⲩⲓⲛ ⲉ̀ϩ̀ⲣⲏⲓ ⲉ̀ϫⲱⲛ: ⲱ̀ ⲧⲉⲛϭⲟⲓⲥ ⲛ̀ⲛⲏⲃ ⲧⲏⲣⲉⲛ ϯⲑⲉⲟ̀ⲧⲟⲕⲟⲥ: Ⲙⲁⲣⲓⲁ ⲑ̀ⲙⲁⲩ ⲙ̀Ⲡⲉⲛⲥⲱⲧⲏⲣ: ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ.',
+      },
+      {
+        language: 'englishCoptic',
+        text: 'Efemepsha gar khen oumethmēi: ouoh oudikeonpe: ethrenhos e-Fti enta-efmēi: Eptshois fēetshop khen tfe.\n\nPefran holj ouoh efesmarōout: khen rōou ennēethouab: ete fai pe Fti efiōt: nem Epshēri nem Pi-epneuma ethouab.\n\nOuoh ententiō-ou entsemne: Mari-a Titheotokos: timahesnouti eneskēnē: pi-aho enalēthinos.\n\nOuoh entenōsh evol rētōs: khen uonishti emmetsais: je khere ne ō tiparthenos: ouoh Eptshois shop neme.\n\nKhere ne ō Tiparthenos: epsōt en-Adam nem Eu-a: Khere ne ō Tiparthenos: epounof ennigene-a.\n\nKhere ne ō Tiparthenos: efrashi en-Avel pi-ethmēi: Khere ne ō Tiparthenos: etsapeshōi epirfei.\n\nKhere ne ō Tiparthenos: tikivōtos ente Nō-e: Khere ne ō Tiparthenos: sha pinifi enkha-e.\n\nKhere ne ō Tiparthenos: pi-ehmot en-Abraam peniōt: Khere ne ō Tiparthenos: ti-eperostatēs etenhot.\n\nKhere ne ō Tiparthenos: epsōti en-Isaak piethouab: Khere ne ō Tiparthenos: ethmau emfēethouab.\n\nKhere ne ō Tiparthenos: epthelēl empeniōt Iakōb: Khere ne ō Tiparthenos: hanansho nem hanethva enkōb.\n\nKhere ne ō Tiparthenos: epshoushou en-Iouda nem nefesnēou: Khere ne ō Tiparthenos: sha epjōk evol ennisēou.\n\nKhere ne ō Tiparthenos: tithe-ōria ente Mō-usēs: Khere ne ō Tiparthenos: ethmau empidespotēs.\n\nKhere ne ō Tiparthenos: etjom en-Iēsou nem Gedeōn: Khere ne ō Tiparthenos: pi-etshro em-Varak nem Sampsōn.\n\nKhere ne ō Tiparthenos: ethmetjōri en-Samouēl: Khere ne ō Tiparthenos: tiourō emp-Israēl.\n\nKhere ne ō Tiparthenos: tihupomonē ente Iōb: Khere ne ō Tiparthenos: khen outho enrēti nem oumēsh ensop.\n\nKhere ne ō Tiparthenos: etsheri en-Dauid epouro: Khere ne ō Tiparthenos: thēetjolh empitouvo.\n\nKhere ne ō Tiparthenos: ti-eshferi en-Solomōn: Khere ne ō Tiparthenos: pi-eshvōt enshe empeukinōn.\n\nKhere ne ō Tiparthenos: ti-eprofētia en-Ēsa-ēas: Khere ne ō Tiparthenos: eptastho en-Ieremias.\n\nKhere ne ō Tiparthenos: epharma en-Iezekiēl: Khere ne ō Tiparthenos: tihorasis en-Daniēl.\n\nKhere ne ō Tiparthenos: eptshisi en-Ēlias: Khere ne ō Tiparthenos: thē-etasmisi em-Masias.\n\nKhere ne ō Tiparthenos: pi-ehmot en-Eliseos: Khere ne ō Tiparthenos: tishelet enkatharos.\n\nKhere ne ō Tiparthenos: efrashi enniaggelos: Khere ne ō Tiparthenos: epounof enniarkhiaggelos.\n\nKhere ne ō Tiparthenos: eptaio ennipatriarkhēs: Khere ne ō Tiparthenos: Ps ephiōish ente ni-eprofētēs.\n\nKhere ne ō Tiparthenos: eflas enni-apostolos: Khere ne ō Tiparthenos: eptouvo enniparthenos.\n\nKhere ne ō Tiparthenos: pi-ekhlom ennimarturos: Khere ne ō Tiparthenos: epthelēl ennidikeos.\n\nKhere ne ō Tiparthenos: eptajro enniekeklēsia: Khere ne ō Tiparthenos: tiagia emmēi Maria.\n\nKhere ne ō Tiparthenos: timoumi enōnkh etasvevi: Khere ne ō Tiparthenos: epkhō evol ente ninovi.\n\nKhere ne ō Tiparthenos: piseperma ente p-Israēl: Khere ne ō Tiparthenos: are-ejfo nan en-Emannou-ēl.\n\nKhere ne ō Tiparthenos: ethebsō enni-estauroforos: Khere ne ō Tiparthenos: tihelpis enni-ekhristianos.\n\nTentiho aripenmeu-i: ō ti-eprostatēs etenhot: nahren Eptshois fē-etaferrōmi: ouoh aftinan empefehmot.\n\nEthreftajron khen pinahti: anon tēren kha nefesōou: enteftshimōit nan khen peftimati: sha epjōk evol enni-ehoou.\n\nNtefareh epenmanesōou: abba (...) efetshisi empefōou: ethrefamoni empeflaos: nem nenioti enepiskopos.\n\nNtefshōp erof enneneukhē: entefshōpi nan enouma-emfōt: entefti-emton ennipsukhē: enni-ekhristianos etauenkot.\n\nNtefti nan enouparrēsia: hiten nitōbh nem ni-epresvia: ente tentshois ennēb Maria: sha epjōk evol ennisuntelia.\n\nTenti-ōou ne ō thē-etenhot: nem piaggelos ente pi-esmou: je khere thēethmeh enehmot: o Kurios meta sou.\n\nAri-epresveuin e-ehrēi ejōn: ō tentshois ennēb tēren tithe-otokos: Maria ethmau em-Pensōtēr: entefkha nennovi nan evol.',
+      },
+      {
+        language: 'english',
+        text: 'For truly it is: meet and right: to praise the True God : the Lord who dwells in Heaven.\n\nHis Name is beautiful and blessed: in the mouths of His saints: this is God the Father: the Son and the Holy Spirit.\n\nWe glorify the pure: Mary the Theotokos: the second tabernacle: the True Treasure.\n\nWe utter crying out: with great charm saying: Hail to you O Virgin: the Lord is with you.\n\nHail to you O Virgin: the salvation of Adam and Eve: Hail to you O Virgin: the joy of the ages.\n\nHail to you O Virgin: the Joy of righteous Abel: Hail to you O Virgin: exalted above the temple.\n\nHail to you O Virgin: the ark of Noah: Hail to you O Virgin: to the last breath.\n\nHail to you O Virgin: the grace of our father Abraham: Hail to you O Virgin: the faithful advocate.\n\nHail to you O Virgin: the Redemption of Saint Isaac: Hail to you O Virgin: the Mother of the Holy.\n\nHail to you O Virgin: the joy of our father Jacob: Hail to you O Virgin: thousands and myriads of myriads.\n\nHail to you O Virgin: the pride of Judah and his brothers: Hail to you O Virgin: to the end of time.\n\nHail to you O Virgin: the apparition of Moses: Hail to you O Virgin: the Mother of the Master.\n\nHail to you O Virgin: the might of Joshua and Gideon: Hail to you O Virgin: the triumph of Barak and Samson.\n\nHail to you O Virgin: the power of Samuel: Hail to you O Virgin: the Queen of Israel.\n\nHail to you O Virgin: the patience of Job: Hail to you O Virgin: by many varieties and various times.\n\nHail to you O Virgin: the Daughter of King David: Hail to you O Virgin: who was clothed in purity.\n\nHail to you O Virgin: the friend of Solomon: Hail to you O Virgin: the almond wooden rod.\n\nHail to you O Virgin: the prophecy of Isaiah: Hail to you O Virgin: the restoration of Jeremiah.\n\nHail to you O Virgin: the chariot of Ezekiel: Hail to you O Virgin: the vision of Daniel.\n\nHail to you O Virgin: the exaltation of Elijah: Hail to you O Virgin: who gave birth to the Messiah.\n\nHail to you O Virgin: the grace of Elisha: Hail to you O Virgin: the pure bride.\n\nHail to you O Virgin: the joy of the angels: Hail to you O Virgin: the rejoicing of the archangels.\n\nHail to you O Virgin: the glory of the Patriarchs: Hail to you O Virgin: the preaching of the prophets.\n\nHail to you O Virgin: the tongue of the Apostles: Hail to you O Virgin: the purity of the virgins.\n\nHail to you O Virgin: the crown of the martyrs: Hail to you O Virgin: the joy of the righteous.\n\nHail to you O Virgin: the confirmation of the churches: Hail to you O Virgin: the true Saint Mary.\n\nHail to you O Virgin: the flowing source of life: Hail to you O Virgin: the forgiveness of sins.\n\nHail to you O Virgin: them offspring of Israel: Hail to you O Virgin: who bore for us Emmanuel.\n\nHail to you O Virgin: the vestment of the crossbearers: Hail to you O Virgin: the hope of the Christians.\n\nWe ask you, remember us: O the faithful advocate: before the Lord who became Man: and granted us His Grace.\n\nThat He may confirm: all of us, His flock: and guide us with His delight: to the end of days.\n\nAnd keep our shepherd: Abba (...) and exalt his glory: that he may shepherd his people: together with our fathers the bishops.\n\nAnd accept our prayers: be our shelter: and repose the souls: of the Christians who have slept.\n\nAnd grant us favor: through the prayers and intercessions: of our Lady Mary: to the end.\n\nWe glorify you O faithful: with the angel of blessing saying: Hail to you full of grace: the Lord is with you.\n\nIntercede on our behalf: O lady of us all, the Theotokos: Mary the Mother of our Savior: that He may forgive us our sins.',
+      },
+      {
+        language: 'arabic',
+        text: 'لأنه بالحقيقة مستحق و عادل أن نسبح الإله الحقيقي الرب الكائن في السماء.\n\nاسمه حلوٌ و مبارك في أفواه القديسين أعني الله الآب و الأبن و الروح القدس.\n\nو نمجد مريم العفيفة والدة الاله، القبة الثانية، الكنز الحقيقي.\n\nو نصرخ جهراً ببهاء عظيم قائلين السلام لكِ أيتها العذراء الرب معكِ.\n\nالسلام لكِ أيتها العذراء خلاص آدم و خواء السلام لكِ أيتها العذراء فرح الأجيال.\n\nالسلام لكِ أيتها العذراء فرح هبيل البار السلام لكِ أيتها العذراء المرتفعة علي الهيكل.\n\nالسلام لكِ ايتها ألعذراء فُلك نوح السلام لكِ أيتها العذراء الي النفس الاخير.\n\nالسلام لكِ أيتها العذراء نعمة أبينا ابراهيم السلام لكِ أيتها العذراء الشفيعة الامينة.\n\nالسلام لكِ أيتها العذراء خلاص القديس اسحق السلام لكِ أيتها العذراء أم القدوس.\n\nالسلام لكِ أيتها العذراء تعليل أبينا يعقوب السلام لكِ أيتها العذراء ألوف و ربوات مضاعفة.\n\nالسلام لكِ أيتها العذراء فخر يهوذا و إخوتة السلام لكِ أيتها العذراء إلي كمال الأزمان.\n\nالسلام لكِ أيتها العذراء رؤيا موسي السلام لكِ أيتها العذراء أم السيد.\n\nالسلام لكِ أيتها العذراء قوة يشوع و جدعون السلام لكِ أيتها العذراء غلبة باراق و شمشون.\n\nالسلام لكِ أيتها العذراء قوة صموئيل السلام لكِ أيتها العذراء ملكة إسرائيل.\n\nالسلام لكِ أيتها العذراء صبر أيوب السلام لكِ أيتها العذراء بأنواع كثيرة و مرات عديدة.\n\nالسلام لكِ أيتها العذراء إبنة الملك داود السلام لكِ أيتها العذراء المتسربلة بالطهارة.\n\nالسلام لكِ أيتها العذراء صديقة سليمان السلام لكِ أيتها العذراء عصا خشب اللوز.\n\nالسلام لكِ أيتها العذراء نبوة أشعياء السلام لكِ أيتها العذراء عودة أرمياء.\n\nالسلام لكِ أيتها العذراء مركبة حزقيال السلام لكِ أيتها العذراء رؤيا دانيال.\n\nالسلام لكِ أيتها العذراء رفعة إيليا السلام لكِ أيتها العذراء التي ولدت ماسيا.\n\nالسلام لكِ أيتها العذراء نعمة أليشع السلام لكِ أيتها العذراء العروس النقية.\n\nالسلام لكِ أيتها العذراء فرح الملائكة السلام لكِ أيتها العذراء بهجة رؤساء الملائكة.\n\nالسلام لكِ أيتها العذراء كرامة رؤساء الآباء السلام لكِ أيتها العذراء كرازة الأنبياء.\n\nالسلام لكِ أيتها العذراء لسان الرسل السلام لكِ أيتها العذراء طُهر العذاري.\n\nالسلام لكِ أيتها العذراء إكليل الشهداء السلام لكِ أيتها العذراء تهليل الصديقين.\n\nالسلام لكِ أيتها العذراء ثبات الكنائس السلام لكِ أيتها العذراء القديسة الحقيقة مريم.\n\nالسلام لكِ أيتها العذراء ينبوع الحياة الفائض السلام لكِ أيتها العذراء مغفرة الخطايا.\n\nالسلام لكِ أيتها العذراء نسل إسرائيل السلام لكِ أيتها العذراء ولدتِ لنا عمانوئيل.\n\nالسلام لكِ أيتها العذراء حلة لابسي الصليب السلام لكِ أيتها العذراء رجاء المسيحيين.\n\nنسألك أن تذكرينا أيتها الشفيعة الأمينة عند الرب الذي تأنس و أعطانا نعمته.\n\nليثبتنا في الايمان نحن كلنا غنمه و يرشدنا بمسرّته إلي كمال الأيام.\n\nو يحفظ راعينا أنبا (…) و يرفع مجده ليرعي شعبه مع أبائنا الأساقفة.\n\nو يقبل إليه صلواتنا و يكون لنا ملجاً و ينبح نفوس المسيحيين الراقدين.\n\nو يمنحنا دالة بطلبات و شفاعات سيدتنا السيدة مريم إلي الأنقضاء.\n\nنمجدك أيتها الأمينة مع ملاك البركة قائلين السلام لكِ يا ممتلئة نعمة الرب معكِ.\n\nإشفعى فينا يا سيدتنا كلنا السيدة والدة الإله مريم أم مخلصنا ليغفر لنا خطايانا.',
+      },
+    ];
+  }
+  const kiahkGabrielDoxology = kiahkMatins.hymns.find((h) => h.title === 'Ⲛ̀ⲑⲟⲕ ⲟⲩⲛⲓϣϯ (Kiahk Doxology for Archangel Gabriel)');
+  if (kiahkGabrielDoxology) {
+    kiahkGabrielDoxology.versions = [
+      {
+        language: 'coptic',
+        text: 'Ⲛ̀ⲑⲟⲕ ⲟⲩⲛⲓϣϯ ⲁ̀ⲗⲏⲑⲱⲥ: ⲱ̀ ⲡⲓϥⲁⲓϣⲉⲛⲛⲟⲩϥⲓ ⲛ̀ⲕⲁⲗⲟⲥ: ϧⲉⲛ ⲛⲓⲧⲁⲝⲓⲥ ⲛ̀ⲁⲅⲅⲉⲗⲓⲕⲟⲛ: ⲛⲉⲙ ⲛⲓⲧⲁⲅⲙⲁ ⲛ̀ⲉ̀ⲡⲟⲩⲣⲁⲛⲓⲟⲛ.\n\nⲄⲁⲃⲣⲓⲏⲗ ⲡⲓϥⲁⲓϣⲉⲛⲛⲟⲩϥⲓ: ⲡⲓⲛⲓϣϯ ϧⲉⲛ ⲛⲓⲁⲅⲅⲉⲗⲟⲥ: ⲛⲉⲙ ⲛⲓⲧⲁⲅⲙⲁ ⲉⲑⲟⲩⲁⲃ ⲉⲧϭⲟⲥⲓ: ⲉⲧϥⲁⲓ ϧⲁ ⲧ̀ⲥⲏϥⲓ ⲛ̀ϣⲁϩ ⲛ̀ⲭ̀ⲣⲱⲙ.\n\nⲀϥⲛⲁⲩ ⲅⲁⲣ ⲉ̀ⲡⲉⲕⲧⲁⲓⲟ: ⲛ̀ϫⲉ Ⲇⲁⲛⲓⲏⲗ ⲡⲓⲡ̀ⲣⲟⲫⲏⲧⲏⲥ: ⲟⲩⲟϩ ⲁⲕⲧⲁⲙⲟϥ ⲉ̀ⲡⲓⲙⲩⲥⲧⲏⲣⲓⲟⲛ: ⲛ̀Ϯⲧ̀ⲣⲓⲁⲥ ⲛ̀ⲣⲉϥⲧⲁⲛϧⲟ.\n\nⲞⲩⲟϩ Ⲍⲁⲭⲁⲣⲓⲁⲥ ⲡⲓⲟⲩⲏⲃ: ⲛ̀ⲑⲟⲕ ⲁⲕϩⲓϣⲉⲛⲛⲟⲩϥⲓ ⲛⲁϥ: ϧⲉⲛ ⲡ̀ϫⲓⲛⲙⲓⲥⲓ ⲙ̀ⲡⲓⲡ̀ⲣⲟⲇⲣⲟⲙⲟⲥ: Ⲓⲱⲁⲛⲛⲏⲥ ⲡⲓⲣⲉϥϯⲱⲙⲥ.\n\nⲀⲕϩⲓϣⲉⲛⲛⲟⲩϥⲓ ⲟⲛ ⲛ̀Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ϫⲉ ⲭⲉⲣⲉ ⲑⲏⲉⲑⲙⲉϩ ⲛ̀ϩ̀ⲙⲟⲧ: Ⲡ̀ϭⲟⲓⲥ ⲛⲉⲙⲉ ⲧⲉⲣⲁⲙⲓⲥⲓ: ⲙ̀Ⲡⲓⲥⲱⲧⲏⲣ ⲙ̀ⲡⲓⲕⲟⲥⲙⲟⲥ ⲧⲏⲣϥ.\n\nⲀ̀ⲣⲓⲡ̀ⲣⲉⲥⲃⲉⲩⲓⲛ ⲉ̀ϩ̀ⲣⲏⲓ ⲉ̀ϫⲱⲛ: ⲱ̀ ⲡⲓⲁⲣⲭⲏⲁⲅⲅⲉⲗⲟⲥ ⲉⲑⲟⲩⲁⲃ: Ⲅⲁⲃⲣⲓⲏⲗ ⲡⲓϥⲁⲓϣⲉⲛⲛⲟⲩϥⲓ: ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ.',
+      },
+      {
+        language: 'englishCoptic',
+        text: 'Enthok ounishti alēthōs: ō pifaishennoufi enkalos: khen nitaksis enaggelikon: nem nitagma enepouranion.\n\nGabriēl pifaishennoufi: pinishti khen niaggelos: nem nitagma ethouab ettshosi: etfai kha etsēfi enshah enekhrōm.\n\nAfnau gar epektaio: enje Daniēl pi-eprofētēs: ouoh aktamof epimustērion: en-Ti-etrias enreftankho.\n\nOuoh Zakharias piouēb: enthok akhishennoufi naf: khen epjinmisi empi-eprodromos: Iōannēs pireftiōms.\n\nAkhishennoufi on en-Tiparthenos: je khere thēethmeh enehmot: Eptshois neme teramisi: em-Pisōtēr empikosmos tērf.\n\nAri-epresveuin e-ehrēi ejōn: ō piarkhēaggelos ethouab: Gabriēl pifaishennoufi: entefkha nennovi nan evol.',
+      },
+      {
+        language: 'english',
+        text: 'You are truly great: O good announcer: among the angelic ranks: and the heavenly orders.\n\nGabriel the announcer: the great among the angels: and the exalted holy orders: who carry fiery flaming swords.\n\nFor Daniel the prophet: beheld your honor: and you revealed to him the mystery: of the life-giving Trinity.\n\nTo Zacharias the priest: you have announced: the birth of the forerunner: John the Baptist.\n\nLikewise you announced to the Virgin: saying "Hail to you O full of grace: the Lord is with you: you shall bring forth the Savior of the whole world."\n\nIntercede on our behalf: O holy archangel: Gabriel the announcer: that He may forgive us our sins.',
+      },
+      {
+        language: 'arabic',
+        text: 'أنت عظيم حقاً، أيها المبشر الحسن، في الطقوس الملائكية، والطغمات السمائية.\n\nيا غبريـال المبشر، العظيم في الملائكة، والطغمات المقدسة العلوية، حامل السيف الملتهب ناراً.\n\nقد نظر كرامتك، دانيال النبي، وأعلمته، سر الثالوث المحيي.\n\nوزكريا الكاهن، أنت بشرته، بميلاد السابق، يوحنا المعمداني.\n\nوبشرت أيضاً العذراء، قائلاً "السلام لكِ يا ممتلئة نعمة، الرب معكِ، ستلدين مخلص العالم كله."\n\nإشفع فينا [أمام الرب]، يا رئيس الملائكة الطاهر، غبريـال المبشر، ليغفر لنا خطايانا.',
+      },
+    ];
+  }
+  const kiahkPsalmTrailer = kiahkMatins.hymns.find((h) => h.title === 'Ⲥⲱⲧⲉⲙ ⲧⲁϣⲉⲣⲓ (Psalm Trailer)');
+  if (kiahkPsalmTrailer) {
+    kiahkPsalmTrailer.versions = [
+      {
+        language: 'coptic',
+        text: 'Ⲥⲱⲧⲉⲙ ⲧⲁϣⲉⲣⲓ ⲁ̀ⲛⲁⲩ ⲣⲉⲕ ⲡⲉⲙⲁϣϫ: ⲁ̀ⲣⲓⲡ̀ⲱⲃϣ ⲙ̀ⲡⲉⲗⲁⲟⲥ ⲛⲉⲙ ⲡ̀ⲏⲓ ⲧⲏⲣϥ ⲛ̀ⲧⲉ ⲡⲉⲓⲱⲧ. Ϫⲉ ⲁ̀ⲡⲓⲟⲩⲣⲟ ⲉ̀ⲣⲉ̀ⲡⲓⲑⲓⲙⲓⲛ ⲉ̀ⲡⲉⲥⲁⲓ: ϫⲉ ⲟⲩⲏⲓ ⲛ̀ⲑⲟϥ ⲡⲉ Ⲡⲉϭⲟⲓⲥ.',
+      },
+      {
+        language: 'englishCoptic',
+        text: 'Sōtem tasheri anau rek pemashj: ari-epōbsh empelaos nem epēi tērf ente peiōt. Je apiouro erepithimin epesai: je ouēi enthof pe Petshois.',
+      },
+      {
+        language: 'english',
+        text: 'Listen, O daughter, behold, and incline your ear; forget also your people, and your father\'s house. Because the king has desired your beauty: for He is your Lord.',
+      },
+      {
+        language: 'arabic',
+        text: 'اسمعي يا ابنتي وانظري وأميلي أذنك وأنسي شعبك وبيت أبيك. فَيَشْتَهِيَ الْمَلِكُ حُسْنَكِ لأَنَّهُ هُوَ سَيَّدُكِ.',
+      },
+    ];
+  }
+  const kiahkGospelResponse = kiahkMatins.hymns.find((h) => h.title === 'Ⲧⲉⲛϯ ⲛⲉ ⲙ̀ⲡⲓⲭⲉⲣⲉⲧⲓⲥⲙⲟⲥ (Gospel Response)');
+  if (kiahkGospelResponse) {
+    kiahkGospelResponse.versions = [
+      {
+        language: 'coptic',
+        text: 'Ⲧⲉⲛϯ ⲛⲉ ⲙ̀ⲡⲓⲭⲉⲣⲉⲧⲓⲥⲙⲟⲥ: ⲛⲉⲙ Ⲅⲁⲃⲣⲓⲏⲗ ⲡⲓⲁⲅⲅⲉⲗⲟⲥ: ϫⲉ ⲭⲉⲣⲉ ⲕⲉⲭⲁⲣⲓⲧⲱⲙⲉⲛⲏ: ⲟ̀ Ⲕⲩⲣⲓⲟⲥ ⲙⲉⲧⲁ ⲥⲟⲩ.\n\nⲈⲑⲃⲉ ⲫⲁⲓ ⲧⲉⲛϯⲱ̀ⲟⲩ ⲛⲉ: ϩⲱⲥ Ⲑⲉⲟ̀ⲧⲟⲕⲟⲥ ⲛ̀ⲥⲏⲟⲩ ⲛⲓⲃⲉⲛ: ⲙⲁϯϩⲟ ⲉ̀Ⲡ̀ϭⲟⲓⲥ ⲉ̀ϩ̀ⲣⲏⲓ ⲉ̀ϫⲱⲛ: ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ.\n\nϪⲉ ϥ̀ⲥ̀ⲙⲁⲣⲱⲟⲩⲧ ⲛ̀ϫⲉ Ⲫⲓⲱⲧ ⲛⲉⲙ Ⲡϣⲏⲣⲓ: ⲛⲉⲙ Ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ ⲉⲑⲟⲩⲁⲃ: ϯⲧ̀ⲣⲓⲁⲥ ⲉⲧϫⲏⲕ ⲉ̀ⲃⲟⲗ: ⲧⲉⲛⲟⲩⲱϣⲧ ⲙ̀ⲙⲟⲥ ⲧⲉⲛϯⲱ̀ⲟⲩ ⲛⲁⲥ.',
+      },
+      {
+        language: 'englishCoptic',
+        text: 'Tenti ne empikheretismos: nem Gabriēl piaggelos: je khere kekharitōmenē: o Kurios meta sou.\n\nEthve fai tenti-ōou ne: hōs The-otokos ensēou niven: matiho e-Eptshois e-ehrēi ejōn: entefkha nennovi nan evol.\n\nJe efesmarōout enje Fiōt nem Pshēri: nem Pi-epneuma ethouab: ti-etrias etjēk evol: tenouōsht emmos tenti-ōou nas.',
+      },
+      {
+        language: 'english',
+        text: 'We send you greetings, with Gabriel the angel, saying "Hail to you O full of grace, the Lord is with you."\n\nWherefore we glorify you, as the ever-Theotokos, ask the Lord on our behalf, that He may forgive us our sins.\n\nBlessed be the Father and the Son and the Holy Spirit, the perfect Trinity. We worship Him and glorify Him.',
+      },
+      {
+        language: 'arabic',
+        text: 'نعطيكِ السلام، مع غبريال الملاك قائلين، "السلام لكِ يا ممتلئة نعمة، الرب معكِ."\n\nمن أجل هذا نمجدِك، كوالدة الإله كل حين، إسألي الرب عنا، ليغفر لنا خطايانا.\n\nلأنه مباركٌ الآب والابن والروح القدس، الثالوث الكامل، نسجد له ونمجده.',
+      },
+    ];
+  }
+  const kiahkGospelResponseTwo = kiahkMatins.hymns.find((h) => h.title === 'Ⲧⲉⲛϭⲓⲥⲓ ⲙ̀ⲙⲟ ϧⲉⲛ ⲟⲩⲉⲙⲡ̀ϣⲁ (Gospel Response)');
+  if (kiahkGospelResponseTwo) {
+    kiahkGospelResponseTwo.versions = [
+      {
+        language: 'coptic',
+        text: 'Ⲧⲉⲛϭⲓⲥⲓ ⲙ̀ⲙⲟ ϧⲉⲛ ⲟⲩⲉⲙⲡ̀ϣⲁ: ⲛⲉⲙ Ⲉ̀ⲗⲓⲥⲁⲃⲉⲧ ⲧⲉⲥⲩⲅⲅⲉⲛⲏⲥ: ϫⲉ ⲧⲉⲥ̀ⲙⲁⲣⲱⲟⲩⲧ ⲛ̀ⲑⲟ ϧⲉⲛ ⲛⲓϩⲓⲟⲙⲓ: ϥ̀ⲥ̀ⲙⲁⲣⲱⲟⲩⲧ ⲛ̀ϫⲉ ⲡ̀ⲟⲩⲧⲁϩ ⲛ̀ⲧⲉ ⲧⲉⲛⲉϫⲓ.\n\nⲈⲑⲃⲉ ⲫⲁⲓ ⲧⲉⲛϯⲱ̀ⲟⲩ ⲛⲉ: ϩⲱⲥ Ⲑⲉⲟ̀ⲧⲟⲕⲟⲥ ⲛ̀ⲥⲏⲟⲩ ⲛⲓⲃⲉⲛ: ⲙⲁϯϩⲟ ⲉ̀Ⲡ̀ϭⲟⲓⲥ ⲉ̀ϩ̀ⲣⲏⲓ ⲉ̀ϫⲱⲛ: ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ.\n\nϪⲉ ϥ̀ⲥ̀ⲙⲁⲣⲱⲟⲩⲧ ⲛ̀ϫⲉ Ⲫⲓⲱⲧ ⲛⲉⲙ Ⲡϣⲏⲣⲓ: ⲛⲉⲙ Ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ ⲉⲑⲟⲩⲁⲃ: ϯⲧ̀ⲣⲓⲁⲥ ⲉⲧϫⲏⲕ ⲉ̀ⲃⲟⲗ: ⲧⲉⲛⲟⲩⲱϣⲧ ⲙ̀ⲙⲟⲥ ⲧⲉⲛϯⲱ̀ⲟⲩ ⲛⲁⲥ.',
+      },
+      {
+        language: 'englishCoptic',
+        text: 'Tentshisi emmo khen ouemepsha: nem Elisavet tesuggenēs: je te-esmarōout entho khen nihiomi: efesmarōout enje epoutah ente teneji.\n\nEthve fai tenti-ōou ne: hōs The-otokos ensēou niven: matiho e-Eptshois e-ehrēi ejōn: entefkha nennovi nan evol.\n\nJe efesmarōout enje Fiōt nem Pshēri: nem Pi-epneuma ethouab: ti-etrias etjēk evol: tenouōsht emmos tenti-ōou nas.',
+      },
+      {
+        language: 'english',
+        text: 'We exalt you worthily, with Elizabeth your cousin saying, "Blessed are you among women, and blessed is the fruit of your womb."\n\nWherefore we glorify you, as the ever-Theotokos, ask the Lord on our behalf, that He may forgive us our sins.\n\nBlessed be the Father and the Son and the Holy Spirit, the perfect Trinity. We worship Him and glorify Him.',
+      },
+      {
+        language: 'arabic',
+        text: 'نعظمكِ بإستحقاق، مع أليصابات نسيبتِك قائلين، "مباركة أنتِ في النساء، ومباركة هي ثمرة بطنِك."\n\nمن أجل هذا نمجدِك، كوالدة الإله كل حين، إسألي الرب عنا، ليغفر لنا خطايانا.\n\nلأنه مباركٌ الآب والابن والروح القدس، الثالوث الكامل، نسجد له ونمجده.',
+      },
+    ];
+  }
+  const kiahkConcludingHymn = kiahkMatins.hymns.find((h) => h.title === 'Concluding Hymn');
+  if (kiahkConcludingHymn) {
+    kiahkConcludingHymn.versions = [
+      {
+        language: 'coptic',
+        text: 'Ⲁⲙⲏⲛ: ⲁⲗⲗⲏⲗⲟⲩⲓⲁ ⲇⲟⲝⲁ Ⲡⲁⲧⲣⲓ ⲕⲉ Ⲩⲓⲱ ⲕⲉ ⲁ̀ⲅⲓⲱ Ⲡⲛⲉⲩⲙⲁⲧⲓ: ⲕⲉ ⲛⲩⲛ ⲕⲉ ⲁ̀ⲓ̀ ⲕⲉ ⲓⲥ ⲧⲟⲩⲥ ⲉ̀ⲱ̀ⲛⲁⲥ ⲧⲱⲛ ⲉ̀ⲱ̀ⲛⲱⲛ: ⲁ̀ⲙⲏⲛ.\n\nⲦⲉⲛⲱϣ ⲉ̀ⲃⲟⲗ ⲉⲛϫⲱ ⲙ̀ⲙⲟⲥ: ϫⲉ ⲱ̀ Ⲡⲉⲛⲟ︦ⲥ︦ Ⲓⲏ︦ⲥ︦ Ⲡⲭ︦ⲥ︦. Ⲡⲓⲙⲓⲥⲓ ⲉ̀ⲃⲟⲗϧⲉⲛ Ⲫ̀ⲓⲱⲧ ϧⲁϫⲱⲟⲩ ⲛ̀ⲛⲓⲉ̀ⲱⲛ ⲧⲏⲣⲟⲩ. Ⲥⲱϯ ⲙ̀ⲙⲟⲛ ⲟⲩⲟϩ ⲛⲁⲓ ⲛⲁⲛ.\n\nⲔⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ: Ⲕⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ: Ⲕⲩⲣⲓⲉ ⲉⲩⲗⲟⲅⲏⲥⲟⲛ ⲁ̀ⲙⲏⲛ. Ⲥ̀ⲙⲟⲩ ⲉ̀ⲣⲟⲓ: ⲥ̀ⲙⲟⲩ ⲉ̀ⲣⲟⲓ: ⲓⲥ ϯⲙⲉⲧⲁⲛⲟⲓⲁ: ⲭⲱ ⲛⲏⲓ ⲉ̀ⲃⲟⲗ: ϫⲱ ⲙ̀ⲡⲓⲥ̀ⲙⲟⲩ.',
+      },
+      {
+        language: 'englishCoptic',
+        text: 'Amēn: allēlouia doksa Patri ke Uiō ke agiō Pneumati: ke nun ke a-i ke is tous e-ōnas tōn e-ōnōn: amēn.\n\nTenōsh evol enjō emmos: je ō Pentshois Iēsous Pi-ekhristos. Pimisi evolkhen Efiōt khajōou enni-eōn tērou. Sōti emmon ouoh nai nan.\n\nKurie ele-ēson: Kurie ele-ēson: Kurie eulogēson amēn. Esmou eroi: esmou eroi: is timetanoia: khō nēi evol: jō empi-esmou.',
+      },
+      {
+        language: 'english',
+        text: 'Amen. Allelluia. Glory to the Father, and to the Son, and to the Holy Spirit. Now and ever and unto the ages of the ages. Amen.\n\nWe proclaim and say: “O our Lord Jesus Christ, the Begotten of the Father before all the ages." Save us and have mercy on us.\n\nLord have mercy. Lord have mercy. Lord bless us. Amen. Bless me, bless me. Behold, my repentance. Forgive me. Say the blessing.',
+      },
+      {
+        language: 'arabic',
+        text: 'امين . هلليلويا . المجدُ للآب والابن والروح القدس، الآن وكل أوان وإلى دهرِ الدهورِ . آمين .\n\nنصرخ قائلين: يا ربنا يسوع المسيح.المولود من الآب قبل كل الدهور.\n\nيا رب إرحم، يا رب إرحم، يا رب بارك آمين. باركوا عليَّ، باركوا عليَّ، ها مطانية، إغفروا لي، قُل البركة.',
       },
     ];
   }
@@ -5218,6 +5450,53 @@ if (kiahkMatins && annualMatins) {
   for (const hymn of kiahkMatins.hymns) {
     const source = annualMatins.hymns.find((h) => h.id === kiahkMatinsFromAnnual[hymn.title]);
     if (source) hymn.versions = source.versions.map((version) => ({ ...version }));
+  }
+  // No recordings in Kiahk Matins yet, not even the ones that came along with the copied text
+  for (const hymn of flattenHymns(kiahkMatins.hymns)) {
+    for (const version of hymn.versions) delete version.audio;
+  }
+}
+
+// ---- Kiahk > Vespers: the same titles and lyrics as Kiahk Matins, except the Psalm Trailer ----
+const kiahkVespers = seasons
+  .find((s) => s.id === 'kiahk')
+  ?.services.find((s) => s.id === 'kiahk-vespers');
+
+// A copy of a Matins item (and of everything inside it) under a Vespers id
+const kiahkMatinsAsVespers = (hymn: Hymn): Hymn => ({
+  ...hymn,
+  id: hymn.id.replace('kiahk-matins-', 'kiahk-vespers-'),
+  versions: hymn.versions.map((v) => ({ ...v })),
+  children: hymn.children?.map(kiahkMatinsAsVespers),
+});
+
+if (kiahkVespers && kiahkMatins) {
+  kiahkVespers.hymns = kiahkMatins.hymns.filter((h) => !h.title.endsWith('(Psalm Trailer)')).map(kiahkMatinsAsVespers);
+  // Vespers has its own Psalm Trailer, right after the Alleluia
+  const kiahkVespersAlleluia = kiahkVespers.hymns.findIndex((h) => h.title === 'Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ');
+  if (kiahkVespersAlleluia >= 0) {
+    kiahkVespers.hymns.splice(kiahkVespersAlleluia + 1, 0, {
+      id: 'kiahk-vespers-psalm-trailer',
+      title: 'Ⲡϭⲟⲓⲥ ⲁⲓⲟϣ ⲟⲩⲃⲏⲕ ⲥⲱⲧⲉⲙ ⲉ̀ⲣⲟⲓ (Psalm Trailer)',
+      versions: [
+          {
+            language: 'coptic',
+            text: 'Ⲡϭⲟⲓⲥ ⲁⲓⲟϣ ⲟⲩⲃⲏⲕ ⲥⲱⲧⲉⲙ ⲉ̀ⲣⲟⲓ: ⲙⲁϩ̀ⲑⲏⲕ ⲉ̀ⲧ̀ⲥ̀ⲙⲏ ⲛ̀ⲧⲉ ⲡⲁϯϩⲟ: ⲉ̀ⲡ̀ϫⲓⲛ ⲧⲁⲱϣ ⲉ̀ⲡ̀ϣⲟⲓ ϩⲁⲣⲟⲕ.\n\nⲘⲁⲣⲉⲥ ⲥⲱⲟⲩⲧⲉⲛ ⲙ̀ⲡⲉⲕⲙ̀ⲑⲟ ⲛ̀ϫⲉ ⲧⲁⲡ̀ⲣⲟⲥⲉⲩⲭⲏ ⲙ̀ⲫ̀ⲣⲏϯ ⲛ̀ⲟⲩⲥ̀ⲑⲟⲓⲛⲟϥⲓ: ⲡ̀ⲧⲱⲛϥ ⲉ̀ⲡ̀ϣⲱⲓ ⲛ̀ⲧⲉⲛⲁϫⲓϫⲟⲩϣⲟⲩϣⲱⲟⲩϣⲓ ⲛ̀ⲧⲉ ϩⲁⲛ ⲁ̀ⲣⲟⲩϩⲓ ⲡⲉ.',
+          },
+          {
+            language: 'englishCoptic',
+            text: 'Ptshois aiosh ouvēk sōtem eroi: ma-ehthēk e-etesmē ente patiho: e-epjin taōsh e-epshoi harok.\n\nMares sōouten empekemtho enje ta-eproseukhē emefrēti enou-esthoinofi: eptōnf e-epshōi entenajijoushoushōoushi ente han arouhi pe.',
+          },
+          {
+            language: 'english',
+            text: 'Lord, I cry out to You; make haste to me! Give ear to my voice when I cry out to You.\n\nLet my prayer be set before You as incense, the lifting up of my hands as the evening sacrifice.',
+          },
+          {
+            language: 'arabic',
+            text: 'يَا رَبُّ إِلَيْكَ دَعَوْتُ، فَأَسْرِعْ لإِغَاثَتِي. أَصْغِ إِلَى صَوْتِي عِنْدَمَا أَصْرُخُ إِلَيْكَ.\n\nلِتَكُنْ صَلَاتِي أَمَامَكَ كَالْبَخُور، وَ رَفْعُ يَدَيَّ مِثْلَ تَقْدِمَةِ الْمَسَاءِ.',
+          },
+      ],
+    });
   }
 }
 

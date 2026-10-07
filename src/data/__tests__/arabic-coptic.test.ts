@@ -561,6 +561,7 @@ describe('Kiahk Praises & Season > Matins', () => {
       'Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ',
       'Ⲥⲱⲧⲉⲙ ⲧⲁϣⲉⲣⲓ (Psalm Trailer)',
       'Ⲧⲉⲛϯ ⲛⲉ ⲙ̀ⲡⲓⲭⲉⲣⲉⲧⲓⲥⲙⲟⲥ (Gospel Response)',
+      'Ⲧⲉⲛϭⲓⲥⲓ ⲙ̀ⲙⲟ ϧⲉⲛ ⲟⲩⲉⲙⲡ̀ϣⲁ (Gospel Response)',
       'Concluding Hymn',
     ]);
     // two dividers: "Doxologies" and a blank one after the Conclusion of the Doxologies
@@ -592,10 +593,23 @@ describe('Kiahk Praises & Season > Matins', () => {
     expect(text(fatherSon, 'englishCoptic')).toContain('patshois epouro Ge-ōrgios');
     expect(text(fatherSon, 'arabicCoptic')).toContain('پاتشُيس إپورُ');
     expect(new Set(service.hymns.map((h) => h.id)).size).toBe(service.hymns.length);
-    // only the Introduction and the Conclusion of the Doxologies have lyrics so far (copied from Annual Matins)
+    // the Introduction and the Conclusion of the Doxologies are copied from Annual Matins, the first two Kiahk doxologies have their own lyrics
+    const writtenHere = [
+      'Ⲕⲉ ⲅⲁⲣ ⲁⲓϣⲁⲛⲥⲁϫⲓ (First Doxology for Kiahk)',
+      'Ⲉ̀ⲣⲉ ⲡ̀ⲥⲟⲗⲥⲉⲗ ⲛ̀Ϯⲡⲁⲣⲑⲉⲛⲟⲥ (Second Doxology for Kiahk)',
+      'Ⲅⲁⲃⲓⲣⲏⲗ ⲡⲓⲁⲅⲅⲉⲗⲟⲥ (Third Doxology for Kiahk)',
+      'Ϧⲉⲛ ⲡⲓⲁ̀ⲃⲟⲧ (Fourth Doxology for Kiahk)',
+      'Ⲉ̀ⲧⲁ ⲡⲓⲱⲡ (Fifth Doxology for Kiahk)',
+      'Ϥ̀ⲉⲙⲡ̀ϣⲁ ⲅⲁⲣ (Sixth Doxology for Kiahk)',
+      'Ⲛ̀ⲑⲟⲕ ⲟⲩⲛⲓϣϯ (Kiahk Doxology for Archangel Gabriel)',
+      'Ⲥⲱⲧⲉⲙ ⲧⲁϣⲉⲣⲓ (Psalm Trailer)',
+      'Ⲧⲉⲛϯ ⲛⲉ ⲙ̀ⲡⲓⲭⲉⲣⲉⲧⲓⲥⲙⲟⲥ (Gospel Response)',
+      'Concluding Hymn',
+      'Ⲧⲉⲛϭⲓⲥⲓ ⲙ̀ⲙⲟ ϧⲉⲛ ⲟⲩⲉⲙⲡ̀ϣⲁ (Gospel Response)',
+    ];
     const copied = ['Ϧⲉⲛ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ (Introduction to the Doxologies)', 'Ϣⲱⲡⲓ Ⲛ̀ⲑⲟ (The Conclusion of the Doxologies)'];
     for (const hymn of service.hymns) {
-      if (copied.includes(hymn.title)) expect(hymn.versions.length).toBeGreaterThan(0);
+      if (copied.includes(hymn.title) || writtenHere.includes(hymn.title)) expect(hymn.versions.length).toBeGreaterThan(0);
       else expect([hymn.title, hymn.versions.length]).toEqual([hymn.title, 0]);
     }
     const annualMatins = seasons.find((s) => s.id === 'annual')!.services.find((s) => s.id === 'annual-matins')!;
@@ -611,6 +625,127 @@ describe('Kiahk Praises & Season > Matins', () => {
       expect(kiahk.versions.some((v) => v.language === 'arabicCoptic')).toBe(true);
       expect(kiahk.versions.some((v) => v.language === 'arabicEnglish')).toBe(true);
     }
+    // the First and Second Doxology for Kiahk: Coptic, Coptic-English, English and Arabic, in stanzas
+    const doxText = (h: Hymn, language: string) => h.versions.find((v) => v.language === language)?.text ?? '';
+    const firstDoxology = service.hymns.find((h) => h.title === writtenHere[0])!;
+    const secondDoxology = service.hymns.find((h) => h.title === writtenHere[1])!;
+    const [thirdDoxology, fourthDoxology, fifthDoxology] = [2, 3, 4].map((i) => service.hymns.find((h) => h.title === writtenHere[i])!);
+    const [sixthDoxology, gabrielDoxology, psalmTrailer, gospelResponse, concludingHymn, gospelResponseTwo] = [5, 6, 7, 8, 9, 10].map(
+      (i) => service.hymns.find((h) => h.title === writtenHere[i])!
+    );
+    const doxologies = [
+      [firstDoxology, 12],
+      [secondDoxology, 8],
+      [thirdDoxology, 12],
+      [fourthDoxology, 6],
+      [fifthDoxology, 12],
+      [sixthDoxology, 36],
+      [gabrielDoxology, 6],
+      [psalmTrailer, 1],
+      [gospelResponse, 3],
+      [concludingHymn, 3],
+      [gospelResponseTwo, 3],
+    ] as [Hymn, number][];
+    for (const [hymn, count] of doxologies) {
+      for (const language of ['coptic', 'englishCoptic', 'english', 'arabic', 'arabicCoptic', 'arabicEnglish']) {
+        expect([hymn.title, language, doxText(hymn, language).split(/\n\s*\n/).length]).toEqual([hymn.title, language, count]);
+      }
+      expect(hymn.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
+    }
+    expect(doxText(firstDoxology, 'english').startsWith('For when I speak about you')).toBe(true);
+    expect(doxText(firstDoxology, 'coptic').startsWith('Ⲕⲉ ⲅⲁⲣ ⲁⲓϣⲁⲛⲥⲁϫⲓ ⲉⲑⲃⲏϯ')).toBe(true);
+    expect(doxText(secondDoxology, 'english').startsWith('The adornment of the Virgin')).toBe(true);
+    expect(doxText(secondDoxology, 'coptic').startsWith('Ⲉ̀ⲣⲉ ⲡ̀ⲥⲟⲗⲥⲉⲗ ⲛ̀Ϯⲡⲁⲣⲑⲉⲛⲟⲥ')).toBe(true);
+    expect(doxText(thirdDoxology, 'english').startsWith('Gabriel the angel: announced to the Virgin')).toBe(true);
+    expect(doxText(thirdDoxology, 'coptic').startsWith('Ⲅⲁⲃⲓⲣⲏⲗ ⲡⲓⲁⲅⲅⲉⲗⲟⲥ')).toBe(true);
+    expect(doxText(fourthDoxology, 'english').startsWith('On the sixth month')).toBe(true);
+    expect(doxText(fourthDoxology, 'coptic').startsWith('Ϧⲉⲛ ⲡⲓⲁ̀ⲃⲟⲧ')).toBe(true);
+    expect(doxText(fifthDoxology, 'english').startsWith('When the lot fell on Zacharias')).toBe(true);
+    expect(doxText(fifthDoxology, 'coptic').startsWith('Ⲉ̀ⲧⲁ ⲡⲓⲱⲡ')).toBe(true);
+    expect(doxText(sixthDoxology, 'english').startsWith('For truly it is: meet and right')).toBe(true);
+    expect(doxText(sixthDoxology, 'coptic').startsWith('Ϥ̀ⲉⲙⲡ̀ϣⲁ ⲅⲁⲣ')).toBe(true);
+    expect(doxText(gabrielDoxology, 'english').startsWith('You are truly great')).toBe(true);
+    expect(doxText(gabrielDoxology, 'coptic').startsWith('Ⲛ̀ⲑⲟⲕ ⲟⲩⲛⲓϣϯ')).toBe(true);
+    // the Psalm Trailer is one stanza (Psalm 45: Listen, O daughter)
+    expect(doxText(psalmTrailer, 'english').startsWith('Listen, O daughter, behold, and incline your ear')).toBe(true);
+    expect(doxText(psalmTrailer, 'coptic').startsWith('Ⲥⲱⲧⲉⲙ ⲧⲁϣⲉⲣⲓ ⲁ̀ⲛⲁⲩ ⲣⲉⲕ ⲡⲉⲙⲁϣϫ')).toBe(true);
+    expect(doxText(psalmTrailer, 'arabic').startsWith('اسمعي يا ابنتي وانظري')).toBe(true);
+    expect(doxText(psalmTrailer, 'english')).not.toBe(doxText(gospelResponse, 'english'));
+    expect(doxText(gospelResponse, 'english').startsWith('We send you greetings, with Gabriel the angel')).toBe(true);
+    expect(doxText(gospelResponse, 'coptic').startsWith('Ⲧⲉⲛϯ ⲛⲉ ⲙ̀ⲡⲓⲭⲉⲣⲉⲧⲓⲥⲙⲟⲥ')).toBe(true);
+    // the second Gospel Response comes right after the first; its last two stanzas are the same as the first one's
+    const matinsTitles = service.hymns.map((h) => h.title);
+    expect(matinsTitles.indexOf(writtenHere[10])).toBe(matinsTitles.indexOf(writtenHere[8]) + 1);
+    expect(doxText(gospelResponseTwo, 'english').startsWith('We exalt you worthily, with Elizabeth your cousin')).toBe(true);
+    expect(doxText(gospelResponseTwo, 'coptic').startsWith('Ⲧⲉⲛϭⲓⲥⲓ ⲙ̀ⲙⲟ ϧⲉⲛ ⲟⲩⲉⲙⲡ̀ϣⲁ')).toBe(true);
+    for (const language of ['coptic', 'english', 'arabic']) {
+      expect(doxText(gospelResponseTwo, language).split(/\n\s*\n/).slice(1)).toEqual(doxText(gospelResponse, language).split(/\n\s*\n/).slice(1));
+    }
+    // the Concluding Hymn: Amen Alleluia / We proclaim and say / Lord have mercy, with "our Lord Jesus Christ" written out
+    expect(doxText(concludingHymn, 'english').startsWith('Amen. Allelluia. Glory to the Father')).toBe(true);
+    expect(doxText(concludingHymn, 'coptic').startsWith('Ⲁⲙⲏⲛ: ⲁⲗⲗⲏⲗⲟⲩⲓⲁ ⲇⲟⲝⲁ')).toBe(true);
+    expect(doxText(concludingHymn, 'englishCoptic')).toContain('ō Pentshois Iēsous Pi-ekhristos');
+    expect(doxText(concludingHymn, 'english').split(/\n\s*\n/)[2]).toBe(
+      'Lord have mercy. Lord have mercy. Lord bless us. Amen. Bless me, bless me. Behold, my repentance. Forgive me. Say the blessing.'
+    );
+    // the shortened words in the Sixth Doxology (ⲡⲟ︦ⲥ︦, ⲛ̀ⲛⲏⲉⲑ︦ⲩ︦, Ⲡⲡ︦ⲛ︦ⲁ) are written out in English and Arabic letters
+    expect(doxText(sixthDoxology, 'englishCoptic')).toContain('Eptshois fēetshop khen tfe');
+    expect(doxText(sixthDoxology, 'englishCoptic')).toContain('ennēethouab');
+    expect(doxText(sixthDoxology, 'arabicCoptic')).toContain('خِن روو إنّيإثواب');
+    // there are no recordings in Kiahk Matins, not even on the copied Introduction and Conclusion
+    for (const hymn of flattenHymns(service.hymns)) {
+      for (const version of hymn.versions) expect([hymn.title, version.language, version.audio]).toEqual([hymn.title, version.language, undefined]);
+    }
+  });
+});
+
+describe('Kiahk Praises & Season > Vespers', () => {
+  const season = seasons.find((s) => s.id === 'kiahk')!;
+  const matins = season.services.find((s) => s.id === 'kiahk-matins')!;
+  const vespers = season.services.find((s) => s.id === 'kiahk-vespers')!;
+  const isPsalmTrailer = (h: Hymn) => h.title.endsWith('(Psalm Trailer)');
+
+  it('has every title of Matins in the same order, except the Psalm Trailer', () => {
+    expect(matins.hymns.some(isPsalmTrailer)).toBe(true);
+    // Vespers has a Psalm Trailer of its own instead, right after the Alleluia
+    const vespersOwn = vespers.hymns.filter(isPsalmTrailer);
+    expect(vespersOwn.map((h) => h.title)).toEqual(['Ⲡϭⲟⲓⲥ ⲁⲓⲟϣ ⲟⲩⲃⲏⲕ ⲥⲱⲧⲉⲙ ⲉ̀ⲣⲟⲓ (Psalm Trailer)']);
+    const vespersTitles = vespers.hymns.map((h) => h.title);
+    expect(vespersTitles.indexOf(vespersOwn[0].title)).toBe(vespersTitles.indexOf('Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ') + 1);
+    expect(vespersTitles.indexOf(vespersOwn[0].title) + 1).toBe(vespersTitles.indexOf('Ⲧⲉⲛϯ ⲛⲉ ⲙ̀ⲡⲓⲭⲉⲣⲉⲧⲓⲥⲙⲟⲥ (Gospel Response)'));
+    const others = vespers.hymns.filter((h) => !isPsalmTrailer(h));
+    expect(others.map((h) => h.title)).toEqual(matins.hymns.filter((h) => !isPsalmTrailer(h)).map((h) => h.title));
+    expect(others.map((h) => !!h.isSectionHeader)).toEqual(matins.hymns.filter((h) => !isPsalmTrailer(h)).map((h) => !!h.isSectionHeader));
+    // its lyrics: Psalm 141, two stanzas in Coptic, Coptic-English, English and Arabic
+    const trailer = vespersOwn[0];
+    const trailerStanzas = (language: string) => (trailer.versions.find((v) => v.language === language)?.text ?? '').split(/\n\s*\n/);
+    for (const language of ['coptic', 'englishCoptic', 'english', 'arabic', 'arabicCoptic', 'arabicEnglish']) {
+      expect([language, trailerStanzas(language).length]).toEqual([language, 2]);
+    }
+    expect(trailerStanzas('english')[0]).toBe('Lord, I cry out to You; make haste to me! Give ear to my voice when I cry out to You.');
+    expect(trailerStanzas('coptic')[0].startsWith('Ⲡϭⲟⲓⲥ ⲁⲓⲟϣ ⲟⲩⲃⲏⲕ ⲥⲱⲧⲉⲙ ⲉ̀ⲣⲟⲓ')).toBe(true);
+    expect(trailerStanzas('arabic')[0].startsWith('يَا رَبُّ إِلَيْكَ دَعَوْتُ')).toBe(true);
+  });
+
+  it('has its own ids, and no placeholders left', () => {
+    const idsOf = (hymns: Hymn[]): string[] => hymns.flatMap((h) => [h.id, ...idsOf(h.children ?? [])]);
+    const everyId = idsOf(vespers.hymns);
+    expect(new Set(everyId).size).toBe(everyId.length);
+    for (const id of everyId) expect(id.startsWith('kiahk-vespers-')).toBe(true);
+    expect(vespers.hymns.some((h) => /Vespers Hymn #/.test(h.title))).toBe(false);
+  });
+
+  it('has the same lyrics as Matins, in every language, including inside the Verses of the Cymbals', () => {
+    const texts = (h: Hymn) => h.versions.map((v) => [v.language, v.text, v.audio]);
+    const matinsHymns = flattenHymns(matins.hymns).filter((h) => !isPsalmTrailer(h));
+    const vespersHymns = flattenHymns(vespers.hymns).filter((h) => !isPsalmTrailer(h));
+    expect(vespersHymns.map((h) => h.title)).toEqual(matinsHymns.map((h) => h.title));
+    matinsHymns.forEach((h, i) => expect([h.title, texts(vespersHymns[i])]).toEqual([h.title, texts(h)]));
+    expect(vespersHymns.some((h) => h.versions.length > 0)).toBe(true);
+    // copies, not the same objects, so the two services can change on their own later
+    expect(vespers.hymns[0]).not.toBe(matins.hymns[0]);
+    expect(vespers.hymns[0].children?.[0]).not.toBe(matins.hymns[0].children?.[0]);
+    expect(vespers.hymns[0].children?.map((h) => h.title)).toEqual(matins.hymns[0].children?.map((h) => h.title));
   });
 });
 
