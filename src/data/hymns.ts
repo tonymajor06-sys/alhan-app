@@ -1853,7 +1853,7 @@ if (kiahkLiturgy) {
     'Ⲭⲉⲣⲉ ⲛⲉ Ⲙⲁⲣⲓⲁ (Praxis Response)',
     'Ⲡⲁϭⲟⲓⲥ (Paralex)',
     'Ⲁⲅⲓⲟⲥ ⲟ̀ Ⲑⲉⲟⲥ (Trisagion)',
-    'Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ (Psalm Trailer)',
+    'Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ (Psalm Chant)',
     'Ⲙⲁⲣⲟⲩϭⲁⲥϥ (Psalm Trailer for the Pope or a Bishop)',
     'Liturgy of the Faithful',
     'Ⲧⲉⲛϯ ⲛⲉ ⲙ̀ⲡⲓⲭⲉⲣⲉⲧⲓⲥⲙⲟⲥ (Gospel Response)',
@@ -1873,6 +1873,15 @@ if (kiahkLiturgy) {
       ? { id: `kiahk-liturgy-header-${kiahkLiturgyHeaders.indexOf(title) + 1}`, title, versions: [], isSectionHeader: true }
       : { id: `kiahk-liturgy-hymn-${index + 1}`, title, versions: [] }
   );
+  // The Psalm Chant is a group: it opens its own list of four Sundays (titles only for now) instead of the reader
+  const kiahkLiturgyPsalmChant = kiahkLiturgy.hymns.find((h) => h.title === 'Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ (Psalm Chant)');
+  if (kiahkLiturgyPsalmChant) {
+    kiahkLiturgyPsalmChant.children = ['First', 'Second', 'Third', 'Fourth'].map((week, index) => ({
+      id: `kiahk-liturgy-psalm-chant-sunday-${index + 1}`,
+      title: `${week} Sunday of Kiahk`,
+      versions: [],
+    }));
+  }
   const kiahkLiturgyIntercessions = kiahkLiturgy.hymns.find((h) => h.title === 'Ϩⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ (Hymn of the Intercessions)');
   if (kiahkLiturgyIntercessions) {
     kiahkLiturgyIntercessions.versions = [
@@ -2101,6 +2110,174 @@ if (kiahkLiturgy) {
       {
         language: 'arabic',
         text: 'يا ربي يسوع المسيح، المولود من الآب، قبل كل الدهور، إرحمنا كعظيم رحمتك.\n\nالشاروبيم سجدون له، السيرافيم يمجدونه، صارخين قائلين، "قدوس قدوس.\n\nقدوس رب الألوف، مكرم بالربوات، أنت بخور يا مخلصي، لأنك أتيت وخلصتنا."',
+      },
+    ];
+  }
+  const kiahkLiturgyZechariah = kiahkLiturgy.hymns.find((h) => h.title === 'Ⲍⲁⲭⲁⲣⲓⲁⲥ (Adam Aspasmos (Zechariah))');
+  if (kiahkLiturgyZechariah) {
+    kiahkLiturgyZechariah.versions = [
+      {
+        language: 'coptic',
+        text: 'Ⲍⲁⲭⲁⲣⲓⲁⲥ ⲡⲓⲟⲩⲏⲃ ⲡ̀ϣⲏⲣⲓ ⲙ̀Ⲃⲁⲣⲁⲭⲓⲁⲥ ⲉⲩⲭⲏ ϧⲉⲛ ⲡⲓⲉ̀ⲣⲫⲉⲓ: ⲉϥⲧⲁⲗⲉ ⲟⲩⲥ̀ⲑⲟⲓ ⲛⲟⲩϥⲓ ⲉ̀ⲡ̀ϣⲱⲓ.\n\nⲈⲧⲁϥⲛⲁⲩ ⲉ̀ⲡⲓⲟ̀ⲩⲱⲓⲛⲓ: ⲉⲧⲭⲏ ϧⲉⲛ ⲡⲉϥϩⲟ ⲁϥⲉ̀ⲣϩⲟϯ ⲟⲩⲟϩ ⲁϥϩⲉⲓ ϧⲁⲣⲁⲧⲟⲩ ⲛ̀ⲛⲉϥ ϭⲁⲗⲁⲩϫ.\n\nⲦⲉⲛϯϩⲟ ⲉ̀ⲣⲟⲕ ⲱ̀ Ⲩⲓⲟⲥ Ⲑⲉⲟⲥ: ⲉⲑⲣⲉⲕⲁ̀ⲣⲉϩ ⲉ̀ⲡ̀ⲱⲛϧ ⲙ̀ⲡⲉⲛⲡⲁⲧⲣⲓⲁⲣⲭⲏⲥ: ⲡⲁⲡⲁ ⲁⲃⲃⲁ (...) ⲡⲓⲁⲣⲭⲏⲉ̀ⲣⲉⲩⲥ: ⲙⲁⲧⲁϫⲣⲟϥ ϩⲓϫⲉⲛ ⲡⲉϥⲑ̀ⲣⲟⲛⲟⲥ.\n\nⲚⲉⲙ ⲡⲉϥⲕⲉϣ̀ⲫⲏⲣ ⲛ̀ⲗⲓⲧⲟⲩⲣⲅⲟⲥ: ⲡⲉⲛⲓⲱⲧ ⲉⲑⲟⲩⲁⲃ ⲛ̀ⲇⲓⲕⲉⲟⲥ Ⲁⲃⲃⲁ (...) ⲡⲓⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲥ (ⲡⲓⲙⲏⲧⲣⲟⲡⲟⲗⲓⲧⲏⲥ): ⲙⲁⲧⲁϫⲣⲟϥ ϩⲓϫⲉⲛ ⲡⲉϥⲑ̀ⲣⲟⲛⲟⲥ.\n\nϨⲓⲛⲁ ⲛ̀ⲧⲉⲛϩⲱⲥ ⲉ̀ⲣⲟⲕ: ⲛⲉⲙ ⲛⲓⲭⲉⲣⲟⲩⲃⲓⲙ ⲛⲉⲙ ⲛⲓⲥⲉⲣⲁⲫⲓⲙ: ⲉⲛⲱϣ ⲉ̀ⲃⲟⲗ ⲉⲛϫⲱ ⲙ̀ⲙⲟⲥ.\n\nϪⲉ ⲭ̀ⲟⲩⲁⲃ ⲭ̀ⲟⲩⲁⲃ ⲭ̀ⲟⲩⲁⲃ: Ⲡ̀ϭⲟⲓⲥ ⲡⲓⲡⲁⲛⲧⲟⲕⲣⲁⲧⲱⲣ: ⲧ̀ⲫⲉ ⲛⲉⲙ ⲡ̀ⲕⲁϩⲓ ⲙⲉϩ ⲉ̀ⲃⲟⲗ: ϧⲉⲛ ⲡⲉⲕⲱ̀ⲟⲩ ⲛⲉⲙ ⲡⲉⲕⲧⲁⲓⲟ.',
+      },
+      {
+        language: 'englishCoptic',
+        text: 'Zakharias piouēb epshēri em-Varakhias eukhē khen pi-erfei: eftale ou-esthoi noufi e-epshōi.\n\nEtafnau epi-ouōini: etkhē khen pefho aferhoti ouoh afhei kharatou ennef tshalauj.\n\nTentiho erok ō Uios Theos: ethrekareh e-epōnkh empenpatriarkhēs: papa abba (...) piarkhē-ereus: matajrof hijen pefethronos.\n\nNem pefke-eshfēr enlitourgos: peniōt ethouab endikeos Abba (...) pi-episkopos (pimētropolitēs): matajrof hijen pefethronos.\n\nHina entenhōs erok: nem nikherouvim nem niserafim: enōsh evol enjō emmos.\n\nJe ekhouab ekhouab ekhouab: Eptshois pipantokratōr: etfe nem epkahi meh evol: khen pekōou nem pektaio.',
+      },
+      {
+        language: 'english',
+        text: 'Zechariah the priest, son of Berachia, was in the temple, offering incense.\n\nWhen he saw the light, which was before his face, he was terrified and fell down, to his feet.\n\nWe ask You O Son of God, to keep the life of our patriarch, Pope Abba (...) the high priest, confirm him upon his throne.\n\nAnd his partner in the liturgy, our holy righteous father, Abba (...) the bishop (metropolitan), confirm him upon his throne.\n\nThat we may praise You, with the Cherubim and the Seraphim, proclaiming and saying:\n\n“Holy, holy, holy, O Lord, the Pantocrator, heaven and earth are full of Your glory and Your honor.”',
+      },
+      {
+        language: 'arabic',
+        text: 'زكريا الكاهن ابن براخيا فيما هر في الهيكل يرفع البخور.\n\nلما رأي النور الكائن في وجه خاف وسقط تحت رجليه.\n\nنسألك يا إبن الله، أن تحفظ حياة بطريركنا، البابا أنبا (...) رئيسُ الكهنة، ثبته على كرسيه.\n\nوشريكه في الخدمة الرسولية، أبانا القديس البار، أنبا (...) الأسقف (المطران)، ثبته على كرسيه.\n\nلكي نسبحك، مع الشاروبيم والسِّرافيم، صارخين قائلين:\n\n"قدوس قدوس قدوس، أيها الرب الضابط الكل، السماء والأرض مملوءتان، من مجدك وكرامتك."',
+      },
+    ];
+  }
+  const kiahkLiturgyRejoice = kiahkLiturgy.hymns.find((h) => h.title === 'Ⲟⲩⲛⲟϥ ⲙ̀ⲙⲟ (Standard Adam Aspasmos (Rejoice))');
+  if (kiahkLiturgyRejoice) {
+    kiahkLiturgyRejoice.versions = [
+      {
+        language: 'coptic',
+        text: 'Ⲟⲩⲛⲟϥ ⲙ̀ⲙⲟ Ⲙⲁⲣⲓⲁ: ϯⲃⲱⲕⲓ ⲟⲩⲟϩ Ϯⲙⲁⲩ: ϫⲉ ⲫⲏⲉⲧ ϧⲉⲛ ⲡⲉⲁ̀ⲙⲏⲣ: ⲛⲓⲁⲅⲅⲉⲗⲟⲥ ⲥⲉϩⲱⲥ ⲉ̀ⲣⲟϥ.\n\nⲞⲩⲟϩ ⲛⲓⲭⲉⲣⲟⲃⲓⲙ: ⲥⲉⲟⲩⲱϣⲧ ⲙ̀ⲙⲟϥ ⲁⲝⲓⲱⲥ: ⲛⲉⲙ ⲛⲓⲥⲉⲣⲁⲫⲓⲙ ϧⲉⲛ ⲟⲩⲙⲉⲧⲁⲧⲙⲟⲩⲛⲕ.\n\nⲘ̀ⲙⲟⲛ ⲛ̀ⲧⲁⲛ ⲛ̀ⲟⲩⲡⲁⲣⲣⲏⲥⲓⲁ: ϧⲁⲧⲉⲛ Ⲡⲉⲛϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: ⲭⲱⲣⲓⲥ ⲛⲉⲧⲱⲃϩ ⲛⲉⲙ ⲛⲉⲡ̀ⲣⲉⲥⲃⲓⲁ: ⲱ̀ ⲧⲉⲛϭⲟⲓⲥ ⲛ̀ⲛⲏⲃ ⲧⲏⲣⲉⲛ Ϯⲑⲉⲟ̀ⲧⲟⲕⲟⲥ.\n\nⲦⲉⲛϯϩⲟ ⲉ̀ⲣⲟⲕ ⲱ̀ Ⲩⲓⲟⲥ Ⲑⲉⲟⲥ: ⲉⲑⲣⲉⲕⲁ̀ⲣⲉϩ ⲉ̀ⲡ̀ⲱⲛϧ ⲙ̀ⲡⲉⲛⲡⲁⲧⲣⲓⲁⲣⲭⲏⲥ: ⲡⲁⲡⲁ ⲁⲃⲃⲁ (...) ⲡⲓⲁⲣⲭⲏⲉ̀ⲣⲉⲩⲥ: ⲙⲁⲧⲁϫⲣⲟϥ ϩⲓϫⲉⲛ ⲡⲉϥⲑ̀ⲣⲟⲛⲟⲥ.\n\nⲚⲉⲙ ⲡⲉϥⲕⲉϣ̀ⲫⲏⲣ ⲛ̀ⲗⲓⲧⲟⲩⲣⲅⲟⲥ: ⲡⲉⲛⲓⲱⲧ ⲉⲑⲟⲩⲁⲃ ⲛ̀ⲇⲓⲕⲉⲟⲥ Ⲁⲃⲃⲁ (...) ⲡⲓⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲥ (ⲡⲓⲙⲏⲧⲣⲟⲡⲟⲗⲓⲧⲏⲥ): ⲙⲁⲧⲁϫⲣⲟϥ ϩⲓϫⲉⲛ ⲡⲉϥⲑ̀ⲣⲟⲛⲟⲥ.\n\nϨⲓⲛⲁ ⲛ̀ⲧⲉⲛϩⲱⲥ ⲉ̀ⲣⲟⲕ: ⲛⲉⲙ ⲛⲓⲭⲉⲣⲟⲩⲃⲓⲙ ⲛⲉⲙ ⲛⲓⲥⲉⲣⲁⲫⲓⲙ: ⲉⲛⲱϣ ⲉ̀ⲃⲟⲗ ⲉⲛϫⲱ ⲙ̀ⲙⲟⲥ.\n\nϪⲉ ⲭ̀ⲟⲩⲁⲃ ⲭ̀ⲟⲩⲁⲃ ⲭ̀ⲟⲩⲁⲃ: Ⲡ̀ϭⲟⲓⲥ ⲡⲓⲡⲁⲛⲧⲟⲕⲣⲁⲧⲱⲣ: ⲧ̀ⲫⲉ ⲛⲉⲙ ⲡ̀ⲕⲁϩⲓ ⲙⲉϩ ⲉ̀ⲃⲟⲗ: ϧⲉⲛ ⲡⲉⲕⲱ̀ⲟⲩ ⲛⲉⲙ ⲡⲉⲕⲧⲁⲓⲟ.',
+      },
+      {
+        language: 'englishCoptic',
+        text: 'Ounof emmo Maria: tivōki ouoh Timau: je fēet khen pe-amēr: niaggelos sehōs erof.\n\nOuoh nikherovim: seouōsht emmof aksiōs: nem niserafim khen oumetatmounk.\n\nEmmon entan enouparrēsia: khaten Pentshois Iēsous Pi-ekhristos: khōris netōbh nem ne-epresvia: ō tentshois ennēb tēren Tithe-otokos.\n\nTentiho erok ō Uios Theos: ethrekareh e-epōnkh empenpatriarkhēs: papa abba (...) piarkhē-ereus: matajrof hijen pefethronos.\n\nNem pefke-eshfēr enlitourgos: peniōt ethouab endikeos Abba (...) pi-episkopos (pimētropolitēs): matajrof hijen pefethronos.\n\nHina entenhōs erok: nem nikherouvim nem niserafim: enōsh evol enjō emmos.\n\nJe ekhouab ekhouab ekhouab: Eptshois pipantokratōr: etfe nem epkahi meh evol: khen pekōou nem pektaio.',
+      },
+      {
+        language: 'english',
+        text: 'Rejoice, O Mary, handmaiden and mother, for the angels praise Him who is in your arms,\n\nand the cherubim worthily worship Him; the seraphim too, without ceasing.\n\nWe have no boldness before our Lord Jesus Christ apart from your prayers and intercessions, O our Lady, the Lady of us all, the Theotokos.\n\nWe ask You O Son of God, to keep the life of our patriarch, Pope Abba (...) the high priest, confirm him upon his throne.\n\nAnd his partner in the liturgy, our holy righteous father, Abba (...) the bishop (metropolitan), confirm him upon his throne.\n\nThat we may praise You, with the Cherubim and the Seraphim, proclaiming and saying:\n\n“Holy, holy, holy, O Lord, the Pantocrator, heaven and earth are full of Your glory and Your honor.”',
+      },
+      {
+        language: 'arabic',
+        text: 'إفرحي يا مريم، العبدة والأم، لأن الذي في حجرك، الملائكة تسبحه.\n\nوالشاروبيم، يسجدون له بإستحقاق، والسِّرافيم، بغير فتور.\n\nليس لنا دالة عند ربنا يسوع المسيح، سوى طلباتك وشفاعتك، يا سيدتنا كلنا السيدة والدة الإله.\n\nنسألك يا إبن الله، أن تحفظ حياة بطريركنا، البابا أنبا (...) رئيسُ الكهنة، ثبته على كرسيه.\n\nوشريكه في الخدمة الرسولية، أبانا القديس البار، أنبا (...) الأسقف (المطران)، ثبته على كرسيه.\n\nلكي نسبحك، مع الشاروبيم والسِّرافيم، صارخين قائلين:\n\n"قدوس قدوس قدوس، أيها الرب الضابط الكل، السماء والأرض مملوءتان، من مجدك وكرامتك."',
+      },
+    ];
+  }
+  const kiahkLiturgyGreet = kiahkLiturgy.hymns.find((h) => h.title === 'Ⲁ̀ⲣⲓⲁⲥⲡⲁⲍⲉⲥⲑⲉ (A Second Standard Adam Aspasmos (Greet With))');
+  if (kiahkLiturgyGreet) {
+    kiahkLiturgyGreet.versions = [
+      {
+        language: 'coptic',
+        text: 'Ⲁ̀ⲣⲓⲁⲥⲡⲁⲍⲉⲥⲑⲉ: ϧⲉⲛ ⲟⲩⲫⲓ ⲉⲑⲟⲩⲁⲃ: ⲙⲁⲧⲟⲩⲃⲟ ⲛ̀ⲛⲉⲧⲉⲛϩⲏⲧ: ⲉ̀ⲃⲟⲗ ϩⲁ ⲕⲁⲕⲓⲁ ⲛⲓⲃⲉⲛ.\n\nϢⲱⲡⲓ ⲉ̀ⲣⲉ ⲧⲉⲛⲥⲉⲃⲧⲱⲧ: ⲉ̀ϯⲇⲱⲣⲉⲁ̀ ⲛ̀ⲧⲉ Ⲫ̀ⲛⲟⲩϯ: ϣⲁ ⲛ̀ⲧⲉⲧⲉⲛϭⲓ ⲉ̀ⲃⲟⲗ: ϧⲉⲛ ⲛⲁⲓⲙⲩⲥⲧⲏⲣⲓⲟⲛ.\n\nⲈ̀ⲃⲟⲗ ϩⲓⲧⲉⲛ ⲛⲁⲓ: ⲉⲑⲣⲉⲛϣⲁϣⲛⲓ ⲉ̀ⲟⲩⲛⲁⲓ: ⲛⲉⲙ ⲟⲩⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ: ⲕⲁⲧⲁ ⲡⲉϥⲛⲓϣϯ ⲛ̀ⲛⲁⲓ.\n\nⲦⲉⲛϯϩⲟ ⲉ̀ⲣⲟⲕ ⲱ̀ Ⲩⲓⲟⲥ Ⲑⲉⲟⲥ: ⲉⲑⲣⲉⲕⲁ̀ⲣⲉϩ ⲉ̀ⲡ̀ⲱⲛϧ ⲙ̀ⲡⲉⲛⲡⲁⲧⲣⲓⲁⲣⲭⲏⲥ: ⲡⲁⲡⲁ ⲁⲃⲃⲁ (...) ⲡⲓⲁⲣⲭⲏⲉ̀ⲣⲉⲩⲥ: ⲙⲁⲧⲁϫⲣⲟϥ ϩⲓϫⲉⲛ ⲡⲉϥⲑ̀ⲣⲟⲛⲟⲥ.\n\nⲚⲉⲙ ⲡⲉϥⲕⲉϣ̀ⲫⲏⲣ ⲛ̀ⲗⲓⲧⲟⲩⲣⲅⲟⲥ: ⲡⲉⲛⲓⲱⲧ ⲉⲑⲟⲩⲁⲃ ⲛ̀ⲇⲓⲕⲉⲟⲥ Ⲁⲃⲃⲁ (...) ⲡⲓⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲥ (ⲡⲓⲙⲏⲧⲣⲟⲡⲟⲗⲓⲧⲏⲥ): ⲙⲁⲧⲁϫⲣⲟϥ ϩⲓϫⲉⲛ ⲡⲉϥⲑ̀ⲣⲟⲛⲟⲥ.\n\nϨⲓⲛⲁ ⲛ̀ⲧⲉⲛϩⲱⲥ ⲉ̀ⲣⲟⲕ: ⲛⲉⲙ ⲛⲓⲭⲉⲣⲟⲩⲃⲓⲙ ⲛⲉⲙ ⲛⲓⲥⲉⲣⲁⲫⲓⲙ: ⲉⲛⲱϣ ⲉ̀ⲃⲟⲗ ⲉⲛϫⲱ ⲙ̀ⲙⲟⲥ.\n\nϪⲉ ⲭ̀ⲟⲩⲁⲃ ⲭ̀ⲟⲩⲁⲃ ⲭ̀ⲟⲩⲁⲃ: Ⲡ̀ϭⲟⲓⲥ ⲡⲓⲡⲁⲛⲧⲟⲕⲣⲁⲧⲱⲣ: ⲧ̀ⲫⲉ ⲛⲉⲙ ⲡ̀ⲕⲁϩⲓ ⲙⲉϩ ⲉ̀ⲃⲟⲗ: ϧⲉⲛ ⲡⲉⲕⲱ̀ⲟⲩ ⲛⲉⲙ ⲡⲉⲕⲧⲁⲓⲟ.',
+      },
+      {
+        language: 'englishCoptic',
+        text: 'Ariaspazesthe: khen oufi ethouab: matouvo ennetenhēt: evol ha kakia niven.\n\nShōpi ere tensebtōt: etidōre-a ente Efnouti: sha entetentshi evol: khen naimustērion.\n\nEvol hiten nai: ethrenshashni eounai: nem oukhō evol ente nennovi: kata pefnishti ennai.\n\nTentiho erok ō Uios Theos: ethrekareh e-epōnkh empenpatriarkhēs: papa abba (...) piarkhē-ereus: matajrof hijen pefethronos.\n\nNem pefke-eshfēr enlitourgos: peniōt ethouab endikeos Abba (...) pi-episkopos (pimētropolitēs): matajrof hijen pefethronos.\n\nHina entenhōs erok: nem nikherouvim nem niserafim: enōsh evol enjō emmos.\n\nJe ekhouab ekhouab ekhouab: Eptshois pipantokratōr: etfe nem epkahi meh evol: khen pekōou nem pektaio.',
+      },
+      {
+        language: 'english',
+        text: 'Greet, with a holy kiss, purify your hearts, from every evil thing.\n\nBe prepared, for the gift of God, that you may be given, these mysteries.\n\nThrough these [mysteries], we may win mercy, and forgiveness of our sins, according to His great mercy.\n\nWe ask You O Son of God, to keep the life of our patriarch, Pope Abba (...) the high priest, confirm him upon his throne.\n\nAnd his partner in the liturgy, our holy righteous father, Abba (...) the bishop (metropolitan), confirm him upon his throne.\n\nThat we may praise You, with the Cherubim and the Seraphim, proclaiming and saying:\n\n“Holy, holy, holy, O Lord, the Pantocrator, heaven and earth are full of Your glory and Your honor.”',
+      },
+      {
+        language: 'arabic',
+        text: 'قبِّلوا، بقبلةٍ مقدسة، طهِّروا قلوبكم، من كل شر.\n\nكونوا مستعدين، لموهبة الله، حتى تنالوا، من هذه الأسرار.\n\nوبهذه، نفوز بالرحمة، ومغفرة خطايانا، كعظيم رحمته.\n\nنسألك يا إبن الله، أن تحفظ حياة بطريركنا، البابا أنبا (...) رئيسُ الكهنة، ثبته على كرسيه.\n\nوشريكه في الخدمة الرسولية، أبانا القديس البار، أنبا (...) الأسقف (المطران)، ثبته على كرسيه.\n\nلكي نسبحك، مع الشاروبيم والسِّرافيم، صارخين قائلين:\n\n"قدوس قدوس قدوس، أيها الرب الضابط الكل، السماء والأرض مملوءتان، من مجدك وكرامتك."',
+      },
+    ];
+  }
+  const kiahkLiturgyChristOurSavior = kiahkLiturgy.hymns.find((h) => h.title === 'Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ Ⲡⲉⲛⲥⲱⲧⲏⲣ (A Third Standard Adam Aspasmos (O Christ Our Savior))');
+  if (kiahkLiturgyChristOurSavior) {
+    kiahkLiturgyChristOurSavior.versions = [
+      {
+        language: 'coptic',
+        text: 'Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ Ⲡⲉⲛⲥⲱⲧⲏⲣ: ⲁ̀ⲣⲓⲧⲉⲛⲛ̀ⲉⲙⲡ̀ϣⲁ: ⲙ̀ⲡⲉⲕⲁⲥⲡⲁⲥⲙⲟⲥ ⲉⲑⲟⲩⲁⲃ: ⲛ̀ϩ̀ⲣⲏⲓ ϧⲉⲛ ⲛⲓⲫⲏⲟⲩⲓ̀.\n\nⲦⲉⲛϯϩⲟ ⲉ̀ⲣⲟⲕ ⲱ̀ Ⲩⲓⲟⲥ Ⲑⲉⲟⲥ: ⲉⲑⲣⲉⲕⲁ̀ⲣⲉϩ ⲉ̀ⲡ̀ⲱⲛϧ ⲙ̀ⲡⲉⲛⲡⲁⲧⲣⲓⲁⲣⲭⲏⲥ: ⲡⲁⲡⲁ ⲁⲃⲃⲁ (...) ⲡⲓⲁⲣⲭⲏⲉ̀ⲣⲉⲩⲥ: ⲙⲁⲧⲁϫⲣⲟϥ ϩⲓϫⲉⲛ ⲡⲉϥⲑ̀ⲣⲟⲛⲟⲥ.\n\nⲚⲉⲙ ⲡⲉϥⲕⲉϣ̀ⲫⲏⲣ ⲛ̀ⲗⲓⲧⲟⲩⲣⲅⲟⲥ: ⲡⲉⲛⲓⲱⲧ ⲉⲑⲟⲩⲁⲃ ⲛ̀ⲇⲓⲕⲉⲟⲥ Ⲁⲃⲃⲁ (...) ⲡⲓⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲥ (ⲡⲓⲙⲏⲧⲣⲟⲡⲟⲗⲓⲧⲏⲥ): ⲙⲁⲧⲁϫⲣⲟϥ ϩⲓϫⲉⲛ ⲡⲉϥⲑ̀ⲣⲟⲛⲟⲥ.\n\nϨⲓⲛⲁ ⲛ̀ⲧⲉⲛϩⲱⲥ ⲉ̀ⲣⲟⲕ: ⲛⲉⲙ ⲛⲓⲭⲉⲣⲟⲩⲃⲓⲙ ⲛⲉⲙ ⲛⲓⲥⲉⲣⲁⲫⲓⲙ: ⲉⲛⲱϣ ⲉ̀ⲃⲟⲗ ⲉⲛϫⲱ ⲙ̀ⲙⲟⲥ.\n\nϪⲉ ⲭ̀ⲟⲩⲁⲃ ⲭ̀ⲟⲩⲁⲃ ⲭ̀ⲟⲩⲁⲃ: Ⲡ̀ϭⲟⲓⲥ ⲡⲓⲡⲁⲛⲧⲟⲕⲣⲁⲧⲱⲣ: ⲧ̀ⲫⲉ ⲛⲉⲙ ⲡ̀ⲕⲁϩⲓ ⲙⲉϩ ⲉ̀ⲃⲟⲗ: ϧⲉⲛ ⲡⲉⲕⲱ̀ⲟⲩ ⲛⲉⲙ ⲡⲉⲕⲧⲁⲓⲟ.',
+      },
+      {
+        language: 'englishCoptic',
+        text: 'Pi-ekhristos Pensōtēr: aritenenemepsha: empekaspasmos ethouab: enehrēi khen nifēou-i.\n\nTentiho erok ō Uios Theos: ethrekareh e-epōnkh empenpatriarkhēs: papa abba (...) piarkhē-ereus: matajrof hijen pefethronos.\n\nNem pefke-eshfēr enlitourgos: peniōt ethouab endikeos Abba (...) pi-episkopos (pimētropolitēs): matajrof hijen pefethronos.\n\nHina entenhōs erok: nem nikherouvim nem niserafim: enōsh evol enjō emmos.\n\nJe ekhouab ekhouab ekhouab: Eptshois pipantokratōr: etfe nem epkahi meh evol: khen pekōou nem pektaio.',
+      },
+      {
+        language: 'english',
+        text: 'O Christ our Savior, make us worthy, of Your holy peace, in the heavens.\n\nWe ask You O Son of God, to keep the life of our patriarch, Pope Abba (...) the high priest, confirm him upon his throne.\n\nAnd his partner in the liturgy, our holy righteous father, Abba (...) the bishop (metropolitan), confirm him upon his throne.\n\nThat we may praise You, with the Cherubim and the Seraphim, proclaiming and saying:\n\n“Holy, holy, holy, O Lord, the Pantocrator, heaven and earth are full of Your glory and Your honor.”',
+      },
+      {
+        language: 'arabic',
+        text: 'أيها المسيح مخلصنا، إجعلنا أهلاً، لسلامك المقدس، في السماوات.\n\nنسألك يا إبن الله، أن تحفظ حياة بطريركنا، البابا أنبا (...) رئيسُ الكهنة، ثبته على كرسيه.\n\nوشريكه في الخدمة الرسولية، أبانا القديس البار، أنبا (...) الأسقف (المطران)، ثبته على كرسيه.\n\nلكي نسبحك، مع الشاروبيم والسِّرافيم، صارخين قائلين:\n\n"قدوس قدوس قدوس، أيها الرب الضابط الكل، السماء والأرض مملوءتان، من مجدك وكرامتك."',
+      },
+    ];
+  }
+  const kiahkLiturgyWatosGabriel = kiahkLiturgy.hymns.find((h) => h.title === 'Ⲅⲁⲃⲣⲓⲏⲗ (Watos Aspasmos (Gabriel))');
+  if (kiahkLiturgyWatosGabriel) {
+    kiahkLiturgyWatosGabriel.versions = [
+      {
+        language: 'coptic',
+        text: 'Ⲅⲁⲃⲣⲓⲏⲗ ⲡⲓⲁ̀ⲅⲅⲉⲗⲟⲥ ⲁϥϩⲓϣⲉⲛⲛⲟⲩϥⲓ ⲛ̀ϯⲠⲁⲣⲑⲉⲛⲟⲥ: ϫⲉ ⲭⲉⲣⲉ ⲑⲏⲉ̀ⲑⲙⲉϩ ⲛ̀ϩ̀ⲙⲟⲧ: ⲟⲩⲟϩ Ⲡⲟ︦ⲥ︦ ϣⲟⲡ ⲛⲉⲙⲉ.\n\nⲦⲉⲣⲁⲉ̀ⲣⲃⲟⲕⲓ ⲟⲩⲟϩ ⲛ̀ⲧⲉ ⲙⲓⲥⲓ ⲛ̀ⲟⲩϢⲏⲣⲓ: ⲉⲩⲉ̀ⲙⲟⲩϯ ⲉ̀ⲡⲉϥⲣⲁⲛ ⲛ̀ϫⲉ Ⲓⲏ︦ⲥ︦: ⲁⲥⲉ̀ⲣⲟⲩⲱ ⲛ̀ϫⲉ ϯⲥⲁⲃⲉ: ⲡⲉⲧϩ̀ⲛⲁⲕ Ⲡⲟ︦ⲥ︦ ⲙⲁⲣⲉϥϣⲱⲡⲓ\n\nⲀⲗⲗⲏⲗⲟⲩⲓⲁ Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ: ⲡⲓⲙⲓⲥⲓ ⲉ̀ⲃⲟⲗ ϧⲉⲛ Ⲫ̀ⲓⲱⲧ ϧⲁϫⲱⲟⲩ ⲛ̀ⲛⲓ ⲉ̀ⲱ̀ⲛ ⲧⲏⲣⲟⲩ: ⲥⲱϯ ⲙ̀ⲙⲟⲛ ⲟⲩⲟϩ ⲛⲁⲓ ⲛⲁⲛ.\n\nⲀⲅⲓⲟⲥ ⲁⲅⲓⲟⲥ ⲁⲅⲓⲟⲥ: ⲕⲩⲣⲓⲟⲥ ⲥⲁⲃⲁⲱⲑ: ⲡⲗⲏⲣⲏⲥ ⲟ ⲟⲩⲣⲁⲛⲟⲥ ⲕⲉ ⲏ ⲅⲏ: ⲧⲏⲥ ⲁⲅⲓⲁⲥ ⲥⲟⲩ ⲇⲟⲝⲏⲥ.',
+      },
+      {
+        language: 'englishCoptic',
+        text: 'Gabriēl pi-aggelos afhishennoufi enti-Parthenos: je khere thē-ethmeh enehmot: ouoh Eptshois shop neme.\n\nTera-ervoki ouoh ente misi enou-Shēri: eu-emouti epefran enje Iēsous: aserouō enje tisave: petehnak Eptshois marefshōpi\n\nAllēlouia Allēlouia Allēlouia: pimisi evol khen Efiōt khajōou enni e-ōn tērou: sōti emmon ouoh nai nan.\n\nAgios agios agios: kurios savaōth: plērēs o ouranos ke ē gē: tēs agias sou doksēs.',
+      },
+      {
+        language: 'english',
+        text: 'Gabriel the holy Angel, announced to the Virgin, "Hail to you O full of grace, the Lord is with you."\n\n"Behold you will conceive, and bring forth a Son, He will be named Jesus," so the wise one answered, "Let it be according to Your will O Lord."\n\nAlleluia Alleluia Alleluia the begotten of the Father before all ages. Save us and have mercy on us.\n\nHoly, holy, holy, Lord of hosts, heaven and earth, are full of Your holy glory.',
+      },
+      {
+        language: 'arabic',
+        text: 'غبريال الملاك بشر العذراء قائلاً: افرحي يا ممتلة نعمة الرب معك،\n\nستحبلين وتلدين ابناً ويدعي اسمه يسوع. فأجابت الحكيمة: لتكن مشيئتك يا رب.\n\nهلليلويا هلليلويا هلليلويا المولود من الآب قبل كل الدهور خلصنا وارحمنا.\n\nقدوس قدوس قدوس، رب الصاباؤت، السماء والأرض، مملوءتان من مجدك الأقدس.',
+      },
+    ];
+  }
+  const kiahkLiturgyWatosLordGod = kiahkLiturgy.hymns.find((h) => h.title === 'Ⲡ̀ϭⲟⲓⲥ Ⲫ̀ⲛⲟⲩϯ (Standard Watos Aspasmos, O Lord God)');
+  if (kiahkLiturgyWatosLordGod) {
+    kiahkLiturgyWatosLordGod.versions = [
+      {
+        language: 'coptic',
+        text: 'Ⲡ̀ϭⲟⲓⲥ Ⲫ̀ⲛⲟⲩϯ ⲛ̀ⲧⲉ ⲛⲓϫⲟⲙ: ⲕⲟⲧⲕ ⲟⲩⲟϩ ϫⲟⲩϣⲧ ⲉ̀ⲃⲟⲗ ϧⲉⲛ ⲧ̀ⲫⲉ: ⲁ̀ⲛⲁⲩ ⲟⲩⲟϩ ϫⲉⲙⲡ̀ϣⲓⲛⲓ ⲛ̀ⲧⲁⲓⲃⲱ ⲛ̀ⲁ̀ⲗⲟⲗⲓ: ⲥⲉⲃⲧⲱⲧⲥ ⲟⲩⲟϩ ⲥⲉⲙⲛⲏⲧⲥ ⲑⲁⲓ ⲉ̀ⲧⲁⲥϭⲟⲥ ⲛ̀ϫⲉ ⲧⲉⲕⲟⲩⲓ̀ⲛⲁⲙ.\n\nⲀⲗⲗⲏⲗⲟⲩⲓⲁ Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ.\n\nⲤⲙⲟⲩ ⲉ̀ⲛⲓⲥⲓϯ ⲛⲉⲙ ⲛⲓⲥⲓⲙ: ⲙⲁⲣⲉ ⲡⲉⲕⲛⲁⲓ ⲛⲉⲙ ⲧⲉⲕϩⲓⲣⲏⲛⲏ ⲟⲓ ⲛ̀ⲥⲟⲃⲧ ⲙ̀ⲡⲉⲕⲗⲁⲟⲥ:\n\nⲀ̀ⲅⲓⲟⲥ ⲁ̀ⲅⲓⲟⲥ ⲁ̀ⲅⲓⲟⲥ: Ⲕⲩⲣⲓⲟⲥ ⲥⲁⲃⲁⲱⲑ: ⲡ̀ⲗⲏⲣⲏⲥ ⲟ̀ ⲟⲩⲣⲁⲛⲟⲥ ⲕⲉ ⲏ̀ ⲅⲏ: ⲧⲏⲥ ⲁ̀ⲅⲓⲁⲥ ⲥⲟⲩ ⲇⲟⲝⲏⲥ.',
+      },
+      {
+        language: 'englishCoptic',
+        text: 'Eptshois Efnouti ente nijom: kotk ouoh jousht evol khen etfe: anau ouoh jemepshini entaivō enaloli: sebtōts ouoh semnēts thai etastshos enje tekou-inam.\n\nAllēlouia Allēlouia Allēlouia.\n\nSmou enisiti nem nisim: mare peknai nem tekhirēnē oi ensobt empeklaos:\n\nAgios agios agios: Kurios savaōth: eplērēs o ouranos ke ē gē: tēs agias sou doksēs.',
+      },
+      {
+        language: 'english',
+        text: 'O Lord God of the hosts, return and behold from heaven, and look and visit this vine, restore and establish Her, this which Your right hand has planted.\n\nAlleluia Alleluia Alleluia.\n\nBless the seeds and the herbs. May Your mercy and Your peace be a fortress unto Your people.\n\nHoly holy holy, Lord of hosts, heaven and earth, are full of Your holy glory.',
+      },
+      {
+        language: 'arabic',
+        text: 'أيها الرب إله القوات، إرجع واطلع من السماء، وانظر وتعهد هذه الكرمة، أصلحها وثبتها، هذه التي غرستها يمينك.\n\nهلليلويا هلليلويا هلليلويا.\n\nبارك الزروع والعشب لتكن رحمتُكَ وسلامُكَ حصناً لشعبِك.\n\nقدوس قدوس قدوس، رب الصاباؤت، السماء والأرض، مملوءتان من مجدك الأقدس.',
+      },
+    ];
+  }
+  const kiahkLiturgyWatosLetUsPraise = kiahkLiturgy.hymns.find((h) => h.title === 'Ⲙⲁⲣⲉⲛϩⲱⲥ (A Second Standard Watos Aspasmos (Let Us Praise))');
+  if (kiahkLiturgyWatosLetUsPraise) {
+    kiahkLiturgyWatosLetUsPraise.versions = [
+      {
+        language: 'coptic',
+        text: 'Ⲙⲁⲣⲉⲛϩⲱⲥ ⲛⲉⲙ ⲛⲓⲁⲅⲅⲉⲗⲟⲥ: ⲛⲉⲙ ⲛⲓⲧⲁⲅⲙⲁ ⲛ̀ⲉ̀ⲡⲟⲩⲣⲁⲛⲓⲛ: ⲉ̀ⲧⲉ ⲫⲁⲓ ⲡⲉ Ⲫ̀ⲓⲱⲧ ⲛⲉⲙ Ⲡ̀ϣⲏⲣⲓ: ⲛⲉⲙ Ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ Ⲉⲑⲟⲩⲁⲃ.\n\nⲀⲗⲗⲏⲗⲟⲩⲓⲁ Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ.\n\nⲤⲙⲟⲩ ⲉ̀ⲛⲓⲥⲓϯ ⲛⲉⲙ ⲛⲓⲥⲓⲙ: ⲙⲁⲣⲉ ⲡⲉⲕⲛⲁⲓ ⲛⲉⲙ ⲧⲉⲕϩⲓⲣⲏⲛⲏ ⲟⲓ ⲛ̀ⲥⲟⲃⲧ ⲙ̀ⲡⲉⲕⲗⲁⲟⲥ:\n\nⲀ̀ⲅⲓⲟⲥ ⲁ̀ⲅⲓⲟⲥ ⲁ̀ⲅⲓⲟⲥ: Ⲕⲩⲣⲓⲟⲥ ⲥⲁⲃⲁⲱⲑ: ⲡ̀ⲗⲏⲣⲏⲥ ⲟ̀ ⲟⲩⲣⲁⲛⲟⲥ ⲕⲉ ⲏ̀ ⲅⲏ: ⲧⲏⲥ ⲁ̀ⲅⲓⲁⲥ ⲥⲟⲩ ⲇⲟⲝⲏⲥ.',
+      },
+      {
+        language: 'englishCoptic',
+        text: 'Marenhōs nem niaggelos: nem nitagma enepouranin: ete fai pe Efiōt nem Epshēri: nem Pi-epneuma Ethouab.\n\nAllēlouia Allēlouia Allēlouia.\n\nSmou enisiti nem nisim: mare peknai nem tekhirēnē oi ensobt empeklaos:\n\nAgios agios agios: Kurios savaōth: eplērēs o ouranos ke ē gē: tēs agias sou doksēs.',
+      },
+      {
+        language: 'english',
+        text: 'Let us praise with the angels, and the heavenly hosts, He who is the Father and the Son, and the Holy Spirit.\n\nAlleluia Alleluia Alleluia.\n\nBless the seeds and the herbs. May Your mercy and Your peace be a fortress unto Your people.\n\nHoly holy holy, Lord of hosts, heaven and earth, are full of Your holy glory.',
+      },
+      {
+        language: 'arabic',
+        text: 'فلنسبح مع الملائكة، والطغمات السمائية، الذي هو الآب والإبن، والروح القدس.\n\nهلليلويا هلليلويا هلليلويا.\n\nبارك الزروع والعشب لتكن رحمتُكَ وسلامُكَ حصناً لشعبِك.\n\nقدوس قدوس قدوس، رب الصاباؤت، السماء والأرض، مملوءتان من مجدك الأقدس.',
+      },
+    ];
+  }
+  const kiahkLiturgyWatosMaryDove = kiahkLiturgy.hymns.find((h) => h.title === 'Ⲙⲁⲣⲓⲁ ϯϭⲣⲟⲙⲡⲓ (A Third Standard Watos Aspasmos (Mary the Beautiful Dove))');
+  if (kiahkLiturgyWatosMaryDove) {
+    kiahkLiturgyWatosMaryDove.versions = [
+      {
+        language: 'coptic',
+        text: 'Ⲙⲁⲣⲓⲁ ϯϭⲣⲟⲙⲡⲓ ⲉⲑⲛⲉⲥⲱⲥ: Ⲙⲁⲣⲓⲁ Ϯⲑⲉⲟ̀ⲧⲟⲕⲟⲥ: Ⲙⲁⲣⲓⲁ Ⲑ̀ⲙⲁⲩ ⲛ̀Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: ⲫⲱⲕ ⲡⲉ ⲡⲓⲱ̀ⲟⲩ ⲛⲉⲙ ⲡⲓⲁ̀ⲙⲁϩⲓ.\n\nⲀⲗⲗⲏⲗⲟⲩⲓⲁ Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ.\n\nⲤⲙⲟⲩ ⲉ̀ⲛⲓⲥⲓϯ ⲛⲉⲙ ⲛⲓⲥⲓⲙ: ⲙⲁⲣⲉ ⲡⲉⲕⲛⲁⲓ ⲛⲉⲙ ⲧⲉⲕϩⲓⲣⲏⲛⲏ ⲟⲓ ⲛ̀ⲥⲟⲃⲧ ⲙ̀ⲡⲉⲕⲗⲁⲟⲥ:\n\nⲀ̀ⲅⲓⲟⲥ ⲁ̀ⲅⲓⲟⲥ ⲁ̀ⲅⲓⲟⲥ: Ⲕⲩⲣⲓⲟⲥ ⲥⲁⲃⲁⲱⲑ: ⲡ̀ⲗⲏⲣⲏⲥ ⲟ̀ ⲟⲩⲣⲁⲛⲟⲥ ⲕⲉ ⲏ̀ ⲅⲏ: ⲧⲏⲥ ⲁ̀ⲅⲓⲁⲥ ⲥⲟⲩ ⲇⲟⲝⲏⲥ.',
+      },
+      {
+        language: 'englishCoptic',
+        text: 'Maria titshrompi ethnesōs: Maria Tithe-otokos: Maria Ethmau en-Iēsous Pi-ekhristos: fōk pe pi-ōou nem pi-amahi.\n\nAllēlouia Allēlouia Allēlouia.\n\nSmou enisiti nem nisim: mare peknai nem tekhirēnē oi ensobt empeklaos:\n\nAgios agios agios: Kurios savaōth: eplērēs o ouranos ke ē gē: tēs agias sou doksēs.',
+      },
+      {
+        language: 'english',
+        text: 'Mary the beautiful dove, Mary the Theotokos, Mary the Mother of Jesus Christ, to you is the glory and majesty.\n\nAlleluia Alleluia Alleluia.\n\nBless the seeds and the herbs. May Your mercy and Your peace be a fortress unto Your people.\n\nHoly holy holy, Lord of hosts, heaven and earth, are full of Your holy glory.',
+      },
+      {
+        language: 'arabic',
+        text: 'مريم الحمامة الحسنة، مريم والدة الإله، مريم أُم يسوع المسيح، لكِ المجد والعز.\n\nهلليلويا هلليلويا هلليلويا.\n\nبارك الزروع والعشب لتكن رحمتُكَ وسلامُكَ حصناً لشعبِك.\n\nقدوس قدوس قدوس، رب الصاباؤت، السماء والأرض، مملوءتان من مجدك الأقدس.',
       },
     ];
   }
@@ -6187,6 +6364,15 @@ if (kiahkLiturgy && annualLiturgy) {
     const source = annualLiturgy.hymns.find((h) => h.id === kiahkLiturgyFromAnnual[hymn.title]);
     // the lyrics only, without the recordings
     if (source) hymn.versions = source.versions.map(({ audio, ...version }) => version);
+  }
+}
+
+// ---- Kiahk > Liturgy of the Faithful: the two Gospel Responses have the same lyrics as in Matins (and Vespers) ----
+if (kiahkLiturgy && kiahkMatins) {
+  for (const hymn of kiahkLiturgy.hymns) {
+    if (!/\(Gospel Response\)$/.test(hymn.title)) continue;
+    const source = kiahkMatins.hymns.find((h) => h.title === hymn.title);
+    if (source) hymn.versions = source.versions.map((version) => ({ ...version }));
   }
 }
 

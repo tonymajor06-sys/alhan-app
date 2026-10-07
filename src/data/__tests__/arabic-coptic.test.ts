@@ -767,7 +767,7 @@ describe('Kiahk Praises & Season > Liturgy', () => {
       'Ⲭⲉⲣⲉ ⲛⲉ Ⲙⲁⲣⲓⲁ (Praxis Response)',
       'Ⲡⲁϭⲟⲓⲥ (Paralex)',
       'Ⲁⲅⲓⲟⲥ ⲟ̀ Ⲑⲉⲟⲥ (Trisagion)',
-      'Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ (Psalm Trailer)',
+      'Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ (Psalm Chant)',
       'Ⲙⲁⲣⲟⲩϭⲁⲥϥ (Psalm Trailer for the Pope or a Bishop)',
       'Liturgy of the Faithful',
       'Ⲧⲉⲛϯ ⲛⲉ ⲙ̀ⲡⲓⲭⲉⲣⲉⲧⲓⲥⲙⲟⲥ (Gospel Response)',
@@ -783,6 +783,17 @@ describe('Kiahk Praises & Season > Liturgy', () => {
     ]);
     expect(service.hymns.filter((h) => h.isSectionHeader).map((h) => h.title)).toEqual(['Liturgy of the Word', 'Liturgy of the Faithful']);
     expect(service.hymns.map((h, i) => (h.isSectionHeader ? i : -1)).filter((i) => i >= 0)).toEqual([0, 15]);
+    // the Psalm Chant is a group: it opens a list of four Sundays of Kiahk, titles only for now
+    const psalmChant = service.hymns.find((h) => h.title === 'Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ (Psalm Chant)')!;
+    expect(psalmChant.versions).toEqual([]);
+    expect(psalmChant.children?.map((h) => h.title)).toEqual([
+      'First Sunday of Kiahk',
+      'Second Sunday of Kiahk',
+      'Third Sunday of Kiahk',
+      'Fourth Sunday of Kiahk',
+    ]);
+    expect(psalmChant.children?.every((h) => h.versions.length === 0)).toBe(true);
+    expect(service.hymns.some((h) => h.title === 'Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ (Psalm Trailer)')).toBe(false);
     expect(new Set(service.hymns.map((h) => h.id)).size).toBe(service.hymns.length);
     // the first eleven hymns of the Liturgy of the Word, the Trisagion and the Psalm Trailer for the Pope or a Bishop have lyrics so far
     const withLyrics = [
@@ -799,6 +810,16 @@ describe('Kiahk Praises & Season > Liturgy', () => {
       'Ⲡⲁϭⲟⲓⲥ (Paralex)',
       'Ⲁⲅⲓⲟⲥ ⲟ̀ Ⲑⲉⲟⲥ (Trisagion)',
       'Ⲙⲁⲣⲟⲩϭⲁⲥϥ (Psalm Trailer for the Pope or a Bishop)',
+      'Ⲧⲉⲛϯ ⲛⲉ ⲙ̀ⲡⲓⲭⲉⲣⲉⲧⲓⲥⲙⲟⲥ (Gospel Response)',
+      'Ⲧⲉⲛϭⲓⲥⲓ ⲙ̀ⲙⲟ ϧⲉⲛ ⲟⲩⲉⲙⲡ̀ϣⲁ (Gospel Response)',
+      'Ⲍⲁⲭⲁⲣⲓⲁⲥ (Adam Aspasmos (Zechariah))',
+      'Ⲟⲩⲛⲟϥ ⲙ̀ⲙⲟ (Standard Adam Aspasmos (Rejoice))',
+      'Ⲁ̀ⲣⲓⲁⲥⲡⲁⲍⲉⲥⲑⲉ (A Second Standard Adam Aspasmos (Greet With))',
+      'Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ Ⲡⲉⲛⲥⲱⲧⲏⲣ (A Third Standard Adam Aspasmos (O Christ Our Savior))',
+      'Ⲅⲁⲃⲣⲓⲏⲗ (Watos Aspasmos (Gabriel))',
+      'Ⲡ̀ϭⲟⲓⲥ Ⲫ̀ⲛⲟⲩϯ (Standard Watos Aspasmos, O Lord God)',
+      'Ⲙⲁⲣⲉⲛϩⲱⲥ (A Second Standard Watos Aspasmos (Let Us Praise))',
+      'Ⲙⲁⲣⲓⲁ ϯϭⲣⲟⲙⲡⲓ (A Third Standard Watos Aspasmos (Mary the Beautiful Dove))',
     ];
     for (const hymn of service.hymns) {
       if (withLyrics.includes(hymn.title)) expect(hymn.versions.length).toBeGreaterThan(0);
@@ -938,6 +959,87 @@ describe('Kiahk Praises & Season > Liturgy', () => {
       expect(kiahk.versions.every((v) => v.audio === undefined)).toBe(true);
     }
     expect(annualLiturgy.hymns.find((h) => h.id === 'annual-liturgy-agios')!.versions.some((v) => v.audio)).toBe(true);
+    // Liturgy of the Faithful: the two Gospel Responses are the same as in Matins and Vespers, then the two Adam Aspasmos
+    const matinsService = seasons.find((s) => s.id === 'kiahk')!.services.find((s) => s.id === 'kiahk-matins')!;
+    const vespersService = seasons.find((s) => s.id === 'kiahk')!.services.find((s) => s.id === 'kiahk-vespers')!;
+    for (const title of ['Ⲧⲉⲛϯ ⲛⲉ ⲙ̀ⲡⲓⲭⲉⲣⲉⲧⲓⲥⲙⲟⲥ (Gospel Response)', 'Ⲧⲉⲛϭⲓⲥⲓ ⲙ̀ⲙⲟ ϧⲉⲛ ⲟⲩⲉⲙⲡ̀ϣⲁ (Gospel Response)']) {
+      const faithful = service.hymns.find((h) => h.title === title)!;
+      for (const other of [matinsService, vespersService]) {
+        const original = other.hymns.find((h) => h.title === title)!;
+        for (const language of ['coptic', 'englishCoptic', 'english', 'arabic', 'arabicCoptic', 'arabicEnglish']) {
+          expect([title, language, text(faithful, language)]).toEqual([title, language, text(original, language)]);
+          expect(text(faithful, language)).toBeTruthy();
+        }
+      }
+      expect(faithful.versions.every((v) => v.audio === undefined)).toBe(true);
+    }
+    const zechariah = service.hymns.find((h) => h.title === 'Ⲍⲁⲭⲁⲣⲓⲁⲥ (Adam Aspasmos (Zechariah))')!;
+    const rejoice = service.hymns.find((h) => h.title === 'Ⲟⲩⲛⲟϥ ⲙ̀ⲙⲟ (Standard Adam Aspasmos (Rejoice))')!;
+    for (const [hymn, count] of [[zechariah, 6], [rejoice, 7]] as [Hymn, number][]) {
+      for (const language of ['coptic', 'englishCoptic', 'english', 'arabic', 'arabicCoptic', 'arabicEnglish']) {
+        expect([hymn.title, language, stanzas(hymn, language).length]).toEqual([hymn.title, language, count]);
+      }
+      expect(hymn.versions.every((v) => !v.text.includes('\\n') && !v.text.includes('⳪') && v.audio === undefined)).toBe(true);
+      // the Lord's symbol is written out, the symbol itself is not in the Coptic font
+      expect(stanzas(hymn, 'coptic')[hymn === zechariah ? 5 : 6]).toContain('Ⲡ̀ϭⲟⲓⲥ ⲡⲓⲡⲁⲛⲧⲟⲕⲣⲁⲧⲱⲣ');
+    }
+    expect(stanzas(zechariah, 'english')[0]).toBe('Zechariah the priest, son of Berachia, was in the temple, offering incense.');
+    expect(stanzas(zechariah, 'coptic')[0].startsWith('Ⲍⲁⲭⲁⲣⲓⲁⲥ ⲡⲓⲟⲩⲏⲃ ⲡ̀ϣⲏⲣⲓ ⲙ̀Ⲃⲁⲣⲁⲭⲓⲁⲥ')).toBe(true);
+    expect(stanzas(rejoice, 'english')[0]).toBe('Rejoice, O Mary, handmaiden and mother, for the angels praise Him who is in your arms,');
+    expect(stanzas(rejoice, 'coptic')[0].startsWith('Ⲟⲩⲛⲟϥ ⲙ̀ⲙⲟ Ⲙⲁⲣⲓⲁ')).toBe(true);
+    // the second and third standard Adam Aspasmos: the same last four stanzas again
+    const greet = service.hymns.find((h) => h.title === 'Ⲁ̀ⲣⲓⲁⲥⲡⲁⲍⲉⲥⲑⲉ (A Second Standard Adam Aspasmos (Greet With))')!;
+    const savior = service.hymns.find((h) => h.title === 'Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ Ⲡⲉⲛⲥⲱⲧⲏⲣ (A Third Standard Adam Aspasmos (O Christ Our Savior))')!;
+    for (const [hymn, count] of [[greet, 7], [savior, 5]] as [Hymn, number][]) {
+      for (const language of ['coptic', 'englishCoptic', 'english', 'arabic', 'arabicCoptic', 'arabicEnglish']) {
+        expect([hymn.title, language, stanzas(hymn, language).length]).toEqual([hymn.title, language, count]);
+      }
+      expect(hymn.versions.every((v) => !v.text.includes('\\n') && !v.text.includes('⳪') && v.audio === undefined)).toBe(true);
+      for (const language of ['coptic', 'english', 'arabic']) {
+        expect(stanzas(hymn, language).slice(-4)).toEqual(stanzas(rejoice, language).slice(-4));
+      }
+    }
+    expect(stanzas(greet, 'english')[0]).toBe('Greet, with a holy kiss, purify your hearts, from every evil thing.');
+    expect(stanzas(greet, 'english')[2]).toBe('Through these [mysteries], we may win mercy, and forgiveness of our sins, according to His great mercy.');
+    expect(stanzas(greet, 'coptic')[0].startsWith('Ⲁ̀ⲣⲓⲁⲥⲡⲁⲍⲉⲥⲑⲉ: ϧⲉⲛ ⲟⲩⲫⲓ ⲉⲑⲟⲩⲁⲃ')).toBe(true);
+    expect(stanzas(savior, 'english')[0]).toBe('O Christ our Savior, make us worthy, of Your holy peace, in the heavens.');
+    expect(stanzas(savior, 'coptic')[0].startsWith('Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ Ⲡⲉⲛⲥⲱⲧⲏⲣ: ⲁ̀ⲣⲓⲧⲉⲛⲛ̀ⲉⲙⲡ̀ϣⲁ')).toBe(true);
+    // the two Watos Aspasmos: 4 stanzas each, ending with "Holy, holy, holy"
+    const watosGabriel = service.hymns.find((h) => h.title === 'Ⲅⲁⲃⲣⲓⲏⲗ (Watos Aspasmos (Gabriel))')!;
+    const watosLordGod = service.hymns.find((h) => h.title === 'Ⲡ̀ϭⲟⲓⲥ Ⲫ̀ⲛⲟⲩϯ (Standard Watos Aspasmos, O Lord God)')!;
+    for (const hymn of [watosGabriel, watosLordGod]) {
+      for (const language of ['coptic', 'englishCoptic', 'english', 'arabic', 'arabicCoptic', 'arabicEnglish']) {
+        expect([hymn.title, language, stanzas(hymn, language).length]).toEqual([hymn.title, language, 4]);
+      }
+      expect(hymn.versions.every((v) => !v.text.includes('\\n') && v.audio === undefined)).toBe(true);
+    }
+    expect(stanzas(watosGabriel, 'english')[0]).toBe('Gabriel the holy Angel, announced to the Virgin, "Hail to you O full of grace, the Lord is with you."');
+    expect(stanzas(watosGabriel, 'coptic')[0].startsWith('Ⲅⲁⲃⲣⲓⲏⲗ ⲡⲓⲁ̀ⲅⲅⲉⲗⲟⲥ ⲁϥϩⲓϣⲉⲛⲛⲟⲩϥⲓ')).toBe(true);
+    expect(stanzas(watosGabriel, 'english')[3]).toBe('Holy, holy, holy, Lord of hosts, heaven and earth, are full of Your holy glory.');
+    expect(stanzas(watosLordGod, 'english')[1]).toBe('Alleluia Alleluia Alleluia.');
+    expect(stanzas(watosLordGod, 'coptic')[0].startsWith('Ⲡ̀ϭⲟⲓⲥ Ⲫ̀ⲛⲟⲩϯ ⲛ̀ⲧⲉ ⲛⲓϫⲟⲙ')).toBe(true);
+    expect(stanzas(watosLordGod, 'english')[3]).toBe('Holy holy holy, Lord of hosts, heaven and earth, are full of Your holy glory.');
+    // the second and third Watos Aspasmos: 4 stanzas each, the last three the same as in the "O Lord God" one
+    const watosLetUsPraise = service.hymns.find((h) => h.title === 'Ⲙⲁⲣⲉⲛϩⲱⲥ (A Second Standard Watos Aspasmos (Let Us Praise))')!;
+    const watosMaryDove = service.hymns.find((h) => h.title === 'Ⲙⲁⲣⲓⲁ ϯϭⲣⲟⲙⲡⲓ (A Third Standard Watos Aspasmos (Mary the Beautiful Dove))')!;
+    for (const hymn of [watosLetUsPraise, watosMaryDove]) {
+      for (const language of ['coptic', 'englishCoptic', 'english', 'arabic', 'arabicCoptic', 'arabicEnglish']) {
+        expect([hymn.title, language, stanzas(hymn, language).length]).toEqual([hymn.title, language, 4]);
+      }
+      expect(hymn.versions.every((v) => !v.text.includes('\\n') && v.audio === undefined)).toBe(true);
+      for (const language of ['coptic', 'english', 'arabic']) {
+        expect(stanzas(hymn, language).slice(1)).toEqual(stanzas(watosLordGod, language).slice(1));
+      }
+    }
+    expect(stanzas(watosLetUsPraise, 'english')[0]).toBe('Let us praise with the angels, and the heavenly hosts, He who is the Father and the Son, and the Holy Spirit.');
+    expect(stanzas(watosLetUsPraise, 'coptic')[0].startsWith('Ⲙⲁⲣⲉⲛϩⲱⲥ ⲛⲉⲙ ⲛⲓⲁⲅⲅⲉⲗⲟⲥ')).toBe(true);
+    expect(stanzas(watosMaryDove, 'english')[0]).toBe('Mary the beautiful dove, Mary the Theotokos, Mary the Mother of Jesus Christ, to you is the glory and majesty.');
+    expect(stanzas(watosMaryDove, 'coptic')[0].startsWith('Ⲙⲁⲣⲓⲁ ϯϭⲣⲟⲙⲡⲓ ⲉⲑⲛⲉⲥⲱⲥ')).toBe(true);
+    expect(stanzas(watosMaryDove, 'arabic')[0]).toBe('مريم الحمامة الحسنة، مريم والدة الإله، مريم أُم يسوع المسيح، لكِ المجد والعز.');
+    // the last four stanzas of the two Adam Aspasmos are the same
+    for (const language of ['coptic', 'english', 'arabic']) {
+      expect(stanzas(zechariah, language).slice(-3)).toEqual(stanzas(rejoice, language).slice(-3));
+    }
     expect(stanzas(intercessions, 'english')[0]).toBe('Through the intercessions, of the Theotokos, Saint Mary, O Lord grant us, the forgiveness of our sins.');
     expect(stanzas(intercessions, 'english')[13]).toBe('Through the prayers: of our righteous father: Abba Abraam the bishop: O Lord grant us the forgiveness of our sins.');
     expect(stanzas(intercessions, 'coptic')[0].startsWith('Ϩⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ: ⲛ̀ⲧⲉ ϯⲑⲉⲟ̀ⲧⲟⲕⲟⲥ')).toBe(true);
