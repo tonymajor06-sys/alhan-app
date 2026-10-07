@@ -3242,6 +3242,45 @@ annualLiturgy?.hymns.push(
   },
 );
 
+// ---- Annual > Liturgy: the Standard Adam Aspasmos and the other Watos Aspasmos, copied from Kiahk ----
+// Arabic in English letters for the Kiahk Aspasmos copied into Annual (they had no such version)
+const kiahkAspasmosEnglishArabic: [string, string][] = [
+  ["Ⲟⲩⲛⲟϥ ⲙ̀ⲙⲟ (Standard Adam Aspasmos (Rejoice))", "Ifrahi ya Maryam, el-'abda wal-umm, li-anna elladhi fi higriki, el-mala'ika tusabbihuhu.\n\nWesh-Sharoubim, yasgudoun lahu bi-istihqaq, wes-Sarafim, bi-ghayr futour.\n\nLaysa lana dalla 'and Rabbina Yasou' el-Maseeh, siwa talabatiki wa shafa'atiki, ya sayyidatana kullina es-sayyida walidat el-Ilah.\n\nNas'aluka ya Ibn Allah, an tahfaz hayat batriyarkina, el-Baba Anba (...) ra'ees el-kahana, thabbithu 'ala kursiyyihi.\n\nWa shareekahu fil-khidma er-rasouliyya, abana el-qiddees el-barr, Anba (...) el-usquf (el-matran), thabbithu 'ala kursiyyihi.\n\nLikay nusabbihaka, ma'a esh-Sharoubim wes-Sarafim, sarikheen qa'ileen:\n\n\"Quddous quddous quddous, ayyuha er-Rabb ed-dabit el-kull, es-sama' wal-ard mamlou'atan, min magdika wa karamatika.\""],
+  ["Ⲁ̀ⲣⲓⲁⲥⲡⲁⲍⲉⲥⲑⲉ (A Second Standard Adam Aspasmos (Greet With))", "Qabbilou, bi-qubla muqaddasa, tahhirou qouloubakum, min kull sharr.\n\nKounou musta'iddeen, li-mawhibat Allah, hatta tanalou, min hadhihi el-asrar.\n\nWa bi-hadhihi, nafouz bir-rahma, wa maghfirat khatayana, ka-'azeem rahmatihi.\n\nNas'aluka ya Ibn Allah, an tahfaz hayat batriyarkina, el-Baba Anba (...) ra'ees el-kahana, thabbithu 'ala kursiyyihi.\n\nWa shareekahu fil-khidma er-rasouliyya, abana el-qiddees el-barr, Anba (...) el-usquf (el-matran), thabbithu 'ala kursiyyihi.\n\nLikay nusabbihaka, ma'a esh-Sharoubim wes-Sarafim, sarikheen qa'ileen:\n\n\"Quddous quddous quddous, ayyuha er-Rabb ed-dabit el-kull, es-sama' wal-ard mamlou'atan, min magdika wa karamatika.\""],
+  ["Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ Ⲡⲉⲛⲥⲱⲧⲏⲣ (A Third Standard Adam Aspasmos (O Christ Our Savior))", "Ayyuha el-Maseeh mukhallisuna, ig'alna ahlan, li-salamika el-muqaddas, fis-samawat.\n\nNas'aluka ya Ibn Allah, an tahfaz hayat batriyarkina, el-Baba Anba (...) ra'ees el-kahana, thabbithu 'ala kursiyyihi.\n\nWa shareekahu fil-khidma er-rasouliyya, abana el-qiddees el-barr, Anba (...) el-usquf (el-matran), thabbithu 'ala kursiyyihi.\n\nLikay nusabbihaka, ma'a esh-Sharoubim wes-Sarafim, sarikheen qa'ileen:\n\n\"Quddous quddous quddous, ayyuha er-Rabb ed-dabit el-kull, es-sama' wal-ard mamlou'atan, min magdika wa karamatika.\""],
+  ["Ⲙⲁⲣⲉⲛϩⲱⲥ (A Second Standard Watos Aspasmos (Let Us Praise))", "Fal-nusabbih ma'a el-mala'ika, wet-tughmat es-sama'iyya, elladhi huwa el-Ab wal-Ibn, war-Rouh el-Qudus.\n\nHalleluia halleluia halleluia.\n\nBarik ez-zurou' wal-'ushb li-takun rahmatuka wa salamuka hisnan li-sha'bika.\n\nQuddous quddous quddous, Rabb es-Saba'out, es-sama' wal-ard, mamlou'atan min magdika el-aqdas."],
+  ["Ⲙⲁⲣⲓⲁ ϯϭⲣⲟⲙⲡⲓ (A Third Standard Watos Aspasmos (Mary the Beautiful Dove))", "Maryam el-hamama el-hasana, Maryam walidat el-Ilah, Maryam umm Yasou' el-Maseeh, laki el-magd wal-'izz.\n\nHalleluia halleluia halleluia.\n\nBarik ez-zurou' wal-'ushb li-takun rahmatuka wa salamuka hisnan li-sha'bika.\n\nQuddous quddous quddous, Rabb es-Saba'out, es-sama' wal-ard, mamlou'atan min magdika el-aqdas."],
+];
+for (const [title, text] of kiahkAspasmosEnglishArabic) {
+  const hymn = kiahkLiturgy?.hymns.find((h) => h.title === title);
+  if (hymn && !hymn.versions.some((v) => v.language === 'englishArabic')) {
+    const at = hymn.versions.findIndex((v) => v.language === 'english') + 1;
+    hymn.versions.splice(at, 0, { language: 'englishArabic', text });
+  }
+}
+const copyFromKiahkLiturgy = (title: string, id: string): Hymn[] => {
+  const hymn = kiahkLiturgy?.hymns.find((h) => h.title === title);
+  return hymn ? [{ ...hymn, id, versions: hymn.versions.map((v) => ({ ...v })) }] : [];
+};
+if (annualLiturgy) {
+  const watos = annualLiturgy.hymns.findIndex((h) => h.id === 'annual-liturgy-aspasmos-watos');
+  if (watos >= 0) {
+    annualLiturgy.hymns.splice(
+      watos + 1,
+      0,
+      ...copyFromKiahkLiturgy('Ⲙⲁⲣⲉⲛϩⲱⲥ (A Second Standard Watos Aspasmos (Let Us Praise))', 'annual-liturgy-aspasmos-watos-2'),
+      ...copyFromKiahkLiturgy('Ⲙⲁⲣⲓⲁ ϯϭⲣⲟⲙⲡⲓ (A Third Standard Watos Aspasmos (Mary the Beautiful Dove))', 'annual-liturgy-aspasmos-watos-3')
+    );
+    annualLiturgy.hymns.splice(
+      watos,
+      0,
+      ...copyFromKiahkLiturgy('Ⲟⲩⲛⲟϥ ⲙ̀ⲙⲟ (Standard Adam Aspasmos (Rejoice))', 'annual-liturgy-aspasmos-adam'),
+      ...copyFromKiahkLiturgy('Ⲁ̀ⲣⲓⲁⲥⲡⲁⲍⲉⲥⲑⲉ (A Second Standard Adam Aspasmos (Greet With))', 'annual-liturgy-aspasmos-adam-2'),
+      ...copyFromKiahkLiturgy('Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ Ⲡⲉⲛⲥⲱⲧⲏⲣ (A Third Standard Adam Aspasmos (O Christ Our Savior))', 'annual-liturgy-aspasmos-adam-3')
+    );
+  }
+}
+
 // ---- Audio: Annual > Liturgy > Psalm Trailer for the Pope or a Bishop ----
 const psalmTrailerPopeBishopHymn = annualLiturgy?.hymns.find((h) => h.id === 'annual-liturgy-psalm-trailer-pope-bishop');
 const psalmTrailerPopeBishopCoptic = psalmTrailerPopeBishopHymn?.versions.find((v) => v.language === 'coptic');
@@ -6457,6 +6496,16 @@ if (kiahkLiturgy && kiahkMatins) {
     if (!/\(Gospel Response\)$/.test(hymn.title)) continue;
     const source = kiahkMatins.hymns.find((h) => h.title === hymn.title);
     if (source) hymn.versions = source.versions.map((version) => ({ ...version }));
+  }
+}
+
+// ---- Audio: Annual > the Concluding Hymn (Vespers, Matins, Distribution, Midnight Praises), sung in Coptic ----
+for (const service of seasons.find((s) => s.id === 'annual')?.services ?? []) {
+  for (const hymn of flattenHymns(service.hymns)) {
+    if (!hymn.id.endsWith('-concluding-hymn')) continue;
+    for (const version of hymn.versions) {
+      if (version.language === 'coptic' || version.language === 'englishCoptic') version.audio = 'Conclusion hymn.m4a';
+    }
   }
 }
 
