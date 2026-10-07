@@ -81,6 +81,22 @@ describe('Kiahk Praises & Season > Midnight Praises', () => {
     }
   });
 
+  it('plays the recording of "I Open my Mouth with Praise" on its English and Arabic versions (and English in Arabic letters)', () => {
+    const hymn = service.hymns.find((h) => h.title === 'I Open my Mouth with Praise')!;
+    const file = 'kiahk-midnight-i-open-my-mouth-with-praise.mp3';
+    expect(hymn.versions.map((v) => [v.language, v.audio])).toEqual([
+      ['english', file],
+      ['arabic', file],
+      ['arabicEnglish', file],
+    ]);
+    // the recording is in the repo, so it can stream from GitHub once it is pushed
+    const nodeFs = jest.requireActual('fs') as { statSync(file: string): { size: number } };
+    expect(nodeFs.statSync('assets/audio/' + file).size).toBeGreaterThan(1000000);
+    // no other Kiahk Midnight hymn got this recording
+    const withThisFile = flattenHymns(service.hymns).filter((h) => h.versions.some((v) => v.audio === file));
+    expect(withThisFile.map((h) => h.title)).toEqual(['I Open my Mouth with Praise']);
+  });
+
   it('has the same lyrics as Annual Midnight Praises for the hymns that are in both', () => {
     const annual = seasons.find((s) => s.id === 'annual')!.services.find((s) => s.id === 'annual-midnight')!;
     const annualHymns = flattenHymns(annual.hymns);
@@ -792,7 +808,23 @@ describe('Kiahk Praises & Season > Liturgy', () => {
       'Third Sunday of Kiahk',
       'Fourth Sunday of Kiahk',
     ]);
-    expect(psalmChant.children?.every((h) => h.versions.length === 0)).toBe(true);
+    // each Sunday is one stanza in Coptic, Coptic-English, English and Arabic, ending with the Alleluia
+    const chantText = (h: Hymn, language: string) => h.versions.find((v) => v.language === language)?.text ?? '';
+    const sundayStarts = ['You will arise and have mercy on Zion', 'Hear, O daughter, and see', 'Mercy and truth are met together', 'You Who sits upon the cherubim'];
+    psalmChant.children!.forEach((sunday, i) => {
+      for (const language of ['coptic', 'englishCoptic', 'english', 'arabic', 'arabicCoptic', 'arabicEnglish']) {
+        expect([sunday.title, language, chantText(sunday, language).split(/\n\s*\n/).length]).toEqual([sunday.title, language, 1]);
+      }
+      expect(chantText(sunday, 'english').startsWith(sundayStarts[i])).toBe(true);
+      expect(chantText(sunday, 'english').endsWith('Alleluia')).toBe(true);
+      expect(chantText(sunday, 'coptic').endsWith('ⲁ︦ⲗ︦.')).toBe(true);
+      expect(chantText(sunday, 'englishCoptic').endsWith('allēlouia.')).toBe(true);
+      expect(chantText(sunday, 'coptic')).not.toContain('⳪');
+      expect(sunday.versions.every((v) => v.audio === undefined)).toBe(true);
+    });
+    expect(chantText(psalmChant.children![0], 'coptic')).toContain('ϫⲉ Ⲡ̀ϭⲟⲓⲥ ⲉϥⲉ̀ⲕⲱⲧ ⲛ̀Ⲥⲓⲱⲛ');
+    expect(chantText(psalmChant.children![1], 'arabic').startsWith('إسمعي يا إبنتي')).toBe(true);
+    expect(chantText(psalmChant.children![3], 'coptic').startsWith('Ⲫⲏⲉⲧϩⲉⲙⲥⲓ ϩⲓϫⲉⲛ Ⲛⲓϣⲉⲣⲟⲩⲃⲓⲙ')).toBe(true);
     expect(service.hymns.some((h) => h.title === 'Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ (Psalm Trailer)')).toBe(false);
     expect(new Set(service.hymns.map((h) => h.id)).size).toBe(service.hymns.length);
     // the first eleven hymns of the Liturgy of the Word, the Trisagion and the Psalm Trailer for the Pope or a Bishop have lyrics so far

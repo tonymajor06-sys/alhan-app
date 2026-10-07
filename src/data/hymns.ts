@@ -1881,6 +1881,78 @@ if (kiahkLiturgy) {
       title: `${week} Sunday of Kiahk`,
       versions: [],
     }));
+    kiahkLiturgyPsalmChant.children[0].versions = [
+        {
+          language: 'coptic',
+          text: 'Ⲛⲑⲟⲕ Ⲫϯ ⲉⲕⲉ̀ⲕⲟⲧⲕ ⲉⲕⲉ̀ϣⲉⲛϩⲏⲧ ϧⲁ Ⲥⲓⲱⲛ: Ϫⲉ ⲡ̀ⲥⲏⲟⲩ ⲡⲉ ⲉⲑⲣⲉⲕϣⲉⲛϩⲏⲧ ϧⲁⲣⲟⲥ: ϫⲉ Ⲡ̀ϭⲟⲓⲥ ⲉϥⲉ̀ⲕⲱⲧ ⲛ̀Ⲥⲓⲱⲛ ⲟⲩⲟϩ ⲉϥⲉ̀ⲟⲩⲟⲛϩϥ ϧⲉⲛ ⲡⲉϥⲱ̀ⲟⲩ. ⲁ︦ⲗ︦.',
+        },
+        {
+          language: 'englishCoptic',
+          text: 'Nthok Fti ekekotk ekeshenhēt kha Siōn: Je epsēou pe ethrekshenhēt kharos: je Eptshois efekōt en-Siōn ouoh efeouonhf khen pefōou. allēlouia.',
+        },
+        {
+          language: 'english',
+          text: 'You will arise and have mercy on Zion; For the time to favor her. For the Lord shall build up Zion; He shall appear in His glory. Alleluia',
+        },
+        {
+          language: 'arabic',
+          text: 'أنت يارب ترجِع وتترأف على صهيون، لأنه وقت التحنن عليها، لأن الرب يبنى صهيون، ويظهر بمجده. هَلِّيلويا.',
+        },
+    ];
+    kiahkLiturgyPsalmChant.children[1].versions = [
+        {
+          language: 'coptic',
+          text: 'Ⲥⲱⲧⲉⲙ ⲧⲁϣⲉⲣⲓ ⲁ̀ⲛⲁⲩ ⲣⲉⲕ ⲡⲉⲙⲁϣϫ: ⲁ̀ⲣⲓⲡ̀ⲱⲃϣ ⲙ̀ⲡⲉⲗⲁⲟⲥ ⲛⲉⲙ ⲡ̀ⲏⲓ ⲧⲏⲣϥ ⲛ̀ⲧⲉ ⲡⲉⲓⲱⲧ: ϫⲉ ⲁ̀ Ⲡⲓⲟⲩⲣⲟ ⲉⲣⲉ̀ⲡⲓⲑⲩⲙⲓⲛ ⲉ̀ⲡⲉⲥⲁⲓ: ϫⲉ ⲟⲩⲏⲓ ⲛ̀ⲑⲟϥ ⲡⲉ Ⲡⲉϭⲟⲓⲥ. ⲁ︦ⲗ︦.',
+        },
+        {
+          language: 'englishCoptic',
+          text: 'Sōtem tasheri anau rek pemashj: ari-epōbsh empelaos nem epēi tērf ente peiōt: je a Piouro erepithumin epesai: je ouēi enthof pe Petshois. allēlouia.',
+        },
+        {
+          language: 'english',
+          text: 'Hear, O daughter, and see, and incline your ear; forget also your people, and your father’s house. Because the king has desired your beauty; for He is Your Lord. Alleluia',
+        },
+        {
+          language: 'arabic',
+          text: 'إسمعي يا إبنتي وانظري وأميلي سمعك، وأنسى شعبك وكل بيت أبيك، فإن الملك قد اشتهى حسنك، لأنه هو ربك. هلليلويا',
+        },
+    ];
+    kiahkLiturgyPsalmChant.children[2].versions = [
+        {
+          language: 'coptic',
+          text: 'Ⲟⲩⲛⲁⲓ ⲛⲉⲙ ⲟⲩⲙⲉⲑⲙⲏⲓ ⲁⲩⲓ̀ ⲉ̀ⲃⲟⲗ ⲉ̀ϩ̀ⲣⲉⲛ ⲛⲟⲩⲉ̀ⲣⲏⲟⲩ: ⲟⲩⲇⲓⲕⲉⲟ̀ⲥⲩⲛⲏ ⲛⲉⲙ ⲟⲩϩⲓⲣⲏⲛⲏ ⲁⲩϣⲉⲡⲧⲟⲧⲟⲩ ⲛ̀ⲛ̀ⲟⲩⲉ̀ⲣⲏⲟⲩ. Ϯⲙⲉⲑⲙⲏⲓ ⲁⲥϣⲁⲓ ⲉ̀ⲃⲟⲗ ϧⲉⲛ ⲡ̀ⲕⲁϩⲓ: ϯⲇⲓⲕⲉⲟ̀ⲥⲩⲛⲏ ⲁⲥϫⲟⲩϣⲧ ⲉ̀ⲃⲟⲗ ϧⲉⲛ ⲧ̀ⲫⲉ. ⲁ︦ⲗ︦.',
+        },
+        {
+          language: 'englishCoptic',
+          text: 'Ounai nem oumethmēi au-i evol e-ehren nou-erēou: oudike-osunē nem ouhirēnē ausheptotou enenou-erēou. Timethmēi asshai evol khen epkahi: tidike-osunē asjousht evol khen etfe. allēlouia.',
+        },
+        {
+          language: 'english',
+          text: 'Mercy and truth are met together; righteousness and peace have kissed each other. Truth is sprung up out of the earth and righteousness has looked down from heaven. Alleluia',
+        },
+        {
+          language: 'arabic',
+          text: 'الرحمةُ والحقُ اِلْتَقَيا، والعدلُ والسلامُ تَلاثَمَا، الحقُ من الأرضِ أشرقَ، والعدلُ من السماءِ تَطَلَّعَ. هلِّيلويا.',
+        },
+    ];
+    kiahkLiturgyPsalmChant.children[3].versions = [
+        {
+          language: 'coptic',
+          text: 'Ⲫⲏⲉⲧϩⲉⲙⲥⲓ ϩⲓϫⲉⲛ Ⲛⲓϣⲉⲣⲟⲩⲃⲓⲙ ⲟⲩⲟⲛϩⲕ ⲉ̀ⲃⲟⲗ: ⲙ̀ⲡⲉⲙ̀ⲑⲟ ⲛ̀Ⲉⲫⲣⲉⲙ ⲛⲉⲙ Ⲃⲉⲛⲓⲁⲙⲓⲛ ⲛⲉⲙ Ⲙⲁⲛⲁⲥⲥⲏ. Ⲉⲫ̀ⲛⲁϩⲙⲉⲛ ⲙⲁⲧⲁⲥⲑⲟⲛ Ⲫϯ: ⲙⲁⲣⲉ ⲡⲉⲕϩⲟ ⲉⲣⲟⲩⲱⲓⲛⲓ ⲉ̀ϩ̀ⲣⲏⲓ ⲉ̀ϫⲱⲛ ⲟⲩⲟϩ ⲉⲛⲉ̀ⲛⲟϩⲉⲙ. ⲁ︦ⲗ︦.',
+        },
+        {
+          language: 'englishCoptic',
+          text: 'Fēethemsi hijen Nisherouvim ouonhk evol: empe-emtho en-Efrem nem Veniamin nem Manassē. Eefnahmen matasthon Fti: mare pekho erouōini e-ehrēi ejōn ouoh enenohem. allēlouia.',
+        },
+        {
+          language: 'english',
+          text: 'You Who sits upon the cherubim, shine Before Ephraim, Benjamin, and Manasseh, come and save us! Turn us again, O God; and Cause Your face to shine, and we shall be saved. Alleluia',
+        },
+        {
+          language: 'arabic',
+          text: 'يا جالســاً على الشــاروبيم اظهــر، قــدام إفـرايم وبنيــامين ومنسى، لخلاصنــا ياالله أرددنا، ولينر وجهــك علينا فنخلص. هلليلويا',
+        },
+    ];
   }
   const kiahkLiturgyIntercessions = kiahkLiturgy.hymns.find((h) => h.title === 'Ϩⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ (Hymn of the Intercessions)');
   if (kiahkLiturgyIntercessions) {
@@ -5266,6 +5338,20 @@ const midnightEnglishArabicAudio: Record<string, string> = {
 };
 for (const hymn of annualMidnight ? flattenHymns(annualMidnight.hymns) : []) {
   const audio = midnightEnglishArabicAudio[hymn.id];
+  if (!audio) continue;
+  for (const version of hymn.versions) {
+    if (version.language === 'english' || version.language === 'arabic' || version.language === 'englishArabic') {
+      version.audio = audio;
+    }
+  }
+}
+
+// Kiahk Midnight Praises recordings sung in English and Arabic (English in Arabic letters copies the English later)
+const kiahkMidnightEnglishArabicAudio: Record<string, string> = {
+  'I Open my Mouth with Praise': 'kiahk-midnight-i-open-my-mouth-with-praise.mp3',
+};
+for (const hymn of kiahkMidnight?.hymns ?? []) {
+  const audio = kiahkMidnightEnglishArabicAudio[hymn.title];
   if (!audio) continue;
   for (const version of hymn.versions) {
     if (version.language === 'english' || version.language === 'arabic' || version.language === 'englishArabic') {
