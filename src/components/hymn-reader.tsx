@@ -4,7 +4,7 @@ import { Alert, Pressable, ScrollView, Share, Text, View } from 'react-native';
 
 import { hymnWebUrl } from '../constants/site';
 import { displayTitle } from '../data/arabic-titles';
-import { Hymn, LanguageType } from '../data/hymns';
+import { flattenHymns, Hymn, LanguageType } from '../data/hymns';
 import { hymnSlug, locateHymn, neighborHymns } from '../data/search';
 import { useAlhanColors, useThemedStyles } from '../hooks/use-alhan-colors';
 import {
@@ -17,6 +17,8 @@ import {
 import {
   currentTrack,
   playQueue,
+  queueAfterCurrent,
+  QueueTrack,
   seekBy,
   seekTo,
   setPlaybackRate,
@@ -117,11 +119,38 @@ export function HymnReader({
       <View style={styles.verseColumn} />
     );
 
+  // Play next: the hymns after this one in the service that have a recording in the same language
+  const followingTracks = (): QueueTrack[] => {
+    const service = location?.service;
+    if (!service) return [];
+    const order = flattenHymns(service.hymns);
+    return order.slice(order.findIndex((h) => h.id === hymn.id) + 1).flatMap((h) => {
+      const file = h.versions.find((v) => v.language === effectiveLanguage)?.audio;
+      const source = file ? audioSourceFor(file) : null;
+      return source ? [{ hymnId: h.id, language: effectiveLanguage, title: displayTitle(h, lang), source }] : [];
+    });
+  };
+
   const toggleReaderAudio = () => {
     if (readerIsCurrent) return togglePlay();
     const source = currentAudio ? audioSourceFor(currentAudio) : null;
-    if (source) playQueue([{ ...readerItem, title, source }]);
+    if (source) playQueue([{ ...readerItem, title, source }, ...(settings.playNext ? followingTracks() : [])]);
   };
+
+  const togglePlayNext = () => {
+    const on = !settings.playNext;
+    updateSettings({ playNext: on });
+    if (readerIsCurrent && queue.origin === 'single') queueAfterCurrent(on ? followingTracks() : []);
+  };
+
+  // When this hymn's recording ends and the next one starts, open the next hymn's words
+  const wasCurrent = useRef(false);
+  useEffect(() => {
+    if (wasCurrent.current && !readerIsCurrent && nowPlaying && queue.origin === 'single' && settings.playNext) {
+      router.replace(hymnHref(nowPlaying.hymnId, nowPlaying.language));
+    }
+    wasCurrent.current = readerIsCurrent;
+  }, [readerIsCurrent, nowPlaying, queue.origin, settings.playNext]);
 
   const toggleDownload = (file: string) => {
     if (downloads.downloaded.has(file)) return removeDownload(file);
@@ -385,6 +414,13 @@ export function HymnReader({
               accessibilityState={{ selected: repeatOne }}
               style={[styles.controlButton, repeatOne && styles.controlButtonActive]}>
               <Text style={[styles.controlText, repeatOne && styles.controlTextActive]}>⟳ {t.repeat}</Text>
+            </Pressable>
+            <Pressable
+              onPress={togglePlayNext}
+              accessibilityRole="switch"
+              accessibilityState={{ checked: settings.playNext }}
+              style={[styles.controlButton, settings.playNext && styles.controlButtonActive]}>
+              <Text style={[styles.controlText, settings.playNext && styles.controlTextActive]}>⏭ {t.playNext}</Text>
             </Pressable>
           </View>
 
