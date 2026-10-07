@@ -1830,6 +1830,279 @@ if (kiahkMatins) {
   }
 }
 
+// ---- Kiahk > Liturgy: only the Liturgy of the Word and the Liturgy of the Faithful, titles only for now ----
+const kiahkLiturgy = seasons
+  .find((s) => s.id === 'kiahk')
+  ?.services.find((s) => s.id === 'kiahk-liturgy');
+
+if (kiahkLiturgy) {
+  const kiahkLiturgyTitles = [
+    'Liturgy of the Word',
+    'Ϩⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ (Hymn of the Intercessions)',
+    'Ⲡⲓϩ̀ⲙⲟⲧ ⲅⲁⲣ (Conclusion to the Coptic Pauline Epistle)',
+    'Ⲡⲓϩ̀ⲙⲟⲧ ⲅⲁⲣ ⲙ̀ⲡⲉⲛⲟ︦ⲥ︦ Ⲓⲏ︦ⲥ︦ Ⲡⲭ︦ⲥ︦ (Response to the Pauline Epistle)',
+    'Ⲡⲓϩ̀ⲙⲟⲧ ⲅⲁⲣ ⲙ̀Ⲫ̀ⲛⲟⲩϯ (Great Response to the Pauline Epistle)',
+    'Ⲏ̀ ⲁ̀ⲅⲁⲡⲏ (Alternate Response to the Pauline Epistle)',
+    'Ϯⲙⲏⲧ ⲥ̀ⲛⲟⲩϯ (Hymn of the Virtues)',
+    'Ⲧⲟⲩ ⲙⲁⲕⲁⲣⲓⲱ (The Blessed)',
+    'Ⲁ̀ ⲡⲉⲧϫⲏⲕ (Perfect is the Blessing)',
+    'Ⲕⲁⲑⲟⲗⲓⲕⲟⲛ (Introduction to the Coptic Catholic Epistle)',
+    'Ⲭⲉⲣⲉ ⲛⲉ Ⲙⲁⲣⲓⲁ (Praxis Response)',
+    'Ⲡⲁϭⲟⲓⲥ (Paralex)',
+    'Ⲁⲅⲓⲟⲥ ⲟ̀ Ⲑⲉⲟⲥ (Trisagion)',
+    'Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ (Psalm Trailer)',
+    'Ⲙⲁⲣⲟⲩϭⲁⲥϥ (Psalm Trailer for the Pope or a Bishop)',
+    'Liturgy of the Faithful',
+    'Ⲧⲉⲛϯ ⲛⲉ ⲙ̀ⲡⲓⲭⲉⲣⲉⲧⲓⲥⲙⲟⲥ (Gospel Response)',
+    'Ⲧⲉⲛϭⲓⲥⲓ ⲙ̀ⲙⲟ ϧⲉⲛ ⲟⲩⲉⲙⲡ̀ϣⲁ (Gospel Response)',
+    'Ⲍⲁⲭⲁⲣⲓⲁⲥ (Adam Aspasmos (Zechariah))',
+    'Ⲟⲩⲛⲟϥ ⲙ̀ⲙⲟ (Standard Adam Aspasmos (Rejoice))',
+    'Ⲁ̀ⲣⲓⲁⲥⲡⲁⲍⲉⲥⲑⲉ (A Second Standard Adam Aspasmos (Greet With))',
+    'Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ Ⲡⲉⲛⲥⲱⲧⲏⲣ (A Third Standard Adam Aspasmos (O Christ Our Savior))',
+    'Ⲅⲁⲃⲣⲓⲏⲗ (Watos Aspasmos (Gabriel))',
+    'Ⲡ̀ϭⲟⲓⲥ Ⲫ̀ⲛⲟⲩϯ (Standard Watos Aspasmos, O Lord God)',
+    'Ⲙⲁⲣⲉⲛϩⲱⲥ (A Second Standard Watos Aspasmos (Let Us Praise))',
+    'Ⲙⲁⲣⲓⲁ ϯϭⲣⲟⲙⲡⲓ (A Third Standard Watos Aspasmos (Mary the Beautiful Dove))',
+  ];
+  const kiahkLiturgyHeaders = ['Liturgy of the Word', 'Liturgy of the Faithful'];
+  kiahkLiturgy.hymns = kiahkLiturgyTitles.map((title, index) =>
+    kiahkLiturgyHeaders.includes(title)
+      ? { id: `kiahk-liturgy-header-${kiahkLiturgyHeaders.indexOf(title) + 1}`, title, versions: [], isSectionHeader: true }
+      : { id: `kiahk-liturgy-hymn-${index + 1}`, title, versions: [] }
+  );
+  const kiahkLiturgyIntercessions = kiahkLiturgy.hymns.find((h) => h.title === 'Ϩⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ (Hymn of the Intercessions)');
+  if (kiahkLiturgyIntercessions) {
+    kiahkLiturgyIntercessions.versions = [
+      {
+        language: 'coptic',
+        text: 'Ϩⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ: ⲛ̀ⲧⲉ ϯⲑⲉⲟ̀ⲧⲟⲕⲟⲥ ⲉⲑⲟⲩⲁⲃ Ⲙⲁⲣⲓⲁ: Ⲡϭⲟⲓⲥ ⲁⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ: ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.\n\nϨⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ: ⲛ̀ⲧⲉ ⲡⲓⲁⲣⲭⲏⲁⲅⲅⲉⲗⲟⲥ ⲉⲑⲟⲩⲁⲃ: Ⲅⲁⲃⲣⲓⲏⲗ ⲡⲓϥⲁⲓϣⲉⲛⲛⲟⲩϥⲓ: Ⲡ̀ϭⲟⲓⲥ ⲁ̀ⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.\n\nϨⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ ⲛ̀ⲧⲉ ⲡⲓϣⲁϣϥ ⲛ̀ⲁⲣⲭⲓⲁⲅⲅⲉⲗⲟⲥ ⲛⲉⲙ ⲛⲓⲧⲁⲅⲙⲁ ⲛ̀ⲉ̀ⲡⲟⲩⲣⲁⲛⲓⲟⲛ: Ⲡϭⲟⲓⲥ ⲁⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.\n\nϨⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ ⲛ̀ⲧⲉ ⲡⲓⲥⲩⲅⲅⲉⲛⲏⲥ ⲛ̀Ⲉⲙⲙⲁⲛⲟⲩⲏⲗ Ⲓⲱⲁⲛⲛⲏⲥ ⲡ̀ϣⲏⲣⲓ ⲛ̀Ⲍⲁⲭⲁⲣⲓⲁⲥ: Ⲡϭⲟⲓⲥ ⲁ̀ⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.\n\nϨⲓⲧⲉⲛ ⲛⲓⲉⲩⲭⲏ: ⲛ̀ⲧⲉ ⲡⲓⲟⲩⲏⲃ Ⲍⲁⲭⲁⲣⲓⲁⲥ: ⲛⲉⲙ ⲧⲉϥⲥ̀ϩⲓⲙⲓ Ⲉ̀ⲗⲓⲥⲁⲃⲉⲧ: Ⲡ̀ϭⲟⲓⲥ ⲁ̀ⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.\n\nϨⲓⲧⲉⲛ ⲛⲓⲉⲩⲭⲏ: ⲛ̀ⲧⲉ ⲛⲓϧⲉⲗⲗⲟⲓ ⲧ̀ⲥ̀ⲙⲁⲣⲱⲟⲩⲧ: Ⲓⲱⲁ̀ⲕⲓⲙ ⲛⲉⲙ Ⲁⲛⲛⲁ: Ⲡ̀ϭⲟⲓⲥ ⲁ̀ⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.\n\nϨⲓⲧⲉⲛ ⲛⲓⲉⲩⲭⲏ ⲛ̀ⲧⲉ ⲛⲁϭⲟⲓⲥ ⲛ̀ⲓⲟϯ ⲛ̀ⲁ̀ⲡⲟⲥⲧⲟⲗⲟⲥ ⲛⲉⲙ ⲡ̀ⲥⲉⲡⲓ ⲛ̀ⲧⲉ ⲛⲓⲙⲁⲑⲏⲧⲏⲥ: Ⲡϭⲟⲓⲥ ⲁⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.\n\nϨⲓⲧⲉⲛ ⲛⲓⲉ̀ⲩⲭⲏ: ⲛ̀ⲧⲉ ⲡⲓⲑⲉⲱⲣⲓⲙⲟⲥ ⲛ̀ⲉ̀ⲩⲁ̀ⲅⲅⲉⲗⲓⲥⲧⲏⲥ: Ⲙⲁⲣⲕⲟⲥ ⲡⲓⲁ̀ⲡⲟⲥⲧⲟⲗⲟⲥ: Ⲡϭⲟⲓⲥ ⲁ̀ⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.\n\nϨⲓⲧⲉⲛ ⲛⲓⲉ̀ⲩⲭⲏ: ⲛ̀ⲧⲉ ⲡⲓⲁⲑⲗⲟⲫⲟⲣⲟⲥ: ⲙ̀ⲙⲁⲣⲧⲩⲣⲟⲥ ⲡⲁϭⲟⲓⲥ ⲡ̀ⲟⲩⲣⲟ Ⲅⲉⲱ̀ⲣⲅⲓⲟⲥ: Ⲡϭⲟⲓⲥ ⲁ̀ⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ\n\nϨⲓⲧⲉⲛ ⲛⲓⲉ̀ⲩⲭⲏ: ⲛ̀ⲧⲉ ⲡⲓⲁⲑⲗⲟⲫⲟⲣⲟⲥ: ⲙ̀ⲙⲁⲣⲧⲩⲣⲟⲥ Ⲫⲓⲗⲟⲡⲁⲧⲏⲣ Ⲙⲉⲣⲕⲟⲩⲣⲓⲟⲥ: Ⲡϭⲟⲓⲥ ⲁ̀ⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.\n\nϨⲓⲧⲉⲛ ⲛⲓⲉ̀ⲩⲭⲏ: ⲛ̀ⲧⲉ ⲡⲓⲁⲑⲗⲟⲫⲟⲣⲟⲥ ⲙ̀ⲙⲁⲣⲧⲩⲣⲟⲥ ⲁⲃⲃⲁ Ⲙⲏⲛⲁ ⲛ̀ⲧⲉ ⲛⲓⲫⲁⲓⲁⲧ: Ⲡϭⲟⲓⲥ ⲁ̀ⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.\n\nϨⲓⲧⲉⲛ ⲛⲓⲉ̀ⲩⲭⲏ: ⲛ̀ⲧⲉ ⲡⲉⲛⲓⲱⲧ ⲉⲑⲟⲩⲁⲃ ⲙ̀ⲡⲁⲧⲣⲓⲁⲣⲭⲏⲥ: Ⲁⲃⲃⲁ Ⲕⲩⲣⲓⲗⲗⲟⲥ Ⲡⲓⲙⲁϩⲥⲟⲟⲩ: Ⲡϭⲟⲓⲥ ⲁ̀ⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ\n\nϨⲓⲧⲉⲛ ⲛⲓⲉ̀ⲩⲭⲏ ⲛ̀ⲧⲉ ⲛⲁϭⲟⲓⲥ ⲛ̀ⲓⲟϯ ⲙ̀ⲙⲁⲓⲛⲟⲩϣⲏⲣⲓ: ⲁⲃⲃⲁ Ⲡⲓϣⲱⲓ ⲛⲉⲙ ⲁⲃⲃⲁ Ⲡⲁⲩⲗⲉ: Ⲡϭⲟⲓⲥ ⲁ̀ⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.\n\nϨⲓⲧⲉⲛ ⲛⲓⲉ̀ⲩⲭⲏ: ⲛ̀ⲧⲉ ⲡⲉⲛⲓⲱⲧ ⲉⲑⲟⲩⲁⲃ ⲛ̀ⲇⲓⲕⲉⲟⲥ: ⲁⲃⲃⲁ Ⲁⲃⲣⲁⲁⲙ ⲡⲓⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲥ: Ⲡϭⲟⲓⲥ ⲁ̀ⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ',
+      },
+      {
+        language: 'englishCoptic',
+        text: 'Hiten ni-epresvia: ente tithe-otokos ethouab Maria: Ptshois ari-ehmot nan: empikhō evol ente nennovi.\n\nHiten ni-epresvia: ente piarkhēaggelos ethouab: Gabriēl pifaishennoufi: Eptshois ari-ehmot nan empikhō evol ente nennovi.\n\nHiten ni-epresvia ente pishashf enarkhiaggelos nem nitagma enepouranion: Ptshois ari-ehmot nan empikhō evol ente nennovi.\n\nHiten ni-epresvia ente pisuggenēs en-Emmanouēl Iōannēs epshēri en-Zakharias: Ptshois ari-ehmot nan empikhō evol ente nennovi.\n\nHiten nieukhē: ente piouēb Zakharias: nem tefeshimi Elisavet: Eptshois ari-ehmot nan empikhō evol ente nennovi.\n\nHiten nieukhē: ente nikhelloi etesmarōout: Iō-akim nem Anna: Eptshois ari-ehmot nan empikhō evol ente nennovi.\n\nHiten nieukhē ente natshois enioti enapostolos nem epsepi ente nimathētēs: Ptshois ari-ehmot nan empikhō evol ente nennovi.\n\nHiten ni-eukhē: ente pitheōrimos eneu-aggelistēs: Markos pi-apostolos: Ptshois ari-ehmot nan empikhō evol ente nennovi.\n\nHiten ni-eukhē: ente piathloforos: emmarturos patshois epouro Ge-ōrgios: Ptshois ari-ehmot nan empikhō evol ente nennovi\n\nHiten ni-eukhē: ente piathloforos: emmarturos Filopatēr Merkourios: Ptshois ari-ehmot nan empikhō evol ente nennovi.\n\nHiten ni-eukhē: ente piathloforos emmarturos abba Mēna ente nifaiat: Ptshois ari-ehmot nan empikhō evol ente nennovi.\n\nHiten ni-eukhē: ente peniōt ethouab empatriarkhēs: Abba Kurillos Pimahsoou: Ptshois ari-ehmot nan empikhō evol ente nennovi\n\nHiten ni-eukhē ente natshois enioti emmainoushēri: abba Pishōi nem abba Paule: Ptshois ari-ehmot nanempikhō evol ente nennovi.\n\nHiten ni-eukhē: ente peniōt ethouab endikeos: abba Abraam pi-episkopos: Ptshois ari-ehmot nan empikhō evol ente nennovi',
+      },
+      {
+        language: 'english',
+        text: 'Through the intercessions, of the Theotokos, Saint Mary, O Lord grant us, the forgiveness of our sins.\n\nThrough the intercessions, of the holy archangel, Gabriel the herald of glad tidings: O Lord, grant us the forgiveness of our sins.\n\nThrough the intercessions of the seven archangels, and the heavenly orders, O Lord, grant us the forgiveness of our sins.\n\nThrough the intercessions, of the kinsman of Emmanuel, John the son of Zacharias, O Lord grant us the forgiveness of our sins.\n\nThrough the prayers, of the priest Zacharias, and his wife Elizabeth: O Lord, grant us the forgiveness of our sins.\n\nThrough the prayers, of the blessed elders, Joachim and Anna: O Lord, grant us the forgiveness of our sins.\n\nThrough the prayers of my lords and fathers the apostles, and the rest of the disciples, O Lord, grant us the forgiveness of our sins.\n\nThrough the prayers of the Beholder of God: the Evangelist: Mark, the Apostle: O Lord, grant us the forgiveness of our sins.\n\nThrough the prayers of the victorious martyr: my lord Prince George: O Lord, grant us the forgiveness of our sins.\n\nThrough the prayers of the victorious martyr: Philopater Mercurius: O Lord, grant us the forgiveness of our sins.\n\nThrough the prayers of the victorious martyr: holy Abba Mena of Bayad: O Lord, grant us the forgiveness of our sins.\n\nThrough the prayers, of our holy father the patriarch, Abba Kyrillos the Sixth, O Lord grant us the forgiveness of our sins.\n\nThrough the prayers of my lords and fathers who love their children, abba Pishoy and abba Paul: O Lord, grant us the forgiveness of our sins.\n\nThrough the prayers: of our righteous father: Abba Abraam the bishop: O Lord grant us the forgiveness of our sins.',
+      },
+      {
+        language: 'arabic',
+        text: 'بشفاعات والدة الإله القديسة مريم، ياربُ أنعم علينا بمغفرة خطايانا.\n\nبشفاعات، رئيس الملائكة الطاهر، غبريال المبشر، يا رب أنعم علينا بمغفرة خطايانا.\n\nبشفاعات رؤساء الملائكة السبعة والطغمات السمائية، ياربُ أنعم علينا بمغفرة خطايانا.\n\nبشفاعات نسيب عمانوئيل يوحنا ابن زكريا يا رب أنعم علينا بمغفرة خطايانا.\n\nبصلوات الكاهن زكريا و أمرأته اليصابات با ربُ أنعم علينا بمغفرة خطايانا.\n\nبصلوات، الشيخين المباركين، يواقيم وحنَّه، يا رب أنعم علينا بمغفرة خطايانا.\n\nبصلوات سادتي الآباء الرسل وبقية التلاميذ، ياربُ أنعم علينا بمغفرة خطايانا.\n\nبصلوات ناظر الإله الإنجيلي مرقس الرسول، ياربُ أنعم علينا بمغفرة خطايانا.\n\nبصلوات المجاهد الشهيد سيدي الملك جيؤرجيوس، ياربُ أنعم علينا بمغفرة خطايانا.\n\nبصلوات المجاهد الشهيد فيلوباتير مرقوريوس، ياربُ أنعم علينا بمغفرة خطايانا.\n\nبصلوات المجاهد الشهيد ابا مينا البياضي، ياربُ أنعم علينا بمغفرة خطايانا.\n\nبصلوات، يا أبانا القديس البطريرك، الانبا كيرلس السادس، يا رب أنعم علينا بمغفرة خطايانا.\n\nبصلوات، سيدي الأباء محبي اولادهم، أنبا بيشوى وأنبا بولا، يارب انعم لنا بمغفرة خطايانا.\n\nبصلوات ابينا القديس البار أنبا أبرام الاسقف يارب انعم لنا بمغفرة خطايانا.',
+      },
+    ];
+  }
+  const kiahkLiturgyPaulineConclusion = kiahkLiturgy.hymns.find((h) => h.title === 'Ⲡⲓϩ̀ⲙⲟⲧ ⲅⲁⲣ (Conclusion to the Coptic Pauline Epistle)');
+  if (kiahkLiturgyPaulineConclusion) {
+    kiahkLiturgyPaulineConclusion.versions = [
+      {
+        language: 'coptic',
+        text: 'Ⲡⲓϩ̀ⲙⲟⲧ ⲅⲁⲣ ⲛⲉⲙⲱⲧⲉⲛ ⲛⲉⲙ ⲧ̀ϩⲓⲣⲏⲛⲏ ⲉⲩⲥⲟⲡ: ϫⲉ ⲁ̀ⲙⲏⲛ ⲉⲥⲉ̀ϣⲱⲡⲓ.',
+      },
+      {
+        language: 'englishCoptic',
+        text: 'Pi-ehmot gar nemōten nem ethirēnē eusop: je amēn eseshōpi.',
+      },
+      {
+        language: 'english',
+        text: 'Grace and peace be with you all. Amen. So be it.',
+      },
+      {
+        language: 'arabic',
+        text: 'النعمة لكم والسلام معاً. آمين. يكون.',
+      },
+    ];
+  }
+  const kiahkLiturgyPaulineResponse = kiahkLiturgy.hymns.find((h) => h.title === 'Ⲡⲓϩ̀ⲙⲟⲧ ⲅⲁⲣ ⲙ̀ⲡⲉⲛⲟ︦ⲥ︦ Ⲓⲏ︦ⲥ︦ Ⲡⲭ︦ⲥ︦ (Response to the Pauline Epistle)');
+  if (kiahkLiturgyPaulineResponse) {
+    kiahkLiturgyPaulineResponse.versions = [
+      {
+        language: 'coptic',
+        text: 'Ⲡⲓϩ̀ⲙⲟⲧ ⲅⲁⲣ ⲙ̀ⲡⲉⲛⲟ︦ⲥ︦ Ⲓⲏ︦ⲥ︦ Ⲡⲭ︦ⲥ︦: ⲉϥⲉ̀ϣⲱⲡⲓ ⲛⲉⲙ ⲡⲉⲕⲁ̀ⲅⲓⲟⲛ ⲡ̀ⲛⲉⲩⲙⲁ: ⲡⲁⲟ︦ⲥ︦ ⲛ̀ⲓⲱⲧ ⲉⲧⲧⲁⲓⲏⲟⲩⲧ ⲛ̀ⲁ̀ⲣⲭⲏⲉ̀ⲣⲉⲩⲥ ⲡⲁⲡⲁ ⲁⲃⲃⲁ (ⲛⲓⲙ).\n\nⲚⲉⲙ ⲡⲉⲛⲓⲱⲧ ⲙ̀ⲙⲏⲧⲣⲟⲡⲟⲗⲓⲧⲏⲥ ⲁⲃⲃⲁ (ⲛⲓⲙ).\n\nⲚⲉⲙ ⲡⲉⲛⲓⲱⲧ ⲛ̀ⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲥ ⲁⲃⲃⲁ (ⲛⲓⲙ).\n\nⲘⲁⲣⲉ ⲡⲓⲕ̀ⲗⲏⲣⲟⲥ: ⲛⲉⲙ ⲡⲓⲗⲁⲟⲥ ⲧⲏⲣϥ: ⲟ̀ⲩϫⲁⲓ ϧⲉⲛ Ⲡⲟ︦ⲥ︦: ϫⲉ ⲁ̀ⲙⲏⲛ ⲉⲥⲉ̀ϣⲱⲡⲓ.',
+      },
+      {
+        language: 'englishCoptic',
+        text: 'Pi-ehmot gar empentshois Iēsous Pi-ekhristos: efeshōpi nem pekagion epneuma: patshois eniōt ettaiēout enarkhē-ereus papa abba (nim).\n\nNem peniōt emmētropolitēs abba (nim).\n\nNem peniōt enepiskopos abba (nim).\n\nMare pi-eklēros: nem pilaos tērf: oujai khen Eptshois: je amēn eseshōpi.',
+      },
+      {
+        language: 'english',
+        text: 'The grace of our Lord Jesus Christ, be with your saintly spirit, my lord the honored father the high priest Pope Abba (...).\n\nAnd our father the Metropolitan Abba (...).\n\nAnd our father the Bishop Abba (...).\n\nMay the clergy and all the people be safe in the Lord. Amen. So be it.',
+      },
+      {
+        language: 'arabic',
+        text: 'نعمة ربنا يسوع المسيح تكون مع روحك الطاهرة، يا سيدي الأب المكرم رئيس الكهنة البابا أنبا (...).\n\nوأبينا المطران الأنبا (...).\n\nوأبينا الأسقف الأنبا (...).\n\nفليكن الإكليروس وكل الشعب معافين في الرب. آمين يكون.',
+      },
+    ];
+  }
+  const kiahkLiturgyGreatResponse = kiahkLiturgy.hymns.find((h) => h.title === 'Ⲡⲓϩ̀ⲙⲟⲧ ⲅⲁⲣ ⲙ̀Ⲫ̀ⲛⲟⲩϯ (Great Response to the Pauline Epistle)');
+  if (kiahkLiturgyGreatResponse) {
+    kiahkLiturgyGreatResponse.versions = [
+      {
+        language: 'coptic',
+        text: 'Ⲡⲓϩ̀ⲙⲟⲧ ⲅⲁⲣ ⲙ̀Ⲫ̀ⲛⲟⲩϯ Ⲫ̀ⲓⲱⲧ Ⲡⲓⲡⲁⲛⲧⲟⲕⲣⲁⲧⲱⲣ.\n\nⲚⲉⲙ ϯⲭⲁⲣⲓⲥ ⲛ̀ⲧⲉ ⲡⲉϥⲙⲟⲛⲟⲅⲉⲛⲏⲥ ⲛ̀Ϣⲏⲣⲓ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ Ⲡⲉⲛϭⲟⲓⲥ.\n\nⲚⲉⲙ ϯⲕⲟⲓⲛⲱⲛⲓⲁ ⲛⲉⲙ ϯⲇⲱⲣⲉⲁ̀ ⲛ̀ⲧⲉ Ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ Ⲉⲑⲟⲩⲁⲃ ⲙ̀ⲡⲁⲣⲁⲕⲗⲏⲧⲟⲛ.\n\nⲈⲩⲉ̀ⲓ̀ ⲉ̀ϩ̀ⲣⲏⲓ ⲉ̀ϫⲉⲛ ⲧ̀ⲁ̀ⲫⲉ ⲙ̀ⲡⲓⲙⲁⲕⲁⲣⲓⲟⲥ ⲛ̀ⲓⲱⲧ ⲉⲧⲧⲁⲓⲏⲟⲩⲧ ⲛ̀ⲁⲣⲭⲏⲉ̀ⲣⲉⲩⲥ ⲡⲁⲡⲁ ⲁⲃⲃⲁ (..).\n\n(Ⲛⲉⲙ ⲉ̀ϫⲉⲛ ⲧ̀ⲁ̀ⲫⲉ ⲙ̀ⲡⲉⲛⲓⲱⲧ ⲉⲑⲟⲩⲁⲃ ⲛ̀ⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲥ (ⲙ̀ⲙⲏⲧⲣⲟⲡⲟⲗⲓⲧⲏⲥ) ⲁⲃⲃⲁ (...)).\n\nⲪ̀ⲛⲟⲩϯ ⲛ̀ⲧⲉ ⲧ̀ⲫⲉ ⲉϥⲉ̀ⲧⲁϫⲣⲟϥ (ⲉϥⲉ̀ⲧⲁϫⲣⲟⲩ) ϩⲓϫⲉⲛ ⲡⲉϥⲑ̀ⲣⲟⲛⲟⲥ (ⲛⲟⲩⲑ̀ⲣⲟⲛⲟⲥ) ⲛ̀ϩⲁⲛⲙⲏϣ ⲛ̀ϭⲣⲟⲙⲡⲓ ⲛⲉⲙ ϩⲁⲛⲥⲏⲟⲩ ⲛ̀ϩⲓⲣⲏⲛⲓⲕⲟⲛ.\n\nⲚ̀ⲧⲉϥⲑⲉⲃⲓⲟ ⲛ̀ⲛⲉϥϫⲁϫⲓ (ⲛ̀ⲛⲟⲩϫⲁϫⲓ) ⲧⲏⲣⲟⲩ ⲥⲁⲡⲉⲥⲏⲧ ⲛ̀ⲛⲉϥϭⲁⲗⲁⲩϫ (ⲛ̀ⲛⲛⲟⲩϭⲁⲗⲁⲩϫ) ⲛ̀ⲭⲱⲗⲉⲙ.\n\nⲦⲱⲃϩ ⲉ̀Ⲡⲭ︦ⲥ︦ ⲉ̀ϩ̀ⲣⲏⲓ ⲉ̀ϫⲱⲛ: ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ ϧⲉⲛ ⲟⲩϩⲓⲣⲏⲛⲏ ⲕⲁⲧⲁ ⲡⲉϥⲛⲓϣϯ ⲛ̀ⲛⲁⲓ.\n\nⲘⲁⲣⲉ ⲡⲓⲕ̀ⲗⲏⲣⲟⲥ: ⲛⲉⲙ ⲡⲓⲗⲁⲟⲥ ⲧⲏⲣϥ: ⲟⲩϫⲁⲓ ϧⲉⲛ Ⲡ̀ⲟ︦ⲥ︦. Ϫⲉ ⲁ̀ⲙⲏⲛ ⲉⲥⲉ̀ϣⲱⲡⲓ.',
+      },
+      {
+        language: 'englishCoptic',
+        text: 'Pi-ehmot gar em-Efnouti Efiōt Pipantokratōr.\n\nNem tikharis ente pefmonogenēs en-Shēri Iēsous Pi-ekhristos Pentshois.\n\nNem tikoinōnia nem tidōre-a ente Pi-epneuma Ethouab emparaklēton.\n\nEu-e-i e-ehrēi ejen etafe empimakarios eniōt ettaiēout enarkhē-ereus papa abba (..).\n\n(Nem ejen etafe empeniōt ethouab enepiskopos (emmētropolitēs) abba (...)).\n\nEfnouti ente etfe efetajrof (efetajrou) hijen pefethronos (nou-ethronos) enhanmēsh entshrompi nem hansēou enhirēnikon.\n\nEntefthevio ennefjaji (ennoujaji) tērou sapesēt enneftshalauj (ennnoutshalauj) enkhōlem.\n\nTōbh e-Pi-ekhristos e-ehrēi ejōn: entefkha nennovi nan evol khen ouhirēnē kata pefnishti ennai.\n\nMare pi-eklēros: nem pilaos tērf: oujai khen Eptshois. Je amēn eseshōpi.',
+      },
+      {
+        language: 'english',
+        text: 'The grace of God, the Father, the Pantocrator,\n\nand the grace of His only-begotten Son, Jesus Christ our Lord,\n\nand the communion and gift of the Holy Spirit, the Paraclete,\n\nbe upon the head of the blessed and honored father, the high priest, Pope Abba (..).\n\n(and upon the head of our holy father the bishop (metropolitan) Abba (...)).\n\nMay the God of heaven confirm him (them) on his (their) throne(s) for many years and peaceful times.\n\nMay He subdue all his (their) enemies under his (their) feet speedily.\n\nPray to Christ on our behalf that He may forgive us our sins, in peace, according to His great mercy.\n\nMay the clergy and all the people be safe in the Lord. Amen, so it shall be.',
+      },
+      {
+        language: 'arabic',
+        text: 'نعمة الله الآب ضابط الكل.\n\nونعمة إبنه الوحيد يسوع المسيح ربنا.\n\nوشركه وعطية الروح القدس المعزي.\n\nتحل على رأس أبينا الطوباوي المكرم رئيس الكهنة البابا أنبا (..).\n\n(وعلى رأس أبينا القديس الأسقف (المطران) أنبا (...).)\n\nإله السماء يثبته (يثبتهم) على كرسيه (كرسيَيْهما)، سنين كثيرة وأزمنة سلامية.\n\nويخضع جميع أعدائه (أعدائهم) تحت أقدامه (أقدامهم) سريعاً.\n\nأطلب (أطلبا) من المسيح عنا ليغفر لنا خطايانا بسلام كعظيم رحمته.\n\nفليكن الإكليروس وكل الشعب معافين في الرب. آمين يكون.',
+      },
+    ];
+  }
+  const kiahkLiturgyAlternateResponse = kiahkLiturgy.hymns.find((h) => h.title === 'Ⲏ̀ ⲁ̀ⲅⲁⲡⲏ (Alternate Response to the Pauline Epistle)');
+  if (kiahkLiturgyAlternateResponse) {
+    kiahkLiturgyAlternateResponse.versions = [
+      {
+        language: 'coptic',
+        text: 'Ⲏ̀ ⲁ̀ⲅⲁⲡⲏ ⲧⲟⲩ Ⲑⲉⲟⲩ Ⲡⲁⲧⲣⲟⲥ: ⲕⲉ ⲏ̀ ⲭⲁⲣⲓⲥⲧⲟⲩ ⲙⲟⲛⲟⲅⲉⲛⲟⲩⲥ Ⲩ̀ⲓⲟⲩ Ⲕⲩⲣⲓⲟⲩ ⲇⲉ ⲕⲉ Ⲑⲉⲟⲩ ⲕⲉ Ⲥⲱⲧⲏⲣⲟⲥ ⲏ̀ⲙⲱⲛ Ⲓⲏⲥⲟⲩ Ⲭ̀ⲣⲓⲥⲧⲟⲩ: ⲕⲉ ⲏ̀ ⲕⲟⲓⲛⲱⲛⲓⲁ ⲕⲉ ⲏ̀ ⲇⲱⲣⲉⲁ̀ ⲧⲟⲩ Ⲁ̀ⲅⲓⲟⲩ Ⲡ̀ⲛⲉⲩⲙⲁⲧⲟⲥ: ⲓ̀ ⲏ̀ ⲙⲉⲧⲁ ⲧⲟⲩ ⲁ̀ⲅⲓⲱ ⲧⲁⲧⲟⲩ ⲕⲉ ⲙⲁⲕⲁⲣⲓⲱ ⲧⲁⲧⲟⲩ: ⲡⲁⲧⲣⲟⲥ ⲏ̀ⲙⲱⲛ ⲡⲁⲡⲁ ⲁⲃⲃⲁ (..): ⲡⲁⲡⲁ ⲕⲉ ⲡⲁⲧⲣⲓⲁⲣⲭⲟⲩ ⲧⲏⲥ ⲙⲉⲅⲁⲗⲟ ⲡⲟⲗⲉⲱⲥ Ⲁ̀ⲗⲉⲝⲁⲛⲇ̀ⲣⲓⲁⲥ: ⲛⲉⲙ ⲧ̀ⲭⲱⲣⲁ ⲧⲏⲣⲥ ⲛ̀Ⲭⲏⲙⲓ: ⲛⲉⲙ ⲧ̀ⲡⲟⲗⲓⲥ ⲙ̀Ⲡⲉⲛⲛⲟⲩϯ Ⲓⲉⲣⲟⲩⲥⲁⲗⲏⲙ: ⲛⲉⲙ ϯⲧ̀ⲓⲟⲩ ⲙ̀ⲃⲁⲕⲓ ⲙ̀ⲡⲉⲙⲉⲛⲧ: ⲛⲉⲙ Ϯⲗⲩⲃⲓⲁ ⲛⲉⲙ Ⲛⲟⲩⲃⲓⲁ ⲛⲉⲙ Ⲛⲓⲉ̀ⲑⲁⲩϣ ⲛⲉⲙ Ⲁϥⲣⲓⲕⲓⲁ (ⲛⲉⲙ Ⲉ̀ⲩⲣⲟⲡⲡⲓ ⲛⲉⲙ Ⲁⲥⲓⲁ ⲛⲉⲙ Ⲕⲁⲛⲁⲇⲁ ⲛⲉⲙ Ⲁⲙⲉⲣⲓⲕⲏ ⲛⲉⲙ Ⲁⲩⲥⲧⲣⲉⲗⲓⲁ).\n\nⲔⲉ ⲧⲟⲩ ⲁ̀ⲅⲓⲟⲥ ⲕⲉ ⲙⲁⲕⲁⲣⲓⲟⲩ ⲉ̀ⲇⲉⲥⲓⲙⲱ ⲧⲁⲧⲟⲩ ⲧⲟⲩ ⲡⲁⲧⲣⲟⲥ ⲏ̀ⲙⲱⲛ ⲁⲃⲃⲁ (...): ⲟⲣⲑⲟⲇⲟⲝⲟⲩ ⲏ̀ⲙⲱⲛ ⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲩ ⲧⲏⲥ: ⲡⲟⲗⲉⲱⲥ ⲧⲁⲩⲧⲏⲥ ⲕⲉ ⲧⲱⲛ ⲟ̀ⲣⲓⲱⲛⲁⲩⲧⲏⲥ.\n\nⲘⲁⲣⲉ ⲡⲓⲕ̀ⲗⲏⲣⲟⲥ: ⲛⲉⲙ ⲡⲓⲗⲁⲟⲥ ⲧⲏⲣϥ: ⲟⲩϫⲁⲓ ϧⲉⲛ Ⲡ̀ⲟ︦ⲥ︦. Ϫⲉ ⲁ̀ⲙⲏⲛ ⲉⲥⲉ̀ϣⲱⲡⲓ.',
+      },
+      {
+        language: 'englishCoptic',
+        text: 'Ē agapē tou Theou Patros: ke ē kharistou monogenous Uiou Kuriou de ke Theou ke Sōtēros ēmōn Iēsou Ekhristou: ke ē koinōnia ke ē dōre-a tou Agiou Epneumatos: i ē meta tou agiō tatou ke makariō tatou: patros ēmōn papa abba (..): papa ke patriarkhou tēs megalo poleōs Aleksanedrias: nem etkhōra tērs en-Khēmi: nem etpolis em-Pennouti Ierousalēm: nem ti-etiou emvaki empement: nem Tiluvia nem Nouvia nem Ni-ethaush nem Afrikia (nem Europpi nem Asia nem Kanada nem Amerikē nem Austrelia).\n\nKe tou agios ke makariou edesimō tatou tou patros ēmōn abba (...): orthodoksou ēmōn episkopou tēs: poleōs tautēs ke tōn oriōnautēs.\n\nMare pi-eklēros: nem pilaos tērf: oujai khen Eptshois. Je amēn eseshōpi.',
+      },
+      {
+        language: 'english',
+        text: 'The love of God the Father, and the grace of His only-begotten Son, our Lord, God and Savior Jesus Christ, and the communion and gift of the Holy Spirit, be with our most holy and most blessed father, Pope Abba (..), pope and patriarch of the great city of Alexandria, and all the land of Egypt, and the city of our God Jerusalem, and Pentapolis, and Libya, and Nubia, and Ethiopia, and Africa. (And Europe, Asia, Canada, America, and Australia).\n\nAnd our holy, blessed, and most honored father, Abba (...), our orthodox bishop of this city and its surroundings.\n\nMay the clergy and all the people be safe in the Lord. Amen, so it shall be.',
+      },
+      {
+        language: 'arabic',
+        text: 'محبة الله الآب، ونعمة الإبن الوحيد ربنا وإلهنا ومخلصنا يسوع المسيح، وشركة وعطية الروح القدس، تكون مع الأقدس الطوباوي أبينا البابا أنبا (..)، بابا وبطريرك المدينة العظمي الإسكندرية، وكل كورة مصر، ومدينة إلهنا أورشليم، والخمس مدن الغربية وليبيا والنوبة والحبشة وأفريقيا (وأوربا وأسيا وكندا وأمريكا وأستراليا).\n\nوالقديس المغبوط الكلي الإكرام أبينا أنبا (...) أسقفنا الأرثوذكسي الذي لهذه المدينة وتخومها.\n\nفليكن الإكليروس وكل الشعب معافين في الرب. آمين يكون.',
+      },
+    ];
+  }
+  const kiahkLiturgyVirtues = kiahkLiturgy.hymns.find((h) => h.title === 'Ϯⲙⲏⲧ ⲥ̀ⲛⲟⲩϯ (Hymn of the Virtues)');
+  if (kiahkLiturgyVirtues) {
+    kiahkLiturgyVirtues.versions = [
+      {
+        language: 'coptic',
+        text: 'Ϯⲙⲏⲧ ⲥ̀ⲛⲟⲩϯ ⲛ̀ⲁ̀ⲣⲉⲧⲏ ⲙ̀Ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ ⲉⲑⲟⲩⲁⲃ: ⲉⲧⲥ̀ϧⲏⲟⲩⲧ ϧⲉⲛ ⲛⲓⲅ̀ⲣⲁⲫⲏ ⲉⲑⲟⲩⲁⲃ: ⲉ̀ⲧⲉ ⲛⲁⲓ ⲛⲉ ⲛⲟⲩⲣⲁⲛ.\n\nⲈⲩⲉ̀ϣⲱⲡⲓ (ⲃ︦) ⲉ̀ϫⲉⲛ ⲧ̀ⲁ̀ⲫⲉ ⲙ̀ⲡⲉⲛⲓⲱⲧ ⲉⲑⲟⲩⲁⲃ ⲛ̀ⲁⲣⲭⲏⲉ̀ⲣⲉⲩⲥ: ⲡⲁⲡⲁ ⲁⲃⲃⲁ (..).\n\n(Ⲛⲉⲙ ⲡⲉϥⲕⲉϣ̀ⲫⲏⲣ ⲛ̀ⲗⲓⲧⲟⲩⲣⲅⲟⲥ ⲛ̀ⲁ̀ⲡⲟⲥⲧⲟⲗⲓⲕⲟⲛ: ⲡⲉⲛⲓⲱⲧ ⲉⲑⲟⲩⲁⲃ ⲛ̀ⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲥ (ⲙ̀ⲙⲏⲧⲣⲟⲡⲟⲗⲓⲧⲏⲥ) ⲁⲃⲃⲁ (...)).\n\nϮϩⲟⲩⲓϯ ⲧⲉ ϯⲁ̀ⲅⲁⲡⲏ: ϯⲙⲁϩ ⲥ̀ⲛⲟⲩϯ ⲧⲉ ϯϩⲉⲗⲡⲓⲥ: ϯⲙⲁϩ ϣⲟⲙϯ ⲧⲉ ϯⲡⲓⲥⲧⲓⲥ.\n\nⲈⲩⲉ̀ϣⲱⲡⲓ (ⲃ︦) ⲉ̀ϫⲉⲛ ⲧ̀ⲁ̀ⲫⲉ ⲙ̀ⲡⲉⲛⲓⲱⲧ ⲉⲑⲟⲩⲁⲃ ⲛ̀ⲁⲣⲭⲏⲉ̀ⲣⲉⲩⲥ: ⲡⲁⲡⲁ ⲁⲃⲃⲁ (..).\n\n(Ⲛⲉⲙ ⲡⲉϥⲕⲉϣ̀ⲫⲏⲣ ⲛ̀ⲗⲓⲧⲟⲩⲣⲅⲟⲥ ⲛ̀ⲁ̀ⲡⲟⲥⲧⲟⲗⲓⲕⲟⲛ: ⲡⲉⲛⲓⲱⲧ ⲉⲑⲟⲩⲁⲃ ⲛ̀ⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲥ (ⲙ̀ⲙⲏⲧⲣⲟⲡⲟⲗⲓⲧⲏⲥ) ⲁⲃⲃⲁ (...)).\n\nϮⲙⲁϩ ϥ̀ⲧⲟⲟⲩ ⲧⲉ ⲡⲓⲧⲟⲩⲃⲟ: ϯⲙⲁϩ ⲧ̀ⲓⲟⲟⲩ ⲧⲉ ϯⲡⲁⲣⲑⲉⲛⲓⲁ: ϯⲙⲁϩ ⲥⲟⲟⲩ ⲧⲉ ϯϩⲓⲣⲏⲛⲏ.\n\nⲈⲩⲉ̀ϣⲱⲡⲓ (ⲃ︦) ⲉ̀ϫⲉⲛ ⲧ̀ⲁ̀ⲫⲉ ⲙ̀ⲡⲉⲛⲓⲱⲧ ⲉⲑⲟⲩⲁⲃ ⲛ̀ⲁⲣⲭⲏⲉ̀ⲣⲉⲩⲥ: ⲡⲁⲡⲁ ⲁⲃⲃⲁ (..).\n\n(Ⲛⲉⲙ ⲡⲉϥⲕⲉϣ̀ⲫⲏⲣ ⲛ̀ⲗⲓⲧⲟⲩⲣⲅⲟⲥ ⲛ̀ⲁ̀ⲡⲟⲥⲧⲟⲗⲓⲕⲟⲛ: ⲡⲉⲛⲓⲱⲧ ⲉⲑⲟⲩⲁⲃ ⲛ̀ⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲥ (ⲙ̀ⲙⲏⲧⲣⲟⲡⲟⲗⲓⲧⲏⲥ) ⲁⲃⲃⲁ (...)).\n\nϮⲙⲁϩ ϣⲁϣϥ ⲧⲉ ϯⲥⲟⲫⲓⲁ: ϯⲙⲁϩ ϣ̀ⲙⲏⲛ ⲧⲉ ϯⲇⲓⲕⲉⲟ̀ⲥⲩⲛⲏ: ϯⲙⲁϩ ⲯⲓϯ ⲧⲉ ϯⲙⲉⲧⲣⲉⲙⲣⲁⲩϣ.\n\nⲈⲩⲉ̀ϣⲱⲡⲓ (ⲃ︦) ⲉ̀ϫⲉⲛ ⲧ̀ⲁ̀ⲫⲉ ⲙ̀ⲡⲉⲛⲓⲱⲧ ⲉⲑⲟⲩⲁⲃ ⲛ̀ⲁⲣⲭⲏⲉ̀ⲣⲉⲩⲥ: ⲡⲁⲡⲁ ⲁⲃⲃⲁ (..).\n\n(Ⲛⲉⲙ ⲡⲉϥⲕⲉϣ̀ⲫⲏⲣ ⲛ̀ⲗⲓⲧⲟⲩⲣⲅⲟⲥ ⲛ̀ⲁ̀ⲡⲟⲥⲧⲟⲗⲓⲕⲟⲛ: ⲡⲉⲛⲓⲱⲧ ⲉⲑⲟⲩⲁⲃ ⲛ̀ⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲥ (ⲙ̀ⲙⲏⲧⲣⲟⲡⲟⲗⲓⲧⲏⲥ) ⲁⲃⲃⲁ (...)).\n\nϮⲙⲁϩ ⲙⲏϯ ⲧⲉ ϯϩⲩⲡⲟⲙⲟⲛⲏ: ϯⲙⲁϩ ⲙⲏⲧⲟⲩⲁⲓ ⲧⲉ ϯⲙⲉⲧⲣⲉϥⲱ̀ⲟⲩ ⲛ̀ϩⲏⲧ: ϯⲙⲁϩ ⲙⲏⲧ ⲥ̀ⲛⲟⲩϯ ⲧⲉ ϯⲉⲅⲕ̀ⲣⲁⲧⲓⲁ.\n\nⲈⲩⲉ̀ϣⲱⲡⲓ (ⲃ︦) ⲉ̀ϫⲉⲛ ⲧ̀ⲁ̀ⲫⲉ ⲙ̀ⲡⲉⲛⲓⲱⲧ ⲉⲑⲟⲩⲁⲃ ⲛ̀ⲁⲣⲭⲏⲉ̀ⲣⲉⲩⲥ: ⲡⲁⲡⲁ ⲁⲃⲃⲁ (..).\n\n(Ⲛⲉⲙ ⲡⲉϥⲕⲉϣ̀ⲫⲏⲣ ⲛ̀ⲗⲓⲧⲟⲩⲣⲅⲟⲥ ⲛ̀ⲁ̀ⲡⲟⲥⲧⲟⲗⲓⲕⲟⲛ: ⲡⲉⲛⲓⲱⲧ ⲉⲑⲟⲩⲁⲃ ⲛ̀ⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲥ (ⲙ̀ⲙⲏⲧⲣⲟⲡⲟⲗⲓⲧⲏⲥ) ⲁⲃⲃⲁ (...)).\n\nⲀ̀ⲙⲏⲛ (ⲅ︦) ⲉⲥⲉ̀ϣⲱⲡⲓ (ⲃ︦).\n\n(Ⲉϥⲉ̀ⲉⲣⲁ̀ⲡⲟⲗⲉⲩⲓⲛ ⲙ̀ⲙⲱⲟⲩ) (ⲃ︦)\n\nϩⲓ ⲡⲁⲓ ⲕⲉⲣⲟⲥ ⲫⲁⲓ ⲡⲉ (ⲡⲁϭⲟⲓⲥ ⲛ̀ⲓⲱⲧ) (ⲃ︦):\n\n(ⲡⲉⲛⲓⲱⲧ ⲉⲑⲟⲩⲁⲃ) (ⲃ︦)\n\nⲉⲧⲧⲁⲓⲏⲟⲩⲧ ⲛ̀ⲁⲣⲭⲏⲉ̀ⲣⲉⲩⲥ ⲡⲁⲡⲁ ⲁⲃⲃⲁ (..) (ⲛⲉⲙ ⲡⲉⲛⲓⲱⲧ ⲛ̀ⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲥ (ⲙ̀ⲙⲏⲧⲣⲟⲡⲟⲗⲓⲧⲏⲥ) ⲁⲃⲃⲁ (...)).\n\nⲀ̀ⲙⲏⲛ (ⲅ︦) ⲉⲥⲉ̀ϣⲱⲡⲓ (ⲃ︦) ⲛⲁⲕ (ⲛⲱⲧⲉⲛ) ϧⲉⲛ ⲛⲓⲉ̀ϩⲟⲟⲩ ⲧⲏⲣⲟⲩ ⲛ̀ⲧⲉ ⲡⲉⲕⲱⲛϧ (ⲛ̀ⲉ̀ⲧⲉⲛⲱⲛϧ).',
+      },
+      {
+        language: 'englishCoptic',
+        text: 'Timēt esnouti enaretē em-Pi-epneuma ethouab: eteskhēout khen ni-egrafē ethouab: ete nai ne nouran.\n\nEu-eshōpi (2) ejen etafe empeniōt ethouab enarkhē-ereus: papa abba (..).\n\n(Nem pefke-eshfēr enlitourgos enapostolikon: peniōt ethouab enepiskopos (emmētropolitēs) abba (...)).\n\nTihouiti te ti-agapē: timah esnouti te tihelpis: timah shomti te tipistis.\n\nEu-eshōpi (2) ejen etafe empeniōt ethouab enarkhē-ereus: papa abba (..).\n\n(Nem pefke-eshfēr enlitourgos enapostolikon: peniōt ethouab enepiskopos (emmētropolitēs) abba (...)).\n\nTimah eftoou te pitouvo: timah etioou te tiparthenia: timah soou te tihirēnē.\n\nEu-eshōpi (2) ejen etafe empeniōt ethouab enarkhē-ereus: papa abba (..).\n\n(Nem pefke-eshfēr enlitourgos enapostolikon: peniōt ethouab enepiskopos (emmētropolitēs) abba (...)).\n\nTimah shashf te tisofia: timah eshmēn te tidike-osunē: timah psiti te timetremraush.\n\nEu-eshōpi (2) ejen etafe empeniōt ethouab enarkhē-ereus: papa abba (..).\n\n(Nem pefke-eshfēr enlitourgos enapostolikon: peniōt ethouab enepiskopos (emmētropolitēs) abba (...)).\n\nTimah mēti te tihupomonē: timah mētouai te timetrefōou enhēt: timah mēt esnouti te tiegekratia.\n\nEu-eshōpi (2) ejen etafe empeniōt ethouab enarkhē-ereus: papa abba (..).\n\n(Nem pefke-eshfēr enlitourgos enapostolikon: peniōt ethouab enepiskopos (emmētropolitēs) abba (...)).\n\nAmēn (3) eseshōpi (2).\n\n(Efeerapoleuin emmōou) (2)\n\nhi pai keros fai pe (patshois eniōt) (2):\n\n(peniōt ethouab) (2)\n\nettaiēout enarkhē-ereus papa abba (..) (nem peniōt enepiskopos (emmētropolitēs) abba (...)).\n\nAmēn (3) eseshōpi (2) nak (nōten) khen ni-ehoou tērou ente pekōnkh (enetenōnkh).',
+      },
+      {
+        language: 'english',
+        text: 'The twelve virtues of the Holy Spirit that are mentioned in the holy Scriptures, these are their names—\n\n(they shall come) (2) upon the head of our holy father, the high priest, Pope Abba (..).\n\n(And his partner in the apostolic liturgy, our father the bishop (metropolitan) Abba (...).\n\nThe first is love, the second is hope, the third is faith.\n\n(they shall come) (2) upon the head of our holy father, the high priest, Pope Abba (..).\n\n(And his partner in the apostolic liturgy, our father the bishop (metropolitan) Abba (...).\n\nThe fourth is purity, the fifth is virginity, the sixth is peace.\n\n(they shall come) (2) upon the head of our holy father, the high priest, Pope Abba (..).\n\n(And his partner in the apostolic liturgy, our father the bishop (metropolitan) Abba (...).\n\nThe seventh is wisdom, the eighth is righteousness, the ninth is meekness.\n\n(they shall come) (2) upon the head of our holy father, the high priest, Pope Abba (..).\n\n(And his partner in the apostolic liturgy, our father the bishop (metropolitan) Abba (...).\n\nThe tenth is patience, the eleventh is long-suffering, the twelfth is asceticism.\n\n(they shall come) (2) upon the head of our holy father, the high priest, Pope Abba (..).\n\n(And his partner in the apostolic liturgy, our father the bishop (metropolitan) Abba (...).\n\nAmen (3), so it shall be (2).\n\n(May he be pleased) (2)\n\nat this time (my lord and father) (2),\n\n(our holy father) (2)\n\nthe honored high priest Pope Abba (..) (and our father the bishop (metropolitan) Abba (...)).\n\nAmen (3), so it shall be (2) for you all the days of your life(s).',
+      },
+      {
+        language: 'arabic',
+        text: 'الإثنا عشرة فضيلة التي للروح القدس، المكتوبة في الكتب المقدسة، وهذه أسماؤها.\n\n(تحل على) (٢) رأس أبينا القديس رئيس الكهنة، البابا أنبا (..).\n\n(وشريكه في الخدمة الرسولية، أبينا القديس الأسقف (المطران) أنبا (...)).\n\nالأولى المحبة، الثانية الرجاء، الثالثة الإيمان.\n\n(تحل على) (٢) رأس أبينا القديس رئيس الكهنة، البابا أنبا (..).\n\n(وشريكه في الخدمة الرسولية، أبينا القديس الأسقف (المطران) أنبا (...)).\n\nالرابعة الطهارة، الخامسة البتولية، السادسة السلام.\n\n(تحل على) (٢) رأس أبينا القديس رئيس الكهنة، البابا أنبا (..).\n\n(وشريكه في الخدمة الرسولية، أبينا القديس الأسقف (المطران) أنبا (...)).\n\nالسابعة الحكمة، الثامنة البر، التاسعة الوداعة.\n\n(تحل على) (٢) رأس أبينا القديس رئيس الكهنة، البابا أنبا (..).\n\n(وشريكه في الخدمة الرسولية، أبينا القديس الأسقف (المطران) أنبا (...)).\n\nالعاشرة الصبر، الحادية عشر طول الروح، الثانية عشر النسك.\n\n(تحل على) (٢) رأس أبينا القديس رئيس الكهنة، البابا أنبا (..).\n\n(وشريكه في الخدمة الرسولية، أبينا القديس الأسقف (المطران) أنبا (...)).\n\nآمين (٣) يكون (٢).\n\nيتجمل (٢)\n\nفي هذا المدى (سيدي الآب) (٢)،\n\n(أبونا القديس) (٢)\n\nالمكرم رئيس الكهنة البابا أنبا (..) (وأبينا الأسقف (المطران) الأنبا (...)).\n\nآمين (٣) يكون (٢) لك (لكم) في جميع أيام حياتك (حياتكم).',
+      },
+    ];
+  }
+  const kiahkLiturgyBlessed = kiahkLiturgy.hymns.find((h) => h.title === 'Ⲧⲟⲩ ⲙⲁⲕⲁⲣⲓⲱ (The Blessed)');
+  if (kiahkLiturgyBlessed) {
+    kiahkLiturgyBlessed.versions = [
+      {
+        language: 'coptic',
+        text: 'Ⲧⲟⲩ ⲙⲁⲕⲁⲣⲓⲱ ⲧⲁⲧⲟⲩ ⲁ̀ⲅⲓⲱ ⲧⲁⲧⲟⲩ ⲧⲉⲕⲉⲥⲉⲃⲁⲥⲙⲓⲱ ⲧⲁⲧⲟⲩ: ⲡⲁⲧⲣⲟⲥ ⲏ̀ⲙⲱⲛ ⲁⲩⲑⲉⲛⲧⲟⲩ ⲕⲉ ⲇⲉⲥⲡⲟⲧⲟⲩ:(..)\n\nⲠⲁⲡⲁ ⲕⲉ ⲡⲁⲧⲣⲓⲁⲣⲭⲟⲩ ⲧⲏⲥ ⲙⲉⲅⲁⲗⲏⲥ ⲡⲟⲗⲉⲱⲥ Ⲁ̀ⲗⲉⲝⲁⲛⲇ̀ⲣⲓⲁⲥ: Ⲗⲩⲃⲓⲏⲥ Ⲡⲉⲛⲧⲁⲡⲟⲗⲉⲱⲥ Ⲉ̀ⲑⲓⲟⲡⲓⲁⲥ ⲛⲉⲙ Ⲁϥⲣⲓⲕⲓⲁ ⲕⲉ ⲡⲁⲥⲏⲥ ⲅⲏⲥ Ⲉ̀ⲅⲩⲡⲧⲟⲩ.\n\nⲠⲁⲧⲣⲟⲥ ⲡⲁⲧⲉⲣⲱⲛ ⲡⲓⲙⲉⲛⲟⲥ ⲡⲓⲙⲉⲛⲱⲛ ⲁⲣⲭⲏⲉ̀ⲣⲉⲱⲥ ⲁⲣⲭⲏⲉ̀ⲣⲉⲱⲛ ⲏ̀ⲙⲱⲛ: ⲧ̀ⲣⲓⲧⲟⲩ ⲕⲉ ⲇⲉⲕⲁⲧⲟⲩ ⲧⲱⲛ ⲁ̀ⲡⲟⲥⲧⲟⲗⲱⲛ: ⲕⲉ ⲕ̀ⲣⲓⲧⲟⲩ ⲧⲏⲥ ⲟⲓⲕⲟⲩⲙⲉⲛⲏⲥ:\n\nⲠⲟⲗⲗⲁ ⲧⲁ ⲉ̀ⲧⲏ ⲧⲟⲛ ⲇⲉⲥⲡⲟⲧⲏⲛ ⲕⲉ ⲁⲣⲭⲏⲉ̀ⲣⲉⲁ̀ ⲏ̀ⲙⲱⲛ: Ⲕⲩⲣⲓⲉ ⲫⲩⲗⲁⲧⲧⲉ ⲁϥⲧⲱⲛ (ⲓⲥ ⲡⲟⲗⲗⲁ ⲉ̀ⲧⲏ Ⲇⲉⲥⲡⲟⲧⲁ) ⲅ︦.\n\nⲚⲉⲙ ⲡⲉⲛⲓⲱⲧ ⲛ̀ⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲥ (ⲙ̀ⲙⲏⲧⲣⲟⲡⲟⲗⲓⲧⲏⲥ) ⲁⲃⲃⲁ (...).\n\nⲘⲁⲣⲉ ⲡⲓⲕ̀ⲗⲏⲣⲟⲥ: ⲛⲉⲙ ⲡⲓⲗⲁⲟⲥ ⲧⲏⲣϥ: ⲟⲩϫⲁⲓ ϧⲉⲛ Ⲡ̀ⲟ︦ⲥ︦. Ϫⲉ ⲁ̀ⲙⲏⲛ ⲉⲥⲉ̀ϣⲱⲡⲓ.',
+      },
+      {
+        language: 'englishCoptic',
+        text: 'Tou makariō tatou agiō tatou tekesevasmiō tatou: patros ēmōn authentou ke despotou:(..)\n\nPapa ke patriarkhou tēs megalēs poleōs Aleksanedrias: Luviēs Pentapoleōs Ethiopias nem Afrikia ke pasēs gēs Eguptou.\n\nPatros paterōn pimenos pimenōn arkhē-ereōs arkhē-ereōn ēmōn: etritou ke dekatou tōn apostolōn: ke ekritou tēs oikoumenēs:\n\nPolla ta etē ton despotēn ke arkhē-ere-a ēmōn: Kurie fulatte aftōn (is polla etē Despota) 3.\n\nNem peniōt enepiskopos (emmētropolitēs) abba (...).\n\nMare pi-eklēros: nem pilaos tērf: oujai khen Eptshois. Je amēn eseshōpi.',
+      },
+      {
+        language: 'english',
+        text: 'The blessed (...), the holy fully honored, our father and master,(...)\n\nPope and Patriarch of the great city of Alexandria, Libya, Pentapolis, Ethiopia, Africa and the land of Egypt.\n\nFather of all Fathers, Shepherd of all Shepherds, our Archbishop, the thirteenth Apostle and the judge of the world.\n\nMay his years be countless, may God preserve our master and Archbishop (for many years O master) (3x)\n\nAnd our father the bishop (metropolitan), Abba (...).\n\nMay the clergy and all the people be safe in the Lord. Amen, so it shall be.',
+      },
+      {
+        language: 'arabic',
+        text: 'الطوباوي الأقدس الكلي الإكرام، أبونا ومولانا وسيدنا\n\nبابا وبطريرك المدينة العظمي الإسكندرية، وليبيا والخمس المدن الغربية والحبشة وأفريقيا وجميع أرض مصر.\n\nأبو الآباء، راعي الرعاة، رئيس رؤساء كهنتنا، ثالث عشر الرسل، وقاضي المسكونة،\n\nفلتكن سنوه عديدة، سيدنا رئيس كهنتنا يا رب إحفظه (لسنين كثيرة يا سيد) (٣).\n\nوأبينا الأسقف (المطران) أنبا (...).\n\nفليكن الإكليروس وكل الشعب معافين في الرب. آمين يكون.',
+      },
+    ];
+  }
+  const kiahkLiturgyPerfectIsTheBlessing = kiahkLiturgy.hymns.find((h) => h.title === 'Ⲁ̀ ⲡⲉⲧϫⲏⲕ (Perfect is the Blessing)');
+  if (kiahkLiturgyPerfectIsTheBlessing) {
+    kiahkLiturgyPerfectIsTheBlessing.versions = [
+      {
+        language: 'coptic',
+        text: 'Ⲁ̀ ⲡⲉⲧϫⲏⲕ ⲉ̀ⲃⲟⲗ ⲛ̀ϫⲉ ⲡⲓⲥ̀ⲙⲟⲩ ⲧⲟⲩ Ⲗⲟⲅⲟⲩ Ⲡⲉϥⲓⲱⲧ: ⲓ̀ ⲁϥϭⲓⲥⲁⲣⲝ ϩⲱⲥ ⲣⲱⲙⲓ ⲛ̀ⲧⲉⲗⲓⲟⲥ.\n\nⲆⲟⲝⲁ Ⲡⲁⲧⲣⲓ ⲕⲉ Ⲩ̀ⲓⲱ ⲕⲉ Ⲁ̀ⲅⲓⲱ Ⲡ̀ⲛⲉⲩⲙⲁⲧⲓ.\n\nⲀ̀ ⲡⲉⲧϧⲉⲗϧⲱⲗϥ ⲛⲁⲩ ⲉ̀ⲣⲟϥ: ⲁ̀ ⲡⲉⲧϧⲉⲗϧⲱⲗϥ ϣⲟⲡ ⲛⲉⲙⲱⲧⲉⲛ: ⲁ̀ ⲡⲉⲧϧⲉⲗϧⲱⲗϥ ⲁϣϥ ϩⲓϫⲉⲛ ⲡⲓⲥ̀ⲧⲁⲩⲣⲟⲥ.\n\nⲔⲉ ⲛⲩⲛ ⲕⲉ ⲁ̀ⲓ̀ ⲕⲉ ⲓⲥ ⲧⲟⲩⲥ ⲉ̀ⲱ̀ⲛⲁⲥ ⲧⲱⲛ ⲉ̀ⲱ̀ⲛⲱⲛ. Ⲁ̀ⲙⲏⲛ.\n\nⲐⲁⲓ ⲧⲉ ϯⲛⲟⲩ ⲉ̀ⲧⲉ: ⲑⲁⲓ ⲧⲉ ϯⲥⲉⲃⲏⲣⲟⲥ: ϯⲡ̀ⲣⲟⲥⲕⲩⲛⲓⲥⲏⲥ ⲧⲱ ⲙⲟⲛⲱ Ⲭ̀ⲣⲓⲥⲧⲟⲥ.\n\nⲈ̀ⲣⲉ ⲡⲓⲥ̀ⲙⲟⲩ ⲛ̀Ϯⲧ̀ⲣⲓⲁⲥ ⲉⲑ︦ⲩ︦ (ⲃ︦): Ⲫ̀ⲓⲱⲧ ⲛⲉⲙ Ⲡ̀ϣⲏⲣⲓ ⲛⲉⲙ Ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ ⲉⲑ︦ⲩ︦.\n\nⲈ̀ⲣⲉ ⲡⲓⲥ̀ⲙⲟⲩ ⲛ̀Ϯⲑⲉⲟ̀ⲧⲟⲕⲟⲥ (ⲃ︦): Ⲙⲁⲣⲓⲁ Ⲑ̀ⲙⲁⲩ ⲛ̀Ⲓⲏ︦ⲥ︦ Ⲡⲭ︦ⲥ︦.\n\nⲈ̀ⲣⲉ ⲡⲓⲥ̀ⲙⲟⲩ ⲙ̀ⲡⲉⲛⲡⲁⲧⲣⲓⲁⲣⲭⲏⲥ (ⲃ︦): ⲛ̀ⲓⲱⲧ ⲉⲧⲧⲁⲓⲏⲟⲧ ⲛ̀ⲁⲣⲭⲏⲉ̀ⲣⲉⲩⲥ ⲡⲁⲡⲁ ⲁⲃⲃⲁ (...).\n\nⲈ̀ⲣⲉ ⲡⲓⲥ̀ⲙⲟⲩ ⲙ̀ⲡⲉⲛⲙⲏⲧⲣⲟⲡⲟⲗⲓⲧⲏⲥ: ⲛ̀ⲓⲱⲧ ⲉⲧⲧⲁⲓⲏⲟⲧ ⲁⲃⲃⲁ (...).\n\nⲈ̀ⲣⲉ ⲡⲓⲥ̀ⲙⲟⲩ ⲙ̀ⲡⲉⲛⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲥ: ⲛ̀ⲓⲱⲧ ⲉⲧⲧⲁⲓⲏⲟⲧ ⲁⲃⲃⲁ (...).\n\nⲈⲩⲉ̀ⲓ̀ ⲉ̀ϩ̀ⲣⲏⲓ ⲉ̀ϫⲉⲛ ⲡⲁⲓⲗⲁⲟⲥ ⲧⲏⲣϥ: ϫⲉ ⲁ̀ⲙⲏⲛ ⲉⲥⲉ̀ϣⲱⲡⲓ.\n\nⲔⲁⲑⲟⲗⲓⲕⲟⲛ: ⲕⲁⲑⲟⲗⲓⲕⲟⲛ.',
+      },
+      {
+        language: 'englishCoptic',
+        text: 'A petjēk evol enje pi-esmou tou Logou Pefiōt: i aftshisarks hōs rōmi entelios.\n\nDoksa Patri ke Uiō ke Agiō Epneumati.\n\nA petkhelkhōlf nau erof: a petkhelkhōlf shop nemōten: a petkhelkhōlf ashf hijen pi-estauros.\n\nKe nun ke a-i ke is tous e-ōnas tōn e-ōnōn. Amēn.\n\nThai te tinou ete: thai te tisevēros: ti-eproskunisēs tō monō Ekhristos.\n\nEre pi-esmou en-Ti-etrias ethouab (2): Efiōt nem Epshēri nem Pi-epneuma ethouab.\n\nEre pi-esmou en-Tithe-otokos (2): Maria Ethmau en-Iēsous Pi-ekhristos.\n\nEre pi-esmou empenpatriarkhēs (2): eniōt ettaiēot enarkhē-ereus papa abba (...).\n\nEre pi-esmou empenmētropolitēs: eniōt ettaiēot abba (...).\n\nEre pi-esmou empenepiskopos: eniōt ettaiēot abba (...).\n\nEu-e-i e-ehrēi ejen pailaos tērf: je amēn eseshōpi.\n\nKatholikon: katholikon.',
+      },
+      {
+        language: 'english',
+        text: 'Perfect is the blessing, of the Word of the Father, who came and was incarnate as a perfect man.\n\nGlory to the Father, and the Son, and the Holy Spirit.\n\nThe slaughtered One was seen. The slaughtered One is present among you. The slaughtered One is crucified on the Cross.\n\nNow and ever and unto the age of ages. Amen.\n\nThis is the perceptible. This is the miraculous. Worship is due to the only-begotten Christ.\n\nThe blessing of the Holy Trinity (2), the Father, the Son, and the Holy Spirit.\n\nThe blessing of the Theotokos (2), Mary the Mother of Jesus Christ.\n\nThe blessing of our patriarch (2), the honored father, the archpriest, Pope Abba (...).\n\nThe blessing of our metropolitan, the honored father Abba (...).\n\nThe blessing of our bishop, the honored father Abba (...).\n\nShall come upon this entire congregation. Amen. So be it.\n\nThe catholic epistle, the catholic epistle.',
+      },
+      {
+        language: 'arabic',
+        text: 'الكامل بركة أبيه الكلمة، أتى وتجسد كإنسان كامل.\n\nالمجد للآب والإبن والروح القدس.\n\nالمذبوح نظروه، المذبوح الكائن معكم، المذبوح مُعَلق على الصليب.\n\nالآن وكل أوان وإلى دهر الدهور. آمين.\n\nهذه العقلية، هذه الأعجوبة، السجود للمسيح الواحد.\n\n(بركة الثالوث الاقدس)٢، الآب والإبن والروح القدس.\n\n(بركة والدة الإله)٢، مريم أم يسوع المسيح.\n\n(بركة بطريركنا)٢، الآب المكرم رئيس الكهنة البابا أنبا (...).\n\nبركة الأب المطران الانبا (...)\n\nبركة الأب الاسقف الانبا (...)\n\nتحل علي هذا الشعب كله أمين يكون.\n\nالكاثوليكون الكاثوليكون.',
+      },
+    ];
+  }
+  const kiahkLiturgyCatholicEpistle = kiahkLiturgy.hymns.find((h) => h.title === 'Ⲕⲁⲑⲟⲗⲓⲕⲟⲛ (Introduction to the Coptic Catholic Epistle)');
+  if (kiahkLiturgyCatholicEpistle) {
+    kiahkLiturgyCatholicEpistle.versions = [
+      {
+        language: 'coptic',
+        text: 'Ⲕⲁⲑⲟⲗⲓⲕⲟⲛ (ⲉ̀ⲃⲟⲗϧⲉⲛ ϯⲉ̀ⲡⲓⲥⲧⲟⲗⲏ ⲛ̀ⲧⲉ) ⲡⲉⲛⲓⲱⲧ (ⲛⲓⲙ) ⲛⲁⲙⲉⲛⲣⲁϯ.',
+      },
+      {
+        language: 'englishCoptic',
+        text: 'Katholikon (evolkhen ti-epistolē ente) peniōt (nim) namenrati.',
+      },
+      {
+        language: 'english',
+        text: 'The Catholic Epistle of our father ___, my beloved.',
+      },
+      {
+        language: 'arabic',
+        text: 'الكاثوليكون من أبينا ___ أحبائي.',
+      },
+    ];
+  }
+  const kiahkLiturgyPraxisResponse = kiahkLiturgy.hymns.find((h) => h.title === 'Ⲭⲉⲣⲉ ⲛⲉ Ⲙⲁⲣⲓⲁ (Praxis Response)');
+  if (kiahkLiturgyPraxisResponse) {
+    kiahkLiturgyPraxisResponse.versions = [
+      {
+        language: 'coptic',
+        text: 'Ⲭⲉⲣⲉ ⲛⲉ Ⲙⲁⲣⲓⲁ: ϯϭⲣⲟⲙⲡⲓ ⲉⲑⲛⲉⲥⲱⲥ: ⲑⲏⲉ̀ⲧⲁⲥⲙⲓⲥⲓ ⲛⲁⲛ: ⲙ̀Ⲫϯ ⲡⲓⲖⲟⲅⲟⲥ.\n\nⲬⲉⲣⲉ ⲛⲉ Ⲙⲁⲣⲓⲁ: ϧⲉⲛ ⲟⲩⲭⲉⲣⲉ ⲉϥⲟⲩⲁⲃ: ⲭⲉⲣⲉ ⲛⲉ Ⲙⲁⲣⲓⲁ: ⲑ̀ⲙⲁⲩ ⲙ̀ⲫⲏⲈ̀ⲑⲟⲩⲁⲃ.\n\nⲬⲉⲣⲉ Ⲅⲁⲃⲣⲓⲏⲗ: ⲡⲓⲛⲓϣϯ ⲛ̀ⲁⲣⲭⲏⲁⲅⲅⲉⲗⲟⲥ: ⲭⲉⲣⲉ ⲫⲏⲉ̀ⲧⲁϥϩⲓϣⲉⲛⲛⲟⲩϥⲓ: ⲙ̀Ⲙⲁⲣⲓⲁ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ.\n\nⲬⲉⲣⲉ ⲛⲁⲕ ⲱ̀ⲡⲓⲙⲁⲣⲧⲩⲣⲟⲥ: ⲭⲉⲣⲉ ⲡⲓⲉ̀ⲩⲁ̀ⲅⲅⲉⲗⲓⲥⲧⲏⲥ: ⲭⲉⲣⲉ ⲡⲓⲁ̀ⲡⲟⲥⲧⲟⲗⲟⲥ: ⲁⲃⲃⲁ Ⲙⲁⲣⲕⲟⲥ ⲡⲓⲑⲉⲱ̀ⲣⲓⲙⲟⲥ.\n\nⲬⲉⲣⲉ ⲛⲁⲕ ⲱ̀ ⲡⲓⲙⲁⲣⲧⲩⲣⲟⲥ: ⲭⲉⲣⲉ ⲡⲓϣⲱⲓϫ ⲛ̀ⲅⲉⲛⲛⲉⲟⲥ: ⲭⲉⲣⲉ ⲡⲓⲁ̀ⲑⲗⲟⲫⲟⲣⲟⲥ: ⲡⲁⲟ︦ⲥ︦ ⲡ̀ⲟⲩⲣⲟ Ⲅⲉⲱ̀ⲣⲅⲓⲟⲥ.\n\nⲬⲉⲣⲉ ⲛⲁⲕ ⲱ̀ ⲡⲓⲙⲁⲣⲧⲩⲣⲟⲥ: ⲭⲉⲣⲉ ⲡⲓϣⲱⲓϫ ⲛ̀ⲅⲉⲛⲛⲉⲟⲥ: ⲭⲉⲣⲉ ⲡⲓⲁⲑⲗⲟⲫⲟⲣⲟⲥ: Ⲫⲓⲗⲟⲡⲁⲧⲏⲣ Ⲙⲉⲣⲕⲟⲩⲣⲓⲟⲥ.\n\nⲬⲉⲣⲉ ⲛⲁⲕ ⲱ̀ ⲡⲓⲙⲁⲣⲧⲩⲣⲟⲥ: ⲭⲉⲣⲉ ⲡⲓϣⲱⲓϫ ⲛ̀ⲅⲉⲛⲛⲉⲟⲥ: ⲭⲉⲣⲉ ⲡⲓⲁ̀ⲑⲗⲟⲫⲟⲣⲟⲥ: ⲡⲓⲁ̀ⲅⲓⲟⲥ ⲁ̀ⲡⲁ Ⲙⲏⲛⲁ.\n\nⲰⲟⲩⲛⲓⲁⲧⲕ ϧⲉⲛ ⲟⲩⲙⲉⲑⲙⲏⲓ: Ⲡⲉⲛⲓⲱⲧ ⲉ︦ⲑ︦ⲩ︦ ⲙ̀ⲡⲁⲧⲣⲓⲁⲣⲭⲏⲥ: Ⲡⲁⲡⲁ Ⲁⲃⲃⲁ Ⲕⲩⲣⲓⲗⲗⲟⲥ Ⲡⲓⲙⲁϩⲥⲟⲟϩ: ⲡⲓⲙⲉⲛⲣⲓⲧ ⲛ̀ⲧⲉ Ⲡⲭ︦ⲥ︦.\n\nⲬⲉⲣⲉ ⲡⲉⲛⲓⲱⲧ ⲁⲃⲃⲁ Ⲡⲓϣⲱⲓ: ⲡⲓⲑ̀ⲙⲏⲓ ⲡⲓⲣⲱⲙⲓ ⲛ̀ⲧⲉⲗⲓⲟⲥ: ⲭⲉⲣⲉ ⲡⲉⲛⲓⲱⲧ ⲁⲃⲃⲁ Ⲡⲁⲩⲗⲉ: ⲡⲓⲙⲉⲛⲣⲓⲧ ⲛ̀ⲧⲉ Ⲡⲭ︦ⲥ︦.\n\nⲰⲟⲩⲛⲓⲁⲧⲕ ϧⲉⲛ ⲟⲩⲙⲉⲑⲙⲏⲓ: ⲡⲉⲛⲓⲱⲧ ⲉⲑⲟⲩⲁⲃ ⲛ̀ⲇⲓⲕⲉⲟⲥ: ⲁⲃⲃⲁ Ⲁⲃⲣⲁⲁⲙ ⲡⲓⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲥ: ⲡⲓⲙⲉⲛⲣⲓⲧ ⲛ̀ⲧⲉ Ⲡⲭ︦ⲥ︦\n\nⲔⲥ̀ⲙⲁⲣⲱⲟⲩⲧ ⲁ̀ⲗⲏⲑⲱⲥ: ⲛⲉⲙ Ⲡⲉⲕⲓⲱⲧ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ: ⲛⲉⲙ Ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ Ⲉⲑⲟⲩⲁⲃ: ϫⲉ ⲁⲕⲓ̀ ⲁⲕⲥⲱϯ ⲙ̀ⲙⲟⲛ ⲛⲁⲓ ⲛⲁⲛ.',
+      },
+      {
+        language: 'englishCoptic',
+        text: 'Khere ne Maria: titshrompi ethnesōs: thē-etasmisi nan: em-Fti pi-Logos.\n\nKhere ne Maria: khen oukhere efouab: khere ne Maria: ethmau emfē-Ethouab.\n\nKhere Gabriēl: pinishti enarkhēaggelos: khere fē-etafhishennoufi: em-Maria Tiparthenos.\n\nKhere nak ōpimarturos: khere pi-eu-aggelistēs: khere pi-apostolos: abba Markos pithe-ōrimos.\n\nKhere nak ō pimarturos: khere pishōij engenneos: khere pi-athloforos: patshois epouro Ge-ōrgios.\n\nKhere nak ō pimarturos: khere pishōij engenneos: khere piathloforos: Filopatēr Merkourios.\n\nKhere nak ō pimarturos: khere pishōij engenneos: khere pi-athloforos: pi-agios apa Mēna.\n\nŌouniatk khen oumethmēi: Peniōt ethouab empatriarkhēs: Papa Abba Kurillos Pimahsooh: pimenrit ente Pi-ekhristos.\n\nKhere peniōt abba Pishōi: pi-ethmēi pirōmi entelios: khere peniōt abba Paule: pimenrit ente Pi-ekhristos.\n\nŌouniatk khen oumethmēi: peniōt ethouab endikeos: abba Abraam pi-episkopos: pimenrit ente Pi-ekhristos\n\nKesmarōout alēthōs: nem Pekiōt enagathos: nem Pi-epneuma Ethouab: je aki aksōti emmon nai nan.',
+      },
+      {
+        language: 'english',
+        text: 'Hail to you O Mary, the beautiful dove, who has borne to us, God the Logos.\n\nHail to you O Mary, a holy hail, hail to you O Mary, the Mother of the Holy.\n\nHail to Gabriel, the great archangel. Hail to him who announced glad tidings to the Virgin Mary.\n\nHail to you O martyr: hail to the Evangelist: hail to the Apostle: Mark the Beholder of God.\n\nHail to you, O martyr: hail to the courageous hero: hail to the struggle-mantled, my Lord Prince George.\n\nHail to you O martyr: hail to the courageous hero: hail to the struggle bearer: Philopater Mercurius.\n\nHail to you, O martyr: hail to the noble hero: hail to the struggle-bearer, saint Abba Mina.\n\nBlessed are you indeed: our holy father the patriarch: Abba Kyrillos the sixth: the beloved of Christ.\n\nHail to our father Abba Pishoy, the just and perfect man, hail to our father Abba Paul, the beloved of Christ.\n\nBlessed are you indeed, our holy and righteous father, Abba Abraam the bishop, the beloved of Christ.\n\nBlessed are You indeed, with Your good Father, and the Holy Spirit, for You have come and saved us. Have mercy on us.',
+      },
+      {
+        language: 'arabic',
+        text: 'السلام لك يا مريم الحمامة الحسنة التي ولدت لنا الله الكلمة.\n\nالسلام لك يا مريم سلاماً مقدساً، السلام لك يا مريم أم القدوس.\n\nالسلام لغبريال، رئيس الملائكة العظيم، السلام للذي بشَّر، مريم العذراء.\n\nالسلا لك أيها الشهيد السلام للانجيلي السلام للرسول مرقس ناظر الإله.\n\nالسلام لك أيها الشهيد، السلام للشجاع المجاهد، السلام لللابس الجهاد، سيدي الملك جيؤرجيوس.\n\nالسلام لك أيها الشهيد. السلام للشجاع البطل. السلام للمجاهد محب الآب مرقوريوس.\n\nالسلام لك أيها الشهيد. السلام للشجاع البطل. السلام للمجاهد القديس أبا مينا.\n\nطوباك بالحقيقة، يا أبانا القديس البطريرك، الانبا كيرلس السادس، حبيب المسيح.\n\nالسلام لأبينا أنبا بيشوي، الرجل البار الكامل، السلام لأبينا أنبا بولا، حبيب المسيح.\n\nطوباك بالحقيقة يا أبانا القديس البار انبا ابرآم الاسقف حبيب المسيح.\n\nمبارك أنت بالحقيقة، مع أبيك الصالح والروح القدس لأنك أتيتَ وخلصتنا. ارحمنا.',
+      },
+    ];
+  }
+  const kiahkLiturgyParalex = kiahkLiturgy.hymns.find((h) => h.title === 'Ⲡⲁϭⲟⲓⲥ (Paralex)');
+  if (kiahkLiturgyParalex) {
+    kiahkLiturgyParalex.versions = [
+      {
+        language: 'coptic',
+        text: 'Ⲡⲁϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: Ⲡⲓⲙⲓⲥⲓ ⲉ̀ⲃⲟⲗϧⲉⲛ Ⲫ̀ⲓⲱⲧ: ϧⲁϫⲱⲟⲩ ⲛ̀ⲓⲉ̀ⲱⲛ ⲧⲏⲣⲟⲩ: ⲛⲁⲓ ⲛⲁⲛ ⲕⲁⲧⲁ ⲡⲉⲕⲛⲓϣϯ ⲛ̀ⲛⲁⲓ.\n\nⲚⲓⲭⲉⲣⲟⲃⲓⲙ ⲥⲉⲟⲩⲱϣⲧ ⲙ̀ⲙⲟⲕ: Ⲛⲓⲥⲉⲣⲁⲫⲓⲙ ⲥⲉϯⲱ̀ⲟⲩ ⲛⲁⲕ: ⲉⲩⲱϣ ⲉ̀ⲃⲟⲗ ⲉⲩϫⲱ ⲙ̀ⲙⲟⲥ: ϫⲉ ⲭ̀ⲟⲩⲁⲃ ⲟⲩⲟϩ ⲭ̀ⲟⲩⲁⲃ.\n\nⲬ̀ⲟⲩⲁⲃ Ⲡ̀ϭⲟⲓⲥ ϧⲉⲛ ⲛⲓⲁ̀ⲛⲁ ⲛ̀ϣⲟ: ⲕ̀ⲧⲁⲓⲏⲟⲩⲧ ϧⲉⲛ ⲛⲓⲁ̀ⲛⲁ ⲛ̀ⲑ̀ⲃⲁ: ⲛ̀ⲑⲟⲕ ⲟⲩⲥ̀ⲑⲟⲓⲛⲟⲩϥⲓ ⲡⲉ Ⲡⲁⲥⲱⲧⲏⲣ: ϫⲉ ⲁⲕⲓ̀ ⲁⲕⲥⲱϯ ⲙ̀ⲙⲟⲛ.',
+      },
+      {
+        language: 'englishCoptic',
+        text: 'Patshois Iēsous Pi-ekhristos: Pimisi evolkhen Efiōt: khajōou eni-eōn tērou: nai nan kata peknishti ennai.\n\nNikherovim seouōsht emmok: Niserafim seti-ōou nak: euōsh evol eujō emmos: je ekhouab ouoh ekhouab.\n\nEkhouab Eptshois khen ni-ana ensho: ektaiēout khen ni-ana enethva: enthok ou-esthoinoufi pe Pasōtēr: je aki aksōti emmon.',
+      },
+      {
+        language: 'english',
+        text: 'O My Lord Jesus Christ, the begotten of the Father, before all ages, have mercy on us according to Your great mercy.\n\nThe Cherubim worship You, the Seraphim glorify You, proclaiming and saying, "Holy and holy.\n\nYou are Holy O Lord among the thousands, You are glorified and among the myriads, You are incense O my Savior, for you have come and saved us."',
+      },
+      {
+        language: 'arabic',
+        text: 'يا ربي يسوع المسيح، المولود من الآب، قبل كل الدهور، إرحمنا كعظيم رحمتك.\n\nالشاروبيم سجدون له، السيرافيم يمجدونه، صارخين قائلين، "قدوس قدوس.\n\nقدوس رب الألوف، مكرم بالربوات، أنت بخور يا مخلصي، لأنك أتيت وخلصتنا."',
+      },
+    ];
+  }
+}
+
 // ---- Annual > Matins: add "Doxologies" divider + Introduction to the Doxologies ----
 const annualMatins = seasons
   .find((s) => s.id === 'annual')
@@ -5662,6 +5935,19 @@ if (kiahkVespers && kiahkMatins) {
           },
       ],
     });
+  }
+}
+
+// ---- Kiahk > Liturgy: the Trisagion and the Psalm Trailer for the Pope or a Bishop have the same lyrics as Annual Liturgy ----
+if (kiahkLiturgy && annualLiturgy) {
+  const kiahkLiturgyFromAnnual: Record<string, string> = {
+    'Ⲁⲅⲓⲟⲥ ⲟ̀ Ⲑⲉⲟⲥ (Trisagion)': 'annual-liturgy-agios',
+    'Ⲙⲁⲣⲟⲩϭⲁⲥϥ (Psalm Trailer for the Pope or a Bishop)': 'annual-liturgy-psalm-trailer-pope-bishop',
+  };
+  for (const hymn of kiahkLiturgy.hymns) {
+    const source = annualLiturgy.hymns.find((h) => h.id === kiahkLiturgyFromAnnual[hymn.title]);
+    // the lyrics only, without the recordings
+    if (source) hymn.versions = source.versions.map(({ audio, ...version }) => version);
   }
 }
 

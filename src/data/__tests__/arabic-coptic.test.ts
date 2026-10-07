@@ -749,6 +749,204 @@ describe('Kiahk Praises & Season > Vespers', () => {
   });
 });
 
+describe('Kiahk Praises & Season > Liturgy', () => {
+  const service = seasons.find((s) => s.id === 'kiahk')!.services.find((s) => s.id === 'kiahk-liturgy')!;
+
+  it('lists only the Liturgy of the Word and the Liturgy of the Faithful, titles only', () => {
+    expect(service.hymns.map((h) => h.title)).toEqual([
+      'Liturgy of the Word',
+      'Ϩⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ (Hymn of the Intercessions)',
+      'Ⲡⲓϩ̀ⲙⲟⲧ ⲅⲁⲣ (Conclusion to the Coptic Pauline Epistle)',
+      'Ⲡⲓϩ̀ⲙⲟⲧ ⲅⲁⲣ ⲙ̀ⲡⲉⲛⲟ︦ⲥ︦ Ⲓⲏ︦ⲥ︦ Ⲡⲭ︦ⲥ︦ (Response to the Pauline Epistle)',
+      'Ⲡⲓϩ̀ⲙⲟⲧ ⲅⲁⲣ ⲙ̀Ⲫ̀ⲛⲟⲩϯ (Great Response to the Pauline Epistle)',
+      'Ⲏ̀ ⲁ̀ⲅⲁⲡⲏ (Alternate Response to the Pauline Epistle)',
+      'Ϯⲙⲏⲧ ⲥ̀ⲛⲟⲩϯ (Hymn of the Virtues)',
+      'Ⲧⲟⲩ ⲙⲁⲕⲁⲣⲓⲱ (The Blessed)',
+      'Ⲁ̀ ⲡⲉⲧϫⲏⲕ (Perfect is the Blessing)',
+      'Ⲕⲁⲑⲟⲗⲓⲕⲟⲛ (Introduction to the Coptic Catholic Epistle)',
+      'Ⲭⲉⲣⲉ ⲛⲉ Ⲙⲁⲣⲓⲁ (Praxis Response)',
+      'Ⲡⲁϭⲟⲓⲥ (Paralex)',
+      'Ⲁⲅⲓⲟⲥ ⲟ̀ Ⲑⲉⲟⲥ (Trisagion)',
+      'Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ (Psalm Trailer)',
+      'Ⲙⲁⲣⲟⲩϭⲁⲥϥ (Psalm Trailer for the Pope or a Bishop)',
+      'Liturgy of the Faithful',
+      'Ⲧⲉⲛϯ ⲛⲉ ⲙ̀ⲡⲓⲭⲉⲣⲉⲧⲓⲥⲙⲟⲥ (Gospel Response)',
+      'Ⲧⲉⲛϭⲓⲥⲓ ⲙ̀ⲙⲟ ϧⲉⲛ ⲟⲩⲉⲙⲡ̀ϣⲁ (Gospel Response)',
+      'Ⲍⲁⲭⲁⲣⲓⲁⲥ (Adam Aspasmos (Zechariah))',
+      'Ⲟⲩⲛⲟϥ ⲙ̀ⲙⲟ (Standard Adam Aspasmos (Rejoice))',
+      'Ⲁ̀ⲣⲓⲁⲥⲡⲁⲍⲉⲥⲑⲉ (A Second Standard Adam Aspasmos (Greet With))',
+      'Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ Ⲡⲉⲛⲥⲱⲧⲏⲣ (A Third Standard Adam Aspasmos (O Christ Our Savior))',
+      'Ⲅⲁⲃⲣⲓⲏⲗ (Watos Aspasmos (Gabriel))',
+      'Ⲡ̀ϭⲟⲓⲥ Ⲫ̀ⲛⲟⲩϯ (Standard Watos Aspasmos, O Lord God)',
+      'Ⲙⲁⲣⲉⲛϩⲱⲥ (A Second Standard Watos Aspasmos (Let Us Praise))',
+      'Ⲙⲁⲣⲓⲁ ϯϭⲣⲟⲙⲡⲓ (A Third Standard Watos Aspasmos (Mary the Beautiful Dove))',
+    ]);
+    expect(service.hymns.filter((h) => h.isSectionHeader).map((h) => h.title)).toEqual(['Liturgy of the Word', 'Liturgy of the Faithful']);
+    expect(service.hymns.map((h, i) => (h.isSectionHeader ? i : -1)).filter((i) => i >= 0)).toEqual([0, 15]);
+    expect(new Set(service.hymns.map((h) => h.id)).size).toBe(service.hymns.length);
+    // the first eleven hymns of the Liturgy of the Word, the Trisagion and the Psalm Trailer for the Pope or a Bishop have lyrics so far
+    const withLyrics = [
+      'Ϩⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ (Hymn of the Intercessions)',
+      'Ⲡⲓϩ̀ⲙⲟⲧ ⲅⲁⲣ (Conclusion to the Coptic Pauline Epistle)',
+      'Ⲡⲓϩ̀ⲙⲟⲧ ⲅⲁⲣ ⲙ̀ⲡⲉⲛⲟ︦ⲥ︦ Ⲓⲏ︦ⲥ︦ Ⲡⲭ︦ⲥ︦ (Response to the Pauline Epistle)',
+      'Ⲡⲓϩ̀ⲙⲟⲧ ⲅⲁⲣ ⲙ̀Ⲫ̀ⲛⲟⲩϯ (Great Response to the Pauline Epistle)',
+      'Ⲏ̀ ⲁ̀ⲅⲁⲡⲏ (Alternate Response to the Pauline Epistle)',
+      'Ϯⲙⲏⲧ ⲥ̀ⲛⲟⲩϯ (Hymn of the Virtues)',
+      'Ⲧⲟⲩ ⲙⲁⲕⲁⲣⲓⲱ (The Blessed)',
+      'Ⲁ̀ ⲡⲉⲧϫⲏⲕ (Perfect is the Blessing)',
+      'Ⲕⲁⲑⲟⲗⲓⲕⲟⲛ (Introduction to the Coptic Catholic Epistle)',
+      'Ⲭⲉⲣⲉ ⲛⲉ Ⲙⲁⲣⲓⲁ (Praxis Response)',
+      'Ⲡⲁϭⲟⲓⲥ (Paralex)',
+      'Ⲁⲅⲓⲟⲥ ⲟ̀ Ⲑⲉⲟⲥ (Trisagion)',
+      'Ⲙⲁⲣⲟⲩϭⲁⲥϥ (Psalm Trailer for the Pope or a Bishop)',
+    ];
+    for (const hymn of service.hymns) {
+      if (withLyrics.includes(hymn.title)) expect(hymn.versions.length).toBeGreaterThan(0);
+      else expect([hymn.title, hymn.versions.length]).toEqual([hymn.title, 0]);
+    }
+  });
+
+  it('has the lyrics of the Hymn of the Intercessions and the Conclusion to the Coptic Pauline Epistle', () => {
+    const text = (h: Hymn, language: string) => h.versions.find((v) => v.language === language)?.text ?? '';
+    const stanzas = (h: Hymn, language: string) => text(h, language).split(/\n\s*\n/);
+    const withLyricsTitles = [
+      'Ϩⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ (Hymn of the Intercessions)',
+      'Ⲡⲓϩ̀ⲙⲟⲧ ⲅⲁⲣ (Conclusion to the Coptic Pauline Epistle)',
+      'Ⲡⲓϩ̀ⲙⲟⲧ ⲅⲁⲣ ⲙ̀ⲡⲉⲛⲟ︦ⲥ︦ Ⲓⲏ︦ⲥ︦ Ⲡⲭ︦ⲥ︦ (Response to the Pauline Epistle)',
+      'Ⲡⲓϩ̀ⲙⲟⲧ ⲅⲁⲣ ⲙ̀Ⲫ̀ⲛⲟⲩϯ (Great Response to the Pauline Epistle)',
+      'Ⲏ̀ ⲁ̀ⲅⲁⲡⲏ (Alternate Response to the Pauline Epistle)',
+      'Ϯⲙⲏⲧ ⲥ̀ⲛⲟⲩϯ (Hymn of the Virtues)',
+      'Ⲧⲟⲩ ⲙⲁⲕⲁⲣⲓⲱ (The Blessed)',
+      'Ⲁ̀ ⲡⲉⲧϫⲏⲕ (Perfect is the Blessing)',
+      'Ⲕⲁⲑⲟⲗⲓⲕⲟⲛ (Introduction to the Coptic Catholic Epistle)',
+      'Ⲭⲉⲣⲉ ⲛⲉ Ⲙⲁⲣⲓⲁ (Praxis Response)',
+      'Ⲡⲁϭⲟⲓⲥ (Paralex)',
+    ];
+    const intercessions = service.hymns.find((h) => h.title === withLyricsTitles[0])!;
+    const conclusion = service.hymns.find((h) => h.title === withLyricsTitles[1])!;
+    for (const [hymn, count] of [[intercessions, 14], [conclusion, 1]] as [Hymn, number][]) {
+      for (const language of ['coptic', 'englishCoptic', 'english', 'arabic', 'arabicCoptic', 'arabicEnglish']) {
+        expect([hymn.title, language, stanzas(hymn, language).length]).toEqual([hymn.title, language, count]);
+      }
+      expect(hymn.versions.every((v) => !v.text.includes('\\n') && v.audio === undefined)).toBe(true);
+    }
+    // the Response and the Great Response to the Pauline Epistle
+    const response = service.hymns.find((h) => h.title === withLyricsTitles[2])!;
+    const greatResponse = service.hymns.find((h) => h.title === withLyricsTitles[3])!;
+    for (const [hymn, count] of [[response, 4], [greatResponse, 9]] as [Hymn, number][]) {
+      for (const language of ['coptic', 'englishCoptic', 'english', 'arabic', 'arabicCoptic', 'arabicEnglish']) {
+        expect([hymn.title, language, stanzas(hymn, language).length]).toEqual([hymn.title, language, count]);
+      }
+      expect(hymn.versions.every((v) => !v.text.includes('\\n') && v.audio === undefined)).toBe(true);
+    }
+    expect(stanzas(response, 'english')[0]).toBe(
+      'The grace of our Lord Jesus Christ, be with your saintly spirit, my lord the honored father the high priest Pope Abba (...).'
+    );
+    expect(stanzas(response, 'englishCoptic')[0].startsWith('Pi-ehmot gar empentshois Iēsous Pi-ekhristos')).toBe(true);
+    expect(stanzas(greatResponse, 'english')[0]).toBe('The grace of God, the Father, the Pantocrator,');
+    expect(stanzas(greatResponse, 'coptic')[0]).toBe('Ⲡⲓϩ̀ⲙⲟⲧ ⲅⲁⲣ ⲙ̀Ⲫ̀ⲛⲟⲩϯ Ⲫ̀ⲓⲱⲧ Ⲡⲓⲡⲁⲛⲧⲟⲕⲣⲁⲧⲱⲣ.');
+    expect(stanzas(greatResponse, 'englishCoptic')[7].startsWith('Tōbh e-Pi-ekhristos')).toBe(true);
+    // the Alternate Response: three stanzas, without the line 'If a Bishop is present:' in English and Arabic
+    const alternate = service.hymns.find((h) => h.title === withLyricsTitles[4])!;
+    for (const language of ['coptic', 'englishCoptic', 'english', 'arabic', 'arabicCoptic', 'arabicEnglish']) {
+      expect([language, stanzas(alternate, language).length]).toEqual([language, 3]);
+    }
+    expect(text(alternate, 'english')).not.toMatch(/bishop is present/i);
+    expect(text(alternate, 'arabic')).not.toContain('في حضور أسقف');
+    expect(stanzas(alternate, 'english')[0].startsWith('The love of God the Father, and the grace of His only-begotten Son')).toBe(true);
+    expect(stanzas(alternate, 'english')[1].startsWith('And our holy, blessed, and most honored father, Abba (...)')).toBe(true);
+    expect(stanzas(alternate, 'coptic')[0].startsWith('Ⲏ̀ ⲁ̀ⲅⲁⲡⲏ ⲧⲟⲩ Ⲑⲉⲟⲩ Ⲡⲁⲧⲣⲟⲥ')).toBe(true);
+    expect(stanzas(alternate, 'arabic')[1].startsWith('والقديس المغبوط')).toBe(true);
+    expect(alternate.versions.every((v) => !v.text.includes('\\n') && v.audio === undefined)).toBe(true);
+    // the Hymn of the Virtues: 21 stanzas, without the line 'If a Bishop is present:' in English and Arabic
+    const virtues = service.hymns.find((h) => h.title === withLyricsTitles[5])!;
+    for (const language of ['coptic', 'englishCoptic', 'english', 'arabic', 'arabicCoptic', 'arabicEnglish']) {
+      expect([language, stanzas(virtues, language).length]).toEqual([language, 21]);
+    }
+    expect(text(virtues, 'english')).not.toMatch(/bishop is present/i);
+    expect(text(virtues, 'arabic')).not.toContain('في حضور أسقف');
+    expect(stanzas(virtues, 'english')[0]).toBe('The twelve virtues of the Holy Spirit that are mentioned in the holy Scriptures, these are their names—');
+    expect(stanzas(virtues, 'english')[3]).toBe('The first is love, the second is hope, the third is faith.');
+    expect(stanzas(virtues, 'english')[20]).toBe('Amen (3), so it shall be (2) for you all the days of your life(s).');
+    expect(stanzas(virtues, 'coptic')[0].startsWith('Ϯⲙⲏⲧ ⲥ̀ⲛⲟⲩϯ ⲛ̀ⲁ̀ⲣⲉⲧⲏ')).toBe(true);
+    // the numbers under a line are written as numbers in English and Arabic letters
+    expect(stanzas(virtues, 'englishCoptic')[1]).toContain('Eu-eshōpi (2)');
+    expect(stanzas(virtues, 'arabicCoptic')[15]).toContain('(٣)');
+    expect(stanzas(virtues, 'arabicCoptic')[15]).toContain('(٢)');
+    expect(virtues.versions.every((v) => !v.text.includes('\\n') && v.audio === undefined)).toBe(true);
+    // The Blessed: 6 stanzas (the praise of the Pope), different from the Hymn of the Virtues
+    const blessed = service.hymns.find((h) => h.title === withLyricsTitles[6])!;
+    for (const language of ['coptic', 'englishCoptic', 'english', 'arabic', 'arabicCoptic', 'arabicEnglish']) {
+      expect([language, stanzas(blessed, language).length]).toEqual([language, 6]);
+    }
+    expect(stanzas(blessed, 'english')[0]).toBe('The blessed (...), the holy fully honored, our father and master,(...)');
+    expect(stanzas(blessed, 'english')[3]).toBe('May his years be countless, may God preserve our master and Archbishop (for many years O master) (3x)');
+    expect(stanzas(blessed, 'coptic')[0].startsWith('Ⲧⲟⲩ ⲙⲁⲕⲁⲣⲓⲱ ⲧⲁⲧⲟⲩ ⲁ̀ⲅⲓⲱ ⲧⲁⲧⲟⲩ')).toBe(true);
+    expect(stanzas(blessed, 'arabic')[0]).toBe('الطوباوي الأقدس الكلي الإكرام، أبونا ومولانا وسيدنا');
+    expect(stanzas(blessed, 'englishCoptic')[3]).toContain('(is polla etē Despota) 3.');
+    expect(stanzas(blessed, 'arabicCoptic')[3]).toContain('٣');
+    expect(text(blessed, 'english')).not.toBe(text(virtues, 'english'));
+    expect(blessed.versions.every((v) => !v.text.includes('\\n') && v.audio === undefined)).toBe(true);
+    // Perfect is the Blessing (12 stanzas) and the Introduction to the Coptic Catholic Epistle (1 stanza)
+    const perfect = service.hymns.find((h) => h.title === withLyricsTitles[7])!;
+    const catholic = service.hymns.find((h) => h.title === withLyricsTitles[8])!;
+    for (const [hymn, count] of [[perfect, 12], [catholic, 1]] as [Hymn, number][]) {
+      for (const language of ['coptic', 'englishCoptic', 'english', 'arabic', 'arabicCoptic', 'arabicEnglish']) {
+        expect([hymn.title, language, stanzas(hymn, language).length]).toEqual([hymn.title, language, count]);
+      }
+      expect(hymn.versions.every((v) => !v.text.includes('\\n') && v.audio === undefined)).toBe(true);
+    }
+    expect(stanzas(perfect, 'english')[0]).toBe('Perfect is the blessing, of the Word of the Father, who came and was incarnate as a perfect man.');
+    expect(stanzas(perfect, 'english')[11]).toBe('The catholic epistle, the catholic epistle.');
+    expect(stanzas(perfect, 'coptic')[0].startsWith('Ⲁ̀ ⲡⲉⲧϫⲏⲕ ⲉ̀ⲃⲟⲗ ⲛ̀ϫⲉ ⲡⲓⲥ̀ⲙⲟⲩ')).toBe(true);
+    expect(stanzas(perfect, 'englishCoptic')[5]).toContain('Ere pi-esmou en-Ti-etrias ethouab (2)');
+    expect(stanzas(perfect, 'englishCoptic')[6]).toContain('en-Iēsous Pi-ekhristos');
+    expect(stanzas(perfect, 'arabicCoptic')[5]).toContain('(٢)');
+    expect(text(catholic, 'english')).toBe('The Catholic Epistle of our father ___, my beloved.');
+    expect(text(catholic, 'coptic').startsWith('Ⲕⲁⲑⲟⲗⲓⲕⲟⲛ (ⲉ̀ⲃⲟⲗϧⲉⲛ ϯⲉ̀ⲡⲓⲥⲧⲟⲗⲏ ⲛ̀ⲧⲉ)')).toBe(true);
+    expect(text(catholic, 'arabic')).toBe('الكاثوليكون من أبينا ___ أحبائي.');
+    // the Praxis Response (11 stanzas) and the Paralex (3 stanzas)
+    const praxis = service.hymns.find((h) => h.title === withLyricsTitles[9])!;
+    const paralex = service.hymns.find((h) => h.title === withLyricsTitles[10])!;
+    for (const [hymn, count] of [[praxis, 11], [paralex, 3]] as [Hymn, number][]) {
+      for (const language of ['coptic', 'englishCoptic', 'english', 'arabic', 'arabicCoptic', 'arabicEnglish']) {
+        expect([hymn.title, language, stanzas(hymn, language).length]).toEqual([hymn.title, language, count]);
+      }
+      expect(hymn.versions.every((v) => !v.text.includes('\\n') && v.audio === undefined)).toBe(true);
+    }
+    expect(stanzas(praxis, 'english')[0]).toBe('Hail to you O Mary, the beautiful dove, who has borne to us, God the Logos.');
+    expect(stanzas(praxis, 'english')[10]).toBe('Blessed are You indeed, with Your good Father, and the Holy Spirit, for You have come and saved us. Have mercy on us.');
+    expect(stanzas(praxis, 'coptic')[0].startsWith('Ⲭⲉⲣⲉ ⲛⲉ Ⲙⲁⲣⲓⲁ: ϯϭⲣⲟⲙⲡⲓ')).toBe(true);
+    expect(stanzas(praxis, 'englishCoptic')[4]).toContain('patshois epouro Ge-ōrgios');
+    expect(stanzas(paralex, 'english')[0]).toBe('O My Lord Jesus Christ, the begotten of the Father, before all ages, have mercy on us according to Your great mercy.');
+    expect(stanzas(paralex, 'coptic')[0].startsWith('Ⲡⲁϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ')).toBe(true);
+    expect(stanzas(paralex, 'arabic')[2]).toBe('قدوس رب الألوف، مكرم بالربوات، أنت بخور يا مخلصي، لأنك أتيت وخلصتنا."');
+    // the Trisagion and the Psalm Trailer for the Pope or a Bishop: the same lyrics as in Annual Liturgy, without its recordings
+    const annualLiturgy = seasons.find((s) => s.id === 'annual')!.services.find((s) => s.id === 'annual-liturgy')!;
+    for (const [title, annualId] of [
+      ['Ⲁⲅⲓⲟⲥ ⲟ̀ Ⲑⲉⲟⲥ (Trisagion)', 'annual-liturgy-agios'],
+      ['Ⲙⲁⲣⲟⲩϭⲁⲥϥ (Psalm Trailer for the Pope or a Bishop)', 'annual-liturgy-psalm-trailer-pope-bishop'],
+    ]) {
+      const kiahk = service.hymns.find((h) => h.title === title)!;
+      const original = annualLiturgy.hymns.find((h) => h.id === annualId)!;
+      for (const language of ['coptic', 'englishCoptic', 'english', 'arabic']) {
+        expect([title, language, text(kiahk, language)]).toEqual([title, language, text(original, language)]);
+        expect(text(kiahk, language)).toBeTruthy();
+      }
+      expect(kiahk.versions.some((v) => v.language === 'arabicCoptic')).toBe(true);
+      expect(kiahk.versions.some((v) => v.language === 'arabicEnglish')).toBe(true);
+      expect(kiahk.versions.every((v) => v.audio === undefined)).toBe(true);
+    }
+    expect(annualLiturgy.hymns.find((h) => h.id === 'annual-liturgy-agios')!.versions.some((v) => v.audio)).toBe(true);
+    expect(stanzas(intercessions, 'english')[0]).toBe('Through the intercessions, of the Theotokos, Saint Mary, O Lord grant us, the forgiveness of our sins.');
+    expect(stanzas(intercessions, 'english')[13]).toBe('Through the prayers: of our righteous father: Abba Abraam the bishop: O Lord grant us the forgiveness of our sins.');
+    expect(stanzas(intercessions, 'coptic')[0].startsWith('Ϩⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ: ⲛ̀ⲧⲉ ϯⲑⲉⲟ̀ⲧⲟⲕⲟⲥ')).toBe(true);
+    expect(text(conclusion, 'english')).toBe('Grace and peace be with you all. Amen. So be it.');
+    expect(text(conclusion, 'coptic').startsWith('Ⲡⲓϩ̀ⲙⲟⲧ ⲅⲁⲣ ⲛⲉⲙⲱⲧⲉⲛ')).toBe(true);
+    expect(text(conclusion, 'arabic')).toBe('النعمة لكم والسلام معاً. آمين. يكون.');
+  });
+});
+
 describe('Kiahk Praises & Season > Distribution', () => {
   const service = seasons.find((s) => s.id === 'kiahk')!.services.find((s) => s.id === 'kiahk-distribution')!;
 
