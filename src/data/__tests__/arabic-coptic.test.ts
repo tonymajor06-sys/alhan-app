@@ -97,6 +97,39 @@ describe('Kiahk Praises & Season > Midnight Praises', () => {
     expect(withThisFile.map((h) => h.title)).toEqual(['I Open my Mouth with Praise']);
   });
 
+  it('plays the other Kiahk Midnight Praises recordings on their hymns, and only on them', () => {
+    const nodeFs = jest.requireActual('fs') as { statSync(file: string): { size: number } };
+    const englishArabic: [string, string][] = [
+      ['O Mary', 'kiahk-midnight-o-mary.mp3'],
+      ['I Praise the Virgin', 'kiahk-midnight-i-praise-the-virgin.mp3'],
+      ['Your Mercies O My God', 'kiahk-midnight-your-mercies-o-my-god.mp3'],
+    ];
+    for (const [title, file] of englishArabic) {
+      const hymn = service.hymns.find((h) => h.title === title)!;
+      expect([title, hymn.versions.map((v) => [v.language, v.audio])]).toEqual([
+        title,
+        [['english', file], ['arabic', file], ['arabicEnglish', file]],
+      ]);
+      expect(nodeFs.statSync('assets/audio/' + file).size).toBeGreaterThan(1000000);
+      const withThisFile = flattenHymns(service.hymns).filter((h) => h.versions.some((v) => v.audio === file));
+      expect(withThisFile.map((h) => h.title)).toEqual([title]);
+    }
+    // the Commemoration of the Saints: the Kiahk recording on the Coptic versions, the Annual one kept as the second choice
+    const commemoration = service.hymns.find((h) => h.title === 'The Commemoration of the Saints')!;
+    const kiahkFile = 'kiahk-midnight-the-commemoration-of-the-saints.mp3';
+    expect(nodeFs.statSync('assets/audio/' + kiahkFile).size).toBeGreaterThan(1000000);
+    for (const version of commemoration.versions) {
+      if (version.language === 'coptic' || version.language === 'englishCoptic') {
+        expect([version.language, version.audio]).toEqual([version.language, kiahkFile]);
+        expect([version.language, version.otherAudio]).toEqual([version.language, ['midnight-commemoration.m4a']]);
+      }
+    }
+    const annualMidnight = seasons.find((s) => s.id === 'annual')!.services.find((s) => s.id === 'annual-midnight')!;
+    const annualCommemoration = flattenHymns(annualMidnight.hymns).find((h) => h.id === 'annual-midnight-commemoration')!;
+    // Annual keeps its own recording and does not get the Kiahk one
+    expect(annualCommemoration.versions.some((v) => v.audio === kiahkFile || v.otherAudio?.includes(kiahkFile))).toBe(false);
+  });
+
   it('has the same lyrics as Annual Midnight Praises for the hymns that are in both', () => {
     const annual = seasons.find((s) => s.id === 'annual')!.services.find((s) => s.id === 'annual-midnight')!;
     const annualHymns = flattenHymns(annual.hymns);

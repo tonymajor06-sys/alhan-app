@@ -5472,6 +5472,9 @@ for (const hymn of annualMidnight ? flattenHymns(annualMidnight.hymns) : []) {
 // Kiahk Midnight Praises recordings sung in English and Arabic (English in Arabic letters copies the English later)
 const kiahkMidnightEnglishArabicAudio: Record<string, string> = {
   'I Open my Mouth with Praise': 'kiahk-midnight-i-open-my-mouth-with-praise.mp3',
+  'O Mary': 'kiahk-midnight-o-mary.mp3',
+  'I Praise the Virgin': 'kiahk-midnight-i-praise-the-virgin.mp3',
+  'Your Mercies O My God': 'kiahk-midnight-your-mercies-o-my-god.mp3',
 };
 for (const hymn of kiahkMidnight?.hymns ?? []) {
   const audio = kiahkMidnightEnglishArabicAudio[hymn.title];
@@ -6592,6 +6595,19 @@ for (const service of seasons.find((s) => s.id === 'annual')?.services ?? []) {
     for (const version of hymn.versions) {
       if (version.language === 'coptic' || version.language === 'englishCoptic') version.audio = 'Conclusion hymn.m4a';
     }
+  }
+}
+
+// ---- Kiahk Midnight Praises: the Commemoration of the Saints has its own Kiahk recording in Coptic;
+// the Annual recording it copied stays as the second choice (this has to come after the Annual hymns are copied into Kiahk)
+const kiahkCommemorationAudio = 'kiahk-midnight-the-commemoration-of-the-saints.mp3';
+const kiahkCommemoration = kiahkMidnight?.hymns.find((h) => h.title === 'The Commemoration of the Saints');
+for (const version of kiahkCommemoration?.versions ?? []) {
+  if (version.language === 'coptic' || version.language === 'englishCoptic') {
+    if (version.audio && version.audio !== kiahkCommemorationAudio) {
+      version.otherAudio = [...(version.otherAudio ?? []), version.audio];
+    }
+    version.audio = kiahkCommemorationAudio;
   }
 }
 
