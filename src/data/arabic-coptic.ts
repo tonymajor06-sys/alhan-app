@@ -193,6 +193,7 @@ export function addArabicCoptic(groups: HymnGroup[]) {
     if (!coptic || isPlaceholder(coptic.text) || !hasCoptic(coptic.text)) return;
     const converted: Hymn['versions'][number] = { language: 'arabicCoptic', text: copticToArabic(coptic.text) };
     if (coptic.audio) converted.audio = coptic.audio;
+    if (coptic.otherAudio) converted.otherAudio = coptic.otherAudio;
     hymn.versions.push(converted);
   };
   groups.forEach((group) => group.services.forEach((service) => service.hymns.forEach(visit)));

@@ -8,6 +8,8 @@ export interface QueueTrack {
   language: LanguageType;
   title: string;
   source: AudioSource;
+  // Which recording, when a hymn has more than one in this language
+  file?: string;
 }
 
 export type RepeatMode = 'none' | 'one' | 'all';

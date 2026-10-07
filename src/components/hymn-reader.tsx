@@ -82,14 +82,18 @@ export function HymnReader({
     ? activeLanguage
     : (availableLanguages[0]?.key ?? activeLanguage);
 
-  const currentAudio = hymn.versions.find((v) => v.language === effectiveLanguage)?.audio ?? null;
+  const currentVersion = hymn.versions.find((v) => v.language === effectiveLanguage);
+  const recordings = [currentVersion?.audio, ...(currentVersion?.otherAudio ?? [])].filter((f): f is string => !!f);
+  const [recordingIndex, setRecordingIndex] = useState(0);
+  const currentAudio = recordings[recordingIndex] ?? recordings[0] ?? null;
   // Audio lives in a shared queue so it keeps playing after leaving the hymn or the app
   const queue = useAudioQueue();
   const nowPlaying = currentTrack(queue);
   const playlist = usePlaylist();
   const downloads = useAudioDownloads();
   const readerItem: PlaylistItem = { hymnId: hymn.id, language: effectiveLanguage };
-  const readerIsCurrent = !!nowPlaying && trackKey(nowPlaying) === trackKey(readerItem);
+  const readerIsCurrent =
+    !!nowPlaying && trackKey(nowPlaying) === trackKey(readerItem) && (!nowPlaying.file || nowPlaying.file === currentAudio);
   const status = readerIsCurrent ? queue.status : { playing: false, currentTime: 0, duration: 0 };
   const title = displayTitle(hymn, lang);
 
@@ -134,7 +138,8 @@ export function HymnReader({
   const toggleReaderAudio = () => {
     if (readerIsCurrent) return togglePlay();
     const source = currentAudio ? audioSourceFor(currentAudio) : null;
-    if (source) playQueue([{ ...readerItem, title, source }, ...(settings.playNext ? followingTracks() : [])]);
+    if (source && currentAudio)
+      playQueue([{ ...readerItem, title, source, file: currentAudio }, ...(settings.playNext ? followingTracks() : [])]);
   };
 
   const togglePlayNext = () => {
@@ -396,6 +401,13 @@ export function HymnReader({
               <SeekBar currentTime={status.currentTime} duration={status.duration} onSeek={seekTo} label={t.position} />
             </View>
           </View>
+          {recordings.length > 1 ? (
+            <View style={[styles.audioControls, rowDirection]}>
+              {recordings.map((file, i) =>
+                actionChip(`${t.recording} ${isRTL ? String(i + 1).replace(/\d/g, (d) => '٠١٢٣٤٥٦٧٨٩'[Number(d)]) : i + 1}`, () => setRecordingIndex(i), file === currentAudio)
+              )}
+            </View>
+          ) : null}
           <View style={[styles.audioControls, rowDirection]}>
             <Pressable
               onPress={() => seekBy(-10)}
