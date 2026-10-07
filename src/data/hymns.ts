@@ -2822,12 +2822,12 @@ const doxologyConclusionHymn = seasons
 
 const doxologyConclusionCoptic = doxologyConclusionHymn?.versions.find((v) => v.language === 'coptic');
 if (doxologyConclusionCoptic) {
-  doxologyConclusionCoptic.audio = 'doxology-conclusion-coptic.m4a';
+  doxologyConclusionCoptic.audio = 'doxology-conclusion.m4a';
 }
 
 const doxologyConclusionEnglishCoptic = doxologyConclusionHymn?.versions.find((v) => v.language === 'englishCoptic');
 if (doxologyConclusionEnglishCoptic) {
-  doxologyConclusionEnglishCoptic.audio = 'doxology-conclusion-coptic.m4a';
+  doxologyConclusionEnglishCoptic.audio = 'doxology-conclusion.m4a';
 }
 const doxologyVirginMary = annualMatins?.hymns.find((h) => h.id === 'annual-matins-doxology-virgin-mary');
 const doxologyVirginMaryCopticVersion = doxologyVirginMary?.versions.find((v) => v.language === 'coptic');
@@ -3192,6 +3192,38 @@ if (deaconAnnualLiturgyFaithful) {
       ],
     },
   ];
+}
+
+// ---- Annual doxologies for St George and Anba Abraam (Vespers, Midnight Praises and Matins) ----
+const doxologyStGeorge = (id: string): Hymn => ({
+  id,
+  title: "Ϣⲁϣϥⲓ ⲛ̀ⲣⲟⲙⲡⲓ (Doxology for St George, Prince of Martyrs)",
+  versions: [
+    { language: 'coptic', text: "Ϣⲁϣϥⲓ ⲛ̀ⲣⲟⲙⲡⲓ ⲁϥϫⲟⲕⲟⲩ ⲉ̀ⲃⲟⲗ: ⲛ̀ϫⲉ ⲫⲏⲉ︦ⲑ︦ⲩ︦ Ⲅⲉⲱ̀ⲣⲅⲓⲟⲥ: ⲉ̀ⲣⲉ ⲡⲓϣ̀ⲃⲉ ⲛ̀ⲟⲩⲣⲟ ⲛ̀ⲁ̀ⲛⲟⲙⲟⲥ: ⲉⲩϯϩⲁⲡ ⲉ̀ⲣⲟϥ ⲙ̀ⲙⲏⲛⲓ.\n\nⲘ̀ⲡⲟⲩϣ̀ⲫⲱⲛϩ ⲙ̀ⲡⲉϥⲗⲟⲅⲓⲥⲙⲟⲥ: ⲟⲩⲇⲉ ⲡⲉϥⲛⲁϩϯ ⲉⲧⲥⲟⲩⲧⲱⲛ: ⲟⲩⲇⲉ ⲧⲉϥⲛⲓϣϯ ⲛ̀ⲁ̀ⲅⲁⲡⲏ: ⲉ̀ϧⲟⲩⲛ ⲉ̀ⲡ̀Ⲟⲩⲣⲟ Ⲡⲭ︦ⲥ︦.\n\nⲚⲁϥⲉ̀ⲣⲯⲗⲓⲛ ⲛⲉⲙ Ⲇⲁⲩⲓⲇ: ϫⲉ ⲁⲩⲕⲱϯ ⲉ̀ⲣⲟⲓ ⲛ̀ϫⲉ ⲛⲓⲉ̀ⲑⲛⲟⲥ ⲧⲏⲣⲟⲩ: ⲁⲗⲗⲁ ϧⲉⲛ ⲫ̀ⲣⲁⲛ ⲛ̀Ⲓⲏ︦ⲥ︦ ⲡⲁⲚⲟⲩϯ: ⲁⲓϭⲓ ⲙ̀ⲡⲁϭⲓ ⲙ̀ⲡ̀ϣⲓϣ ⲛⲉⲙⲱⲟⲩ.\n\nⲞⲩⲛⲓϣϯ ⲅⲁⲣ ⲡⲉ ⲡⲉⲕⲧⲁⲓⲟ: ⲱ̀ ⲡⲁⲟ︦ⲥ︦ ⲡ̀ⲟⲩⲣⲟ Ⲅⲉⲱ̀ⲣⲅⲓⲟⲥ: ⲉ̀ⲣⲉ Ⲡⲭ︦ⲥ︦ ⲣⲁϣⲓ ⲛⲉⲙⲁⲕ: ϧⲉⲛ Ⲓⲉⲣⲟⲩⲥⲁⲗⲏⲙ ⲛ̀ⲧⲉ ⲧ̀ⲫⲉ.\n\nⲬⲉⲣⲉ ⲛⲁⲕ ⲱ̀ ⲡⲓⲙⲁⲣⲧⲩⲣⲟⲥ: ⲭⲉⲣⲉ ⲡⲓϣⲱⲓϫ ⲛ̀ⲅⲉⲛⲛⲉⲟⲥ: ⲭⲉⲣⲉ ⲡⲓⲁ̀ⲑⲗⲟⲫⲟⲣⲟⲥ: ⲡⲁⲟ︦ⲥ︦ ⲡ̀ⲟⲩⲣⲟ Ⲅⲉⲱ̀ⲣⲅⲓⲟⲥ.\n\nⲦⲱⲃϩ ⲙ̀Ⲡⲟ︦ⲥ︦ ⲉ̀ϩ̀ⲣⲏⲓ ⲉ̀ϫⲱⲛ: ⲱ̀ ⲡⲓⲁ̀ⲑⲗⲟⲫⲟⲣⲟⲥ ⲙ̀ⲙⲁⲣⲧⲩⲣⲟⲥ: ⲡⲁⲟ︦ⲥ︦ ⲡ̀ⲟⲩⲣⲟ Ⲅⲉⲱ̀ⲣⲅⲓⲟⲥ: ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉⲃⲟⲗ." },
+    { language: 'englishCoptic', text: "Shashfi enrompi afjokou evol: enje fēethouab Ge-ōrgios: ere pi-eshve enouro enanomos: eutihap erof emmēni.\n\nEmpou-eshfōnh empeflogismos: oude pefnahti etsoutōn: oude tefnishti enagapē: ekhoun ep-Ouro Pikhristos.\n\nNafer-epsalin nem Dauid: je aukōti eroi enje ni-ethnos tērou: alla khen efran en-Iēsous pa-Nouti: aitshi empatshi emep-eshish nemōou.\n\nOunishti gar pe pektaio: ō patshois epouro Ge-ōrgios: ere Pikhristos rashi nemak: khen Ierousalēm ente etfe.\n\nShere nak ō pimarturos: shere pishōij engenneos: shere pi-athloforos: patshois epouro Ge-ōrgios.\n\nTōbh em-Eptshois ehrēi ejōn: ō pi-athloforos emmarturos: patshois epouro Ge-ōrgios: entefkha nennovi nan evol." },
+    { language: 'english', text: "Saint George completed: seven whole years: being judged daily: by seventy lawless kings.\n\nThey could not change his mind: nor his upright faith: nor his great love: for Christ the King.\n\nHe was singing with David saying: \"All the nations encircled me: but in the name of Jesus my Lord: I took revenge upon them.\"\n\nFor great is your honor: O my lord Prince George: for Christ rejoices in you: in the heavenly Jerusalem.\n\nHail to you, O martyr: hail to the courageous hero: hail to the struggle-mantled: my lord Prince George.\n\nPray to the Lord on our behalf: O struggle-bearer and martyr: my lord Prince George: that He may forgive us our sins." },
+    { language: 'englishArabic', text: "Sab' sineen akmalaha, el-qiddees Gi'orgios, es-sab'een malikan el-munafiqeen, yahkumoon 'alayhi kulla yawm.\n\nWa lam yaqdiroo an yumeeloo afkarahu, wala eemanahu el-mustaqeem, wala 'izam mahabbatihi, fil-malik el-Maseeh.\n\nWa kana yurattil ma'a Dawood qa'ilan, ahata bi gamee' el-umam, lakin bi-ism Yasoo' ilahi, intaqamtu minhum.\n\n'Azeema hiya karamatuk, ya sayyidi el-malik Gi'orgios, el-Maseeh yafrah ma'ak, fi Orshaleem es-sama'iyya.\n\nEs-salamu laka ayyuha esh-shaheed, es-salamu lish-shugaa' el-mugahid, es-salamu lil-labis el-gihad, sayyidi el-malik Gi'orgios.\n\nUtlub min er-Rabb 'anna, ayyuha esh-shaheed el-mugahid, sayyidi el-malik Gi'orgios, li-yaghfir lana khatayana." },
+    { language: 'arabic', text: "سبع سنين أكملها، القديس جيؤرجيوس، السبعين ملكاً المنافقين، يحكمون عليه كل يوم.\n\nولم يقدروا أن يميلوا أفكاره، ولا إيمانه المستقيم، ولا عظم محبته، في الملك المسيح.\n\nوكان يرتل مع داود قائلاً، أحاط بي جميع الأمم، لكن بإسم يسوع إلهي، انتقمت منهم.\n\nعظيمة هي كرامتك، يا سيدي الملك جيؤرجيوس، المسيح يفرح معك، في أورشليم السمائية.\n\nالسلام لك أيها الشهيد، السلام للشجاع المجاهد، السلام لللابس الجهاد، سيدي الملك جيؤرجيوس.\n\nأطلب من الرب عنا، أيها الشهيد المجاهد، سيدي الملك جيؤرجيوس، ليغفر لنا خطايانا." },
+  ],
+});
+const doxologyAnbaAbraam = (id: string): Hymn => ({
+  id,
+  title: "Ⲡⲓϧⲏⲃⲥ ⲉⲧⲉⲣⲟⲩⲱⲓⲛⲓ (Doxology for St Abraam, Bishop of Fayoum)",
+  versions: [
+    { language: 'coptic', text: "Ⲡⲓϧⲏⲃⲥ ⲉⲧⲉⲣⲟⲩⲱⲓⲛⲓ: ϧⲉⲛ Ⲫⲓⲟⲙ ⲛⲉⲙ Ⲭⲏⲙⲓ ⲧⲏⲣⲥ: ⲉⲑⲃⲉ ⲛⲉϥϣ̀ⲫⲏⲣⲓ ⲛⲉⲙ ⲛⲉϥⲙⲏⲛⲓ: ⲛⲉⲙ ⲡⲉϥⲙⲉⲓ ⲙ̀Ⲡⲭ︦ⲥ︦.\n\nⲪⲁ ⲡⲓⲭ̀ⲗⲟⲙ ⲙ̀ⲙⲁⲣⲅⲁⲣⲓⲧⲏⲥ: ⲡⲓϣ̀ⲫⲏⲣ ⲛ̀ⲛⲓⲁⲛⲭⲱⲣⲓⲧⲏⲥ: ⲛⲉⲙ ⲛⲓⲑ̀ⲙⲏⲓ ⲛⲉⲙ ⲛⲓⲡ̀ⲣⲟⲫⲏⲧⲏⲥ: ⲫⲏⲉ̀ⲧⲁϥⲙⲟϣⲓ ⲛ̀ⲥⲁ Ⲡⲉⲛⲇⲉⲥⲡⲟⲧⲏⲥ.\n\nⲚⲑⲟϥ ⲡⲉ ⲁⲃⲃⲁ Ⲁⲃⲣⲁⲁⲙ: ⲡⲓⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲥ ⲛ̀ⲧⲉ Ⲫⲓⲟⲙ: ⲡⲓⲙⲁⲛⲉ̀ⲥⲱⲟⲩ ⲛ̀ⲧⲁⲫ̀ⲙⲏⲓ: ⲡⲓⲥⲁϧ ⲛ̀ⲧⲉ ⲛⲓⲁ̀ⲣⲉⲧⲏ.\n\nⲆⲁⲩⲓⲇ ⲁϥⲧⲁⲙⲟⲛ ϧⲉⲛ ⲟⲩⲙⲉⲑⲙⲏ: ϫⲉ ⲱ̀ⲟⲩⲛⲓⲁⲧϥ ⲙ̀ⲫⲏⲉⲑⲛⲁⲕⲁϯ: ⲉ̀ϫⲉⲛ ⲟⲩϫⲱⲃ ⲛⲉⲙ ⲟⲩϩⲏⲕⲓ: ⲟⲩⲟϩ ⲉϥⲉ̀ⲛⲁϩⲙⲉϥ ⲛ̀ϫⲉ Ⲫϯ.\n\nⲘⲫ̀ⲣⲏϯ ⲙ̀ⲡⲉⲛⲓⲱⲧ Ⲁⲃⲣⲁⲁⲙ: ⲫ̀ⲓⲱⲧ ⲛ̀Ⲓⲥⲁⲁⲕ ⲛⲉⲙ Ⲓⲁⲕⲱⲃ: ⲁⲕⲙⲉⲛⲣⲉ ϯⲙⲉⲑⲛⲁⲏⲧ: ⲟⲩⲟϩ ⲁⲕϫⲱⲕ ⲉ̀ⲃⲟⲗ ⲛ̀ⲛⲓⲉⲛⲧⲟⲗⲏ.\n\nϢⲁⲕⲉⲣⲙⲉⲑⲣⲉ ⲛ̀ϯⲙⲉⲑⲙⲏⲓ: ϣⲁⲕⲟⲩⲱⲙ ⲛⲉⲙ ⲛⲓϩⲏⲕⲓ: ϧⲉⲛ ⲟⲩⲛⲓϣϯ ⲛ̀ⲑⲉⲃⲓⲟ: ⲁⲕⲙⲉⲛⲣⲉ ⲛⲉⲕⲉ̀ⲥⲱⲟⲩ.\n\nⲚⲏⲉⲑⲙⲉⲓ ⲛ̀ⲛⲁ ⲡ̀ⲕⲁϩⲓ: ⲁⲩⲕⲱϯ ⲛ̀ⲥⲁ ϩⲁⲛϫⲓⲛⲕⲱⲧ ⲙ̀ⲃⲉⲣⲓ: ⲁⲗⲗⲁ ⲁⲕⲕⲱⲧ ϧⲉⲛ ⲛⲓⲫⲏⲟⲩⲓ: ⲛ̀ⲛⲓϫⲓⲛⲕⲟⲧ ⲛ̀ⲛⲁ ⲛⲓⲫⲏⲟⲩⲓ.\n\nⲞⲩⲏⲣ ⲛⲉ ⲛⲉⲕϣ̀ⲫⲏⲣⲓ: ⲁⲕⲧⲁⲗϭⲟ ⲛ̀ⲛⲏⲉⲧϣⲱⲛⲓ: ⲁⲕⲉⲣⲡ̀ⲣⲟⲥⲫⲏⲧⲉⲩⲓⲛ ⲛ̀ⲛⲓϣ̀ⲫⲏⲣⲓ: ⲛⲓⲇⲉⲙⲱⲛ ⲁⲕϩⲓⲧⲟⲩ ⲉ̀ⲃⲟⲗ.\n\nⲀⲕϣⲱⲡⲓ ⲛⲁⲛ ⲛ̀ⲟⲩⲧⲩⲡⲟⲥ: ϧⲉⲛ ⲡⲉⲕϫⲓⲛⲙⲟϣⲓ ⲉⲧⲧⲟⲩⲃⲏⲟⲩⲧ: ϧⲉⲛ ϯⲁ̀ⲅⲁⲡⲏ ⲛⲉⲙ ϯⲙⲉⲑⲛⲁⲏⲧ: ⲛⲉⲙ ϯⲙⲉⲧⲙⲉⲑⲣⲉ ⲛ̀ϯⲙⲉⲑⲙⲏⲓ.\n\nⲦⲱⲃϩ ⲙ̀Ⲡϭⲟⲓⲥ ⲉ̀ϩ̀ⲣⲏⲓ ⲉ̀ϫⲱⲛ: ⲡⲉⲛⲓⲱⲧ ⲉⲑⲟⲩⲁⲃ ⲁⲃⲃⲁ Ⲁⲃⲣⲁⲁⲙ: ⲡⲓⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲥ ⲛ̀ⲧⲉ Ⲫⲓⲟⲙ: ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉⲃⲟⲗ." },
+    { language: 'englishCoptic', text: "Pikhēbs eterouōini: khen Fiom nem Khēmi tērs: ethve nefeshfēri nem nefmēni: nem pefmei em-Pikhristos.\n\nFa pi-ekhlom emmargaritēs: pi-eshfēr enni-ankhōritēs: nem ni-ethmēi nem ni-eprofētēs: fē-etafmoshi ensa Pendespotēs.\n\nEnthof pe abba Abraam: pi-episkopos ente Fiom: pimanesōou enta-efmēi: pisakh ente ni-aretē.\n\nDauid aftamon khen oumethmē: je ō-ouniatf emfē-ethnakati: ejen oujōb nem ouhēki: ouoh ef-enahmef enje Efnouti.\n\nEmefrēti empeniōt Abraam: ef-iōt en-Isaak nem Iakōb: akmenre timethnaēt: ouoh akjōk evol enni-entolē.\n\nShakermethre entimethmēi: shakouōm nem nihēki: khen ounishti enthevio: akmenre nekesōou.\n\nNēethmei enna epkahi: aukōti ensa hanjinkōt emveri: alla akkōt khen nifēoui: ennijinkot enna nifēoui.\n\nOuēr ne nekeshfēri: aktaltsho ennēetshōni: akerep-rosfēteuin enni-eshfēri: nidemōn akhitou evol.\n\nAkshōpi nan enoutupos: khen pekjinmoshi ettouvēout: khen ti-agapē nem timethnaēt: nem timetmethre entimethmēi.\n\nTōbh em-Eptshois ehrēi ejōn: peniōt ethouab abba Abraam: pi-episkopos ente Fiom: entefkha nennovi nan evol." },
+    { language: 'english', text: "The shining lamp: in Fayoum and all Egypt: because of his signs and miracles: and his love for Christ.\n\nHe who has the expensive crown: the friend of the hermits: the righteous and the prophets: who follow our Master.\n\nHe is Abba Abraam: bishop of Fayoum: the true shepherd: the teacher of virtues.\n\nDavid taught with truth, saying: \"Blessed are those: who care for the weak and the poor: the Lord God saves them.\"\n\nLike our father Abraham: the father of Isaac and Jacob: you loved mercy: and completed the commandments.\n\nYou witnessed the truth: and you ate with the poor: with great humility: you loved your sheep.\n\nThe lovers of the worldly things: sought for new buildings: but you built in heaven: many heavenly buildings.\n\nHow many are your miracles: you healed the sick: you prophesied great things: and you cast out demons.\n\nYou became a type for us: by your pure ways: by love and mercy: and testimony of the truth.\n\nPray to the Lord on our behalf: our holy father Abba Abraam: the Bishop of Fayoum: that He may forgive us our sins." },
+    { language: 'englishArabic', text: "El-misbah el-muneer, fil-Fayyoum wa kull Misr, min agl 'aga'ibihi wa ayatihi, wa mahabbatihi lil-Maseeh.\n\nZul-ikleel el-gawhar, sadeeq es-suwwah, wal-abrar wal-anbiya', ellazi tabi'a sayyidana.\n\nHuwa el-Anba Abraam, usquf el-Fayyoum, er-ra'i el-haqeeqi, mu'allim el-fada'il.\n\nDawood a'lamana bil-haqeeqa, annahu toobah lillazi yatafahham, fi amr el-miskeen wal-faqeer, wallahu yukhallisuhu.\n\nMithl abuna Abraam, abu Ishaq wa Ya'qoub, anta ahbabta er-rahma, wa akmalta el-wasaya.\n\nTa'awwadta esh-shahada lil-haqq, wa ta'awwadta el-akl ma'a el-fuqara', bi-ittida' 'azeem, ahbabta ra'iyyatak.\n\nMuhibboo el-ardiyyat, bahathoo 'an abniya gadeeda, lakinnaka banayta fis-sama', abniya sama'iyya.\n\nKam hiya 'aga'ibak, shafayta el-marda, tanabba'ta bil-'aza'im, wa akhragta esh-shayateen.\n\nSirta lana qudwa, bi-seeratika et-tahira, bil-mahabba war-rahma, wash-shahada lil-haqq.\n\nUtlub min er-Rabb 'anna, ya abana el-qiddees el-Anba Abraam, usquf el-Fayyoum, li-yaghfir lana khatayana." },
+    { language: 'arabic', text: "المصباح المنير، في الفيوم وكل مصر، من أجل عجائبه وآياته، ومحبته للمسيح.\n\nذو الإكليل الجوهر، صديق السواح، والأبرار والأنبياء، الذي تبع سيدنا.\n\nهو الأنبا أبرآم، أسقف الفيوم، الراعي الحقيقي، معلم الفضائل.\n\nداود أعلمنا بالحقيقة، أنه طوبى للذي يتفهَّم، في أمر المسكين والفقير، والله يخلصه.\n\nمثل أبونا أبرآم، أبو إسحق ويعقوب، أنت أحببت الرحمة، وأكملت الوصايا.\n\nتعودت الشهادة للحق، وتعودت الأكل مع الفقراء، بإتضاع عظيم، أحببت رعيتك.\n\nمحبو الأرضيات، بحثوا عن أبنية جديدة، لكنك بنيت في السماء، أبنية سمائية.\n\nكم هي عجائبك، شفيت المرضى، تنبأت بالعظائم، وأخرجت الشياطين.\n\nصرت لنا قدوة، بسيرتك الطاهرة، بالمحبة والرحمة، والشهادة للحق.\n\nأطلب من الرب عنا، يا أبانا القديس الأنبا أبرآم، أسقف الفيوم، ليغفر لنا خطايانا." },
+  ],
+});
+if (annualMatins) {
+  const insertAfter = (afterId: string, hymn: Hymn) => {
+    const i = annualMatins.hymns.findIndex((h) => h.id === afterId);
+    if (i >= 0) annualMatins.hymns.splice(i + 1, 0, hymn);
+  };
+  insertAfter('annual-matins-doxology-st-mark-2', doxologyStGeorge('annual-matins-doxology-st-george'));
+  insertAfter('annual-matins-doxology-st-mena', doxologyAnbaAbraam('annual-matins-doxology-anba-abraam'));
 }
 
 // ---- Annual > Matins (and Vespers): everything else comes before the Doxologies ----
@@ -4277,7 +4309,7 @@ if (annualMidnight) {
                 { language: 'arabic', text: 'ثلاثة أسماء فى السموات، أنت توشحت بها، يا ناظر الإله الإنجيلي، مرقس الرسول.\n\n+ توشحت بثلاثة أكاليل، هي الثلاثه أسماء الكاملة، أي الآب والإبن، والروح القدس.\n\nأنت رسول، أنت شهيد، وأنت المختار الثاني، في الإنجليين.\n\n+ وأصدقاؤك الرسل، الأخرون يفخرون بك، وأقوالك بلغت، إلى أقطار المسكونة.\n\nويفخرون بك، الذين غرستهم على الأرض، في كل إقليم مصر، مُثمرين.\n\n+ أُطلب من الرب عنا، يا ناظر الإله الإنجيلي، مرقس الرسول، ليغفر لنا خطايانا.' },
               ],
             },
-            { id: 'annual-midnight-doxology-st-george', title: 'Doxology for St George', versions: [] },
+            doxologyStGeorge('annual-midnight-doxology-st-george'),
             { id: 'annual-midnight-doxology-st-george-2', title: 'Another Doxology for St George', versions: [] },
             {
               id: 'annual-midnight-doxology-philopater-mercurius',
@@ -4301,7 +4333,7 @@ if (annualMidnight) {
                 { language: 'arabic', text: 'اذا ربح الإنسان العالم كله: وخسر نفسه: فما هي الحياة الباطلة\n\n+ القديس أبا مينا: سمع الصوت الالهي: وترك عنه العالم كله: ومجده الفاسد\n\nوبذل نفسه للموت، وجسده للنار: وقبل عذابات عظيمة: لأجل ابن الله الحي\n\n+ فلهذا رفعه مخلصنا: إلي ملكوته: وأعطاه الخيرات: التي لم ترها عين\n\nالسلام لك أيها الشهيد: السلام للشجاع البطل: السلام للمجاهد: القديس أبا مينا\n\n+ أطلب من الرب عنا: أيها الشهيد المجاهد: القديس أبا مينا: ليغفر لنا خطايانا' },
               ],
             },
-            { id: 'annual-midnight-doxology-anba-abraam', title: 'Doxology for Anba Abraam', versions: [] },
+            doxologyAnbaAbraam('annual-midnight-doxology-anba-abraam'),
             {
               id: 'annual-midnight-doxology-pope-kyrillos',
               title: 'Ⲡⲁⲡⲁ Ⲁⲃⲃⲁ Ⲕⲩⲣⲓⲗⲗⲟⲥ (Doxology for St Pope Kyrillos VI)',
@@ -4747,11 +4779,6 @@ const midnightAudio: Record<string, string> = {
   'annual-midnight-tuesday-adam-theotokias-conclusion': 'midnight-adam-theotokias-conclusion.m4a',
   'annual-midnight-three-holy-children': 'midnight-tenen.m4a',
   'annual-midnight-doxology-virgin-mary': 'midnight-doxology-virgin-mary.m4a',
-  'annual-midnight-doxology-heavenly-beings': 'midnight-doxology-heavenly-beings.m4a',
-  'annual-midnight-doxology-st-mark': 'midnight-doxology-st-mark.m4a',
-  'annual-midnight-doxology-philopater-mercurius': 'midnight-doxology-philopater-mercurius.m4a',
-  'annual-midnight-doxology-st-mena': 'midnight-doxology-st-mena.m4a',
-  'annual-midnight-doxology-conclusion': 'midnight-doxology-conclusion.m4a',
   'annual-midnight-saturday-watos-lobsh-1': 'midnight-saturday-watos-lobsh-1.m4a',
   'annual-midnight-saturday-watos-lobsh-2': 'midnight-saturday-watos-lobsh-2.m4a',
 };
@@ -4779,17 +4806,22 @@ for (const hymn of annualMidnight ? flattenHymns(annualMidnight.hymns) : []) {
   }
 }
 
-// ---- Audio: Annual > Matins and Vespers doxologies with the same words as a Midnight Praises recording ----
+// ---- Audio: Annual doxologies shared by Vespers, Midnight Praises and Matins (one recording, cut per doxology) ----
+// The Virgin Mary has its own doxology in each service, so it isn't shared
 const sharedDoxologyAudio: Record<string, string> = {
-  'heavenly-beings': 'midnight-doxology-heavenly-beings.m4a',
-  'st-mark': 'midnight-doxology-st-mark.m4a',
-  'philopater-mercurius': 'midnight-doxology-philopater-mercurius.m4a',
-  'st-mena': 'midnight-doxology-st-mena.m4a',
+  'heavenly-beings': 'doxology-heavenly-beings.m4a',
+  apostles: 'doxology-apostles.m4a',
+  'st-mark': 'doxology-st-mark.m4a',
+  'st-george': 'doxology-st-george.m4a',
+  'philopater-mercurius': 'doxology-philopater-mercurius.m4a',
+  'st-mena': 'doxology-st-mena.m4a',
+  'anba-abraam': 'doxology-anba-abraam.m4a',
+  conclusion: 'doxology-conclusion.m4a',
 };
 
-for (const service of [annualMatins, annualVespers]) {
-  for (const hymn of service?.hymns ?? []) {
-    const audio = sharedDoxologyAudio[hymn.id.replace(/^annual-(matins|vespers)-doxology-/, '')];
+for (const service of [annualMatins, annualVespers, annualMidnight]) {
+  for (const hymn of service ? flattenHymns(service.hymns) : []) {
+    const audio = sharedDoxologyAudio[hymn.id.replace(/^annual-(matins|vespers|midnight)-doxology-/, '')];
     if (!audio) continue;
     for (const version of hymn.versions) {
       if (version.language === 'coptic' || version.language === 'englishCoptic') {

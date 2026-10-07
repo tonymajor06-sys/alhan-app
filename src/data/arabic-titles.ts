@@ -131,6 +131,8 @@ const arabicTitles: Record<string, string> = {
   'annual-matins-doxology-st-mark-2': 'ذكصولوجية أخرى لمار مرقس الرسول',
   'annual-matins-doxology-philopater-mercurius': 'ذكصولوجية أبي سيفين',
   'annual-matins-doxology-st-mena': 'ذكصولوجية مار مينا العجايبي',
+  'annual-matins-doxology-st-george': 'ذكصولوجية مار جرجس',
+  'annual-matins-doxology-anba-abraam': 'ذكصولوجية الأنبا أبرآم',
   'annual-matins-doxology-pope-kyrillos-vi': 'ذكصولوجية البابا كيرلس السادس',
   'annual-matins-doxology-patriarch-bishop': 'ذكصولوجية البطريرك أو الأسقف',
   'annual-matins-doxology-conclusion': 'ختام الذكصولوجيات',
