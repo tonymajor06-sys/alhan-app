@@ -1,5 +1,8 @@
-import { arabicAlphabet, arabicForms, arabicWords, buildArabicQuiz, getArabicPracticeVerses } from '../arabic-lessons';
-import { buildQuiz, copticAlphabet, copticWords, getPracticeVerses } from '../coptic-lessons';
+import { learnStrings } from '../../components/learn-strings';
+import { arabicAlphabet, arabicForms, arabicQuizLevels, getArabicPracticeVerses } from '../arabic-lessons';
+import { copticAlphabet, copticQuizLevels, getPracticeVerses } from '../coptic-lessons';
+import { englishQuizLevels } from '../english-lessons';
+import { QuizLevel } from '../quiz';
 
 describe('copticAlphabet', () => {
   it('has each letter once', () => {
@@ -7,22 +10,41 @@ describe('copticAlphabet', () => {
   });
 });
 
-describe('buildQuiz', () => {
-  it('gives four different options with the right answer among them', () => {
-    for (const lang of ['en', 'ar'] as const) {
-      const quiz = buildQuiz(lang);
+// Every level of a course gives ten questions: four different options with the right one among them,
+// or a sentence whose tiles are its own words, mixed up
+const checkLevels = (levels: QuizLevel[]) => {
+  expect(levels).toHaveLength(6);
+  for (const level of levels) {
+    for (let round = 0; round < 5; round++) {
+      const quiz = level.build();
       expect(quiz).toHaveLength(10);
       for (const q of quiz) {
-        expect(new Set(q.options).size).toBe(4);
-        expect(q.answer).toBeGreaterThanOrEqual(0);
-        const right = q.options[q.answer];
-        if (q.kind === 'letter') {
-          expect(copticAlphabet.find((l) => `${l.upper} ${l.lower}` === q.prompt)?.name).toBe(right);
+        if (q.kind === 'order') {
+          expect([...q.tiles!].sort()).toEqual([...q.solution!].sort());
+          if (q.solution!.length > 1) expect(q.tiles!.join(' ')).not.toBe(q.solution!.join(' '));
+          expect(q.prompt).toBeTruthy();
         } else {
-          expect(copticWords.find((w) => w.coptic === q.prompt)?.meaning[lang]).toBe(right);
+          expect(new Set(q.options).size).toBe(4);
+          expect(q.answer).toBeGreaterThanOrEqual(0);
         }
       }
     }
+  }
+};
+
+describe('quiz levels', () => {
+  it('builds every Learn Coptic level in both languages', () => {
+    checkLevels(copticQuizLevels('en', learnStrings.en.levelText));
+    checkLevels(copticQuizLevels('ar', learnStrings.ar.levelText));
+  });
+  it('builds every Learn Arabic and Learn English level', () => {
+    checkLevels(arabicQuizLevels(learnStrings.en.levelText));
+    checkLevels(englishQuizLevels(learnStrings.ar.levelText));
+  });
+  it('ends with sentence building and a mix of everything', () => {
+    const levels = copticQuizLevels('en', learnStrings.en.levelText);
+    expect(levels[4].build().every((q) => q.kind === 'order')).toBe(true);
+    expect(new Set(levels[5].build().map((q) => q.kind)).size).toBeGreaterThan(2);
   });
 });
 
@@ -56,17 +78,6 @@ describe('arabicAlphabet', () => {
 });
 
 describe('Learn Arabic', () => {
-  it('builds a quiz of letter names and word meanings with the right answer among four options', () => {
-    const quiz = buildArabicQuiz();
-    expect(quiz).toHaveLength(10);
-    for (const q of quiz) {
-      expect(new Set(q.options).size).toBe(4);
-      const right = q.options[q.answer];
-      if (q.kind === 'letter') expect(arabicAlphabet.find((l) => l.letter === q.prompt)?.name.en).toBe(right);
-      else expect(arabicWords.find((w) => w.arabic === q.prompt)?.meaning).toBe(right);
-    }
-  });
-
   it('pairs Arabic verses from the hymns with their pronunciation', () => {
     const verses = getArabicPracticeVerses();
     expect(verses.length).toBeGreaterThan(50);

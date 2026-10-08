@@ -5,15 +5,18 @@ import { Pressable, Text, View } from 'react-native';
 import { goBackOrHome, openHymnPage, ScreenShell, withCopticFont } from '@/components/alhan-ui';
 import { ArabicLessonId, arabicLessonIds, learnArabicStrings as t } from '@/components/learn-strings';
 import { useLessonStyles } from '@/components/lesson-styles';
-import { QuizRound } from '@/components/quiz-round';
+import { QuizLevels } from '@/components/quiz-levels';
 import {
   arabicAlphabet,
   arabicForms,
   arabicMarks,
   arabicWords,
-  buildArabicQuiz,
+  arabicQuizLevels,
+  arabicMoreWords,
   getArabicPracticeVerses,
 } from '@/data/arabic-lessons';
+
+const quizLevels = arabicQuizLevels(t.levelText);
 
 // Build every page ahead of time, so a shared link or a refresh on the website works
 export async function generateStaticParams(): Promise<Record<string, string>[]> {
@@ -31,7 +34,7 @@ export default function ArabicLessonScreen() {
       {id === 'alphabet' ? <Alphabet /> : null}
       {id === 'marks' ? <Marks /> : null}
       {id === 'words' ? <Words /> : null}
-      {id === 'quiz' ? <QuizRound lang="en" build={() => buildArabicQuiz()} strings={t} questionText={(q) => (q.kind === 'letter' ? t.whatLetter : t.whatWord)} /> : null}
+      {id === 'quiz' ? <QuizLevels lang="en" levels={quizLevels} strings={t} questionText={(q) => (q.kind === 'letter' ? t.whatLetter : undefined)} tilesRTL /> : null}
       {id === 'practice' ? <Practice /> : null}
     </ScreenShell>
   );
@@ -145,7 +148,7 @@ function Words() {
           {hideMeanings ? t.showMeanings : t.hideMeanings}
         </Text>
       </Pressable>
-      {arabicWords.map((word) => {
+      {[...arabicWords, ...arabicMoreWords].map((word) => {
         const shown = !hideMeanings || revealed.has(word.arabic);
         return (
           <Pressable

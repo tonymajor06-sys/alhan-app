@@ -5,15 +5,18 @@ import { Pressable, Text, View } from 'react-native';
 import { goBackOrHome, openHymnPage, ScreenShell, withCopticFont } from '@/components/alhan-ui';
 import { EnglishLessonId, englishLessonIds, learnEnglishStrings as t } from '@/components/learn-strings';
 import { useLessonStyles } from '@/components/lesson-styles';
-import { QuizRound } from '@/components/quiz-round';
+import { QuizLevels } from '@/components/quiz-levels';
 import {
-  buildEnglishQuiz,
+  englishQuizLevels,
+  englishMoreWords,
   englishAlphabet,
   englishSound,
   englishSounds,
   englishWords,
   getEnglishPracticeVerses,
 } from '@/data/english-lessons';
+
+const quizLevels = englishQuizLevels(t.levelText);
 
 // Build every page ahead of time, so a shared link or a refresh on the website works
 export async function generateStaticParams(): Promise<Record<string, string>[]> {
@@ -31,7 +34,7 @@ export default function EnglishLessonScreen() {
       {id === 'alphabet' ? <Alphabet /> : null}
       {id === 'sounds' ? <Sounds /> : null}
       {id === 'words' ? <Words /> : null}
-      {id === 'quiz' ? <QuizRound lang="ar" build={() => buildEnglishQuiz()} strings={t} questionText={(q) => (q.kind === 'letter' ? t.whatLetter : t.whatWord)} /> : null}
+      {id === 'quiz' ? <QuizLevels lang="ar" levels={quizLevels} strings={t} questionText={(q) => (q.kind === 'letter' ? t.whatLetter : undefined)} /> : null}
       {id === 'practice' ? <Practice /> : null}
     </ScreenShell>
   );
@@ -124,7 +127,7 @@ function Words() {
           {hideMeanings ? t.showMeanings : t.hideMeanings}
         </Text>
       </Pressable>
-      {englishWords.map((word) => {
+      {[...englishWords, ...englishMoreWords].map((word) => {
         const shown = !hideMeanings || revealed.has(word.english);
         return (
           <Pressable

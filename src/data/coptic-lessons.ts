@@ -1,5 +1,5 @@
 import { deaconCategories, flattenHymns, Hymn, seasons } from './hymns';
-import { makeQuestion, QuizQuestion, shuffle } from './quiz';
+import { buildLevels, LevelText, makeQuestion, QuizEntry, QuizLevel, shuffle } from './quiz';
 
 // Lessons for reading Coptic as it is sung in church (the same pronunciation as the app's transliterations)
 
@@ -186,7 +186,7 @@ export const copticWords: CopticWord[] = [
   { coptic: 'Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ', sound: 'Pi-ekhristos', meaning: { en: 'Christ', ar: 'المسيح' } },
   { coptic: 'Ⲙⲁⲣⲓⲁ', sound: 'Maria', meaning: { en: 'Mary', ar: 'مريم' } },
   { coptic: 'Ϯⲡⲁⲣⲑⲉⲛⲟⲥ', sound: 'Tiparthenos', meaning: { en: 'the Virgin', ar: 'العذراء' } },
-  { coptic: 'Ⲭⲉⲣⲉ', sound: 'Khere', meaning: { en: 'hail', ar: 'السلام' } },
+  { coptic: 'Ⲭⲉⲣⲉ', sound: 'Shere', meaning: { en: 'hail', ar: 'السلام' } },
   { coptic: 'ⲱ̀ⲟⲩ', sound: 'ōou', meaning: { en: 'glory', ar: 'مجد' } },
   { coptic: 'ⲛⲁⲓ', sound: 'nai', meaning: { en: 'mercy', ar: 'رحمة' } },
   { coptic: 'ⲉⲑⲟⲩⲁⲃ', sound: 'ethouab', meaning: { en: 'holy', ar: 'قدوس' } },
@@ -216,20 +216,105 @@ export const copticWords: CopticWord[] = [
   { coptic: 'Ⲕⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ', sound: 'Kurie ele-ēson', meaning: { en: 'Lord have mercy', ar: 'يا رب ارحم' } },
 ];
 
+// More words from the hymns, shown after the first list and used from Quiz level 3
+export const copticMoreWords: CopticWord[] = [
+  { coptic: "ⲁ̀ⲅⲁⲑⲟⲥ", sound: "agathos", meaning: { en: "good", ar: "صالح" } },
+  { coptic: "ⲙⲉⲛⲣⲓⲧ", sound: "menrit", meaning: { en: "beloved", ar: "حبيب" } },
+  { coptic: "ⲥⲱⲧⲏⲣ", sound: "sōtēr", meaning: { en: "Savior", ar: "مخلص" } },
+  { coptic: "ⲥ̀ⲧⲁⲩⲣⲟⲥ", sound: "estauros", meaning: { en: "cross", ar: "صليب" } },
+  { coptic: "ⲉⲕⲕⲗⲏⲥⲓⲁ", sound: "ekklēsia", meaning: { en: "church", ar: "كنيسة" } },
+  { coptic: "ⲙⲁⲩ", sound: "mau", meaning: { en: "mother", ar: "أم" } },
+  { coptic: "ⲙⲉⲑⲙⲏⲓ", sound: "methmēi", meaning: { en: "truth", ar: "حق" } },
+  { coptic: "ⲣⲱⲙⲓ", sound: "rōmi", meaning: { en: "man, person", ar: "إنسان" } },
+  { coptic: "ⲣⲁⲛ", sound: "ran", meaning: { en: "name", ar: "اسم" } },
+  { coptic: "ⲣⲁϣⲓ", sound: "rashi", meaning: { en: "joy", ar: "فرح" } },
+  { coptic: "ⲑⲉⲗⲏⲗ", sound: "thelēl", meaning: { en: "rejoice", ar: "تهلل" } },
+  { coptic: "ⲟⲩⲱϣⲧ", sound: "ouōsht", meaning: { en: "worship", ar: "سجود" } },
+  { coptic: "ⲥⲱϯ", sound: "sōti", meaning: { en: "save", ar: "خلّص" } },
+  { coptic: "ⲙⲟⲩ", sound: "mou", meaning: { en: "death", ar: "موت" } },
+  { coptic: "ⲁ̀ⲛⲁⲥⲧⲁⲥⲓⲥ", sound: "anastasis", meaning: { en: "resurrection", ar: "قيامة" } },
+  { coptic: "ⲛⲁϩϯ", sound: "nahti", meaning: { en: "faith", ar: "إيمان" } },
+  { coptic: "ⲁ̀ⲅⲁⲡⲏ", sound: "agapē", meaning: { en: "love", ar: "محبة" } },
+  { coptic: "ϩⲏⲧ", sound: "hēt", meaning: { en: "heart", ar: "قلب" } },
+  { coptic: "ⲯⲩⲭⲏ", sound: "psukhē", meaning: { en: "soul", ar: "نفس" } },
+  { coptic: "ⲥⲱⲙⲁ", sound: "sōma", meaning: { en: "body", ar: "جسد" } },
+  { coptic: "ⲱⲓⲕ", sound: "ōik", meaning: { en: "bread", ar: "خبز" } },
+  { coptic: "ⲟⲩⲱⲓⲛⲓ", sound: "ouōini", meaning: { en: "light", ar: "نور" } },
+  { coptic: "ⲭⲁⲕⲓ", sound: "khaki", meaning: { en: "darkness", ar: "ظلمة" } },
+  { coptic: "ⲉ̀ϩⲟⲟⲩ", sound: "ehoou", meaning: { en: "day", ar: "يوم" } },
+  { coptic: "ⲉ̀ϫⲱⲣϩ", sound: "ejōrh", meaning: { en: "night", ar: "ليل" } },
+  { coptic: "ⲛⲓⲃⲉⲛ", sound: "niven", meaning: { en: "every, all", ar: "كل" } },
+  { coptic: "ⲛⲁⲛ", sound: "nan", meaning: { en: "to us", ar: "لنا" } },
+  { coptic: "ⲉ̀ϫⲱⲛ", sound: "ejōn", meaning: { en: "for us, on our behalf", ar: "عنا" } },
+  { coptic: "ⲛ̀ⲥⲏⲟⲩ ⲛⲓⲃⲉⲛ", sound: "ensēou niven", meaning: { en: "always", ar: "كل حين" } },
+  { coptic: "ⲁ̀ⲗⲏⲑⲱⲥ", sound: "alēthōs", meaning: { en: "truly", ar: "بالحقيقة" } },
+  { coptic: "ⲡ̀ⲣⲟⲫⲏⲧⲏⲥ", sound: "eprofētēs", meaning: { en: "prophet", ar: "نبي" } },
+  { coptic: "ⲁ̀ⲡⲟⲥⲧⲟⲗⲟⲥ", sound: "apostolos", meaning: { en: "apostle", ar: "رسول" } },
+  { coptic: "ⲙⲁⲣⲧⲩⲣⲟⲥ", sound: "marturos", meaning: { en: "martyr", ar: "شهيد" } },
+  { coptic: "ⲑ̀ⲣⲟⲛⲟⲥ", sound: "ethronos", meaning: { en: "throne", ar: "عرش" } },
+  { coptic: "ⲭ̀ⲗⲟⲙ", sound: "ekhlom", meaning: { en: "crown", ar: "إكليل" } },
+  { coptic: "ⲥ̀ⲑⲟⲓⲛⲟⲩϥⲓ", sound: "esthoinoufi", meaning: { en: "incense, sweet smell", ar: "بخور" } },
+  { coptic: "ϣⲉⲗⲉⲧ", sound: "shelet", meaning: { en: "bride", ar: "عروس" } },
+  { coptic: "ⲉⲑⲛⲉⲥⲱⲥ", sound: "ethnesōs", meaning: { en: "beautiful", ar: "حسنة" } },
+  { coptic: "ϭ̀ⲣⲟⲙⲡⲓ", sound: "etshrompi", meaning: { en: "dove", ar: "حمامة" } },
+  { coptic: "ϩ̀ⲙⲟⲧ", sound: "ehmot", meaning: { en: "grace", ar: "نعمة" } },
+  { coptic: "ⲧⲱⲃϩ", sound: "tōbh", meaning: { en: "pray, entreat", ar: "اطلب" } },
+  { coptic: "ⲛⲏⲉⲑⲟⲩⲁⲃ", sound: "nēethouab", meaning: { en: "the saints", ar: "القديسون" } },
+  { coptic: "ⲑ̀ⲙⲁⲩ", sound: "ethmau", meaning: { en: "the mother", ar: "الأم" } },
+  { coptic: "Ϯⲧ̀ⲣⲓⲁⲥ", sound: "Ti-etrias", meaning: { en: "the Trinity", ar: "الثالوث" } },
+  { coptic: "ⲙ̀ⲙⲟⲛ", sound: "emmon", meaning: { en: "us", ar: "نحن / إيانا" } },
+];
+
+// Short phrases from the hymns (Quiz level 4)
+export const copticPhrases: CopticWord[] = [
+  { coptic: "Ⲫ̀ⲛⲟⲩϯ ⲛⲁⲓ ⲛⲁⲛ", sound: "Efnouti nai nan", meaning: { en: "God have mercy on us", ar: "يا الله ارحمنا" } },
+  { coptic: "Ⲡ̀ϭⲟⲓⲥ ⲥ̀ⲙⲟⲩ ⲉ̀ⲣⲟⲛ", sound: "Eptshois esmou eron", meaning: { en: "Lord bless us", ar: "يا رب باركنا" } },
+  { coptic: "Ⲡ̀ϭⲟⲓⲥ ⲥⲱⲧⲉⲙ ⲉ̀ⲣⲟⲛ", sound: "Eptshois sōtem eron", meaning: { en: "Lord hear us", ar: "يا رب اسمعنا" } },
+  { coptic: "Ⲭⲉⲣⲉ ⲛⲉ Ⲙⲁⲣⲓⲁ", sound: "Shere ne Maria", meaning: { en: "Hail to you, Mary", ar: "السلام لكِ يا مريم" } },
+  { coptic: "Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ ⲁϥⲧⲱⲛϥ", sound: "Pi-ekhristos aftōnf", meaning: { en: "Christ is risen", ar: "المسيح قام" } },
+  { coptic: "Ⲁ̀ⲗⲏⲑⲱⲥ ⲁϥⲧⲱⲛϥ", sound: "Alēthōs aftōnf", meaning: { en: "Truly He is risen", ar: "بالحقيقة قام" } },
+  { coptic: "ⲛⲉⲙ Ⲡⲉⲕⲓⲱⲧ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ", sound: "nem Pekiōt enagathos", meaning: { en: "with Your good Father", ar: "مع أبيك الصالح" } },
+  { coptic: "Ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ ⲉⲑⲟⲩⲁⲃ", sound: "Pi-epneuma ethouab", meaning: { en: "the Holy Spirit", ar: "الروح القدس" } },
+  { coptic: "ϣⲁ ⲉ̀ⲛⲉϩ ⲛ̀ⲧⲉ ⲡⲓⲉ̀ⲛⲉϩ", sound: "sha eneh ente pi-eneh", meaning: { en: "forever and ever", ar: "إلى أبد الآبدين" } },
+  { coptic: "Ⲁ̀ⲣⲓⲡ̀ⲣⲉⲥⲃⲉⲩⲓⲛ ⲉ̀ϩ̀ⲣⲏⲓ ⲉ̀ϫⲱⲛ", sound: "Ari-epresveuin e-ehrēi ejōn", meaning: { en: "intercede on our behalf", ar: "اشفعي فينا" } },
+  { coptic: "Ⲧⲱⲃϩ ⲙ̀Ⲡ̀ϭⲟⲓⲥ ⲉ̀ϩ̀ⲣⲏⲓ ⲉ̀ϫⲱⲛ", sound: "Tōbh em-Eptshois e-ehrēi ejōn", meaning: { en: "pray to the Lord on our behalf", ar: "اطلب من الرب عنا" } },
+  { coptic: "Ⲁ̀ⲅⲓⲟⲥ ⲟ̀ Ⲑⲉⲟⲥ", sound: "Agios o Theos", meaning: { en: "Holy God", ar: "قدوس الله" } },
+  { coptic: "Ϯⲧ̀ⲣⲓⲁⲥ ⲉⲑⲟⲩⲁⲃ", sound: "Ti-etrias ethouab", meaning: { en: "the Holy Trinity", ar: "الثالوث القدوس" } },
+];
+
+// Whole lines from the hymns to put back in order (Quiz level 5), split into words at the spaces
+export const copticSentences: CopticWord[] = [
+  { coptic: "Ⲧⲉⲛⲟⲩⲱϣⲧ ⲙ̀ⲙⲟⲕ ⲱ̀ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ", sound: "Tenouōsht emmok ō Pi-ekhristos", meaning: { en: "We worship You, O Christ", ar: "نسجد لك أيها المسيح" } },
+  { coptic: "Ϧⲉⲛ ⲫ̀ⲣⲁⲛ ⲙ̀Ⲫ̀ⲓⲱⲧ ⲛⲉⲙ Ⲡ̀ϣⲏⲣⲓ ⲛⲉⲙ Ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ ⲉⲑⲟⲩⲁⲃ", sound: "Khen efran em-Efiōt nem Epshēri nem Pi-epneuma ethouab", meaning: { en: "In the name of the Father and the Son and the Holy Spirit", ar: "باسم الآب والابن والروح القدس" } },
+  { coptic: "Ⲧⲉⲛϩⲱⲥ ⲉ̀ⲣⲟϥ ⲧⲉⲛϯⲱ̀ⲟⲩ ⲛⲁϥ", sound: "Tenhōs erof tenti-ōou naf", meaning: { en: "We praise Him and glorify Him", ar: "نسبحه ونمجده" } },
+  { coptic: "Ⲡⲓⲱ̀ⲟⲩ ⲫⲁ Ⲡⲉⲛⲛⲟⲩϯ ⲡⲉ", sound: "Pi-ōou fa Pennouti pe", meaning: { en: "Glory be to our God", ar: "المجد لإلهنا" } },
+  { coptic: "Ⲭⲉⲣⲉ ⲛⲉ Ⲙⲁⲣⲓⲁ ϯϭ̀ⲣⲟⲙⲡⲓ ⲉⲑⲛⲉⲥⲱⲥ", sound: "Shere ne Maria ti-etshrompi ethnesōs", meaning: { en: "Hail to you, Mary, the beautiful dove", ar: "السلام لكِ يا مريم الحمامة الحسنة" } },
+  { coptic: "Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ ⲁϥⲧⲱⲛϥ ⲉ̀ⲃⲟⲗ ϧⲉⲛ ⲛⲏⲉⲑⲙⲱⲟⲩⲧ", sound: "Pi-ekhristos aftōnf evol khen nēethmōout", meaning: { en: "Christ is risen from the dead", ar: "المسيح قام من بين الأموات" } },
+  { coptic: "Ϫⲉ ⲁⲕⲓ̀ ⲁⲕⲥⲱϯ ⲙ̀ⲙⲟⲛ", sound: "Je aki aksōti emmon", meaning: { en: "For You have come and saved us", ar: "لأنك أتيت وخلصتنا" } },
+  { coptic: "Ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ", sound: "Entefkha nennovi nan evol", meaning: { en: "That He may forgive us our sins", ar: "ليغفر لنا خطايانا" } },
+  { coptic: "Ⲁ̀ⲅⲓⲟⲥ ⲟ̀ Ⲑⲉⲟⲥ ⲁ̀ⲅⲓⲟⲥ ⲓ̀ⲥⲭⲩⲣⲟⲥ", sound: "Agios o Theos agios iskhuros", meaning: { en: "Holy God, Holy Mighty", ar: "قدوس الله قدوس القوي" } },
+  { coptic: "Ϯⲧ̀ⲣⲓⲁⲥ ⲉⲑⲟⲩⲁⲃ ⲛⲁⲓ ⲛⲁⲛ", sound: "Ti-etrias ethouab nai nan", meaning: { en: "Holy Trinity, have mercy on us", ar: "أيها الثالوث القدوس ارحمنا" } },
+  { coptic: "Ⲧⲉⲛⲟⲩⲱϣⲧ ⲙ̀Ⲫ̀ⲓⲱⲧ ⲛⲉⲙ Ⲡ̀ϣⲏⲣⲓ ⲛⲉⲙ Ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ ⲉⲑⲟⲩⲁⲃ", sound: "Tenouōsht em-Efiōt nem Epshēri nem Pi-epneuma ethouab", meaning: { en: "We worship the Father and the Son and the Holy Spirit", ar: "نسجد للآب والابن والروح القدس" } },
+];
+
 // ---- Quiz ----
 
-// A round mixing "what is this letter called" and "what does this word mean"
-export function buildQuiz(lang: 'en' | 'ar', count = 10, random: () => number = Math.random): QuizQuestion[] {
+const copticEntries = (list: CopticWord[], lang: 'en' | 'ar'): QuizEntry[] =>
+  list.map((w) => ({ foreign: w.coptic, meaning: w.meaning[lang] }));
+
+// Six levels, from naming letters up to putting whole lines from the hymns back in order
+export function copticQuizLevels(lang: 'en' | 'ar', text: LevelText[]): QuizLevel[] {
   const letterNames = copticAlphabet.map((l) => l.name);
-  const meanings = copticWords.map((w) => w.meaning[lang]);
-  const letters = shuffle(copticAlphabet, random).map((l) =>
-    makeQuestion(l.name, letterNames, random, { prompt: `${l.upper} ${l.lower}`, kind: 'letter' })
-  );
-  const words = shuffle(copticWords, random).map((w) =>
-    makeQuestion(w.meaning[lang], meanings, random, { prompt: w.coptic, kind: 'word' })
-  );
-  const half = Math.ceil(count / 2);
-  return shuffle([...letters.slice(0, half), ...words.slice(0, count - half)], random);
+  return buildLevels('coptic', text, {
+    letters: (count, random) =>
+      shuffle(copticAlphabet, random)
+        .slice(0, count)
+        .map((l) => makeQuestion(l.name, letterNames, random, { prompt: `${l.upper} ${l.lower}`, kind: 'letter' })),
+    words: copticEntries(copticWords, lang),
+    moreWords: copticEntries(copticMoreWords, lang),
+    phrases: copticEntries(copticPhrases, lang),
+    sentences: copticEntries(copticSentences, lang),
+  });
 }
 
 // ---- Reading practice: real verses from the app's hymns ----

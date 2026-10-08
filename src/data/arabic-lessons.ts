@@ -1,6 +1,6 @@
 import type { Bilingual } from './coptic-lessons';
 import { deaconCategories, flattenHymns, Hymn, seasons } from './hymns';
-import { makeQuestion, QuizQuestion, shuffle } from './quiz';
+import { buildLevels, LevelText, makeQuestion, QuizEntry, QuizLevel, shuffle } from './quiz';
 
 // The Arabic alphabet, for reading the Arabic text of the hymns (and its English-letter spelling in the app)
 
@@ -432,18 +432,96 @@ export const arabicWords: ArabicWord[] = [
   { arabic: 'يا رب ارحم', sound: 'ya Rabb irham', meaning: 'Lord have mercy' },
 ];
 
-// A round mixing "what is this letter called" and "what does this word mean"
-export function buildArabicQuiz(count = 10, random: () => number = Math.random): QuizQuestion[] {
+// More words from the hymns, shown after the first list and used from Quiz level 3
+export const arabicMoreWords: ArabicWord[] = [
+  { arabic: "الكنيسة", sound: "el-kaneesa", meaning: "the church" },
+  { arabic: "الصليب", sound: "es-saleeb", meaning: "the cross" },
+  { arabic: "القيامة", sound: "el-qiyama", meaning: "the resurrection" },
+  { arabic: "المخلص", sound: "el-mukhallis", meaning: "the Savior" },
+  { arabic: "القديسين", sound: "el-qiddiseen", meaning: "the saints" },
+  { arabic: "الملائكة", sound: "el-mala'ika", meaning: "the angels" },
+  { arabic: "الشهيد", sound: "esh-shaheed", meaning: "the martyr" },
+  { arabic: "الرسل", sound: "er-rusul", meaning: "the apostles" },
+  { arabic: "الأنبياء", sound: "el-anbiya'", meaning: "the prophets" },
+  { arabic: "الإيمان", sound: "el-eeman", meaning: "faith" },
+  { arabic: "المحبة", sound: "el-mahabba", meaning: "love" },
+  { arabic: "النعمة", sound: "en-ni'ma", meaning: "grace" },
+  { arabic: "الرحمة", sound: "er-rahma", meaning: "mercy" },
+  { arabic: "الحياة", sound: "el-hayah", meaning: "life" },
+  { arabic: "الموت", sound: "el-mawt", meaning: "death" },
+  { arabic: "القلب", sound: "el-qalb", meaning: "the heart" },
+  { arabic: "النفس", sound: "en-nafs", meaning: "the soul" },
+  { arabic: "الجسد", sound: "el-gasad", meaning: "the body" },
+  { arabic: "الخبز", sound: "el-khubz", meaning: "the bread" },
+  { arabic: "الكلمة", sound: "el-Kalima", meaning: "the Word" },
+  { arabic: "العرش", sound: "el-'arsh", meaning: "the throne" },
+  { arabic: "الإكليل", sound: "el-ikleel", meaning: "the crown" },
+  { arabic: "البخور", sound: "el-bakhour", meaning: "incense" },
+  { arabic: "العروس", sound: "el-'arous", meaning: "the bride" },
+  { arabic: "الحمامة", sound: "el-hamama", meaning: "the dove" },
+  { arabic: "صالح", sound: "salih", meaning: "good" },
+  { arabic: "حبيب", sound: "habeeb", meaning: "beloved" },
+  { arabic: "عظيم", sound: "'azeem", meaning: "great" },
+  { arabic: "كل", sound: "kull", meaning: "every, all" },
+  { arabic: "كل حين", sound: "kull heen", meaning: "always" },
+  { arabic: "بالحقيقة", sound: "bil-haqeeqa", meaning: "truly" },
+  { arabic: "نسجد", sound: "nasgud", meaning: "we worship" },
+  { arabic: "خلصنا", sound: "khallasana", meaning: "He saved us" },
+  { arabic: "قام", sound: "qam", meaning: "He rose" },
+  { arabic: "اشفعي", sound: "ishfa'i", meaning: "intercede (to Mary)" },
+  { arabic: "باركنا", sound: "barikna", meaning: "bless us" },
+  { arabic: "اسمعنا", sound: "isma'na", meaning: "hear us" },
+  { arabic: "الأم", sound: "el-umm", meaning: "the mother" },
+  { arabic: "الابن الوحيد", sound: "el-Ibn el-waheed", meaning: "the Only Son" },
+  { arabic: "الأعالي", sound: "el-a'ali", meaning: "the highest" },
+];
+
+// Short phrases from the hymns (Quiz level 4)
+export const arabicPhrases: ArabicWord[] = [
+  { arabic: "يا رب باركنا", sound: "ya Rabb barikna", meaning: "Lord bless us" },
+  { arabic: "يا رب اسمعنا", sound: "ya Rabb isma'na", meaning: "Lord hear us" },
+  { arabic: "السلام لكِ يا مريم", sound: "es-salamu laki ya Maryam", meaning: "Hail to you, Mary" },
+  { arabic: "المسيح قام", sound: "el-Maseeh qam", meaning: "Christ is risen" },
+  { arabic: "بالحقيقة قام", sound: "bil-haqeeqa qam", meaning: "Truly He is risen" },
+  { arabic: "مع أبيك الصالح", sound: "ma'a abeeka es-salih", meaning: "with Your good Father" },
+  { arabic: "إلى أبد الآبدين", sound: "ila abad el-abideen", meaning: "forever and ever" },
+  { arabic: "المجد لإلهنا", sound: "el-magd li-Ilahina", meaning: "Glory to our God" },
+  { arabic: "اشفعي فينا", sound: "ishfa'i fina", meaning: "intercede for us" },
+  { arabic: "اطلب من الرب عنا", sound: "utlub min er-Rabb 'anna", meaning: "pray to the Lord for us" },
+  { arabic: "قدوس الله", sound: "quddous Allah", meaning: "Holy God" },
+  { arabic: "أيها المسيح إلهنا", sound: "ayyuha el-Maseeh Ilahuna", meaning: "O Christ our God" },
+  { arabic: "الثالوث القدوس", sound: "eth-thalouth el-quddous", meaning: "the Holy Trinity" },
+];
+
+// Whole lines from the hymns to put back in order (Quiz level 5), split into words at the spaces
+export const arabicSentences: ArabicWord[] = [
+  { arabic: "نسجد لك أيها المسيح", sound: "nasgud laka ayyuha el-Maseeh", meaning: "We worship You, O Christ" },
+  { arabic: "باسم الآب والابن والروح القدس", sound: "bism el-Ab wal-Ibn war-Rouh el-Qudus", meaning: "In the name of the Father and the Son and the Holy Spirit" },
+  { arabic: "نسبحه ونمجده ونزيده علواً", sound: "nusabbihuhu wa numaggiduhu wa nazeeduhu 'uluwwan", meaning: "We praise Him, glorify Him and exalt Him" },
+  { arabic: "المجد لله في الأعالي", sound: "el-magd lillah fil-a'ali", meaning: "Glory to God in the highest" },
+  { arabic: "السلام لكِ يا مريم الحمامة الحسنة", sound: "es-salamu laki ya Maryam el-hamama el-hasana", meaning: "Hail to you, Mary, the beautiful dove" },
+  { arabic: "المسيح قام من بين الأموات", sound: "el-Maseeh qam min bayn el-amwat", meaning: "Christ is risen from the dead" },
+  { arabic: "لأنك أتيت وخلصتنا", sound: "li-annaka atayta wa khallastana", meaning: "For You have come and saved us" },
+  { arabic: "ليغفر لنا خطايانا", sound: "li-yaghfir lana khatayana", meaning: "That He may forgive us our sins" },
+  { arabic: "قدوس الله قدوس القوي", sound: "quddous Allah quddous el-qawi", meaning: "Holy God, Holy Mighty" },
+  { arabic: "أيها الثالوث القدوس ارحمنا", sound: "ayyuha eth-thalouth el-quddous irhamna", meaning: "O Holy Trinity, have mercy on us" },
+  { arabic: "نسجد للآب والابن والروح القدس", sound: "nasgud lil-Ab wal-Ibn war-Rouh el-Qudus", meaning: "We worship the Father and the Son and the Holy Spirit" },
+];
+
+// Six levels, from naming letters up to putting whole lines from the hymns back in order
+export function arabicQuizLevels(text: LevelText[]): QuizLevel[] {
+  const entries = (list: ArabicWord[]): QuizEntry[] => list.map((w) => ({ foreign: w.arabic, meaning: w.meaning }));
   const letterNames = arabicAlphabet.map((l) => l.name.en);
-  const meanings = arabicWords.map((w) => w.meaning);
-  const letters = shuffle(arabicAlphabet, random).map((l) =>
-    makeQuestion(l.name.en, letterNames, random, { prompt: l.letter, kind: 'letter' })
-  );
-  const words = shuffle(arabicWords, random).map((w) =>
-    makeQuestion(w.meaning, meanings, random, { prompt: w.arabic, kind: 'word' })
-  );
-  const half = Math.ceil(count / 2);
-  return shuffle([...letters.slice(0, half), ...words.slice(0, count - half)], random);
+  return buildLevels('arabic', text, {
+    letters: (count, random) =>
+      shuffle(arabicAlphabet, random)
+        .slice(0, count)
+        .map((l) => makeQuestion(l.name.en, letterNames, random, { prompt: l.letter, kind: 'letter' })),
+    words: entries(arabicWords),
+    moreWords: entries(arabicMoreWords),
+    phrases: entries(arabicPhrases),
+    sentences: entries(arabicSentences),
+  });
 }
 
 // ---- Reading practice: real Arabic verses from the app's hymns ----

@@ -1,6 +1,6 @@
 import { englishToArabic } from './arabic-english';
 import { deaconCategories, flattenHymns, Hymn, seasons } from './hymns';
-import { makeQuestion, QuizQuestion, shuffle } from './quiz';
+import { buildLevels, LevelText, makeQuestion, QuizEntry, QuizLevel, shuffle } from './quiz';
 
 // Learn English: for Arabic speakers reading the English text of the hymns, so everything is explained in Arabic.
 // Pronunciations use the same English-in-Arabic-letters spelling as the hymns (englishToArabic).
@@ -117,18 +117,96 @@ export const englishWords: EnglishWord[] = [
 // How a word sounds, in Arabic letters
 export const englishSound = (english: string) => englishToArabic(english);
 
-// A round mixing "what is this letter called" and "what does this word mean"
-export function buildEnglishQuiz(count = 10, random: () => number = Math.random): QuizQuestion[] {
+// More words from the hymns, shown after the first list and used from Quiz level 3
+export const englishMoreWords: EnglishWord[] = [
+  { english: "Savior", meaning: "المخلص" },
+  { english: "the saints", meaning: "القديسين" },
+  { english: "angels", meaning: "الملائكة" },
+  { english: "martyr", meaning: "الشهيد" },
+  { english: "apostles", meaning: "الرسل" },
+  { english: "prophets", meaning: "الأنبياء" },
+  { english: "faith", meaning: "الإيمان" },
+  { english: "love", meaning: "المحبة" },
+  { english: "grace", meaning: "النعمة" },
+  { english: "mercy", meaning: "الرحمة" },
+  { english: "life", meaning: "الحياة" },
+  { english: "death", meaning: "الموت" },
+  { english: "heart", meaning: "القلب" },
+  { english: "soul", meaning: "النفس" },
+  { english: "body", meaning: "الجسد" },
+  { english: "bread", meaning: "الخبز" },
+  { english: "blood", meaning: "الدم" },
+  { english: "the Word", meaning: "الكلمة" },
+  { english: "throne", meaning: "العرش" },
+  { english: "crown", meaning: "الإكليل" },
+  { english: "incense", meaning: "البخور" },
+  { english: "bride", meaning: "العروس" },
+  { english: "dove", meaning: "الحمامة" },
+  { english: "good", meaning: "صالح" },
+  { english: "beloved", meaning: "حبيب" },
+  { english: "great", meaning: "عظيم" },
+  { english: "all", meaning: "كل" },
+  { english: "always", meaning: "كل حين" },
+  { english: "truly", meaning: "بالحقيقة" },
+  { english: "we worship", meaning: "نسجد" },
+  { english: "He saved us", meaning: "خلصنا" },
+  { english: "He is risen", meaning: "قام" },
+  { english: "intercede", meaning: "اشفعي" },
+  { english: "pray", meaning: "صلِّ / اطلب" },
+  { english: "hear us", meaning: "اسمعنا" },
+  { english: "bless us", meaning: "باركنا" },
+  { english: "mother", meaning: "الأم" },
+  { english: "the highest", meaning: "الأعالي" },
+  { english: "the dead", meaning: "الأموات" },
+  { english: "mighty", meaning: "القوي" },
+];
+
+// Short phrases from the hymns (Quiz level 4)
+export const englishPhrases: EnglishWord[] = [
+  { english: "Lord bless us", meaning: "يا رب باركنا" },
+  { english: "Lord hear us", meaning: "يا رب اسمعنا" },
+  { english: "Hail to you Mary", meaning: "السلام لكِ يا مريم" },
+  { english: "Christ is risen", meaning: "المسيح قام" },
+  { english: "Truly He is risen", meaning: "بالحقيقة قام" },
+  { english: "with Your good Father", meaning: "مع أبيك الصالح" },
+  { english: "forever and ever", meaning: "إلى أبد الآبدين" },
+  { english: "Glory to our God", meaning: "المجد لإلهنا" },
+  { english: "intercede for us", meaning: "اشفعي فينا" },
+  { english: "pray to the Lord for us", meaning: "اطلب من الرب عنا" },
+  { english: "Holy God", meaning: "قدوس الله" },
+  { english: "O Christ our God", meaning: "أيها المسيح إلهنا" },
+  { english: "the Holy Trinity", meaning: "الثالوث القدوس" },
+];
+
+// Whole lines from the hymns to put back in order (Quiz level 5), split into words at the spaces
+export const englishSentences: EnglishWord[] = [
+  { english: "We worship You O Christ", meaning: "نسجد لك أيها المسيح" },
+  { english: "In the name of the Father and the Son and the Holy Spirit", meaning: "باسم الآب والابن والروح القدس" },
+  { english: "We praise Him and glorify Him", meaning: "نسبحه ونمجده" },
+  { english: "Glory to God in the highest", meaning: "المجد لله في الأعالي" },
+  { english: "Hail to you Mary the beautiful dove", meaning: "السلام لكِ يا مريم الحمامة الحسنة" },
+  { english: "Christ is risen from the dead", meaning: "المسيح قام من بين الأموات" },
+  { english: "For You have come and saved us", meaning: "لأنك أتيت وخلصتنا" },
+  { english: "That He may forgive us our sins", meaning: "ليغفر لنا خطايانا" },
+  { english: "Holy God Holy Mighty", meaning: "قدوس الله قدوس القوي" },
+  { english: "O Holy Trinity have mercy on us", meaning: "أيها الثالوث القدوس ارحمنا" },
+  { english: "We worship the Father and the Son and the Holy Spirit", meaning: "نسجد للآب والابن والروح القدس" },
+];
+
+// Six levels, from naming letters up to putting whole lines from the hymns back in order
+export function englishQuizLevels(text: LevelText[]): QuizLevel[] {
+  const entries = (list: EnglishWord[]): QuizEntry[] => list.map((w) => ({ foreign: w.english, meaning: w.meaning }));
   const letterNames = englishAlphabet.map((l) => l.name);
-  const meanings = englishWords.map((w) => w.meaning);
-  const letters = shuffle(englishAlphabet, random).map((l) =>
-    makeQuestion(l.name, letterNames, random, { prompt: l.letter, kind: 'letter' })
-  );
-  const words = shuffle(englishWords, random).map((w) =>
-    makeQuestion(w.meaning, meanings, random, { prompt: w.english, kind: 'word' })
-  );
-  const half = Math.ceil(count / 2);
-  return shuffle([...letters.slice(0, half), ...words.slice(0, count - half)], random);
+  return buildLevels('english', text, {
+    letters: (count, random) =>
+      shuffle(englishAlphabet, random)
+        .slice(0, count)
+        .map((l) => makeQuestion(l.name, letterNames, random, { prompt: l.letter, kind: 'letter' })),
+    words: entries(englishWords),
+    moreWords: entries(englishMoreWords),
+    phrases: entries(englishPhrases),
+    sentences: entries(englishSentences),
+  });
 }
 
 // ---- Reading practice: real English verses from the app's hymns ----

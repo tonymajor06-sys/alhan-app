@@ -1,13 +1,13 @@
 import { Redirect, useLocalSearchParams } from 'expo-router';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
 import { copticFont, goBackOrHome, openHymnPage, ScreenShell, withCopticFont } from '@/components/alhan-ui';
 import { learnStrings, LessonId, lessonIds } from '@/components/learn-strings';
 import { useLessonStyles } from '@/components/lesson-styles';
-import { QuizRound } from '@/components/quiz-round';
+import { QuizLevels } from '@/components/quiz-levels';
 import { displayTitle } from '@/data/arabic-titles';
-import { buildQuiz, copticAlphabet, copticWords, getPracticeVerses, readingRules } from '@/data/coptic-lessons';
+import { copticAlphabet, copticMoreWords, copticQuizLevels, copticWords, getPracticeVerses, readingRules } from '@/data/coptic-lessons';
 import { AppLanguage, useSettings } from '@/hooks/use-settings';
 
 // Build every page ahead of time, so a shared link or a refresh on the website works
@@ -134,7 +134,7 @@ function Words({ lang }: LessonProps) {
           {hideMeanings ? t.showMeanings : t.hideMeanings}
         </Text>
       </Pressable>
-      {copticWords.map((word) => {
+      {[...copticWords, ...copticMoreWords].map((word) => {
         const shown = !hideMeanings || revealed.has(word.coptic);
         return (
           <Pressable
@@ -157,12 +157,14 @@ function Words({ lang }: LessonProps) {
 
 function Quiz({ lang }: LessonProps) {
   const t = learnStrings[lang];
+  const levels = useMemo(() => copticQuizLevels(lang, t.levelText), [lang, t]);
   return (
-    <QuizRound
+    <QuizLevels
+      key={lang}
       lang={lang}
-      build={() => buildQuiz(lang)}
+      levels={levels}
       strings={t}
-      questionText={(q) => (q.kind === 'letter' ? t.whatLetter : t.whatWord)}
+      questionText={(q) => (q.kind === 'letter' ? t.whatLetter : undefined)}
       promptFont={copticFont}
     />
   );
