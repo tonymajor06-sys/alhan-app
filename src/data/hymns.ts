@@ -2100,6 +2100,10 @@ if (kiahkLiturgy) {
         text: 'الطوباوي الأقدس الكلي الإكرام، أبونا ومولانا وسيدنا\n\nبابا وبطريرك المدينة العظمي الإسكندرية، وليبيا والخمس المدن الغربية والحبشة وأفريقيا وجميع أرض مصر.\n\nأبو الآباء، راعي الرعاة، رئيس رؤساء كهنتنا، ثالث عشر الرسل، وقاضي المسكونة،\n\nفلتكن سنوه عديدة، سيدنا رئيس كهنتنا يا رب إحفظه (لسنين كثيرة يا سيد) (٣).\n\nوأبينا الأسقف (المطران) أنبا (...).\n\nفليكن الإكليروس وكل الشعب معافين في الرب. آمين يكون.',
       },
     ];
+    // Recorded in Coptic by Archdeacon Arsani Sidarous
+    for (const version of kiahkLiturgyBlessed.versions) {
+      if (version.language === 'coptic' || version.language === 'englishCoptic') version.audio = 'kiahk-liturgy-tou-makario.m4a';
+    }
   }
   const kiahkLiturgyPerfectIsTheBlessing = kiahkLiturgy.hymns.find((h) => h.title === 'Ⲁ̀ ⲡⲉⲧϫⲏⲕ (Perfect is the Blessing)');
   if (kiahkLiturgyPerfectIsTheBlessing) {
@@ -3485,6 +3489,17 @@ if (deaconAnnualMatins) {
       ],
     },
     {
+      id: 'd-annual-matins-pray-for-the-departed',
+      title: 'Ⲧⲱⲃϩ ⲉ̀ϫⲉⲛ ⲛⲉⲛⲓⲟϯ (Pray for the Departed)',
+      versions: [
+        { language: 'coptic', text: "Ⲧⲱⲃϩ ⲉ̀ϫⲉⲛ ⲛⲉⲛⲓⲟϯ ⲛⲉⲙ ⲛⲉⲛ̀ⲥⲛⲏⲟⲩ ⲉ̀ⲧⲁⲩⲉ̀ⲛⲕⲟⲧ ⲁⲩⲙ̀ⲧⲟⲛ ⲙ̀ⲙⲱⲟⲩ ϧⲉⲛ ⲫ̀ⲛⲁϩϯ ⲙ̀Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ ⲓⲥϫⲉⲛ ⲡ̀ⲉ̀ⲛⲉϩ: ⲛⲉⲛⲓⲟϯ ⲉⲑⲟⲩⲁⲃ ⲛ̀ⲁ̀ⲣⲭⲏⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲥ ⲕⲉ ⲛⲉⲛⲓⲟϯ ⲛ̀ⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲥ: ⲛⲉⲛⲓⲟϯ ⲛ̀ϩⲏⲅⲟⲩⲙⲉⲛⲟⲥ ⲕⲉ ⲛⲉⲛⲓⲟϯ ⲙ̀ⲡ̀ⲣⲉⲥⲃⲩⲧⲉⲣⲟⲥ ⲛⲉⲙ ⲛⲉⲛ̀ⲥⲛⲏⲟⲩ ⲛ̀ⲇⲓⲁ̀ⲕⲱⲛ: ⲛⲉⲛⲓⲟϯ ⲙ̀ⲙⲟⲛⲁⲭⲟⲥ: ⲕⲉ ⲛⲉⲛⲓⲟϯ ⲛ̀ⲗⲁⲓ̀ⲕⲟⲥ: ⲛⲉⲙ ⲉ̀ϩⲣⲏⲓ ⲉ̀ϫⲉⲛ ϯⲁⲛⲁⲡⲁⲩⲥⲓⲥ ⲧⲏⲣⲥ ⲛ̀ⲧⲉ ⲛⲓⲭ̀ⲣⲓⲥⲧⲓⲁ̀ⲛⲟⲥ: ϩⲓⲛⲁ ⲛ̀ⲧⲉ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ Ⲡⲉⲛⲛⲟⲩϯ ϯⲙ̀ⲧⲟⲛ ⲛ̀ⲛⲟⲩⲯⲩⲭⲏ ⲧⲏⲣⲟⲩ ϧⲉⲛ ⲡⲓⲡⲁⲣⲁⲇⲓⲥⲟⲥ ⲛ̀ⲧⲉ ⲡ̀ⲟⲩⲛⲟϥ: ⲁ̀ⲛⲟⲛ ⲇⲉ ϩⲱⲛ ⲛ̀ⲧⲉϥⲉ̀ⲣ ⲡⲓⲛⲁⲓ ⲛⲉⲙⲁⲛ: ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ." },
+        { language: 'englishCoptic', text: "Tōbh ejen nenioti nem ne-ensnēou etau-enkot au-emton emmōou khen efnahti em-Pi-ekhristos isjen epeneh: nenioti ethouab enarkhē-episkopos ke nenioti enepiskopos: nenioti enhēgoumenos ke nenioti emepresvuteros nem ne-ensnēou endi-akōn: nenioti emmonakhos: ke nenioti enla-ikos: nem ehrēi ejen tianapausis tērs ente ni-ekhristi-anos: hina ente Pi-ekhristos Pennouti ti-emton ennoupsukhē tērou khen piparadisos ente epounof: anon de hōn entefer pinai neman: entefkha nennovi nan evol." },
+        { language: 'english', text: "Pray for our fathers and brethren who have fallen asleep and reposed in the faith of Christ since the beginning: our holy fathers the archbishops, our fathers the bishops, our fathers the hegumens, our fathers the priests, our brethren the deacons, our fathers the monks, and our fathers the laymen, and for the full repose of all Christians, that Christ our God may repose all their souls in the paradise of joy, and that He may have mercy on us, and forgive us our sins." },
+        { language: 'englishArabic', text: "Utlubu 'an aba'ina wa ikhwatina elladheena raqadu wa tanayyahu fil-eeman bil-Maseeh mundhu el-bad': aba'ina el-qiddiseen ru'asa' el-asaqifa, wa aba'ina el-asaqifa, wa aba'ina el-qamamisa, wa aba'ina el-qusus, wa ikhwatina esh-shamamisa, wa aba'ina er-ruhban, wa aba'ina el-'almaniyyeen, wa 'an niyah kull el-maseehiyyeen, likay el-Maseeh ilahuna yuneeh nufusahum agma'een fi firdaws en-na'eem, wa nahnu aydan yasna' ma'ana rahma, wa yaghfir lana khatayana." },
+        { language: 'arabic', text: "اطلبوا عن آبائنا وإخوتنا الذين رقدوا وتنيحوا في الإيمان بالمسيح منذ البدء: آبائنا القديسين رؤساء الأساقفة، وآبائنا الأساقفة، وآبائنا القمامصة، وآبائنا القسوس، وإخوتنا الشمامسة، وآبائنا الرهبان، وآبائنا العلمانيين، وعن نياح كل المسيحيين، لكي المسيح إلهنا ينيح نفوسهم أجمعين في فردوس النعيم، ونحن أيضاً يصنع معنا رحمةً، ويغفر لنا خطايانا." },
+      ],
+    },
+    {
       id: 'd-annual-matins-pray-for-the-sick',
       title: 'Ⲧⲱⲃϩ ⲉ̀ϫⲉⲛ ⲛⲉⲛⲓⲟϯ (Pray for the Sick)',
       versions: [
@@ -3585,9 +3600,97 @@ if (deaconAnnualMatins) {
       ],
     },
     {
+      id: 'd-annual-matins-pray-for-peace',
+      title: 'Ⲡⲣⲟⲥⲉⲩⲝⲁⲥⲑⲉ ⲩ̀ⲡⲉⲣ ⲧⲏⲥ ⲓ̀ⲣⲏⲛⲏⲥ (Pray for the Peace)',
+      versions: [
+        { language: 'coptic', text: "Ⲡⲣⲟⲥⲉⲩⲝⲁⲥⲑⲉ ⲩ̀ⲡⲉⲣ ⲧⲏⲥ ⲓ̀ⲣⲏⲛⲏⲥ ⲧⲏⲥ ⲁ̀ⲅⲓⲁⲥ ⲙⲟⲛⲏⲥ ⲕⲁⲑⲟⲗⲓⲕⲏⲥ ⲕⲉ ⲁ̀ⲡⲟⲥⲧⲟⲗⲓⲕⲏⲥ ⲟⲣⲑⲟⲇⲟⲝⲟⲩ ⲧⲟⲩ Ⲑⲉⲟⲩ ⲉⲕⲕⲗⲏⲥⲓⲁⲥ." },
+        { language: 'englishCoptic', text: "Proseuksasthe uper tēs irēnēs tēs agias monēs katholikēs ke apostolikēs orthodoksou tou Theou ekklēsias." },
+        { language: 'english', text: "Pray for the peace of the One, Holy, Catholic and Apostolic Orthodox Church of God." },
+        { language: 'englishArabic', text: "Sallu min agl salam el-wahida el-waheeda el-muqaddasa el-gami'a er-rasouliya kaneesat Allah el-orthodoxiya." },
+        { language: 'arabic', text: "صلوا من أجل سلام الواحدة الوحيدة المقدسة الجامعة الرسولية كنيسة الله الأرثوذكسية." },
+      ],
+    },
+    {
+      id: 'd-annual-matins-pray-for-the-fathers',
+      title: 'Ⲡⲣⲟⲥⲉⲩⲝⲁⲥⲑⲉ ⲩ̀ⲡⲉⲣ ⲧⲟⲩ ⲁ̀ⲣⲭⲏⲉ̀ⲣⲉⲱⲥ (Pray for the Fathers)',
+      versions: [
+        { language: 'coptic', text: "Ⲡⲣⲟⲥⲉⲩⲝⲁⲥⲑⲉ ⲩ̀ⲡⲉⲣ ⲧⲟⲩ ⲁ̀ⲣⲭⲏⲉ̀ⲣⲉⲱⲥ ⲏ̀ⲙⲱⲛ ⲡⲁⲡⲁ ⲁⲃⲃⲁ (ⲛⲓⲙ): ⲡⲁⲡⲁ ⲕⲉ ⲡⲁⲧⲣⲓⲁⲣⲭⲟⲩ ⲕⲉ ⲁ̀ⲣⲭⲏⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲩ ⲧⲏⲥ ⲙⲉⲅⲁⲗⲟⲡⲟⲗⲉⲱⲥ Ⲁⲗⲉⲝⲁⲛⲇ̀ⲣⲓⲁⲥ: ⲕⲉ ⲧⲱⲛ ⲟ̀ⲣⲑⲟⲇⲟⲝⲱⲛ ⲏ̀ⲙⲱⲛ ⲉ̀ⲡⲓⲥⲕⲟⲡⲱⲛ.\n\n(Ⲉ̀ϣⲱⲡ ⲁⲣⲉ ⲡⲓⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲥ ⲭⲏ:) ⲛⲉⲙ ⲡⲉϥⲕⲉϣ̀ⲫⲏⲣ ⲛ̀ⲗⲓⲧⲟⲩⲣⲅⲟⲥ ⲡⲉⲛⲓⲱⲧ ⲛ̀ⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲥ ⲁⲃⲃⲁ (ⲛⲓⲙ): ⲕⲉ ⲧⲱⲛ ⲟ̀ⲣⲑⲟⲇⲟⲝⲱⲛ ⲏ̀ⲙⲱⲛ ⲉ̀ⲡⲓⲥⲕⲟⲡⲱⲛ." },
+        { language: 'englishCoptic', text: "Proseuksasthe uper tou arkhē-ereōs ēmōn papa abba (nim): papa ke patriarkhou ke arkhē-episkopou tēs megalopoleōs Aleksanedrias: ke tōn orthodoksōn ēmōn episkopōn.\n\n(Eshōp are pi-episkopos khē:) nem pefke-eshfēr enlitourgos peniōt enepiskopos abba (nim): ke tōn orthodoksōn ēmōn episkopōn." },
+        { language: 'english', text: "Pray for our high priest, Pope Abba (...), Pope and Patriarch and Archbishop of the great city of Alexandria, and for our Orthodox bishops.\n\n(If a bishop is present:) and his partner in the liturgy, our father the bishop, Abba (...), and for our Orthodox bishops." },
+        { language: 'englishArabic', text: "Sallu min agl ra'ees kahanatina el-Baba el-Anba (...) baba wa batriyark wa ra'ees asaqifat el-madeena el-'uzma el-Iskandariya, wa sa'ir asaqifatina el-orthodoxiyyeen.\n\n(Fi wugud el-usquf:) wa shareekuhu fil-khidma er-rasouliya abeena el-usquf el-mukarram el-Anba (...), wa sa'ir asaqifatina el-orthodoxiyyeen." },
+        { language: 'arabic', text: "صلوا من أجل رئيس كهنتنا البابا الأنبا (...) بابا وبطريرك ورئيس أساقفة المدينة العظمى الإسكندرية، وسائر أساقفتنا الأرثوذكسيين.\n\n(في وجود الأسقف:) وشريكه في الخدمة الرسولية أبينا الأسقف المكرم الأنبا (...)، وسائر أساقفتنا الأرثوذكسيين." },
+      ],
+    },
+    {
+      id: 'd-annual-matins-pray-for-the-place',
+      title: 'Ⲡⲣⲟⲥⲉⲩⲝⲁⲥⲑⲉ ⲩ̀ⲡⲉⲣ ⲧⲏⲥ ⲥⲱⲧⲏⲣⲓⲁⲥ (Pray for the Place)',
+      versions: [
+        { language: 'coptic', text: "Ⲡⲣⲟⲥⲉⲩⲝⲁⲥⲑⲉ ⲩ̀ⲡⲉⲣ ⲧⲏⲥ ⲥⲱⲧⲏⲣⲓⲁⲥ ⲧⲟⲩ ⲕⲟⲥⲙⲟⲩ ⲕⲉ ⲧⲏⲥ ⲡⲟⲗⲉⲱⲥ ⲏ̀ⲙⲱⲛ ⲧⲁⲩⲧⲏⲥ ⲕⲉ ⲡⲁⲥⲱⲛ ⲡⲟⲗⲉⲱⲛ ⲕⲉ ⲧⲱⲛ ⲭⲱⲣⲱⲛ ⲕⲉ ⲛⲏⲥⲱⲛ ⲕⲉ ⲙⲟⲛⲁⲥⲧⲏⲣⲓⲱⲛ." },
+        { language: 'englishCoptic', text: "Proseuksasthe uper tēs sōtērias tou kosmou ke tēs poleōs ēmōn tautēs ke pasōn poleōn ke tōn khōrōn ke nēsōn ke monastēriōn." },
+        { language: 'english', text: "Pray for the salvation of the world and of this city of ours, and of all cities, districts, islands and monasteries." },
+        { language: 'englishArabic', text: "Sallu min agl khalas el-'alam, wa madeenatina hadhihi, wa sa'ir el-mudun wal-aqaleem wal-gaza'ir wal-adyira." },
+        { language: 'arabic', text: "صلوا من أجل خلاص العالم، ومدينتنا هذه، وسائر المدن والأقاليم والجزائر والأديرة." },
+      ],
+    },
+    {
+      id: 'd-annual-matins-pray-for-the-waters',
+      title: 'Ⲧⲱⲃϩ ⲉ̀ϫⲉⲛ ⲡ̀ϫⲓⲛⲙⲟϣⲓ (Pray for the Waters)',
+      versions: [
+        { language: 'coptic', text: "Ⲧⲱⲃϩ ⲉ̀ϫⲉⲛ ⲡ̀ϫⲓⲛⲙⲟϣⲓ ⲉ̀ⲡ̀ϣⲱⲓ ⲛ̀ⲧⲉ ⲛⲓⲓⲁⲣⲱⲟⲩ ⲙ̀ⲙⲱⲟⲩ ϧⲉⲛ ⲧⲁⲓⲣⲟⲙⲡⲓ ⲑⲁⲓ: ϩⲓⲛⲁ ⲛ̀ⲧⲉ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ Ⲡⲉⲛⲛⲟⲩϯ ⲥ̀ⲙⲟⲩ ⲉ̀ⲣⲱⲟⲩ: ⲛ̀ⲧⲉϥⲉ̀ⲛⲟⲩ ⲉ̀ⲡ̀ϣⲱⲓ ⲕⲁⲧⲁ ⲛⲟⲩϣⲓ: ⲛ̀ⲧⲉϥϯ ⲙ̀ⲡ̀ⲟⲩⲛⲟϥ ⲙ̀ⲡ̀ϩⲟ ⲙ̀ⲡ̀ⲕⲁϩⲓ: ⲛ̀ⲧⲉϥϣⲁⲛⲟⲩϣⲧⲉⲛ ϧⲁ ⲛⲓϣⲏⲣⲓ ⲛ̀ⲧⲉ ⲛⲓⲣⲱⲙⲓ: ⲛ̀ⲧⲉϥϯ ⲙ̀ⲫ̀ⲛⲟϩⲉⲙ ⲛ̀ⲛⲓⲧⲉⲃⲛⲱⲟⲩⲓ̀: ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ." },
+        { language: 'englishCoptic', text: "Tōbh ejen epjinmoshi e-epshōi ente niiarōou emmōou khen tairompi thai: hina ente Pi-ekhristos Pennouti esmou erōou: entefenou e-epshōi kata noushi: entefti emepounof emepho emepkahi: entefshanoushten kha nishēri ente nirōmi: entefti emefnohem ennitebnōou-i: entefkha nennovi nan evol." },
+        { language: 'english', text: "(In Egypt, from 12 Paoni to 9 Paopi, 19 June to 19/20 October:) Pray for the rising of the waters of the rivers this year, that Christ our God may bless them and raise them according to their measure, give joy to the face of the earth, sustain us, the sons of men, save the cattle, and forgive us our sins." },
+        { language: 'englishArabic', text: "(Fi Masr, min 12 Ba'ouna ila 9 Baba:) Utlubu 'an su'ud miyah el-anhar fi hadhihi es-sana, likay yubarikaha el-Maseeh ilahuna, wa yus'idaha ka-miqdariha, wa yufarrih wagh el-ard, wa ya'ulna nahnu el-bashar, wa yahab en-nagah lil-baha'im, wa yaghfir lana khatayana." },
+        { language: 'arabic', text: "(في مصر، من ١٢ بؤونة إلى ٩ بابه:) اطلبوا عن صعود مياه الأنهار في هذه السنة، لكي يباركها المسيح إلهنا، ويصعدها كمقدارها، ويفرح وجه الأرض، ويعولنا نحن البشر، ويهب النجاة للبهائم، ويغفر لنا خطايانا." },
+      ],
+    },
+    {
+      id: 'd-annual-matins-pray-for-the-plants',
+      title: 'Ⲧⲱⲃϩ ⲉ̀ϫⲉⲛ ⲛⲓⲥⲓϯ (Pray for the Plants)',
+      versions: [
+        { language: 'coptic', text: "Ⲧⲱⲃϩ ⲉ̀ϫⲉⲛ ⲛⲓⲥⲓϯ ⲛⲉⲙ ⲛⲓⲥⲓⲙ ⲛⲉⲙ ⲛⲓⲣⲱⲧ ⲛ̀ⲧⲉ ⲧ̀ⲕⲟⲓ ϧⲉⲛ ⲧⲁⲓⲣⲟⲙⲡⲓ ⲑⲁⲓ: ϩⲓⲛⲁ ⲛ̀ⲧⲉ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ Ⲡⲉⲛⲛⲟⲩϯ ⲥ̀ⲙⲟⲩ ⲉ̀ⲣⲱⲟⲩ: ⲛ̀ⲧⲟⲩⲁⲓⲁⲓ ⲟⲩⲟϩ ⲛ̀ⲧⲟⲩⲁ̀ϣⲁⲓ ϣⲁⲛ̀ⲧⲟⲩϫⲱⲕ ⲉ̀ⲃⲟⲗ ϧⲉⲛ ⲟⲩⲛⲓϣϯ ⲛ̀ⲕⲁⲣⲡⲟⲥ: ⲟⲩⲟϩ ⲛ̀ⲧⲉϥϣⲉⲛϩⲏⲧ ϧⲁ ⲡⲉϥⲡ̀ⲗⲁⲥⲙⲁ ⲉ̀ⲧⲁ ⲛⲉϥϫⲓϫ ⲑⲁⲙⲓⲟϥ: ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ." },
+        { language: 'englishCoptic', text: "Tōbh ejen nisiti nem nisim nem nirōt ente etkoi khen tairompi thai: hina ente Pi-ekhristos Pennouti esmou erōou: entouaiai ouoh entou-ashai sha-entoujōk evol khen ounishti enkarpos: ouoh entefshenhēt kha pefeplasma eta nefjij thamiof: entefkha nennovi nan evol." },
+        { language: 'english', text: "(In Egypt, from 10 Paopi to 10 Tobi, 20/21 October to 18/19 January:) Pray for the seeds, the herbs and the plants of the field this year, that Christ our God may bless them to grow and multiply unto perfection with great fruit, have compassion on His creation which His hands have made, and forgive us our sins." },
+        { language: 'englishArabic', text: "(Fi Masr, min 10 Baba ila 10 Touba:) Utlubu 'an ez-zurou' wal-'ushb wa nabat el-haql fi hadhihi es-sana, likay yubarikaha el-Maseeh ilahuna li-tanmu wa taktharu ila an tak-mal bi-thamara 'azeema, wa yatahannan 'ala gibilatihi allati sana'at-ha yadah, wa yaghfir lana khatayana." },
+        { language: 'arabic', text: "(في مصر، من ١٠ بابه إلى ١٠ طوبه:) اطلبوا عن الزروع والعشب ونبات الحقل في هذه السنة، لكي يباركها المسيح إلهنا لتنمو وتكثر إلى أن تكمل بثمرة عظيمة، ويتحنن على جبلته التي صنعتها يداه، ويغفر لنا خطايانا." },
+      ],
+    },
+    {
+      id: 'd-annual-matins-pray-for-the-fruits',
+      title: 'Ⲧⲱⲃϩ ⲉ̀ϫⲉⲛ ⲛⲓⲁ̀ⲏⲣ (Pray for the Fruits)',
+      versions: [
+        { language: 'coptic', text: "Ⲧⲱⲃϩ ⲉ̀ϫⲉⲛ ⲛⲓⲁ̀ⲏⲣ ⲛ̀ⲧⲉ ⲧ̀ⲫⲉ: ⲛⲉⲙ ⲛⲓⲕⲁⲣⲡⲟⲥ ⲛ̀ⲧⲉ ⲡ̀ⲕⲁϩⲓ: ⲛⲉⲙ ⲫⲁ ⲛⲓϣ̀ϣⲏⲛ ⲛⲉⲙ ⲫⲁ ⲛⲓⲙⲁⲛ̀ⲁ̀ⲗⲟⲗⲓ: ⲛⲉⲙ ϣ̀ϣⲏⲛ ⲛⲓⲃⲉⲛ ⲛ̀ⲣⲉϥϯⲕⲁⲣⲡⲟⲥ ⲉⲧϧⲉⲛ ϯⲟⲓⲕⲟⲩⲙⲉⲛⲏ ⲧⲏⲣⲥ: ϩⲓⲛⲁ ⲛ̀ⲧⲉ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ Ⲡⲉⲛⲛⲟⲩϯ ⲥ̀ⲙⲟⲩ ⲉ̀ⲣⲱⲟⲩ: ⲛ̀ⲧⲉϥϫⲟⲕⲟⲩ ⲉ̀ⲃⲟⲗϧⲉⲛ ⲟⲩϩⲓⲣⲏⲛⲏ ⲁϭⲛⲉ ⲙ̀ⲕⲁϩ: ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ." },
+        { language: 'englishCoptic', text: "Tōbh ejen ni-aēr ente etfe: nem nikarpos ente epkahi: nem fa ni-eshshēn nem fa nima-enaloli: nem eshshēn niven enreftikarpos etkhen tioikoumenē tērs: hina ente Pi-ekhristos Pennouti esmou erōou: entefjokou evolkhen ouhirēnē atshne emkah: entefkha nennovi nan evol." },
+        { language: 'english', text: "(In Egypt, from 11 Tobi to 11 Paoni, 19/20 January to 18 June:) Pray for the air of heaven, the fruits of the earth, the trees, the vines and every fruit-bearing tree in all the world, that Christ our God may bless them, bring them to perfection in peace without harm, and forgive us our sins." },
+        { language: 'englishArabic', text: "(Fi Masr, min 11 Touba ila 11 Ba'ouna:) Utlubu 'an ahwiyat es-sama', wa thamarat el-ard, wash-shagar wal-kuroum wa kull shagara muthmira fi kull el-maskouna, likay yubarikaha el-Maseeh ilahuna, wa yukammilaha salima bi-ghayr alam, wa yaghfir lana khatayana." },
+        { language: 'arabic', text: "(في مصر، من ١١ طوبه إلى ١١ بؤونة:) اطلبوا عن أهوية السماء، وثمرات الأرض، والشجر والكروم وكل شجرة مثمرة في كل المسكونة، لكي يباركها المسيح إلهنا، ويكملها سالمة بغير ألم، ويغفر لنا خطايانا." },
+      ],
+    },
+    {
+      id: 'd-annual-matins-pray-for-the-waters-plants-fruits',
+      title: 'Ⲧⲱⲃϩ ⲉ̀ϫⲉⲛ ⲛⲓⲁ̀ⲏⲣ (Waters, Plants and Fruits, Outside Egypt)',
+      versions: [
+        { language: 'coptic', text: "Ⲧⲱⲃϩ ⲉ̀ϫⲉⲛ ⲛⲓⲁ̀ⲏⲣ ⲛ̀ⲧⲉ ⲧ̀ⲫⲉ ⲛⲉⲙ ⲛⲓⲕⲁⲣⲡⲟⲥ ⲛ̀ⲧⲉ ⲡ̀ⲕⲁϩⲓ: ⲡ̀ϫⲓⲛⲙⲟϣⲓ ⲉ̀ⲡ̀ϣⲱⲓ ⲛ̀ⲧⲉ ⲛⲓⲓⲁⲣⲱⲟⲩ ⲙ̀ⲙⲱⲟⲩ: ⲛⲓⲥⲓϯ ⲛⲉⲙ ⲛⲓⲥⲓⲙ ⲛⲉⲙ ⲛⲓⲣⲱⲧ ⲛ̀ⲧⲉ ⲧ̀ⲕⲟⲓ: ϩⲓⲛⲁ ⲛ̀ⲧⲉ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ Ⲡⲉⲛⲛⲟⲩϯ ⲥ̀ⲙⲟⲩ ⲉ̀ⲣⲱⲟⲩ: ⲟⲩⲟϩ ⲛ̀ⲧⲉϥϣⲉⲛϩⲏⲧ ϧⲁ ⲡⲉϥⲡ̀ⲗⲁⲥⲙⲁ ⲉ̀ⲧⲁ ⲛⲉϥϫⲓϫ ⲑⲁⲙⲓⲟϥ: ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ." },
+        { language: 'englishCoptic', text: "Tōbh ejen ni-aēr ente etfe nem nikarpos ente epkahi: epjinmoshi e-epshōi ente niiarōou emmōou: nisiti nem nisim nem nirōt ente etkoi: hina ente Pi-ekhristos Pennouti esmou erōou: ouoh entefshenhēt kha pefeplasma eta nefjij thamiof: entefkha nennovi nan evol." },
+        { language: 'english', text: "(Outside Egypt, the three are said together:) Pray for the air of heaven, the fruits of the earth, the rising of the waters of the rivers, the seeds, the herbs and the plants of the field, that Christ our God may bless them, have compassion on His creation which His hands have made, and forgive us our sins." },
+        { language: 'englishArabic', text: "(Kharig Masr tuqal eth-thalath ma'an:) Utlubu 'an ahwiyat es-sama', wa thamarat el-ard, wa su'ud miyah el-anhar, wez-zurou' wal-'ushb wa nabat el-haql, likay yubarikaha el-Maseeh ilahuna, wa yatahannan 'ala gibilatihi allati sana'at-ha yadah, wa yaghfir lana khatayana." },
+        { language: 'arabic', text: "(خارج مصر تقال الثلاث معاً:) اطلبوا عن أهوية السماء، وثمرات الأرض، وصعود مياه الأنهار، والزروع والعشب ونبات الحقل، لكي يباركها المسيح إلهنا، ويتحنن على جبلته التي صنعتها يداه، ويغفر لنا خطايانا." },
+      ],
+    },
+    {
+      id: 'd-annual-matins-pray-for-the-assemblies',
+      title: 'Ⲡⲣⲟⲥⲉⲩⲝⲁⲥⲑⲉ ⲩ̀ⲡⲉⲣ ⲧⲏⲥ ⲁ̀ⲅⲓⲁⲥ ⲉⲕⲕⲗⲏⲥⲓⲁⲥ (Pray for the Assemblies)',
+      versions: [
+        { language: 'coptic', text: "Ⲡⲣⲟⲥⲉⲩⲝⲁⲥⲑⲉ ⲩ̀ⲡⲉⲣ ⲧⲏⲥ ⲁ̀ⲅⲓⲁⲥ ⲉⲕⲕⲗⲏⲥⲓⲁⲥ ⲧⲁⲩⲧⲏⲥ ⲕⲉ ⲧⲱⲛ ⲥⲩⲛⲉ̀ⲗⲉⲩⲥⲉⲱⲛ ⲏ̀ⲙⲱⲛ." },
+        { language: 'englishCoptic', text: "Proseuksasthe uper tēs agias ekklēsias tautēs ke tōn suneleuseōn ēmōn." },
+        { language: 'english', text: "Pray for this holy church and for our assemblies." },
+        { language: 'englishArabic', text: "Sallu min agl hadhihi el-kaneesa el-muqaddasa wa igtima'atina." },
+        { language: 'arabic', text: "صلوا من أجل هذه الكنيسة المقدسة واجتماعاتنا." },
+      ],
+    },
+    {
       // People and deacon take turns; each speaker is its own paragraph so side by side lines up
       id: 'd-annual-matins-in-christ-jesus-our-lord',
-      title: 'Ϧⲉⲛ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲉⲛϭⲟⲓⲥ (In Christ Jesus Our Lord)',
+      title: 'Ϧⲉⲛ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲉⲛϭⲟⲓⲥ (Three Absolutions)',
       versions: [
         {
           language: 'coptic',
@@ -3721,7 +3824,24 @@ if (deaconAnnualOffering) {
         },
       ],
     },
+    ...fromMatins('d-annual-matins-pray-for-the-gospel', 'd-annual-offering-lamb-pray-for-the-gospel'),
+    ...fromMatins('d-annual-matins-stand-in-the-fear-of-god', 'd-annual-offering-lamb-stand-in-the-fear-of-god'),
+    ...fromMatins('d-annual-matins-pray-for-peace', 'd-annual-offering-lamb-pray-for-peace'),
+    ...fromMatins('d-annual-matins-pray-for-the-fathers', 'd-annual-offering-lamb-pray-for-the-fathers'),
+    ...fromMatins('d-annual-matins-pray-for-the-assemblies', 'd-annual-offering-lamb-pray-for-the-assemblies'),
   ];
+  // The same words sung to the long ("Great") tune, right after the regular one
+  for (const key of ['one-is-the-holy-father', 'pray-for-mercy']) {
+    const i = deaconAnnualOffering.hymns.findIndex((h) => h.id === `d-annual-offering-lamb-${key}`);
+    if (i < 0) continue;
+    const hymn = deaconAnnualOffering.hymns[i];
+    deaconAnnualOffering.hymns.splice(i + 1, 0, {
+      ...hymn,
+      id: `${hymn.id}-great`,
+      title: hymn.title.replace(/\)$/, ', Great)'),
+      versions: hymn.versions.map((v) => ({ ...v })),
+    });
+  }
 }
 
 // ---- Deacon Responses > Annual > Liturgy of the Word: the same responses as in Matins ----
@@ -3737,7 +3857,7 @@ if (deaconAnnualLiturgyWord) {
   ];
 }
 
-// ---- Deacon Responses > Annual > Liturgy of the Faithful: the people and deacon at the end ----
+// ---- Deacon Responses > Annual > Liturgy of the Faithful (St Basil, with the St Gregory responses marked) ----
 const deaconAnnualLiturgyFaithful = deaconCategories
   .find((c) => c.id === 'deacon-annual')
   ?.services.find((s) => s.id === 'd-annual-liturgy-faithful');
@@ -3745,14 +3865,263 @@ const deaconAnnualLiturgyFaithful = deaconCategories
 if (deaconAnnualLiturgyFaithful) {
   deaconAnnualLiturgyFaithful.hymns = [
     {
-      id: 'd-annual-liturgy-faithful-in-christ-jesus-our-lord',
-      title: 'Ϧⲉⲛ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲉⲛϭⲟⲓⲥ (In Christ Jesus Our Lord)',
+      id: 'd-annual-liturgy-faithful-in-the-wisdom-of-god',
+      title: "Ⲉⲛ ⲥⲟⲫⲓⲁ̀ Ⲑⲉⲟⲩ (In the Wisdom of God)",
       versions: [
-        { language: 'coptic', text: 'Ⲡⲓⲗⲁⲟⲥ:\n\nϦⲉⲛ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲉⲛϭⲟⲓⲥ.\n\nⲠⲓⲇⲓⲁⲕⲱⲛ:\n\nⲦⲁⲥ ⲕⲉⲫⲁⲗⲁⲥ ⲩ̀ⲙⲱⲛ ⲧⲱ ⲕⲩⲣⲓⲱ ⲕ̀ⲗⲓⲛⲁⲧⲉ.\n\nⲠⲓⲗⲁⲟⲥ:\n\nⲈⲛⲱⲡⲓⲟⲛ ⲥⲟⲩ Ⲕⲩⲣⲓⲉ.\n\nⲠⲓⲇⲓⲁⲕⲱⲛ:\n\nⲠ̀ⲣⲟⲥⲭⲱⲙⲉⲛ Ⲑⲉⲟⲩ ⲙⲉⲧⲁ ⲫⲟⲃⲟⲩ: ⲁ̀ⲙⲏⲛ.\n\nⲠⲓⲟⲩⲏⲃ:\n\nⲒⲣⲏⲛⲏ ⲡⲁⲥⲓ.\n\nⲠⲓⲗⲁⲟⲥ:\n\nⲔⲉ ⲧⲱ ⲡ̀ⲛⲉⲩⲙⲁⲧⲓ ⲥⲟⲩ.' },
-        { language: 'englishCoptic', text: 'Pi-laos:\n\nKhen Pi-ekhristos Iēsous Pentshois.\n\nPi-diakon:\n\nTas kefalas umōn tō kuriō eklinate.\n\nPi-laos:\n\nEnōpion sou Kurie.\n\nPi-diakon:\n\nEproskhōmen Theou meta fovou: amēn.\n\nPi-ouib:\n\nIrēnē pasi.\n\nPi-laos:\n\nKe tō epneumati sou.' },
-        { language: 'english', text: 'People:\n\nIn Christ Jesus our Lord.\n\nDeacon:\n\nBow your heads to the Lord.\n\nPeople:\n\nBefore You, O Lord.\n\nDeacon:\n\nLet us attend in the fear of God. Amen.\n\nPriest:\n\nPeace be with all.\n\nPeople:\n\nAnd with your spirit.' },
-        { language: 'englishArabic', text: 'Esh-sha\'b:\n\nBil-Maseeh Yasou\' Rabbina.\n\nEsh-shammas:\n\nIhnou ru\'ousakum lir-Rabb.\n\nEsh-sha\'b:\n\nAmamak ya Rabb.\n\nEsh-shammas:\n\nAnsitou bi-khawf Allah. Ameen.\n\nEl-kahin:\n\nEs-salam lil-kull.\n\nEsh-sha\'b:\n\nWa li-rouhika aydan.' },
-        { language: 'arabic', text: 'الشعب:\n\nبالمسيحِ يسوع ربنا.\n\nالشماس:\n\nإحنوا رؤوسَكم للربِ.\n\nالشعب:\n\nأمامك ياربُ.\n\nالشماس:\n\nأنصتوا بخوفِ الله. آمين.\n\nالكاهن:\n\nالسلامُ للكلِّ.\n\nالشعب:\n\nولروحِكَ أيضاً.' },
+        { language: 'coptic', text: "Ⲉⲛ ⲥⲟⲫⲓⲁ̀ Ⲑⲉⲟⲩ ⲡ̀ⲣⲟⲥⲭⲱⲙⲉⲛ." },
+        { language: 'englishCoptic', text: "En sofi-a Theou eproskhōmen." },
+        { language: 'english', text: "In the wisdom of God, let us attend." },
+        { language: 'englishArabic', text: "Bi-hikmat Allah nunsit." },
+        { language: 'arabic', text: "بحكمة الله ننصت." },
+      ],
+    },
+    {
+      id: 'd-annual-liturgy-faithful-reconciliation',
+      title: "Ⲡⲣⲟⲥⲉⲩⲝⲁⲥⲑⲉ ⲩ̀ⲡⲉⲣ ⲧⲏⲥ ⲧⲉⲗⲓⲁⲥ (Reconciliation Prayer)",
+      versions: [
+        { language: 'coptic', text: "Ⲉⲡⲓ ⲡ̀ⲣⲟⲥⲉⲩⲭⲏ ⲥ̀ⲧⲁⲑⲏⲧⲉ.\n\nⲠⲣⲟⲥⲉⲩⲝⲁⲥⲑⲉ ⲩ̀ⲡⲉⲣ ⲧⲏⲥ ⲧⲉⲗⲓⲁⲥ ⲓ̀ⲣⲏⲛⲏⲥ ⲕⲉ ⲁ̀ⲅⲁⲡⲏⲥ ⲕⲉ ⲧⲱⲛ ⲁ̀ⲅⲓⲱⲛ ⲁⲥⲡⲁⲥⲙⲱⲛ ⲧⲱⲛ ⲁ̀ⲡⲟⲥⲧⲟⲗⲱⲛ." },
+        { language: 'englishCoptic', text: "Epi eproseukhē estathēte.\n\nProseuksasthe uper tēs telias irēnēs ke agapēs ke tōn agiōn aspasmōn tōn apostolōn." },
+        { language: 'english', text: "Stand up for prayer.\n\nPray for perfect peace, love, and the holy apostolic kisses." },
+        { language: 'englishArabic', text: "Lis-salah qifu.\n\nSallu min agl es-salam el-kamil, wal-mahabba, wal-qubla et-tahira er-rasouliya." },
+        { language: 'arabic', text: "للصلاة قفوا.\n\nصلوا من أجل السلام الكامل، والمحبة، والقبلة الطاهرة الرسولية." },
+      ],
+    },
+    {
+      id: 'd-annual-liturgy-faithful-reconciliation-st-gregory',
+      title: "Ⲡⲣⲟⲥⲉⲩⲝⲁⲥⲑⲉ ⲩ̀ⲡⲉⲣ ⲧⲏⲥ ⲧⲉⲗⲓⲁⲥ (Reconciliation Prayer, St Gregory)",
+      versions: [
+        { language: 'coptic', text: "Ⲡⲣⲟⲥⲉⲩⲝⲁⲥⲑⲉ ⲩ̀ⲡⲉⲣ ⲧⲏⲥ ⲧⲉⲗⲓⲁⲥ ⲓ̀ⲣⲏⲛⲏⲥ ⲕⲉ ⲁ̀ⲅⲁⲡⲏⲥ ⲕⲉ ⲧⲱⲛ ⲁ̀ⲅⲓⲱⲛ ⲁⲥⲡⲁⲥⲙⲱⲛ ⲧⲱⲛ ⲁ̀ⲡⲟⲥⲧⲟⲗⲱⲛ." },
+        { language: 'englishCoptic', text: "Proseuksasthe uper tēs telias irēnēs ke agapēs ke tōn agiōn aspasmōn tōn apostolōn." },
+        { language: 'english', text: "Pray for perfect peace, love, and the holy apostolic kisses." },
+        { language: 'englishArabic', text: "Sallu min agl es-salam el-kamil, wal-mahabba, wal-qubla et-tahira er-rasouliya." },
+        { language: 'arabic', text: "صلوا من أجل السلام الكامل، والمحبة، والقبلة الطاهرة الرسولية." },
+      ],
+    },
+    {
+      id: 'd-annual-liturgy-faithful-greet-one-another',
+      title: "Ⲁⲥⲡⲁⲍⲉⲥⲑⲉ ⲁⲗⲗⲏⲗⲟⲩⲥ (Greet One Another)",
+      versions: [
+        { language: 'coptic', text: "Ⲁⲥⲡⲁⲍⲉⲥⲑⲉ ⲁⲗⲗⲏⲗⲟⲩⲥ ⲉⲛ ⲫⲓⲗⲏⲙⲁⲧⲓ ⲁ̀ⲅⲓⲱ̀.\n\nⲔⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ: Ⲕⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ: Ⲕⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ: ⲥⲉ Ⲕⲩⲣⲓⲉ ⲉ̀ⲧⲉ ⲫⲁⲓ ⲡⲉ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ Ⲡϣⲏⲣⲓ ⲙ̀Ⲫϯ ⲥⲱⲧⲉⲙ ⲉ̀ⲣⲟⲛ ⲟⲩⲟϩ ⲛⲁⲓ ⲛⲁⲛ.\n\nⲠⲣⲟⲥⲫⲉⲣⲓⲛ ⲕⲁⲧⲁ ⲧ̀ⲣⲟⲡⲟⲛ: ⲥ̀ⲧⲁⲑⲏⲧⲉ ⲕⲁⲧⲁ ⲧ̀ⲣⲟⲙⲟⲩ: ⲓⲥ ⲁ̀ⲛⲁⲧⲟⲗⲁⲥ ⲃ̀ⲗⲉⲯⲁⲧⲉ. Ⲡ̀ⲣⲟⲥⲭⲱⲙⲉⲛ." },
+        { language: 'englishCoptic', text: "Aspazesthe allēlous en filēmati agi-ō.\n\nKurie ele-ēson: Kurie ele-ēson: Kurie ele-ēson: se Kurie ete fai pe Iēsous Pi-ekhristos Pshēri em-Efnouti sōtem eron ouoh nai nan.\n\nProsferin kata etropon: estathēte kata etromou: is anatolas eblepsate. Eproskhōmen." },
+        { language: 'english', text: "Greet one another with a holy kiss.\n\nLord have mercy. Lord have mercy. Lord have mercy. Yea, Lord, who are Jesus Christ, the Son of God, hear us and have mercy upon us.\n\nOffer in order. Stand with trembling. Look towards the East. Let us attend." },
+        { language: 'englishArabic', text: "Qabbilu ba'dakum ba'dan bi-qubla muqaddasa.\n\nYa Rabbu irham. Ya Rabbu irham. Ya Rabbu irham. Na'am ya Rabb elladhi huwa Yasou' el-Maseeh Ibn Allah, isma'na warhamna.\n\nTaqaddamu 'ala er-rasm, qifu bi-ra'da, wa ila esh-sharq unzuru. Nunsit." },
+        { language: 'arabic', text: "قبلوا بعضكم بعضاً بقبلة مقدسة.\n\nيا رب ارحم. يا رب ارحم. يا رب ارحم. نعم يا رب الذي هو يسوع المسيح ابن الله، اسمعنا وارحمنا.\n\nتقدموا على الرسم، قفوا برعدة، وإلى الشرق انظروا. ننصت." },
+      ],
+    },
+    {
+      id: 'd-annual-liturgy-faithful-greet-one-another-great',
+      title: 'Ⲁⲥⲡⲁⲍⲉⲥⲑⲉ (Great Greet One Another)',
+      versions: [
+        { language: 'coptic', audio: 'deacon-great-aspazesthe.m4a', text: "Ⲁⲥⲡⲁⲍⲉⲥⲑⲉ ⲁⲗⲗⲏⲗⲟⲩⲥ ⲉⲛ ⲫⲓⲗⲏⲙⲁⲧⲓ ⲁ̀ⲅⲓⲱ.\n\nⲀ̀ⲙⲏⲛ. Ⲕⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ Ⲕⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ Ⲕⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ. Ⲉ̀ⲧⲉ ⲫⲁⲓ ⲡⲉ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ Ⲡ̀ϣⲏⲣⲓ ⲙ̀Ⲫ̀ⲛⲟⲩϯ ⲥⲱⲧⲉⲙ ⲉ̀ⲣⲟⲛ ⲟⲩⲟϩ ⲛⲁⲓ ⲛⲁⲛ.\n\nⲤ̀ⲧⲱⲙⲉⲛ ⲕⲁⲗⲱⲥ: ⲥ̀ⲧⲱⲙⲉⲛ ⲉⲩⲗⲁⲃⲱⲥ: ⲥ̀ⲧⲱⲙⲉⲛ ⲉⲕⲧⲉⲛⲱⲥ: ⲥ̀ⲧⲱⲙⲉⲛ ⲉⲛⲓ̀ⲣⲏⲛⲏ: ⲥ̀ⲧⲱⲙⲉⲛ ⲙⲉⲧⲁ ⲫⲟⲃⲟⲩ Ⲑⲉⲟⲩ ⲕⲉ ⲧ̀ⲣⲟⲙⲟⲩ ⲕⲉ ⲕⲁⲧⲁ ⲛⲩⲝⲉⲟⲥ.\n\nⲠⲓⲕ̀ⲗⲏⲣⲟⲥ ⲛⲉⲙ ⲡⲓⲗⲁⲟⲥ ⲧⲏⲣϥ: ϧⲉⲛ ⲟⲩⲧⲱⲃϩ ⲛⲉⲙ ⲟⲩϣⲉⲡϩ̀ⲙⲟⲧ: ⲛⲉⲙ ⲟⲩⲥⲉⲙⲛⲓ ⲛⲉⲙ ⲟⲩⲭⲁⲣⲱϥ.\n\nϤⲁⲓ ⲛ̀ⲛⲉⲧⲉⲛⲃⲁⲗ ⲉ̀ⲡ̀ϣⲱⲓ ⲉ̀ⲡ̀ⲥⲁ ⲛ̀ϯⲁ̀ⲛⲁⲧⲟⲗⲏ: ⲛ̀ⲧⲉⲧⲉⲛⲛⲁⲩ ⲉ̀ⲡⲓⲑⲩⲥⲓⲁⲥⲧⲏⲣⲓⲟⲛ: ⲉ̀ⲣⲉ Ⲡⲓⲥⲱⲙⲁ ⲛⲉⲙ Ⲡⲓⲥ̀ⲛⲟϥ ⲛ̀ⲧⲉ Ⲉⲙⲙⲁⲛⲟⲩⲏⲗ Ⲡⲉⲛⲛⲟⲩϯ ⲭⲏ ⲉ̀ϩ̀ⲣⲏⲓ ⲉ̀ϫⲱϥ.\n\nⲈ̀ⲣⲉ ⲛⲓⲁⲅⲅⲉⲗⲟⲥ ⲟ̀ϩⲓ ⲉ̀ⲣⲁⲧⲟⲩ ⲛⲉⲙ ⲛⲓⲁⲣⲭⲏⲁⲅⲅⲉⲗⲟⲥ: Ⲛⲓⲥⲉⲣⲁⲫⲓⲙ ⲛⲁ ⲡⲓⲥⲟⲟⲩ ⲛ̀ⲧⲉⲛϩ: ⲛⲉⲙ Ⲛⲓⲭⲉⲣⲟⲩⲃⲓⲙ ⲉⲑⲙⲉϩ ⲙ̀ⲃⲁⲗ: ⲉⲩϩⲱⲃⲥ ⲛ̀ⲛⲟⲩϩⲟ ⲉⲑⲃⲉ ⲑ̀ⲙⲉⲧⲥⲁⲓⲉ ⲛ̀ⲧⲉ ⲡⲉϥⲛⲓϣϯ ⲡ̀ⲱ̀ⲟⲩ: ⲛ̀ⲁⲧϣ̀ⲉⲣⲑⲉⲱ̀ⲣⲓⲛ ⲙ̀ⲙⲟϥ ⲟⲩⲟϩ ⲛ̀ⲁⲧϣ̀ⲥⲁϫⲓ ⲙ̀ⲙⲟϥ.\n\nⲈⲩϩⲱⲥ ϧⲉⲛ ⲟⲩⲥ̀ⲙⲏ ⲛ̀ⲟⲩⲱⲧ: ⲉⲩⲱϣ ⲉ̀ⲃⲟⲗ ⲉⲩϫⲱ ⲙ̀ⲙⲟⲥ: ϫⲉ ⲁ̀ⲅⲓⲟⲥ ⲁ̀ⲅⲓⲟⲥ ⲁ̀ⲅⲓⲟⲥ: Ⲕⲩⲣⲓⲟⲥ ⲥⲁⲃⲁⲱⲑ: ⲡ̀ⲗⲏⲣⲏⲥ ⲟ̀ ⲟⲩⲣⲁⲛⲟⲥ ⲕⲉ ⲏ̀ⲅⲏ ⲧⲏⲥ ⲁ̀ⲅⲓⲁⲥ ⲥⲟⲩ ⲇⲟⲝⲏⲥ." },
+        { language: 'englishCoptic', audio: 'deacon-great-aspazesthe.m4a', text: "Aspazesthe allēlous en filēmati agiō.\n\nAmēn. Kurie ele-ēson Kurie ele-ēson Kurie ele-ēson. Ete fai pe Iēsous Pi-ekhristos Epshēri em-Efnouti sōtem eron ouoh nai nan.\n\nEstōmen kalōs: estōmen eulavōs: estōmen ektenōs: estōmen enirēnē: estōmen meta fovou Theou ke etromou ke kata nukseos.\n\nPi-eklēros nem pilaos tērf: khen outōbh nem oushepehmot: nem ousemni nem oukharōf.\n\nFai ennetenval e-epshōi e-epsa enti-anatolē: entetennau epithusiastērion: ere Pisōma nem Pi-esnof ente Emmanouēl Pennouti khē e-ehrēi ejōf.\n\nEre niaggelos ohi eratou nem niarkhēaggelos: Niserafim na pisoou entenh: nem Nikherouvim ethmeh emval: euhōbs ennouho ethve ethmetsaie ente pefnishti epōou: enatesherthe-ōrin emmof ouoh enateshsaji emmof.\n\nEuhōs khen ou-esmē enouōt: euōsh evol eujō emmos: je agios agios agios: Kurios savaōth: eplērēs o ouranos ke ēgē tēs agias sou doksēs." },
+        { language: 'english', text: "Greet one another with a holy kiss.\n\nAmen. Lord have mercy, Lord have mercy, Lord have mercy. Yes, Lord, who are Jesus Christ, the Son of God, hear us and have mercy upon us.\n\nLet us stand well, let us stand reverently, let us stand earnestly, let us stand in peace, let us stand in the fear of God, with trembling and contrition.\n\nO clergy and all the people, with prayer and with thanksgiving, with tranquility and silence,\n\nraise your eyes towards the East to see the altar, with the Body and the Blood of Emmanuel our God placed upon it.\n\nThe angels and archangels are standing; the Seraphim with six wings and the Cherubim full of eyes are covering their faces because of the splendor of His great glory, which is invisible and ineffable,\n\npraising in one voice, proclaiming and saying: \"Holy, holy, holy, Lord of hosts; heaven and earth are full of Your holy glory.\"" },
+        { language: 'englishArabic', text: "Qabbilu ba'dakum ba'dan bi-qubla muqaddasa.\n\nAmeen. Ya Rabbu irham, ya Rabbu irham, ya Rabbu irham, elladhi huwa Yasou' el-Maseeh Ibn Allah, isma'na warhamna.\n\nFal-naqif hasanan, li-naqif bi-taqwa, naqif bi-ittisal, naqif bi-salam, naqif bi-khawf Allah wa ra'da wa khushou'.\n\nAyyuha el-ikleeros wa kull esh-sha'b bi-tilba wa shukr, bi-hudou' wa sukout.\n\nIrfa'u a'yunakum ila nahiyat el-mashriq, li-tanzuru el-madhbah wa gasad wa dam 'Emmanu'eel ilahina mawdou'ayn 'alayh.\n\nEl-mala'ika wa ru'asa' el-mala'ika qiyam. Es-sarafeem dhu es-sitta agniha wash-sharoubeem el-mumtali'oon a'yunan yasturoon wugouhahum min baha' 'azamat magdihi ghayr el-manzour wala yuntaq bih.\n\nYusabbihoon bi-sawt wahid sarikheen qa'ileen: \"Quddous, quddous, quddous, Rabb es-Saba'out. Es-sama' wal-ard mamlou'atan min magdika el-aqdas.\"" },
+        { language: 'arabic', text: "قبِّلوا بعضَكُمْ بعضاً بقُبلةٍ مقدسةٍ.\n\nآمين. يا ربُّ إرحَم، يا ربُّ إرحَم، يا ربُّ إرحَم، الذي هو يسوع المسيح إبن الله، إسمعنا وإرحمنا.\n\nفلنقف حسناً، لنقف بتقوَى، نقف بإتصال، نقف بسلام، نقف بخوف الله ورعدة وخشوع.\n\nأيها الإكليروس وكل الشعب بطلبة وشكر، بهدوء وسكوت.\n\nإرفعوا أعينكم إلى ناحية المشرق، لتنظروا المذبح وجسد ودم عمانوئيل إلهنا موضوعين عليه.\n\nالملائكة ورؤساء الملائكة قيام. السِّرافيم ذو الستة أجنحه والشاروبيم الممتلئون أعيناً يسترون وجوههم من بهاء عظمة مجده غير المنظور ولا ينطق به.\n\nيسبحون بصوت واحد صارخين قائلين: \"قدوس قدوس قدوس رب الصاباؤوت. السماء والأرض مملوءتان من مجدك الأقدس.\"" },
+      ],
+    },
+    {
+      id: 'd-annual-liturgy-faithful-anaphora',
+      title: "Ⲟⲓ ⲕⲁⲑⲏⲙⲉⲛⲟⲓ ⲁ̀ⲛⲁⲥⲧⲏⲧⲉ (Anaphora)",
+      versions: [
+        { language: 'coptic', text: "Ⲟⲓ ⲕⲁⲑⲏⲙⲉⲛⲟⲓ ⲁ̀ⲛⲁⲥⲧⲏⲧⲉ.\n\nⲒⲥ ⲁ̀ⲛⲁⲧⲟⲗⲁⲥ ⲃ̀ⲗⲉⲯⲁⲧⲉ.\n\nⲠ̀ⲣⲟⲥⲭⲱⲙⲉⲛ." },
+        { language: 'englishCoptic', text: "Oi kathēmenoi anastēte.\n\nIs anatolas eblepsate.\n\nEproskhōmen." },
+        { language: 'english', text: "You who are seated, stand.\n\nLook towards the East.\n\nLet us attend." },
+        { language: 'englishArabic', text: "Ayyuha el-guloos qifu.\n\nWa ila esh-sharq unzuru.\n\nNunsit." },
+        { language: 'arabic', text: "أيها الجلوس قفوا.\n\nوإلى الشرق انظروا.\n\nننصت." },
+      ],
+    },
+    {
+      id: 'd-annual-liturgy-faithful-epiclesis',
+      title: "Ⲟⲩⲱϣⲧ ⲙ̀Ⲫϯ (Epiclesis)",
+      versions: [
+        { language: 'coptic', text: "Ⲟⲩⲱϣⲧ ⲙ̀Ⲫϯ ϧⲉⲛ ⲟⲩϩⲟϯ ⲛⲉⲙ ⲟⲩⲥⲑⲉⲣⲧⲉⲣ.\n\nⲠ̀ⲣⲟⲥⲭⲱⲙⲉⲛ: ⲁ̀ⲙⲏⲛ." },
+        { language: 'englishCoptic', text: "Ouōsht em-Efnouti khen ouhoti nem oustherter.\n\nEproskhōmen: amēn." },
+        { language: 'english', text: "Worship God in fear and trembling.\n\nLet us attend. Amen." },
+        { language: 'englishArabic', text: "Usgudu lillah bi-khawf wa ra'da.\n\nNunsit. Ameen." },
+        { language: 'arabic', text: "اسجدوا لله بخوف ورعدة.\n\nننصت. آمين." },
+      ],
+    },
+    ...fromMatins('d-annual-matins-pray-for-peace', 'd-annual-liturgy-faithful-pray-for-peace'),
+    ...fromMatins('d-annual-matins-pray-for-the-fathers', 'd-annual-liturgy-faithful-pray-for-the-fathers'),
+    {
+      id: 'd-annual-liturgy-faithful-pray-for-priests-and-deacons',
+      title: "Ⲡⲣⲟⲥⲉⲩⲝⲁⲥⲑⲉ ⲩ̀ⲡⲉⲣ ⲧⲱⲛ ⲏ̀ⲅⲟⲩⲙⲉⲛⲱⲛ (Pray for the Priests and Deacons)",
+      versions: [
+        { language: 'coptic', text: "Ⲡⲣⲟⲥⲉⲩⲝⲁⲥⲑⲉ ⲩ̀ⲡⲉⲣ ⲧⲱⲛ ⲏ̀ⲅⲟⲩⲙⲉⲛⲱⲛ ⲕⲉ ⲡ̀ⲣⲉⲥⲃⲩⲧⲉⲣⲱⲛ ⲕⲉ ⲇⲓⲁⲕⲟⲛⲱⲛ ⲕⲉ ⲩ̀ⲡⲟⲇⲓⲁⲕⲟⲛⲱⲛ ⲉⲡⲧⲁ ⲧⲁⲅⲙⲁⲧⲱⲛ ⲧⲟⲩ Ⲑⲉⲟⲩ ⲧⲏⲥ ⲉⲕⲕⲗⲏⲥⲓⲁⲥ." },
+        { language: 'englishCoptic', text: "Proseuksasthe uper tōn ēgoumenōn ke epresvuterōn ke diakonōn ke upodiakonōn epta tagmatōn tou Theou tēs ekklēsias." },
+        { language: 'english', text: "Pray for the hegumens, priests, deacons, subdeacons, and the seven orders of the Church of God." },
+        { language: 'englishArabic', text: "Sallu min agl el-qamamisa wal-qusus wash-shamamisa wal-ibodiyakoniyyeen wa sab' tughmat kaneesat Allah." },
+        { language: 'arabic', text: "صلوا من أجل القمامصة والقسوس والشمامسة والإيبوذياكونيين وسبع طغمات كنيسة الله." },
+      ],
+    },
+    ...fromMatins('d-annual-matins-pray-for-the-place', 'd-annual-liturgy-faithful-pray-for-the-place'),
+    ...fromMatins('d-annual-matins-pray-for-the-waters', 'd-annual-liturgy-faithful-pray-for-the-waters'),
+    ...fromMatins('d-annual-matins-pray-for-the-plants', 'd-annual-liturgy-faithful-pray-for-the-plants'),
+    ...fromMatins('d-annual-matins-pray-for-the-fruits', 'd-annual-liturgy-faithful-pray-for-the-fruits'),
+    ...fromMatins('d-annual-matins-pray-for-the-waters-plants-fruits', 'd-annual-liturgy-faithful-pray-for-the-waters-plants-fruits'),
+    {
+      id: 'd-annual-liturgy-faithful-pray-for-the-oblations',
+      title: "Ⲡⲣⲟⲥⲉⲩⲝⲁⲥⲑⲉ ⲩ̀ⲡⲉⲣ ⲧⲱⲛ ⲁ̀ⲅⲓⲱⲛ (Pray for the Oblations)",
+      versions: [
+        { language: 'coptic', text: "Ⲡⲣⲟⲥⲉⲩⲝⲁⲥⲑⲉ ⲩ̀ⲡⲉⲣ ⲧⲱⲛ ⲁ̀ⲅⲓⲱⲛ ⲧⲓⲙⲓⲱⲛ ⲇⲱⲣⲱⲛ ⲧⲟⲩⲧⲱⲛ ⲕⲉ ⲑⲩⲥⲓⲱⲛ ⲏ̀ⲙⲱⲛ ⲕⲉ ⲡ̀ⲣⲟⲥⲫⲉⲣⲟⲛⲧⲱⲛ." },
+        { language: 'englishCoptic', text: "Proseuksasthe uper tōn agiōn timiōn dōrōn toutōn ke thusiōn ēmōn ke eprosferontōn." },
+        { language: 'english', text: "Pray for these holy and precious gifts, our sacrifices and those who have brought them." },
+        { language: 'englishArabic', text: "Sallu min agl hadhihi el-qarabeen el-muqaddasa el-kareema, wa taqdimatina, wal-ladheena qaddamuha." },
+        { language: 'arabic', text: "صلوا من أجل هذه القرابين المقدسة الكريمة، وتقدماتنا، والذين قدموها." },
+      ],
+    },
+    {
+      id: 'd-annual-liturgy-faithful-worship-the-lamb-st-gregory',
+      title: "Ⲟⲩⲱϣⲧ ⲙ̀ⲡⲓϨⲓⲏⲃ (Worship the Lamb, St Gregory)",
+      versions: [
+        { language: 'coptic', text: "Ⲟⲩⲱϣⲧ ⲙ̀ⲡⲓϨⲓⲏⲃ ⲛ̀Ⲗⲟⲅⲟⲥ ⲛ̀ⲧⲉ Ⲫϯ." },
+        { language: 'englishCoptic', text: "Ouōsht empi-Hiēb en-Logos ente Efnouti." },
+        { language: 'english', text: "Worship the Lamb, the Logos of God." },
+        { language: 'englishArabic', text: "Usgudu lil-hamal kalimat Allah." },
+        { language: 'arabic', text: "اسجدوا للحمل كلمة الله." },
+      ],
+    },
+    {
+      id: 'd-annual-liturgy-faithful-pray-for-the-kings-st-gregory',
+      title: "Ⲡⲣⲟⲥⲉⲩⲝⲁⲥⲑⲉ ⲩ̀ⲡⲉⲣ ⲧⲱⲛ ⲫⲓⲗⲟⲭ̀ⲣⲓⲥⲧⲱⲛ (Pray for the Kings, St Gregory)",
+      versions: [
+        { language: 'coptic', text: "Ⲡⲣⲟⲥⲉⲩⲝⲁⲥⲑⲉ ⲩ̀ⲡⲉⲣ ⲧⲱⲛ ⲫⲓⲗⲟⲭ̀ⲣⲓⲥⲧⲱⲛ ⲏ̀ⲙⲱⲛ ⲃⲁⲥⲓⲗⲉⲱⲛ." },
+        { language: 'englishCoptic', text: "Proseuksasthe uper tōn filo-ekhristōn ēmōn vasileōn." },
+        { language: 'english', text: "Pray for our Christ-loving kings (leaders)." },
+        { language: 'englishArabic', text: "Sallu min agl mulukina (ru'asa'ina) muhibbi el-Maseeh." },
+        { language: 'arabic', text: "صلوا من أجل ملوكنا (رؤسائنا) محبي المسيح." },
+      ],
+    },
+    {
+      id: 'd-annual-liturgy-faithful-pray-for-the-government-st-gregory',
+      title: "Ⲡⲣⲟⲥⲉⲩⲝⲁⲥⲑⲉ ⲩ̀ⲡⲉⲣ ⲧⲱⲛ ⲉⲛ ⲧⲱ ⲡⲁⲗⲁⲧⲓⲱ (Pray for the Government, St Gregory)",
+      versions: [
+        { language: 'coptic', text: "Ⲡⲣⲟⲥⲉⲩⲝⲁⲥⲑⲉ ⲩ̀ⲡⲉⲣ ⲧⲱⲛ ⲉⲛ ⲧⲱ ⲡⲁⲗⲁⲧⲓⲱ ⲁ̀ⲇⲉⲗⲫⲱⲛ ⲡⲓⲥⲧⲱⲛ ⲕⲉ ⲟⲣⲑⲟⲇⲟⲝⲱⲛ ⲕⲉ ⲡⲁⲛⲧⲱⲛ ⲧⲱⲛ ⲥ̀ⲧⲣⲁⲧⲟⲡⲉⲇⲱⲛ." },
+        { language: 'englishCoptic', text: "Proseuksasthe uper tōn en tō palatiō adelfōn pistōn ke orthodoksōn ke pantōn tōn estratopedōn." },
+        { language: 'english', text: "Pray for those of our brethren, the Orthodox believers who are in the palace (government), and all the soldiers." },
+        { language: 'englishArabic', text: "Sallu min agl elladheena fil-balat min el-ikhwa el-mu'mineen el-orthodoxiyyeen wa sa'ir el-agnad." },
+        { language: 'arabic', text: "صلوا من أجل الذين في البلاط من الإخوة المؤمنين الأرثوذكسيين وسائر الأجناد." },
+      ],
+    },
+    {
+      id: 'd-annual-liturgy-faithful-pray-for-the-oblations-st-gregory',
+      title: "Ⲡⲣⲟⲥⲉⲩⲝⲁⲥⲑⲉ ⲩ̀ⲡⲉⲣ ⲧⲱⲛ ⲁ̀ⲅⲓⲱⲛ (Pray for the Oblations, St Gregory)",
+      versions: [
+        { language: 'coptic', text: "Ⲡⲣⲟⲥⲉⲩⲝⲁⲥⲑⲉ ⲩ̀ⲡⲉⲣ ⲧⲱⲛ ⲁ̀ⲅⲓⲱⲛ ⲧⲓⲙⲓⲱⲛ ⲇⲱⲣⲱⲛ ⲧⲟⲩⲧⲱⲛ ⲕⲉ ⲑⲩⲥⲓⲱⲛ ⲏ̀ⲙⲱⲛ ⲕⲉ ⲡ̀ⲣⲟⲥⲫⲉⲣⲟⲛⲧⲱⲛ." },
+        { language: 'englishCoptic', text: "Proseuksasthe uper tōn agiōn timiōn dōrōn toutōn ke thusiōn ēmōn ke eprosferontōn." },
+        { language: 'english', text: "Pray for these holy and precious gifts, our sacrifices and those who have brought them." },
+        { language: 'englishArabic', text: "Sallu min agl hadhihi el-qarabeen el-muqaddasa el-kareema, wa taqdimatina, wal-ladheena qaddamuha." },
+        { language: 'arabic', text: "صلوا من أجل هذه القرابين المقدسة الكريمة، وتقدماتنا، والذين قدموها." },
+      ],
+    },
+    {
+      id: 'd-annual-liturgy-faithful-pray-for-the-captives-st-gregory',
+      title: "Ⲡⲣⲟⲥⲉⲩⲝⲁⲥⲑⲉ ⲩ̀ⲡⲉⲣ ⲧⲱⲛ ⲉⲭⲙⲁⲗⲱⲧⲱⲛ (Pray for the Captives, St Gregory)",
+      versions: [
+        { language: 'coptic', text: "Ⲡⲣⲟⲥⲉⲩⲝⲁⲥⲑⲉ ⲩ̀ⲡⲉⲣ ⲧⲱⲛ ⲉⲭⲙⲁⲗⲱⲧⲱⲛ." },
+        { language: 'englishCoptic', text: "Proseuksasthe uper tōn ekhmalōtōn." },
+        { language: 'english', text: "Pray for the captives." },
+        { language: 'englishArabic', text: "Sallu min agl el-masbiyyeen." },
+        { language: 'arabic', text: "صلوا من أجل المسبيين." },
+      ],
+    },
+    {
+      id: 'd-annual-liturgy-faithful-worship-god-st-gregory',
+      title: "Ⲕ̀ⲗⲓⲛⲁⲧⲉ Ⲑⲉⲱ̀ (Worship God, St Gregory)",
+      versions: [
+        { language: 'coptic', text: "Ⲕ̀ⲗⲓⲛⲁⲧⲉ Ⲑⲉⲱ̀ ⲙⲉⲧⲁ ⲫⲟⲃⲟⲩ." },
+        { language: 'englishCoptic', text: "Eklinate The-ō meta fovou." },
+        { language: 'english', text: "Worship God in fear." },
+        { language: 'englishArabic', text: "Usgudu lillah bi-khawf." },
+        { language: 'arabic', text: "اسجدوا لله بخوف." },
+      ],
+    },
+    {
+      id: 'd-annual-liturgy-faithful-let-those-who-read',
+      title: "Ⲛⲏⲉⲧⲱϣ (Let Those Who Read)",
+      versions: [
+        { language: 'coptic', text: "Ⲛⲏⲉⲧⲱϣ ⲙⲁⲣⲟⲩⲧⲁⲟⲩⲟ̀ ⲛ̀ⲛⲓⲣⲁⲛ: ⲛ̀ⲧⲉ ⲛⲉⲛⲓⲟϯ ⲉⲑⲟⲩⲁⲃ ⲙ̀ⲡⲁⲧⲣⲓⲁⲣⲭⲏⲥ ⲉⲧⲁⲩⲉⲛⲕⲟⲧ: Ⲡ̀ϭⲟⲓⲥ ⲙⲁⲙ̀ⲧⲟⲛ ⲛ̀ⲛⲟⲩⲯⲩⲭⲏ ⲧⲏⲣⲟⲩ: ⲟⲩⲟϩ ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ." },
+        { language: 'englishCoptic', text: "Nēetōsh maroutaou-o enniran: ente nenioti ethouab empatriarkhēs etauenkot: Eptshois ma-emton ennoupsukhē tērou: ouoh entefkha nennovi nan evol." },
+        { language: 'english', text: "Let those who read, recite the names of our holy fathers the patriarchs who have fallen asleep. O Lord, repose all their souls and forgive us our sins." },
+        { language: 'englishArabic', text: "El-qari'oon fal-yaqulu asma' aba'ina el-batarika el-qiddiseen elladheena raqadu. Er-Rabb yuneeh nufusahum agma'een, wa yaghfir lana khatayana." },
+        { language: 'arabic', text: "القارئون فليقولوا أسماء آبائنا البطاركة القديسين الذين رقدوا. الرب ينيح نفوسهم أجمعين، ويغفر لنا خطايانا." },
+      ],
+    },
+    {
+      id: 'd-annual-liturgy-faithful-through-the-prayers-evshes',
+      title: "Ⲉⲩⲭⲉⲥ (Through the Prayers)",
+      versions: [
+        { language: 'coptic', text: "Ⲉⲩⲭⲉⲥ ⲕⲉ ⲡ̀ⲣⲉⲥⲃⲓⲉⲥ: ⲧⲏⲥ ⲡⲁⲛⲁ̀ⲅⲓⲁⲥ ⲩ̀ⲡⲉⲣⲉⲛⲇⲟⲝⲟⲩ: ⲁⲭⲣⲁⲛⲧⲟⲩ ⲩ̀ⲡⲉⲣⲉ̀ⲩⲗⲟⲅⲏⲙⲉⲛⲏⲥ: ⲇⲉⲥⲡⲓⲛⲏⲥ ⲏ̀ⲙⲱⲛ: Ⲑⲉⲟ̀ⲧⲟⲕⲟⲩ ⲕⲉ ⲁ̀ⲓ̀Ⲡⲁⲣⲑⲉⲛⲟⲩ Ⲙⲁⲣⲓⲁⲥ.\n\nⲔⲉ ⲧⲟⲩ ⲁ̀ⲅⲓⲟⲩ ⲡ̀ⲣⲟⲫⲏⲧⲟⲩ: ⲕⲉ ⲡ̀ⲣⲟⲇⲣⲟⲙⲟⲩ ⲃⲁⲡⲧⲓⲥⲧⲟⲩ: ⲕⲉ ⲙⲁⲣⲧⲩⲣⲟⲥ Ⲓⲱⲁⲛⲛⲟⲩ.\n\nⲔⲉ ⲧⲟⲩ ⲁ̀ⲅⲓⲟⲩ Ⲥ̀ⲧⲉⲫⲁⲛⲟⲩ: ⲧⲟⲩ ⲁⲣⲭⲏⲇⲓⲁⲕⲟⲛⲟⲩ: ⲕⲉ ⲡ̀ⲣⲱⲧⲟ ⲙⲁⲣⲧⲩⲣⲟⲥ.\n\nⲔⲉ ⲧⲱⲛ ⲁ̀ⲅⲓⲱⲛ: ⲁ̀ⲡⲟⲥⲧⲟⲗⲱⲛ ⲉⲛⲇⲟⲝⲱⲛ: ⲡ̀ⲣⲟⲫⲏⲧⲱⲛ: ⲕⲉ ⲕⲁⲗⲗⲓⲛⲓⲕⲱⲛ: ⲙⲁⲣⲧⲩⲣⲱⲛ ⲕⲉ ⲡⲁⲛⲧⲱⲛ ⲧⲱⲛ ⲭⲟⲣⲱⲛ ⲧⲱⲛ ⲁ̀ⲅⲓⲱⲛ ⲥⲟⲩ.\n\nⲀⲃⲃⲁ (ⲛⲓⲙ) ⲕⲩⲣⲓⲟⲩ: ⲧⲟⲩ ⲁ̀ⲣⲭⲏⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲩ: ⲧⲏⲥ ⲙⲉⲅⲁⲗⲟⲡⲟⲗⲉⲱⲥ Ⲁⲗⲉⲝⲁⲛⲇ̀ⲣⲓⲁⲥ: ⲕⲉ ⲧⲱⲛ ⲟⲣⲑⲟⲇⲟⲝⲱⲛ ⲏ̀ⲙⲱⲛ ⲉ̀ⲡⲓⲥⲕⲟⲡⲱⲛ ⲧⲱⲛ ⲉⲩⲭⲁⲣⲓⲥⲧⲏⲣⲓⲱⲛ: ⲕⲉ ⲩ̀ⲡⲉⲣⲅⲩⲙⲛⲉⲥⲉⲱⲥ ⲕⲉ ⲁ̀ⲛⲁⲡⲁⲩⲥⲉⲱⲥ: ⲕⲉ ⲧⲱⲛ ⲁ̀ⲅⲓⲱⲛ ⲡⲁⲧⲉⲣⲱⲛ ⲏ̀ⲙⲱⲛ.\n\nⲞⲩⲁⲓ (ⲁ̅) Ⲙⲁⲣⲕⲟⲩ ⲧⲟⲩ ⲁ̀ⲅⲓⲟⲩ ⲁ̀ⲡⲟⲥⲧⲟⲗⲟⲩ: ⲉⲩⲁ̀ⲅⲅⲉⲗⲓⲥⲧⲟⲩ: ⲁ̀ⲣⲭⲏⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲩ ⲕⲉ ⲙⲁⲣⲧⲩⲣⲟⲥ.\n\nⲔⲉ ⲡⲁⲛⲧⲱⲛ ⲧⲱⲛ ⲟⲣⲑⲟⲇⲓⲇⲁⲝⲁⲛⲧⲱⲛ: ⲧⲟⲛ ⲗⲟⲅⲟⲛ: ⲧⲏⲥ ⲁ̀ⲗⲏⲑⲓⲁⲥ: ⲟⲣⲑⲟⲇⲟⲝⲱⲛ: ⲉ̀ⲡⲓⲥⲕⲟⲡⲱⲛ ⲡ̀ⲣⲉⲥⲃⲩⲧⲉⲣⲱⲛ: ⲇⲓⲁⲕⲟⲛⲱⲛ ⲕ̀ⲗⲏⲣⲓⲕⲱⲛ ⲕⲉ ⲗⲁⲓⲕⲱⲛ ⲕⲉ ⲧⲟⲩⲧⲱⲛ ⲕⲉ ⲡⲁⲛⲧⲱⲛ: ⲟⲣⲑⲟⲇⲟⲝⲱⲛ: ⲁ̀ⲙⲏⲛ." },
+        { language: 'englishCoptic', text: "Eukhes ke epresvies: tēs panagias uperendoksou: akhrantou upereulogēmenēs: despinēs ēmōn: The-otokou ke a-i-Parthenou Marias.\n\nKe tou agiou eprofētou: ke eprodromou vaptistou: ke marturos Iōannou.\n\nKe tou agiou Estefanou: tou arkhēdiakonou: ke eprōto marturos.\n\nKe tōn agiōn: apostolōn endoksōn: eprofētōn: ke kallinikōn: marturōn ke pantōn tōn khorōn tōn agiōn sou.\n\nAbba (nim) kuriou: tou arkhē-episkopou: tēs megalopoleōs Aleksanedrias: ke tōn orthodoksōn ēmōn episkopōn tōn eukharistēriōn: ke upergumneseōs ke anapauseōs: ke tōn agiōn paterōn ēmōn.\n\nOuai (a) Markou tou agiou apostolou: eu-aggelistou: arkhē-episkopou ke marturos.\n\nKe pantōn tōn orthodidaksantōn: ton logon: tēs alēthias: orthodoksōn: episkopōn epresvuterōn: diakonōn eklērikōn ke laikōn ke toutōn ke pantōn: orthodoksōn: amēn." },
+        { language: 'english', text: "Through the prayers and intercessions of the all-holy, glorified, pure and blessed one, our lady the Mother of God, the ever-Virgin Mary.\n\nAnd the holy prophet, forerunner and baptizer, John the martyr.\n\nAnd Saint Stephen, the archdeacon and first martyr.\n\nAnd the holy and glorious apostles, the prophets, the victorious martyrs and all the choirs of Your saints.\n\nAbba (...) our lord, the archbishop of the great city of Alexandria, and our Orthodox bishops, for the sake of the departed and their repose, and our holy fathers.\n\nFirst, Saint Mark the Apostle, the evangelist, the archbishop and martyr.\n\nAnd all those who have rightly taught the word of truth: the Orthodox bishops, priests, deacons, clergy and laity, and all the Orthodox. Amen." },
+        { language: 'englishArabic', text: "Bi-salawat wa shafa'at dhat kull qadasa, el-mumaggada et-tahira el-mubaraka sayyidatina walidat el-Ilah ed-da'imat el-batouliya Maryam.\n\nWal-qiddees en-nabi es-sabiq el-ma'madan esh-shaheed Youhanna.\n\nWal-qiddees Istefanos ra'ees esh-shamamisa wa awwal esh-shuhada'.\n\nWal-qiddiseen er-rusul el-mumaggadeen wal-anbiya' wal-husni ez-zafar esh-shuhada' wa kull masaf el-qiddiseen.\n\nAnba (...) es-sayyid ra'ees asaqifat el-madeena el-'uzma el-Iskandariya, wa asaqifatina el-orthodoxiyyeen el-mashkoureen, wa min agl er-raqideen wa niyahatihim, wa aba'ina el-qiddiseen.\n\nEl-awwal, el-qiddees Marqus er-rasoul el-ingeeli ra'ees el-asaqifa wash-shaheed.\n\nWa gamee' elladheena 'allamu kalimat el-haqq bi-istiqama, el-asaqifa el-orthodoxiyyeen wal-qusus wash-shamamisa wal-ikleeros wal-'almaniyyeen, ha'ula' wa gamee' el-orthodoxiyyeen. Ameen." },
+        { language: 'arabic', text: "بصلوات وشفاعات ذات كل قداسة، الممجدة الطاهرة المباركة سيدتنا والدة الإله الدائمة البتولية مريم.\n\nوالقديس النبي السابق المعمدان الشهيد يوحنا.\n\nوالقديس إسطفانوس رئيس الشمامسة وأول الشهداء.\n\nوالقديسين الرسل الممجدين والأنبياء والحسني الظفر الشهداء وكل مصاف القديسين.\n\nأنبا (...) السيد رئيس أساقفة المدينة العظمى الإسكندرية، وأساقفتنا الأرثوذكسيين المشكورين، ومن أجل الراقدين ونياحتهم، وآبائنا القديسين.\n\nالأول، القديس مرقس الرسول الإنجيلي رئيس الأساقفة والشهيد.\n\nوجميع الذين علموا كلمة الحق باستقامة، الأساقفة الأرثوذكسيين والقسوس والشمامسة والإكليروس والعلمانيين، هؤلاء وجميع الأرثوذكسيين. آمين." },
+      ],
+    },
+    {
+      id: 'd-annual-liturgy-faithful-the-great-abba-antony-pinishti',
+      title: "Ⲡⲓⲛⲓϣϯ ⲁⲃⲃⲁ Ⲁⲛⲧⲱⲛⲓ (The Great Abba Antony, Pinishti)",
+      versions: [
+        { language: 'coptic', text: "Ⲡⲓⲛⲓϣϯ ⲁⲃⲃⲁ Ⲁⲛⲧⲱⲛⲓ: ⲛⲉⲙ ⲡⲓⲑ̀ⲙⲏⲓ ⲁⲃⲃⲁ Ⲡⲁⲩⲗⲉ: ⲛⲉⲙ ⲡⲓϣⲟⲙⲧ ⲉⲑⲟⲩⲁⲃ Ⲙⲁⲕⲁⲣⲓⲟⲥ: ⲁⲃⲃⲁ Ⲓⲱⲁⲛⲛⲏⲥ ⲡⲓⲕⲟⲗⲟⲃⲟⲥ: ⲁⲃⲃⲁ Ⲡⲓϣⲱⲓ: ⲁⲃⲃⲁ Ⲡⲁⲩⲗⲉ: ⲛⲉⲛⲓⲟϯ ⲉⲑⲟⲩⲁⲃ ⲛ̀ⲣⲱⲙⲉⲟⲥ Ⲙⲁⲝⲓⲙⲟⲥ ⲛⲉⲙ Ⲇⲟⲙⲉⲧⲓⲟⲥ: ⲁⲃⲃⲁ Ⲙⲱⲥⲏ: ⲁⲃⲃⲁ Ⲓⲱⲁⲛⲛⲏⲥ Ⲭⲁⲙⲏ: ⲁⲃⲃⲁ Ⲇⲁⲛⲓⲏⲗ: ⲁⲃⲃⲁ Ⲓⲥⲓⲇⲱⲣⲟⲥ: ⲁⲃⲃⲁ Ⲡⲁϧⲱⲙ: ⲁⲃⲃⲁ Ϣⲉⲛⲟⲩϯ: ⲕⲉ ⲁⲃⲃⲁ Ⲡⲁⲫⲛⲟⲩϯ: ⲁⲃⲃⲁ Ⲡⲁⲣⲥⲱⲙⲁ: ⲁⲃⲃⲁ Ⲧⲉϫⲓ.\n\nⲔⲉ ⲡⲁⲛⲧⲱⲛ ⲧⲱⲛ ⲟⲣⲑⲟⲇⲓⲇⲁⲝⲁⲛⲧⲱⲛ: ⲧⲟⲛ ⲗⲟⲅⲟⲛ: ⲧⲏⲥ ⲁ̀ⲗⲏⲑⲓⲁⲥ: ⲟⲣⲑⲟⲇⲟⲝⲱⲛ: ⲉ̀ⲡⲓⲥⲕⲟⲡⲱⲛ ⲡ̀ⲣⲉⲥⲃⲩⲧⲉⲣⲱⲛ: ⲇⲓⲁⲕⲟⲛⲱⲛ ⲕ̀ⲗⲏⲣⲓⲕⲱⲛ ⲕⲉ ⲗⲁⲓⲕⲱⲛ ⲕⲉ ⲧⲟⲩⲧⲱⲛ ⲕⲉ ⲡⲁⲛⲧⲱⲛ: ⲟⲣⲑⲟⲇⲟⲝⲱⲛ: ⲁ̀ⲙⲏⲛ." },
+        { language: 'englishCoptic', text: "Pinishti abba Antōni: nem pi-ethmēi abba Paule: nem pishomt ethouab Makarios: abba Iōannēs pikolovos: abba Pishōi: abba Paule: nenioti ethouab enrōmeos Maksimos nem Dometios: abba Mōsē: abba Iōannēs Khamē: abba Daniēl: abba Isidōros: abba Pakhōm: abba Shenouti: ke abba Pafnouti: abba Parsōma: abba Teji.\n\nKe pantōn tōn orthodidaksantōn: ton logon: tēs alēthias: orthodoksōn: episkopōn epresvuterōn: diakonōn eklērikōn ke laikōn ke toutōn ke pantōn: orthodoksōn: amēn." },
+        { language: 'english', text: "The great Abba Antony, the righteous Abba Paul, the three holy Abba Macarii, Abba John the Short, Abba Pishoy, Abba Paul, our holy Roman fathers Maximus and Dometius, Abba Moses, Abba John Kame, Abba Daniel, Abba Isidore, Abba Pachom, Abba Shenouda, Abba Paphnouti, Abba Barsoum and Abba Teji (Roweis).\n\nAnd all those who have rightly taught the word of truth: the Orthodox bishops, priests, deacons, clergy and laity, and all the Orthodox. Amen." },
+        { language: 'englishArabic', text: "El-'azeem Anba Antonios, wal-barr Anba Bola, wal-qiddisoon eth-thalatha Maqarat, Anba Yu'annis el-qaseer, Anba Bishoy, Anba Bola, abawana el-qiddisan er-roumiyyan Maximos wa Domadios, Anba Mousa, Anba Yu'annis Kama, Anba Danial, Anba Isidhoros, Anba Bakhoum, Anba Shenouda, wa Anba Bafnouti, Anba Barsoum, Anba Roweis.\n\nWa gamee' elladheena 'allamu kalimat el-haqq bi-istiqama, el-asaqifa el-orthodoxiyyeen wal-qusus wash-shamamisa wal-ikleeros wal-'almaniyyeen, ha'ula' wa gamee' el-orthodoxiyyeen. Ameen." },
+        { language: 'arabic', text: "العظيم أنبا أنطونيوس، والبار أنبا بولا، والقديسون الثلاثة مقارات، أنبا يؤأنس القصير، أنبا بيشوي، أنبا بولا، أبوانا القديسان الروميان مكسيموس ودوماديوس، أنبا موسى، أنبا يؤأنس كاما، أنبا دانيال، أنبا إيسيذوروس، أنبا باخوم، أنبا شنودة، وأنبا بفنوتي، أنبا برسوم، أنبا رويس.\n\nوجميع الذين علموا كلمة الحق باستقامة، الأساقفة الأرثوذكسيين والقسوس والشمامسة والإكليروس والعلمانيين، هؤلاء وجميع الأرثوذكسيين. آمين." },
+      ],
+    },
+    {
+      id: 'd-annual-liturgy-faithful-the-great-abba-antony-great-pinishti',
+      title: "Ⲡⲓⲛⲓϣϯ ⲁⲃⲃⲁ Ⲁⲛⲧⲱⲛⲓ (The Great Abba Antony, Great Pinishti)",
+      versions: [
+        { language: 'coptic', text: "Ⲡⲓⲛⲓϣϯ ⲁⲃⲃⲁ Ⲁⲛⲧⲱⲛⲓ: ⲡⲓⲧⲉⲗⲓⲟⲥ ϧⲉⲛ ⲛⲓⲁ̀ⲅⲁⲑⲟⲛ: ⲛⲉⲙ ⲡⲓⲑ̀ⲙⲏⲓ ⲁⲃⲃⲁ Ⲡⲁⲩⲗⲉ: ⲡⲓϣⲟⲣⲡ ⲛ̀ⲁ̀ⲛⲁⲭⲱⲣⲓⲧⲏⲥ: ⲁⲃⲃⲁ Ⲙⲁⲕⲁⲣⲓ ⲡⲓⲡ̀ⲛⲉⲩⲙⲁⲧⲟⲫⲟⲣⲟⲥ: ⲁⲃⲃⲁ Ⲙⲁⲕⲁⲣⲓ ⲡⲓⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲥ: ⲡⲓⲙⲉⲛⲣⲓⲧ ⲛ̀ⲧⲉ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: ⲁⲃⲃⲁ Ⲙⲁⲕⲁⲣⲓ ⲡⲓⲡ̀ⲣⲉⲥⲃⲩⲧⲉⲣⲟⲥ: ⲁⲃⲃⲁ Ⲓⲱⲁⲛⲛⲏⲥ ⲡⲓϩⲏⲅⲟⲩⲙⲉⲛⲟⲥ: ⲁⲃⲃⲁ Ⲡⲓϣⲱⲓ ⲡⲓⲣⲱⲙⲓ ⲛ̀ⲧⲉⲗⲓⲟⲥ: ⲁⲃⲃⲁ Ⲓⲥⲓⲇⲱⲣⲟⲥ ⲡⲓⲡ̀ⲣⲉⲥⲃⲩⲧⲉⲣⲟⲥ: ⲛⲉⲛⲓⲟϯ ⲉⲑⲟⲩⲁⲃ ⲛ̀ⲣⲱⲙⲉⲟⲥ Ⲙⲁⲝⲓⲙⲟⲥ ⲛⲉⲙ Ⲇⲟⲙⲉⲧⲓⲟⲥ: ⲁⲃⲃⲁ Ⲙⲱⲥⲏ ⲡⲓⲙⲁⲧⲟⲓ ⲛ̀ϫⲱⲣⲓ: ⲁⲃⲃⲁ Ⲇⲁⲛⲓⲏⲗ ⲡⲓϩⲏⲅⲟⲩⲙⲉⲛⲟⲥ: ⲁⲃⲃⲁ Ϣⲉⲛⲟⲩϯ ⲡⲓⲁ̀ⲣⲭⲏⲙⲁⲛ̀ⲇⲣⲓⲧⲏⲥ: ⲛⲉⲙ ⲁⲃⲃⲁ Ⲥⲁⲙⲟⲩⲏ̀ⲗ ⲡⲓⲟ̀ⲙⲟⲗⲟⲅⲓⲧⲏⲥ: ⲛⲉⲙ ⲡ̀ⲭⲟⲣⲟⲥ ⲧⲏⲣϥ ⲛ̀ⲧⲉ ⲛⲏⲉⲑⲟⲩⲁⲃ: ⲉ̀ⲣⲉ ⲡⲟⲩⲥ̀ⲙⲟⲩ ⲉⲑⲟⲩⲁⲃ ϣⲱⲡⲓ ⲛⲉⲙⲁⲛ ⲁ̀ⲙⲏⲛ." },
+        { language: 'englishCoptic', text: "Pinishti abba Antōni: pitelios khen ni-agathon: nem pi-ethmēi abba Paule: pishorp enanakhōritēs: abba Makari pi-epneumatoforos: abba Makari pi-episkopos: pimenrit ente Pi-ekhristos: abba Makari pi-epresvuteros: abba Iōannēs pihēgoumenos: abba Pishōi pirōmi entelios: abba Isidōros pi-epresvuteros: nenioti ethouab enrōmeos Maksimos nem Dometios: abba Mōsē pimatoi enjōri: abba Daniēl pihēgoumenos: abba Shenouti pi-arkhēma-endritēs: nem abba Samou-ēl pi-omologitēs: nem epkhoros tērf ente nēethouab: ere pou-esmou ethouab shōpi neman amēn." },
+        { language: 'english', text: "The great Abba Antony, perfect in all good things, the righteous Abba Paul, the first anchorite, Abba Macarius the Spirit-bearer, Abba Macarius the bishop, the beloved of Christ, Abba Macarius the priest, Abba John the hegumen, Abba Pishoy the perfect man, Abba Isidore the priest, our holy Roman fathers Maximus and Dometius, Abba Moses the strong soldier, Abba Daniel the hegumen, Abba Shenouda the archimandrite, Abba Samuel the confessor, and all the choir of the saints. May their holy blessings be with us. Amen." },
+        { language: 'englishArabic', text: "El-'azeem Anba Antonios el-kamil fis-salihat, wal-barr Anba Bola awwal es-suwwah, Anba Maqar labis er-Rouh, Anba Maqar el-usquf habeeb el-Maseeh, Anba Maqar el-qiss, Anba Yu'annis el-qummus, Anba Bishoy er-ragul el-kamil, Anba Isidhoros el-qiss, abawana el-qiddisan er-roumiyyan Maximos wa Domadios, Anba Mousa el-gundi el-qawi, Anba Danial el-qummus, Anba Shenouda ra'ees el-mutawahhideen, Anba Samu'eel el-mu'tarif, wa kull masaf el-qiddiseen, barakatuhum el-muqaddasa takoun ma'ana. Ameen." },
+        { language: 'arabic', text: "العظيم أنبا أنطونيوس الكامل في الصالحات، والبار أنبا بولا أول السواح، أنبا مقار لابس الروح، أنبا مقار الأسقف حبيب المسيح، أنبا مقار القس، أنبا يؤأنس القمص، أنبا بيشوي الرجل الكامل، أنبا إيسيذوروس القس، أبوانا القديسان الروميان مكسيموس ودوماديوس، أنبا موسى الجندي القوي، أنبا دانيال القمص، أنبا شنودة رئيس المتوحدين، أنبا صموئيل المعترف، وكل مصاف القديسين، بركتهم المقدسة تكون معنا. آمين." },
+      ],
+    },
+    {
+      id: 'd-annual-liturgy-faithful-amen-let-us-pray',
+      title: "Ⲁ̀ⲙⲏⲛ ⲁ̀ⲙⲏⲛ ⲡ̀ⲣⲟⲥⲉⲩⲝⲁⲥⲑⲉ (Amen. Let Us Pray)",
+      versions: [
+        { language: 'coptic', text: "Ⲁ̀ⲙⲏⲛ ⲁ̀ⲙⲏⲛ ⲡ̀ⲣⲟⲥⲉⲩⲝⲁⲥⲑⲉ." },
+        { language: 'englishCoptic', text: "Amēn amēn eproseuksasthe." },
+        { language: 'english', text: "Amen. Amen. Pray." },
+        { language: 'englishArabic', text: "Ameen. Ameen. Sallu." },
+        { language: 'arabic', text: "آمين آمين صلوا." },
+      ],
+    },
+    {
+      id: 'd-annual-liturgy-faithful-in-christ-jesus-our-lord',
+      title: 'Ϧⲉⲛ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲉⲛϭⲟⲓⲥ (Before Confession)',
+      versions: [
+        { language: 'coptic', text: 'Ⲡⲓⲗⲁⲟⲥ:\n\nϦⲉⲛ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲉⲛϭⲟⲓⲥ.\n\nⲠⲓⲇⲓⲁⲕⲱⲛ:\n\nⲦⲁⲥ ⲕⲉⲫⲁⲗⲁⲥ ⲩ̀ⲙⲱⲛ ⲧⲱ ⲕⲩⲣⲓⲱ ⲕ̀ⲗⲓⲛⲁⲧⲉ.\n\nⲠⲓⲗⲁⲟⲥ:\n\nⲈⲛⲱⲡⲓⲟⲛ ⲥⲟⲩ Ⲕⲩⲣⲓⲉ.\n\nⲠⲓⲇⲓⲁⲕⲱⲛ:\n\nⲠ̀ⲣⲟⲥⲭⲱⲙⲉⲛ Ⲑⲉⲟⲩ ⲙⲉⲧⲁ ⲫⲟⲃⲟⲩ: ⲁ̀ⲙⲏⲛ.\n\nⲠⲓⲟⲩⲏⲃ:\n\nⲒⲣⲏⲛⲏ ⲡⲁⲥⲓ.\n\nⲠⲓⲗⲁⲟⲥ:\n\nⲔⲉ ⲧⲱ ⲡ̀ⲛⲉⲩⲙⲁⲧⲓ ⲥⲟⲩ.\n\nⲠⲓⲇⲓⲁⲕⲱⲛ:\n\nⲤⲱⲑⲓⲥ ⲁ̀ⲙⲏⲛ: ⲕⲉ ⲧⲱ ⲡ̀ⲛⲉⲩⲙⲁⲧⲓ ⲥⲟⲩ: ⲙⲉⲧⲁ ⲫⲟⲃⲟⲩ Ⲑⲉⲟⲩ ⲡ̀ⲣⲟⲥⲭⲱⲙⲉⲛ.\n\nⲠⲓⲗⲁⲟⲥ:\n\nⲀ̀ⲙⲏⲛ: Ⲕⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ: Ⲕⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ: Ⲕⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ.\n\nⲠⲓⲟⲩⲏⲃ:\n\nⲦⲁ ⲁ̀ⲅⲓⲁ ⲧⲟⲓⲥ ⲁ̀ⲅⲓⲟⲓⲥ.\n\nⲠⲓⲗⲁⲟⲥ:\n\nⲒⲥ ⲟ̀ ⲡⲁⲛⲁⲅⲓⲟⲥ Ⲡⲁⲧⲏⲣ: Ⲓⲥ ⲟ̀ ⲡⲁⲛⲁⲅⲓⲟⲥ Ⲩ̀ⲓⲟⲥ: ⲉⲛ ⲧⲟ ⲡⲁⲛⲁⲅⲓⲟⲛ Ⲡ̀ⲛⲉⲩⲙⲁ: ⲁ̀ⲙⲏⲛ.' },
+        { language: 'englishCoptic', text: 'Pi-laos:\n\nKhen Pi-ekhristos Iēsous Pentshois.\n\nPi-diakon:\n\nTas kefalas umōn tō kuriō eklinate.\n\nPi-laos:\n\nEnōpion sou Kurie.\n\nPi-diakon:\n\nEproskhōmen Theou meta fovou: amēn.\n\nPi-ouib:\n\nIrēnē pasi.\n\nPi-laos:\n\nKe tō epneumati sou.\n\nPi-diakon:\n\nSōthis amēn: ke tō epneumati sou: meta fovou Theou eproskhōmen.\n\nPi-laos:\n\nAmēn: Kurie ele-ēson: Kurie ele-ēson: Kurie ele-ēson.\n\nPi-ouib:\n\nTa agia tois agiois.\n\nPi-laos:\n\nIs o panagios Patēr: Is o panagios Uios: en to panagion Epneuma: amēn.' },
+        { language: 'english', text: 'People:\n\nIn Christ Jesus our Lord.\n\nDeacon:\n\nBow your heads to the Lord.\n\nPeople:\n\nBefore You, O Lord.\n\nDeacon:\n\nLet us attend in the fear of God. Amen.\n\nPriest:\n\nPeace be with all.\n\nPeople:\n\nAnd with your spirit.\n\nDeacon:\n\nSaved. Amen. And with your spirit. In the fear of God, let us attend.\n\nPeople:\n\nAmen. Lord have mercy. Lord have mercy. Lord have mercy.\n\nPriest:\n\nThe holies for the holy.\n\nPeople:\n\nOne is the All-Holy Father, one is the All-Holy Son, one is the All-Holy Spirit. Amen.' },
+        { language: 'englishArabic', text: 'Esh-sha\'b:\n\nBil-Maseeh Yasou\' Rabbina.\n\nEsh-shammas:\n\nIhnou ru\'ousakum lir-Rabb.\n\nEsh-sha\'b:\n\nAmamak ya Rabb.\n\nEsh-shammas:\n\nAnsitou bi-khawf Allah. Ameen.\n\nEl-kahin:\n\nEs-salam lil-kull.\n\nEsh-sha\'b:\n\nWa li-rouhika aydan.\n\nEsh-shammas:\n\nKhalasta haqqan, wa ma\'a rouhika, nunsit bi-khawf Allah.\n\nEsh-sha\'b:\n\nAmeen. Ya Rabbu irham. Ya Rabbu irham. Ya Rabbu irham.\n\nEl-kahin:\n\nEl-qudsat lil-qiddiseen.\n\nEsh-sha\'b:\n\nWahid huwa el-Ab el-quddous, wahid huwa el-Ibn el-quddous, wahid huwa er-Rouh el-Qudus. Ameen.' },
+        { language: 'arabic', text: 'الشعب:\n\nبالمسيحِ يسوع ربنا.\n\nالشماس:\n\nإحنوا رؤوسَكم للربِ.\n\nالشعب:\n\nأمامك ياربُ.\n\nالشماس:\n\nأنصتوا بخوفِ الله. آمين.\n\nالكاهن:\n\nالسلامُ للكلِّ.\n\nالشعب:\n\nولروحِكَ أيضاً.\n\nالشماس:\n\nخلصت حقاً، ومع روحك، ننصت بخوف الله.\n\nالشعب:\n\nآمين. يا رب ارحم. يا رب ارحم. يا رب ارحم.\n\nالكاهن:\n\nالقدسات للقديسين.\n\nالشعب:\n\nواحد هو الآب القدوس. واحد هو الابن القدوس. واحد هو الروح القدس. آمين.' },
+      ],
+    },
+    {
+      id: 'd-annual-liturgy-faithful-confession',
+      title: "Ⲁ̀ⲙⲏⲛ ⲁ̀ⲙⲏⲛ ⲁ̀ⲙⲏⲛ ϯⲛⲁϩϯ (Confession)",
+      versions: [
+        { language: 'coptic', text: "Ⲁ̀ⲙⲏⲛ ⲁ̀ⲙⲏⲛ ⲁ̀ⲙⲏⲛ ϯⲛⲁϩϯ ϯⲛⲁϩϯ ϯⲛⲁϩϯ ϫⲉ ⲑⲁⲓ ⲧⲉ ϧⲉⲛ ⲟⲩⲙⲉⲑⲙⲏⲓ ⲁ̀ⲙⲏⲛ.\n\nⲦⲱⲃϩ ⲉ̀ϩ̀ⲣⲏⲓ ⲉ̀ϫⲱⲛ ⲛⲉⲙ ⲉ̀ϫⲉⲛ ⲭ̀ⲣⲓⲥⲧⲓⲁⲛⲟⲥ ⲛⲓⲃⲉⲛ ⲉ̀ⲧⲁⲩϫⲟⲥ ⲛⲁⲛ ⲉⲑⲃⲏⲧⲟⲩ ϫⲉ ⲁ̀ⲣⲓⲡⲉⲛⲙⲉⲩⲓ̀ ϧⲉⲛ ⲡ̀ⲏⲓ ⲙ̀Ⲡ̀ϭⲟⲓⲥ." },
+        { language: 'englishCoptic', text: "Amēn amēn amēn tinahti tinahti tinahti je thai te khen oumethmēi amēn.\n\nTōbh e-ehrēi ejōn nem ejen ekhristianos niven etaujos nan ethvētou je aripenmeu-i khen epēi em-Eptshois." },
+        { language: 'english', text: "Amen. Amen. Amen. I believe, I believe, I believe that this is so in truth. Amen.\n\nPray for us and for all Christians who have asked us to remember them in the house of the Lord." },
+        { language: 'englishArabic', text: "Ameen. Ameen. Ameen. U'min. U'min. U'min. Anna hadha huwa bil-haqeeqa. Ameen.\n\nUtlubu 'anna wa 'an kull el-maseehiyyeen elladheena qalu lana min aglihim, udhkuruna fi bayt er-Rabb." },
+        { language: 'arabic', text: "آمين. آمين. آمين. أؤمن. أؤمن. أؤمن. أن هذا هو بالحقيقة. آمين.\n\nاطلبوا عنا وعن كل المسيحيين الذين قالوا لنا من أجلهم، اذكرونا في بيت الرب." },
+      ],
+    },
+    {
+      id: 'd-annual-liturgy-faithful-confession-great',
+      title: "Ⲁ̀ⲙⲏⲛ ⲁ̀ⲙⲏⲛ ⲁ̀ⲙⲏⲛ ϯⲛⲁϩϯ (Confession, Great)",
+      versions: [
+        { language: 'coptic', text: "Ⲁ̀ⲙⲏⲛ ⲁ̀ⲙⲏⲛ ⲁ̀ⲙⲏⲛ ϯⲛⲁϩϯ ϯⲛⲁϩϯ ϯⲛⲁϩϯ ϫⲉ ⲑⲁⲓ ⲧⲉ ϧⲉⲛ ⲟⲩⲙⲉⲑⲙⲏⲓ ⲁ̀ⲙⲏⲛ.\n\nⲦⲱⲃϩ ⲉ̀ϩ̀ⲣⲏⲓ ⲉ̀ϫⲱⲛ ⲛⲉⲙ ⲉ̀ϫⲉⲛ ⲭ̀ⲣⲓⲥⲧⲓⲁⲛⲟⲥ ⲛⲓⲃⲉⲛ ⲉ̀ⲧⲁⲩϫⲟⲥ ⲛⲁⲛ ⲉⲑⲃⲏⲧⲟⲩ ϫⲉ ⲁ̀ⲣⲓⲡⲉⲛⲙⲉⲩⲓ̀ ϧⲉⲛ ⲡ̀ⲏⲓ ⲙ̀Ⲡ̀ϭⲟⲓⲥ." },
+        { language: 'englishCoptic', text: "Amēn amēn amēn tinahti tinahti tinahti je thai te khen oumethmēi amēn.\n\nTōbh e-ehrēi ejōn nem ejen ekhristianos niven etaujos nan ethvētou je aripenmeu-i khen epēi em-Eptshois." },
+        { language: 'english', text: "Amen. Amen. Amen. I believe, I believe, I believe that this is so in truth. Amen.\n\nPray for us and for all Christians who have asked us to remember them in the house of the Lord." },
+        { language: 'englishArabic', text: "Ameen. Ameen. Ameen. U'min. U'min. U'min. Anna hadha huwa bil-haqeeqa. Ameen.\n\nUtlubu 'anna wa 'an kull el-maseehiyyeen elladheena qalu lana min aglihim, udhkuruna fi bayt er-Rabb." },
+        { language: 'arabic', text: "آمين. آمين. آمين. أؤمن. أؤمن. أؤمن. أن هذا هو بالحقيقة. آمين.\n\nاطلبوا عنا وعن كل المسيحيين الذين قالوا لنا من أجلهم، اذكرونا في بيت الرب." },
       ],
     },
   ];
@@ -5582,8 +5951,7 @@ if (annualVesperPraises) {
   annualVesperPraises.hymns = [
     vesperPraisesDay('sunday', 'Sunday', [
       ...fromMidnight('sunday-psali', 'sunday-psali-lord-jesus', 'sunday-adam-psali-conclusion'),
-      // On Saturday evening the Sunday Theotokia is sung from its eleventh part
-      ...vesperTheotokia('sunday').slice(10),
+      ...vesperTheotokia('sunday'),
       ...fromMidnight('sunday-adam-theotokias-conclusion'),
     ]),
     vesperPraisesDay('monday', 'Monday', [
@@ -5908,6 +6276,17 @@ for (const [id, audio, languages] of liturgyLanguageAudio) {
   }
 }
 
+// ---- Audio: recordings added on their own ----
+for (const [service, id, audio, languages] of [
+  [annualLiturgy, 'annual-liturgy-aspasmos-adam-2', 'liturgy-aspasmos-adam-2.m4a', ['coptic', 'englishCoptic']],
+  [annualLiturgy, 'annual-liturgy-offering-hail-to-mary', 'liturgy-offering-hail-to-mary-arabic.m4a', ['arabic', 'englishArabic']],
+  [annualVeneration, 'annual-veneration-rejoice', 'veneration-rejoice-archangel-michael.m4a', ['coptic', 'englishCoptic']],
+] as [Service | undefined, string, string, LanguageType[]][]) {
+  for (const version of service?.hymns.find((h) => h.id === id)?.versions ?? []) {
+    if (languages.includes(version.language)) version.audio = audio;
+  }
+}
+
 // ---- Annual > Liturgy: the Liturgy of the Word starts with Taishori, the Liturgy of the Faithful after the Psalm Trailers ----
 if (annualLiturgy) {
   const before = (id: string, header: Hymn) => {
@@ -6117,6 +6496,29 @@ const doxologyVersions = (verses: DoxologyVerse[]): LanguageVersion[] =>
     language,
     text: verses.map((verse) => verse[i]).join('\n\n'),
   }));
+// The Lent Hymn of the Intercessions (weekdays and weekends), with John the Baptist, the martyrs and Fr Pishoy Kamel
+const lentHymnOfIntercessions = (id: string): Hymn => ({
+  id,
+  title: 'Ϩⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ (Hymn of the Intercessions)',
+  versions: doxologyVersions([
+      ["People:", "Ⲡⲓⲗⲁⲟⲥ:", "الشعب:", "Pilaos:", "Esh-sha'b:"],
+      ["Through the intercessions, of the Theotokos, Saint Mary, O Lord grant us, the forgiveness of our sins.", "Ϩⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ: ⲛ̀ⲧⲉ ϯⲑⲉⲟ̀ⲧⲟⲕⲟⲥ ⲉⲑⲟⲩⲁⲃ Ⲙⲁⲣⲓⲁ: Ⲡϭⲟⲓⲥ ⲁⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ: ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.", "بشفاعات والدة الإله القديسة مريم، يا ربُ أنعم علينا بمغفرة خطايانا.", "Hiten ni-epresvia: ente tithe-otokos ethouab Maria: Ptshois ari-ehmot nan: empikhō evol ente nennovi.", "Bi-shafa'at walidat el-Ilah el-qiddisa Maryam, ya Rabbu an'im 'alayna bi-maghfirat khatayana."],
+      ["Through the intercessions of the seven archangels, and the heavenly orders, O Lord, grant us the forgiveness of our sins.", "Ϩⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ ⲛ̀ⲧⲉ ⲡⲓϣⲁϣϥ ⲛ̀ⲁⲣⲭⲓⲁⲅⲅⲉⲗⲟⲥ ⲛⲉⲙ ⲛⲓⲧⲁⲅⲙⲁ ⲛ̀ⲉ̀ⲡⲟⲩⲣⲁⲛⲓⲟⲛ: Ⲡϭⲟⲓⲥ ⲁⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.", "بشفاعات رؤساء الملائكة السبعة والطغمات السمائية، يا ربُ أنعم علينا بمغفرة خطايانا.", "Hiten ni-epresvia ente pishashf enarkhiaggelos nem nitagma enepouranion: Ptshois ari-ehmot nan empikhō evol ente nennovi.", "Bi-shafa'at ru'asa' el-mala'ika es-sab'a wet-tughmat es-sama'iyya, ya Rabbu an'im 'alayna bi-maghfirat khatayana."],
+      ["Through the intercessions of the forerunner and baptizer, John the Baptist: O Lord, grant us the forgiveness of our sins.", "Ϩⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ: ⲛ̀ⲧⲉ ⲡⲓⲡ̀ⲣⲟⲇⲣⲟⲙⲟⲥ ⲙ̀ⲃⲁⲡⲧⲓⲥⲧⲏⲥ: Ⲓⲱⲁⲛⲛⲏⲥ ⲡⲓⲣⲉϥϯⲱⲙⲥ: Ⲡϭⲟⲓⲥ ⲁ̀ⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.", "بشفاعات السابق الصابغ يوحنا المعمدان، يا رب أنعم لنا بمغفرة خطايانا.", "Hiten ni-epresvia: ente pi-eprodromos emvaptistēs: Iōannēs pireftiōms: Ptshois ari-ehmot nan empikhō evol ente nennovi.", "Bi-shafa'at es-sabiq es-sabigh Youhanna el-Ma'madan, ya Rabbu an'im lana bi-maghfirat khatayana."],
+      ["Through the prayers of my lords and fathers the apostles, and the rest of the disciples, O Lord, grant us the forgiveness of our sins.", "Ϩⲓⲧⲉⲛ ⲛⲓⲉⲩⲭⲏ ⲛ̀ⲧⲉ ⲛⲁϭⲟⲓⲥ ⲛ̀ⲓⲟϯ ⲛ̀ⲁ̀ⲡⲟⲥⲧⲟⲗⲟⲥ ⲛⲉⲙ ⲡ̀ⲥⲉⲡⲓ ⲛ̀ⲧⲉ ⲛⲓⲙⲁⲑⲏⲧⲏⲥ: Ⲡϭⲟⲓⲥ ⲁⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.", "بصلوات سادتي الآباء الرسل وبقية التلاميذ، يا ربُ أنعم علينا بمغفرة خطايانا.", "Hiten nieukhē ente natshois enioti enapostolos nem epsepi ente nimathētēs: Ptshois ari-ehmot nan empikhō evol ente nennovi.", "Bi-salawat sadati el-aba' er-rusul wa baqiyyat et-talameedh, ya Rabbu an'im 'alayna bi-maghfirat khatayana."],
+      ["Through the prayers of the Beholder of God: the Evangelist: Mark, the Apostle: O Lord, grant us the forgiveness of our sins.", "Ϩⲓⲧⲉⲛ ⲛⲓⲉ̀ⲩⲭⲏ: ⲛ̀ⲧⲉ ⲡⲓⲑⲉⲱⲣⲓⲙⲟⲥ ⲛ̀ⲉ̀ⲩⲁ̀ⲅⲅⲉⲗⲓⲥⲧⲏⲥ: Ⲙⲁⲣⲕⲟⲥ ⲡⲓⲁ̀ⲡⲟⲥⲧⲟⲗⲟⲥ: Ⲡϭⲟⲓⲥ ⲁ̀ⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.", "بصلوات ناظر الإله الإنجيلي مرقس الرسول، يا ربُ أنعم علينا بمغفرة خطايانا.", "Hiten ni-eukhē: ente pitheōrimos eneu-aggelistēs: Markos pi-apostolos: Ptshois ari-ehmot nan empikhō evol ente nennovi.", "Bi-salawat nazir el-Ilah el-ingeeli Marqus er-rasoul, ya Rabbu an'im 'alayna bi-maghfirat khatayana."],
+      ["Through the prayers of the victorious martyr: my lord Prince George: O Lord, grant us the forgiveness of our sins.", "Ϩⲓⲧⲉⲛ ⲛⲓⲉ̀ⲩⲭⲏ: ⲛ̀ⲧⲉ ⲡⲓⲁⲑⲗⲟⲫⲟⲣⲟⲥ: ⲙ̀ⲙⲁⲣⲧⲩⲣⲟⲥ ⲡⲁϭⲟⲓⲥ ⲡ̀ⲟⲩⲣⲟ Ⲅⲉⲱ̀ⲣⲅⲓⲟⲥ: Ⲡϭⲟⲓⲥ ⲁ̀ⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.", "بصلوات المجاهد الشهيد سيدي الملك جيؤرجيوس، يا ربُ أنعم علينا بمغفرة خطايانا.", "Hiten ni-eukhē: ente piathloforos: emmarturos patshois epouro Ge-ōrgios: Ptshois ari-ehmot nan empikhō evol ente nennovi.", "Bi-salawat el-mugahid esh-shaheed sayyidi el-malik Gi'orgios, ya Rabbu an'im 'alayna bi-maghfirat khatayana."],
+      ["Through the prayers of the victorious martyr: Philopater Mercurius: O Lord, grant us the forgiveness of our sins.", "Ϩⲓⲧⲉⲛ ⲛⲓⲉ̀ⲩⲭⲏ: ⲛ̀ⲧⲉ ⲡⲓⲁⲑⲗⲟⲫⲟⲣⲟⲥ: ⲙ̀ⲙⲁⲣⲧⲩⲣⲟⲥ Ⲫⲓⲗⲟⲡⲁⲧⲏⲣ Ⲙⲉⲣⲕⲟⲩⲣⲓⲟⲥ: Ⲡϭⲟⲓⲥ ⲁ̀ⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.", "بصلوات المجاهد الشهيد فيلوباتير مرقوريوس، يا ربُ أنعم علينا بمغفرة خطايانا.", "Hiten ni-eukhē: ente piathloforos: emmarturos Filopatēr Merkourios: Ptshois ari-ehmot nan empikhō evol ente nennovi.", "Bi-salawat el-mugahid esh-shaheed Filobatir Marqourios, ya Rabbu an'im 'alayna bi-maghfirat khatayana."],
+      ["Through the prayers of the victorious martyr: holy Abba Mena of Bayad: O Lord, grant us the forgiveness of our sins.", "Ϩⲓⲧⲉⲛ ⲛⲓⲉ̀ⲩⲭⲏ: ⲛ̀ⲧⲉ ⲡⲓⲁⲑⲗⲟⲫⲟⲣⲟⲥ ⲙ̀ⲙⲁⲣⲧⲩⲣⲟⲥ ⲁⲃⲃⲁ Ⲙⲏⲛⲁ ⲛ̀ⲧⲉ ⲛⲓⲫⲁⲓⲁⲧ: Ⲡϭⲟⲓⲥ ⲁ̀ⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.", "بصلوات المجاهد الشهيد أبا مينا البياضي، يا ربُ أنعم علينا بمغفرة خطايانا.", "Hiten ni-eukhē: ente piathloforos emmarturos abva Mēna ente nifaiat: Ptshois ari-ehmot nan empikhō evol ente nennovi.", "Bi-salawat el-mugahid esh-shaheed Aba Mina el-Bayadi, ya Rabbu an'im 'alayna bi-maghfirat khatayana."],
+      ["Through the prayers, of our holy father the patriarch, Abba Kyrillos the Sixth, O Lord, grant us the forgiveness of our sins.", "Ϩⲓⲧⲉⲛ ⲛⲓⲉ̀ⲩⲭⲏ: ⲛ̀ⲧⲉ ⲡⲉⲛⲓⲱⲧ ⲉⲑⲟⲩⲁⲃ ⲙ̀ⲡⲁⲧⲣⲓⲁⲣⲭⲏⲥ: Ⲁⲃⲃⲁ Ⲕⲩⲣⲓⲗⲗⲟⲥ Ⲡⲓⲙⲁϩⲥⲟⲟⲩ: Ⲡϭⲟⲓⲥ ⲁ̀ⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.", "بصلوات أبينا القديس البطريرك الأنبا كيرلس السادس، يا رب أنعم علينا بمغفرة خطايانا.", "Hiten ni-eukhē: ente peniōt ethouab empatriarkhēs: Abva Kurillos Pimahsoou: Ptshois ari-ehmot nan empikhō evol ente nennovi.", "Bi-salawat abeena el-qiddees el-batriyark el-Anba Kirollos es-sadis, ya Rabbu an'im 'alayna bi-maghfirat khatayana."],
+      ["Through the prayers: of our righteous father: Abba Abraam the bishop: O Lord, grant us the forgiveness of our sins.", "Ϩⲓⲧⲉⲛ ⲛⲓⲉ̀ⲩⲭⲏ: ⲛ̀ⲧⲉ ⲡⲉⲛⲓⲱⲧ ⲉⲑⲟⲩⲁⲃ ⲛ̀ⲇⲓⲕⲉⲟⲥ: ⲁⲃⲃⲁ Ⲁⲃⲣⲁⲁⲙ ⲡⲓⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲥ: Ⲡϭⲟⲓⲥ ⲁ̀ⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.", "بصلوات أبينا القديس البار أنبا أبرآم الأسقف، يا رب أنعم لنا بمغفرة خطايانا.", "Hiten ni-eukhē: ente peniōt ethouab endikeos: abva Abraam pi-episkopos: Ptshois ari-ehmot nan empikhō evol ente nennovi.", "Bi-salawat abeena el-qiddees el-barr Anba Abraam el-usquf, ya Rabbu an'im lana bi-maghfirat khatayana."],
+      ["Through the intercessions of the priest of the truth: Pishoy Kamel the hegumen: O Lord, grant us the forgiveness of our sins.", "Ϩⲓⲧⲉⲛ ⲛⲓⲉ̀ⲩⲭⲏ: ⲛ̀ⲧⲉ ⲡⲓⲟⲩⲏⲃ ⲛ̀ⲧⲉ ϯⲙⲉⲑⲙⲏⲓ ⲡⲉⲛⲓⲱⲧ Ⲡⲓϣⲱⲓ Ⲕⲁⲙⲉⲗ ⲡⲓϩⲏⲅⲟⲩⲙⲉⲛⲟⲥ: Ⲡϭⲟⲓⲥ ⲁ̀ⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.", "بصلوات كاهن الحق أبينا القمص بيشوي كامل، يا رب أنعم لنا بمغفرة خطايانا.", "Hiten ni-eukhē: ente piouēb ente timethmēi peniōt Pishōi Kamel pihēgoumenos: Ptshois ari-ehmot nan empikhō evol ente nennovi.", "Bi-salawat kahin el-haqq abeena el-Qummus Bishoy Kamel, ya Rabbu an'im lana bi-maghfirat khatayana."],
+      ["Through the prayers of the saints of this day, each one according to their name, O Lord, grant us the forgiveness of our sins.", "Ϩⲓⲧⲉⲛ ⲛⲓⲉⲩⲭⲏ ⲛ̀ⲧⲉ ⲛⲏⲉⲑⲟⲩⲁⲃ ⲛ̀ⲧⲉ ⲡⲁⲓⲉ̀ϩⲟⲟⲩ ⲡⲓⲟⲩⲁⲓ ⲡⲓⲟⲩⲁⲓ ⲕⲁⲧⲁ ⲡⲉϥⲣⲁⲛ: Ⲡϭⲟⲓⲥ ⲁⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.", "بصلوات قديسي هذا اليوم، كل واحد باسمِه، يا ربُ أنعم علينا بمغفرة خطايانا.", "Hiten nieukhē ente nēethouab ente pai-ehoou piouai piouai kata pefran: Ptshois ari-ehmot nan empikhō evol ente nennovi.", "Bi-salawat qiddisi hadha el-yawm, kull wahid bismih, ya Rabbu an'im 'alayna bi-maghfirat khatayana."],
+      ["Through their prayers, keep the life of our honored father, the archpriest Pope Abba ___. O Lord, grant us the forgiveness of our sins.", "Ϩⲓⲧⲉⲛ ⲛⲟⲩⲉⲩⲭⲏ ⲁ̀ⲣⲉϩ ⲉ̀ⲡ̀ⲱⲛϧ ⲙ̀ⲡⲉⲛⲓⲱⲧ ⲉⲧⲧⲁⲓⲏⲟⲩⲧ ⲛ̀ⲁⲣⲭⲓⲉ̀ⲣⲉⲩⲥ ⲡⲁⲡⲁ ⲁⲃⲃⲁ (ⲛⲓⲙ): Ⲡϭⲟⲓⲥ ⲁⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.", "بصلواتِهم إحفظ حياة أبينا المكرم رئيس الكهنة البابا الأنبا ___، يا ربُ أنعم علينا بمغفرة خطايانا.", "Hiten noueukhē areh e-epōnkh empeniōt ettaiēout enarkhi-ereus papa abva (nim): Ptshois ari-ehmot nan empikhō evol ente nennovi.", "Bi-salawatihim ihfaz hayat abeena el-mukarram ra'ees el-kahana el-Baba el-Anba ___, ya Rabbu an'im 'alayna bi-maghfirat khatayana."],
+      ["Through their prayers, keep the life of our honored and righteous father, Abba ___ the bishop (metropolitan), O Lord, grant us the forgiveness of our sins.", "Ϩⲓⲧⲉⲛ ⲛⲟⲩⲉⲩⲭⲏ ⲁ̀ⲣⲉϩ ⲉ̀ⲡ̀ⲱⲛϧ ⲙ̀ⲡⲉⲛⲓⲱⲧ ⲉⲧⲧⲁⲓⲏⲟⲩⲧ ⲛ̀ⲇⲓⲕⲉⲟⲥ ⲁⲃⲃⲁ (ⲛⲓⲙ) ⲡⲓⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲥ (ⲡⲓⲙⲏⲧⲣⲟⲡⲟⲗⲓⲧⲏⲥ): Ⲡϭⲟⲓⲥ ⲁⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.", "بصلواتهم إحفظ حياة أبينا المكرم البار أنبا ___ الأسقف (المطران)، يا ربُ أنعم علينا بمغفرة خطايانا.", "Hiten noueukhē areh e-epōnkh empeniōt ettaiēout endikeos abva (nim) pi-episkopos (pimētropolitēs): Ptshois ari-ehmot nan empikhō evol ente nennovi.", "Bi-salawatihim ihfaz hayat abeena el-mukarram el-barr Anba ___ el-usquf (el-matran), ya Rabbu an'im 'alayna bi-maghfirat khatayana."],
+      ["We worship You, O Christ, with Your Good Father and the Holy Spirit, for You have come and saved us. Have mercy on us.", "Ⲧⲉⲛⲟⲩⲱϣⲧ ⲙ̀ⲙⲟⲕ ⲱ̀ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: ⲛⲉⲙ Ⲡⲉⲕⲓⲱⲧ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ: ⲛⲉⲙ Ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ ⲉⲑⲟⲩⲁⲃ: ϫⲉ ⲁⲕⲓ̀ ⲁⲕⲥⲱϯ ⲙ̀ⲙⲟⲛ ⲛⲁⲓ ⲛⲁⲛ.", "نسجدُ لكَ أيها المسيح، مع أبيكَ الصالح، والروح القدس، لأنك أتيتَ وخلصتنا. ارحمنا.", "Tenouōsht emmok ō Pi-ekhristos: nem Pekiōt enagathos: nem Pi-epneuma ethouab: je aki aksōti emmon nai nan.", "Nasgud laka ayyuha el-Maseeh, ma'a abeeka es-salih, war-Rouh el-Qudus, li-annaka atayta wa khallastana. Irhamna."],
+  ]),
+});
 const lentDoxologies: { key: string; title: string; verses: DoxologyVerse[] }[] = [
   {
     key: "sat-sun",
@@ -6261,7 +6663,7 @@ if (greatLent) {
   const byId = new Map(greatLent.services.map((service) => [service.id, service]));
   const withoutAudio = (hymn: Hymn): Hymn => ({
     ...hymn,
-    versions: hymn.versions.map(({ audio: _audio, ...version }) => version),
+    versions: hymn.versions.map(({ audio: _audio, otherAudio: _otherAudio, ...version }) => version),
     children: hymn.children?.map(withoutAudio),
   });
   // The Lent Gospel Response, for Matins and Vespers on weekdays and weekends
@@ -6339,8 +6741,8 @@ if (greatLent) {
   ];
   // Weekdays have no Vespers (and no Vesper Praises)
   const partServices = {
-    weekday: ['matins', 'liturgy', 'distribution', 'midnight'],
-    weekend: ['matins', 'liturgy', 'distribution', 'vespers', 'midnight'],
+    weekday: ['matins', 'liturgy', 'distribution'],
+    weekend: ['matins', 'liturgy', 'distribution', 'vespers'],
   } as const;
   const serviceGroups = (part: 'weekday' | 'weekend'): Hymn[] =>
     partServices[part].map((name) => {
@@ -6357,6 +6759,22 @@ if (greatLent) {
           .filter((d) => d.key === key)
           .map((d) => ({ id: `${id}-doxology-${d.key}`, title: d.title, versions: doxologyVersions(d.verses) }));
       const doxologiesHeader: Hymn = { id: `${id}-doxologies-header`, title: 'Doxologies', versions: [], isSectionHeader: true };
+      // The Lent Introduction to the Doxologies (its second verse differs from Annual's: Ⲭⲉⲣⲉ ⲛⲉ ⲧⲉⲛϯϩⲟ)
+      const lentIntroDoxologies: Hymn = {
+        id: `${id}-intro-doxologies`,
+        title: 'Ⲭⲉⲣⲉ ⲛⲉ ⲧⲉⲛϯϩⲟ (Introduction to the Doxologies)',
+        versions: doxologyVersions([
+        ["In Christ Jesus our Lord. Amen. Alleluia.", "Ϧⲉⲛ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲉⲛϭⲟⲓⲥ: ⲁ̀ⲙⲏⲛ ⲁⲗⲗⲏⲗⲟⲩⲓⲁ.", "بالمسيح يسوع ربنا: آمين هلليلويا.", "Khen Pi-ekhristos Iēsous Pentshois: amēn allēlouia.", "Bil-Maseeh Yasou' Rabbina: amin halleluia."],
+        ["Hail to you. We ask you, O saint, full of glory, the ever-Virgin, the Theotokos, the Mother of Christ.", "Ⲭⲉⲣⲉ ⲛⲉ ⲧⲉⲛϯϩⲟ ⲉ̀ⲣⲟ: ⲱ̀ ⲑⲏⲉ︦ⲑ︦ⲩ︦ ⲉⲑⲙⲉϩ ⲛ̀ⲱ̀ⲟⲩ: ⲉ̀ⲧⲟⲓ ⲙ̀ⲡⲁⲣⲑⲉⲛⲟⲥ ⲛ̀ⲥⲏⲟⲩ ⲛⲓⲃⲉⲛ: ϯⲙⲁⲥⲛⲟⲩϯ ⲑ̀ⲙⲁⲩ ⲙ̀Ⲡⲭ︦ⲥ︦.", "السلام لكِ نسألكِ أيتها القديسة الممتلئة مجداً العذراء كل حين، والدة الإله أم المسيح.", "Shere ne tentiho ero: ō thēethouab ethmeh enōou: etoi emparthenos ensēou niven: timasnouti ethmau em-Pikhristos.", "Es-salamu laki nas'aluki ayyatuha el-qiddisa el-mumtali'a magdan el-'Adhra' kull heen, walidat el-Ilah umm el-Maseeh."],
+        ["Lift our prayers unto your beloved Son, that He may forgive us our sins.", "Ⲁⲛⲓⲟⲩⲓ̀ ⲛ̀ⲧⲉⲛⲡ̀ⲣⲟⲥⲉⲩⲭⲏ: ⲉ̀ⲡ̀ϣⲱⲓ ϩⲁ ⲡⲉϣⲏⲣⲓ ⲙ̀ⲙⲉⲛⲣⲓⲧ: ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ.", "اصعدي صلاتنا إلى ابنكِ الحبيب ليغفر لنا خطايانا.", "Aniou-i enteneproseukhē: e-epshōi ha peshēri emmenrit: entefkha nennovi nan evol.", "Is'adi salatana ila ibniki el-habeeb li-yaghfir lana khatayana."],
+        ["Hail to the holy Virgin, who has brought forth unto us the true Light, Christ our God.", "Ⲭⲉⲣⲉ ⲑⲏⲉ̀ⲧⲁⲥⲙⲓⲥⲓ ⲛⲁⲛ: ⲙ̀ⲡⲓⲟⲩⲱⲓⲛⲓ ⲛ̀ⲧⲁⲫ̀ⲙⲏⲓ: Ⲡⲭ︦ⲥ︦ Ⲡⲉⲛⲛⲟⲩϯ: ϯⲡⲁⲣⲑⲉⲛⲟⲥ ⲉ︦ⲑ︦ⲩ︦.", "السلام للتي ولدت لنا النور الحقيقي المسيح إلهنا العذراء القديسة.", "Shere thē-etasmisi nan: empiouōini enta-efmēi: Pikhristos Pennouti: tiparthenos ethouab.", "Es-salamu lillati waladat lana en-nour el-haqeeqi el-Maseeh Ilahana el-'Adhra' el-qiddisa."],
+        ["Ask the Lord on our behalf, to have mercy on our souls, and forgive us our sins.", "Ⲙⲁϯϩⲟ ⲙ̀Ⲡⲟ︦ⲥ︦ ⲉ̀ϩ̀ⲣⲏⲓ ⲉ̀ϫⲱⲛ: ⲛ̀ⲧⲉϥⲉⲣⲟⲩⲛⲁⲓ ⲛⲉⲙ ⲛⲉⲛⲯⲩⲭⲏ: ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ.", "اسألي الرب عنا ليصنع رحمة مع نفوسنا ويغفر لنا خطايانا.", "Matiho em-Eptshois e-ehrēi ejōn: enteferounai nem nenpsukhē: entefkha nennovi nan evol.", "Is'ali er-Rabb 'anna li-yasna' rahma ma'a nufousina wa yaghfir lana khatayana."],
+        ["O Virgin Mary, the holy Theotokos, the faithful advocate for all mankind.", "Ϯⲡⲁⲣⲑⲉⲛⲟⲥ Ⲙⲁⲣⲓⲁⲙ: ϯⲑⲉⲟ̀ⲧⲟⲕⲟⲥ ⲉ︦ⲑ︦ⲩ︦: ϯⲡ̀ⲣⲟⲥⲧⲁⲧⲏⲥ ⲉ̀ⲧⲉⲛϩⲟⲧ: ⲛ̀ⲧⲉ ⲡ̀ⲅⲉⲛⲟⲥ ⲛ̀ⲧⲉ ϯⲙⲉⲧⲣⲱⲙⲓ.", "أيتها العذراء مريم والدة الإله القديسة الشفيعة الأمينة لجنس البشر.", "Tiparthenos Mariam: tithe-otokos ethouab: ti-eprostatēs etenhot: ente epgenos ente timetrōmi.", "Ayyatuha el-'Adhra' Maryam walidat el-Ilah el-qiddisa esh-shafi'a el-amina li-gins el-bashar."],
+        ["Intercede on our behalf before Christ whom you bore, that He may grant us the forgiveness of our sins.", "Ⲁⲣⲓⲡ̀ⲣⲉⲥⲃⲉⲩⲓⲛ ⲉ̀ϩ̀ⲣⲏⲓ ⲉϫⲱⲛ: ⲛⲁϩⲣⲉⲛ Ⲡⲭ︦ⲥ︦: ⲫⲏⲉ̀ⲧⲁⲣⲉϫ̀ⲫⲟϥ: ϩⲟⲡⲱⲥ ⲛ̀ⲧⲉϥⲉⲣϩ̀ⲙⲟⲧ ⲛⲁⲛ: ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.", "اشفعي فينا أمام المسيح الذي ولدتِه لكي ينعم لنا بمغفرة خطايانا.", "Ari-epresveuin e-ehrēi ejōn: nahren Pikhristos: fē-etare-ejfof: hopōs enteferehmot nan: empikhō evol ente nennovi.", "Ishfa'i fina amam el-Maseeh elladhi waladtihi likay yun'im lana bi-maghfirat khatayana."],
+        ["Hail to you O Virgin, the right and true Queen. Hail to the pride of our race, who bore to us Emmanuel.", "Ⲭⲉⲣⲉ ⲛⲉ ⲱ̀ ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ϯⲟⲩⲣⲱ ⲙ̀ⲙⲏⲓ ⲛ̀ⲁ̀ⲗⲏⲑⲓⲛⲏ: ⲭⲉⲣⲉ ⲡ̀ϣⲟⲩϣⲟⲩ ⲛ̀ⲧⲉ ⲡⲉⲛⲅⲉⲛⲟⲥ: ⲁ̀ⲣⲉϫ̀ⲫⲟ ⲛⲁⲛ ⲛ̀Ⲉⲙⲙⲁⲛⲟⲩⲏⲗ.", "السلام لكِ أيتها العذراء الملكة الحقيقية الحقانية، السلام لفخر جنسنا، ولدتِ لنا عمانوئيل.", "Shere ne ō tiparthenos: tiourō emmēi enalēthinē: shere epshoushou ente pengenos: are-ejfo nan en-Emmanouēl.", "Es-salamu laki ayyatuha el-'Adhra' el-malika el-haqeeqiyya el-haqqaniyya, es-salamu li-fakhr ginsina, waladti lana 'Immanu'eel."],
+        ["We ask you to remember us, O our faithful advocate, before our Lord Jesus Christ, that He may forgive us our sins.", "Ⲧⲉⲛϯϩⲟ ⲁ̀ⲣⲓⲡⲉⲛⲙⲉⲩⲓ̀: ⲱ̀ ϯⲡ̀ⲣⲟⲥⲧⲁⲧⲏⲥ ⲉ̀ⲧⲉⲛϩⲟⲧ: ⲛⲁϩⲣⲉⲛ Ⲡⲉⲛⲟ︦ⲥ︦ Ⲓⲏ︦ⲥ︦ Ⲡⲭ︦ⲥ︦: ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ.", "نسألكِ أن تذكرينا أيتها الشفيعة المؤتمنة أمام ربنا يسوع المسيح ليغفر لنا خطايانا.", "Tentiho aripenmeu-i: ō ti-eprostatēs etenhot: nahren Pentshois Iēsous Pikhristos: entefkha nennovi nan evol.", "Nas'aluki an tadhkureena ayyatuha esh-shafi'a el-mu'tamana amam Rabbina Yasou' el-Maseeh li-yaghfir lana khatayana."],
+        ]),
+      };
       // Weekends follow the church's order, hymns only (prayers, litanies, readings and the Creed are left out).
       // Hymns that are the same as Annual are copied from it; the Lent ones have their titles until their text comes in.
       const fromLent = (key: string): Hymn[] => {
@@ -6367,37 +6785,48 @@ if (greatLent) {
         const hymn = list?.find((h) => h.id === annualId);
         return hymn ? [withoutAudio({ ...hymn, id: `${id}-${key}`, ...(title ? { title } : {}) })] : [];
       };
+      // Same words as in Kiahk
+      const fromKiahk = (title: string, key: string): Hymn[] => {
+        const hymn = kiahkLiturgy?.hymns.find((h) => h.title === title);
+        return hymn ? [withoutAudio({ ...hymn, id: `${id}-${key}` })] : [];
+      };
       const header = (key: string, title: string): Hymn => ({ id: `${id}-${key}`, title, versions: [], isSectionHeader: true });
-      if (part === 'weekend' && (name === 'matins' || name === 'vespers')) {
+      if (part === 'weekend' && name === 'matins') {
+        children = [
+          ...fromLent('verse-of-cymbals'),
+          ...fromLent('psalm-trailer'),
+          ...fromLent('psalm-trailer-pope-bishop'),
+          lentGospelResponse(`lent-${name}-gospel-response`),
+          ...lentConclusions(`lent-${name}`),
+          // The Doxologies come last: the weekend one, then the rest of the weekday ones (not the weekday Doxology)
+          doxologiesHeader,
+          lentIntroDoxologies,
+          ...lentDoxology('sat-sun'),
+          ...lentDoxology('lent-2'),
+          ...lentDoxology('lent-3'),
+          ...lentDoxology('lent-4'),
+          ...fromAnnualMatins('doxology-virgin-mary'),
+          ...fromAnnualMatins('doxology-heavenly-beings'),
+          ...lentDoxology('st-john'),
+          ...lentDoxology('st-john-2'),
+          ...fromAnnualMatins('doxology-apostles'),
+          ...fromAnnualMatins('doxology-st-george'),
+          ...fromAnnualMatins('doxology-philopater-mercurius'),
+          ...fromAnnualMatins('doxology-st-mena'),
+          ...fromAnnualMatins('doxology-anba-abraam'),
+          ...fromAnnualMatins('doxology-pope-kyrillos-vi'),
+          ...fromAnnualMatins('doxology-patriarch-bishop'),
+          ...fromAnnualMatins('doxology-conclusion'),
+        ];
+      }
+      if (part === 'weekend' && name === 'vespers') {
         children = [
           titleOnly(`${id}-thanksgiving-response`, 'Ⲧⲱⲃϩ ϩⲓⲛⲁ (Thanksgiving Prayer Response in the Presence of the Pope or a Bishop)'),
           ...fromLent('verse-of-cymbals'),
-          // The Gloria, the Trisagion and the Doxologies are said at Matins
-          ...(name === 'matins'
-            ? [
-                titleOnly(`${id}-gloria`, 'Ⲡⲓϩⲱⲥ ⲛ̀ⲧⲉ ⲛⲓⲁⲅⲅⲉⲗⲟⲥ (The Gloria, the Hymn of the Angels)'),
-                ...fromAnnual(annualLiturgy?.hymns, 'annual-liturgy-agios', 'trisagion', 'Ⲁⲅⲓⲟⲥ ⲟ̀ Ⲑⲉⲟⲥ (Trisagion)'),
-                {
-                  id: `${id}-doxologies`,
-                  title: 'Doxologies',
-                  versions: [],
-                  children: [
-                    ...fromAnnualMatins('intro-doxologies'),
-                    ...lentDoxology('sat-sun'),
-                    ...lentDoxology('weekday-lent'),
-                    ...lentDoxology('lent-2'),
-                    ...lentDoxology('lent-3'),
-                    ...lentDoxology('lent-4'),
-                    ...fromAnnualMatins('doxology-virgin-mary'),
-                    ...fromAnnualMatins('doxology-heavenly-beings'),
-                  ],
-                },
-              ]
-            : []),
           titleOnly(`${id}-creed-introduction`, 'Introduction to the Creed'),
           titleOnly(`${id}-god-have-mercy`, 'Ⲫ̀ⲛⲟⲩϯ ⲛⲁⲓ ⲛⲁⲛ (God Have Mercy)'),
           titleOnly(`${id}-veneration`, 'Veneration'),
-          titleOnly(`${id}-psalm-chant`, name === 'matins' ? 'Matins Psalm Chant' : 'Vespers Psalm Chant'),
+          titleOnly(`${id}-psalm-chant`, 'Vespers Psalm Chant'),
           ...fromLent('psalm-trailer'),
           ...fromLent('psalm-trailer-pope-bishop'),
           lentGospelResponse(`lent-${name}-gospel-response`),
@@ -6408,15 +6837,15 @@ if (greatLent) {
         children = [
           // Offering of the Lamb, copied above from Annual with His Foundation
           ...(service?.hymns.map(withoutAudio) ?? []),
+          ...fromAnnual(annualLiturgy?.hymns, 'annual-liturgy-offering-all-the-wise-men', 'offering-all-the-wise-men', 'Ⲛⲓⲥⲁⲃⲉⲩ (All You Wise Men)'),
           header('word-header', 'Liturgy of the Word'),
           ...fromAnnual(annualLiturgy?.hymns, 'annual-liturgy-offering-golden-censer-virgin', 'hymn-of-the-censer', 'Ϯϣⲟⲩⲣⲏ (Hymn of the Censer)'),
-          ...fromAnnual(annualLiturgy?.hymns, 'annual-liturgy-hitens', 'hymn-of-intercessions', 'Ϩⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ (Hymn of the Intercessions)'),
-          titleOnly(`${id}-pauline-conclusion`, 'Ⲡⲓϩ̀ⲙⲟⲧ ⲅⲁⲣ (Conclusion to the Coptic Pauline Epistle)'),
-          titleOnly(`${id}-pauline-response`, 'Ⲡⲓϩ̀ⲙⲟⲧ ⲅⲁⲣ (Response to the Pauline Epistle)'),
-          titleOnly(`${id}-pauline-great-response`, 'Ⲡⲓϩ̀ⲙⲟⲧ ⲅⲁⲣ (Great Response to the Pauline Epistle)'),
-          titleOnly(`${id}-pauline-alternate-response`, 'Ⲏ̀ ⲁ̀ⲅⲁⲡⲏ (Alternate Response to the Pauline Epistle)'),
-          titleOnly(`${id}-hymn-of-the-virtues`, 'Ϯⲙⲏⲧ ⲥ̀ⲛⲟⲩϯ (Hymn of the Virtues)'),
-          titleOnly(`${id}-the-blessed`, 'Ⲧⲟⲩ Ⲙⲁⲕⲁⲣⲓⲱ (The Blessed)'),
+          lentHymnOfIntercessions(`${id}-hymn-of-intercessions`),
+          // From here on, the same words as Annual or Kiahk where the hymn is the same in Lent
+          ...fromAnnual(annualLiturgy?.hymns, 'annual-liturgy-pihmot-gar', 'pihmot-gar', 'Ⲡⲓϩ̀ⲙⲟⲧ ⲅⲁⲣ'),
+          ...fromKiahk('Ⲏ̀ ⲁ̀ⲅⲁⲡⲏ (Alternate Response to the Pauline Epistle)', 'pauline-alternate-response'),
+          ...fromKiahk('Ϯⲙⲏⲧ ⲥ̀ⲛⲟⲩϯ (Hymn of the Virtues)', 'hymn-of-the-virtues'),
+          ...fromKiahk('Ⲧⲟⲩ ⲙⲁⲕⲁⲣⲓⲱ (The Blessed)', 'the-blessed'),
           ...fromAnnual(annualLiturgy?.hymns, 'annual-liturgy-perfect-is-the-blessing', 'perfect-is-the-blessing', 'Ⲁ̀ ⲡⲉⲧϫⲏⲕ ⲉ̀ⲃⲟⲗ (Perfect is the Blessing)'),
           titleOnly(`${id}-praxis-response`, 'Praxis Response'),
           titleOnly(`${id}-the-great-high-priest`, 'Ⲙⲉⲅⲁⲗⲟⲩ (The Great High Priest)'),
@@ -6428,13 +6857,13 @@ if (greatLent) {
           header('faithful-header', 'Liturgy of the Faithful'),
           lentGospelResponse(`${id}-gospel-response`),
           titleOnly(`${id}-adam-aspasmos`, 'Ϫⲉ ⲭ̀ⲟⲩⲱϣ (Adam Aspasmos, For You Do Not)'),
-          titleOnly(`${id}-adam-aspasmos-rejoice`, 'Ⲟⲩⲛⲟϥ ⲙ̀ⲙⲟ (Standard Adam Aspasmos, Rejoice)'),
-          titleOnly(`${id}-adam-aspasmos-greet-with`, 'Ⲁⲣⲓⲁⲥⲡⲁⲍⲉⲥⲑⲉ (A Second Standard Adam Aspasmos, Greet With)'),
-          titleOnly(`${id}-adam-aspasmos-o-christ`, 'Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ (A Third Standard Adam Aspasmos, O Christ Our Savior)'),
+          ...fromAnnual(annualLiturgy?.hymns, 'annual-liturgy-aspasmos-adam', 'adam-aspasmos-rejoice'),
+          ...fromAnnual(annualLiturgy?.hymns, 'annual-liturgy-aspasmos-adam-2', 'adam-aspasmos-greet-with'),
+          ...fromAnnual(annualLiturgy?.hymns, 'annual-liturgy-aspasmos-adam-3', 'adam-aspasmos-o-christ'),
           titleOnly(`${id}-watos-aspasmos-i-know`, 'Ϯⲥⲱⲟⲩⲛ (Watos Aspasmos, I Know)'),
           ...fromAnnual(annualLiturgy?.hymns, 'annual-liturgy-aspasmos-watos', 'aspasmos-watos'),
-          titleOnly(`${id}-watos-aspasmos-let-us-praise`, 'Ⲙⲁⲣⲉⲛϩⲱⲥ (A Second Standard Watos Aspasmos, Let Us Praise)'),
-          titleOnly(`${id}-watos-aspasmos-mary`, 'Ⲙⲁⲣⲓⲁ ϯϭ̀ⲣⲟⲙⲡⲓ (A Third Standard Watos Aspasmos, Mary the Beautiful Dove)'),
+          ...fromAnnual(annualLiturgy?.hymns, 'annual-liturgy-aspasmos-watos-2', 'watos-aspasmos-let-us-praise'),
+          ...fromAnnual(annualLiturgy?.hymns, 'annual-liturgy-aspasmos-watos-3', 'watos-aspasmos-mary'),
           // "Agios Agios Agios": the people's part after the deacon's "The Cherubim worship You"
           ...fromAnnual(annualLiturgy?.hymns, 'annual-liturgy-the-cherubim-worship-you', 'the-cherubim-worship-you'),
           // The people's responses in the Institution Narrative
@@ -6450,27 +6879,27 @@ if (greatLent) {
           titleOnly(`${id}-as-it-was`, 'As It Was and Is'),
         ];
       }
-      if (part === 'weekend' && name === 'distribution') {
-        children = [
-          ...fromAnnual(annualDistribution?.hymns, 'annual-distribution-psalm-150', 'psalm-150'),
-          titleOnly(`${id}-a-great-mystery`, 'Ⲟⲩⲛⲓϣϯ (A Great Mystery)'),
-          titleOnly(`${id}-veneration`, 'Veneration'),
-          {
-            id: `${id}-melodies`,
-            title: 'Melodies',
-            versions: [],
-            children: [titleOnly(`${id}-melody-preparation-first-sunday`, 'Melody for Preparation and First Sunday (by Cantor Abou El Saad El-Aboutigi)')],
-          },
-          ...lentConclusions(`lent-${name}`),
-        ];
-      }
       if (part === 'weekday' && name === 'matins') {
         children = [
           weekdayCymbals(`${id}-verse-of-cymbals`),
+          ...fromAnnualMatins('psalm-trailer'),
+          ...fromAnnualMatins('psalm-trailer-pope-bishop'),
           lentGospelResponse(`${id}-gospel-response`),
           ...weekdayConclusions(id),
+          // Said on Lent weekdays before the Doxologies
+          {
+            id: `${id}-supplications`,
+            title: 'Ⲕⲗⲓⲛⲱⲙⲉⲛ ⲧⲁ ⲅⲟⲛⲁⲧⲁ (Supplications)',
+            versions: [
+              { language: 'coptic', text: "Ⲡⲓⲟⲩⲏⲃ:\n\nⲔⲗⲓⲛⲱⲙⲉⲛ ⲧⲁ ⲅⲟⲛⲁⲧⲁ.\n\nⲠⲓⲗⲁⲟⲥ:\n\nⲚⲁⲓ ⲛⲁⲛ Ⲫ̀ϯ Ⲫ̀ⲓⲱⲧ ⲡⲓⲠⲁⲛⲧⲟⲕⲣⲁⲧⲱⲣ.\n\nⲠⲓⲟⲩⲏⲃ:\n\nⲀⲛⲁⲥⲧⲱⲙⲉⲛ: ⲕ̀ⲗⲓⲛⲱⲙⲉⲛ ⲧⲁ ⲅⲟⲛⲁⲧⲁ.\n\nⲠⲓⲗⲁⲟⲥ:\n\nⲚⲁⲓ ⲛⲁⲛ Ⲫ̀ϯ ⲡⲉⲛⲤⲱⲧⲏⲣ.\n\nⲠⲓⲟⲩⲏⲃ:\n\nⲔⲉ ⲁⲛⲁⲥⲧⲱⲙⲉⲛ: ⲕ̀ⲗⲓⲛⲱⲙⲉⲛ ⲧⲁ ⲅⲟⲛⲁⲧⲁ.\n\nⲠⲓⲗⲁⲟⲥ:\n\nⲚⲁⲓ ⲛⲁⲛ Ⲫ̀ϯ ⲟⲩⲟϩ ⲛⲁⲓ ⲛⲁⲛ." },
+              { language: 'englishCoptic', text: "Piouēb:\n\nKlinōmen ta gonata.\n\nPilaos:\n\nNai nan Efnouti Efiōt pi-Pantokratōr.\n\nPiouēb:\n\nAnastōmen: eklinōmen ta gonata.\n\nPilaos:\n\nNai nan Efnouti pen-Sōtēr.\n\nPiouēb:\n\nKe anastōmen: eklinōmen ta gonata.\n\nPilaos:\n\nNai nan Efnouti ouoh nai nan." },
+              { language: 'english', text: "Priest:\n\nLet us bow our knees.\n\nPeople:\n\nHave mercy upon us, O God, the Father, the Pantocrator.\n\nPriest:\n\nLet us stand. Let us bow our knees.\n\nPeople:\n\nHave mercy upon us, O God, our Savior.\n\nPriest:\n\nAnd let us stand. Let us bow our knees.\n\nPeople:\n\nHave mercy upon us, O God, and have mercy upon us." },
+              { language: 'englishArabic', text: "El-kahin:\n\nNahni rukabna.\n\nEsh-sha'b:\n\nIrhamna ya Allah el-Ab dabit el-kull.\n\nEl-kahin:\n\nNaqif thumma nahni rukabna.\n\nEsh-sha'b:\n\nIrhamna ya Allah mukhallisana.\n\nEl-kahin:\n\nThumma naqif nahni rukabna.\n\nEsh-sha'b:\n\nIrhamna ya Allah thumma irhamna." },
+              { language: 'arabic', text: "الكاهن:\n\nنحني ركبنا.\n\nالشعب:\n\nارحمنا يا الله الآب ضابط الكل.\n\nالكاهن:\n\nنقف ثم نحني ركبنا.\n\nالشعب:\n\nارحمنا يا الله مخلصنا.\n\nالكاهن:\n\nثم نقف نحني ركبنا.\n\nالشعب:\n\nارحمنا يا الله ثم ارحمنا." },
+            ],
+          },
           doxologiesHeader,
-          ...fromAnnualMatins('intro-doxologies'),
+          lentIntroDoxologies,
           ...lentDoxology('weekday-lent'),
           ...lentDoxology('lent-2'),
           ...lentDoxology('lent-3'),
@@ -6479,13 +6908,54 @@ if (greatLent) {
           ...fromAnnualMatins('doxology-heavenly-beings'),
           ...lentDoxology('st-john'),
           ...lentDoxology('st-john-2'),
+          ...fromAnnualMatins('doxology-apostles'),
+          ...fromAnnualMatins('doxology-st-george'),
+          ...fromAnnualMatins('doxology-philopater-mercurius'),
+          ...fromAnnualMatins('doxology-st-mena'),
+          ...fromAnnualMatins('doxology-anba-abraam'),
+          ...fromAnnualMatins('doxology-pope-kyrillos-vi'),
+          ...fromAnnualMatins('doxology-patriarch-bishop'),
+          ...fromAnnualMatins('doxology-conclusion'),
         ];
       }
-      if (part === 'weekday' && (name === 'distribution' || name === 'midnight')) children = weekdayConclusions(id);
+      // The Distribution is the same on weekdays and weekends, apart from the conclusions
+      if (name === 'distribution') {
+        const melody = (key: string, title: string) => titleOnly(`${id}-melody-${key}`, title);
+        children = [
+          titleOnly(`${id}-psalm-150`, 'Ⲥⲙⲟⲩ ⲉ̀Ⲫ̀ⲛⲟⲩϯ (Psalm 150)'),
+          titleOnly(`${id}-o-good-one`, 'Ⲡⲓⲙⲁⲓⲣⲱⲙⲓ (O Good One)'),
+          {
+            id: `${id}-melodies`,
+            title: 'Melodies',
+            versions: [],
+            children: [
+              melody('preparation-first-sunday', 'Melody for Preparation and First Sunday'),
+              melody('second-sunday', 'Melody for the Second Sunday of Great Lent'),
+              melody('third-sunday', 'Melody for the Third Sunday of Great Lent'),
+              melody('fourth-sunday', 'Melody for the Fourth Sunday of Great Lent'),
+              melody('fifth-sunday', 'Melody for the Fifth Sunday of Great Lent'),
+              melody('sixth-sunday', 'Melody for the Sixth Sunday of Great Lent'),
+              melody('last-week', 'Melody for the Last Week of Great Lent'),
+            ],
+          },
+          ...(part === 'weekday' ? weekdayConclusions(id) : lentConclusions(`lent-${name}`)),
+        ];
+      }
       // Weekday Liturgy of the Word: the Hymn of the Censer in place of Tishori, then the weekday Hymn of the Intercessions
       if (part === 'weekday' && name === 'liturgy') {
+        const offering = (key: string, title?: string) => fromAnnual(annualLiturgy?.hymns, `annual-liturgy-offering-${key}`, `offering-${key}`, title);
+        const hisFoundation = service?.hymns.find((h) => h.id === 'lent-liturgy-offering-his-foundation');
         children = [
-          { id: `${id}-word-header`, title: 'Liturgy of the Word', versions: [], isSectionHeader: true },
+          header('offering-header', 'Offering of the Lamb'),
+          ...offering('blessed-are-you'),
+          ...offering('hymn-of-blessing'),
+          ...offering('hail-to-mary'),
+          ...offering('the-time-has-come'),
+          titleOnly(`${id}-offering-alleluia-i-shall-go-in`, 'Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ ⲉⲓⲉⲓ̀ (Alleluia I Shall Go In)'),
+          ...(hisFoundation ? [withoutAudio({ ...hisFoundation, id: `${id}-offering-his-foundation` })] : []),
+          ...offering('all-the-wise-men', 'Ⲛⲓⲥⲁⲃⲉⲩ (All You Wise Men)'),
+          // Liturgy of the Word: the Hymn of the Censer in place of Tishori, then the weekday Hymn of the Intercessions
+          header('word-header', 'Liturgy of the Word'),
           {
             id: `${id}-hymn-of-the-censer`,
             title: 'Ⲛ̀ⲑⲟ ⲧⲉ ϯϣⲟⲩⲣⲏ (Hymn of the Censer)',
@@ -6497,20 +6967,34 @@ if (greatLent) {
               { language: 'arabic', text: 'الشعب:\n\nأنت هي المجمرة الذهب النقي، حاملة جمر النار المباركة.\n\nنسجدُ لكَ أيها المسيح، مع أبيكَ الصالح، والروح القدس، لأنك أتيتَ وخلصتنا. ارحمنا.' },
             ],
           },
+          lentHymnOfIntercessions(`${id}-hymn-of-intercessions`),
+          ...fromAnnual(annualLiturgy?.hymns, 'annual-liturgy-pihmot-gar', 'pihmot-gar'),
+          ...fromKiahk('Ϯⲙⲏⲧ ⲥ̀ⲛⲟⲩϯ (Hymn of the Virtues)', 'hymn-of-the-virtues'),
+          ...fromKiahk('Ⲧⲟⲩ ⲙⲁⲕⲁⲣⲓⲱ (The Blessed)', 'the-blessed'),
+          ...fromAnnual(annualLiturgy?.hymns, 'annual-liturgy-perfect-is-the-blessing', 'perfect-is-the-blessing', 'Ⲁ̀ ⲡⲉⲧϫⲏⲕ (Perfect is the Blessing)'),
           {
-            id: `${id}-hymn-of-intercessions`,
-            title: 'Ϩⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ (Hymn of the Intercessions)',
-            versions: doxologyVersions([
-              ["People:", "Ⲡⲓⲗⲁⲟⲥ:", "الشعب:", "Pi-laos:", "Esh-sha'b:"],
-              ["Through the intercessions, of the Theotokos, Saint Mary, O Lord grant us, the forgiveness of our sins.", "Ϩⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ: ⲛ̀ⲧⲉ ϯⲑⲉⲟ̀ⲧⲟⲕⲟⲥ ⲉⲑⲟⲩⲁⲃ Ⲙⲁⲣⲓⲁ: Ⲡϭⲟⲓⲥ ⲁⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ: ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.", "بشفاعات والدة الإله القديسة مريم، يا ربُّ أنعم علينا بمغفرة خطايانا.", "Hiten ni-epresvia: ente Tithe-otokos ethouab Maria: Ptshois ari-ehmot nan: empikhō evol ente nennovi.", "Bi-shafa'at walidat el-Ilah el-qiddisa Maryam, ya Rabbu an'im 'alayna bi-maghfirat khatayana."],
-              ["Through the intercessions of the seven archangels, and the heavenly orders, O Lord, grant us the forgiveness of our sins.", "Ϩⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ ⲛ̀ⲧⲉ ⲡⲓϣⲁϣϥ ⲛ̀ⲁⲣⲭⲓⲁⲅⲅⲉⲗⲟⲥ ⲛⲉⲙ ⲛⲓⲧⲁⲅⲙⲁ ⲛ̀ⲉ̀ⲡⲟⲩⲣⲁⲛⲓⲟⲛ: Ⲡϭⲟⲓⲥ ⲁⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.", "بشفاعات رؤساء الملائكة السبعة والطغمات السمائية، يا ربُّ أنعم علينا بمغفرة خطايانا.", "Hiten ni-epresvia ente pishashf enarkhiaggelos nem nitagma enepouranion: Ptshois ari-ehmot nan empikhō evol ente nennovi.", "Bi-shafa'at ru'asa' el-mala'ika es-sab'a wet-tughmat es-sama'iyya, ya Rabbu an'im 'alayna bi-maghfirat khatayana."],
-              ["Through the prayers of my lords and fathers the apostles, and the rest of the disciples, O Lord, grant us the forgiveness of our sins.", "Ϩⲓⲧⲉⲛ ⲛⲓⲉⲩⲭⲏ ⲛ̀ⲧⲉ ⲛⲁϭⲟⲓⲥ ⲛ̀ⲓⲟϯ ⲛ̀ⲁ̀ⲡⲟⲥⲧⲟⲗⲟⲥ ⲛⲉⲙ ⲡ̀ⲥⲉⲡⲓ ⲛ̀ⲧⲉ ⲛⲓⲙⲁⲑⲏⲧⲏⲥ: Ⲡϭⲟⲓⲥ ⲁⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.", "بصلوات سادتي الآباء الرسل وبقية التلاميذ، يا ربُّ أنعم علينا بمغفرة خطايانا.", "Hiten nieukhē ente natshois enioti enapostolos nem epsepi ente nimathētēs: Ptshois ari-ehmot nan empikhō evol ente nennovi.", "Bi-salawat sadati el-aba' er-rusul wa baqiyyat et-talameedh, ya Rabbu an'im 'alayna bi-maghfirat khatayana."],
-              ["Through the prayers of the saints of this day, each one according to their name, O Lord, grant us the forgiveness of our sins.", "Ϩⲓⲧⲉⲛ ⲛⲓⲉⲩⲭⲏ ⲛ̀ⲧⲉ ⲛⲏⲉⲑⲟⲩⲁⲃ ⲛ̀ⲧⲉ ⲡⲁⲓⲉ̀ϩⲟⲟⲩ ⲡⲓⲟⲩⲁⲓ ⲡⲓⲟⲩⲁⲓ ⲕⲁⲧⲁ ⲡⲉϥⲣⲁⲛ: Ⲡϭⲟⲓⲥ ⲁⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.", "بصلوات قديسي هذا اليوم، كل واحد باسمه، يا ربُّ أنعم علينا بمغفرة خطايانا.", "Hiten nieukhē ente nēethouab ente pai-ehoou piouai piouai kata pefran: Ptshois ari-ehmot nan empikhō evol ente nennovi.", "Bi-salawat qiddisi hadha el-yawm, kull wahid bismih, ya Rabbu an'im 'alayna bi-maghfirat khatayana."],
-              ["Through their prayers, keep the life of our honored father, the archpriest Pope Abba ___. O Lord, grant us the forgiveness of our sins.", "Ϩⲓⲧⲉⲛ ⲛⲟⲩⲉⲩⲭⲏ ⲁ̀ⲣⲉϩ ⲉ̀ⲡ̀ⲱⲛϧ ⲙ̀ⲡⲉⲛⲓⲱⲧ ⲉⲧⲧⲁⲓⲏⲟⲩⲧ ⲛ̀ⲁⲣⲭⲓⲉ̀ⲣⲉⲩⲥ ⲡⲁⲡⲁ ⲁⲃⲃⲁ (ⲛⲓⲙ): Ⲡϭⲟⲓⲥ ⲁⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.", "بصلواتهم احفظ حياة أبينا المكرم رئيس الكهنة البابا الأنبا ___، يا ربُّ أنعم علينا بمغفرة خطايانا.", "Hiten noueukhē areh e-epōnkh empeniōt ettaiēout enarkhiereus papa abba (nim): Ptshois ari-ehmot nan empikhō evol ente nennovi.", "Bi-salawatihim ihfaz hayat abeena el-mukarram ra'ees el-kahana el-Baba el-Anba ___, ya Rabbu an'im 'alayna bi-maghfirat khatayana."],
-              ["Through their prayers, keep the life of our honored and righteous father, Abba ___ the bishop (metropolitan), O Lord, grant us the forgiveness of our sins.", "Ϩⲓⲧⲉⲛ ⲛⲟⲩⲉⲩⲭⲏ ⲁ̀ⲣⲉϩ ⲉ̀ⲡ̀ⲱⲛϧ ⲙ̀ⲡⲉⲛⲓⲱⲧ ⲉⲧⲧⲁⲓⲏⲟⲩⲧ ⲛ̀ⲇⲓⲕⲉⲟⲥ ⲁⲃⲃⲁ (ⲛⲓⲙ) ⲡⲓⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲥ (ⲡⲓⲙⲏⲧⲣⲟⲡⲟⲗⲓⲧⲏⲥ): Ⲡϭⲟⲓⲥ ⲁⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.", "بصلواتهم احفظ حياة أبينا المكرم البار أنبا ___ الأسقف (المطران)، يا ربُّ أنعم علينا بمغفرة خطايانا.", "Hiten noueukhē areh e-epōnkh empeniōt ettaiēout endikeos abba (nim) pi-episkopos (pimētropolitēs): Ptshois ari-ehmot nan empikhō evol ente nennovi.", "Bi-salawatihim ihfaz hayat abeena el-mukarram el-barr Anba ___ el-usquf (el-matran), ya Rabbu an'im 'alayna bi-maghfirat khatayana."],
-              ["We worship You, O Christ, with Your Good Father and the Holy Spirit, for You have come and saved us. Have mercy on us.", "Ⲧⲉⲛⲟⲩⲱϣⲧ ⲙ̀ⲙⲟⲕ ⲱ̀ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: ⲛⲉⲙ Ⲡⲉⲕⲓⲱⲧ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ: ⲛⲉⲙ Ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ ⲉⲑⲟⲩⲁⲃ: ϫⲉ ⲁⲕⲓ̀ ⲁⲕⲥⲱϯ ⲙ̀ⲙⲟⲛ ⲛⲁⲓ ⲛⲁⲛ.", "نسجدُ لكَ أيها المسيح، مع أبيكَ الصالح، والروح القدس، لأنك أتيتَ وخلصتنا. ارحمنا.", "Tenouōsht emmok ō Pi-ekhristos: nem Pekiōt enagathos: nem Pi-epneuma ethouab: je aki aksōti emmon nai nan.", "Nasgud laka ayyuha el-Maseeh, ma'a abeeka es-salih, war-Rouh el-Qudus, li-annaka ataita wa khallastana. Irhamna."],
-            ]),
+            id: `${id}-trisagion`,
+            title: 'Ⲁⲅⲓⲟⲥ ⲟ̀ Ⲑⲉⲟⲥ (Trisagion)',
+            versions: [
+              { language: 'coptic', text: "Ⲡⲓⲗⲁⲟⲥ:\n\nⲀⲅⲓⲟⲥ ⲟ̀ Ⲑⲉⲟⲥ: Ⲁⲅⲓⲟⲥ ⲓⲥⲭⲩⲣⲟⲥ: Ⲁⲅⲓⲟⲥ ⲁ̀ⲑⲁⲛⲁⲧⲟⲥ: ⲟ̀ ⲉⲕ ⲡⲁⲣⲑⲉⲛⲟⲩ ⲅⲉⲛⲛⲉⲑⲏⲥ: ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ ⲏ̀ⲙⲁⲥ.\n\nⲀⲅⲓⲟⲥ ⲟ̀ Ⲑⲉⲟⲥ: Ⲁⲅⲓⲟⲥ ⲓⲥⲭⲩⲣⲟⲥ: Ⲁⲅⲓⲟⲥ ⲁ̀ⲑⲁⲛⲁⲧⲟⲥ: ⲟ̀ ⲥ̀ⲧⲁⲩⲣⲱⲑⲓⲥ ⲇⲓ ⲏⲙⲁⲥ: ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ ⲏ̀ⲙⲁⲥ.\n\nⲀⲅⲓⲟⲥ ⲟ̀ Ⲑⲉⲟⲥ: Ⲁⲅⲓⲟⲥ ⲓⲥⲭⲩⲣⲟⲥ: Ⲁⲅⲓⲟⲥ ⲁ̀ⲑⲁⲛⲁⲧⲟⲥ: ⲟ̀ ⲁ̀ⲛⲁⲥⲧⲁⲥ ⲉⲕ ⲧⲱⲛ ⲛⲉⲕⲣⲱⲛ ⲕⲉ ⲁ̀ⲛⲉⲗⲑⲱⲛ ⲓⲥ ⲧⲟⲩⲥ ⲟⲩⲣⲁⲛⲟⲥ: ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ ⲏ̀ⲙⲁⲥ.\n\nⲆⲟⲝⲁ Ⲡⲁⲧⲣⲓ ⲕⲉ Ⲩⲓⲱ ⲕⲉ ⲁ̀ⲅⲓⲱ Ⲡⲛⲉⲩⲙⲁⲧⲓ: ⲕⲉ ⲛⲩⲛ ⲕⲉ ⲁ̀ⲓ̀ ⲕⲉ ⲓⲥ ⲧⲟⲩⲥ ⲉ̀ⲱ̀ⲛⲁⲥ ⲧⲱⲛ ⲉ̀ⲱ̀ⲛⲱⲛ: ⲁ̀ⲙⲏⲛ. Ⲁⲅⲓⲁ ⲧ̀ⲣⲓⲁⲥ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ ⲏ̀ⲙⲁⲥ." },
+              { language: 'englishCoptic', text: "Pilaos:\n\nAgios o Theos: Agios iskhuros: Agios athanatos: o ek parthenou gennethēs: ele-ēson ēmas.\n\nAgios o Theos: Agios iskhuros: Agios athanatos: o estaurōthis di ēmas: ele-ēson ēmas.\n\nAgios o Theos: Agios iskhuros: Agios athanatos: o anastas ek tōn nekrōn ke anelthōn is tous ouranos: ele-ēson ēmas.\n\nDoksa Patri ke Uiō ke agiō Pneumati: ke nun ke a-i ke is tous e-ōnas tōn e-ōnōn: amēn. Agia etrias ele-ēson ēmas." },
+              { language: 'english', text: "People:\n\nHoly God, Holy Mighty, Holy Immortal, who was born of the Virgin, have mercy upon us.\n\nHoly God, Holy Mighty, Holy Immortal, who was crucified for us, have mercy upon us.\n\nHoly God, Holy Mighty, Holy Immortal, who rose from the dead and ascended into the heavens, have mercy upon us.\n\nGlory to the Father and to the Son and to the Holy Spirit, now and ever and unto the age of the ages. Amen. O Holy Trinity, have mercy upon us." },
+              { language: 'englishArabic', text: "Esh-sha'b:\n\nQuddous Allah. Quddous el-qawi. Quddous el-hayy elladhi la yamout. Ya man wulida min el-'Adhra', irhamna.\n\nQuddous Allah. Quddous el-qawi. Quddous el-hayy elladhi la yamout. Ya man suliba 'anna, irhamna.\n\nQuddous Allah. Quddous el-qawi. Quddous el-hayy elladhi la yamout. Ya man qama min el-amwat wa sa'ida ila es-samawat, irhamna.\n\nEl-magd lil-Ab wal-Ibn war-Rouh el-Qudus, el-an wa kull awan wa ila dahr ed-dahireen. Amin. Ayyuha eth-thalouth el-quddous, irhamna." },
+              { language: 'arabic', text: "الشعب:\n\nقدوسُ الله. قدوسُ القوي. قدوسُ الحي الذي لا يموتُ. يا من وُلِدَ من العذراء، إرحَمنا.\n\nقدوسُ الله. قدوسُ القوي. قدوسُ الحي الذي لا يموت. يا من صُلِبَ عنا، إرحَمنا.\n\nقدوسُ الله. قدوسُ القوي. قدوسُ الحي الذي لا يموت. يا من قامَ من الأمواتِ وصعدَ إلى السموات، إرحَمنا.\n\nالمجدُ للآبِ والابنِ والروحِ القدس، الآنَ وكل أوانٍ وإلى دهر الداهرين. آمين. أيها الثالوثُ القدوس، إرحَمنا." },
+            ],
           },
+          ...fromAnnual(annualLiturgy?.hymns, 'annual-liturgy-psalm-trailer', 'psalm-trailer'),
+          ...fromAnnual(annualLiturgy?.hymns, 'annual-liturgy-psalm-trailer-pope-bishop', 'psalm-trailer-pope-bishop'),
+          header('faithful-header', 'The Divine Liturgy'),
+          lentGospelResponse(`${id}-gospel-response`),
+          titleOnly(`${id}-adam-aspasmos`, 'Ϫⲉ ⲭ̀ⲟ̀ⲩⲱ̀ϣ (Adam Aspasmos, For You Do Not)'),
+          ...fromAnnual(annualLiturgy?.hymns, 'annual-liturgy-aspasmos-adam', 'aspasmos-adam'),
+          ...fromAnnual(annualLiturgy?.hymns, 'annual-liturgy-aspasmos-adam-2', 'aspasmos-adam-2'),
+          ...fromAnnual(annualLiturgy?.hymns, 'annual-liturgy-aspasmos-adam-3', 'aspasmos-adam-3'),
+          titleOnly(`${id}-watos-aspasmos-i-know`, 'Ϯⲥⲱⲟ̀ⲩⲛ (Watos Aspasmos, I Know)'),
+          ...fromAnnual(annualLiturgy?.hymns, 'annual-liturgy-aspasmos-watos', 'aspasmos-watos'),
+          ...fromAnnual(annualLiturgy?.hymns, 'annual-liturgy-aspasmos-watos-2', 'aspasmos-watos-2'),
+          ...fromAnnual(annualLiturgy?.hymns, 'annual-liturgy-aspasmos-watos-3', 'aspasmos-watos-3'),
         ];
       }
       return { id, title: service?.title ?? name, versions: [], children };
@@ -6518,6 +7002,12 @@ if (greatLent) {
   greatLent.services = [
     { id: 'lent-weekday', title: 'Weekdays', hymns: serviceGroups('weekday') },
     { id: 'lent-weekend', title: 'Weekends (Saturday and Sunday)', hymns: serviceGroups('weekend') },
+    // Midnight Praises is the same every day of Lent: Annual's, without its recordings for now
+    {
+      id: 'lent-midnight',
+      title: 'Midnight Praises',
+      hymns: (annualMidnight?.hymns ?? []).map((hymn) => withoutAudio(copyForService(hymn, 'annual-midnight-', 'lent-midnight-'))),
+    },
   ];
 }
 
