@@ -5307,11 +5307,11 @@ if (annualMidnight) {
           id: 'annual-midnight-thursday-watos-lobsh',
           title: 'Ⲫ̀ⲛⲟⲩϯ Ⲡⲓⲁⲧϣⲛⲁⲩ (Watos Lobsh on the Thursday Theotokia)',
           versions: [
-            { language: 'coptic', text: 'Ⲫϯ ⲡⲓⲁⲧϣ̀ⲛⲁⲩ ⲉ̀ⲣⲟϥ: ϧⲁϫⲱⲟⲩ ⲛ̀ⲛⲓⲉ̀ⲱⲛ ⲧⲏⲣⲟⲩ: ⲁϥⲉⲣⲡ̀ⲉⲙⲡ̀ϣⲁ ⲛ̀ⲛⲁⲩ ⲉ̀ⲡⲉϥⲱ̀ⲟⲩ: ⲛ̀ϫⲉ Ⲙⲱⲩ̀ⲥⲏⲥ ϩⲓϫⲉⲛ ⲡⲓⲧⲱⲟⲩ.\n\n+ Ⲁϥⲛⲁⲩ ⲅⲁⲣ ⲉ̀ⲡⲓⲃⲁⲧⲟⲥ: ⲉ̀ⲣⲉ ⲡⲓⲭ̀ⲣⲱⲙ ⲙⲟϩ ⲛ̀ϧⲏⲧϥ: ⲟⲩⲇⲉ ⲙ̀ⲡⲟⲩⲣⲱⲕϩ ⲛ̀ϫⲉ ⲛⲉϥⲕ̀ⲗⲁⲇⲟⲥ: ⲟⲩⲇⲉ ⲙ̀ⲡⲉ ⲛⲉϥϫⲱⲃⲓ ⲧⲁⲕⲟ.\n\nⲠⲓⲭ̀ⲣⲱⲙ ⲙⲉⲛ ⲁϥⲉⲣⲗⲁⲙⲡⲓⲛ: ϧⲉⲛ ⲡⲓⲃⲁⲧⲟⲥ ⲛⲁϥⲣⲱⲕϩ ⲁⲛ: ϫⲉ ⲉ̀ⲣⲉ Ⲫϯ ⲥⲁϧⲟⲩⲛ ⲙ̀ⲙⲟϥ: ⲉϥⲥⲁϫⲓ ⲛ̀ⲑⲟϥ ⲛⲉⲙ ⲡⲓⲡ̀ⲣⲟⲫⲏⲧⲏⲥ.\n\n+ Ϫⲉ ⲱ̀ Ⲙⲱⲩ̀ⲥⲏⲥ ⲱ̀ Ⲙⲱⲩ̀ⲥⲏⲥ: ⲱ̀ Ⲙⲱⲩ̀ⲥⲏⲥ ⲡⲉ ϯⲙⲉⲓ ⲙ̀ⲙⲟϥ: ⲁ̀ⲛⲟⲕ ⲡⲉ Ⲫϯ ⲛ̀ⲧⲉ ⲛⲉⲕⲓⲟϯ: ⲙ̀ⲙⲟⲛ ⲕⲉ ⲟⲩⲁⲓ ⲉ̀ⲃⲏⲗ ⲉ̀ⲣⲟⲓ.\n\nⲂⲱⲗ ⲙ̀ⲡⲓⲑⲱⲟⲩⲓ̀ ⲉ̀ⲃⲟⲗ: ⲫⲏⲉⲧⲟⲓ ⲉ̀ⲛⲉⲕϭⲁⲗⲁⲩϫ: ϫⲉ ⲡⲓⲙⲁ ⲉ̀ⲧⲉⲕⲟ̀ϩⲓ ⲉ̀ⲣⲁⲧⲕ ϩⲓϫⲱϥ: ⲟⲩⲕⲁϩⲓ ⲉϥⲟⲩⲁⲃ ⲡⲉ ⲱ̀ ⲡⲓⲡ̀ⲣⲟⲫⲏⲧⲏⲥ.\n\n+ Ⲁ̀ⲣⲓⲛⲟⲓⲛ ⲛⲁⲕ ⲙ̀ⲡⲓⲃⲁⲧⲟⲥ: ⲉ̀ⲣⲉ ⲡⲓⲭ̀ⲣⲱⲙ ⲙⲟϩ ⲛ̀ϧⲏⲧϥ: ⲟⲩⲇⲉ ⲙ̀ⲡⲟⲩⲣⲱⲕϩ ⲛ̀ϫⲉ ⲛⲉϥⲕ̀ⲗⲁⲇⲟⲥ: ⲟⲩⲇⲉ ⲙ̀ⲡⲉ ⲛⲉϥϫⲱⲃⲓ ⲧⲁⲕⲟ.\n\nϤⲟⲓ ⲛ̀ⲧⲩⲡⲟⲥ ⲙ̀Ⲙⲁⲣⲓⲁ: ϯⲡⲁⲣⲑⲉⲛⲟⲥ ⲛ̀ⲁⲧⲑⲱⲗⲉⲃ: ⲉ̀ⲧⲁ ⲡⲓⲗⲟⲅⲟⲥ ⲛ̀ⲧⲉ Ⲫⲓⲱⲧ: ⲓ̀ ⲁϥϭⲓⲥⲁⲣⲝ ⲉ̀ⲃⲟⲗ ⲛ̀ϧⲏⲧⲥ.\n\n+ Ⲉⲑⲃⲉ ⲫⲁⲓ ⲧⲉⲛⲉⲣⲭⲟⲣⲉⲩⲓⲛ: ⲛⲉⲙ Ⲓⲱⲁⲛⲛⲏⲥ ⲡⲓⲡⲁⲣⲑⲉⲛⲟⲥ: ϫⲉ ⲥ̀ⲟⲩⲁⲃ ⲛ̀ϫⲉ ⲧⲁⲓϣⲉⲗⲉⲧ: ⲉ̀ⲧⲁⲩⲥⲉⲗⲥⲱⲗⲥ ⲙ̀ⲡⲓϩⲓⲏⲃ.\n\nⲬⲉⲣⲉ ⲛⲉ ⲱ̀ ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ϯⲟⲩⲣⲱ ⲙ̀ⲙⲏⲓ ⲛ̀ⲁ̀ⲗⲏⲑⲓⲛⲏ: ⲭⲉⲣⲉ ⲡ̀ϣⲟⲩϣⲟⲩ ⲛ̀ⲧⲉ ⲡⲉⲛⲅⲉⲛⲟⲥ: ⲁ̀ⲣⲉϫ̀ⲫⲟ ⲛⲁⲛ ⲛ̀Ⲉⲙⲙⲁⲛⲟⲩⲏⲗ.\n\n+ Ⲧⲉⲛϯϩⲟ ⲁ̀ⲣⲓⲡⲉⲛⲙⲉⲩⲓ̀: ⲱ̀ ϯⲡ̀ⲣⲟⲥⲧⲁⲧⲏⲥ ⲉ̀ⲧⲉⲛϩⲟⲧ: ⲛⲁϩⲣⲉⲛ Ⲡⲉⲛϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ.' },
-            { language: 'englishCoptic', text: 'Efnouti piateshnau erof: khajōou enni-eōn tērou: aferepemepsha ennau epefōou: enje Mō-usēs hijen pitōou.\n\n+ Afnau gar epivatos: ere pi-ekhrōm moh enkhētf: oude empourōkh enje nefeklados: oude empe nefjōvi tako.\n\nPi-ekhrōm men aferlampin: khen pivatos nafrōkh an: je ere Efnouti sakhoun emmof: efsaji enthof nem pi-eprofētēs.\n\n+ Je ō Mō-usēs ō Mō-usēs: ō Mō-usēs pe timei emmof: anok pe Efnouti ente nekioti: emmon ke ouai evēl eroi.\n\nVōl empithōou-i evol: fēetoi enektshalauj: je pima etekohi eratk hijōf: oukahi efouab pe ō pi-eprofētēs.\n\n+ Arinoin nak empivatos: ere pi-ekhrōm moh enkhētf: oude empourōkh enje nefeklados: oude empe nefjōvi tako.\n\nFoi entupos em-Maria: tiparthenos enatthōleb: eta pilogos ente Fiōt: i aftshisarks evol enkhēts.\n\n+ Ethve fai tenerkhoreuin: nem Iōannēs piparthenos: je esouab enje taishelet: etauselsōls empihiēb.\n\nKhere ne ō tiparthenos: tiourō emmēi enalēthinē: shere epshoushou ente pengenos: are-ejfo nan en-Emmanouēl.\n\n+ Tentiho aripenmeu-i: ō ti-eprostatēs etenhot: nahren Pentshois Iēsous Pi-ekhristos: entefkha nennovi nan evol.' },
-            { language: 'english', text: 'God the invisible, who was before all ages, Moses was worthy to see, His glory upon the mountain.\n\n+ For he saw the bush, and the fire in it, its branches did not burn, and its leaves were not damaged.\n\nThough the fire was aflame, the bush did not burn, that is because God was within it, and talking to the prophet.\n\n+ Saying "O Moses O Moses, O Moses the one I love, I am the God of your fathers, and there is no other besides Me.\n\nTake off your sandals, which are upon your feet, for the place where you are standing, is holy ground O prophet."\n\n+ Contemplate on the bush, and the fire within it, its branches did not burn, and its leaves were not damaged.\n\nThis is a symbol of Mary, the undefiled virgin, from whom the Word of the Father, came and took flesh.\n\n+ Wherefore we praise, with John the celibate, saying "Pure is the Bride, decorated for the Lamb."\n\nHail to you, O Virgin, the right and true Queen. Hail to the pride of our race, who bore to us Immanuel.\n\n+ We ask you to remember us, O our faithful advocate, before our Lord Jesus Christ, that He may forgive us our sins.' },
+            { language: 'coptic', text: "Ⲫ̀ⲛⲟⲩϯ Ⲡⲓⲁⲧϣ̀ⲛⲁⲩ ⲉ̀ⲣⲟϥ: ϧⲁϫⲱⲟⲩ ⲛ̀ⲛⲓⲉ̀ⲱⲛ ⲧⲏⲣⲟⲩ: ⲁϥⲉⲣⲡ̀ⲉⲙⲡ̀ϣⲁ ⲛ̀ⲛⲁⲩ ⲉ̀ⲡⲉϥⲱ̀ⲟⲩ: ⲛ̀ϫⲉ Ⲙⲱⲩ̀ⲥⲏⲥ ϩⲓϫⲉⲛ ⲡⲓⲧⲱⲟⲩ.\n\n+ Ⲁϥⲛⲁⲩ ⲅⲁⲣ ⲉ̀ⲡⲓⲃⲁⲧⲟⲥ: ⲉ̀ⲣⲉ ⲡⲓⲭ̀ⲣⲱⲙ ⲙⲟϩ ⲛ̀ϧⲏⲧϥ: ⲟⲩⲇⲉ ⲙ̀ⲡⲟⲩⲣⲱⲕϩ ⲛ̀ϫⲉ ⲛⲉϥⲕ̀ⲗⲁⲇⲟⲥ: ⲟⲩⲇⲉ ⲙ̀ⲡⲉ ⲛⲉϥϫⲱⲃⲓ ⲧⲁⲕⲟ.\n\nⲠⲓⲭ̀ⲣⲱⲙ ⲙⲉⲛ ⲁϥⲉⲣⲗⲁⲙⲡⲓⲛ: ϧⲉⲛ ⲡⲓⲃⲁⲧⲟⲥ ⲛⲁϥⲣⲱⲕϩ ⲁⲛ: ϫⲉ ⲉ̀ⲣⲉ Ⲫ̀ⲛⲟⲩϯ ⲥⲁϧⲟⲩⲛ ⲙ̀ⲙⲟⲥ: ⲉϥⲥⲁϫⲓ ⲛ̀ⲑⲟϥ ⲛⲉⲙ ⲡⲓⲡ̀ⲣⲟⲫⲏⲧⲏⲥ.\n\n+ Ϫⲉ ⲱ̀ Ⲙⲱⲩ̀ⲥⲏⲥ ⲱ̀ Ⲙⲱⲩ̀ⲥⲏⲥ: ⲱ̀ Ⲙⲱⲩ̀ⲥⲏⲥ ⲡⲉϯⲙⲉⲓ ⲙ̀ⲙⲟϥ: ⲁ̀ⲛⲟⲕ ⲡⲉ Ⲫ̀ⲛⲟⲩϯ ⲛ̀ⲧⲉ ⲛⲉⲕⲓⲟϯ: ⲙ̀ⲙⲟⲛ ⲕⲉ ⲟⲩⲁⲓ ⲉ̀ⲃⲏⲗ ⲉ̀ⲣⲟⲓ.\n\nⲂⲱⲗ ⲙ̀ⲡⲓⲑⲱⲟⲩⲓ̀ ⲉ̀ⲃⲟⲗ: ⲫⲏⲉ̀ⲧⲟⲓ ⲉ̀ⲛⲉⲕϭⲁⲗⲁⲩϫ: ϫⲉ ⲡⲓⲙⲁ ⲉ̀ⲧⲉⲕⲟ̀ϩⲓ ⲉ̀ⲣⲁⲧⲕ ϩⲓϫⲱϥ: ⲟⲩⲕⲁϩⲓ ⲉϥⲟⲩⲁⲃ ⲡⲉ ⲱ̀ ⲡⲓⲡ̀ⲣⲟⲫⲏⲧⲏⲥ.\n\n+ Ⲁ̀ⲣⲓⲛⲟⲓⲛ ⲛⲁⲕ ⲙ̀ⲡⲓⲃⲁⲧⲟⲥ: ⲉ̀ⲣⲉ ⲡⲓⲭ̀ⲣⲱⲙ ⲙⲟϩ ⲛ̀ϧⲏⲧϥ: ⲟⲩⲇⲉ ⲙ̀ⲡⲟⲩⲣⲱⲕϩ ⲛ̀ϫⲉ ⲛⲉϥⲕ̀ⲗⲁⲇⲟⲥ: ⲟⲩⲇⲉ ⲙ̀ⲡⲉ ⲛⲉϥϫⲱⲃⲓ ⲧⲁⲕⲟ.\n\nϤ̀ⲟⲓ ⲛ̀ⲧⲩⲡⲟⲥ ⲙ̀Ⲙⲁⲣⲓⲁ: Ϯⲡⲁⲣⲑⲉⲛⲟⲥ ⲛ̀ⲁⲧⲑⲱⲗⲉⲃ: ⲉ̀ⲧⲁ Ⲡⲓⲗⲟⲅⲟⲥ ⲛ̀ⲧⲉ Ⲫ̀ⲓⲱⲧ: ⲓ̀ ⲁϥϭⲓⲥⲁⲣⲝ ⲉ̀ⲃⲟⲗ ⲛ̀ϧⲏⲧⲥ.\n\n+ Ⲉⲑⲃⲉ ⲫⲁⲓ ⲧⲉⲛⲉⲣⲭⲟⲣⲉⲩⲓⲛ: ⲛⲉⲙ Ⲓⲱⲁⲛⲛⲏⲥ ⲡⲓⲡⲁⲣⲑⲉⲛⲟⲥ: ϫⲉ ⲥ̀ⲟⲩⲁⲃ ⲛ̀ϫⲉ ⲧⲁⲓϣⲉⲗⲏⲧ: ⲉ̀ⲧⲁⲩⲥⲉⲗⲥⲱⲗⲥ ⲙ̀Ⲡⲓϩⲓⲏⲃ.\n\nⲬⲉⲣⲉ ⲛⲉ ⲱ̀ Ϯⲡⲁⲣⲑⲉⲛⲟⲥ: ϯⲟⲩⲣⲱ ⲙ̀ⲙⲏⲓ ⲛ̀ⲁ̀ⲗⲏⲑⲓⲛⲏ: ⲭⲉⲣⲉ ⲡ̀ϣⲟⲩϣⲟⲩ ⲛ̀ⲧⲉ ⲡⲉⲛⲅⲉⲛⲟⲥ: ⲁ̀ⲣⲉϫ̀ⲫⲟ ⲛⲁⲛ ⲛ̀Ⲉⲙⲙⲁⲛⲟⲩⲏⲗ.\n\n+ Ⲧⲉⲛϯϩⲟ ⲁ̀ⲣⲓⲡⲉⲛⲙⲉⲩⲓ: ⲱ̀ ϯⲡ̀ⲣⲟⲥⲧⲁⲧⲏⲥ ⲉ̀ⲧⲉⲛϩⲟⲧ: ⲛⲁϩⲣⲉⲛ Ⲡⲉⲛϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ." },
+            { language: 'englishCoptic', text: "Efnouti Piateshnau erof: khajōou enni-eōn tērou: aferepemepsha ennau epefōou: enje Mō-usēs hijen pitōou.\n\n+ Afnau gar epivatos: ere pi-ekhrōm moh enkhētf: oude empourōkh enje nefeklados: oude empe nefjōvi tako.\n\nPi-ekhrōm men aferlampin: khen pivatos nafrōkh an: je ere Efnouti sakhoun emmos: efsaji enthof nem pi-eprofētēs.\n\n+ Je ō Mō-usēs ō Mō-usēs: ō Mō-usēs petimei emmof: anok pe Efnouti ente nekioti: emmon ke ouai evēl eroi.\n\nVōl empithōou-i evol: fē-etoi enektshalauj: je pima etekohi eratk hijōf: oukahi efouab pe ō pi-eprofētēs.\n\n+ Arinoin nak empivatos: ere pi-ekhrōm moh enkhētf: oude empourōkh enje nefeklados: oude empe nefjōvi tako.\n\nEfoi entupos em-Maria: Tiparthenos enatthōleb: eta Pilogos ente Efiōt: i aftshisarks evol enkhēts.\n\n+ Ethve fai tenerkhoreuin: nem Iōannēs piparthenos: je esouab enje taishelēt: etauselsōls em-Pihiēb.\n\nShere ne ō Tiparthenos: tiourō emmēi enalēthinē: shere epshoushou ente pengenos: are-ejfo nan en-Emmanouēl.\n\n+ Tentiho aripenmeui: ō ti-eprostatēs etenhot: nahren Pentshois Iēsous Pi-ekhristos: entefkha nennovi nan evol." },
+            { language: 'english', text: "God the invisible, who was before all ages, Moses was worthy to see, His glory upon the mountain.\n\n+ For he saw the bush, and the fire in it, its branches did not burn, and its leaves were not damaged.\n\nThough the fire was aflame, the bush did not burn, that is because God was within it, and talking to the prophet.\n\n+ Saying \"O Moses O Moses, O Moses the one I love, I am the God of your fathers, and there is no other besides Me.\n\nTake off your sandals, which are upon your feet, for the place where you are standing, is holy ground O prophet.\n\n+ Contemplate on the bush, and the fire within it, its branches did not burn, and its leaves were not damaged.\"\n\nThis is a symbol of Mary, the undefiled virgin, from whom the Logos of the Father, came and took flesh.\n\n+ Wherefore we praise, with John the celibate, saying \"Pure is this Bride, decorated for the Lamb.\"\n\nHail to you O Virgin, / the right and true Queen. / Hail to the pride of our race / who bore to us Emmanuel.\n\n+ We ask you to remember us, / O our faithful advocate, / before our Lord Jesus Christ, / that He may forgive us our sins." },
             { language: 'englishArabic', text: 'Allah ghayr el-manzour qabl kull ed-duhour istahaqq an yara Mousa magdahu \'ala el-gabal.\n\n+ Li-annahu ra\'a el-\'ulayqa wen-nar mushta\'ila fiha wa lam tahtariq aghsanuha wa lam yafsad waraquha.\n\nFen-nar kanat tashta\'il fil-\'ulayqa wa lam tahtariq li-anna Allah dakhilaha wa huwa yukhatib en-nabi.\n\n+ Qa\'ilan ya Mousa ya Mousa alladhi ana uhibbuhu ana huwa Ilah aba\'ik wa laysa akhar siwaya.\n\nHill el-hidha\' alladhi fi riglayk li-anna el-mawdi\' alladhi anta waqif \'alayh ard muqaddasa ayyuha en-nabi.\n\n+ Ta\'ammal el-\'ulayqa wen-nar mushta\'ila fiha wa lam tahtariq aghsanuha wa lam yafsad waraquha.\n\nHiya mithal li-Maryam el-\'Adhra\' ghayr ed-danisa allati tagassad minha kalimat el-Ab.\n\n+ Min agl hadha namdah ma\'a Youhanna el-batoul qa\'ileen tahira hiya hadhihi el-\'arousa allati zuyyinat lil-hamal.\n\nEs-salam laki ayyatuha el-\'Adhra\', el-malika el-haqiqiya el-haqqaniya, es-salam li-fakhr ginsina, waladti lana \'Immanu\'eel.\n\n+ Nas\'aluki udhkurina ayyatuha esh-shafi\'a el-mu\'tamana amam Rabbina Yasou\' el-Maseeh li-yaghfir lana khatayana.' },
-            { language: 'arabic', text: 'الله غير المنظور قبل كل الدهور إستحق أن يرى موسى مجده على الجبل.\n\n+ لأنه رأى العليقة والنار مشتعلة فيها ولم تحترق أغصانها ولم يفسد ورقها.\n\nفالنار كانت تشتعل في العليقة ولم تحترق لأن الله داخلها وهو يخاطب النبي.\n\n+ قائلاً يا موسى يا موسى الذي أنا أحبه أنا هو إله آبائك وليس آخر سواي.\n\nحل الحذاء الذي في رجليك لأن الموضع الذي أنت واقف عليه أرض مقدسة أيها النبي.\n\n+ تأمل العليقة والنار مشتعلة فيها ولم تحترق أغصانها ولم يفسد ورقها.\n\nهي مثال لمريم العذراء غير الدنسة التي تجسد منها كلمة الآب.\n\n+ من أجل هذا نمدح مع يوحنا البتول قائلين طاهرة هي هذه العروسة التي زينت للحمل.\n\nالسلام لك أيتها العذراء، الملكة الحقيقية الحقانية، السلام لفخر جنسنا، ولدتِ لنا عمانوئيل.\n\n+ نسألك اذكرينا أيتها الشفيعة المؤتمنة أمام ربنا يسوع المسيح ليغفر لنا خطايانا.' },
+            { language: 'arabic', text: "الله الغير المنظور، قبل كل الدهور، إستحق أن يرى موسى، مجده على الجبل.\n\n+ لأنه رأى العليقة، والنار مشتعلة فيها، ولم تحترق أغصانها، ولم يفسد ورقها.\n\nفالنار كانت تشتعل، في العليقة ولم تحترق، لأن الله داخلها، وهو يخاطب النبي.\n\n+ قائلاً \"يا موسى يا موسى، يا موسى الذي أنا أحبه، أنا هو إله آبائك، وليس آخر سواي.\n\nحِل الحذاء، الذي في رجليك، لأن الموضع الذي أنت واقف عليه، أرض مقدسة أيها النبي.\n\n+ تأمل العليقة، والنار مشتعلة فيها، ولم تحترق أغصانها، ولم يفسد ورقها.\"\n\nهي مثال لمريم، العذراء غير الدنسة، التي تجسد منها، كلمة الآب.\n\n+ من أجل هذا نمدح، مع يوحنا البتول قائلين، \"طاهرة هي هذه العروس، التي زُينت للحمل.\"\n\nالسلام لكِ أيتها العذراء، الملكة الحقيقية الحقانية، السلام لفخر جنسنا، ولدتِ لنا عمانوئيل.\n\n+ نسألكِ أن تذكرينا، أيتها الشفيعة المؤتمنة، أمام ربنا يسوع المسيح، ليغفر لنا خطايانا." },
           ],
         },
         watosTheotokiaConclusion('thursday'),
@@ -5798,20 +5798,33 @@ const sundayTheotokion8 = [findMidnightHymn('annual-midnight-sunday-theotokia-pa
     ? [{ ...h, id: 'annual-veneration-sunday-theotokia', title: 'Ϣⲁϣϥ ⲛ̀ⲥⲟⲡ ⲙ̀ⲙⲏⲛⲓ (The Sunday Theotokia)', versions: h.versions.map((v) => ({ ...v })) }]
     : []
 );
-// Veneration recordings: Coptic ones play for Coptic and Coptic in English letters, the others for English and Arabic
-const venerationCopticAudio: Record<string, string> = {
-  'in-the-name': 'veneration-in-the-name.m4a',
-};
-const venerationEnglishArabicAudio: Record<string, string> = {
-  'hail-to-you-o-mary': 'veneration-hail-to-you-o-mary.m4a',
+// Veneration recordings and the languages each is sung in; Coptic also plays for Coptic in English letters,
+// Arabic for Arabic in English letters, and English for English in Arabic letters
+const COPTIC: LanguageType[] = ['coptic', 'englishCoptic'];
+const ARABIC: LanguageType[] = ['arabic', 'englishArabic'];
+const ENGLISH: LanguageType[] = ['english'];
+const venerationAudio: Record<string, { file: string; languages: LanguageType[]; other?: string }> = {
+  'blessed-are-you': { file: 'Blessed are you.m4a', languages: COPTIC },
+  'holy-is-the-father': { file: 'Holy is the Father.m4a', languages: COPTIC },
+  intercede: { file: 'Ariprecvavin.m4a', languages: COPTIC },
+  'your-name': { file: 'Apekran.m4a', languages: COPTIC },
+  'ten-strings': { file: 'Atai Parthenos.m4a', languages: [...COPTIC, ...ARABIC] },
+  'hymn-of-joy': { file: 'Hymn of joy.m4a', languages: COPTIC },
+  'hail-to-you-o-mary': { file: 'veneration-hail-to-you-o-mary.m4a', languages: [...ENGLISH, ...ARABIC] },
+  'hail-to-you-o-mary-2': { file: 'Hail to you o Mary 2.m4a', languages: [...ENGLISH, ...ARABIC] },
+  // "Recording 2" is the In the Name from the St Mary Glorification recording
+  'in-the-name': { file: 'veneration-in-the-name.m4a', languages: COPTIC, other: 'In the name 2.m4a' },
+  'a-crown': { file: 'A crown.m4a', languages: COPTIC },
+  'hear-o-daughter': { file: 'Hear o daughter.m4a', languages: ARABIC },
+  conclusion: { file: 'Veneration conclusion.m4a', languages: ARABIC },
 };
 const veneration = (slug: string, title: string): Hymn => ({
   id: `annual-veneration-${slug}`,
   title,
   versions: (venerationTexts[slug] ?? []).map((v) => {
-    const coptic = v.language === 'coptic' || v.language === 'englishCoptic';
-    const audio = coptic ? venerationCopticAudio[slug] : venerationEnglishArabicAudio[slug];
-    return audio ? { ...v, audio } : v;
+    const recording = venerationAudio[slug];
+    if (!recording?.languages.includes(v.language)) return v;
+    return { ...v, audio: recording.file, ...(recording.other ? { otherAudio: [recording.other] } : {}) };
   }),
 });
 if (annualVeneration) {
@@ -6585,6 +6598,22 @@ if (kiahkLiturgy && kiahkMatins) {
     if (!/\(Gospel Response\)$/.test(hymn.title)) continue;
     const source = kiahkMatins.hymns.find((h) => h.title === hymn.title);
     if (source) hymn.versions = source.versions.map((version) => ({ ...version }));
+  }
+}
+
+// ---- Audio: Annual > Morning Praises > Conclusion of the Adam Theotokias: the same recording as in Midnight Praises ----
+const morningAdamTheotokiasConclusion = seasons
+  .find((s) => s.id === 'annual')
+  ?.services.find((s) => s.id === 'annual-morning-praises')
+  ?.hymns.find((h) => h.id === 'annual-morning-praises-adam-theotokias-conclusion');
+for (const version of morningAdamTheotokiasConclusion?.versions ?? []) {
+  if (version.language === 'coptic' || version.language === 'englishCoptic') version.audio = 'midnight-adam-theotokias-conclusion.m4a';
+}
+
+// ---- Audio: Annual > Liturgy > Blessed Are You: the Veneration recording as a second choice ----
+for (const version of annualLiturgy?.hymns.find((h) => h.id === 'annual-liturgy-offering-blessed-are-you')?.versions ?? []) {
+  if (version.audio && (version.language === 'coptic' || version.language === 'englishCoptic')) {
+    version.otherAudio = [...(version.otherAudio ?? []), 'Blessed are you.m4a'];
   }
 }
 
