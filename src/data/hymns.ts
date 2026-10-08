@@ -5438,11 +5438,6 @@ const midnightAudio: Record<string, string> = {
   'annual-midnight-three-holy-children': 'midnight-tenen.m4a',
   'annual-midnight-doxology-virgin-mary': 'midnight-doxology-virgin-mary.m4a',
   'annual-midnight-saturday-watos-lobsh-1': 'midnight-saturday-watos-lobsh-1.m4a',
-  ...Object.fromEntries([1, 2, 3, 4, 5, 6, 7].map((n) => [`annual-midnight-friday-theotokia-part-${n}`, `midnight-friday-theotokion-${n}.m4a`])),
-  // Theotokia recordings keep the names they were added with, e.g. "Monday theokia 1.m4a"
-  ...Object.fromEntries([1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => [`annual-midnight-monday-theotokia-part-${n}`, `Monday theokia ${n}.m4a`])),
-  ...Object.fromEntries([1, 2, 3, 4, 5, 6, 7].map((n) => [`annual-midnight-tuesday-theotokia-part-${n}`, `Tuesday theokia ${n}.m4a`])),
-  ...Object.fromEntries([1, 2, 3, 4, 5, 6, 7].map((n) => [`annual-midnight-wednesday-theotokia-part-${n}`, `Wednesday theokia ${n}.m4a`])),
   'annual-midnight-saturday-watos-lobsh-2': 'midnight-saturday-watos-lobsh-2.m4a',
 };
 for (const hymn of annualMidnight ? flattenHymns(annualMidnight.hymns) : []) {
@@ -5457,6 +5452,12 @@ for (const hymn of annualMidnight ? flattenHymns(annualMidnight.hymns) : []) {
 
 // Midnight Praises recordings sung in English and Arabic, not Coptic (English in Arabic letters copies the English later)
 const midnightEnglishArabicAudio: Record<string, string> = {
+  // The Monday, Tuesday, Wednesday and Friday Theotokia recordings are sung in English and Arabic
+  // (they keep the names they were added with, e.g. "Monday theokia 1.m4a")
+  ...Object.fromEntries([1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => [`annual-midnight-monday-theotokia-part-${n}`, `Monday theokia ${n}.m4a`])),
+  ...Object.fromEntries([1, 2, 3, 4, 5, 6, 7].map((n) => [`annual-midnight-tuesday-theotokia-part-${n}`, `Tuesday theokia ${n}.m4a`])),
+  ...Object.fromEntries([1, 2, 3, 4, 5, 6, 7].map((n) => [`annual-midnight-wednesday-theotokia-part-${n}`, `Wednesday theokia ${n}.m4a`])),
+  ...Object.fromEntries([1, 2, 3, 4, 5, 6, 7].map((n) => [`annual-midnight-friday-theotokia-part-${n}`, `midnight-friday-theotokion-${n}.m4a`])),
   'annual-midnight-saturday-watos-theotokia-conclusion': 'midnight-saturday-watos-theotokia-conclusion.m4a',
 };
 for (const hymn of annualMidnight ? flattenHymns(annualMidnight.hymns) : []) {

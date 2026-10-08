@@ -260,6 +260,84 @@ export const guideSections: GuideSection[] = [
     ],
   },
   {
+    id: 'psalms',
+    icon: '✧',
+    title: { en: 'Psalms for Serving', ar: 'مزامير الخدمة' },
+    desc: {
+      en: 'What to pray from the morning of the Liturgy until you leave',
+      ar: 'ما تصليه من صباح القداس حتى تخرج من الكنيسة',
+    },
+    items: [
+      {
+        title: { en: 'When you wake up', ar: 'عند الاستيقاظ' },
+        text: {
+          en: "Pray the Lord's Prayer and your own prayers, as your father of confession taught you. Then read Psalms 26, 46 and 121.",
+          ar: 'صلِّ الصلاة الربانية وصلواتك الخاصة حسب قانونك الروحي من أب اعترافك. ثم اقرأ المزامير ٢٦ و٤٦ و١٢١.',
+        },
+      },
+      {
+        title: { en: 'On the way to church · Psalm 121, 26:4–5, 64:4', ar: 'في الطريق إلى الكنيسة · مزمور ١٢١، ٢٦: ٤–٥، ٦٤: ٤' },
+        text: {
+          en: 'I was glad when they said to me, "Let us go into the house of the Lord." (pray the whole psalm)\n\nOne thing I have desired of the Lord, that will I seek: that I may dwell in the house of the Lord all the days of my life, to behold the beauty of the Lord, and to inquire in His temple. For in the time of trouble He shall hide me in His pavilion; in the secret place of His tabernacle He shall hide me; He shall set me high upon a rock.\n\nBlessed is the man You choose, and cause to approach You, that he may dwell in Your courts. We shall be satisfied with the goodness of Your house, of Your holy temple.',
+          ar: 'فَرِحْتُ بِالْقَائِلِينَ لِي: «إِلَى بَيْتِ الرَّبِّ نَذْهَبُ». (صلِّ المزمور كله)\n\nوَاحِدَةً سَأَلْتُ مِنَ الرَّبِّ وَإِيَّاهَا أَلْتَمِسُ: أَنْ أَسْكُنَ فِي بَيْتِ الرَّبِّ كُلَّ أَيَّامِ حَيَاتِي، لِكَيْ أَنْظُرَ إِلَى جَمَالِ الرَّبِّ، وَأَتَفَرَّسَ فِي هَيْكَلِهِ. لأَنَّهُ يُخَبِّئُنِي فِي مَظَلَّتِهِ فِي يَوْمِ الشَّرِّ. يَسْتُرُنِي بِسِتْرِ خَيْمَتِهِ. عَلَى صَخْرَةٍ يَرْفَعُنِي.\n\nطُوبَى لِلَّذِي تَخْتَارُهُ وَتُقَرِّبُهُ لِيَسْكُنَ فِي دِيَارِكَ. لَنَشْبَعَنَّ مِنْ خَيْرِ بَيْتِكَ، قُدْسِ هَيْكَلِكَ.',
+        },
+      },
+      {
+        title: { en: 'Entering the church · Psalm 5:7', ar: 'عند دخول الكنيسة · مزمور ٥: ٧' },
+        text: {
+          en: 'But as for me, I will come into Your house in the multitude of Your mercy; in fear of You I will worship toward Your holy temple.\n\nThen bow toward the altar and say: We worship You, O Christ, with Your Good Father and the Holy Spirit, for You have come and saved us. (In the Holy Fifty Days: for You have risen and saved us.)',
+          ar: 'أَمَّا أَنَا فَبِكَثْرَةِ رَحْمَتِكَ أَدْخُلُ بَيْتَكَ. أَسْجُدُ فِي هَيْكَلِ قُدْسِكَ بِخَوْفِكَ.\n\nثم اسجد نحو الهيكل وقل: نسجد لك أيها المسيح مع أبيك الصالح والروح القدس، لأنك أتيت وخلصتنا. (وفي الخماسين: لأنك قمت وخلصتنا.)',
+        },
+      },
+      {
+        title: { en: 'Putting on the tonia · Psalm 29 and 92', ar: 'عند لبس التونية · مزمور ٢٩ و٩٢' },
+        text: {
+          en: 'Take the tonia to the priest to bless it. Say "I have sinned, absolve me," then kiss the cross and the priest\'s hand.\n\nWhile you put it on, stay quiet and pray Psalm 29: I will extol You, O Lord, for You have lifted me up, and have not let my foes rejoice over me…\n\nand Psalm 92: The Lord reigns, He is clothed with majesty; the Lord is clothed, He has girded Himself with strength…',
+          ar: 'قدّم التونية للكاهن ليرشمها. قل «أخطأت، حاللني»، ثم قبّل الصليب ويد الكاهن.\n\nوأنت تلبسها، اصمت وصلِّ المزمور ٢٩: أُعَظِّمُكَ يَا رَبُّ لأَنَّكَ نَشَلْتَنِي وَلَمْ تُشْمِتْ بِي أَعْدَائِي…\n\nوالمزمور ٩٢: اَلرَّبُّ قَدْ مَلَكَ. لَبِسَ الْجَلاَلَ. لَبِسَ الرَّبُّ الْقُدْرَةَ، ائْتَزَرَ بِهَا…',
+        },
+      },
+      {
+        title: { en: 'Going up to the altar · Psalm 42:4 and 25:6', ar: 'عند الصعود إلى الهيكل · مزمور ٤٢: ٤ و٢٥: ٦' },
+        text: {
+          en: 'Then I will go to the altar of God, to God my exceeding joy; and on the harp I will praise You, O God, my God.\n\nI will wash my hands in innocence; so I will go about Your altar, O Lord.\n\nTake off your shoes and bow before you go in.',
+          ar: 'فَآتِي إِلَى مَذْبَحِ اللهِ، إِلَى اللهِ بَهْجَةِ فَرَحِي، وَأَحْمَدُكَ بِالْعُودِ يَا اللهُ إِلهِي.\n\nأَغْسِلُ يَدَيَّ فِي النَّقَاوَةِ، فَأَطُوفُ بِمَذْبَحِكَ يَا رَبُّ.\n\nاخلع حذاءك واسجد قبل أن تدخل.',
+        },
+      },
+      {
+        title: { en: 'Before communion · Psalm 50', ar: 'قبل التناول · مزمور ٥٠' },
+        text: {
+          en: 'Create in me a clean heart, O God, and renew a steadfast spirit within me.\n\nPray all of Psalm 50 quietly if you can, asking forgiveness for your sins.',
+          ar: 'قَلْبًا نَقِيًّا اخْلُقْ فِيَّ يَا اَللهُ، وَرُوحًا مُسْتَقِيمًا جَدِّدْ فِي دَاخِلِي.\n\nصلِّ المزمور الخمسين كله بهدوء إن استطعت، طالباً غفران خطاياك.',
+        },
+      },
+      {
+        title: { en: 'After communion · Psalm 115:3–4 and 33:8', ar: 'بعد التناول · مزمور ١١٥: ٣–٤ و٣٣: ٨' },
+        text: {
+          en: 'What shall I render to the Lord for all His benefits toward me? I will take up the cup of salvation, and call upon the name of the Lord.\n\nOh, taste and see that the Lord is good; blessed is the man who trusts in Him!',
+          ar: 'مَاذَا أَرُدُّ لِلرَّبِّ مِنْ أَجْلِ كُلِّ حَسَنَاتِهِ لِي؟ كَأْسَ الْخَلاَصِ أَتَنَاوَلُ، وَبِاسْمِ الرَّبِّ أَدْعُو.\n\nذُوقُوا وَانْظُرُوا مَا أَطْيَبَ الرَّبَّ! طُوبَى لِلرَّجُلِ الْمُتَوَكِّلِ عَلَيْهِ.',
+        },
+      },
+      {
+        title: { en: 'Taking off the tonia · Psalm 46', ar: 'عند خلع التونية · مزمور ٤٦' },
+        text: {
+          en: 'Take it off only at the end of the Liturgy, after the final blessing, unless the priest allows you earlier.\n\nWhile you take it off, pray Psalm 46: Oh, clap your hands, all you peoples! Shout to God with the voice of triumph!…\n\nFold the tonia neatly and kiss the cross on it.',
+          ar: 'لا تخلعها إلا في نهاية القداس بعد البركة الختامية، إلا إذا سمح لك الكاهن قبل ذلك.\n\nوأنت تخلعها، صلِّ المزمور ٤٦: يَا جَمِيعَ الأُمَمِ صَفِّقُوا بِالأَيَادِي. اهْتِفُوا للهِ بِصَوْتِ الابْتِهَاجِ…\n\nاطوِ التونية بعناية وقبّل الصليب الذي عليها.',
+        },
+      },
+      {
+        title: { en: 'Leaving the church · Psalm 120:8', ar: 'عند الخروج من الكنيسة · مزمور ١٢٠: ٨' },
+        text: {
+          en: 'The Lord shall preserve your going out and your coming in from this time forth, and even forevermore.',
+          ar: 'الرَّبُّ يَحْفَظُ خُرُوجَكَ وَدُخُولَكَ مِنَ الآنَ وَإِلَى الدَّهْرِ.',
+        },
+      },
+    ],
+    note: {
+      en: 'Psalm numbers follow the Agpeya, as deacons pray them. In most Bibles the number is one higher (Agpeya Psalm 29 is Psalm 30). Churches differ a little, so follow what your priest teaches.',
+      ar: 'أرقام المزامير حسب الأجبية كما يصليها الشمامسة. وتختلف الكنائس قليلاً، فاتبع ما يعلّمه كاهنك.',
+    },
+  },
+  {
     id: 'stand',
     icon: '⇄',
     title: { en: 'Where to Stand', ar: 'أين تقف' },
