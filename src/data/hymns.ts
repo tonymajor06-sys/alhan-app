@@ -7362,7 +7362,9 @@ const serviceRank = (id: string) => serviceOrder.findIndex((name) => id.endsWith
 for (const full of stFullSeasons) {
   const season = seasons.find((s) => s.id === full.season);
   if (!season) continue;
+  let headers = 0;
   const hymns = full.items.flatMap((item): Hymn[] => {
+    if ('header' in item) return [{ id: `${full.id}-header-${++headers}`, title: item.header, versions: [], isSectionHeader: true }];
     if ('hymn' in item) {
       if (!leavesById.has(item.hymn.id)) leavesById.set(item.hymn.id, item.hymn);
       return [item.hymn];
@@ -7410,6 +7412,11 @@ const insertAfterId = (list: Hymn[], id: string, hymn: Hymn): boolean => {
   return list.some((h) => (h.children ? insertAfterId(h.children, id, hymn) : false));
 };
 // (and every hymn on the other captured days of a season that it still lacked, see st-more.ts)
+// Kiahk's Liturgy gets the Offering of the Lamb hymns from Spirit & Truth, under Annual's header for them
+const kiahkLiturgyService = seasons.find((s) => s.id === 'kiahk')?.services.find((s) => s.id === 'kiahk-liturgy');
+if (kiahkLiturgyService && kiahkLiturgyService.hymns[0]?.title !== 'Offering of the Lamb') {
+  kiahkLiturgyService.hymns.unshift({ id: 'annual-liturgy-offering-header@st', title: 'Offering of the Lamb', versions: [], isSectionHeader: true });
+}
 const allExtras: { season: string; service: string; serviceTitle?: string; group: string | null; after: string | null; item: { copy: string } | { hymn: Hymn } }[] = [
   ...stSeasonExtras,
   ...stMore,
@@ -7435,8 +7442,11 @@ for (const extra of allExtras) {
   if (!leavesById.has(hymn.id)) leavesById.set(hymn.id, hymn);
   if (extra.after && insertAfterId(service.hymns, extra.after, hymn)) continue;
   const group = extra.group ? service.hymns.find((h) => h.children && h.title === extra.group) : undefined;
-  (group?.children ?? service.hymns).unshift(hymn);
+  // first in its list, but under the list's first section header
+  const list = group?.children ?? service.hymns;
+  list.splice(list[0]?.isSectionHeader ? 1 : 0, 0, hymn);
 }
+
 
 // ---- Words from Spirit & Truth for hymns listed by title only (see st-fills.ts) ----
 const fillFromSt = (hymns: Hymn[]) => {

@@ -828,6 +828,15 @@ const arabicTitles: Record<string, string> = {
   "theophany-distribution": "التوزيع",
   "theophany-midnight": "تسبحة نصف الليل",
   // ---- end of Spirit & Truth hymns ----
+  // ---- Spirit & Truth other days (made by the import) ----
+  "kiahk-midnight-adam-psali-before-tuesday-theotokia": "إبصالية أدام تقال قبل ثيؤطوكية الثلاثاء",
+  "kiahk-midnight-another-adam-psali-before-tuesday-theotokia": "مديح على ثيؤتوكية يوم الثلاثاء (يا مريم أنا عبدك)",
+  "kiahk-midnight-second-adam-lobsh-on-tuesday-theotokion": "لبش آدام ثاني على ثيؤطوكية يوم الثلاثاء",
+  "kiahk-midnight-exposition-on-tuesday-theotokion": "طرح آدام على تذاكية الثلاثاء",
+  "nativity-midnight-adam-exposition-on-second-hoos": "الطرح الآدام على الهوس الثاني",
+  "kiahk-morning-praises": "تسبحة باكر",
+  "jonah-vespers": "رفع بخور عشية",
+  // ---- end of Spirit & Truth other days ----
   // ---- Spirit & Truth full seasons (made by the import) ----
   "nayrouz-matins-the-orthodox-creed": "قانون الإيمان المقدس الأرثوذكسي",
   "nayrouz-liturgy-the-orthodox-creed": "قانون الإيمان المقدس الأرثوذكسي",
@@ -923,13 +932,6 @@ const arabicTitles: Record<string, string> = {
   "minorfeasts-feast-of-transfiguration-liturgy-the-orthodox-creed": "قانون الإيمان المقدس الأرثوذكسي",
   "minorfeasts-feast-of-transfiguration-liturgy-agios-agios-agios": "قدوسٌ قدوسٌ قدوسٌ",
   "minorfeasts-feast-of-transfiguration-midnight-holy-holy-holy": "قدوس قدوس قدوس",
-  "holyweek-pascha-general-graciously-accord-o-lord": "تفضل يا رب",
-  "holyweek-pascha-general-introduction-to-the-creed": "بَدء قانون الإيمان",
-  "holyweek-pascha-general-the-orthodox-creed": "قانون الإيمان المقدس الأرثوذكسي",
-  "holyweek-pascha-general-watos-exposition": "الطرح الواطس",
-  "holyweek-pascha-general-holy-holy-holy": "قدوس قدوس قدوس",
-  "holyweek-pascha-general-agios-agios-agios": "قدوسٌ قدوسٌ قدوسٌ",
-  "holyweek-pascha-general-agios-agios-agios-2": "قدوسٌ قدوسٌ قدوسٌ",
   "holyweek-pascha-general-the-exposition": "الطرح",
   "holyweek-pascha-general-the-exposition-2": "الطرح",
   "holyweek-covenant-thursday-liturgy-psalm": "المزمور",
@@ -1053,15 +1055,6 @@ const arabicTitles: Record<string, string> = {
   "minorfeasts-feast-of-transfiguration-distribution": "عيد التجلي: التوزيع",
   "minorfeasts-feast-of-transfiguration-morning-praises": "عيد التجلي: تسبحة باكر",
   // ---- end of Spirit & Truth full seasons ----
-  // ---- Spirit & Truth other days (made by the import) ----
-  "kiahk-midnight-adam-psali-before-tuesday-theotokia": "إبصالية أدام تقال قبل ثيؤطوكية الثلاثاء",
-  "kiahk-midnight-another-adam-psali-before-tuesday-theotokia": "مديح على ثيؤتوكية يوم الثلاثاء (يا مريم أنا عبدك)",
-  "kiahk-midnight-second-adam-lobsh-on-tuesday-theotokion": "لبش آدام ثاني على ثيؤطوكية يوم الثلاثاء",
-  "kiahk-midnight-exposition-on-tuesday-theotokion": "طرح آدام على تذاكية الثلاثاء",
-  "nativity-midnight-adam-exposition-on-second-hoos": "الطرح الآدام على الهوس الثاني",
-  "kiahk-morning-praises": "تسبحة باكر",
-  "jonah-vespers": "رفع بخور عشية",
-  // ---- end of Spirit & Truth other days ----
 };
 
 // Service names are shared across seasons, so match on the English title
@@ -1074,6 +1067,7 @@ const serviceTitles: Record<string, string> = {
   Vespers: 'رفع بخور عشية',
   'Midnight Praises': 'تسبحة نصف الليل',
   'Offering of Lamb': 'تقديم الحمل',
+  'Offering of the Lamb': 'تقديم الحمل',
   'Liturgy of the Word': 'قداس الكلمة',
   'Liturgy of the Faithful': 'قداس المؤمنين',
   'In Presence of Bishop / Patriarch': 'في حضور الأسقف / البطريرك',
@@ -1127,6 +1121,16 @@ export function displayTitle(item: { id: string; title: string }, lang: AppLangu
   const matinsId = item.id.replace(/^(d-)?annual-vespers-/, '$1annual-matins-');
   if (arabicTitles[matinsId]) return arabicTitles[matinsId];
   if (serviceTitles[item.title]) return serviceTitles[item.title];
+
+  // Holy Week's hour headers, e.g. "First Hour - Covenant Thursday" or "Liturgy of the Word (Bright Saturday)"
+  const hour = item.title.match(/^(First|Third|Sixth|Ninth|Eleventh|Twelfth) Hour - (.*)$/);
+  const hours: Record<string, string> = { First: 'الساعة الأولى', Third: 'الساعة الثالثة', Sixth: 'الساعة السادسة', Ninth: 'الساعة التاسعة', Eleventh: 'الساعة الحادية عشرة', Twelfth: 'الساعة الثانية عشرة' };
+  const days: Record<string, string> = { 'Palm Sunday Day': 'يوم أحد الشعانين', 'Eve of Monday': 'ليلة الاثنين', 'Day of Monday': 'يوم الاثنين', 'Eve of Tuesday': 'ليلة الثلاثاء',
+    'Day of Tuesday': 'يوم الثلاثاء', 'Eve of Wednesday': 'ليلة الأربعاء', 'Day of Wednesday': 'يوم الأربعاء', 'Eve of Thursday (Covenant)': 'ليلة خميس العهد',
+    'Covenant Thursday': 'خميس العهد', 'Eve of Great Friday': 'ليلة الجمعة العظيمة', 'Great Friday': 'الجمعة العظيمة', 'Bright Saturday': 'سبت الفرح' };
+  if (hour) return `${hours[hour[1]]} من ${days[hour[2]] ?? hour[2]}`;
+  const inDay = item.title.match(/^(.*) \((Covenant Thursday|Great Friday|Bright Saturday|Palm Sunday)\)$/);
+  if (inDay) return `${displayTitle({ ...item, title: inDay[1] }, lang)} (${days[inDay[2]] ?? 'أحد الشعانين'})`;
 
   // Theotokia parts, e.g. "annual-midnight-monday-theotokia-part-3" → "ثيئوطوكية الاثنين (القطعة ٣)"
   const part = item.id.match(/^(.*)-part-(\d+)$/);

@@ -6,7 +6,7 @@ import { stMore } from '../st-more';
 // The Kiahk tests check the lists as they were built; the hymns added from Spirit & Truth are set aside
 const extraIds = new Set([...stSeasonExtras, ...stMore].map((e) => ('copy' in e.item ? `${e.item.copy}@${e.service}` : e.item.hymn.id)));
 const withoutExtras = (list: Hymn[]): Hymn[] =>
-  list.filter((h) => !extraIds.has(h.id)).map((h) => (h.children ? { ...h, children: withoutExtras(h.children) } : h));
+  list.filter((h) => !extraIds.has(h.id) && !h.id.endsWith('@st')).map((h) => (h.children ? { ...h, children: withoutExtras(h.children) } : h));
 const kiahkService = (id: string): Service => {
   const service = seasons.find((s) => s.id === 'kiahk')!.services.find((s) => s.id === id)!;
   return { ...service, hymns: withoutExtras(service.hymns) };
