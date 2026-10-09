@@ -828,15 +828,6 @@ const arabicTitles: Record<string, string> = {
   "theophany-distribution": "التوزيع",
   "theophany-midnight": "تسبحة نصف الليل",
   // ---- end of Spirit & Truth hymns ----
-  // ---- Spirit & Truth other days (made by the import) ----
-  "kiahk-midnight-adam-psali-before-tuesday-theotokia": "إبصالية أدام تقال قبل ثيؤطوكية الثلاثاء",
-  "kiahk-midnight-another-adam-psali-before-tuesday-theotokia": "مديح على ثيؤتوكية يوم الثلاثاء (يا مريم أنا عبدك)",
-  "kiahk-midnight-second-adam-lobsh-on-tuesday-theotokion": "لبش آدام ثاني على ثيؤطوكية يوم الثلاثاء",
-  "kiahk-midnight-exposition-on-tuesday-theotokion": "طرح آدام على تذاكية الثلاثاء",
-  "nativity-midnight-adam-exposition-on-second-hoos": "الطرح الآدام على الهوس الثاني",
-  "kiahk-morning-praises": "تسبحة باكر",
-  "jonah-vespers": "رفع بخور عشية",
-  // ---- end of Spirit & Truth other days ----
   // ---- Spirit & Truth full seasons (made by the import) ----
   "nayrouz-matins-the-orthodox-creed": "قانون الإيمان المقدس الأرثوذكسي",
   "nayrouz-liturgy-the-orthodox-creed": "قانون الإيمان المقدس الأرثوذكسي",
@@ -1055,6 +1046,15 @@ const arabicTitles: Record<string, string> = {
   "minorfeasts-feast-of-transfiguration-distribution": "عيد التجلي: التوزيع",
   "minorfeasts-feast-of-transfiguration-morning-praises": "عيد التجلي: تسبحة باكر",
   // ---- end of Spirit & Truth full seasons ----
+  // ---- Spirit & Truth other days (made by the import) ----
+  "kiahk-midnight-adam-psali-before-tuesday-theotokia": "إبصالية أدام تقال قبل ثيؤطوكية الثلاثاء",
+  "kiahk-midnight-another-adam-psali-before-tuesday-theotokia": "مديح على ثيؤتوكية يوم الثلاثاء (يا مريم أنا عبدك)",
+  "kiahk-midnight-second-adam-lobsh-on-tuesday-theotokion": "لبش آدام ثاني على ثيؤطوكية يوم الثلاثاء",
+  "kiahk-midnight-exposition-on-tuesday-theotokion": "طرح آدام على تذاكية الثلاثاء",
+  "nativity-midnight-adam-exposition-on-second-hoos": "الطرح الآدام على الهوس الثاني",
+  "kiahk-morning-praises": "تسبحة باكر",
+  "jonah-vespers": "رفع بخور عشية",
+  // ---- end of Spirit & Truth other days ----
 };
 
 // Service names are shared across seasons, so match on the English title

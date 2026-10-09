@@ -7352,6 +7352,16 @@ for (const rite of stMysteries) {
   else category?.services.push({ id: rite.id, title: rite.title, hymns: rite.hymns });
 }
 
+// ---- Words from Spirit & Truth for hymns listed by title only (see st-fills.ts) ----
+const fillFromSt = (hymns: Hymn[]) => {
+  for (const hymn of hymns) {
+    if (hymn.children) fillFromSt(hymn.children);
+    else if (hymn.versions.length === 0 && stFills[hymn.id]) hymn.versions = stFills[hymn.id].map((v) => ({ ...v }));
+  }
+};
+for (const season of seasons) for (const service of season.services) fillFromSt(service.hymns);
+// (before the seasons below copy these hymns)
+
 // ---- Each season's services in Spirit & Truth's full order (see st-full-seasons.ts) ----
 // The season's own hymns keep their place and recordings; the hymns the day sings from Annual (or another season)
 // are copied in, with "@" and the service in their id
@@ -7417,7 +7427,7 @@ const kiahkLiturgyService = seasons.find((s) => s.id === 'kiahk')?.services.find
 if (kiahkLiturgyService && kiahkLiturgyService.hymns[0]?.title !== 'Offering of the Lamb') {
   kiahkLiturgyService.hymns.unshift({ id: 'annual-liturgy-offering-header@st', title: 'Offering of the Lamb', versions: [], isSectionHeader: true });
 }
-const allExtras: { season: string; service: string; serviceTitle?: string; group: string | null; after: string | null; item: { copy: string } | { hymn: Hymn } }[] = [
+const allExtras: { season: string; service: string; serviceTitle?: string; group: string | null; section?: string | null; after: string | null; item: { copy: string } | { hymn: Hymn } }[] = [
   ...stSeasonExtras,
   ...stMore,
 ];
@@ -7442,20 +7452,13 @@ for (const extra of allExtras) {
   if (!leavesById.has(hymn.id)) leavesById.set(hymn.id, hymn);
   if (extra.after && insertAfterId(service.hymns, extra.after, hymn)) continue;
   const group = extra.group ? service.hymns.find((h) => h.children && h.title === extra.group) : undefined;
-  // first in its list, but under the list's first section header
+  // first in its section (as Spirit & Truth has it), or first in its list under the list's first header
   const list = group?.children ?? service.hymns;
-  list.splice(list[0]?.isSectionHeader ? 1 : 0, 0, hymn);
+  const section = extra.section ? list.findIndex((h) => h.isSectionHeader && h.title === extra.section) : -1;
+  list.splice(section >= 0 ? section + 1 : list[0]?.isSectionHeader ? 1 : 0, 0, hymn);
 }
 
 
-// ---- Words from Spirit & Truth for hymns listed by title only (see st-fills.ts) ----
-const fillFromSt = (hymns: Hymn[]) => {
-  for (const hymn of hymns) {
-    if (hymn.children) fillFromSt(hymn.children);
-    else if (hymn.versions.length === 0 && stFills[hymn.id]) hymn.versions = stFills[hymn.id].map((v) => ({ ...v }));
-  }
-};
-for (const season of seasons) for (const service of season.services) fillFromSt(service.hymns);
 
 // Keep these last: give every hymn a "Coptic in Arabic letters" and an "English in Arabic letters" version
 // (see arabic-coptic.ts and arabic-english.ts),
