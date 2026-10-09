@@ -6,6 +6,7 @@ import { stFills } from './st-fills';
 import { stMysteries } from './st-mysteries';
 import { stFullSeasons } from './st-full-seasons';
 import { stSeasonExtras } from './st-season-extras';
+import { stMore } from './st-more';
 
 export type LanguageType = 'coptic' | 'englishCoptic' | 'arabicCoptic' | 'english' | 'arabicEnglish' | 'englishArabic' | 'arabic';
 
@@ -7362,7 +7363,10 @@ for (const full of stFullSeasons) {
   const season = seasons.find((s) => s.id === full.season);
   if (!season) continue;
   const hymns = full.items.flatMap((item): Hymn[] => {
-    if ('hymn' in item) return [item.hymn];
+    if ('hymn' in item) {
+      if (!leavesById.has(item.hymn.id)) leavesById.set(item.hymn.id, item.hymn);
+      return [item.hymn];
+    }
     if ('ref' in item) return leavesById.has(item.ref) ? [leavesById.get(item.ref)!] : [];
     const source = leavesById.get(item.copy);
     return source ? [{ ...JSON.parse(JSON.stringify(source)), id: `${source.id}@${full.id}` }] : [];
@@ -7405,8 +7409,20 @@ const insertAfterId = (list: Hymn[], id: string, hymn: Hymn): boolean => {
   }
   return list.some((h) => (h.children ? insertAfterId(h.children, id, hymn) : false));
 };
-for (const extra of stSeasonExtras) {
-  const service = seasons.find((s) => s.id === extra.season)?.services.find((s) => s.id === extra.service);
+// (and every hymn on the other captured days of a season that it still lacked, see st-more.ts)
+const allExtras: { season: string; service: string; serviceTitle?: string; group: string | null; after: string | null; item: { copy: string } | { hymn: Hymn } }[] = [
+  ...stSeasonExtras,
+  ...stMore,
+];
+for (const extra of allExtras) {
+  const season = seasons.find((s) => s.id === extra.season);
+  let service = season?.services.find((s) => s.id === extra.service);
+  if (season && !service && extra.serviceTitle) {
+    const created: Service = { id: extra.service, title: extra.serviceTitle, hymns: [] };
+    const later = season.services.findIndex((s) => serviceRank(s.id) > serviceRank(extra.service));
+    season.services.splice(later >= 0 && serviceRank(extra.service) >= 0 ? later : season.services.length, 0, created);
+    service = created;
+  }
   if (!service) continue;
   let hymn: Hymn | undefined;
   if ('hymn' in extra.item) hymn = extra.item.hymn;
@@ -7414,7 +7430,9 @@ for (const extra of stSeasonExtras) {
     const source = leavesById.get(extra.item.copy);
     if (source) hymn = { ...JSON.parse(JSON.stringify(source)), id: `${source.id}@${extra.service}` };
   }
-  if (!hymn) continue;
+  if (!hymn || flattenHymns(service.hymns).some((h) => h.id === hymn.id)) continue;
+  // a hymn added here can be copied by a later one
+  if (!leavesById.has(hymn.id)) leavesById.set(hymn.id, hymn);
   if (extra.after && insertAfterId(service.hymns, extra.after, hymn)) continue;
   const group = extra.group ? service.hymns.find((h) => h.children && h.title === extra.group) : undefined;
   (group?.children ?? service.hymns).unshift(hymn);

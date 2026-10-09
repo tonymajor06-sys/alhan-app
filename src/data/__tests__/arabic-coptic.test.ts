@@ -1,9 +1,10 @@
 import { copticToArabic } from '../arabic-coptic';
 import { deaconCategories, flattenHymns, Hymn, Service, seasons } from '../hymns';
 import { stSeasonExtras } from '../st-season-extras';
+import { stMore } from '../st-more';
 
 // The Kiahk tests check the lists as they were built; the hymns added from Spirit & Truth are set aside
-const extraIds = new Set(stSeasonExtras.map((e) => ('copy' in e.item ? `${e.item.copy}@${e.service}` : e.item.hymn.id)));
+const extraIds = new Set([...stSeasonExtras, ...stMore].map((e) => ('copy' in e.item ? `${e.item.copy}@${e.service}` : e.item.hymn.id)));
 const withoutExtras = (list: Hymn[]): Hymn[] =>
   list.filter((h) => !extraIds.has(h.id)).map((h) => (h.children ? { ...h, children: withoutExtras(h.children) } : h));
 const kiahkService = (id: string): Service => {
