@@ -5,6 +5,7 @@ import { stAdditions } from './st-hymns';
 import { stFills } from './st-fills';
 import { stMysteries } from './st-mysteries';
 import { stFullSeasons } from './st-full-seasons';
+import { stSeasonExtras } from './st-season-extras';
 
 export type LanguageType = 'coptic' | 'englishCoptic' | 'arabicCoptic' | 'english' | 'arabicEnglish' | 'englishArabic' | 'arabic';
 
@@ -7380,7 +7381,8 @@ for (const full of stFullSeasons) {
 // In each rebuilt season: feast by feast (the Lord's Minor Feasts), then in the order they are prayed;
 // "Vespers and Matins" counts as Vespers, and lists like the Procession stay after the service before them
 const feastOf = (id: string) => id.replace(/-(vespers|morning-praises|matins|liturgy|distribution|midnight)$/, '');
-for (const season of seasons.filter((s) => stFullSeasons.some((f) => f.season === s.id))) {
+// (Holy Week is listed by day and keeps its own order)
+for (const season of seasons.filter((s) => s.id !== 'holy-week' && stFullSeasons.some((f) => f.season === s.id))) {
   const feasts = [...new Set(stFullSeasons.filter((f) => f.season === season.id).map((f) => feastOf(f.id)))];
   let last = 0;
   const keyed = season.services.map((s, i) => {
@@ -7391,6 +7393,31 @@ for (const season of seasons.filter((s) => stFullSeasons.some((f) => f.season ==
   });
   keyed.sort((a, b) => a.key[0] - b.key[0] || a.key[1] - b.key[1] || a.key[2] - b.key[2]);
   season.services = keyed.map((k) => k.s);
+}
+
+// ---- What Kiahk's and Great Lent's days sing that those seasons lacked (see st-season-extras.ts) ----
+// Each goes after the hymn before it wherever that sits in the service (inside its groups), or first in its group
+const insertAfterId = (list: Hymn[], id: string, hymn: Hymn): boolean => {
+  const i = list.findIndex((h) => h.id === id);
+  if (i >= 0) {
+    list.splice(i + 1, 0, hymn);
+    return true;
+  }
+  return list.some((h) => (h.children ? insertAfterId(h.children, id, hymn) : false));
+};
+for (const extra of stSeasonExtras) {
+  const service = seasons.find((s) => s.id === extra.season)?.services.find((s) => s.id === extra.service);
+  if (!service) continue;
+  let hymn: Hymn | undefined;
+  if ('hymn' in extra.item) hymn = extra.item.hymn;
+  else {
+    const source = leavesById.get(extra.item.copy);
+    if (source) hymn = { ...JSON.parse(JSON.stringify(source)), id: `${source.id}@${extra.service}` };
+  }
+  if (!hymn) continue;
+  if (extra.after && insertAfterId(service.hymns, extra.after, hymn)) continue;
+  const group = extra.group ? service.hymns.find((h) => h.children && h.title === extra.group) : undefined;
+  (group?.children ?? service.hymns).unshift(hymn);
 }
 
 // ---- Words from Spirit & Truth for hymns listed by title only (see st-fills.ts) ----

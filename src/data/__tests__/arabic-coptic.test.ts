@@ -1,5 +1,15 @@
 import { copticToArabic } from '../arabic-coptic';
-import { deaconCategories, flattenHymns, Hymn, seasons } from '../hymns';
+import { deaconCategories, flattenHymns, Hymn, Service, seasons } from '../hymns';
+import { stSeasonExtras } from '../st-season-extras';
+
+// The Kiahk tests check the lists as they were built; the hymns added from Spirit & Truth are set aside
+const extraIds = new Set(stSeasonExtras.map((e) => ('copy' in e.item ? `${e.item.copy}@${e.service}` : e.item.hymn.id)));
+const withoutExtras = (list: Hymn[]): Hymn[] =>
+  list.filter((h) => !extraIds.has(h.id)).map((h) => (h.children ? { ...h, children: withoutExtras(h.children) } : h));
+const kiahkService = (id: string): Service => {
+  const service = seasons.find((s) => s.id === 'kiahk')!.services.find((s) => s.id === id)!;
+  return { ...service, hymns: withoutExtras(service.hymns) };
+};
 
 const allHymns = (): Hymn[] =>
   [...seasons, ...deaconCategories].flatMap((group) => group.services.flatMap((service) => flattenHymns(service.hymns)));
@@ -51,7 +61,7 @@ describe('Coptic in Arabic letters for every hymn', () => {
 });
 
 describe('Kiahk Praises & Season > Midnight Praises', () => {
-  const service = seasons.find((s) => s.id === 'kiahk')!.services.find((s) => s.id === 'kiahk-midnight')!;
+  const service = kiahkService('kiahk-midnight');
 
   it('lists the 82 titles of the service, in order, with no placeholders left', () => {
     expect(service.hymns).toHaveLength(82);
@@ -596,7 +606,7 @@ describe('Kiahk Praises & Season > Midnight Praises', () => {
 });
 
 describe('Kiahk Praises & Season > Matins', () => {
-  const service = seasons.find((s) => s.id === 'kiahk')!.services.find((s) => s.id === 'kiahk-matins')!;
+  const service = kiahkService('kiahk-matins');
 
   it('lists only the titles, in order, with the Doxologies as a divider and no lyrics yet', () => {
     expect(service.hymns.map((h) => h.title)).toEqual([
@@ -757,9 +767,8 @@ describe('Kiahk Praises & Season > Matins', () => {
 });
 
 describe('Kiahk Praises & Season > Vespers', () => {
-  const season = seasons.find((s) => s.id === 'kiahk')!;
-  const matins = season.services.find((s) => s.id === 'kiahk-matins')!;
-  const vespers = season.services.find((s) => s.id === 'kiahk-vespers')!;
+  const matins = kiahkService('kiahk-matins');
+  const vespers = kiahkService('kiahk-vespers');
   const isPsalmTrailer = (h: Hymn) => h.title.endsWith('(Psalm Trailer)');
 
   it('has every title of Matins in the same order, except the Psalm Trailer', () => {
@@ -807,7 +816,7 @@ describe('Kiahk Praises & Season > Vespers', () => {
 });
 
 describe('Kiahk Praises & Season > Liturgy', () => {
-  const service = seasons.find((s) => s.id === 'kiahk')!.services.find((s) => s.id === 'kiahk-liturgy')!;
+  const service = kiahkService('kiahk-liturgy');
 
   it('lists only the Liturgy of the Word and the Liturgy of the Faithful, titles only', () => {
     expect(service.hymns.map((h) => h.title)).toEqual([
@@ -1038,8 +1047,8 @@ describe('Kiahk Praises & Season > Liturgy', () => {
     }
     expect(annualLiturgy.hymns.find((h) => h.id === 'annual-liturgy-agios')!.versions.some((v) => v.audio)).toBe(true);
     // Liturgy of the Faithful: the two Gospel Responses are the same as in Matins and Vespers, then the two Adam Aspasmos
-    const matinsService = seasons.find((s) => s.id === 'kiahk')!.services.find((s) => s.id === 'kiahk-matins')!;
-    const vespersService = seasons.find((s) => s.id === 'kiahk')!.services.find((s) => s.id === 'kiahk-vespers')!;
+    const matinsService = kiahkService('kiahk-matins');
+    const vespersService = kiahkService('kiahk-vespers');
     for (const title of ['Ⲧⲉⲛϯ ⲛⲉ ⲙ̀ⲡⲓⲭⲉⲣⲉⲧⲓⲥⲙⲟⲥ (Gospel Response)', 'Ⲧⲉⲛϭⲓⲥⲓ ⲙ̀ⲙⲟ ϧⲉⲛ ⲟⲩⲉⲙⲡ̀ϣⲁ (Gospel Response)']) {
       const faithful = service.hymns.find((h) => h.title === title)!;
       for (const other of [matinsService, vespersService]) {
@@ -1129,7 +1138,7 @@ describe('Kiahk Praises & Season > Liturgy', () => {
 });
 
 describe('Kiahk Praises & Season > Distribution', () => {
-  const service = seasons.find((s) => s.id === 'kiahk')!.services.find((s) => s.id === 'kiahk-distribution')!;
+  const service = kiahkService('kiahk-distribution');
 
   it('lists only the hymns that are in use, in order', () => {
     expect(service.hymns.map((h) => h.id.replace('kiahk-distribution-hymn-', ''))).toEqual(['1', '2', '3', '4', '6', '7', '8']);
