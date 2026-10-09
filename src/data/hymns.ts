@@ -7325,7 +7325,12 @@ for (const { season: seasonId, service: serviceId, serviceTitle, after, before, 
   let service = season.services.find((s) => s.id === serviceId);
   if (!service) {
     service = { id: serviceId, title: serviceTitle, hymns: [] };
-    season.services.push(service);
+    // In the order the services are prayed
+    const order = ['vespers', 'matins', 'liturgy', 'distribution', 'midnight'];
+    const rank = (id: string) => order.findIndex((name) => id.endsWith(`-${name}`));
+    const later = rank(serviceId) < 0 ? -1 : season.services.findIndex((s) => rank(s.id) > rank(serviceId));
+    if (later >= 0) season.services.splice(later, 0, service);
+    else season.services.push(service);
   }
   const index = after ? service.hymns.findIndex((h) => h.id === after) : -1;
   const next = before ? service.hymns.findIndex((h) => h.id === before) : -1;
