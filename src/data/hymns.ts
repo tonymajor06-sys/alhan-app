@@ -4,6 +4,7 @@ import { alhanSeasonServices } from './alhan-seasons';
 import { stAdditions } from './st-hymns';
 import { stFills } from './st-fills';
 import { stMysteries } from './st-mysteries';
+import { stFullSeasons } from './st-full-seasons';
 
 export type LanguageType = 'coptic' | 'englishCoptic' | 'arabicCoptic' | 'english' | 'arabicEnglish' | 'englishArabic' | 'arabic';
 
@@ -7347,6 +7348,49 @@ for (const rite of stMysteries) {
   const service = category?.services.find((s) => s.id === rite.id);
   if (service) service.hymns = rite.hymns;
   else category?.services.push({ id: rite.id, title: rite.title, hymns: rite.hymns });
+}
+
+// ---- Each season's services in Spirit & Truth's full order (see st-full-seasons.ts) ----
+// The season's own hymns keep their place and recordings; the hymns the day sings from Annual (or another season)
+// are copied in, with "@" and the service in their id
+const leavesById = new Map<string, Hymn>();
+for (const season of seasons) for (const service of season.services) for (const hymn of flattenHymns(service.hymns)) if (!leavesById.has(hymn.id)) leavesById.set(hymn.id, hymn);
+const serviceOrder = ['vespers', 'morning-praises', 'matins', 'liturgy', 'distribution', 'midnight'];
+const serviceRank = (id: string) => serviceOrder.findIndex((name) => id.endsWith(`-${name}`));
+for (const full of stFullSeasons) {
+  const season = seasons.find((s) => s.id === full.season);
+  if (!season) continue;
+  const hymns = full.items.flatMap((item): Hymn[] => {
+    if ('hymn' in item) return [item.hymn];
+    if ('ref' in item) return leavesById.has(item.ref) ? [leavesById.get(item.ref)!] : [];
+    const source = leavesById.get(item.copy);
+    return source ? [{ ...JSON.parse(JSON.stringify(source)), id: `${source.id}@${full.id}` }] : [];
+  });
+  // the season's own hymns now listed here leave the list they were in
+  const listed = new Set(hymns.map((h) => h.id));
+  for (const service of season.services) if (service.id !== full.id) service.hymns = service.hymns.filter((h) => !listed.has(h.id));
+  const service = season.services.find((s) => s.id === full.id);
+  if (service) service.hymns = hymns;
+  else {
+    const later = season.services.findIndex((s) => serviceRank(s.id) > serviceRank(full.id));
+    season.services.splice(later >= 0 && serviceRank(full.id) >= 0 ? later : season.services.length, 0, { id: full.id, title: full.title, hymns });
+  }
+  season.services = season.services.filter((s) => s.hymns.length > 0);
+}
+// In each rebuilt season: feast by feast (the Lord's Minor Feasts), then in the order they are prayed;
+// "Vespers and Matins" counts as Vespers, and lists like the Procession stay after the service before them
+const feastOf = (id: string) => id.replace(/-(vespers|morning-praises|matins|liturgy|distribution|midnight)$/, '');
+for (const season of seasons.filter((s) => stFullSeasons.some((f) => f.season === s.id))) {
+  const feasts = [...new Set(stFullSeasons.filter((f) => f.season === season.id).map((f) => feastOf(f.id)))];
+  let last = 0;
+  const keyed = season.services.map((s, i) => {
+    const merged = s.title === 'Vespers and Matins' ? 0 : serviceRank(s.id);
+    if (merged >= 0) last = merged;
+    const feast = feasts.indexOf(feastOf(s.id));
+    return { s, key: [feast < 0 ? 0 : feast, merged >= 0 ? merged : last + 0.5, i] };
+  });
+  keyed.sort((a, b) => a.key[0] - b.key[0] || a.key[1] - b.key[1] || a.key[2] - b.key[2]);
+  season.services = keyed.map((k) => k.s);
 }
 
 // ---- Words from Spirit & Truth for hymns listed by title only (see st-fills.ts) ----
