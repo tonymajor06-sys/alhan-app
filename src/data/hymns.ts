@@ -6809,6 +6809,15 @@ if (greatLent) {
       if (part === 'weekend' && name === 'matins') {
         children = [
           ...fromLent('verse-of-cymbals'),
+          {
+            id: `${id}-verse-of-cymbals-lent`,
+            title: "Ⲁ̀ⲡⲉⲛϭⲟⲓⲥ (Verses of the Cymbals for Great Lent)",
+            versions: doxologyVersions([
+            ["Our Lord Jesus Christ fasted for us forty days and forty nights, to save us from our sins.", "Ⲁ̀ ⲡⲉⲛϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ ⲉⲣⲛⲏⲥⲧⲉⲩⲓⲛ ⲉ̀ϩ̀ⲣⲏⲓ ⲉ̀ϫⲱⲛ ⲛ̀ϩ̀ⲙⲉ ⲛ̀ⲉ̀ϩⲟⲟ̀ⲩ ⲛⲉⲙ ϩ̀ⲙⲉ ⲛ̀ⲉ̀ϫⲱⲣϩ ϣⲁ ⲛ̀ⲧⲉϥⲥⲱⲧⲧⲉⲛ ϧⲉⲛ ⲛⲉⲛⲛⲟⲃⲓ.", "ربنا يسوع المسيح صام عنا أربعين يوماً وأربعين ليلة، حتى خلصنا من خطايانا.", "A pentshois Iēsous Pi-ekhristos ernēsteuin e-ehrēi ejōn enehme eneho-ou nem ehme enejōrh sha entefsōtten khen nennovi.", "Rabbuna Yasou' el-Maseeh sama 'anna arba'een yawman wa arba'een layla, hatta khallasana min khatayana."],
+            ["And we too, let us fast with purity and righteousness, and let us pray, proclaiming and saying:", "Ⲁ̀ⲛⲟⲛ ϩⲱⲛ ⲙⲁⲣⲉⲛ ⲉⲣⲛⲏⲥⲧⲉⲩⲓⲛ ϧⲉⲛ ⲟ̀ⲩⲧⲟⲩⲃⲟ ⲛⲉⲙ ⲟ̀ⲩⲙⲉⲑⲙⲏⲓ ⲟⲩⲟϩ ⲛ̀ⲧⲉⲛⲉ̀ⲣ ⲡ̀ⲣⲟⲥⲉ̀ⲩⲭⲉⲥⲑⲉ ⲉⲛⲱ̀ϣ ⲉ̀ⲃⲟⲗ ⲉⲛϫⲱ ⲙ̀ⲙⲟⲥ.", "ونحن أيضاً فلنصم بطهارة وبر، ونصلي صارخين قائلين:", "Anon hōn maren ernēsteuin khen outouvo nem oumethmēi ouoh entener eproseukhesthe enōsh evol enjō emmos.", "Wa nahnu aydan fal-nasum bi-tahara wa birr, wa nusalli sarikheen qa'ileen:"],
+            ["Our Father who art in heaven, hallowed be Your name, Your kingdom come, for Yours is the glory forever.", "Ϫⲉ ⲡⲉⲛⲒⲱⲧ ⲉⲧϧⲉⲛ ⲛⲓⲫⲏⲟ̀ⲩⲓ̀ ⲙⲁⲣⲉϥⲧⲟⲩⲃⲟ ⲛ̀ϫⲉ ⲡⲉⲕⲣⲁⲛ ⲙⲁⲣⲉⲥⲓ ⲛ̀ϫⲉ ⲧⲉⲕⲙⲉⲧⲟ̀ⲩⲣⲟ ϫⲉ ⲫⲱⲕ ⲡⲉ ⲡⲓⲱ̀ⲟ̀ⲩ ϣⲁ ⲛⲓⲉ̀ⲛⲉϩ.", "أبانا الذي في السموات، ليتقدس اسمك، ليأت ملكوتك، لأن لك المجد إلى الأبد.", "Je pen-Iōt etkhen nifē-ou-i mareftouvo enje pekran maresi enje tekmetouro je fōk pe pi-ō-ou sha ni-eneh.", "Abana elladhi fis-samawat, li-yataqaddas ismuk, li-ya'ti malakoutuk, li-anna laka el-magd ila el-abad."],
+            ]),
+          },
           ...fromLent('psalm-trailer'),
           ...fromLent('psalm-trailer-pope-bishop'),
           lentGospelResponse(`lent-${name}-gospel-response`),
@@ -6838,6 +6847,15 @@ if (greatLent) {
         children = [
           titleOnly(`${id}-thanksgiving-response`, 'Ⲧⲱⲃϩ ϩⲓⲛⲁ (Thanksgiving Prayer Response in the Presence of the Pope or a Bishop)'),
           ...fromLent('verse-of-cymbals'),
+          {
+            id: `${id}-verse-of-cymbals-lent`,
+            title: "Ⲁ̀ⲡⲉⲛϭⲟⲓⲥ (Verses of the Cymbals for Great Lent)",
+            versions: doxologyVersions([
+            ["Our Lord Jesus Christ fasted for us forty days and forty nights, to save us from our sins.", "Ⲁ̀ ⲡⲉⲛϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ ⲉⲣⲛⲏⲥⲧⲉⲩⲓⲛ ⲉ̀ϩ̀ⲣⲏⲓ ⲉ̀ϫⲱⲛ ⲛ̀ϩ̀ⲙⲉ ⲛ̀ⲉ̀ϩⲟⲟ̀ⲩ ⲛⲉⲙ ϩ̀ⲙⲉ ⲛ̀ⲉ̀ϫⲱⲣϩ ϣⲁ ⲛ̀ⲧⲉϥⲥⲱⲧⲧⲉⲛ ϧⲉⲛ ⲛⲉⲛⲛⲟⲃⲓ.", "ربنا يسوع المسيح صام عنا أربعين يوماً وأربعين ليلة، حتى خلصنا من خطايانا.", "A pentshois Iēsous Pi-ekhristos ernēsteuin e-ehrēi ejōn enehme eneho-ou nem ehme enejōrh sha entefsōtten khen nennovi.", "Rabbuna Yasou' el-Maseeh sama 'anna arba'een yawman wa arba'een layla, hatta khallasana min khatayana."],
+            ["And we too, let us fast with purity and righteousness, and let us pray, proclaiming and saying:", "Ⲁ̀ⲛⲟⲛ ϩⲱⲛ ⲙⲁⲣⲉⲛ ⲉⲣⲛⲏⲥⲧⲉⲩⲓⲛ ϧⲉⲛ ⲟ̀ⲩⲧⲟⲩⲃⲟ ⲛⲉⲙ ⲟ̀ⲩⲙⲉⲑⲙⲏⲓ ⲟⲩⲟϩ ⲛ̀ⲧⲉⲛⲉ̀ⲣ ⲡ̀ⲣⲟⲥⲉ̀ⲩⲭⲉⲥⲑⲉ ⲉⲛⲱ̀ϣ ⲉ̀ⲃⲟⲗ ⲉⲛϫⲱ ⲙ̀ⲙⲟⲥ.", "ونحن أيضاً فلنصم بطهارة وبر، ونصلي صارخين قائلين:", "Anon hōn maren ernēsteuin khen outouvo nem oumethmēi ouoh entener eproseukhesthe enōsh evol enjō emmos.", "Wa nahnu aydan fal-nasum bi-tahara wa birr, wa nusalli sarikheen qa'ileen:"],
+            ["Our Father who art in heaven, hallowed be Your name, Your kingdom come, for Yours is the glory forever.", "Ϫⲉ ⲡⲉⲛⲒⲱⲧ ⲉⲧϧⲉⲛ ⲛⲓⲫⲏⲟ̀ⲩⲓ̀ ⲙⲁⲣⲉϥⲧⲟⲩⲃⲟ ⲛ̀ϫⲉ ⲡⲉⲕⲣⲁⲛ ⲙⲁⲣⲉⲥⲓ ⲛ̀ϫⲉ ⲧⲉⲕⲙⲉⲧⲟ̀ⲩⲣⲟ ϫⲉ ⲫⲱⲕ ⲡⲉ ⲡⲓⲱ̀ⲟ̀ⲩ ϣⲁ ⲛⲓⲉ̀ⲛⲉϩ.", "أبانا الذي في السموات، ليتقدس اسمك، ليأت ملكوتك، لأن لك المجد إلى الأبد.", "Je pen-Iōt etkhen nifē-ou-i mareftouvo enje pekran maresi enje tekmetouro je fōk pe pi-ō-ou sha ni-eneh.", "Abana elladhi fis-samawat, li-yataqaddas ismuk, li-ya'ti malakoutuk, li-anna laka el-magd ila el-abad."],
+            ]),
+          },
           titleOnly(`${id}-creed-introduction`, 'Introduction to the Creed'),
           titleOnly(`${id}-god-have-mercy`, 'Ⲫ̀ⲛⲟⲩϯ ⲛⲁⲓ ⲛⲁⲛ (God Have Mercy)'),
           titleOnly(`${id}-veneration`, 'Veneration'),
@@ -6862,8 +6880,31 @@ if (greatLent) {
           ...fromKiahk('Ϯⲙⲏⲧ ⲥ̀ⲛⲟⲩϯ (Hymn of the Virtues)', 'hymn-of-the-virtues'),
           ...fromKiahk('Ⲧⲟⲩ ⲙⲁⲕⲁⲣⲓⲱ (The Blessed)', 'the-blessed'),
           ...fromAnnual(annualLiturgy?.hymns, 'annual-liturgy-perfect-is-the-blessing', 'perfect-is-the-blessing', 'Ⲁ̀ ⲡⲉⲧϫⲏⲕ ⲉ̀ⲃⲟⲗ (Perfect is the Blessing)'),
-          titleOnly(`${id}-praxis-response`, 'Praxis Response'),
-          titleOnly(`${id}-the-great-high-priest`, 'Ⲙⲉⲅⲁⲗⲟⲩ (The Great High Priest)'),
+          {
+            id: `${id}-praxis-response`,
+            title: "Ⲁ̀ⲣⲓⲡⲁⲙⲉⲩⲓ̀ (Praxis Response)",
+            versions: doxologyVersions([
+            ["Remember me, O my Lord; remember me, O my God; remember me, O my King, when You come into Your kingdom.", "Ⲁ̀ⲣⲓⲡⲁⲙⲉⲩⲓ̀ ⲱ̀ ⲡⲁϬⲟⲓⲥ ⲁ̀ⲣⲓⲡⲁⲙⲉⲩⲓ̀ ⲱ̀ ⲡⲁⲚⲟⲩϯ ⲁ̀ⲣⲓⲡⲁⲙⲉⲩⲓ̀ ⲱ̀ ⲡⲁⲞ̀ⲩⲣⲟ ⲁⲕϣⲁⲛⲓ̀ ϧⲉⲛ ⲧⲉⲕⲙⲉⲧⲟ̀ⲩⲣⲟ.", "اذكرني يا رب، اذكرني يا إلهي، اذكرني يا ملكي، متى جئت في ملكوتك.", "Aripameu-i ō pa-Tshois aripameu-i ō pa-Nouti aripameu-i ō pa-Ouro akshani khen tekmetouro.", "Udhkurni ya Rabb, udhkurni ya Ilahi, udhkurni ya Maliki, mata gi'ta fi malakoutak."],
+            ["Blessed are You indeed, with Your good Father and the Holy Spirit, for You have come and saved us. Have mercy upon us.", "Ⲕ̀ⲥ̀ⲙⲁⲣⲱⲟ̀ⲩⲧ ⲁ̀ⲗⲏⲑⲱⲥ ⲛⲉⲙ Ⲡⲉⲕⲓⲱⲧ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ ⲛⲉⲙ ⲡⲓⲠ̀ⲛⲉⲩⲙⲁ ⲉⲑⲟⲩⲁⲃ ϫⲉ ⲁⲕⲓ̀ ⲁⲕⲥⲱϯ ⲙ̀ⲙⲟⲛ. Ⲛⲁⲓ ⲛⲁⲛ.", "مبارك أنت بالحقيقة مع أبيك الصالح والروح القدس، لأنك أتيت وخلصتنا. ارحمنا.", "Ekesmarō-out alēthōs nem Pekiōt enagathos nem pi-Epneuma ethouab je aki aksōti emmon. Nai nan.", "Mubarakun anta bil-haqeeqa ma'a abeeka es-salih war-Rouh el-Qudus, li-annaka atayta wa khallastana. Irhamna."],
+            ]),
+          },
+          {
+            id: `${id}-the-great-high-priest`,
+            title: "Ⲙⲉⲅⲁⲗⲟⲩ (The Great High Priest)",
+            versions: doxologyVersions([
+            ["The great High Priest, pure forever: Holy God, Holy Mighty, Holy Immortal, who was crucified for us, have mercy upon us.", "Ⲙⲉⲅⲁⲗⲟⲩ ⲁ̀ⲣⲭⲏⲉ̀ⲣⲉⲩⲥ ⲓⲥⲧⲟⲩⲥ ⲉ̀ⲱ̀ⲛⲁⲥ ⲁⲭⲣⲁⲛⲧⲟⲛ ⲁ̀ⲅⲓⲟⲥ ⲟ̀ Ⲑⲉⲟⲥ ⲁ̀ⲅⲓⲟⲥ Ⲓⲥⲭⲩⲣⲟⲥ ⲁ̀ⲅⲓⲟⲥ Ⲁ̀ⲑⲁⲛⲁⲧⲟⲥ ⲟ̀ ⲥ̀ⲧⲁⲩⲣⲱⲑⲓⲥ ⲇⲓ ⲏ̀ⲙⲁⲥ ⲉ̀ⲗⲉⲏⲥⲟⲛ ⲏ̀ⲙⲁⲥ.", "رئيس الكهنة العظيم الطاهر إلى الأبد: قدوس الله، قدوس القوي، قدوس الذي لا يموت، الذي صُلب عنا، ارحمنا.", "Megalou arkhē-ereus istous e-ōnas akhranton agios o Theos agios Iskhuros agios Athanatos o estaurōthis di ēmas eleēson ēmas.", "Ra'ees el-kahana el-'azeem et-tahir ila el-abad: quddous Allah, quddous el-qawi, quddous elladhi la yamout, elladhi sulib 'anna, irhamna."],
+            ]),
+          },
+          {
+            id: `${id}-apenchois`,
+            title: "Ⲁ̀ⲡⲉⲛϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ (Our Lord Jesus Christ Fasted)",
+            versions: doxologyVersions([
+            ["Our Lord Jesus Christ fasted for us forty days and forty nights, to save us from our sins.", "Ⲁ̀ ⲡⲉⲛϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ ⲉⲣⲛⲏⲥⲧⲉⲩⲓⲛ ⲉ̀ϩ̀ⲣⲏⲓ ⲉ̀ϫⲱⲛ ⲛ̀ϩ̀ⲙⲉ ⲛ̀ⲉ̀ϩⲟⲟ̀ⲩ ⲛⲉⲙ ϩ̀ⲙⲉ ⲛ̀ⲉ̀ϫⲱⲣϩ ϣⲁ ⲛ̀ⲧⲉϥⲥⲱⲧⲧⲉⲛ ϧⲉⲛ ⲛⲉⲛⲛⲟⲃⲓ.", "ربنا يسوع المسيح صام عنا أربعين يوماً وأربعين ليلة، حتى خلصنا من خطايانا.", "A pentshois Iēsous Pi-ekhristos ernēsteuin e-ehrēi ejōn enehme eneho-ou nem ehme enejōrh sha entefsōtten khen nennovi.", "Rabbuna Yasou' el-Maseeh sama 'anna arba'een yawman wa arba'een layla, hatta khallasana min khatayana."],
+            ["And we too, let us fast with purity and righteousness, and let us pray, proclaiming and saying:", "Ⲁ̀ⲛⲟⲛ ϩⲱⲛ ⲙⲁⲣⲉⲛ ⲉⲣⲛⲏⲥⲧⲉⲩⲓⲛ ϧⲉⲛ ⲟ̀ⲩⲧⲟⲩⲃⲟ ⲛⲉⲙ ⲟ̀ⲩⲙⲉⲑⲙⲏⲓ ⲟⲩⲟϩ ⲛ̀ⲧⲉⲛⲉ̀ⲣ ⲡ̀ⲣⲟⲥⲉ̀ⲩⲭⲉⲥⲑⲉ ⲉⲛⲱ̀ϣ ⲉ̀ⲃⲟⲗ ⲉⲛϫⲱ ⲙ̀ⲙⲟⲥ.", "ونحن أيضاً فلنصم بطهارة وبر، ونصلي صارخين قائلين:", "Anon hōn maren ernēsteuin khen outouvo nem oumethmēi ouoh entener eproseukhesthe enōsh evol enjō emmos.", "Wa nahnu aydan fal-nasum bi-tahara wa birr, wa nusalli sarikheen qa'ileen:"],
+            ["I have sinned, I have sinned, my Lord Jesus, forgive me, for there is no servant without sin, nor a master without forgiveness.", "Ⲁⲓⲉ̀ⲣⲛⲟⲃⲓ ⲁⲓⲉ̀ⲣⲛⲟⲃⲓ ⲡⲁϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ ⲭⲱ ⲛⲏⲓ ⲉ̀ⲃⲟⲗ ϫⲉ ⲙ̀ⲙⲟⲛ ⲃⲱⲕ ⲛ̀ⲁ̀ⲧⲉ̀ⲣⲛⲟⲃⲓ ⲟ̀ⲩⲇⲉ ⲙ̀ⲙⲟⲛ ϭ̀ⲟⲓⲥ ⲛ̀ⲁ̀ⲧⲭⲱ ⲉ̀ⲃⲟⲗ.", "أخطأت أخطأت يا ربي يسوع اغفر لي، لأنه ليس عبد بلا خطية، ولا سيد بلا غفران.", "Ai-ernovi ai-ernovi patshois Iēsous khō nēi evol je emmon vōk enaternovi oude emmon etshois enatkhō evol.", "Akhta't akhta't ya Rabbi Yasou' ighfir li, li-annahu laysa 'abd bila khatiyya, wala sayyid bila ghufran."],
+            ["Our Father who art in heaven, hallowed be Your name, Your kingdom come, for Yours is the glory forever.", "Ϫⲉ ⲡⲉⲛⲒⲱⲧ ⲉⲧϧⲉⲛ ⲛⲓⲫⲏⲟ̀ⲩⲓ̀ ⲙⲁⲣⲉϥⲧⲟⲩⲃⲟ ⲛ̀ϫⲉ ⲡⲉⲕⲣⲁⲛ ⲙⲁⲣⲉⲥⲓ ⲛ̀ϫⲉ ⲧⲉⲕⲙⲉⲧⲟ̀ⲩⲣⲟ ϫⲉ ⲫⲱⲕ ⲡⲉ ⲡⲓⲱ̀ⲟ̀ⲩ ϣⲁ ⲛⲓⲉ̀ⲛⲉϩ.", "أبانا الذي في السموات، ليتقدس اسمك، ليأت ملكوتك، لأن لك المجد إلى الأبد.", "Je pen-Iōt etkhen nifē-ou-i mareftouvo enje pekran maresi enje tekmetouro je fōk pe pi-ō-ou sha ni-eneh.", "Abana elladhi fis-samawat, li-yataqaddas ismuk, li-ya'ti malakoutuk, li-anna laka el-magd ila el-abad."],
+            ]),
+          },
           titleOnly(`${id}-paralex`, 'Ⲁ̀ⲡⲉⲛϭⲟⲓⲥ (Paralex)'),
           titleOnly(`${id}-veneration`, 'Veneration'),
           ...fromAnnual(annualLiturgy?.hymns, 'annual-liturgy-agios', 'trisagion', 'Ⲁⲅⲓⲟⲥ ⲟ̀ Ⲑⲉⲟⲥ (Trisagion)'),
@@ -6937,7 +6978,7 @@ if (greatLent) {
       if (name === 'distribution') {
         const melody = (key: string, title: string) => titleOnly(`${id}-melody-${key}`, title);
         children = [
-          titleOnly(`${id}-psalm-150`, 'Ⲥⲙⲟⲩ ⲉ̀Ⲫ̀ⲛⲟⲩϯ (Psalm 150)'),
+          ...fromAnnual(annualDistribution?.hymns, 'annual-distribution-psalm-150', 'psalm-150', 'Ⲥⲙⲟⲩ ⲉ̀Ⲫ̀ⲛⲟⲩϯ (Psalm 150)'),
           titleOnly(`${id}-o-good-one`, 'Ⲡⲓⲙⲁⲓⲣⲱⲙⲓ (O Good One)'),
           {
             id: `${id}-melodies`,
@@ -6966,7 +7007,13 @@ if (greatLent) {
           ...offering('hymn-of-blessing'),
           ...offering('hail-to-mary'),
           ...offering('the-time-has-come'),
-          titleOnly(`${id}-offering-alleluia-i-shall-go-in`, 'Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ ⲉⲓⲉⲓ̀ (Alleluia I Shall Go In)'),
+          {
+            id: `${id}-offering-alleluia-i-shall-go-in`,
+            title: "Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ ⲉⲓⲉⲓ̀ (Alleluia I Shall Go In)",
+            versions: doxologyVersions([
+            ["Alleluia. I shall go in unto the altar of God, before the face of God, who gives gladness to my youth. I will confess to You, O God my God, with a harp. Remember, O Lord, David and all his meekness. Alleluia.", "Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ. Ⲉⲓⲉ̀ⲓ̀ ⲉ̀ϧⲟⲩⲛ ϣⲁ ⲡⲓⲙⲁⲉ̀ⲛⲉ̀ⲣϣⲱⲟ̀ⲩϣⲓ ⲛ̀ⲧⲉ Ⲫ̀ϯ ⲛⲁϩⲣⲉⲛ ⲡ̀ϩⲟ ⲙ̀Ⲫ̀ϯ ⲫⲏⲉ̀ⲧⲁϥϯ ⲙ̀ⲡ̀ⲟ̀ⲩⲛⲟϥ ⲛ̀ⲧⲉ ⲧⲁⲙⲉⲧⲁ̀ⲗⲟⲩ. Ϯⲛⲁⲟ̀ⲩⲱ̀ⲛϩ ⲛⲁⲕ ⲉ̀ⲃⲟⲗ Ⲫ̀ϯ ⲡⲁⲚⲟⲩϯ ϧⲉⲛ ⲟ̀ⲩⲕⲩⲑⲁⲣⲁ. Ⲁ̀ⲣⲓⲫ̀ⲙⲉⲩⲓ̀ Ⲡ̀ϭⲟⲓⲥ ⲛ̀Ⲇⲁⲩⲓⲇ ⲛⲉⲙ ⲧⲉϥⲙⲉⲧⲣⲉⲙⲣⲁⲩϣ ⲧⲏⲣⲥ. Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ.", "هلليلويا. فآتي إلى مذبح الله، تجاه وجه الله الذي يُفرّح شبابي. أعترف لك يا الله إلهي بالقيثارة. اذكر يا رب داود وكل دعته. هلليلويا.", "Allēlouia. Ei-e-i ekhoun sha pima-enershō-oushi ente Efti nahren epho em-Efti fē-etafti emepounof ente tametalou. Tina-ou-ōnh nak evol Efti pa-Nouti khen oukuthara. Ari-efmeu-i Eptshois en-Dauid nem tefmetremraush tērs. Allēlouia.", "Hallelouia. Fa-ati ila madhbah Allah, tugaha wagh Allah elladhi yufarrih shababi. A'tarif laka ya Allah ilahi bil-qeethara. Udhkur ya Rabb Dawoud wa kull da'atih. Hallelouia."],
+            ]),
+          },
           ...(hisFoundation ? [withoutAudio({ ...hisFoundation, id: `${id}-offering-his-foundation` })] : []),
           ...offering('all-the-wise-men', 'Ⲛⲓⲥⲁⲃⲉⲩ (All You Wise Men)'),
           // Liturgy of the Word: the Hymn of the Censer in place of Tishori, then the weekday Hymn of the Intercessions
@@ -6987,6 +7034,14 @@ if (greatLent) {
           ...fromKiahk('Ϯⲙⲏⲧ ⲥ̀ⲛⲟⲩϯ (Hymn of the Virtues)', 'hymn-of-the-virtues'),
           ...fromKiahk('Ⲧⲟⲩ ⲙⲁⲕⲁⲣⲓⲱ (The Blessed)', 'the-blessed'),
           ...fromAnnual(annualLiturgy?.hymns, 'annual-liturgy-perfect-is-the-blessing', 'perfect-is-the-blessing', 'Ⲁ̀ ⲡⲉⲧϫⲏⲕ (Perfect is the Blessing)'),
+          {
+            id: `${id}-praxis-response`,
+            title: "Ϣⲁⲣⲉ Ⲫ̀ϯ (Praxis Response)",
+            versions: doxologyVersions([
+            ["Wherein God takes away the sins of the people, through the burnt offerings and the aroma of incense.", "Ϣⲁⲣⲉ Ⲫ̀ϯ ⲱ̀ⲗⲓ ⲙ̀ⲙⲁⲩ ⲛ̀ⲛⲓⲛⲟⲃⲓ ⲛ̀ⲧⲉ ⲡⲓⲗⲁⲟ̀ⲥ ⲉ̀ⲃⲟⲗϩⲓⲧⲉⲛ ⲡⲓϭ̀ⲗⲓⲗ ⲛⲉⲙ ⲡⲓⲥ̀ⲑⲟⲓ ⲛ̀ⲧⲉ ⲡⲓⲥ̀ⲑⲟⲓⲛⲟⲩϥⲓ.", "حيث يرفع الله خطايا الشعب، بالمحرقات ورائحة البخور.", "Share Efti ōli emmau enninovi ente pila-os evolhiten pi-etshlil nem pi-esthoi ente pi-esthoinoufi.", "Haythu yarfa' Allah khataya esh-sha'b, bil-muhraqat wa ra'ihat el-bukhour."],
+            ["Blessed are You indeed, with Your good Father and the Holy Spirit, for You have come and saved us. Have mercy upon us.", "Ⲕ̀ⲥ̀ⲙⲁⲣⲱⲟ̀ⲩⲧ ⲁ̀ⲗⲏⲑⲱⲥ ⲛⲉⲙ Ⲡⲉⲕⲓⲱⲧ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ ⲛⲉⲙ ⲡⲓⲠ̀ⲛⲉⲩⲙⲁ ⲉⲑⲟⲩⲁⲃ ϫⲉ ⲁⲕⲓ̀ ⲁⲕⲥⲱϯ ⲙ̀ⲙⲟⲛ. Ⲛⲁⲓ ⲛⲁⲛ.", "مبارك أنت بالحقيقة مع أبيك الصالح والروح القدس، لأنك أتيت وخلصتنا. ارحمنا.", "Ekesmarō-out alēthōs nem Pekiōt enagathos nem pi-Epneuma ethouab je aki aksōti emmon. Nai nan.", "Mubarakun anta bil-haqeeqa ma'a abeeka es-salih war-Rouh el-Qudus, li-annaka atayta wa khallastana. Irhamna."],
+            ]),
+          },
           {
             id: `${id}-trisagion`,
             title: 'Ⲁⲅⲓⲟⲥ ⲟ̀ Ⲑⲉⲟⲥ (Trisagion)',
@@ -7021,7 +7076,62 @@ if (greatLent) {
     {
       id: 'lent-midnight',
       title: 'Midnight Praises',
-      hymns: (annualMidnight?.hymns ?? []).map((hymn) => withoutAudio(copyForService(hymn, 'annual-midnight-', 'lent-midnight-'))),
+      hymns: (() => {
+        const hymns = (annualMidnight?.hymns ?? []).map((hymn) => withoutAudio(copyForService(hymn, 'annual-midnight-', 'lent-midnight-')));
+        // Hymns sit inside the day sections, so look through each section's list
+        const insertAt = (list: Hymn[], id: string, offset: number, added: Hymn[]): boolean => {
+          const i = list.findIndex((h) => h.id === id);
+          if (i >= 0) {
+            list.splice(i + offset, 0, ...added);
+            return true;
+          }
+          return list.some((h) => (h.children ? insertAt(h.children, id, offset, added) : false));
+        };
+        const insertAfter = (afterId: string, ...added: Hymn[]) => insertAt(hymns, afterId, 1, added);
+        const insertBefore = (beforeId: string, ...added: Hymn[]) => insertAt(hymns, beforeId, 0, added);
+        insertAfter('lent-midnight-arise-o-children', titleOnly('lent-midnight-great-lent-ode', 'Great Lent Ode'));
+        insertAfter(
+          'lent-midnight-fourth-canticle',
+          {
+            id: 'lent-midnight-adam-psali-great-lent',
+            title: "Ⲁⲓⲱϣ ⲛ̀ⲧⲁⲥ̀ⲙⲏⲓ (Adam Psali for Great Lent)",
+            versions: doxologyVersions([
+            ["I cried with my voice to You, O my God; because of fasting, grant me salvation.", "Ⲁⲓⲱϣ ⲛ̀ⲧⲁⲥ̀ⲙⲏⲓ: ⲉ̀ⲡ̀ϣⲱⲓ ϩⲁⲣⲟⲕ Ⲡⲁⲛⲟⲩϯ: ⲉⲑⲃⲉ ϯⲛⲏⲥⲧⲓⲁ: ⲙⲟⲓ ⲛⲏⲓ ⲛ̀ⲟⲩⲥⲱϯ.", "بصوتي صرخت، إليك يا إلهي، فمن أجل الصوم، أعطني خلاصاً.", "Aiōsh enta-esmēi: e-epshōi harok Panouti: ethve tinēstia: moi nēi enousōti.", "Bi-sawti sarakht, ilayka ya ilahi, fa-min agl es-sawm, a'tini khalasan."],
+            ["Help my weakness, O Savior; because of fasting, wash away our filth.", "Ⲃⲟⲏ̀ⲑⲓⲛ ⲉ̀ⲧⲁⲙⲉⲧϫⲱⲃ: ⲱ̀ Ⲡⲓⲣⲉϥⲛⲟϩⲉⲙ: ⲉⲑⲃⲉ ϯⲛⲏⲥⲧⲓⲁ: ⲉⲕⲉⲓⲱⲓ ⲛ̀ⲛⲉⲛϭⲱϧⲉⲙ.", "أعن ضعفي، أيها المخلص، من أجل الصوم، أغسل أقذارنا.", "Vo-ēthin etametjōb: ō Pirefnohem: ethve tinēstia: ekeiōi ennentshōkhem.", "A'in da'fi, ayyuha el-mukhallis, min agl es-sawm, ighsil aqdharana."],
+            ["For our forefathers have taught us that because of fasting they gained salvation.", "Ⲅⲉ ⲅⲁⲣ ⲁⲩⲧⲁⲙⲟⲛ: ⲛ̀ϫⲉ ⲛⲉⲛϣⲟⲣⲡ ⲛ̀ⲓⲟϯ: ⲉⲑⲃⲉ ϯⲛⲏⲥⲧⲓⲁ: ⲁⲩϣⲁϣⲛⲓ ⲉ̀ⲡⲓⲥⲱϯ.", "لأن آبائنا الأولين، أعلمونا أنه، من أجل الصوم، قد فازوا بالخلاص.", "Ge gar autamon: enje nenshorp enioti: ethve tinēstia: aushashni episōti.", "Li-anna aba'ana el-awwaleen, a'lamuna annahu, min agl es-sawm, qad fazu bil-khalas."],
+            ["David, the son of Jesse, in his kingdom, because of fasting, received the victory.", "Ⲇⲁⲩⲓⲇ ⲫⲁ Ⲓⲉⲥⲥⲉ: ϧⲉⲛ ⲧⲉϥⲙⲉⲧⲟⲩⲣⲟ: ⲉⲑⲃⲉ ϯⲛⲏⲥⲧⲓⲁ: ⲁϥϭⲓ ⲙ̀ⲡⲓϭⲣⲟ.", "داود ابن يسى، في ملكه، ومن أجل الصوم، نال الغلبة.", "Dauid fa Iesse: khen tefmetouro: ethve tinēstia: aftshi empitshro.", "Dawoud ibn Yassa, fi mulkih, wa min agl es-sawm, nal el-ghalaba."],
+            ["Eve and Adam were deceived by the serpent, but because of fasting the Lord had compassion on them.", "Ⲉ̀ⲩⲁ ⲛⲉⲙ Ⲁ̀ⲇⲁⲙ: ⲁ̀ ⲡⲓϩⲟϥ ⲉⲣϩⲁⲗ ⲙ̀ⲙⲱⲟⲩ: ⲉⲑⲃⲉ ϯⲛⲏⲥⲧⲓⲁ: ⲁ̀ Ⲡ̀ϭⲟⲓⲥ ϣⲉⲛϩⲏⲧ ϧⲁⲣⲱⲟⲩ.", "حواء وآدم، أطغتهما الحية، ومن أجل الصوم، تحنن الرب عليهما.", "Eua nem Adam: a pihof erhal emmōou: ethve tinēstia: a Eptshois shenhēt kharōou.", "Hawwa' wa Adam, atghat-huma el-hayya, wa min agl es-sawm, tahannan er-Rabb 'alayhima."],
+            ["Truly Enoch's mind was enlightened, and because of fasting he was taken up to heaven.", "Ⲍⲉ ⲟⲛⲧⲱⲥ Ⲉ̀ⲛⲱⲭ: ⲁϥⲉⲣⲟⲩⲱⲓⲛⲓ ⲛ̀ϫⲉ ⲡⲉϥⲛⲟⲩⲥ: ⲉⲑⲃⲉ ϯⲛⲏⲥⲧⲓⲁ: ⲁⲩⲟⲗϥ ⲉ̀ⲟⲩⲣⲁⲛⲟⲥ.", "حقاً استنار، عقل أخنوخ، ومن أجل الصوم، رُفع إلى السماء.", "Ze ontōs Enōkh: aferouōini enje pefnous: ethve tinēstia: auolf eouranos.", "Haqqan istanar, 'aql Akhnoukh, wa min agl es-sawm, rufi'a ila es-sama'."],
+            ["Elijah in his prayer asked and received, and because of fasting he stopped the rain.", "Ⲏ̀ⲗⲓⲁⲥ ϧⲉⲛ ⲡⲉϥϣ̀ⲗⲏⲗ: ⲁϥⲧⲱⲃϩ ⲟⲩⲟϩ ⲁϥϭⲓ: ⲉⲑⲃⲉ ϯⲛⲏⲥⲧⲓⲁ: ⲙ̀ⲡⲉϥⲭⲁ ⲟⲩⲙⲟⲩⲛϩⲱⲟⲩ ⲉ̀ⲓ̀.", "إيليا في صلاته، طلب فأخذ، ومن أجل الصوم، لم يدع مطراً يأتي.", "Ēlias khen pefeshlēl: aftōbh ouoh aftshi: ethve tinēstia: empefkha oumounhōou e-i.", "Iliya fi salatih, talab fa-akhadh, wa min agl es-sawm, lam yada' matran ya'ti."],
+            ["The Lord accepted Abraham's sacrifice, and because of fasting he hosted God.", "Ⲑⲩⲥⲓⲁ ⲛ̀Ⲁⲃⲣⲁⲁⲙ: ⲁ̀ Ⲡ̀ϭⲟⲓⲥ ϣⲟⲡⲥ ⲉ̀ⲣⲟϥ: ⲉⲑⲃⲉ ϯⲛⲏⲥⲧⲓⲁ: ⲁ̀ Ⲫ̀ⲛⲟⲩϯ ϫⲱⲓⲗⲓ ⲉ̀ⲣⲟϥ.", "ذبيحة إبراهيم، قبلها الرب، ومن أجل الصوم، قد ضاف الله.", "Thusia en-Abraam: a Eptshois shops erof: ethve tinēstia: a Efnouti jōili erof.", "Dhabeehat Ibraheem, qabilaha er-Rabb, wa min agl es-sawm, qad daf Allah."],
+            ["Isaac the beloved was offered to the slaughter, and because of fasting he was saved with joy.", "Ⲓ̀ⲥⲁⲁⲕ ⲡⲓⲙⲉⲛⲣⲓⲧ: ⲁⲩⲉⲛϥ ⲉ̀ⲡ̀ϧⲟⲗϧⲉⲗ: ⲉⲑⲃⲉ ϯⲛⲏⲥⲧⲓⲁ: ⲁϥⲟⲩϫⲁⲓ ϧⲉⲛ ⲟⲩⲑⲉⲗⲏⲗ.", "إسحق الحبيب، قُدم إلى الذبح، ومن أجل الصوم، خلص بتهليل.", "Isaak pimenrit: auenf e-epkholkhel: ethve tinēstia: afoujai khen outhelēl.", "Ishaq el-habeeb, quddima ila edh-dhabh, wa min agl es-sawm, khalusa bi-tahleel."],
+            ["And also Jacob, whose eyes were darkened, because of fasting saw the ladder.", "Ⲕⲉ ⲡⲁⲗⲓⲛ Ⲓⲁⲕⲱⲃ: ⲛⲉϥⲃⲁⲗ ⲁⲩⲉⲣⲭⲁⲕⲓ: ⲉⲑⲃⲉ ϯⲛⲏⲥⲧⲓⲁ: ⲁϥⲛⲁⲩ ⲉ̀ϯⲙⲟⲩⲕⲓ.", "ويعقوب أيضاً، أظلمت عيناه، ومن أجل الصوم، نظر السلم.", "Ke palin Iakōb: nefval auerkhaki: ethve tinēstia: afnau etimouki.", "Wa Ya'qoub aydan, azlamat 'aynah, wa min agl es-sawm, nazar es-sullam."],
+            ["Moreover Joseph was sold to men, and because of fasting he reigned over Egypt.", "Ⲗⲟⲓⲡⲟⲛ ⲅⲁⲣ Ⲓⲱⲥⲏⲫ: ⲁⲩⲧⲏⲓϥ ⲛ̀ϩⲁⲛⲣⲱⲙⲓ: ⲉⲑⲃⲉ ϯⲛⲏⲥⲧⲓⲁ: ⲁϥⲉⲣⲟⲩⲣⲟ ⲉ̀ϫⲉⲛ Ⲭⲏⲙⲓ.", "ويوسف أيضاً، بيع لأناس، ومن أجل الصوم، ملك على مصر.", "Loipon gar Iōsēf: autēif enhanrōmi: ethve tinēstia: aferouro ejen Khēmi.", "Wa Yousef aydan, bee'a li-unas, wa min agl es-sawm, malak 'ala Masr."],
+            ["Moses the prophet spoke with God, and because of fasting he received the two tablets.", "Ⲙⲱⲩ̀ⲥⲏⲥ ⲡⲓⲡ̀ⲣⲟⲫⲏⲧⲏⲥ: ⲁϥⲥⲁϫⲓ ⲛⲉⲙ Ⲫ̀ⲛⲟⲩϯ: ⲉⲑⲃⲉ ϯⲛⲏⲥⲧⲓⲁ: ⲁϥϭⲓ ⲛ̀ϯⲡ̀ⲗⲁⲝ ⲥ̀ⲛⲟⲩϯ.", "موسى النبي، تكلم مع الله، ومن أجل الصوم، أخذ اللوحين.", "Mō-usēs pi-eprofētēs: afsaji nem Efnouti: ethve tinēstia: aftshi enti-eplaks esnouti.", "Mousa en-nabi, takallam ma'a Allah, wa min agl es-sawm, akhadh el-lawhayn."],
+            ["Noah the righteous, before the flood, because of fasting made the ark.", "Ⲛⲱⲉ̀ ⲡⲓⲇⲓⲕⲉⲟⲥ: ϧⲁ ⲡⲓⲕⲁⲧⲁⲕⲗⲩⲥⲙⲟⲥ: ⲉⲑⲃⲉ ϯⲛⲏⲥⲧⲓⲁ: ⲁϥⲓ̀ⲣⲓ ⲛ̀ϯⲕⲓⲃⲱⲧⲟⲥ.", "الصديق نوح، قبل الطوفان، من أجل الصوم، صنع الفلك.", "Nō-e pidikeos: kha pikataklusmos: ethve tinēstia: afiri entikivōtos.", "Es-siddeeq Nouh, qabl et-toufan, min agl es-sawm, sana' el-fulk."],
+            ["Suddenly the men of Nineveh, because of fasting, the Lord heard their voice.", "Ⲝⲁⲡⲓⲛⲁ ⲛⲓⲣⲱⲙⲓ: ⲛ̀ⲧⲉ Ⲛⲓⲛⲉⲩⲏ̀: ⲉⲑⲃⲉ ϯⲛⲏⲥⲧⲓⲁ: ⲁ̀ Ⲡ̀ϭⲟⲓⲥ ⲥⲱⲧⲉⲙ ⲉ̀ⲧⲟⲩⲥ̀ⲙⲏ.", "رجال نينوى، بغتةً، من أجل الصوم، سمع الرب صوتهم.", "Ksapina nirōmi: ente Nineu-ē: ethve tinēstia: a Eptshois sōtem etou-esmē.", "Rigal Neenawa, baghtatan, min agl es-sawm, sami'a er-Rabb sawtahum."],
+            ["And Lot in the fire, through his deeds and because of fasting, was saved with his daughters.", "Ⲟⲩⲟϩ Ⲗⲱⲧ ϧⲉⲛ ⲡⲓⲭ̀ⲣⲱⲙ: ⲉ̀ⲃⲟⲗ ϩⲓⲧⲉⲛ ⲛⲉϥϩ̀ⲃⲏⲟⲩⲓ̀: ⲉⲑⲃⲉ ϯⲛⲏⲥⲧⲓⲁ: ⲁϥⲟⲩϫⲁⲓ ⲛⲉⲙ ⲛⲉϥϣⲉⲣⲓ.", "نجا لوط من النار، بأعماله، ومن أجل الصوم، خلص مع ابنتيه.", "Ouoh Lōt khen pi-ekhrōm: evol hiten nefehvēou-i: ethve tinēstia: afoujai nem nefsheri.", "Naga Lout min en-nar, bi-a'malih, wa min agl es-sawm, khalusa ma'a ibnatayh."],
+            ["And likewise Jonah, in the belly of the whale, because of fasting came out safely.", "Ⲡⲁⲓⲣⲏϯ Ⲓⲱⲛⲁ: ϧⲉⲛ ⲑ̀ⲛⲉϫⲓ ⲙ̀ⲡⲓⲕⲏⲧⲟⲥ: ⲉⲑⲃⲉ ϯⲛⲏⲥⲧⲓⲁ: ⲁϥⲓ̀ ⲉ̀ⲃⲟⲗ ⲕⲁⲗⲱⲥ.", "يونان النبي، في بطن الحوت، من أجل الصوم، خرج سالماً حسناً.", "Pairēti Iōna: khen ethneji empikētos: ethve tinēstia: afi evol kalōs.", "Younan en-nabi, fi batn el-hout, min agl es-sawm, kharag saliman hasanan."],
+            ["The lions' mouths could not approach Daniel; because of fasting they were subdued through his prayer.", "Ⲣⲱⲟⲩ ⲛ̀ⲛⲓⲙⲟⲩⲓ̀: ⲙ̀ⲡⲟⲩϣ̀ϧⲱⲛⲧ ⲉ̀Ⲇⲁⲛⲓⲏⲗ: ⲉⲑⲃⲉ ϯⲛⲏⲥⲧⲓⲁ: ⲁⲩϭⲛⲉϫⲱⲟⲩ ϧⲉⲛ ⲡⲉϥϣ̀ⲗⲏⲗ.", "أفواه الأسود، لم تقترب من دانيال، ومن أجل الصوم، خضعت بصلاته.", "Rōou ennimou-i: empou-eshkhōnt e-Daniēl: ethve tinēstia: autshnejōou khen pefeshlēl.", "Afwah el-usoud, lam taqtarib min Danial, wa min agl es-sawm, khada'at bi-salatih."],
+            ["Samuel, the anointer of kings, because of fasting his days were increased.", "Ⲥⲁⲙⲟⲩⲏⲗ ⲡⲓⲣⲉϥⲑⲱϩⲥ: ⲛ̀ⲧⲉ ⲛⲓⲟⲩⲣⲱⲟⲩ: ⲉⲑⲃⲉ ϯⲛⲏⲥⲧⲓⲁ: ⲁⲩⲁⲓⲁⲓ ⲛ̀ϫⲉ ⲛⲉϥⲉ̀ϩⲟⲟⲩ.", "صموئيل، ماسح الملوك، من أجل الصوم، طالت أيامه.", "Samouēl pirefthōhs: ente niourōou: ethve tinēstia: auaiai enje nefehoou.", "Samu'eel, masih el-mulouk, min agl es-sawm, talat ayyamuh."],
+            ["Then the three young men of Babylon, because of fasting, quenched the fire.", "Ⲧⲟⲧⲉ ⲡⲓϣⲟⲙⲧ ⲛ̀ⲁ̀ⲗⲟⲩ: ⲛ̀ⲧⲉ Ⲑ̀ⲃⲁⲃⲩⲗⲱⲛ: ⲉⲑⲃⲉ ϯⲛⲏⲥⲧⲓⲁ: ⲁⲩⲱ̀ϣⲉⲙ ⲙ̀ⲡⲓⲭ̀ⲣⲱⲙ.", "والثلاثة فتية، في بابل، من أجل الصوم، أطفأوا النار.", "Tote pishomt enalou: ente Ethvavulōn: ethve tinēstia: au-ōshem empi-ekhrōm.", "Wath-thalatha fitya, fi Babil, min agl es-sawm, atfa'u en-nar."],
+            ["My masters and fathers, the apostles, because of fasting turned the nations back.", "Ⲩⲥ ⲛⲁϭⲟⲓⲥ ⲛ̀ⲓⲟϯ: ⲛ̀ⲁ̀ⲡⲟⲥⲧⲟⲗⲟⲥ: ⲉⲑⲃⲉ ϯⲛⲏⲥⲧⲓⲁ: ⲁⲩⲧⲁⲥⲑⲟ ⲛ̀ⲛⲓⲉⲑⲛⲟⲥ.", "ها سادتي، الآباء الرسل، من أجل الصوم، ردوا الأمم.", "Us natshois enioti: enapostolos: ethve tinēstia: autastho enniethnos.", "Ha sadati, el-aba' er-rusul, min agl es-sawm, raddu el-umam."],
+            ["God of gods, Jesus the Judge, because of fasting strengthened the strugglers.", "Ⲫ̀ⲛⲟⲩϯ ⲛ̀ⲧⲉ ⲛⲓⲛⲟⲩϯ: Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲕ̀ⲣⲓⲧⲏⲥ: ⲉⲑⲃⲉ ϯⲛⲏⲥⲧⲓⲁ: ⲁϥⲧⲁϫⲣⲟ ⲛ̀ⲛⲓⲁⲑⲗⲏⲧⲏⲥ.", "إله الآلهة، يسوع الديان، من أجل الصوم، ثبت المجاهدين.", "Efnouti ente ninouti: Iēsous Pi-ekritēs: ethve tinēstia: aftajro enniathlētēs.", "Ilah el-aliha, Yasou' ed-dayyan, min agl es-sawm, thabbat el-mugahideen."],
+            ["Coolness and rest and repose, because of fasting, will come at the Judgment.", "Ⲭ̀ⲃⲟⲃ ⲛⲉⲙ ⲟⲩⲙ̀ⲧⲟⲛ: ⲛⲉⲙ ⲟⲩⲁ̀ⲛⲁⲡⲁⲩⲥⲓⲥ: ⲉⲑⲃⲉ ϯⲛⲏⲥⲧⲓⲁ: ⲛⲁϣⲱⲡⲓ ϧⲉⲛ ϯⲕ̀ⲣⲓⲥⲓⲥ.", "برودة وراحة، ونياحاً، من أجل الصوم، تكون في الدينونة.", "Ekhvob nem ou-emton: nem ou-anapausis: ethve tinēstia: nashōpi khen ti-ekrisis.", "Burouda wa raha, wa niyahan, min agl es-sawm, takoun fid-daynouna."],
+            ["The Savior taught us in His Gospel that because of fasting we can cast out demons.", "Ⲯⲱⲧⲏⲣ ⲁϥⲧ̀ⲥⲁⲃⲟⲛ: ϧⲉⲛ ⲡⲉϥⲉⲩⲁⲅⲅⲉⲗⲓⲟⲛ: ⲉⲑⲃⲉ ϯⲛⲏⲥⲧⲓⲁ: ⲛ̀ⲧⲉⲛϩⲓⲟⲩⲓ̀ ⲛ̀ⲛⲓⲇⲉⲙⲱⲛ.", "علمنا المخلص، في إنجيله، من أجل الصوم، نخرج الشياطين.", "Psōtēr afetsavon: khen pefeuaggelion: ethve tinēstia: entenhiou-i ennidemōn.", "'Allamana el-mukhallis, fi ingeelih, min agl es-sawm, nukhrig esh-shayateen."],
+            ["O Compassionate One towards sinners, because of fasting, forgive us our sins.", "Ⲱ̀ Ⲡⲓϣⲁⲛⲁϩ̀ⲑⲏϥ: ⲉ̀ϫⲉⲛ ⲛⲓⲣⲉϥⲉⲣⲛⲟⲃⲓ: ⲉⲑⲃⲉ ϯⲛⲏⲥⲧⲓⲁ: ⲭⲱ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ ⲛ̀ⲛⲉⲛⲛⲟⲃⲓ.", "أيها المتحنن، على الخطاة، من أجل الصوم، اغفر لنا خطايانا.", "Ō Pishana-ehthēf: ejen nirefernovi: ethve tinēstia: khō nan evol ennennovi.", "Ayyuha el-mutahannin, 'ala el-khutah, min agl es-sawm, ighfir lana khatayana."],
+            ]),
+          }
+        );
+        // The doxology changes with the day: the weekday one Monday to Friday, the other on Saturday and Sunday
+        insertBefore(
+          'lent-midnight-doxology-virgin-mary',
+          ...['weekday-lent', 'sat-sun']
+            .flatMap((key) => lentDoxologies.filter((d) => d.key === key))
+            .map((d) => ({ id: `lent-midnight-doxology-${d.key}`, title: d.title, versions: doxologyVersions(d.verses) })),
+        );
+        return hymns;
+      })(),
     },
   ];
 }
@@ -7143,6 +7253,45 @@ for (const version of kiahkCommemoration?.versions ?? []) {
       version.otherAudio = [...(version.otherAudio ?? []), version.audio];
     }
     version.audio = kiahkCommemorationAudio;
+  }
+}
+
+// ---- Audio: Kiahk and Great Lent recordings from alhan.org (by Arsani Sidarous, used with his permission) ----
+// Coptic recordings play on Coptic and on Coptic in English letters; "second" adds it as another recording
+const alhanRecordings: [string, string, string[], boolean?][] = [
+  ['kiahk', 'kiahk-doxology-intro.mp3', ['kiahk-matins-hymn-3', 'kiahk-vespers-hymn-3']],
+  ['kiahk', 'kiahk-doxology-1.mp3', ['kiahk-matins-hymn-4', 'kiahk-vespers-hymn-4']],
+  ['kiahk', 'kiahk-midnight-second-hos-psali.mp3', ['kiahk-midnight-hymn-7']],
+  ['kiahk', 'kiahk-midnight-third-hos-psali.mp3', ['kiahk-midnight-hymn-12', 'kiahk-midnight-hymn-13']],
+  ['kiahk', 'kiahk-midnight-tenen.mp3', ['kiahk-midnight-hymn-20'], true],
+  ['kiahk', 'kiahk-liturgy-psalm-sunday-1.mp3', ['kiahk-liturgy-psalm-chant-sunday-1']],
+  ['kiahk', 'kiahk-liturgy-psalm-sunday-2.mp3', ['kiahk-liturgy-psalm-chant-sunday-2']],
+  ['kiahk', 'kiahk-liturgy-psalm-sunday-3.mp3', ['kiahk-liturgy-psalm-chant-sunday-3']],
+  ['kiahk', 'kiahk-liturgy-psalm-sunday-4.mp3', ['kiahk-liturgy-psalm-chant-sunday-4']],
+  ['kiahk', 'kiahk-gospel-response-1.mp3', ['kiahk-matins-hymn-15', 'kiahk-vespers-hymn-15', 'kiahk-liturgy-hymn-17']],
+  ['kiahk', 'kiahk-gospel-response-2.mp3', ['kiahk-matins-hymn-16', 'kiahk-vespers-hymn-16', 'kiahk-liturgy-hymn-18']],
+  ['kiahk', 'kiahk-psalm-150.mp3', ['kiahk-distribution-hymn-1']],
+  ['great-lent', 'lent-weekday-alleluia-i-shall-go-in.mp3', ['lent-weekday-liturgy-offering-alleluia-i-shall-go-in']],
+  ['great-lent', 'lent-weekday-his-foundation.mp3', ['lent-weekday-liturgy-offering-his-foundation']],
+  ['great-lent', 'lent-weekday-hymn-of-the-censer.mp3', ['lent-weekday-liturgy-hymn-of-the-censer']],
+  ['great-lent', 'lent-weekday-share-efnouti.mp3', ['lent-weekday-liturgy-praxis-response']],
+  ['great-lent', 'lent-weekday-psalm-150.mp3', ['lent-weekday-distribution-psalm-150']],
+  ['great-lent', 'lent-weekday-concluding-hymn.mp3', ['lent-weekday-matins-concluding-hymn', 'lent-weekday-distribution-concluding-hymn']],
+  ['great-lent', 'lent-weekend-cymbals.mp3', ['lent-weekend-matins-verse-of-cymbals-lent', 'lent-weekend-vespers-verse-of-cymbals-lent']],
+  ['great-lent', 'lent-weekend-doxology-sat-sun.mp3', ['lent-weekend-matins-doxology-sat-sun', 'lent-midnight-doxology-sat-sun']],
+  ['great-lent', 'lent-weekend-gospel-response.mp3', ['lent-matins-gospel-response', 'lent-vespers-gospel-response', 'lent-weekend-liturgy-gospel-response']],
+  ['great-lent', 'lent-weekend-praxis-response.mp3', ['lent-weekend-liturgy-praxis-response']],
+  ['great-lent', 'lent-weekend-megalou.mp3', ['lent-weekend-liturgy-the-great-high-priest']],
+  ['great-lent', 'lent-weekend-apenchois.mp3', ['lent-weekend-liturgy-apenchois']],
+];
+for (const [seasonId, audio, ids, second] of alhanRecordings) {
+  const hymns = seasons.find((s) => s.id === seasonId)?.services.flatMap((s) => flattenHymns(s.hymns)) ?? [];
+  for (const id of ids) {
+    for (const version of hymns.find((h) => h.id === id)?.versions ?? []) {
+      if (version.language !== 'coptic' && version.language !== 'englishCoptic') continue;
+      if (second && version.audio) version.otherAudio = [...(version.otherAudio ?? []), audio];
+      else version.audio = audio;
+    }
   }
 }
 

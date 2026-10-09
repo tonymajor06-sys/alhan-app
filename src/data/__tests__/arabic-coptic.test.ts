@@ -744,10 +744,13 @@ describe('Kiahk Praises & Season > Matins', () => {
     expect(doxText(sixthDoxology, 'englishCoptic')).toContain('Eptshois fēetshop khen tfe');
     expect(doxText(sixthDoxology, 'englishCoptic')).toContain('ennēethouab');
     expect(doxText(sixthDoxology, 'arabicCoptic')).toContain('خِن روو إنّيإثواب');
-    // there are no recordings in Kiahk Matins, not even on the copied Introduction and Conclusion
+    // the Kiahk recordings play on Coptic only; the Conclusion copied from Annual Matins has none
     for (const hymn of flattenHymns(service.hymns)) {
-      for (const version of hymn.versions) expect([hymn.title, version.language, version.audio]).toEqual([hymn.title, version.language, undefined]);
+      for (const version of hymn.versions) {
+        if (version.audio) expect(['coptic', 'englishCoptic', 'arabicCoptic']).toContain(version.language);
+      }
     }
+    expect(service.hymns.find((h) => h.title === 'Ϣⲱⲡⲓ Ⲛ̀ⲑⲟ (The Conclusion of the Doxologies)')!.versions.every((v) => !v.audio)).toBe(true);
   });
 });
 
@@ -856,7 +859,8 @@ describe('Kiahk Praises & Season > Liturgy', () => {
       expect(chantText(sunday, 'coptic').endsWith('ⲁ︦ⲗ︦.')).toBe(true);
       expect(chantText(sunday, 'englishCoptic').endsWith('allēlouia.')).toBe(true);
       expect(chantText(sunday, 'coptic')).not.toContain('⳪');
-      expect(sunday.versions.every((v) => v.audio === undefined)).toBe(true);
+      // each Sunday has its own recording, on Coptic
+      expect(sunday.versions.find((v) => v.language === 'coptic')!.audio).toMatch(/^kiahk-liturgy-psalm-sunday-\d\.mp3$/);
     });
     expect(chantText(psalmChant.children![0], 'coptic')).toContain('ϫⲉ Ⲡ̀ϭⲟⲓⲥ ⲉϥⲉ̀ⲕⲱⲧ ⲛ̀Ⲥⲓⲱⲛ');
     expect(chantText(psalmChant.children![1], 'arabic').startsWith('إسمعي يا إبنتي')).toBe(true);
@@ -1039,7 +1043,8 @@ describe('Kiahk Praises & Season > Liturgy', () => {
           expect(text(faithful, language)).toBeTruthy();
         }
       }
-      expect(faithful.versions.every((v) => v.audio === undefined)).toBe(true);
+      // the same recording as in Matins and Vespers
+      expect(faithful.versions.find((v) => v.language === 'coptic')!.audio).toBe(matinsService.hymns.find((h) => h.title === title)!.versions.find((v) => v.language === 'coptic')!.audio);
     }
     const zechariah = service.hymns.find((h) => h.title === 'Ⲍⲁⲭⲁⲣⲓⲁⲥ (Adam Aspasmos (Zechariah))')!;
     const rejoice = service.hymns.find((h) => h.title === 'Ⲟⲩⲛⲟϥ ⲙ̀ⲙⲟ (Standard Adam Aspasmos (Rejoice))')!;
