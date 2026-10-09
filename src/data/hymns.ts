@@ -7290,6 +7290,12 @@ const alhanRecordings: [string, string, string[], boolean?][] = [
   ['great-lent', 'lent-weekend-praxis-response.mp3', ['lent-weekend-liturgy-praxis-response']],
   ['great-lent', 'lent-weekend-megalou.mp3', ['lent-weekend-liturgy-the-great-high-priest']],
   ['great-lent', 'lent-weekend-apenchois.mp3', ['lent-weekend-liturgy-apenchois']],
+  ['great-lent', 'alhan-advent-dox-intro.mp3', ['lent-weekday-matins-intro-doxologies', 'lent-weekend-matins-intro-doxologies']],
+  ['great-lent', 'lent-weekend-gospel-response.mp3', ['lent-weekday-matins-gospel-response', 'lent-weekday-liturgy-gospel-response']],
+  ['great-lent', 'lent-weekday-his-foundation.mp3', ['lent-liturgy-offering-his-foundation']],
+  ['great-lent', 'alhan-pascha-teeshori.mp3', ['lent-weekend-liturgy-hymn-of-the-censer']],
+  ['great-lent', 'alhan-brightsat-marenouonh.mp3', ['lent-midnight-second-canticle-lobsh']],
+  ['great-lent', 'alhan-nativity-neknai.mp3', ['lent-midnight-sunday-adam-theotokias-conclusion', 'lent-midnight-monday-adam-theotokias-conclusion', 'lent-midnight-tuesday-adam-theotokias-conclusion']],
 ];
 for (const [seasonId, audio, ids, second] of alhanRecordings) {
   const hymns = seasons.find((s) => s.id === seasonId)?.services.flatMap((s) => flattenHymns(s.hymns)) ?? [];

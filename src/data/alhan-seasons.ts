@@ -1408,4 +1408,174 @@ export const alhanSeasonServices: Record<string, Service[]> = {
       ],
     },
   ],
+  "nativity-fast": [
+    {
+      id: "nativity-fast-vesper-praises",
+      title: "Vesper Praises",
+      hymns: [
+        {
+          id: "nativity-fast-vesper-praises-saturday-psali",
+          title: "Ⲁⲙⲱⲓⲛⲓ (Saturday Psali)",
+          versions: [
+            { language: 'coptic', audio: "alhan-advent-sat-psali.mp3", text: "Ⲁⲙⲱⲓⲛⲓ ⲧⲏⲣⲟⲩ ϧⲉⲛ ⲟⲩⲣⲁϣⲓ ⲁ̀ⲙⲱⲓⲛⲓ ⲧⲏⲣⲟⲩ ϧⲉⲛ ⲟⲩⲑⲉⲗⲏⲗ ⲁ̀ⲙⲱⲓⲛⲓ ⲧⲏⲣⲟⲩ ϧⲉⲛ ⲟⲩⲟ̀ⲩⲛⲟϥ ⲛⲉⲛϣⲏⲣⲓ ⲧⲏⲣⲟⲩ ⲛ̀ⲧⲉ ⲛⲓⲣⲱⲙⲓ.\n\nⲂⲟⲛ ⲟⲩⲥⲁⲃⲉ ⲃⲟⲛ ⲟⲩⲕⲁⲧϩⲏⲧ ⲃⲟⲛ ⲟⲩϧⲉⲗⲗⲟⲓ ⲃⲟⲛ ⲟⲩϧⲉⲗϣⲓⲣⲓ ⲃⲟⲛ ⲟⲩⲣⲱⲙⲓ ⲃⲟⲛ ⲟⲩⲥ̀ϩⲓⲙⲓ ⲛⲉⲛϣⲏⲣⲓ ⲧⲏⲣⲟⲩ ⲛ̀ⲧⲉ Ⲁ̀ⲇⲁⲙ.\n\n+ Ⲅⲉ ⲅⲁⲣ ⲁ̀ⲙⲱⲓⲛⲓ ⲥⲱⲧⲉⲙ ⲉ̀ⲣⲟⲓ ⲅⲉ ⲅⲁⲣ ⲁ̀ⲛⲟⲕ ϯⲛⲁⲧⲁⲙⲱⲧⲉⲛ ⲅⲉ ⲅⲁⲣ ⲁϥⲓ̀ ⲛ̀ϫⲉ Ⲫϯ ⲙ̀ⲙⲏⲓ ⲁϥϭⲓⲥⲁⲣⲝ ϧⲉⲛ ϯⲠⲁⲣⲑⲉⲛⲟⲥ.\n\n+ Ⲇⲓⲕⲉⲱⲥ ⲁⲥⲙⲓⲥⲓ ⲙ̀ⲙⲟϥ ⲇⲓⲕⲉⲱⲥ ⲉⲥⲟⲓ ⲛ̀ⲁ̀ⲧⲁϭⲛⲓ ⲇⲓⲕⲉⲱⲥ ⲁⲥⲙⲓⲥⲓ ⲙ̀ⲡⲓⲖⲟⲅⲟⲥ ϧⲉⲛ ⲧⲉⲥⲡⲁⲣⲑⲉⲛⲓⲁ ⲙ̀ⲙⲏⲓ.\n\nⲈ̀ⲣⲉ ⲛⲓⲙ ϧⲉⲛ ⲛⲓⲥⲟⲫⲟⲥ ⲛⲓⲣⲉⲙⲛ̀ⲕⲁϯ ⲉⲧϩⲓϫⲉⲛ ⲡⲓⲕⲁϩⲓ ⲛⲁϣ̀ⲉⲣ ⲡⲉϥⲛⲟⲩⲥ ⲛ̀ⲣⲉⲙⲙ̀ⲫⲉ ⲉϥϫⲱ ⲙ̀ⲡ̀ⲧⲁⲓⲟ ⲛ̀ϯⲠⲁⲣⲑⲉⲛⲟⲥ.\n\nϢⲁϣϥ ⲛ̀ⲧⲁⲅⲙⲁ ⲛ̀ⲁ̀ⲅⲅⲉⲗⲟⲥ ϣⲁϣϥ ⲛ̀ⲛⲓϣϯ ⲛ̀ⲥ̀ⲧⲣⲁⲧⲓⲁ ϣⲁϣϥ ⲛ̀ⲧⲁⲅⲙⲁ ϧⲉⲛ Ⲥⲓⲱⲛ ⲥⲉⲉ̀ⲣϩⲩⲙⲛⲟⲥ ⲛ̀ϯⲠⲁⲣⲑⲉⲛⲟⲥ.\n\n+ Ⲏⲥ ϯⲕ̀ⲧⲏⲥⲓⲥ ⲧⲏⲣⲥ ⲉⲩⲥⲟⲡ ⲏⲥ ϯⲱ̀ⲟⲩ ⲛ̀ϯⲠⲁⲣⲑⲉⲛⲟⲥ ⲓⲥϫⲉⲛ ⲛⲓⲙⲁⲛϣⲁⲓ ⲛ̀ⲧⲉ ⲫ̀ⲣⲏ ⲛⲉⲙ ⲉ̀ⲃⲟⲗ ϣⲁ ⲛⲉϥⲙⲁⲛϩⲱⲧⲡ.\n\n+ Ⲑⲉⲟⲥ ⲅⲁⲣ ⲡⲉ Ⲫϯ ⲙ̀ⲙⲏⲓ Ⲑⲉⲟⲥ ⲡⲓⲖⲟⲅⲟⲥ ⲛ̀ⲧⲉ Ⲫ̀ⲓⲱⲧ Ⲑⲉⲟⲥ ⲡ̀Ϣⲏⲣⲓ ⲛ̀ϯⲠⲁⲣⲑⲉⲛⲟⲥ ⲧ̀ϣⲉⲣⲓ ⲛ̀Ⲓⲱⲁⲕⲓⲙ ⲛⲉⲙ Ⲁⲛⲛⲁ.\n\nⲒ̅ⲏ̅ⲥ̅ Ⲡⲭ̅ⲥ̅ ⲫⲁ ⲡⲓⲣⲁⲛ ⲛ̀ⲟ̀ⲩϫⲁⲓ Ⲓ̅ⲏ̅ⲥ̅ Ⲡⲭ̅ⲥ̅ ⲫⲁ ⲡⲓⲣⲁⲛ ⲉⲧϩⲟⲗϫ Ⲓ̅ⲏ̅ⲥ̅ Ⲡⲭ̅ⲥ̅ ⲫ̀ⲣⲉϥϯ ⲙ̀ⲡ̀ⲱⲛϧ ⲉ̀ⲧⲁϥϭⲓⲥⲁⲣⲝ ϧⲉⲛ ϯⲠⲁⲣⲑⲉⲛⲟⲥ.\n\nⲔⲁⲧⲁ ⲫ̀ⲣⲏϯ ⲉ̀ⲧⲁϥϫⲟⲥ ⲛ̀ϫⲉ Ⲏ̀ⲥⲁⲏ̀ⲁⲥ ⲡⲓⲡ̀ⲣⲟⲫⲏⲧⲏⲥ ϫⲉ ⲉⲥⲉ̀ⲉⲣⲃⲟⲕⲓ ⲛ̀ϫⲉ ϯⲠⲁⲣⲑⲉⲛⲟⲥ ⲟⲩⲟϩ ⲉⲥⲉ̀ⲙⲓⲥⲓ ⲛ̀Ⲉⲙⲙⲁⲛⲟⲩⲏⲗ.\n\n+ Ⲗⲁⲟⲥ ⲛⲓⲃⲉⲛ ⲛⲉⲙ ⲫⲩⲗⲏ ⲛⲓⲃⲉⲛ ⲗⲁⲟⲥ ⲛⲓⲃⲉⲛ ⲛ̀Ⲟⲣⲑⲟⲇⲟⲝⲟⲥ ⲗⲩⲙⲏⲛ ⲛⲓⲃⲉⲛ ⲛ̀ⲧⲉ ⲡⲓⲟ̀ⲩϫⲁⲓ ⲃⲉⲃⲓ ⲛⲱⲟⲩ ⲉ̀ⲃⲟⲗ ⲛ̀ϧⲏⲧⲥ.\n\n+ Ⲙⲱⲩ̀ⲥⲏⲥ ⲅⲁⲣ ⲡⲓⲛⲟⲙⲟⲑⲉⲧⲏⲥ Ⲙⲉⲗⲭⲓⲥⲉⲇⲉⲕ ⲛⲉⲙ Ⲁ̀ⲁⲣⲱⲛ Ⲙⲁⲣⲕⲟⲥ ⲡⲓⲁ̀ⲡⲟⲥⲧⲟⲗⲟⲥ ⲥⲉϣⲟⲩϣⲟⲩ ⲙ̀ⲙⲱⲟⲩ ⲉ̀ϫⲉⲛ ϯⲠⲁⲣⲑⲉⲛⲟⲥ.\n\nⲚⲓⲬⲉⲣⲟⲩⲃⲓⲙ ⲛⲁ ⲡⲓⲥⲟⲟ̀ⲩ ⲛ̀ⲧⲉⲛϩ ⲛⲓⲤⲉⲣⲁⲫⲓⲙ ⲉⲧⲟϣ ⲙ̀ⲃⲁⲗ ⲛⲓⲧⲁⲅⲙⲁ ⲧⲏⲣⲟⲩ ⲛ̀ⲁ̀ⲅⲅⲉⲗⲓⲕⲟⲛ ⲥⲉϯⲱ̀ⲟⲩ ⲛ̀ϯⲠⲁⲣⲑⲉⲛⲟⲥ.\n\nⲜⲩⲗⲟⲛ ⲛⲓⲃⲉⲛ ⲛ̀ⲧⲉ ⲡ̀ⲱⲛϧ ⲝⲟⲗⲥⲉⲗ ⲙ̀ⲡⲓⲡⲁⲣⲁⲇⲓⲥⲟⲥ ⲝⲟⲗⲥⲉⲗ ⲛ̀ⲛⲓⲡⲁⲣⲑⲉⲛⲟⲥ ⲧⲏⲣⲟⲩ ⲡⲉ Ⲙⲁⲣⲓⲁ ϯⲠⲁⲣⲑⲉⲛⲟⲥ.\n\n+ Ⲟⲩⲱ̀ⲟⲩ ⲙ̀Ⲫϯ Ⲫ̀ⲓⲱⲧ ⲁ̀ⲙⲏⲛ ⲟⲩⲱ̀ⲟⲩ ⲙ̀Ⲡⲉϥϣⲏⲣⲓ ⲙ̀ⲙⲉⲛⲣⲓⲧ ⲟⲩⲱ̀ⲟⲩ ⲙ̀ⲡⲓⲠ̀ⲛⲉⲩⲙⲁ ⲉ̅ⲑ̅ⲩ̅ ⲛ̀ⲧⲉⲛⲧⲁⲓⲟ ⲛ̀ϯⲠⲁⲣⲑⲉⲛⲟⲥ.\n\n+ Ⲡⲓⲑ̀ⲣⲟⲛⲟⲥ ⲛ̀ⲧⲉ ⲫⲏⲈ̀ⲧϭⲟⲥⲓ ⲡ̀ϩⲁⲣⲙⲁ ⲛ̀ⲛⲓⲭⲉⲣⲟⲩⲃⲓⲙⲩⲕⲟⲛ ⲡⲓⲥ̀ⲧⲉⲣⲉⲱ̀ⲙⲁ ⲉ̀ⲧⲉⲣⲟ̀ⲩⲱⲓⲛⲓ ⲡⲉ Ⲙⲁⲣⲓⲁ ϯⲠⲁⲣⲑⲉⲛⲟⲥ.\n\nⲢⲁϣⲓ ⲧⲁ⳪ ⲑ̀ⲙⲁⲩ ⲙ̀ⲡⲁ⳪ ⲣⲁϣⲓ ϯⲟⲩⲣⲱ ⲑ̀ⲙⲁⲩ ⲙ̀ⲡⲓⲞⲩⲣⲟ ⲣⲁϣⲓ ⲱ̀ ϯϣⲉⲗⲏⲧ ⲙ̀ⲙⲏⲓ ⲉ̀ⲧⲁⲥⲙⲓⲥⲓ ⲙ̀ⲡⲓⲠⲁⲧϣⲉⲗⲉⲧ.\n\nⲤⲟⲗⲟⲙⲱⲛ ⲡ̀ϣⲏⲣⲓ ⲛ̀Ⲇⲁⲩⲓⲇ Ⲥⲁⲙⲟⲩⲏ̀ⲗ ⲡⲓⲡ̀ⲣⲟⲫⲏⲧⲏⲥ Ⲥⲉⲩⲏ̀ⲣⲟⲥ ⲡⲓⲡⲁⲧⲣⲓⲁⲣⲭⲏⲥ ⲥⲉϯⲱⲟ̀ⲩ ⲛ̀ϯⲠⲁⲣⲑⲉⲛⲟⲥ.\n\n+ Ⲧⲉⲙⲉⲧⲛⲓϣϯ ⲱ̀ Ⲙⲁⲣⲓⲁ ⲧⲉⲥⲁⲡ̀ϣⲱⲓ ⲉ̀ϩⲟⲧⲉ ⲧ̀ⲫⲉ ⲧⲉⲣⲁⲙⲓⲥⲓ ⲛ̀ⲟⲩϢⲏⲣⲓ ⲉⲩⲉⲙⲟⲩϯ ⲉ̀ⲡⲉϥⲣⲁⲛ ϫⲉ Ⲉⲙⲙⲁⲛⲟⲩⲏⲗ.\n\n+ Ⲩⲙⲙⲟⲛ ⲫⲏⲉ̀ⲧⲉⲛⲑⲱⲛⲧ ⲉ̀ⲣⲟ ⲩⲙⲙⲟⲛ ϧⲉⲛ ⲧ̀ⲫⲉ ⲛⲉⲙ ϩⲓϫⲉⲛ ⲡⲓⲕⲁϩⲓ ⲩⲙⲙⲟⲛ ϣ̀ϫⲟⲙ ⲙ̀ⲙⲟⲓ ⲁ̀ⲛⲟⲕ ⲉⲑⲣⲓⲥⲁϫⲓ ⲉ̀ⲡⲉⲧⲁⲓⲟ.\n\nⲪⲏⲉ̀ⲧⲁϥⲑⲁⲙⲓⲟ ⲛ̀ⲧ̀ⲫⲉ ⲛⲉⲙ ⲡ̀ⲕⲁϩⲓ ⲫⲏⲉ̀ⲑⲛⲏⲟⲩ ⲉ̀ⲃⲟⲗ ϧⲉⲛ Ⲫ̀ⲓⲱⲧ ⲁϥⲓ̀ ⲁϥϣⲱⲡⲓ ϧⲉⲛ ⲧⲉⲛⲉϫⲓ ⲙ̀ⲯⲓⲧ ⲛ̀ⲁ̀ⲃⲟⲧ ⲛ̀ⲏ̀ⲡⲓ.\n\nⲬⲉⲣⲉ ϯⲙⲟⲩⲙⲓ ⲙ̀ⲙⲱⲟⲩ ⲛ̀ⲱⲛϧ ⲭⲉⲣⲉ ⲡⲓⲥ̀ⲧⲁⲙⲛⲟⲥ ⲛ̀ⲛⲟⲩⲃ ⲭⲉⲣⲉ ϯⲕⲩⲃⲱⲧⲟⲥ ⲛ̀ⲁ̀ⲧⲁϭⲛⲓ ϧⲉⲛ ϯⲥ̀ⲕⲩⲛⲏ ⲛ̀ⲧⲉ ϯⲙⲉⲧⲙⲉⲑⲣⲉ.\n\n+ Ⲯ̀ⲟⲗⲥⲉⲗ ⲛ̀ⲛⲓⲡⲁⲣⲑⲉⲛⲟⲥ ⲧⲏⲣⲟⲩ ⲯ̀ⲩⲭⲏ ⲛⲓⲃⲉⲛ ⲛ̀Ⲟⲣⲑⲟⲇⲟⲝⲟⲥ ⲯ̀ⲩⲭⲏ ⲛⲓⲃⲉⲛ ⲥⲉⲥ̀ⲙⲟⲩ ⲉ̀ⲣⲟ ⲱ̀ Ⲙⲁⲣⲓⲁ ϯⲠⲁⲣⲑⲉⲛⲟⲥ.\n\n+ Ⲱ̀ ϯϭⲣⲟⲙⲡⲓ ⲛ̀ⲟ̀ⲩⲱⲓⲛⲓ ⲱ̀ ⲡⲓϩ̀ⲙⲟⲧ ⲉⲧϫⲏⲕ ⲉ̀ⲃⲟⲗ ⲱ̀ ⲡⲓϣⲃⲱⲧ ⲛ̀ⲧⲉ Ⲁ̀ⲁⲣⲱⲛ ⲉ̀ⲧⲁϥⲫⲓⲣⲓ ⲉ̀ⲃⲟⲗ ⲟⲩⲟϩ ⲁϥϯⲕⲁⲣⲡⲟⲥ." },
+            { language: 'english', text: "Come all with happiness, come all with joy, come all with gladness, all you sons of man.\n\nAll wisemen and scholars, all elders and young, all men and women, all you sons of Adam.\n\n+ Come hear from me, for I proclaim to you, that the true God has come, and took flesh from the Virgin.\n\n+ Truly she gave birth to Him, truly without blemish, truly she gave birth to the Word, with her true virginity.\n\nWho of the wisemen, or scholars on earth, can obtain the heavenly thought, to speak of the honor of the Virgin.\n\nSeven ranks of angels, seven great hosts, seven ranks in Zion, chant to the Virgin.\n\n+ The whole creation together, glorifies the Virgin, from where the sun rises, until its setting.\n\n+ For God is the true God, God the Logos of the Father, God the Son of the Virgin, the daughter of Joachim and Anna.\n\nJesus Christ the name of salvation, Jesus Christ the sweet name, Jesus Christ the life-Giver, was incarnate of the Virgin.\n\nAs was spoken, through Isaiah the prophet, \"Behold the Virgin will conceive, and give birth to Emmanuel.\"\n\n+ All nations and all tribes, all nations the Orthodox people, every harbor of salvation, came forth from her.\n\n+ For Moses the law giver, Melchisedek and Aaron, Mark the Apostle, take pride in the Virgin.\n\nThe Cherubim with the six wings, the Seraphim full eyes, all the ranks of angels, glorify the Virgin.\n\nEvery tree of life, that paradise adorns, that all virgins adorn, is the Virgin Mary.\n\n+ Glory be to God the Father amen, glory be to His beloved Son, glory be to the Holy Spirit, we magnify the Virgin.\n\n+ The throne of the Highest, carried by the Cherubim, the light of the firmament, is the Virgin Mary.\n\nRejoice O my Lady the mother of my Lord, rejoice O queen the mother of the King, rejoice O true bride, who gave birth to the Bridegroom.\n\nSolomon the Son of David, Samuel the prophet, Sawerus the patriarch, glorify the Virgin.\n\n+ Your greatness O Mary, is higher than the heavens, you will bear a Son, and His name will be Emmanuel.\n\n+ Nobody can resemble you, in heaven nor on earth, I am not capable, of speaking of your honor.\n\nHe who created heaven and earth, who comes from the Father, came and dwelt in your womb, for nine full months.\n\nHail to the fountain of living water, hail to the golden vessel, hail to the unblemished ark, in the tabernacle of testimony.\n\n+ The adornment of all virgins, and all souls of the Orthodox, all souls bless them, O Virgin Mary.\n\n+ O shining dove, O perfect grace, O rod of Aaron, that blossomed and brought forth fruit." },
+          ],
+        },
+      ],
+    },
+    {
+      id: "nativity-fast-matins",
+      title: "Vespers and Matins",
+      hymns: [
+        {
+          id: "nativity-fast-matins-doxology-intro",
+          title: "Ⲭⲉⲣⲉ ⲛⲉ (Doxology Intro)",
+          versions: [
+            { language: 'coptic', audio: "alhan-advent-dox-intro.mp3", text: "Ⲭⲉⲣⲉ ⲛⲉ ⲧⲉⲛϯϩⲟ ⲉ̀ⲣⲟ ⲱ̀ ⲑⲏⲉⲑⲟⲩⲁⲃ ⲉⲑⲙⲉϩ ⲛ̀ⲱ̀ⲟⲩ ⲉⲧⲟⲓ ⲙ̀ⲡⲁⲣⲑⲉⲛⲟⲥ ⲛ̀ⲥⲏⲟⲩ ⲛⲓⲃⲉⲛ ϯⲙⲁⲥⲛⲟⲩϯ ⲑ̀ⲙⲁⲩ ⲙ̀Ⲡⲭ̅ⲥ̅.\n\nⲀⲛⲓⲟⲩⲓ ⲛ̀ⲧⲉⲛⲡ̀ⲣⲟⲥⲉⲩⲭⲏ ⲉ̀ⲡ̀ϣⲱⲓ ϩⲁ ⲡⲉϣⲏⲣⲓ ⲙ̀ⲙⲉⲛⲣⲓⲧ ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ.\n\nⲬⲉⲣⲉ ⲑⲏⲉ̀ⲧⲁⲥⲙⲓⲥⲓ ⲛⲁⲛ ⲙ̀ⲡⲓⲟⲩⲱⲓⲛⲓ ⲛ̀ⲧⲁⲫ̀ⲙⲏⲓ Ⲡⲭ̅ⲥ̅ Ⲡⲉⲛⲛⲟⲩϯ ϯⲡⲁⲣⲑⲉⲛⲟⲥ ⲉⲑⲟⲩⲁⲃ.\n\nⲘⲁϯϩⲟ ⲙ̀Ⲡ̀ϭⲟⲓⲥ ⲉ̀ϩ̀ⲣⲏⲓ ⲉ̀ϫⲱⲛ ⲛ̀ⲧⲉϥⲉⲣⲟⲩⲛⲁⲓ ⲛⲉⲙ ⲛⲉⲛⲯⲩⲭⲏ ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ.\n\nϮⲡⲁⲣⲑⲉⲛⲟⲥ Ⲙⲁⲣⲓⲁⲙ ϯⲑⲉⲟ̀ⲧⲟⲕⲟⲥ ⲉⲑⲟⲩⲁⲃ ϯⲡ̀ⲣⲟⲥⲧⲁⲧⲏⲥ ⲉ̀ⲧⲉⲛϩⲟⲧ ⲛ̀ⲧⲉ ⲡ̀ⲅⲉⲛⲟⲥ ⲛ̀ⲧⲉ ϯⲙⲉⲧⲣⲱⲙⲓ.\n\nⲀⲣⲓⲡ̀ⲣⲉⲥⲃⲉⲩⲓⲛ ⲉ̀ϩ̀ⲣⲏⲓ ⲉ̀ϫⲱⲛ ⲛⲁϩⲣⲉⲛ Ⲡⲭ̅ⲥ̅ ⲫⲏⲉ̀ⲧⲁⲣⲉϫ̀ⲫⲟϥ ϩⲟⲡⲱⲥ ⲛ̀ⲧⲉϥⲉⲣϩ̀ⲙⲟⲧ ⲛⲁⲛ ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.\n\nⲬⲉⲣⲉ ⲛⲉ ⲱ̀ ϯⲠⲁⲣⲑⲉⲛⲟⲥ ϯⲟⲩⲣⲱ ⲙ̀ⲙⲏⲓ ⲛ̀ⲁ̀ⲗⲏⲑⲓⲛⲏ ⲭⲉⲣⲉ ⲡ̀ϣⲟⲩϣⲟⲩ ⲛ̀ⲧⲉ ⲡⲉⲛⲅⲉⲛⲟⲥ ⲁⲣⲉϫ̀ⲫⲟ ⲛⲁⲛ ⲛ̀Ⲉⲙⲙⲁⲛⲟⲩⲏⲗ.\n\nⲦⲉⲛϯϩⲟ ⲁ̀ⲣⲉⲡⲉⲛⲙⲉⲩⲓ̀ ⲱ̀ ϯⲡ̀ⲣⲟⲥⲧⲁⲧⲏⲥ ⲉ̀ⲧⲉⲛϩⲟⲧ ⲛⲁϩⲣⲉⲛ ⲡⲉⲛ⳪ Ⲓ̅ⲏ̅ⲥ̅ Ⲡⲭ̅ⲥ̅ ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ." },
+            { language: 'english', text: "Hail to you we ask you, O saint full of glory, the ever-Virgin, Mother of God Mother of Christ.\n\n+ Lift our prayers, to your beloved Son, that He may forgive us our sins.\n\nHail to her who gave birth, to the true Light, Christ our God, the saintly Virgin.\n\n+ Ask the Lord on our behalf, to have mercy upon our souls, and that He may forgive us our sins.\n\nO Virgin Mary, the holy Mother of God, the trusted advocate, of the human race.\n\n+ Intercede on our behalf, before Christ to whom you gave birth, that He may grant us, the forgiveness of our sins.\n\nHail to you O Virgin, the very and true queen, hail to the pride of our race, who gave birth to Emmanuel.\n\n+ We ask you to remember us, O our trusted advocate, before our Lord Jesus Christ, that He may forgive us our sins." },
+          ],
+        },
+        {
+          id: "nativity-fast-matins-first-doxology",
+          title: "Ⲕⲉ Ⲅⲁⲣ (First Doxology)",
+          versions: [
+            { language: 'coptic', audio: "alhan-advent-keghar.mp3", text: "Ⲕⲉ ⲅⲁⲣ ⲁⲓϣⲁⲛⲥⲁϫⲓ ⲉⲑⲃⲏϯ ⲱ̀ ⲡⲓϩⲁⲣⲙⲁ ⲛ̀ⲭⲉⲣⲟⲩⲃⲓⲙⲓⲕⲟⲛ ⲡⲁⲗⲁⲥ ⲛⲁϧⲓⲥⲓ ⲁⲛ ⲉ̀ⲛⲉϩ ⲧⲉⲛⲉⲣⲙⲁⲕⲁⲣⲓⲍⲓⲛ ⲙ̀ⲙⲟ.\n\n+ Ϫⲉ ⲟⲛⲧⲱⲥ ⲅⲁⲣ ϯⲛⲁϣⲉⲛⲏⲓ ϣⲁ ⲛⲓⲁ̀ⲩⲗⲉⲏⲟⲩ ⲛ̀ⲧⲉ ⲡ̀ⲏⲓ ⲛ̀Ⲇⲁⲩⲓⲇ ⲛ̀ⲧⲁϭ̀ⲓ ⲛ̀ⲟⲩⲥ̀ⲙⲏ ⲉ̀ⲃⲟⲗϩⲓⲧⲟⲧϥ ⲉⲑⲣⲓⲥⲁϫⲓ ⲙ̀ⲡⲉⲧⲁⲓⲟ.\n\nϪⲉ ⲁ̀ Ⲫϯ ⲟ̀ϩⲓ ⲉ̀ⲣⲁⲧϥ ϧⲉⲛ ⲛⲓⲑⲱϣ ⲛ̀ⲧⲉ ϯⲒⲟⲩⲇⲉⲁ̀ ⲁϥϯ ⲛ̀ⲧⲉϥⲥ̀ⲙⲏ ϧⲉⲛ ⲟⲩⲑⲉⲗⲏⲗ ⲁ̀ⲧ̀ⲫⲩⲗⲏ ⲛ̀Ⲓⲟⲩⲇⲁ ϣⲟⲡϥ ⲉ̀ⲣⲟⲥ.\n\n+ Ⲧ̀ⲫⲩⲗⲏ ⲛ̀Ⲓⲟⲩⲇⲁ ⲧⲉ ϯⲠⲁⲣⲑⲉⲛⲟⲥ ⲑⲏⲉ̀ⲧⲁⲥⲙⲓⲥⲓ ⲙ̀ⲡⲉⲛⲤⲱⲧⲏⲣ ⲟⲩⲟϩ ⲟⲛ ⲙⲉⲛⲉⲛⲥⲁ ⲑ̀ⲣⲉⲥⲙⲁⲥϥ ⲁⲥⲟ̀ϩⲓ ⲉⲥⲟⲓ ⲙ̀ⲡⲁⲣⲑⲉⲛⲟⲥ.\n\nⲈ̀ⲃⲟⲗ ⲅⲁⲣ ϩⲓⲧⲉⲛ ϯⲫⲱⲛⲏ ⲛ̀ⲧⲉ Ⲅⲁⲃⲣⲓⲏⲗ ⲡⲓⲁ̀ⲅⲅⲉⲗⲟⲥ ⲧⲉⲛϯ ⲛⲉ ⲙ̀ⲡⲓⲭⲉⲣⲉⲧⲓⲥⲙⲟⲥ ⲱ̀ ϯⲑⲉⲟ̀ⲧⲟⲕⲟⲥ Ⲙⲁⲣⲓⲁ.\n\n+ Ⲭⲉⲣⲉ ⲛⲉ ⲉ̀ⲃⲟⲗ ϩⲓⲧⲉⲛ Ⲫϯ ⲭⲉⲣⲉ ⲛⲉ ⲉ̀ⲃⲟⲗ ϩⲓⲧⲉⲛ Ⲅⲁⲃⲣⲓⲏⲗ ⲭⲉⲣⲉ ⲛⲉ ⲉ̀ⲃⲟⲗ ϩⲓⲧⲟⲧⲉⲛ ϫⲉ ⲭⲉⲣⲉ ⲛⲉ ⲧⲉⲛϭⲓⲥⲓ ⲙ̀ⲙⲟ.\n\nⲠⲓⲁ̀ⲅⲅⲉⲗⲟⲥ ⲉ̅ⲑ̅ⲩ̅ Ⲅⲁⲃⲣⲓⲏⲗ ⲁϥϩⲓϣⲉⲛⲛⲟⲩϥⲓ ⲛ̀ϯⲠⲁⲣⲑⲉⲛⲟⲥ ⲙⲉⲛⲉⲛⲥⲁ ⲡⲓⲁ̀ⲥⲡⲁⲥⲙⲟⲥ ⲁϥⲧⲁϫⲣⲟ ⲙ̀ⲙⲟⲥ ϧⲉⲛ ⲡⲉϥⲥⲁϫⲓ.\n\n+ Ϫⲉ ⲙ̀ⲡⲉⲣⲉⲣϩⲟϯ Ⲙⲁⲣⲓⲁⲙ ⲁ̀ⲣⲉϫⲓⲙⲓ ⲅⲁⲣ ⲛ̀ⲟⲩϩ̀ⲙⲟⲧ ϧⲁⲧⲉⲛ Ⲫϯ ϩⲏⲡⲡⲉ ⲅⲁⲣ ⲧⲉⲣⲁⲉ̀ⲣⲃⲟⲕⲓ ⲟⲩⲟϩ ⲛ̀ⲧⲉⲙⲓⲥⲓ ⲛ̀ⲟⲩϢⲏⲣⲓ.\n\nⲈϥⲉ̀ϯ ⲛⲁϥ ⲛ̀ϫⲉ Ⲡ⳪ Ⲫϯ ⲙ̀ⲡⲓⲑ̀ⲣⲟⲛⲟⲥ ⲛ̀ⲧⲉ Ⲇⲁⲩⲓⲇ ⲡⲉϥⲓⲱⲧ ϥ̀ⲛⲁⲉ̀ⲣⲟⲩⲣⲟ ⲉ̀ϫⲉⲛ ⲡ̀ⲏⲓ ⲛ̀Ⲓⲁⲕⲱⲃ ϣⲁ ⲉ̀ⲛⲉϩ ⲛ̀ⲧⲉ ⲡⲓⲉ̀ⲛⲉϩ.\n\n+ Ⲉⲑⲃⲉ ⲫⲁⲓ ⲧⲉⲛϯⲱ̀ⲟⲩ ⲛⲉ ϩⲱⲥ Ⲑⲉⲟ̀ⲧⲟⲕⲟⲥ ⲛ̀ⲥⲏⲟⲩ ⲛⲓⲃⲉⲛ ⲙⲁϯϩⲟ ⲉ̀Ⲡ⳪ ⲉ̀ϩ̀ⲣⲏⲓ ⲉ̀ϫⲱⲛ ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ.\n\nⲬⲉⲣⲉ ⲛⲉ ⲱ̀ ϯⲠⲁⲣⲑⲉⲛⲟⲥ ϯⲟⲩⲣⲱ ⲙ̀ⲙⲏⲓ ⲛ̀ⲁ̀ⲗⲏⲑⲓⲛⲏ ⲭⲉⲣⲉ ⲡ̀ϣⲟⲩϣⲟⲩ ⲛ̀ⲧⲉ ⲡⲉⲛⲅⲉⲛⲟⲥ ⲁⲣⲉϫ̀ⲫⲟ ⲛⲁⲛ ⲛ̀Ⲉⲙⲙⲁⲛⲟⲩⲏⲗ.\n\n+ Ⲧⲉⲛϯϩⲟ ⲁ̀ⲣⲉⲡⲉⲛⲙⲉⲩⲓ̀ ⲱ̀ ϯⲡ̀ⲣⲟⲥⲧⲁⲧⲏⲥ ⲉ̀ⲧⲉⲛϩⲟⲧ ⲛⲁϩⲣⲉⲛ ⲡⲉⲛ⳪ Ⲓ̅ⲏ̅ⲥ̅ Ⲡⲭ̅ⲥ̅ ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ." },
+            { language: 'english', text: "For if I speak about you, O cherubimic throne, my tongue will never get tired, from blessing you.\n\n+ For indeed I will go to, the house of David, to acquire a voice by which, I can speak of your honor.\n\nFor God has stood, at the borders of Judea, and joyfully gave His voice, which the tribe of Judah accepted.\n\n+ The Virgin is the tribe of Judah, who gave birth to our Savior, and after His birth, she remained a virgin.\n\nAlong with the voice, of Gabriel the Angel, we send you greetings, O Mary the Mother of God.\n\n+ Hail to you from God, hail to you from Gabriel, hail to you from us, we magnify you saying \"Hail to you.\"\n\nGabriel the holy Angel, announced to the Virgin, and after the greeting, he strengthened her saying.\n\n+ \"Do not be afraid Mary, for you have found favor with God, behold you will conceive, and bring forth a Son.\"\n\n\"And the Lord God will give Him, the throne of His father David, and He will reign over the house, of Jacob forever and ever.\"\n\n+ Wherefore we glorify you, as the ever-Theotokos, ask the Lord on our behalf, that He may forgive us our sins.\n\nHail to you O Virgin, the very and true queen, hail to the pride of our race, who gave birth to Emmanuel.\n\n+ We ask you to remember us, O our trusted advocate, before our Lord Jesus Christ, that He may forgive us our sins." },
+          ],
+        },
+      ],
+    },
+    {
+      id: "nativity-fast-midnight",
+      title: "Midnight Praises",
+      hymns: [
+        {
+          id: "nativity-fast-midnight-second-hos-psali",
+          title: "Ⲁⲡⲁϩⲏⲧ (Second Hos Psali)",
+          versions: [
+            { language: 'coptic', audio: "alhan-advent-apaheet.mp3", text: "Ⲁⲡⲁϩⲏⲧ ⲛⲉⲙ ⲡⲁⲗⲁⲥ ϩⲱⲥ ⲉ̀ϯⲧⲣⲓⲁⲥ ⲁ̀ⲅⲓⲁ ⲧ̀ⲣⲓⲁⲥ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ ⲏ̀ⲙⲁⲥ\n\nⲂⲟⲛ Ⲛⲓⲃⲉⲛ ⲥⲉϩⲱⲥ ⲛⲁⲕ ⲟⲩⲟϩ ⲥⲉⲉⲡⲃⲱⲕ ⲛⲁⲕ ⲁ̀ⲅⲓⲁ ⲧ̀ⲣⲓⲁⲥ ...\n\nⲄⲉ ⲅⲁⲣ ⲛ̀ⲑⲟⲕ Ⲡⲉⲛⲟⲩϯ Ⲡⲉⲛⲥⲱⲧⲏⲣ ⲟⲩⲟϩ ⲡⲓⲛⲓϣϯ ⲁ̀ⲅⲓⲁ ⲧ̀ⲣⲓⲁⲥ ...\n\nⲆⲉⲥⲡⲟⲩⲇⲉ ⲕⲩⲣⲓⲟⲛ ⲁϥⲓ̀ ⲁϥⲥⲱϯ ⲙ̀ⲙⲟⲛ ⲁ̀ⲅⲓⲁ ⲧ̀ⲣⲓⲁⲥ ...\n\nⲈⲑⲃⲉ ⲛⲉⲥⲕϩⲁⲡ ⲙ̀ⲙⲏⲓ ⲙⲁⲧⲥⲁⲃⲟⲓ ⲉ̀ⲛⲉⲕⲙⲉⲑⲙⲏⲓ ̀ⲁⲅⲓⲁ ⲧ̀ⲣⲓⲁⲥ ...\n\nⲌⲉⲟϣ ⲡⲉ ⲡⲉⲕⲛⲁⲓ ϫⲉⲙ ⲡⲉⲛϣⲓⲛⲓ ϧⲉⲛ ⲡⲉⲕⲟⲩϫⲁⲓ ⲁ̀ⲅⲓⲁ ⲧ̀ⲣⲓⲁⲥ ...\n\nⲎⲥ ϩⲏⲡⲡⲉ ⲁ̀ⲛⲟⲕ ⲉⲓⲉ̀ⲫⲱⲧ ϩⲁⲣⲟⲕ ⲁ̀ⲅⲓⲁ ⲧ̀ⲣⲓⲁⲥ ...\n\nⲐⲱⲕ ⲧⲉ ϯϫⲟⲙ ⲛⲉⲙ ⲡⲓⲱ̀ⲟⲩ ⲱ ⲡⲓⲟⲩⲣⲟ ⲛ̀ⲧⲉ ⲡ̀ⲱ̀ⲟⲩ ⲁ̀ⲅⲓⲁ ⲧ̀ⲣⲓⲁⲥ ...\n\nⲒ̅ⲏ̅ⲥ̅ ⲙⲉ ⲧⲉⲛϩⲉⲗⲡⲓⲥ ϧⲉⲛ ⲛⲉⲛⲑ̀ⲗⲩⲫⲓⲥ ⲁ̀ⲅⲓⲁ ⲧ̀ⲣⲓⲁⲥ ...\n\nⲔ̀ⲥ̀ⲙⲁⲣⲟⲱⲧⲨⲥ̅ Ⲑⲥ̅ ⲛⲁⲍⲙⲉⲛ ϧⲉⲛ ⲛⲓⲣⲁⲥⲙⲟⲥ ⲁ̀ⲅⲓⲁ ⲧ̀ⲣⲓⲁⲥ ...\n\nⲖⲁⲟⲥ ⲛⲓⲃⲉⲛ ⲥⲉϩⲱⲥ ⲛⲁⲕ ⲱ̀ ⲡ̀ⲟⲩⲣⲟ Ⲡⲭ̅ⲥ̅ ⲁ̀ⲅⲓⲁ ⲧ̀ⲣⲓⲁⲥ ...\n\nⲘⲟⲩ ⲛⲁⲛ ⲛ̀ⲧⲉⲕϩⲓⲣⲏⲛⲏ ⲙⲁⲧⲁⲗϭⲟ ⲛ̀ⲛⲉⲛϣⲱⲛⲓ ⲁ̀ⲅⲓⲁ ⲧ̀ⲣⲓⲁⲥ ...\n\nⲚ̀ⲑⲟⲕ ⲟⲩⲣⲉϥϣⲉⲛϩⲏⲧ ⲟⲩⲟϩ ⲛ̀ⲛⲁⲏⲧ ⲁ̀ⲅⲓⲁ ⲧ̀ⲣⲓⲁⲥ ...\n\nⲜⲙⲁⲣⲱⲟⲩⲧ ⲛ̀ⲑⲟⲕ ⲧⲉⲛϩⲱⲥ ⲛⲁⲕ ⲥ̀ⲙⲟⲩ ⲉ̀ⲣⲟⲕ ⲁ̀ⲅⲓⲁ ⲧ̀ⲣⲓⲁⲥ ...\n\nⲞⲩⲛⲓϣϯ ⲛ̀ⲧⲁⲫ̀ⲙⲏⲓ ⲡⲓⲣⲉϥϯϩⲁⲡ ⲙ̀ⲙⲏⲓ ⲁ̀ⲅⲓⲁ ⲧ̀ⲣⲓⲁⲥ ...\n\nⲠⲉⲕⲡⲁⲛ ⲉⲧⲥ̀ⲙⲁⲣⲱⲟⲩⲧ ⲱ̀ ⲡⲓⲗⲟⲅⲟⲥ ⲛ̀ⲧⲁⲫ̀ⲙⲏⲓ ⲁ̀ⲅⲓⲁ ⲧ̀ⲣⲓⲁⲥ ...\n\nⲢⲱⲓⲥ ⲉ̀ⲡⲟⲛ ⲱ̀ Ⲡⲭ̅ⲥ̅  ϧⲉⲛ ⲧⲉⲕⲙⲉⲧⲁ̀ⲅⲁⲑⲟⲥ ⲁ̀ⲅⲓⲁ ⲧ̀ⲣⲓⲁⲥ ...\n\nⲤⲱⲧⲉⲙ ⲉ̀ⲛⲓⲡⲉϥⲉⲣⲛⲟⲃⲓ ϧⲉⲛ ⲛⲟⲩⲁ̀ⲛⲁⲅⲕⲏ ⲁ̀ⲅⲓⲁ ⲧ̀ⲣⲓⲁⲥ ...\n\nⲦⲁⲯⲩⲭⲏ ⲛⲉⲙ ⲡⲁⲛⲟⲩⲥ ⲱ̀ⲗⲟⲩ ⲉⲟⲩⲣⲁⲛⲟⲥ ⲁ̀ⲅⲓⲁ ⲧ̀ⲣⲓⲁⲥ ...\n\nⲨⲥ̅ Ⲑⲥ̅ Ⲡⲉⲛⲛⲟⲩϯ ⲙⲟⲓ ⲛⲁⲛ ⲛ̀ⲟⲩⲥⲱϯ ⲁ̀ⲅⲓⲁ ⲧ̀ⲣⲓⲁⲥ ...\n\nⲪϯ ⲡⲓⲛⲁⲏⲧ ⲡⲓⲣⲉϥⲱⲟⲩⲛ̀ϩⲏⲧ ⲁ̀ⲅⲓⲁ ⲧ̀ⲣⲓⲁⲥ ...\n\nⲬ̀ⲟⲩⲁⲃ ⲭ̀ⲟⲩⲁⲃ ⲭ̀ⲟⲩⲁⲃ ⲡ̀ϣⲏⲣⲓ ⲙ̀Ⲫⲏⲉ̅ⲑ̅ⲩ̅̅ ⲁ̀ⲅⲓⲁ ⲧ̀ⲣⲓⲁⲥ ...\n\nⲮⲩⲭⲏ ⲛ̀ⲛⲉⲛⲓⲟϯ ⲙⲁⲙ̀ⲧⲟⲛ ⲛⲱⲟⲩ ⲱ̀ ⲡⲓⲣⲉϥⲥⲱϯ ⲁ̀ⲅⲓⲁ ⲧ̀ⲣⲓⲁⲥ ...\n\nⲰ ⲡⲉⲛⲛⲏⲃ ⲣ̀ⲓⲡⲉⲛⲙⲉⲩⲓ̀ ϧⲉⲛ ⲧⲉⲕⲙⲉⲧⲟⲩⲣⲟ ⲛ̀ⲛⲁ ⲛⲓⲫⲏⲟⲩⲓ̀ ⲁ̀ⲅⲓⲁ ⲧ̀ⲣⲓⲁⲥ ..." },
+            { language: 'english', text: "My heart and my tongue: Praise the trinity: O holy trinity have mercy on us.\n\nEvery one praises you: and worships you: O holy ...\n\nFor you are our God: and our great savior: O holy...\n\nThe master Lord: he came and saved us: O holy...\n\nFor the sake of your true judgements:teach me your justice: O holy...\n\nMany are your mercies: grant us your salvation: O holy...\n\nI am here before you: I took refuge in you: O holy...\n\nYours is the power and glory: O King of glory: O holy...\n\nJesus is our hope: in our tribulations: O holy...\n\nYou are blessed o son of God: Deliver us from temptation: O holy...\n\nAll nations praise you: O Christ the king: O holy...\n\nGrant us your peace: heal our sicness: O holy...\n\nYou are the compassionat: and your are the merciful: O holy...\n\nYou are blessed: we praise and bless you: O holy...\n\nTruly great: is the just judge: O holy...\n\nYour name is blessed: O true logos: O holy...\n\nGaurd us o Christ: with your goodness: O holy...\n\nHearken unto the sinners: in their tribulations: O holy...\n\nMy soul and my mind: lift them up to heaven: O holy...\n\nO Son of our God: grant us your salvation: O holy...\n\nGod the merciful: the long suffering: O holy...\n\nHoly,Holy,holy: o Son of the holy: O holy...\n\nThe souls of our fathers: give rest unto them: O holy...\n\nO our master remember us: In your heavenly kingdom: O holy..." },
+          ],
+        },
+        {
+          id: "nativity-fast-midnight-third-hos-psali",
+          title: "Ϯϣⲉⲡϩ̀ⲙⲟⲧ (Third Hos Psali)",
+          versions: [
+            { language: 'coptic', audio: "alhan-advent-tshepehmot.mp3", text: "Ϯϣⲉⲡϩ̀ⲙⲟⲧ ⲛ̀ⲧⲟⲧⲕ: Ⲫⲧ ⲙ̀Ⲡⲓⲥ̀ⲣⲁⲏⲗ: ϫⲉ ⲁⲕⲓⲣⲓ ⲛⲉⲙⲁⲛ: ⲕⲁⲧⲁ ⲡⲉⲕⲛⲓϣϯ ⲛ̀ⲛⲁⲓ\n\nϮϣⲉⲡϩ̀ⲙⲟⲧ ⲛ̀ⲧⲟⲧⲕ: Ⲫⲧ ⲙ̀Ⲡⲓⲥ̀ⲣⲁⲏⲗ: ϫⲉ ⲁⲕⲟⲩⲱⲣⲡ ⲙ̀ⲡⲉⲕϣϩⲣⲓ: ϣⲁ ⲛ̀ⲧⲉⲕⲥⲱϯ ⲙ̀ⲙⲟⲛ\n\nϮϣⲉⲡϩ̀ⲙⲟⲧ ⲛ̀ⲧⲟⲧⲕ: Ⲫⲧ ⲙ̀Ⲡⲓⲥ̀ⲣⲁⲏⲗ: ϫⲉ ⲁⲕϭⲓⲥⲁⲣⲝ ⲉ̀ⲃⲟⲗ: ϧⲉⲛ Ⲑⲏⲉⲑⲟⲩⲁⲃ Ⲙⲁⲣⲓⲁ\n\nϮϣⲉⲡϩ̀ⲙⲟⲧ ⲛ̀ⲧⲟⲧⲕ: Ⲫⲧ ⲙ̀Ⲡⲓⲥ̀ⲣⲁⲏⲗ: ϫⲉ ⲁⲩⲙⲁⲥⲕ ϧⲉⲛ Ⲃⲏⲑⲗⲉⲉⲙ: ⲕⲁⲧⲁ ϯⲡ̀ⲣⲟⲫⲓⲧⲓⲁ\n\nϮϣⲉⲡϩ̀ⲙⲟⲧ ⲛ̀ⲧⲟⲧⲕ: Ⲫⲧ ⲙ̀Ⲡⲓⲥ̀ⲣⲁⲏⲗ: ϫⲉ ⲁϥⲛⲁⲩ ⲉⲡⲉⲕⲱⲟⲩ: ⲛ̀ϫⲉ ⲛⲓⲙⲁⲛⲉⲥⲱⲟⲩ\n\nϮϣⲉⲡϩ̀ⲙⲟⲧ ⲛ̀ⲧⲟⲧⲕ: Ⲫⲧ ⲙ̀Ⲡⲓⲥ̀ⲣⲁⲏⲗ: ϫⲉ ⲁⲕϣⲁⲓ ⲛⲁⲛ: ϧⲉⲛ ⲧⲉⲕⲙⲉⲧⲥⲁⲓⲉ̀\n\nϮϣⲉⲡϩ̀ⲙⲟⲧ ⲛ̀ⲧⲟⲧⲕ: Ⲫⲧ ⲙ̀Ⲡⲓⲥ̀ⲣⲁⲏⲗ: ϫⲉ ⲁⲕⲓ̀ⲣⲓ ⲛ̀ϩⲁⲛⲙⲓⲛⲓ: ⲛⲉⲙ ϩⲁⲛ ϣ̀ⲫⲓⲣⲓ ⲉⲩⲟϣ\n\nϮϣⲉⲡϩ̀ⲙⲟⲧ ⲛ̀ⲧⲟⲧⲕ: Ⲫⲧ ⲙ̀Ⲡⲓⲥ̀ⲣⲁⲏⲗ: ϫⲉ ⲁⲫⲉⲣ ⲟⲩⲥⲟϭⲛⲓ ⲉⲣⲟⲕ: ⲛ̀ⲅⲉ ⲛⲓⲟⲩⲇⲁⲓ\n\nϮϣⲉⲡϩ̀ⲙⲟⲧ ⲛ̀ⲧⲟⲧⲕ: Ⲫⲧ ⲙ̀Ⲡⲓⲥ̀ⲣⲁⲏⲗ: ϫⲉ ⲁⲩⲁϣⲕ ⲉⲡⲓⲥ̀ⲧⲁⲩⲣⲟⲥ: ϧⲉⲛ ϯⲅⲟⲗⲅⲟⲑⲁ\n\nϮϣⲉⲡϩ̀ⲙⲟⲧ ⲛ̀ⲧⲟⲧⲕ: Ⲫⲧ ⲙ̀Ⲡⲓⲥ̀ⲣⲁⲏⲗ: ϫⲉ ⲁⲩⲭⲁⲕ ϧⲉⲛ ⲡⲓⲙ̀ϩⲁⲩ: ⲙⲫ̀ⲣⲏⲧ ⲛ̀ⲛⲓⲣⲉϥⲙⲱⲟⲩⲧ\n\nϮϣⲉⲡϩ̀ⲙⲟⲧ ⲛ̀ⲧⲟⲧⲕ: Ⲫⲧ ⲙ̀Ⲡⲓⲥ̀ⲣⲁⲏⲗ: ϫⲉ ⲙⲉⲛⲉⲛⲥⲁ ϣⲟⲙⲧ ⲛ̀ⲉ̀ϩⲟⲟⲩ: ⲁⲕⲧⲟⲛⲕ ⲉ̀ⲃⲟⲗϧⲉⲛ ⲛⲏⲉⲑⲙⲱⲟⲩⲧ\n\nϮϣⲉⲡϩ̀ⲙⲟⲧ ⲛ̀ⲧⲟⲧⲕ: Ⲫⲧ ⲙ̀Ⲡⲓⲥ̀ⲣⲁⲏⲗ: ϫⲉ ⲁⲕϣⲉⲛⲁⲕ ⲉⲡⲉⲥⲏⲧ ⲉ̀ⲁ̀ⲙⲉⲛϯ: ⲉ̀ϧⲟⲩⲛ ⲉ̀ϯⲡⲣⲟⲛⲓⲁ\n\nϮϣⲉⲡϩ̀ⲙⲟⲧ ⲛ̀ⲧⲟⲧⲕ: Ⲫⲧ ⲙ̀Ⲡⲓⲥ̀ⲣⲁⲏⲗ: ϫⲉ ⲁⲕⲛⲟϩⲉⲙ ⲛ̀Ⲁⲇⲁⲙ: ⲛⲉⲙ ⲡⲉϥⲅⲉⲛⲟⲥ ⲧⲏⲣϥ\n\nϮϣⲉⲡϩ̀ⲙⲟⲧ ⲛ̀ⲧⲟⲧⲕ: Ⲫⲧ ⲙ̀Ⲡⲓⲥ̀ⲣⲁⲏⲗ: ϫⲉ ⲁⲕϩⲟⲛϩⲉⲛ ⲉⲧⲟⲧⲟⲩ: ⲛ̀ⲛⲉⲕⲁ̀ⲡⲟⲥⲧⲟⲗⲟⲥ\n\nϮϣⲉⲡϩ̀ⲙⲟⲧ ⲛ̀ⲧⲟⲧⲕ: Ⲫⲧ ⲙ̀Ⲡⲓⲥ̀ⲣⲁⲏⲗ: ϫⲉ ⲁⲕϣⲉⲛⲁⲕ ⲉ̀ϩ̀ⲣⲏⲓ: ⲉ̀ⲡ̀ϣⲱⲓ ⲉ̀ⲛⲓⲫⲏⲟⲩⲓ\n\nϮϣⲉⲡϩ̀ⲙⲟⲧ ⲛ̀ⲧⲟⲧⲕ: Ⲫⲧ ⲙ̀Ⲡⲓⲥ̀ⲣⲁⲏⲗ: ϫⲉ ⲁⲕϩⲉⲙⲥⲓ ⲥⲁⲟⲩⲓ̀ⲛⲁⲙ: ⲙ̀Ⲡⲓⲡⲁⲛⲧⲟⲕⲣⲁⲧⲱⲣ\n\nϮϣⲉⲡϩ̀ⲙⲟⲧ ⲛ̀ⲧⲟⲧⲕ: Ⲫⲧ ⲙ̀Ⲡⲓⲥ̀ⲣⲁⲏⲗ: ϫⲉ ⲉ̀ⲕⲉ̀Ⲓ̀ ⲉ̀ϯϩⲁⲡ: ⲉϯⲟⲓⲕⲟⲩⲙⲉⲛⲏ\n\nϮϣⲉⲡϩ̀ⲙⲟⲧ ⲛ̀ⲧⲟⲧⲕ: Ⲫⲧ ⲙ̀Ⲡⲓⲥ̀ⲣⲁⲏⲗ: Ⲙⲟⲓ ⲛⲏⲓ ⲛ̀ⲟⲩⲛⲁⲓ: Ⲛⲉⲙ ⲟⲩⲭⲱ ⲉⲃⲟⲗ\n\nϮϣⲉⲡϩ̀ⲙⲟⲧ ⲛ̀ⲧⲟⲧⲕ: Ⲫⲧ ⲙ̀Ⲡⲓⲥ̀ⲣⲁⲏⲗ: ⲁⲣⲓⲥⲩⲛⲭⲟⲣⲓⲛ: ⲛ̀ⲛⲉⲛⲡⲁⲣⲁⲡ̀ⲧⲱⲙⲁ\n\nϮϣⲉⲡϩ̀ⲙⲟⲧ ⲛ̀ⲧⲟⲧⲕ: Ⲫⲧ ⲙ̀Ⲡⲓⲥ̀ⲣⲁⲏⲗ: ϫⲉ ϯϯⲱ̀ⲟⲩ ⲙ̀ⲡⲉⲕⲣⲁⲛ: ⲟⲩⲟϩ ⲧⲉⲛⲟⲩⲱϣⲧ ⲙ̀ⲙⲟⲕ" },
+            { language: 'english', text: "I thank You, O God of Israel, For You had mercy on us According to Your great mercy\n\nI thank You, O God of Israel, For You have sent Your Son Until He saved us.\n\nI thank You, O God of Israel, For You were incarnate From Saint Mary.\n\nI thank You, O God of Israel, For You were born in Bethlehem. According to the prophecies.\n\nI thank You, O God of Israel, For the shepherds Behold Your glory.\n\nI thank You, O God of Israel, For You revealed to us Your Holy glory.\n\nI thank You, O God of Israel, For You have performed Many miracles.\n\nI thank You, O God of Israel, For the Jews Conspired against You.\n\nI thank You, O God of Israel, For You were crucified Upon the Cross in Golgotha\n\nI thank You, O God of Israel, For You were placed in the tomb Like those who are dead.\n\nI thank You, O God of Israel: For You have risen from the dead, after three days.\n\nI thank You, O God of Israel, For You have descended into Hades And the abyss.\n\nI thank You, O God of Israel, For You have saved Adam And his entire race.\n\nI thank You, O God of Israel, For You have sent Your apostles.\n\nI thank You, O God of Israel, For You ascended Into the highest heavens.\n\nI thank You, O God of Israel, For You sat On the right of the Pantocrator.\n\nI thank You, O God of Israel: For You shall come, and judge the entire world.\n\nI thank You, O God of Israel: Grant unto me mercy, and forgiveness.\n\nI thank You, O God of Israel, ِAbsolve and remit All our trespasses\n\nI thank You, O God of Israel, We glorify Your Name And we worship You." },
+          ],
+        },
+        {
+          id: "nativity-fast-midnight-song-of-the-three-youth",
+          title: "Ⲧⲉⲛⲉⲛ (Song of the Three Youth)",
+          versions: [
+            { language: 'coptic', audio: "alhan-advent-tenen1.mp3", text: "Ⲧⲉⲛⲉⲛ ⲟ̀ⲑⲉⲛ ⲑⲩⲥⲓⲁⲛ ⲕⲉ ⲧⲏⲛ ⲗⲟⲅⲓⲕⲏⲛ ⲗⲁⲧⲣⲓⲁⲛ ⲁ̀ⲛⲁⲡⲉⲙⲡⲱⲙⲉⲛ ⲥⲉⲁ̀ⲩⲧⲱ ⲥⲏⲙⲉⲣⲟⲛ ⲱ̀ⲇⲁⲥ ⲡ̀ⲣⲟⲥ ⲇⲟⲝⲁ ⲥⲟⲩ Ⲥⲱⲧⲏⲣ ⲏ̀ⲙⲱⲛ.\n\nⲀ̀ⲛⲁⲛⲓⲁⲥ Ⲁ̀ⲍⲁⲣⲓⲁⲥ ⲕⲉ Ⲙⲓⲥⲁⲏ̀ⲗ." },
+            { language: 'english', text: "We therefore present an offering and rational worship; We send unto you this day psalmodies for Your glory O our Savior.\n\nHananiah Azariah and Mishael." },
+          ],
+        },
+        {
+          id: "nativity-fast-midnight-song-of-the-three-holy-youth-2",
+          title: "Ⲧ̀ⲣⲓⲟⲛ (Song of the Three Holy Youth (2))",
+          versions: [
+            { language: 'coptic', audio: "alhan-advent-etrion.mp3", text: "Ⲧ̀ⲣⲓⲟⲛ ⲡⲁⲓⲑⲟⲛ ⲛ̀ϫⲉ ⲙⲉⲗⲓⲛ ⲛⲁⲧⲟⲩ ⲡⲉⲣⲟⲥ ⲇⲟⲝⲁ ⲙ̀ⲡ̀ⲥⲁⲧⲉⲧⲟⲩ ⲥⲱⲙⲁⲧⲟⲥ ⲁⲅⲅⲉⲗⲟⲥ ⲅⲁⲣ ⲥⲉⲛⲁⲥⲉⲗ ⲑⲉⲇⲉ ⲁⲩⲧⲟⲕⲓⲑⲟⲛ ⲫ̀ⲗⲓⲅⲁⲣⲧⲏⲥ ⲉ̀ⲗⲉⲩⲥⲉⲱ̀ⲛ ⲏ̀ⲙⲱⲛ. Ⲁ̀ⲛⲁⲛⲓⲁⲥ Ⲁ̀ⲍⲁⲣⲓⲁⲥ ⲕⲉ Ⲙⲓⲥⲁⲏ̀ⲗ." },
+            { language: 'english', text: "When they were raised to take glory in their bodies, the angel came down, stopped the fire and became cool for Hananiah Azariah and Mishael." },
+          ],
+        },
+      ],
+    },
+    {
+      id: "nativity-fast-liturgy",
+      title: "Liturgy",
+      hymns: [
+        {
+          id: "nativity-fast-liturgy-hiten-for-archangel-gabriel",
+          title: "Ϩⲓⲧⲉⲛ Ⲅⲁⲃⲣⲓⲏⲗ (Hiten for Archangel Gabriel)",
+          versions: [
+            { language: 'coptic', audio: "alhan-advent-hiten1.mp3", text: "Ϩⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ ⲛ̀ⲧⲉ ⲡⲓⲁⲣⲭⲏⲁⲅⲅⲉⲗⲟⲥ ⲉⲑⲟⲩⲁⲃ Ⲅⲁⲃⲣⲓⲏⲗ ⲡⲓϥⲁⲓϣⲉⲛⲛⲟⲩϥⲓ Ⲡ̀ϭⲟⲓⲥ ...." },
+            { language: 'english', text: "Through the intercessions, of the holy archangel, Gabriel the announcer, O Lord ...." },
+          ],
+        },
+        {
+          id: "nativity-fast-liturgy-hiten-for-st-john",
+          title: "Ϩⲓⲧⲉⲛ Ⲓⲱⲁⲛⲛⲏⲥ (Hiten for St John)",
+          versions: [
+            { language: 'coptic', audio: "alhan-advent-hiten2.mp3", text: "Ϩⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ ⲛ̀ⲧⲉ ⲡⲓⲥⲩⲅⲅⲉⲛⲏⲥ ⲛ̀Ⲉⲙⲙⲁⲛⲟⲩⲏⲗ Ⲓⲱⲁⲛⲛⲏⲥ ⲡ̀ϣⲏⲣⲓ ⲛ̀Ⲍⲁⲭⲁⲣⲓⲁⲥ Ⲡ̀ϭⲟⲓⲥ ...." },
+            { language: 'english', text: "Through the intercessions, of the relative of Emmanuel, John the son of Zechariah, O Lord ...." },
+          ],
+        },
+        {
+          id: "nativity-fast-liturgy-hiten-for-zechariah-and-elizabeth",
+          title: "Ϩⲓⲧⲉⲛ Ⲍⲁⲭⲁⲣⲓⲁⲥ (Hiten for Zechariah & Elizabeth)",
+          versions: [
+            { language: 'coptic', audio: "alhan-advent-hiten3.mp3", text: "Ϩⲓⲧⲉⲛ ⲛⲓⲉⲩⲭⲏ ⲛ̀ⲧⲉ ⲡⲓⲟⲩⲏⲃ Ⲍⲁⲭⲁⲣⲓⲁⲥ ⲛⲉⲙ ⲧⲉϥⲥ̀ϩⲓⲙⲓ Ⲉ̀ⲗⲓⲥⲁⲃⲉⲧ Ⲡ̀ϭⲟⲓⲥ ...." },
+            { language: 'english', text: "Through the prayers, of Zechariah the priest, and his wife Elizabeth, O Lord ...." },
+          ],
+        },
+        {
+          id: "nativity-fast-liturgy-hiten-for-joachim-and-anna",
+          title: "Ϩⲓⲧⲉⲛ Ⲓⲱⲁ̀ⲕⲓⲙ (Hiten for Joachim & Anna)",
+          versions: [
+            { language: 'coptic', audio: "alhan-advent-hiten4.mp3", text: "Ϩⲓⲧⲉⲛ ⲛⲓⲉⲩⲭⲏ ⲛ̀ⲧⲉ ⲛⲓϧⲉⲗⲗⲟⲓ ⲧ̀ⲥ̀ⲙⲁⲣⲱⲟⲩⲧ Ⲓⲱⲁ̀ⲕⲓⲙ ⲛⲉⲙ Ⲁⲛⲛⲁ Ⲡ̀ϭⲟⲓⲥ ...." },
+            { language: 'english', text: "Through the prayers, of the blessed elders, Joachim and Anna, O Lord ...." },
+          ],
+        },
+        {
+          id: "nativity-fast-liturgy-first-sunday-psalm",
+          title: "Ⲛ̀ⲑⲟⲕ Ⲡ̀ϭⲟⲓⲥ (First Sunday Psalm)",
+          versions: [
+            { language: 'coptic', audio: "alhan-advent-psalm-wk1.mp3", text: "Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ ⲁ̅ⲗ̅ ⲁ̅ⲗ̅. Ⲛ̀ⲑⲟⲕ Ⲡ̀ϭⲟⲓⲥ ⲉⲕⲉ̀ⲕⲟⲧⲕ ⲉⲕϣⲉⲛϩⲏⲧ ϧⲁ Ⲥⲓⲱⲛ ϫⲉ ⲡ̀ⲥⲏⲟⲩ ⲡⲉ ⲉⲑⲣⲉⲕϣⲉⲛϩⲏⲧ ϧⲁⲣⲟⲥ.\n\nⲀⲗⲗⲏⲗⲟⲩⲓⲁ ⲁ̅ⲗ̅ ⲁ̅ⲗ̅. Ϫⲉ Ⲡ̀ϭⲟⲓⲥ ⲉϥⲉ̀ⲕⲱⲧ ⲛ̀Ⲥⲓⲱⲛ ⲟⲩⲟϩ ⲉϥⲉ̀ⲟⲩⲟⲛϩϥ ϧⲉⲛ ⲡⲉϥⲱ̀ⲟⲩ. Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ ⲁ̅ⲗ̅ ⲁ̅ⲗ̅." },
+            { language: 'english', text: "Alleluia, alleluia, alleluia. You will arise and have mercy upon Zion. For it is time to have mercy upon her.\n\nAlleluia, alleluia, alleluia. For the LORD shall build up Zion. And shall appear in His glory. Alleluia, alleluia, alleluia." },
+          ],
+        },
+        {
+          id: "nativity-fast-liturgy-second-sunday-psalm",
+          title: "Ⲥⲱⲧⲉⲙ ⲧⲁϣⲉⲣⲓ (Second Sunday Psalm)",
+          versions: [
+            { language: 'coptic', audio: "alhan-advent-psalm-wk2.mp3", text: "Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ ⲁ̅ⲗ̅ ⲁ̅ⲗ̅. Ⲥⲱⲧⲉⲙ ⲧⲁϣⲉⲣⲓ ⲁ̀ⲛⲁⲩ ⲣⲉⲕ ⲡⲉⲙⲁϣϫ ⲁ̀ⲣⲓⲡ̀ⲱⲃϣ ⲙ̀ⲡⲉⲗⲁⲟⲥ ⲛⲉⲙ ⲡ̀ⲏⲓ ⲧⲏⲣϥ ⲛ̀ⲧⲉ ⲡⲉⲓⲱⲧ.\n\nⲀⲗⲗⲏⲗⲟⲩⲓⲁ ⲁ̅ⲗ̅ ⲁ̅ⲗ̅. Ϫⲉ ⲁ̀ Ⲡⲓⲟⲩⲣⲟ ⲉ̀ⲣⲉ ⲡⲓⲑⲩⲙⲓⲛ ⲉ̀ⲡⲉⲥⲁⲓ ϫⲉ ⲟⲩⲏⲓ ⲛ̀ⲑⲟϥ ⲡⲉ ⲡⲉⲧ⳪. Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ ⲁ̅ⲗ̅ ⲁ̅ⲗ̅." },
+            { language: 'english', text: "Alleluia, alleluia, alleluia. Hear O daughter, and see, and incline your ear. Forget your own people also, and your father’s house.\n\nAlleluia, alleluia, alleluia.Because the King has desired your beauty. For He is your LORD. Alleluia, alleluia, alleluia." },
+          ],
+        },
+        {
+          id: "nativity-fast-liturgy-third-sunday-psalm",
+          title: "Ⲟⲩⲛⲁⲓ ⲛⲉⲙ ⲟⲩⲙⲉⲑⲙⲏⲓ (Third Sunday Psalm)",
+          versions: [
+            { language: 'coptic', audio: "alhan-advent-psalm-wk3.mp3", text: "Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ ⲁ̅ⲗ̅ ⲁ̅ⲗ̅. Ⲟⲩⲛⲁⲓ ⲛⲉⲙ ⲟⲩⲙⲉⲑⲙⲏⲓ ⲁⲩⲓ̀ ⲉ̀ⲃⲟⲗ ⲉ̀ϩⲣⲏⲛ ⲛⲟⲩⲉ̀ⲣⲏⲟⲩ ⲟⲩⲇⲓⲕⲉⲟ̀ⲥⲩⲛⲏ ⲛⲉⲙ ⲟⲩϩⲓⲣⲏⲛⲏ ⲁⲩϣⲉⲡ ⲧⲟⲧⲟⲩ ⲛ̀ⲛⲟⲩⲉ̀ⲣⲏⲟⲩ.\n\nⲀⲗⲗⲏⲗⲟⲩⲓⲁ ⲁ̅ⲗ̅ ⲁ̅ⲗ̅. Ϯⲙⲉⲑⲙⲏⲓ ⲁⲥϣⲁⲓ ⲉ̀ⲃⲟⲗϧⲉⲛ ⲡ̀ⲕⲁϩⲓ ϯⲇⲓⲕⲉⲟ̀ⲥⲩⲛⲏ ⲁⲥϫⲟⲩϣⲧ ⲉ̀ⲃⲟⲗϧⲉⲛ ⲧ̀ⲫⲉ. Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ ⲁ̅ⲗ̅ ⲁ̅ⲗ̅." },
+            { language: 'english', text: "Alleluia, alleluia, alleluia. Mercy and truth are met together. Righteousness and peace have kissed each other.\n\nAlleluia, alleluia, alleluia. Truth has sprung out of the earth. And righteousness has looked down from heaven. Alleluia, alleluia, alleluia." },
+          ],
+        },
+        {
+          id: "nativity-fast-liturgy-fourth-sunday-psalm",
+          title: "Ⲫⲏⲉⲧϩⲉⲙⲥⲓ (Fourth Sunday Psalm)",
+          versions: [
+            { language: 'coptic', audio: "alhan-advent-psalm-wk4.mp3", text: "Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ ⲁ̅ⲗ̅ ⲁ̅ⲗ̅. Ⲫⲏⲉⲧϩⲉⲙⲥⲓ ϩⲓϫⲉⲛ Ⲛⲓⲭⲉⲣⲟⲩⲃⲓⲙ ⲟⲩⲟⲛϩⲕ ⲉ̀ⲃⲟⲗ ⲙ̀ⲡⲉⲙ̀ⲑⲟ ⲛ̀Ⲉⲫⲣⲉⲙ ⲛⲉⲙ Ⲃⲉⲛⲓⲁⲙⲓⲛ ⲛⲉⲙ Ⲙⲁⲛⲁⲥⲥⲏ.\n\nⲀⲗⲗⲏⲗⲟⲩⲓⲁ ⲁ̅ⲗ̅ ⲁ̅ⲗ̅. Ⲉ̀ⲫ̀ⲛⲁϩⲙⲉⲛ ⲙⲁⲧⲁⲥⲑⲟⲛ Ⲫ̀ⲛⲟⲩϯ ⲙⲁⲣⲉ ⲡⲉⲕϩⲟ ⲉⲣⲟⲩⲱⲓⲛⲓ ⲉ̀ϩ̀ⲣⲏⲓ ⲉ̀ϫⲱⲛ ⲟⲩⲟϩ ⲉⲛⲉ̀ⲛⲟϩⲉⲙ. Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ ⲁ̅ⲗ̅ ⲁ̅ⲗ̅." },
+            { language: 'english', text: "Alleluia, alleluia, alleluia. You who sits upon the Cherubim, manifest Yourself. Before Ephraim, Benjamin, and Manasseh.\n\nAlleluia, alleluia, alleluia. And come and deliver us, turn us, O God. And cause Your face to shine, and we shall be delivered. Alleluia, alleluia, alleluia." },
+          ],
+        },
+        {
+          id: "nativity-fast-liturgy-psalm-150",
+          title: "Ⲥ̀ⲙⲟⲩ ⲉ̀Ⲫϯ (Psalm 150)",
+          versions: [
+            { language: 'coptic', audio: "alhan-advent-psalm150.mp3", text: "Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ.\n\nⲤ̀ⲙⲟⲩ ⲉ̀Ⲫϯ ϧⲉⲛ ⲛⲏⲉ̅ⲑ̅ⲩ̅ ⲧⲏⲣⲟⲩ ⲛ̀ⲧⲁϥ.\n\n+ Ⲥ̀ⲙⲟⲩ ⲉ̀ⲣⲟϥ ϧⲉⲛ ⲡⲓⲧⲁϫⲣⲟ ⲛ̀ⲧⲉ ⲧⲉϥϫⲟⲙ.\n\nⲤ̀ⲙⲟⲩ ⲉ̀ⲣⲟϥ ⲉ̀ϩ̀ⲣⲏⲓ ϩⲓϫⲉⲛ ⲧⲉϥⲙⲉⲧϫⲱⲣⲓ.\n\n+ Ⲥ̀ⲙⲟⲩ ⲉ̀ⲣⲟϥ ⲕⲁⲧⲁ ⲡ̀ⲁ̀ϣⲁⲓ ⲛ̀ⲧⲉ ⲧⲉϥⲙⲉⲧⲛⲓϣϯ.\n\nⲤ̀ⲙⲟⲩ ⲉ̀ⲣⲟϥ ϧⲉⲛ ⲟⲩⲥ̀ⲙⲏ ⲛ̀ⲥⲁⲗⲡⲓⲅⲅⲟⲥ.\n\n+ Ⲥ̀ⲙⲟⲩ ⲉ̀ⲣⲟϥ ϧⲉⲛ ⲟⲩⲯⲁⲗⲧⲏⲣⲓⲟⲛ ⲛⲉⲙ ⲟⲩⲕⲩⲑⲁⲣⲁ.\n\nⲤ̀ⲙⲟⲩ ⲉ̀ⲣⲟϥ ϧⲉⲛ ϩⲁⲛⲕⲉⲙⲕⲉⲙ ⲛⲉⲙ ϩⲁⲛⲭⲟⲣⲟⲥ.\n\n+ Ⲥ̀ⲙⲟⲩ ⲉ̀ⲣⲟϥ ϧⲉⲛ ϩⲁⲛⲕⲁⲡ ⲛⲉⲙ ⲟⲩⲟⲣⲅⲁⲛⲟⲛ.\n\nⲤ̀ⲙⲟⲩ ⲉ̀ⲣⲟϥ ϧⲉⲛ ϩⲁⲛⲕⲩⲙⲃⲁⲗⲟⲛ ⲉ̀ⲛⲉⲥⲉ ⲧⲟⲩⲥ̀ⲙⲏ.\n\n+ Ⲥ̀ⲙⲟⲩ ⲉ̀ⲣⲟϥ ϧⲉⲛ ϩⲁⲛⲕⲩⲙⲃⲁⲗⲟⲛ ⲛ̀ⲧⲉ ⲟⲩⲉ̀ϣ̀ⲗⲏⲗⲟⲩⲓ̀.\n\nⲚⲓϥⲓ ⲛⲓⲃⲉⲛ ⲙⲁⲣⲟⲩⲥ̀ⲙⲟⲩ ⲧⲏⲣⲟⲩ ⲉ̀ⲫ̀ⲣⲁⲛ ⲙ̀Ⲡ⳪ ⲡⲉⲛⲛⲟⲩϯ.\n\n+ Ⲇⲟⲝⲁ Ⲡⲁⲧⲣⲓ ⲕⲉ Ⲩ̀ⲓⲱ̀ ⲕⲉ ⲁ̀ⲅⲓⲱ̀ Ⲡ̀ⲛⲉⲩⲙⲁⲧⲓ.\n\nⲔⲉ ⲛⲩⲛ ⲕⲉ ⲁ̀ⲓ̀ ⲕⲉ ⲓⲥ ⲧⲟⲩⲥ ⲉ̀ⲱ̀ⲛⲁⲥ ⲧⲱⲛ ⲉ̀ⲱ̀ⲛⲱⲛ ⲁ̀ⲙⲏⲛ.\n\n+ Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ ⲁ̅ⲗ̅ ⲇⲟⲝⲁ ⲥⲓ ⲟ Ⲑⲉⲟⲥ ⲏ̀ⲙⲱⲛ.\n\nⲀⲗⲗⲏⲗⲟⲩⲓⲁ ⲁ̅ⲗ̅ ⲡⲓⲱ̀ⲟⲩ ⲫⲁ ⲡⲉⲛⲚⲟⲩϯ ⲡⲉ.\n\n+ Ⲓ̅ⲏ̅ⲥ̅ Ⲡⲭ̅ⲥ̅ ⲡ̀Ϣⲏⲣⲓ ⲙ̀Ⲫϯ ⲥⲱⲧⲉⲙ ⲉ̀ⲣⲟⲛ ⲟⲩⲟϩ ⲛⲁⲓ ⲛⲁⲛ." },
+            { language: 'english', text: "Alleluia.\n\nPraise God in all His saints.\n\n+ Praise Him in the firmament of His power.\n\nPraise Him for His mighty acts.\n\n+ Praise Him according to the multitudes of His greatness.\n\nPraise Him with the sound of the trumpet.\n\n+ Praise Him with psaltery and harp.\n\nPraise Him with timbrel and chorus.\n\n+ Praise Him with strings and organs.\n\nPraise Him with pleasant sounding cymbals.\n\n+ Praise Him upon the cymbals of joy.\n\nLet every thing that has breath praise the name of the Lord our God.\n\n+ Glory be to the Father, and the Son and the Holy Spirit.\n\nNow and forever and unto the age of all ages Amen.\n\n+ Alleluia, Alleluia, glory be to our God.\n\nAlleluia, Alleluia, glory be to our God.\n\n+ O Jesus Christ, the Son of God, hear us and have mercy upon us." },
+          ],
+        },
+        {
+          id: "nativity-fast-liturgy-gospel-response-wks1and2",
+          title: "Ⲧⲉⲛϯ ⲛⲉ ⲙ̀ⲡⲓ... (Gospel Response wks1&2)",
+          versions: [
+            { language: 'coptic', audio: "alhan-advent-gospelresponse1.mp3", text: "Ⲧⲉⲛϯ ⲛⲉ ⲙ̀ⲡⲓⲭⲉⲣⲉⲧⲓⲥⲙⲟⲥ ⲛⲉⲙ Ⲅⲁⲃⲣⲓⲏⲗ ⲡⲓⲁⲅⲅⲉⲗⲟⲥ ϫⲉ ⲭⲉⲣⲉ ⲕⲉⲭⲁⲣⲓⲧⲱⲙⲉⲛⲏ ⲟ̀ Ⲕⲩⲣⲓⲟⲥ ⲙⲉⲧⲁ ⲥⲟⲩ.\n\nⲈⲑⲃⲉ ⲫⲁⲓ ⲧⲉⲛϯⲱ̀ⲟⲩ ⲛⲉ ϩⲱⲥ Ⲑⲉⲟ̀ⲧⲟⲕⲟⲥ ⲛ̀ⲥⲏⲟⲩ ⲛⲓⲃⲉⲛ ⲙⲁϯϩⲟ ⲉ̀Ⲡ̀ϭⲟⲓⲥ ⲉ̀ϩ̀ⲣⲏⲓ ⲉ̀ϫⲱⲛ ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ." },
+            { language: 'english', text: "We give unto you greeting, with Gabriel the angel saying, \"Hail to you O full of grace, the Lord is with you.\"\n\nWherefore we glorify you, as the ever-Theotokos, ask the Lord on our behalf, that He may forgive us our sins." },
+          ],
+        },
+        {
+          id: "nativity-fast-liturgy-gospel-response-wks-3and4",
+          title: "Ⲧⲉⲛϭⲓⲥⲓ ⲙ̀ⲙⲟ (Gospel Response wks 3&4)",
+          versions: [
+            { language: 'coptic', audio: "alhan-advent-gospelresponse2.mp3", text: "Ⲧⲉⲛϭⲓⲥⲓ ⲙ̀ⲙⲟ ϧⲉⲛ ⲟⲩⲉⲙⲡ̀ϣⲁ ⲛⲉⲙ Ⲉ̀ⲗⲓⲥⲁⲃⲉⲧ ⲧⲉⲥⲩⲅⲅⲉⲛⲏⲥ ϫⲉ ⲧⲉⲥ̀ⲙⲁⲣⲱⲟⲩⲧ ⲛ̀ⲑⲟ ϧⲉⲛ ⲛⲓϩⲓⲟⲙⲓ ϥ̀ⲥ̀ⲙⲁⲣⲱⲟⲩⲧ ⲛ̀ϫⲉ ⲡ̀ⲟⲩⲧⲁϩ ⲛ̀ⲧⲉ ⲧⲉⲛⲉϫⲓ.\n\nⲈⲑⲃⲉ ⲫⲁⲓ ⲧⲉⲛϯⲱ̀ⲟⲩ ⲛⲉ ϩⲱⲥ Ⲑⲉⲟ̀ⲧⲟⲕⲟⲥ ⲛ̀ⲥⲏⲟⲩ ⲛⲓⲃⲉⲛ ⲙⲁϯϩⲟ ⲉ̀Ⲡ̀ϭⲟⲓⲥ ⲉ̀ϩ̀ⲣⲏⲓ ⲉ̀ϫⲱⲛ ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ." },
+            { language: 'english', text: "We magnify you worthily, with Elizabeth your cousin saying, \"Blessed are you among women, and blessed is the fruit of your womb.\"\n\nWherefore we glorify you, as the ever-Theotokos, ask the Lord on our behalf, that He may forgive us our sins." },
+          ],
+        },
+      ],
+    },
+  ],
 };
