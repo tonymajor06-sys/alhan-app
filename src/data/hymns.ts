@@ -3,6 +3,7 @@ import { addArabicEnglish } from './arabic-english';
 import { alhanSeasonServices } from './alhan-seasons';
 import { stAdditions } from './st-hymns';
 import { stFills } from './st-fills';
+import { stMysteries } from './st-mysteries';
 
 export type LanguageType = 'coptic' | 'englishCoptic' | 'arabicCoptic' | 'english' | 'arabicEnglish' | 'englishArabic' | 'arabic';
 
@@ -7337,6 +7338,14 @@ for (const { season: seasonId, service: serviceId, serviceTitle, after, before, 
   if (index >= 0) service.hymns.splice(index + 1, 0, hymn);
   else if (next >= 0) service.hymns.splice(next, 0, hymn);
   else service.hymns.push(hymn);
+}
+
+// ---- The Special Holy Orders rites from Spirit & Truth's Mysteries (see st-mysteries.ts) replace their placeholder responses ----
+const holyOrders = deaconCategories.find((c) => c.id === 'deacon-special-orders');
+for (const rite of stMysteries) {
+  const service = holyOrders?.services.find((s) => s.id === rite.id);
+  if (service) service.hymns = rite.hymns;
+  else holyOrders?.services.push({ id: rite.id, title: rite.title, hymns: rite.hymns });
 }
 
 // ---- Words from Spirit & Truth for hymns listed by title only (see st-fills.ts) ----
