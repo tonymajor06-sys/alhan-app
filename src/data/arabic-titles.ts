@@ -812,6 +812,11 @@ const arabicTitles: Record<string, string> = {
   "d-order-funeral-trisagion-2": "قدوس الله",
   "d-order-funeral-god-have-mercy": "اللهم ارحمنا",
   "d-order-funeral-adam-psali-2": "إبصالية أدام",
+  "d-annual-bishop-blessed-is-he": "مبارك الآتي",
+  "d-annual-bishop-thanksgiving-prayer-response-in-the-presence-of-th": "مرد صلاة الشكر في حضور البابا أو الأسقف",
+  "d-annual-bishop-psalm-trailer-for-the-pope-or-a-bishop": "فليرفعوه في كنيسةِ",
+  "d-annual-bishop-introduction-to-the-coptic-gospel-when-read-by-the": "مقدمة الإنجيل القبطي عند قراءته بواسطة البابا أو الأسقف",
+  "d-annual-bishop-conclusion-in-the-presence-of-the-pope-or-a-bishop": "فى وجود الأب البطريرك أو الأسقف",
   // ---- end of Spirit & Truth Mysteries ----
 };
 

@@ -7341,11 +7341,12 @@ for (const { season: seasonId, service: serviceId, serviceTitle, after, before, 
 }
 
 // ---- The Special Holy Orders rites from Spirit & Truth's Mysteries (see st-mysteries.ts) replace their placeholder responses ----
-const holyOrders = deaconCategories.find((c) => c.id === 'deacon-special-orders');
+// (and Annual's responses in the presence of the Pope or a bishop)
 for (const rite of stMysteries) {
-  const service = holyOrders?.services.find((s) => s.id === rite.id);
+  const category = deaconCategories.find((c) => c.id === rite.category);
+  const service = category?.services.find((s) => s.id === rite.id);
   if (service) service.hymns = rite.hymns;
-  else holyOrders?.services.push({ id: rite.id, title: rite.title, hymns: rite.hymns });
+  else category?.services.push({ id: rite.id, title: rite.title, hymns: rite.hymns });
 }
 
 // ---- Words from Spirit & Truth for hymns listed by title only (see st-fills.ts) ----
