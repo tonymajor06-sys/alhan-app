@@ -53,11 +53,11 @@ describe('Coptic in Arabic letters for every hymn', () => {
 describe('Kiahk Praises & Season > Midnight Praises', () => {
   const service = seasons.find((s) => s.id === 'kiahk')!.services.find((s) => s.id === 'kiahk-midnight')!;
 
-  it('lists the 80 titles of the service, in order, with no placeholders left', () => {
-    expect(service.hymns).toHaveLength(80);
+  it('lists the 81 titles of the service, in order, with no placeholders left', () => {
+    expect(service.hymns).toHaveLength(81);
     expect(service.hymns[0].title).toBe('Holy God');
-    expect(service.hymns[79].title).toBe('Conclusion in the presence of the Pope or a Bishop');
-    expect(new Set(service.hymns.map((h) => h.id)).size).toBe(80);
+    expect(service.hymns[80].title).toBe('Conclusion in the presence of the Pope or a Bishop');
+    expect(new Set(service.hymns.map((h) => h.id)).size).toBe(81);
     expect(service.hymns.some((h) => /Hymn #\d+$/.test(h.title))).toBe(false);
   });
 
@@ -100,6 +100,8 @@ describe('Kiahk Praises & Season > Midnight Praises', () => {
   it('plays the other Kiahk Midnight Praises recordings on their hymns, and only on them', () => {
     const nodeFs = jest.requireActual('fs') as { statSync(file: string): { size: number } };
     const englishArabic: [string, string][] = [
+      ['The Burning Bush', 'kiahk-midnight-the-burning-bush.mp3'],
+      ['The Sixth Explanation', 'kiahk-midnight-the-sixth-explanation.mp3'],
       ['O Mary', 'kiahk-midnight-o-mary.mp3'],
       ['I Praise the Virgin', 'kiahk-midnight-i-praise-the-virgin.mp3'],
       ['Your Mercies O My God', 'kiahk-midnight-your-mercies-o-my-god.mp3'],
@@ -351,9 +353,9 @@ describe('Kiahk Praises & Season > Midnight Praises', () => {
     expect(text(fourthCanticlePsali, 'english')).not.toBe(text(commemoration, 'english'));
     expect(fourthCanticlePsali.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
     // number 40 is now The First Explanation (number 39, The Sunday Theotokia, was removed): 16 verses in English and in Arabic
-    const firstExplanation = service.hymns[39];
+    const firstExplanation = service.hymns[40];
     expect(firstExplanation.title).toBe('The First Explanation');
-    expect(service.hymns[38].title).toBe('The Sunday Theotokion (1)');
+    expect(service.hymns[39].title).toBe('The Sunday Theotokion (1)');
     expect(text(firstExplanation, 'english').split(/\n\s*\n/)).toHaveLength(16);
     expect(text(firstExplanation, 'arabic').split(/\n\s*\n/)).toHaveLength(16);
     expect(text(firstExplanation, 'english').startsWith('(1/16) In the Name of God')).toBe(true);
@@ -525,7 +527,7 @@ describe('Kiahk Praises & Season > Midnight Praises', () => {
     // The Third Explanation: its own 16 verses (Mary as the altar and table of showbread)
     const thirdExplanation = service.hymns.find((h) => h.title === 'The Third Explanation')!;
     // number 45 before "Luke 1:51-55" (number 43) was removed, so number 44 now
-    expect(service.hymns[43]).toBe(thirdExplanation);
+    expect(service.hymns[44]).toBe(thirdExplanation);
     expect(text(thirdExplanation, 'english').split(/\n\s*\n/)).toHaveLength(16);
     expect(text(thirdExplanation, 'arabic').split(/\n\s*\n/)).toHaveLength(16);
     expect(text(thirdExplanation, 'english').startsWith('(1/16) Mary you became')).toBe(true);
@@ -538,7 +540,7 @@ describe('Kiahk Praises & Season > Midnight Praises', () => {
     expect(text(secondExplanation, 'english')).not.toBe(text(firstExplanation, 'english'));
     expect(secondExplanation.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
     // number 37, Adam Psali on "You are Called": 24 verses, each ending with the same refrain line
-    const youAreCalled = service.hymns[36];
+    const youAreCalled = service.hymns[37];
     expect(youAreCalled.title).toContain('You are Called');
     expect(text(youAreCalled, 'english').split(/\n\s*\n/)).toHaveLength(24);
     expect(text(youAreCalled, 'arabic').split(/\n\s*\n/)).toHaveLength(24);
@@ -546,14 +548,14 @@ describe('Kiahk Praises & Season > Midnight Praises', () => {
     expect(text(youAreCalled, 'arabic').split(/\n\s*\n/).every((v) => v.endsWith('مريم العذراء.'))).toBe(true);
     expect(youAreCalled.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
     // number 36, I Open my Mouth with Praise: 52 verses in English and in Arabic
-    const openMouth = service.hymns[35];
+    const openMouth = service.hymns[36];
     expect(openMouth.title).toBe('I Open my Mouth with Praise');
     expect(text(openMouth, 'english').split(/\n\s*\n/)).toHaveLength(52);
     expect(text(openMouth, 'arabic').split(/\n\s*\n/)).toHaveLength(52);
     expect(text(openMouth, 'english').split(/\n\s*\n/)[51].startsWith('(52/52) We ask You O Our King')).toBe(true);
     expect(openMouth.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
     // number 34, Adam Praise on Sunday Psali Aikoti: 29 verses, each ending with the same refrain line
-    const aikotiPraise = service.hymns[33];
+    const aikotiPraise = service.hymns[34];
     expect(aikotiPraise.title).toBe('Adam Praise on Sunday Psali Aikoti');
     expect(text(aikotiPraise, 'english').split(/\n\s*\n/)).toHaveLength(29);
     expect(text(aikotiPraise, 'arabic').split(/\n\s*\n/)).toHaveLength(29);
@@ -561,7 +563,7 @@ describe('Kiahk Praises & Season > Midnight Praises', () => {
     expect(text(aikotiPraise, 'arabic').split(/\n\s*\n/).every((v) => v.endsWith('السلام لك يا مريم'))).toBe(true);
     expect(aikotiPraise.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
     // number 33, Adam Psali before Aikotee: 32 verses in English and in Arabic
-    const aikotee = service.hymns[32];
+    const aikotee = service.hymns[33];
     expect(aikotee.title).toBe('Adam Psali before Aikotee');
     expect(text(aikotee, 'english').split(/\n\s*\n/)).toHaveLength(32);
     expect(text(aikotee, 'arabic').split(/\n\s*\n/)).toHaveLength(32);
@@ -569,6 +571,7 @@ describe('Kiahk Praises & Season > Midnight Praises', () => {
     expect(aikotee.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
     // number 32, Exposition on the Fourth Canticle: 6 paragraphs in English and in Arabic
     const fourthCanticleExposition = service.hymns[31];
+    expect(service.hymns[32].title).toBe('The Burning Bush');
     expect(fourthCanticleExposition.title).toBe('Exposition on the Fourth Canticle');
     expect(text(fourthCanticleExposition, 'english').split(/\n\s*\n/)).toHaveLength(6);
     expect(text(fourthCanticleExposition, 'arabic').split(/\n\s*\n/)).toHaveLength(6);
