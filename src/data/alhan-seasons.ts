@@ -974,6 +974,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-palm-ouniatk.mp3", text: "Ⲱ̀ⲟⲩⲛⲓⲁⲧϥ ⲙ̀ⲫⲏⲉ̀ⲧⲁⲕⲥⲟⲧⲡϥ ⲟⲩⲟϩ ⲁⲕϣⲟⲡϥ ⲉ̀ⲣⲟⲕ ⲉϥⲉϣⲱⲡⲓ ϧⲉⲛ ⲛⲉⲕⲁⲩⲗⲏⲟⲩ ϣⲁ ⲉ̀ⲛⲉϩ ⲉⲛⲉ̀ⲥⲓ ⲉ̀ⲃⲟⲗϧⲉⲛ ⲛⲓⲁ̀ⲅⲁⲑⲟⲛ ⲛ̀ⲧⲉ ⲡⲉⲕⲏⲓ ϥ̀ⲟⲩⲁⲃ ⲛ̀ϫⲉ ⲡⲉⲕⲉⲣⲫⲉⲓ ⲟⲩⲟϩ ϥ̀ⲟⲓ ⲛ̀ϣ̀ⲫⲏⲣⲓ ϧⲉⲛ ⲟⲩⲙⲉⲑⲙⲏ ⲁ̅ⲗ̅" },
             { language: 'englishCoptic', audio: "alhan-palm-ouniatk.mp3", text: "Ōouniatf emfē-etaksotpf ouoh akshopf erok efeshōpi khen nekaulēou sha eneh enesi evolkhen ni-agathon ente pekēi efouab enje pekerfei ouoh efoi eneshfēri khen oumethmē allēlouia" },
             { language: 'english', text: "Blessed is he whom You have chosen and adopted; he shall dwell in Your courts; we shall be filled with the good things of Your house; Your temple is holy. You are wonderful in righteousness." },
+            { language: 'arabic', text: "طوبى لمن إخترته وقبلته ليسكن في ديارك إلى الأبد سنشبع من خيرات بيتك. قدوس هو هيكلك، وعجيب بالبر." },
+            { language: 'englishArabic', text: "Touba li-man ikhtartahu wa qabiltahu li-yaskun fi diyarika ila el-abad. Sa-nashba' min khayrat baytik. Quddousun huwa haykaluk, wa 'ageebun bil-birr." },
           ],
         },
       ],
@@ -1072,6 +1074,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-pascha-avechnon.mp3", text: "Ⲁⲩϭ̀ⲛⲟⲛ ⲛ̀ϫⲉ ⲛⲉϥⲥⲁϫⲓ ⲉ̀ϩⲟⲧⲉ ⲟⲩⲛⲉϩ ⲟⲩⲟϩ ⲛ̀ⲑⲱⲟⲩ ϩⲁⲛ ⲥⲟⲑⲛⲉϥ ⲛⲉ ϭⲓⲥ̀ⲙⲏ Ⲫϯ ⲉ̀ⲧⲁ ⲡ̀ⲣⲟⲥⲉⲩⲭⲏ ⲟⲩⲟϩ ⲙ̀ⲡⲉⲣϩⲓ ⲡ̀ϩⲟ ⲙ̀ⲡⲁⲧⲱⲃϩ ⲁ̅ⲗ̅." },
             { language: 'englishCoptic', audio: "alhan-pascha-avechnon.mp3", text: "Au-etshnon enje nefsaji ehote ouneh ouoh enthōou han sothnef ne tshi-esmē Efnouti eta eproseukhē ouoh emperhi epho empatōbh allēlouia." },
             { language: 'english', text: "His words were softer than oil, Yet they were drawn swords. Give ear to my prayer, O God, And do not hide Yourself from my supplication. Alleluia." },
+            { language: 'arabic', text: "كلامه ألين من الدهن وهو نصال. أنصت يا الله لصلاتي. و لا تغفل عن تضرعي." },
+            { language: 'englishArabic', text: "Kalamuhu alyan min ed-dihn wa huwa nisal. Ansit ya Allah li-salati, wala taghfal 'an tadarru'i." },
           ],
         },
       ],
@@ -1107,6 +1111,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-pascha-sixthhour.mp3", text: "Ⲱⲫⲏⲉⲧ ϧⲉⲛ ⲡⲓⲉ̀ϩⲟⲟⲩ ⲙ̀ⲙⲁϩ ⲥⲟⲟⲩ ϧⲉⲛ ⲫ̀ⲛⲁⲩ ⲛ̀ⲁϫⲡ ⲥⲟⲟⲩ ⲁⲩϯⲓϥⲧ ⲛⲁⲕ ⲉ̀ϧⲟⲩⲛ ⲉ̀ⲡⲓⲥ̀ⲧⲁⲩⲣⲟⲥ ⲉⲑⲃⲉ ⲫ̀ⲛⲟⲃⲓ ⲉ̀ⲧⲁϥⲉⲣⲧⲟⲗⲙⲁⲛ ⲉ̀ⲣⲟϥ ⲛ̀ϫⲉ Ⲁⲇⲁⲙ ϧⲉⲛ ⲡⲓⲡⲁⲣⲁⲇⲓⲥⲟⲥ ⲫⲱϧ ⲙ̀ⲡⲓⲥ̀ϧⲓ ⲛ̀ϫⲓϫ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ ⲱ̀Ⲡⲭ̅ⲥ̅ ⲡⲉⲛⲚⲟⲩϯ ⲟⲩⲟϩ ⲛⲁϩⲙⲉⲛ." },
             { language: 'englishCoptic', audio: "alhan-pascha-sixthhour.mp3", text: "Ōfēet khen pi-ehoou emmah soou khen efnau enajp soou autiift nak ekhoun epi-estauros ethve efnovi etafertolman erof enje Adam khen piparadisos fōkh empi-eskhi enjij ente nennovi ō-Pi-ekhristos pen-Nouti ouoh nahmen." },
             { language: 'english', text: "O You who on the sixth day, and at the sixth hour, were nailed to the cross on account of the sin that our father Adam dared to commit in Paradise; wipe out the handwriting of our sins, O Christ our God and save us." },
+            { language: 'arabic', text: "يا من في اليوم السادس وفى الساعة السادسة سمرت على الصليب من أجل الخطية التي تجرأ عليها أبونا آدم في الفردوس. مزق صك خطايانا أيها المسيح إلهنا ونجنا." },
+            { language: 'englishArabic', text: "Ya man fil-yawm es-sadis wa fis-sa'a es-sadisa summirta 'ala es-saleeb, min agl el-khatiyya allati tagarra'a 'alayha abouna Adam fil-firdaws, mazziq sakk khatayana ayyuha el-Maseeh ilahuna wa naggina." },
           ],
         },
         {
@@ -1116,6 +1122,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-pascha-omonogenis.mp3", text: "Ⲟ̀ⲙⲟⲛⲟⲅⲉⲛⲏⲥ Ⲩ̀ⲓⲟⲥ ⲕⲉ Ⲗⲟⲅⲟⲥ ⲧⲟⲩ Ⲑⲉⲟⲩ Ⲁ̀ⲑⲁⲛⲁⲧⲟⲥ ⲩ̀Ⲡⲁⲣⲭⲱⲛ ⲕⲉ ⲕⲁⲧⲁ ⲇⲉⲝⲁⲙⲉⲛⲟⲥ ⲇⲓⲁⲧⲏⲛ ⲏ̀ⲙⲉⲧⲉⲣⲁⲛ ⲥⲱⲧⲏⲣⲓⲁⲛ ⲥⲁⲣⲕⲱⲑⲏⲛⲉ ⲉⲕ ⲧⲏⲥ ⲁ̀ⲅⲓⲁⲥ Ⲑⲉⲟ̀ⲧⲟⲕⲟⲩ ⲕⲉ ⲁ̀ⲓ̀ (Ⲡⲁⲣⲑⲉⲛⲟⲩ Ⲙⲁⲣⲓⲁⲥ) ⲃ̅.\n\nⲀⲧⲣⲉⲡⲧⲱⲥ ⲉ̀ⲛⲁⲛⲑ̀ⲣⲱⲡⲓⲥⲁⲥ ⲟ̀ⲥ̀ⲧⲁⲩⲣⲱⲑⲓⲥ ⲧⲉ Ⲭ̀ⲣⲓⲥⲧⲉ ⲟ̀ Ⲑⲉⲟⲥ. Ⲑⲁⲛⲁⲧⲱ ⲑⲁⲛⲁⲧⲟⲛ ⲡⲁⲧⲏⲥⲁⲥ ⲓⲥ ⲱⲛⲧⲏⲥ ⲁ̀ⲅⲓⲁⲥ Ⲧ̀ⲣⲓⲁⲇⲟⲥ ⲥⲩⲛ ⲇⲟⲝⲁ ⲍⲟⲙⲉⲛⲟⲥ ⲧⲱ Ⲡⲁⲧⲣⲓ ⲕⲉ ⲧⲱ ⲁ̀ⲅⲓⲱ Ⲡ̀ⲛⲉⲩⲙⲁⲧⲓ ⲥⲱⲥⲟⲛ ⲏ̀ⲙⲁⲥ.\n\nⲀ̀ⲅⲓⲟⲥ ⲟ̀ Ⲑⲉⲟⲥ ⲟ̀ⲇⲓ ⲏ̀ⲙⲁⲥ ⲁⲛ ⲑ̀ⲣⲱⲡⲟⲥ ⲅⲉ ⲅⲟⲛⲱⲥ ⲁⲧⲣⲉⲡⲧⲱⲥ ⲕⲉ ⲙⲓⲛⲁⲥ Ⲑⲉⲟⲥ.\n\nⲀ̀ⲅⲓⲟⲥ Ⲓⲥⲭⲩⲣⲟⲥ ⲟ̀ ⲉ̀ⲛ ⲁⲥⲑⲉⲛⲓⲁ ⲧⲟ ⲩ̀ⲡⲉⲣⲉⲭⲟⲛ ⲧⲏⲥ Ⲓⲥⲭⲩⲣⲟⲥ ⲉ̀ⲡⲓⲇⲓⲝⲁⲙⲉⲛⲟⲥ.\n\nⲀ̀ⲅⲓⲟⲥ Ⲁ̀ⲑⲁⲛⲁⲧⲟⲥ ⲟ̀ ⲥ̀ⲧⲁⲩⲣⲱⲑⲓⲥ ⲇⲓ ⲏ̀ⲙⲁⲥ ⲟ̀ⲧⲟⲛ ⲇⲓⲁ̀ⲥ̀ⲧⲁⲩⲣⲟⲩ ⲑⲁⲛⲁⲧⲟⲛ ⲩ̀ⲡⲟⲙⲓⲛⲁⲥ ⲥⲁⲣⲕⲓ ⲕⲉ ⲇⲓⲝⲁⲥⲩⲱⲥ ⲕⲉ ⲉⲛ ⲑⲁⲛⲁⲧⲱ ⲅⲉⲅⲟⲛⲱⲥ ⲩ̀Ⲡⲁⲣⲭⲓⲥ Ⲁ̀ⲑⲁⲛⲁⲧⲟⲥ.\n\nⲀ̀ⲅⲓⲁ Ⲧ̀ⲣⲓⲁⲥ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ ⲏ̀ⲙⲁⲥ." },
             { language: 'englishCoptic', audio: "alhan-pascha-omonogenis.mp3", text: "Omonogenēs Uios ke Logos tou Theou Athanatos u-Parkhōn ke kata deksamenos diatēn ēmeteran sōtērian sarkōthēne ek tēs agias The-otokou ke a-i (Parthenou Marias) b.\n\nAtreptōs enanethrōpisas o-estaurōthis te Ekhriste o Theos. Thanatō thanaton patēsas is ōntēs agias Etriados sun doksa zomenos tō Patri ke tō agiō Epneumati sōson ēmas.\n\nAgios o Theos odi ēmas an ethrōpos ge gonōs atreptōs ke minas Theos.\n\nAgios Iskhuros o en asthenia to uperekhon tēs Iskhuros epidiksamenos.\n\nAgios Athanatos o estaurōthis di ēmas oton di-a-estaurou thanaton upominas sarki ke diksasuōs ke en thanatō gegonōs u-Parkhis Athanatos.\n\nAgia Etrias ele-ēson ēmas." },
             { language: 'english', text: "O only-begotten Son, the eternal and immortal Word of God; who for our salvation did will to be incarnate of the holy Theotokos (and ever Virgin Mary)2.\n\nWho without change became man and was crucified, the Christ God. Trampled down death by death. One of the Holy Trinity, who is glorified with the Father and the Holy Spirit, save us.\n\nHoly God, who being God, for our sake, became man without change.\n\nHoly Mighty, who by weakness showed forth what is greater than power.\n\nHoly Immortal, who was crucified for our sake, and endured death in His flesh, the Eternal and Immortal.\n\nO Holy Trinity, have mercy on us." },
+            { language: 'arabic', text: "أيها الإبن الوحيد الجنس وكلمة الله الذى لا يموت الأزلى القابل كل شئ من أجل خلاصنا المتجسد من القديسة والدة الإله الدائمة البتولية مريم.\n\nبغير إستحالة المتأنس المصلوب المسيح الإله. بالموت داس الموت. أحد الثالوث المقدس الممجد مع الآب والروح القدس خلصنا.\n\nقدوس الله الذى من أجلنا صار إنسان بغير إستحالة وهو الإله.\n\nقدوس القوى الذى أظهر بالضعف ما هو أعظم من القوة.\n\nقدوس الذى لا يموت الذى صلب من أجلنا وصبر على موت الصليب وقبله فى جسده وهو أزلى غير مائت.\n\nأيها الثالوث المقدس إرحمنا." },
+            { language: 'englishArabic', text: "Ayyuha el-Ibn el-waheed el-gins, wa Kalimat Allah elladhi la yamout, el-azali, el-qabil kull shay' min agl khalasina, el-mutagassid min el-qiddeesa walidat el-Ilah ed-da'imat el-batouliyya Maryam,\n\nBi-ghayr istihala, el-muta'annis el-masloub, el-Maseeh el-Ilah. Bil-mawt dasa el-mawt. Ahad eth-thalouth el-muqaddas, el-mumaggad ma'a el-Ab war-Rouh el-Qudus, khallisna.\n\nQuddous Allah, elladhi min aglina sara insanan bi-ghayr istihala wa huwa el-Ilah.\n\nQuddous el-qawi, elladhi azhara bid-du'f ma huwa a'zam min el-quwwa.\n\nQuddous elladhi la yamout, elladhi sulib min aglina, wa sabara 'ala mawt es-saleeb wa qabilahu fi gasadih, wa huwa azaliyyun ghayr ma'it.\n\nAyyuha eth-thalouth el-muqaddas irhamna." },
           ],
         },
         {
@@ -1136,6 +1144,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-pascha-ninthhour.mp3", text: "Ⲱ̀ ⲫⲏⲉ̀ⲧⲁϥϫⲉⲙϯⲡⲓ ⲙ̀ⲫ̀ⲙⲟⲩ ϧⲉⲛ ⲧ̀ⲥⲁⲣⲝ ⲙ̀ⲫ̀ⲛⲁⲩ ⲛ̀ⲁϫⲡ ⲯⲓϯ ⲉⲑⲃⲏⲧⲉⲛ ϧⲱⲧⲉⲃ ⲛ̀ⲛⲉⲛⲗⲟⲅⲓⲥⲙⲟⲥ ⲛ̀ⲥⲱⲙⲁⲧⲓⲕⲟⲛ ⲱ̀Ⲡⲭ̅ⲥ̅ ⲡⲉⲛⲚⲟⲩϯ ⲟⲩⲟϩ ⲛⲁϩⲙⲉⲛ." },
             { language: 'englishCoptic', audio: "alhan-pascha-ninthhour.mp3", text: "Ō fē-etafjemtipi emefmou khen etsarks emefnau enajp psiti ethvēten khōteb ennenlogismos ensōmatikon ō-Pi-ekhristos pen-Nouti ouoh nahmen." },
             { language: 'english', text: "O who tasted death in the flesh at the ninth hour for our sake, us sinners, put to death our carnal desires O Christ our God and deliver us." },
+            { language: 'arabic', text: "يا من ذاق الموت بالجسد في وقت الساعة التاسعة من أجلنا نحن الخطاة، أمت حواسنا الجسمانية، أيها المسيح إلهنا ونجنا." },
+            { language: 'englishArabic', text: "Ya man dhaqa el-mawt bil-gasad fi waqt es-sa'a et-tasi'a min aglina nahnu el-khuta', amit hawassana el-gismaniyya ayyuha el-Maseeh ilahuna wa naggina." },
           ],
         },
         {
@@ -1145,6 +1155,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-pascha-pekethronos-04.mp3", text: "Ⲡⲉⲕⲑ̀ⲣⲟⲛⲟⲥ Ⲫ̀ϯ ϣⲁⲉ̀ⲛⲉϩ ⲛ̀ⲧⲉ ⲡⲓⲉ̀ⲛⲉϩ ⲟⲩⲟϩ ⲡⲓϣ̀ⲃⲱⲧ ⲙ̀ⲡ̀ⲥⲱⲟⲩⲧⲉⲛ ⲡⲉ ⲡ̀ϣ̀ⲃⲱⲧ ⲛ̀ⲧⲉ ⲧⲉⲕⲙⲉⲧⲟ̀ⲩⲣⲟ.\n\nⲞ̀ⲩⲥ̀ⲙⲩⲣⲛⲁ ⲛⲉⲙ ⲟⲩⲥ̀ⲧⲁⲕⲧⲏ ⲛⲉⲙ ⲟ̀ⲩⲕⲁⲥⲓⲁ ⲉ̀ⲃⲟⲗϧⲉⲛ ⲛⲉⲕϩ̀ⲃⲱⲥ ⲁ̅ⲗ̅." },
             { language: 'englishCoptic', audio: "alhan-pascha-pekethronos-04.mp3", text: "Pekethronos Efti sha-eneh ente pi-eneh ouoh pi-eshvōt emepsōouten pe epeshvōt ente tekmetouro.\n\nOu-esmurna nem ou-estaktē nem oukasia evolkhen nekehvōs allēlouia." },
             { language: 'english', text: "Your throne, O God, is forever and ever; A scepter of righteousness is the scepter of Your kingdom.\n\nAll Your garments are scented with myrrh and aloes and cassia. Alleluia." },
+            { language: 'arabic', text: "كُرْسِيُّكَ يَا اَللهُ إِلَى دَهْرِ الدُّهر. قَضِيبُ الاسْتِقَامَةٍ هو قَضِيبُ مُلْكِكَ.\n\nالمُرٌّ والميعةُ وَالسَلِيخَةٌ مِنْ ثيابك." },
+            { language: 'englishArabic', text: "Kursiyyuka ya Allah ila dahr ed-dahr. Qadeeb el-istiqama huwa qadeeb mulkik.\n\nEl-murr wal-may'a was-saleekha min thiyabik." },
           ],
         },
         {
@@ -1169,6 +1181,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-brightsat-anok.mp3", text: "Ⲇⲟⲝⲁ ⲥⲓ ⲟ̀ Ⲑⲉⲟⲥ ⲩ̀ⲙⲱⲛ ⲁⲗⲗⲏⲗⲟⲩⲓⲁ.\n\nⲠⲓⲱ̀ⲟⲩ ⲫⲁ ⲡⲉⲛⲚⲟⲩϯ ⲡⲉ.\n\nⲀ̀ⲛⲟⲕ ⲡⲉ ⲡⲓⲕⲟⲩϫⲓ ⲛ̀ϧ̀ⲣⲏⲓ ϧⲉⲛ ⲛⲁⲥ̀ⲛⲏⲟⲩ ⲟⲩⲟϩ ⲛ̀ⲁ̀ⲗⲟⲩ ϧⲉⲛ ⲡ̀ⲏⲓ ⲛ̀ⲧⲉ ⲡⲁⲓⲱⲧ ⲛⲁⲓ ⲁ̀ⲙⲟⲛⲓ ⲛ̀ⲛⲓⲉ̀ⲥⲱⲟⲩ ⲛ̀ⲧⲉ ⲡⲁⲓⲱⲧ. Ⲛⲁϫⲓϫ ⲁⲩⲑⲁⲙⲓⲟ ⲛ̀ⲟⲩⲟⲣⲅⲁⲛⲟⲛ ⲟⲩⲟϩ ⲛⲁⲧⲏⲃ ⲁⲩϩⲱⲧⲡ ⲛ̀ⲟ̀ⲯⲁⲗⲧⲏⲣⲓⲟⲛ. Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ ⲁ̅ⲗ̅ ⲁ̅ⲗ̅." },
             { language: 'englishCoptic', audio: "alhan-brightsat-anok.mp3", text: "Doksa si o Theos umōn allēlouia.\n\nPi-ōou fa pen-Nouti pe.\n\nAnok pe pikouji enekhrēi khen na-esnēou ouoh enalou khen epēi ente paiōt nai amoni enni-esōou ente paiōt. Najij authamio enouorganon ouoh natēb auhōtp enopsaltērion. Allēlouia allēlouia allēlouia." },
             { language: 'english', text: "Glory be to You, O our God, Alleluia.\n\nGlory be to our God.\n\nI was small among my brothers, and the youngest in my father’s house; I tended my father’s sheep. My hands made a harp; my fingers fashioned a lyre. Alleluia, alleluia, alleluia." },
+            { language: 'arabic', text: "المجد لك يا إلهنا، هلليلويا.\n\nالمجد هو لإلهنا.\n\nأنا الصَغِيرُ في إخوَتي، والحَدَثُ في بَيتِ أبي، كُنْتُ راعِياً غَنَم أبي. يَدايَّ صَنَعتا الأرغن، وأصَابِعِي ألَّلفَت المِزمَار. هلليلويا هلليلويا هلليلويا." },
+            { language: 'englishArabic', text: "El-magd laka ya ilahana, hallelouia.\n\nEl-magd huwa li-ilahina.\n\nAna es-sagheer fi ikhwati, wal-hadath fi bayt abi, kuntu ra'iyan ghanam abi. Yadaya sana'ata el-arghan, wa asabi'i allafat el-mizmar. Hallelouia hallelouia hallelouia." },
           ],
         },
         {
@@ -1203,6 +1217,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-brightsat-feete.mp3", text: "Ⲫⲏⲉ̀ⲧⲉ ⲟⲩⲟⲛ ⲙⲁϣϫ ⲙ̀ⲙⲟϥ ⲉ̀ⲥⲱⲧⲉⲙ ⲙⲁⲣⲉϥⲥⲱⲧⲉⲙ ϫⲉ ⲟⲩ ⲡⲉ ⲉ̀ⲧⲉ ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ ϫⲱ ⲙ̀ⲙⲟϥ ⲛ̀ⲛⲓⲉⲕⲕ̀ⲗⲏⲥⲓⲁ̀." },
             { language: 'englishCoptic', audio: "alhan-brightsat-feete.mp3", text: "Fē-ete ouon mashj emmof esōtem marefsōtem je ou pe ete pi-epneuma jō emmof enniekeklēsi-a." },
             { language: 'english', text: "He who has an ear, let him hear, what the Spirit says, to the Churches." },
+            { language: 'arabic', text: "مَنْ لَهُ أُذُنٌ فَلْيَسْمَعْ مَا يَقُولُهُ الرُّوحُ لِلْكَنَائِسِ." },
+            { language: 'englishArabic', text: "Man lahu udhunun fal-yasma' ma yaqouluhu er-Rouh lil-kana'is." },
           ],
         },
         {
@@ -1311,6 +1327,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-brightsat-erepensoteer.mp3", text: "Ⲉ̀ⲣⲉ ⲡⲉⲛⲤⲱⲧⲏⲣ ϧⲉⲛ ⲧⲉⲥⲙⲏϯ ⲉϥϯⲭ̀ⲗⲟⲙ ϩⲓ ⲧⲁⲓⲟ̀ ⲛ̀ⲛⲏⲉⲑⲙⲉⲓ ⲙ̀ⲙⲟϥ." },
             { language: 'englishCoptic', audio: "alhan-brightsat-erepensoteer.mp3", text: "Ere pen-Sōtēr khen tesmēti efti-ekhlom hi tai-o ennēethmei emmof." },
             { language: 'english', text: "And our Savior in the midst of it giving a crown and honoring the ones who love Him." },
+            { language: 'arabic', text: "ومخلصنا في وسطها يكلل بالكرامة الذين يحبونه." },
+            { language: 'englishArabic', text: "Wa mukhallisuna fi wasatiha yukallil bil-karama elladheena yuhibbounah." },
           ],
         },
       ],
@@ -1613,6 +1631,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
           versions: [
             { language: 'coptic', audio: "alhan-advent-etrion.mp3", text: "Ⲧ̀ⲣⲓⲟⲛ ⲡⲁⲓⲑⲟⲛ ⲛ̀ϫⲉ ⲙⲉⲗⲓⲛ ⲛⲁⲧⲟⲩ ⲡⲉⲣⲟⲥ ⲇⲟⲝⲁ ⲙ̀ⲡ̀ⲥⲁⲧⲉⲧⲟⲩ ⲥⲱⲙⲁⲧⲟⲥ ⲁⲅⲅⲉⲗⲟⲥ ⲅⲁⲣ ⲥⲉⲛⲁⲥⲉⲗ ⲑⲉⲇⲉ ⲁⲩⲧⲟⲕⲓⲑⲟⲛ ⲫ̀ⲗⲓⲅⲁⲣⲧⲏⲥ ⲉ̀ⲗⲉⲩⲥⲉⲱ̀ⲛ ⲏ̀ⲙⲱⲛ. Ⲁ̀ⲛⲁⲛⲓⲁⲥ Ⲁ̀ⲍⲁⲣⲓⲁⲥ ⲕⲉ Ⲙⲓⲥⲁⲏ̀ⲗ." },
             { language: 'english', text: "When they were raised to take glory in their bodies, the angel came down, stopped the fire and became cool for Hananiah Azariah and Mishael." },
+            { language: 'arabic', text: "لما رُفعوا ليأخذوا المجد في أجسادهم إنحدر ملاك وأطفأ اللهيب وصيره بارداً عن حنانيا وعزاريا وميصائيل." },
+            { language: 'englishArabic', text: "Lamma rufi'ou li-ya'khudhou el-magd fi agsadihim, inhadara malak wa atfa'a el-laheeb wa sayyarahu baridan 'an Hananya wa 'Azarya wa Misa'eel." },
           ],
         },
       ],
@@ -1699,6 +1719,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
           versions: [
             { language: 'coptic', audio: "alhan-advent-gospelresponse1.mp3", text: "Ⲧⲉⲛϯ ⲛⲉ ⲙ̀ⲡⲓⲭⲉⲣⲉⲧⲓⲥⲙⲟⲥ ⲛⲉⲙ Ⲅⲁⲃⲣⲓⲏⲗ ⲡⲓⲁⲅⲅⲉⲗⲟⲥ ϫⲉ ⲭⲉⲣⲉ ⲕⲉⲭⲁⲣⲓⲧⲱⲙⲉⲛⲏ ⲟ̀ Ⲕⲩⲣⲓⲟⲥ ⲙⲉⲧⲁ ⲥⲟⲩ.\n\nⲈⲑⲃⲉ ⲫⲁⲓ ⲧⲉⲛϯⲱ̀ⲟⲩ ⲛⲉ ϩⲱⲥ Ⲑⲉⲟ̀ⲧⲟⲕⲟⲥ ⲛ̀ⲥⲏⲟⲩ ⲛⲓⲃⲉⲛ ⲙⲁϯϩⲟ ⲉ̀Ⲡ̀ϭⲟⲓⲥ ⲉ̀ϩ̀ⲣⲏⲓ ⲉ̀ϫⲱⲛ ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ." },
             { language: 'english', text: "We give unto you greeting, with Gabriel the angel saying, \"Hail to you O full of grace, the Lord is with you.\"\n\nWherefore we glorify you, as the ever-Theotokos, ask the Lord on our behalf, that He may forgive us our sins." },
+            { language: 'arabic', text: "نعطيكِ السلام، مع غبريال الملاك قائلين، \"السلام لكِ يا ممتلئة نعمة، الرب معكِ.\"\n\nمن أجل هذا نمجدِك، كوالدة الإله كل حين، إسألي الرب عنا، ليغفر لنا خطايانا." },
+            { language: 'englishArabic', text: "Nu'teeki es-salam, ma'a Ghabriyal el-malak qa'ileen: \"Es-salam laki ya mumtali'a ni'ma, er-Rabb ma'aki.\"\n\nMin agl hadha numaggiduki, ka-walidat el-Ilah kull heen. Is'ali er-Rabb 'anna, li-yaghfir lana khatayana." },
           ],
         },
         {
@@ -1707,6 +1729,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
           versions: [
             { language: 'coptic', audio: "alhan-advent-gospelresponse2.mp3", text: "Ⲧⲉⲛϭⲓⲥⲓ ⲙ̀ⲙⲟ ϧⲉⲛ ⲟⲩⲉⲙⲡ̀ϣⲁ ⲛⲉⲙ Ⲉ̀ⲗⲓⲥⲁⲃⲉⲧ ⲧⲉⲥⲩⲅⲅⲉⲛⲏⲥ ϫⲉ ⲧⲉⲥ̀ⲙⲁⲣⲱⲟⲩⲧ ⲛ̀ⲑⲟ ϧⲉⲛ ⲛⲓϩⲓⲟⲙⲓ ϥ̀ⲥ̀ⲙⲁⲣⲱⲟⲩⲧ ⲛ̀ϫⲉ ⲡ̀ⲟⲩⲧⲁϩ ⲛ̀ⲧⲉ ⲧⲉⲛⲉϫⲓ.\n\nⲈⲑⲃⲉ ⲫⲁⲓ ⲧⲉⲛϯⲱ̀ⲟⲩ ⲛⲉ ϩⲱⲥ Ⲑⲉⲟ̀ⲧⲟⲕⲟⲥ ⲛ̀ⲥⲏⲟⲩ ⲛⲓⲃⲉⲛ ⲙⲁϯϩⲟ ⲉ̀Ⲡ̀ϭⲟⲓⲥ ⲉ̀ϩ̀ⲣⲏⲓ ⲉ̀ϫⲱⲛ ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ." },
             { language: 'english', text: "We magnify you worthily, with Elizabeth your cousin saying, \"Blessed are you among women, and blessed is the fruit of your womb.\"\n\nWherefore we glorify you, as the ever-Theotokos, ask the Lord on our behalf, that He may forgive us our sins." },
+            { language: 'arabic', text: "نعظمكِ بإستحقاق، مع أليصابات نسيبتِك قائلين، \"مباركة أنتِ في النساء، ومباركة هي ثمرة بطنِك.\"\n\nمن أجل هذا نمجدِك، كوالدة الإله كل حين، إسألي الرب عنا، ليغفر لنا خطايانا." },
+            { language: 'englishArabic', text: "Nu'azzimuki bi-istihqaq, ma'a Aleesabat naseebatiki qa'ileen, \"Mubarakatun anti fin-nisa', wa mubarakatun hiya thamaratu batniki.\"\n\nMin agl hadha numaggiduki, ka-walidat el-Ilah kull heen. Is'ali er-Rabb 'anna, li-yaghfir lana khatayana." },
           ],
         },
       ],
