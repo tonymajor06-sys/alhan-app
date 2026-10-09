@@ -1,6 +1,7 @@
 import { addArabicCoptic } from './arabic-coptic';
 import { addArabicEnglish } from './arabic-english';
 import { alhanSeasonServices } from './alhan-seasons';
+import { stAdditions } from './st-hymns';
 
 export type LanguageType = 'coptic' | 'englishCoptic' | 'arabicCoptic' | 'english' | 'arabicEnglish' | 'englishArabic' | 'arabic';
 
@@ -7309,6 +7310,27 @@ for (const [seasonId, audio, ids, second] of alhanRecordings) {
       else version.audio = audio;
     }
   }
+}
+
+// ---- Hymns from Spirit & Truth that each season was missing (see st-hymns.ts) ----
+// Each goes after the hymn it follows in Spirit & Truth (or before the one it precedes); a service the season lacks is added,
+// and a season's placeholder hymns make way once it has real ones
+for (const { season: seasonId, service: serviceId, serviceTitle, after, before, hymn } of stAdditions) {
+  const season = seasons.find((s) => s.id === seasonId);
+  if (!season) continue;
+  season.services = season.services
+    .map((s) => ({ ...s, hymns: s.hymns.filter((h) => !/ Hymn #\d+$/.test(h.title)) }))
+    .filter((s) => s.hymns.length > 0 || s.id === serviceId);
+  let service = season.services.find((s) => s.id === serviceId);
+  if (!service) {
+    service = { id: serviceId, title: serviceTitle, hymns: [] };
+    season.services.push(service);
+  }
+  const index = after ? service.hymns.findIndex((h) => h.id === after) : -1;
+  const next = before ? service.hymns.findIndex((h) => h.id === before) : -1;
+  if (index >= 0) service.hymns.splice(index + 1, 0, hymn);
+  else if (next >= 0) service.hymns.splice(next, 0, hymn);
+  else service.hymns.push(hymn);
 }
 
 // Keep these last: give every hymn a "Coptic in Arabic letters" and an "English in Arabic letters" version
