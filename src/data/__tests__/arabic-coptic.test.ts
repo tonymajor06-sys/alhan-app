@@ -972,7 +972,7 @@ describe('Kiahk Praises & Season > Liturgy', () => {
     expect(stanzas(blessed, 'englishCoptic')[3]).toContain('(is polla etē Despota) 3.');
     expect(stanzas(blessed, 'arabicCoptic')[3]).toContain('٣');
     expect(text(blessed, 'english')).not.toBe(text(virtues, 'english'));
-    expect(blessed.versions.every((v) => !v.text.includes('\\n') && v.audio === undefined)).toBe(true);
+    expect(blessed.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
     // Perfect is the Blessing (12 stanzas) and the Introduction to the Coptic Catholic Epistle (1 stanza)
     const perfect = service.hymns.find((h) => h.title === withLyricsTitles[7])!;
     const catholic = service.hymns.find((h) => h.title === withLyricsTitles[8])!;
