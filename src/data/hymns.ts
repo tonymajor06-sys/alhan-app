@@ -7462,6 +7462,23 @@ for (const extra of allExtras) {
 
 
 
+// ---- Audio: Arsani Sidarous recordings, each for the one hymn (id) it was recorded for; Coptic also plays for Coptic in English letters ----
+const sidarousAudio: Record<string, string> = {
+  'annual-liturgy-great-greet-one-another': 'annual-liturgy-great-greet-one-another.mp3',
+  'nayrouz-liturgy-praxis-response-2': 'nayrouz-liturgy-praxis-response.mp3',
+  'annual-vespers-blessed-is-he': 'annual-vespers-blessed-is-he.mp3',
+  'nayrouz-matins-verses-of-the-cymbals@cross-matins': 'cross-matins-verses-of-the-cymbals.mp3',
+};
+for (const season of seasons) {
+  for (const hymn of season.services.flatMap((s) => flattenHymns(s.hymns))) {
+    const file = sidarousAudio[hymn.id];
+    if (!file) continue;
+    for (const version of hymn.versions) {
+      if (version.language === 'coptic' || version.language === 'englishCoptic') version.audio = file;
+    }
+  }
+}
+
 // Keep these last: give every hymn a "Coptic in Arabic letters" and an "English in Arabic letters" version
 // (see arabic-coptic.ts and arabic-english.ts),
 // so it must run after all the changes above
