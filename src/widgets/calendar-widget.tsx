@@ -16,7 +16,7 @@ import { createWidget, type WidgetEnvironment } from 'expo-widgets';
 // because the widget runtime can't import the calendar code.
 export type CalendarWidgetProps = {
   rtl: boolean;
-  monthTitle: string; // "Thout 1743"
+  monthTitle: string; // "Tout 1743"
   gregorianRange: string; // "11 Sep – 10 Oct"
   weekdays: string[]; // 7 short names, already in display order
   cells: string[]; // day numbers, '' for blanks; rows of 7, already in display order

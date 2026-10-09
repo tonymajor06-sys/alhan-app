@@ -1,5 +1,6 @@
 import {
   copticToJdn,
+  currentSeasonName,
   formatCopticDate,
   getSeasonInfo,
   gregorianToJdn,
@@ -52,7 +53,7 @@ describe('Coptic dates', () => {
   });
 
   it('formats in English and Arabic', () => {
-    expect(formatCopticDate(day(2026, 9, 30), 'en')).toBe('20 Thout 1743 A.M.');
+    expect(formatCopticDate(day(2026, 9, 30), 'en')).toBe('20 Tout 1743 A.M.');
     expect(formatCopticDate(day(2026, 9, 30), 'ar')).toContain('للشهداء');
   });
 });
@@ -87,6 +88,40 @@ describe('seasons', () => {
   it('lets Kiahk take over the Nativity Fast', () => {
     expect(seasonOn(2026, 12, 1)).toBe('nativity-fast');
     expect(seasonOn(2026, 12, 20)).toBe('kiahk');
+  });
+
+  it('names each day as Spirit & Truth does', () => {
+    const nameOn = (y: number, m: number, d: number) => currentSeasonName(getSeasonInfo(day(y, m, d)), 'en');
+    expect(nameOn(2026, 9, 11)).toBe('Coptic New Year');
+    expect(nameOn(2026, 11, 25)).toBe('1st Day of the Nativity Fast');
+    expect(nameOn(2026, 12, 2)).toBe('Nativity Fast');
+    expect(nameOn(2026, 12, 13)).toBe('1st Sunday of Kiahk');
+    expect(nameOn(2026, 12, 15)).toBe('1st Week of Kiahk');
+    expect(nameOn(2027, 1, 3)).toBe('4th Sunday of Kiahk');
+    expect(nameOn(2027, 1, 6)).toBe('Nativity Paramoun');
+    expect(nameOn(2027, 1, 8)).toBe('2nd Day of the Nativity');
+    expect(nameOn(2027, 1, 18)).toBe('Theophany Paramoun');
+    expect(nameOn(2027, 1, 20)).toBe('2nd Day of the Theophany');
+    expect(nameOn(2027, 3, 7)).toBe('Preparation Sunday');
+    expect(nameOn(2027, 3, 8)).toBe('1st Monday of Great Lent');
+    expect(nameOn(2027, 3, 14)).toBe('1st Sunday of Great Lent');
+    expect(nameOn(2027, 3, 20)).toBe('2nd Week of Great Lent');
+    expect(nameOn(2027, 4, 23)).toBe('Last Friday of Great Lent');
+    expect(nameOn(2027, 4, 29)).toBe('Covenant Thursday');
+    expect(nameOn(2027, 5, 1)).toBe('Bright Saturday');
+    expect(nameOn(2027, 5, 12)).toBe('2nd Week of Pentecost');
+    expect(nameOn(2027, 5, 16)).toBe('2nd Sunday of Pentecost');
+    expect(nameOn(2027, 6, 21)).toBe("1st Day of Apostles' Fast");
+    expect(nameOn(2027, 7, 14)).toBe('Annual (ordinary days)');
+    expect(nameOn(2027, 7, 18)).toBe('2nd Sunday of Abib');
+    expect(nameOn(2027, 8, 10)).toBe('Fast of St. Mary');
+  });
+
+  it('leaves out of "Coming up" the seasons a first day of their own announces', () => {
+    const names = getSeasonInfo(day(2026, 10, 9), 40).upcoming.map((ev) => ev.name.en);
+    expect(names).toContain('1st Day of the Nativity Fast');
+    expect(names).not.toContain('Nativity Fast');
+    expect(names).not.toContain('Month of Kiahk');
   });
 
   it('uses Adam tunes Sunday to Tuesday and Watos tunes Wednesday to Saturday', () => {

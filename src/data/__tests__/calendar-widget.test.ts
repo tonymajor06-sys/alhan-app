@@ -4,7 +4,7 @@ import { calendarWidgetProps } from '@/widgets/calendar-widget-props';
 jest.mock('@/widgets/calendar-widget', () => ({}));
 
 describe('calendar widget month grid', () => {
-  const jdn = gregorianToJdn(2026, 10, 1); // 21 Thout 1743, a Thursday
+  const jdn = gregorianToJdn(2026, 10, 1); // 21 Tout 1743, a Thursday
 
   it('lays the month out in full weeks with today in the right cell', () => {
     const p = calendarWidgetProps(jdn, 'en');
@@ -14,10 +14,10 @@ describe('calendar widget month grid', () => {
     expect(p.cells.filter(Boolean)).toHaveLength(30);
     expect(p.cells[p.todayIndex]).toBe(String(c.day));
     expect(p.todayIndex % 7).toBe(4); // Thursday column
-    expect(p.monthTitle).toBe('Thout 1743');
+    expect(p.monthTitle).toBe('Tout 1743');
   });
 
-  it('marks the Feast of the Cross (17 Thout)', () => {
+  it('marks the Feast of the Cross (17 Tout)', () => {
     const p = calendarWidgetProps(jdn, 'en');
     expect(p.kinds[p.cells.indexOf('17')]).toBe(1);
   });

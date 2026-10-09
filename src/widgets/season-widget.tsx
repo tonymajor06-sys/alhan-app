@@ -15,7 +15,7 @@ import { createWidget, type WidgetEnvironment } from 'expo-widgets';
 // the widget runtime can't import the calendar code.
 export type SeasonWidgetProps = {
   rtl: boolean;
-  copticDay: string; // "20 Thout"
+  copticDay: string; // "20 Tout"
   copticYear: string; // "1743 A.M."
   gregorianDate: string; // "30 Sep 2026"
   season: string; // "Annual (ordinary days)"
