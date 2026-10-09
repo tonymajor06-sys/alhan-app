@@ -2,6 +2,7 @@ import { addArabicCoptic } from './arabic-coptic';
 import { addArabicEnglish } from './arabic-english';
 import { alhanSeasonServices } from './alhan-seasons';
 import { stAdditions } from './st-hymns';
+import { stFills } from './st-fills';
 
 export type LanguageType = 'coptic' | 'englishCoptic' | 'arabicCoptic' | 'english' | 'arabicEnglish' | 'englishArabic' | 'arabic';
 
@@ -7332,6 +7333,15 @@ for (const { season: seasonId, service: serviceId, serviceTitle, after, before, 
   else if (next >= 0) service.hymns.splice(next, 0, hymn);
   else service.hymns.push(hymn);
 }
+
+// ---- Words from Spirit & Truth for hymns listed by title only (see st-fills.ts) ----
+const fillFromSt = (hymns: Hymn[]) => {
+  for (const hymn of hymns) {
+    if (hymn.children) fillFromSt(hymn.children);
+    else if (hymn.versions.length === 0 && stFills[hymn.id]) hymn.versions = stFills[hymn.id].map((v) => ({ ...v }));
+  }
+};
+for (const season of seasons) for (const service of season.services) fillFromSt(service.hymns);
 
 // Keep these last: give every hymn a "Coptic in Arabic letters" and an "English in Arabic letters" version
 // (see arabic-coptic.ts and arabic-english.ts),
