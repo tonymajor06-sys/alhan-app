@@ -6209,6 +6209,8 @@ const venerationAudio: Record<string, { file: string; languages: LanguageType[];
   'a-crown': { file: 'A crown.m4a', languages: COPTIC },
   'hear-o-daughter': { file: 'Hear o daughter.m4a', languages: ARABIC },
   conclusion: { file: 'Veneration conclusion.m4a', languages: ARABIC },
+  'rejoice-o-theotokos': { file: 'annual-veneration-rejoice-o-theotokos.mp3', languages: COPTIC },
+  'let-us-gather': { file: 'annual-veneration-let-us-gather.mp3', languages: COPTIC },
 };
 const veneration = (slug: string, title: string): Hymn => ({
   id: `annual-veneration-${slug}`,
