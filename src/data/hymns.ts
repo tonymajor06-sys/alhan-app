@@ -1,5 +1,6 @@
 import { addArabicCoptic } from './arabic-coptic';
 import { addArabicEnglish } from './arabic-english';
+import { alhanSeasonServices } from './alhan-seasons';
 
 export type LanguageType = 'coptic' | 'englishCoptic' | 'arabicCoptic' | 'english' | 'arabicEnglish' | 'englishArabic' | 'arabic';
 
@@ -7254,6 +7255,12 @@ for (const version of kiahkCommemoration?.versions ?? []) {
     }
     version.audio = kiahkCommemorationAudio;
   }
+}
+
+// ---- Seasons from alhan.org: their hymns replace the placeholder services ----
+for (const [seasonId, services] of Object.entries(alhanSeasonServices)) {
+  const season = seasons.find((s) => s.id === seasonId);
+  if (season) season.services = services;
 }
 
 // ---- Audio: Kiahk and Great Lent recordings from alhan.org (by Arsani Sidarous, used with his permission) ----
