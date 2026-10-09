@@ -24,6 +24,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-nairouz-nai-psalm.mp3", text: "Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ ⲁ̅ⲗ̅ ⲥ̀ⲙⲟⲩ ⲉ̀ⲡⲓⲭ̀ⲗⲟⲙ ⲛ̀ⲧⲉ ϯⲣⲟⲙⲡⲓ ϩⲓⲧⲉⲛ ⲧⲉⲕⲙⲉⲧⲭ̀ⲣⲏⲥⲧⲟⲥ Ⲡ̀⳪ ⲛⲓⲁ̀ⲣⲱⲟⲩ ⲛⲉⲙ ⲛⲓⲙⲟⲩⲙⲓ ⲛⲉⲙ ⲛⲓⲥⲓϯ ⲛⲉⲙ ⲛⲓⲕⲁⲣⲡⲟⲥ. Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ ⲁ̅ⲗ̅." },
             { language: 'englishCoptic', audio: "alhan-nairouz-nai-psalm.mp3", text: "Allēlouia allēlouia esmou epi-ekhlom ente tirompi hiten tekmetekhrēstos Eptshois ni-arōou nem nimoumi nem nisiti nem nikarpos. Allēlouia allēlouia." },
             { language: 'english', text: "Alleluia Alleluia, bless the crown of the year with Your goodness O Lord. The rivers, the springs, the plants, and the crops. Alleluia Alleluia." },
+            { language: 'arabic', text: "هلليلويا هلليلويا، بارك إكليل السنة، بصلاحك يا رب، الأنهار والينابيع، والزروع والأثمار، هلليلويا هلليلويا." },
+            { language: 'englishArabic', text: "Hallelouia hallelouia, barik ikleel es-sana, bi-salahak ya Rabb, el-anhar wal-yanabee', waz-zurou' wal-athmar, hallelouia hallelouia." },
           ],
         },
         {
@@ -57,6 +59,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-nairouz-nai-psalm.mp3", text: "Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ ⲁ̅ⲗ̅ ⲥ̀ⲙⲟⲩ ⲉ̀ⲡⲓⲭ̀ⲗⲟⲙ ⲛ̀ⲧⲉ ϯⲣⲟⲙⲡⲓ ϩⲓⲧⲉⲛ ⲧⲉⲕⲙⲉⲧⲭ̀ⲣⲏⲥⲧⲟⲥ Ⲡ̀⳪ ⲛⲓⲁ̀ⲣⲱⲟⲩ ⲛⲉⲙ ⲛⲓⲙⲟⲩⲙⲓ ⲛⲉⲙ ⲛⲓⲥⲓϯ ⲛⲉⲙ ⲛⲓⲕⲁⲣⲡⲟⲥ. Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ ⲁ̅ⲗ̅." },
             { language: 'englishCoptic', audio: "alhan-nairouz-nai-psalm.mp3", text: "Allēlouia allēlouia esmou epi-ekhlom ente tirompi hiten tekmetekhrēstos Eptshois ni-arōou nem nimoumi nem nisiti nem nikarpos. Allēlouia allēlouia." },
             { language: 'english', text: "Alleluia Alleluia, bless the crown of the year with Your goodness O Lord. The rivers, the springs, the plants, and the crops. Alleluia Alleluia." },
+            { language: 'arabic', text: "هلليلويا هلليلويا، بارك إكليل السنة، بصلاحك يا رب، الأنهار والينابيع، والزروع والأثمار، هلليلويا هلليلويا." },
+            { language: 'englishArabic', text: "Hallelouia hallelouia, barik ikleel es-sana, bi-salahak ya Rabb, el-anhar wal-yanabee', waz-zurou' wal-athmar, hallelouia hallelouia." },
           ],
         },
         {
@@ -83,6 +87,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-cross-cross-cymbals.mp3", text: "Ⲭⲉⲣⲉ ⲡⲓⲥ̀ⲧⲁⲩⲣⲟⲥ ⲉ̀ⲧⲁⲩⲉϣ ⲡⲁ⳪ ⲉ̀ⲣⲟϥ ⲭⲉⲣⲉ ⲡⲓⲙ̀ϩⲁⲩ ⲉⲧⲁⲩ ⲭⲱ ⲙ̀ⲡⲉϥⲥⲱⲙⲁ ⲛ̀ϧⲏⲧϥ.\n\nⲠⲓⲥ̀ⲧⲁⲩⲣⲟⲥ ⲡⲉ ⲡⲉⲛϩⲟⲡⲗⲟⲛ ⲡⲓⲥ̀ⲧⲁⲩⲣⲟⲥ ⲡⲉ ⲧⲉⲛϩⲉⲗⲡⲓⲥ ⲡⲓⲥ̀ⲧⲁⲩⲣⲟⲥ ⲡⲉ ⲡⲉⲛⲧⲁϫⲣⲟ ϧⲉⲛ ⲛⲉⲛϩⲟϫϩⲉϫ ⲛⲉⲙ ⲛⲉⲛⲑ̀ⲗⲓⲯⲓⲥ." },
             { language: 'englishCoptic', audio: "alhan-cross-cross-cymbals.mp3", text: "Shere pi-estauros etauesh patshois erof shere pi-emhau etau khō empefsōma enkhētf.\n\nPi-estauros pe penhoplon pi-estauros pe tenhelpis pi-estauros pe pentajro khen nenhojhej nem nenethlipsis." },
             { language: 'english', text: "Hail to the cross, which my Lord was crucified upon, hail to the grave, where they placed His body.\n\nThe cross is our weapon, the cross is our hope, the cross is our confirmation, in our troubles and sufferings." },
+            { language: 'arabic', text: "السلام للصليب، الذي صُلِبَ عليه ربي، السلام للقبر، الذي وُضِعَ فيه جسده.\n\nالصليب هو سلاحنا، الصليب هو رجاؤنا، الصليب هو ثباتنا، في ضيقاتنا وشدائدنا." },
+            { language: 'englishArabic', text: "Es-salam lis-saleeb, elladhi sulib 'alayhi Rabbi, es-salam lil-qabr, elladhi wudi'a feehi gasaduh.\n\nEs-saleeb huwa silahuna, es-saleeb huwa raga'una, es-saleeb huwa thabatuna, fi diqatina wa shada'idina." },
           ],
         },
         {
@@ -101,6 +107,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-cross-pmatin-refrain-cross.mp3", text: "Ⲉ̀ⲃⲟⲗ ϩⲓⲧⲉⲛ ⲡⲉϥⲥ̀ⲧⲁⲩⲣⲟⲥ ⲛⲉⲙ ⲧⲉϥⲁ̀ⲛⲁⲥⲧⲁⲥⲓⲥ ⲉⲑⲟⲩⲁⲃ ⲁϥⲧⲁⲥⲑⲟ ⲙ̀ⲡⲓⲣⲱⲙⲓ ⲛ̀ⲕⲉⲥⲟⲡ ⲉ̀ϧⲟⲩⲛ ⲉ̀ⲡⲓⲡⲁⲣⲁⲇⲓⲥⲟⲥ.\n\nϪⲉ ϥ̀ⲥ̀ⲙⲁⲣⲱⲟⲩⲧ ⲛ̀ϫⲉ Ⲫⲓⲱⲧ ⲛⲉⲙ Ⲡϣⲏⲣⲓ ⲛⲉⲙ Ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ ⲉ̅ⲑ̅ⲩ̅ Ϯⲧ̀ⲣⲓⲁⲥ ⲉⲧϫⲏⲕ ⲉ̀ⲃⲟⲗ ⲧⲉⲛⲟⲩⲱϣⲧ ⲙ̀ⲙⲟⲥ ⲧⲉⲛϯⲱ̀ⲟⲩ ⲛⲁⲥ." },
             { language: 'englishCoptic', audio: "alhan-cross-pmatin-refrain-cross.mp3", text: "Evol hiten pefestauros nem tefanastasis ethouab aftastho empirōmi enkesop ekhoun epiparadisos.\n\nJe efesmarōout enje Fiōt nem Pshēri nem Pi-epneuma ethouab Ti-etrias etjēk evol tenouōsht emmos tenti-ōou nas." },
             { language: 'english', text: "Through His crucifixion, and holy Resurrection, He restored man once more, to the Paradise.\n\nBlessed be the Father and the Son and the Holy Spirit, the perfect Trinity. We worship Him and glorify Him." },
+            { language: 'arabic', text: "من قِبَل صليبه، و قيامته المقدسة، رد الانسان مرة أخرى، الي الفردوس.\n\nلأنه مباركٌ الآب والابن والروح القدس، الثالوث الكامل، نسجد له ونمجده." },
+            { language: 'englishArabic', text: "Min qibal saleebihi, wa qiyamatihi el-muqaddasa, radd el-insan marra ukhra, ila el-firdaws.\n\nLi-annahu mubarakun el-Ab wal-Ibn war-Rouh el-Qudus, eth-thalouth el-kamil, nasgud lahu wa numaggiduh." },
           ],
         },
         {
@@ -119,6 +127,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-palm-pmatin-mary.mp3", text: "Ⲧⲉⲛϭⲓⲥⲓ ⲙ̀ⲙⲟ ϧⲉⲛ ⲟⲩⲉⲙⲡ̀ϣⲁ ⲛⲉⲙ Ⲉ̀ⲗⲓⲥⲁⲃⲉⲧ ⲧⲉⲥⲩⲅⲅⲉⲛⲏⲥ ϫⲉ ⲧⲉⲥ̀ⲙⲁⲣⲱⲟⲩⲧ ⲛ̀ⲑⲟ ϧⲉⲛ ⲛⲓϩⲓⲟ̀ⲙⲓ ϥ̀ⲥ̀ⲙⲁⲣⲱⲟⲩⲧ ⲛ̀ϫⲉ ⲡ̀ⲟⲩⲧⲁϩ ⲛ̀ⲧⲉ ⲧⲉⲛⲉϫⲓ." },
             { language: 'englishCoptic', audio: "alhan-palm-pmatin-mary.mp3", text: "Tentshisi emmo khen ouemepsha nem Elisavet tesuggenēs je te-esmarōout entho khen nihi-omi efesmarōout enje epoutah ente teneji." },
             { language: 'english', text: "We indeed exalt you, with your cousin Elizabeth, saying \"Blessed are you among women, and blessed is the fruit of your womb.\"" },
+            { language: 'arabic', text: "نُعظِّمُكِ بإستحقاقٍ، مع أليصابات نَسيبَتكِ قائلين، \"مُباركةٌ أنتِ في النساء، ومُباركةٌ هي ثمرة بطنكِ.\"" },
+            { language: 'englishArabic', text: "Nu'azzimuki bi-istihqaq, ma'a Aleesabat naseebatiki qa'ileen, \"Mubarakatun anti fin-nisa', wa mubarakatun hiya thamaratu batniki.\"" },
           ],
         },
         {
@@ -173,6 +183,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-palm-pmatin-ndoor.mp3", text: "Ⲁⲕϣⲁⲛⲓ̀ ϧⲉⲛ ⲧⲉⲕⲙⲁϩⲥ̀ⲛⲟⲩϯ ⲙ̀ⲡⲁⲣⲟⲩⲥⲓⲁ̀ ⲉⲧⲟⲓ ⲛ̀ϩⲟϯ ⲙ̀ⲡⲉⲛⲑ̀ⲣⲉⲛⲥⲱⲧⲉⲙ ϧⲉⲛ ⲟⲩⲥ̀ⲑⲉⲣ-ⲧⲉⲣ ϫⲉ ϯⲥⲱⲟⲩⲛ ⲙ̀ⲙⲱⲧⲉⲛ ⲁⲛ." },
             { language: 'englishCoptic', audio: "alhan-palm-pmatin-ndoor.mp3", text: "Akshani khen tekmahesnouti emparousi-a etoi enhoti empenethrensōtem khen ou-esther-ter je tisōoun emmōten an." },
             { language: 'english', text: "And when You come again, in Your fearful appearance, may we never hear You say, \"I do not know you.\"" },
+            { language: 'arabic', text: "عند ظهورِك الثاني، المخوف لا نسمع، برعدةٍ \"أنَّنِي، لَستُ أعرفكم.\"" },
+            { language: 'englishArabic', text: "'Inda zuhourika eth-thani, el-mukhawwif la nasma', bi-ra'da \"innani, lastu a'rifukum.\"" },
           ],
         },
         {
@@ -182,6 +194,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-palm-pmatin-baptism.mp3", text: "Ⲁϥⲉⲣⲙⲉⲑⲣⲉ ⲛ̀ϫⲉ Ⲓⲱⲁⲛⲛⲏⲥ ϧⲉⲛ ⲡⲓϥ̀ⲧⲟⲟⲩ (ⲇ̅) ⲛ̀ⲉ̀ⲩⲁ̀ⲅⲅⲉⲗⲓⲟⲛ ϫⲉ ⲁⲓϯⲱⲙⲥ ⲙ̀ⲡⲁⲤⲱⲧⲏⲣ ϧⲉⲛ ⲛⲓⲙⲱⲟⲩ ⲛ̀ⲧⲉ ⲡⲓⲒⲟⲣⲇⲁⲛⲏⲥ." },
             { language: 'englishCoptic', audio: "alhan-palm-pmatin-baptism.mp3", text: "Afermethre enje Iōannēs khen pi-eftoou (d) eneu-aggelion je aitiōms empa-Sōtēr khen nimōou ente pi-Iordanēs." },
             { language: 'english', text: "John witnessed, in the four gospels, \"I baptized my Savior, in the waters of the Jordan.\"" },
+            { language: 'arabic', text: "شهد يوحنا، في الأناجيل الأربع، \"أني عمدَّت مخلصي، في مياه الأردن.\"" },
+            { language: 'englishArabic', text: "Shahida Youhanna, fil-anageel el-arba', \"inni 'ammadtu mukhallisi, fi miyah el-Urdunn.\"" },
           ],
         },
         {
@@ -200,6 +214,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-palm-pmatin-john.mp3", text: "Ⲙⲡⲉ ⲟⲩⲟⲛ ⲧⲱⲛϥ ϧⲉⲛ ⲛⲓϫⲓⲛⲙⲓⲥⲓ ⲛ̀ⲧⲉ ⲛⲓϩⲓⲟⲙⲓ ⲉϥⲟⲛⲓ ⲙ̀ⲙⲟⲕ ⲛ̀ⲑⲟⲕ ⲟⲩⲛⲓϣϯ ϧⲉⲛ ⲛⲏⲉ̅ⲑ̅ⲩ̅ ⲧⲏⲣⲟⲩ Ⲓⲱⲁⲛⲛⲏⲥ ⲡⲓⲣⲉϥϯⲱⲙⲥ." },
             { language: 'englishCoptic', audio: "alhan-palm-pmatin-john.mp3", text: "Mpe ouon tōnf khen nijinmisi ente nihiomi efoni emmok enthok ounishti khen nēethouab tērou Iōannēs pireftiōms." },
             { language: 'english', text: "Among those born of women, no one is like you, you are great among the saints, O John the Baptist." },
+            { language: 'arabic', text: "لم يقم في مواليد النساء، مَنْ يشبهك، أنت عظيم في جميع القديسين، يا يوحنا المعمدان." },
+            { language: 'englishArabic', text: "Lam yaqum fi mawaleed en-nisa', man yushbihuk, anta 'azeemun fi gamee' el-qiddiseen, ya Youhanna el-Ma'madan." },
           ],
         },
       ],
@@ -224,6 +240,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-cross-cross-praxis.mp3", text: "Ⲭⲉⲣⲉ ⲡⲓⲥ̀ⲧⲁⲩⲣⲟⲥ ⲫⲏⲉ̀ⲧⲁⲩⲉϣ ⲡⲁ⳪ ⲉ̀ⲣⲟϥ ϣⲁ ⲛ̀ⲧⲉϥⲥⲱϯ ⲙ̀ⲙⲟⲛ ⲉ̀ⲃⲟⲗ ϧⲉⲛ ⲛⲉⲛⲛⲟⲃⲓ." },
             { language: 'englishCoptic', audio: "alhan-cross-cross-praxis.mp3", text: "Shere pi-estauros fē-etauesh patshois erof sha entefsōti emmon evol khen nennovi." },
             { language: 'english', text: "Hail to the Cross, which my Lord was crucified upon, in order to save us, from our sins." },
+            { language: 'arabic', text: "السلام للصليب، الذي صُلِبَ ربي عليه، حتى خلصنا، من خطايانا." },
+            { language: 'englishArabic', text: "Es-salam lis-saleeb, elladhi sulib Rabbi 'alayh, hatta khallasana, min khatayana." },
           ],
         },
         {
@@ -233,6 +251,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-cross-cross-etaven.mp3", text: "Ⲉⲧⲁⲩⲉ̀ⲛ ⲛⲓⲥ̀ϧⲁⲓ ⲛ̀ϩⲓⲣⲏⲛⲓⲕⲟⲛ ⲛ̀ⲧⲉ Ⲕⲱⲥⲧⲁⲛⲧⲓⲛⲟⲥ ⲉ̀ϧⲟⲩⲛ ⲉⲢⲁⲕⲟϯ ϫⲉ ⲙⲁϣ̀ⲑⲁⲙ ⲙ̀ⲫ̀ⲣⲟ ⲛ̀ⲛⲓⲉⲣⲫⲏⲟⲩⲓ̀ ⲁ̀ⲱⲟⲩⲛ ⲙ̀ⲫ̀ⲣⲟ ⲛ̀ⲛⲓⲉⲕⲕ̀ⲗⲏⲥⲓⲁ̀.\n\nⲀ̀ ⲛⲓⲉ̀ⲡⲓⲥⲕⲟⲡⲟⲥ ⲥⲱⲧⲉⲙ ⲁⲩⲣⲁϣⲓ ⲁ̀ⲛⲓⲡ̀ⲣⲉⲥⲃⲩⲧⲉⲣⲟⲥ ⲟⲩⲛⲟϥ ⲙ̀ⲙⲱⲟⲩ ⲁ̀ⲡⲓϣⲁϣϥ ⲛ̀ⲧⲁⲅⲙⲁ ⲛ̀ⲧⲉ ϯⲉⲕⲕ̀ⲗⲏⲥⲓⲁ̀ ϯⲱ̀ⲟⲩ ⲙ̀Ⲫ̀ϯ ⲛ̀ⲧⲉ ⲧ̀ⲫⲉ." },
             { language: 'englishCoptic', audio: "alhan-cross-cross-etaven.mp3", text: "Etau-en ni-eskhai enhirēnikon ente Kōstantinos ekhoun e-Rakoti je ma-eshtham emefro ennierfēou-i aōoun emefro enniekeklēsi-a.\n\nA ni-episkopos sōtem aurashi ani-epresvuteros ounof emmōou apishashf entagma ente tiekeklēsi-a ti-ōou em-Efti ente etfe." },
             { language: 'english', text: "When Constantine's peaceful writings reached Alexandria saying, \"Shut the gates of the heathen and open the gates of the Churches\".\n\nThe bishops heard and were joyful, the priests rejoiced, and the seven ranks of the Church glorified the God of heaven." },
+            { language: 'arabic', text: "لما وردت مكاتبات السلام، التي لقسطنطين إلى الإسكندرية قائلة،\"أغلقوا أبواب البرابي، وإفتحوا أبواب الكنائس.\"\n\nالأساقفة سمعوا ففرحوا، والقساوسة إبتهجوا، وسبع رتب الكنيسة، مجَّدوا إله السماء." },
+            { language: 'englishArabic', text: "Lamma waradat mukatabat es-salam, allati li-Qustanteen ila el-Iskandariya qa'ila, \"Aghliqu abwab el-barabi, waftahu abwab el-kana'is.\"\n\nEl-asaqifa sami'u fa-farihu, wal-qasawisa ibtahagu, wa sab' rutab el-kaneesa, maggadu ilah es-sama'." },
           ],
         },
       ],
@@ -259,6 +279,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-nativity-piouoiny1.mp3", text: "ⲠⲓⲞ̀ⲩⲱ̀ⲓⲛⲓ ⲛ̀ⲧⲁⲫ̀ⲙⲏⲓ ⲫⲏⲉ̀ⲧⲉ̀ⲣⲟ̀ⲩⲱ̀ⲓⲛⲓ ⲉ̀ⲣⲱⲙⲓ ⲛⲓⲃⲉⲛ ⲉⲑⲛⲏⲟⲩ ⲉ̀ⲡⲓⲕⲟⲥⲙⲟⲥ.\n\n+ Ⲁⲕⲓ̀ ⲉ̀ⲡⲓⲕⲟⲥⲙⲟⲥ ϩⲓⲧⲉⲛ ⲧⲉⲕⲙⲉⲧⲙⲁⲓⲣⲱⲙⲓ ⲁϯⲕ̀ⲧⲏⲥⲓⲥ ⲧⲏⲣⲥ ⲑⲉⲗⲏⲗ ϧⲁ ⲡⲉⲕϫⲓⲛⲓ̀.\n\nⲀⲕⲥⲱϯ ⲛ̀Ⲁⲇⲁⲙ ⲉ̀ⲃⲟⲗ ϧⲉⲛ ϯⲁ̀ⲡⲁⲧⲏ ⲁⲕⲉ̀ⲣ Ⲉⲩⲁ ⲛ̀ⲣⲉⲙϩⲉ ϧⲉⲛ ⲛⲓⲛⲁⲕϩⲓ ⲛ̀ⲧⲉ ⲫ̀ⲙⲟⲩ.\n\n+ Ⲁⲕϯ ⲛⲁⲛ ⲙ̀ⲡⲓⲠ̀ⲛⲉⲩⲙⲁ ⲛ̀ⲧⲉ ϯⲙⲉⲧϣⲏⲣⲓ ⲉⲛϩⲱⲥ ⲉⲛⲥ̀ⲙⲟⲩ ⲉ̀ⲣⲟⲕ ⲛⲉⲙ ⲛⲉⲕⲁ̀ⲅⲅⲉⲗⲟⲥ." },
             { language: 'englishCoptic', audio: "alhan-nativity-piouoiny1.mp3", text: "Pi-Ou-ōini enta-efmēi fē-eterou-ōini erōmi niven ethnēou epikosmos.\n\n+ Aki epikosmos hiten tekmetmairōmi ati-ektēsis tērs thelēl kha pekjini.\n\nAksōti en-Adam evol khen ti-apatē aker Eua enremhe khen ninakhi ente efmou.\n\n+ Akti nan empi-Epneuma ente timetshēri enhōs enesmou erok nem nekaggelos." },
             { language: 'english', text: "O true Light, that gives light, to every man, that comes into the world.\n\n+ You came into the world, through Your love for man, and all the creation, rejoiced at Your coming.\n\nYou have saved Adam, from seduction, and delivered Eve, from the pangs of death.\n\n+ You gave unto us, the Spirit of sonship, we praise and bless You, with Your angels." },
+            { language: 'arabic', text: "أيها النور الحقيقي، الذي يضئ، لكل إنسان، آتٍ إلى العالم.\n\nأتيت إلى العالم، بمحبتك للبشر، وكل الخليقة، تهللت بمجيئك.\n\nخلصَّت آدم، من الغواية، وعتقت حواء، من طلقات الموت.\n\nأعطيتنا، روح البنوة، نسبحك ونباركك، مع ملائكتك." },
+            { language: 'englishArabic', text: "Ayyuha en-nour el-haqeeqi, elladhi yudee', li-kull insan, atin ila el-'alam.\n\nAtayta ila el-'alam, bi-mahabbatika lil-bashar, wa kull el-khaleeqa, tahallalat bi-magee'ik.\n\nKhallasta Adam, min el-ghawaya, wa 'ataqta Hawwa', min talaqat el-mawt.\n\nA'taytana, rouh el-bunouwa, nusabbihuka wa nubarikuk, ma'a mala'ikatik." },
           ],
         },
         {
@@ -268,6 +290,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-nativity-piouoiny2.mp3", text: "Ϧⲉⲛ ⲡ̀ϫⲓⲛⲑ̀ⲣⲉϥⲓ̀ ⲛⲁⲛ ⲉ̀ϧⲟⲩⲛ ⲛ̀ϫⲉ ⲫ̀ⲛⲁⲩ ⲛ̀ϣⲱⲣⲡ ⲱ̀ Ⲡⲭ̅ⲥ̅ ⲡⲉⲛⲚⲟⲩϯ ⲡⲓⲞ̀ⲩⲱ̀ⲓⲛⲓ ⲛ̀ⲧⲁⲫ̀ⲙⲏⲓ.\n\n+ Ⲙⲁⲣⲟⲩϣⲁⲓ ⲛ̀ϧⲏⲧⲉⲛ ⲛ̀ϫⲉ ⲛⲓⲗⲟⲅⲓⲥⲙⲟⲥ ⲛ̀ⲧⲉ ⲡⲓⲟ̀ⲩⲱ̀ⲓⲛⲓ ⲟⲩⲟϩ ⲙ̀ⲡⲉⲛⲑ̀ⲣⲉϥϩⲟⲃⲥⲧⲉⲛ ⲛ̀ϫⲉ ⲡ̀ⲭⲁⲕⲓ ⲛ̀ⲛⲓⲡⲁⲑⲟⲥ.\n\nϨⲓⲛⲁ ⲛ̀ⲧⲉⲛϩⲱⲥ ⲉ̀ⲣⲟⲕ ⲛ̀ⲛⲟⲏ̀ⲧⲟⲥ ⲛⲉⲙ Ⲇⲁⲩⲓⲇ ⲉⲛⲱϣ ⲟⲩⲃⲏⲕ ⲟⲩⲟϩ ⲉⲛϫⲱ ⲙ̀ⲙⲟⲥ.\n\n+ Ϫⲉ ⲁⲩⲉ̀ⲣϣⲟⲣⲡ ⲙ̀ⲫⲟϩ ⲛ̀ϫⲉ ⲛⲁⲃⲁⲗ ⲙ̀ⲫ̀ⲛⲁⲩ ⲛ̀ϣⲱⲣⲡ ⲉ̀ⲉ̀ⲣⲙⲉⲗⲉⲧⲁⲛ ϧⲉⲛ ⲛⲉⲕⲥⲁϫⲓ ⲧⲏⲣⲟⲩ." },
             { language: 'englishCoptic', audio: "alhan-nativity-piouoiny2.mp3", text: "Khen epjinethrefi nan ekhoun enje efnau enshōrp ō Pi-ekhristos pen-Nouti pi-Ou-ōini enta-efmēi.\n\n+ Maroushai enkhēten enje nilogismos ente pi-ou-ōini ouoh empenethrefhobsten enje epkhaki ennipathos.\n\nHina entenhōs erok enno-ētos nem Dauid enōsh ouvēk ouoh enjō emmos.\n\n+ Je au-ershorp emfoh enje naval emefnau enshōrp e-ermeletan khen neksaji tērou." },
             { language: 'english', text: "When the morning hour, comes upon us, O Christ our God, the true Light.\n\n+ Let the thought of light, shine within us, and do not let the darkness, of pain cover us.\n\nThat we may praise You, with understanding, proclaiming and saying, with David.\n\n+ My eyes have reached, the morning watch, that I may meditate, upon all Your words." },
+            { language: 'arabic', text: "عندما يدخل، وقت باكر الينا، أيها المسيح الهنا، النور الحقيقي.\n\nفلتشرق فينا، حواس النور، ولا تغطينا، ظلمة الآلام.\n\nلكي نسبحك، عقلياً، مع داود، صارخين نحوك قائلين.\n\nسبق أن بلغت، عيناي وقت السحر، لأتلو، جميع أقوالك." },
+            { language: 'englishArabic', text: "'Indama yadkhul, waqt bakir ilayna, ayyuha el-Maseeh ilahuna, en-nour el-haqeeqi.\n\nFal-tashriq feena, hawass en-nour, wala tughattina, zulmat el-alam.\n\nLikay nusabbihak, 'aqliyyan, ma'a Dawoud, sarikheen nahwak qa'ileen.\n\nSabaqa an balaghat, 'aynaya waqt es-sahar, li-atlu, gamee' aqwalik." },
           ],
         },
         {
@@ -277,6 +301,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-nativity-piouoiny3.mp3", text: "Ⲥⲱⲧⲉⲙ ⲉ̀ⲧⲉⲛⲥ̀ⲙⲏ ⲕⲁⲧⲁ ⲡⲉⲕⲛⲓϣϯ ⲛ̀ⲛⲁⲓ ⲛⲁϩⲙⲉⲛ Ⲡ⳪ ⲡⲉⲛⲚⲟⲩϯ ⲕⲁⲧⲁ ⲛⲉⲕⲙⲉⲧϣⲉⲛϩⲏⲧ.\n\n+ Ⲫϯ ⲡⲓϥⲁⲓⲣⲱⲟ̀ⲩϣ ⲛ̀ⲣⲉϥⲉ̀ⲣⲡⲉⲑⲛⲁⲛⲉϥ ⲡⲓⲣⲉϥⲉ̀ⲣⲟⲓⲕⲟⲛⲟⲙⲓⲛ ⲛ̀ⲛⲉϥⲥⲱⲧⲡ ⲛ̀ⲕⲁⲗⲱⲥ.\n\nⲠⲓⲣⲉϥⲉ̀ⲣϩⲉⲙⲓ ⲉⲧϫⲟⲣ ⲛ̀ⲛⲏⲉ̀ⲧⲁⲩⲫⲱⲧ ϩⲁⲣⲟϥ ⲫ̀ⲣⲉϥϭⲓϣϣⲱⲟ̀ⲩ ⲛ̀ⲧⲉ ⲟⲩⲟ̀ⲛ ⲛⲓⲃⲉⲛ ⲛⲟϩⲉⲙ ⲛ̀ⲧⲟⲩⲟ̀ⲩϫⲁⲓ.\n\n+ Ϧⲉⲛ ⲧⲉⲕⲙⲉⲧⲭ̀ⲣⲏⲥⲧⲟⲥ ⲁⲕⲥⲟⲃϯ ⲛⲁⲛ ⲙ̀ⲡⲓⲉ̀ϫⲱⲣϩ ⲁⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ ⲙ̀ⲡⲁⲓⲉ̀ϩⲟⲟ̀ⲩ ⲉ̀ⲛⲟⲓ ⲛ̀ⲁ̀ⲑⲛⲟⲃⲓ." },
             { language: 'englishCoptic', audio: "alhan-nativity-piouoiny3.mp3", text: "Sōtem etenesmē kata peknishti ennai nahmen Ptshois pen-Nouti kata nekmetshenhēt.\n\n+ Efnouti pifairō-oush enreferpethnanef pireferoikonomin ennefsōtp enkalōs.\n\nPireferhemi etjor ennē-etaufōt harof efreftshishshō-ou ente ou-on niven nohem entou-oujai.\n\n+ Khen tekmetekhrēstos aksobti nan empi-ejōrh ari-ehmot nan empai-eho-ou enoi enathnovi." },
             { language: 'english', text: "Hear our voices, according to Your great mercy, save us O Lord our God, according to Your compassion.\n\n+ O caring God, the Maker of all good things, who governs well, with His chosen ones.\n\nThe strong Governor for those, who take refuge in Him, who longs for the salvation, and deliverance of everyone.\n\n+ Through Your goodness, You provided us the night, grant us to pass, this day without sin." },
+            { language: 'arabic', text: "اسمع صوتنا، كعظيم رحمتك، ونجنا أيها الرب إلهنا، حسب رأفاتك.\n\nيا الله المهتم، صانع الخيرات، مدبر مختاريه، حسناً.\n\nالمدبر القوي، للملتجئين اليه، المتشوق لخلاص، ونجاة كل أحد.\n\nبصلاحك هيأت، لنا الليل، انعم لنا بهذا اليوم، ونحن بغير خطية." },
+            { language: 'englishArabic', text: "Isma' sawtana, ka-'azeem rahmatik, wa naggina ayyuha er-Rabb ilahuna, hasab ra'fatik.\n\nYa Allah el-muhtamm, sani' el-khayrat, mudabbir mukhtareehi, hasanan.\n\nEl-mudabbir el-qawi, lil-multagi'een ilayh, el-mutashawwiq li-khalas, wa nagat kull ahad.\n\nBi-salahika hayya'ta, lana el-layl, an'im lana bi-hadha el-yawm, wa nahnu bi-ghayr khatiyya." },
           ],
         },
         {
@@ -286,6 +312,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-nativity-piouoiny4.mp3", text: "Ⲉⲑⲣⲉⲛⲉ̀ⲣⲡ̀ⲉ̀ⲙⲡ̀ϣⲁ ⲉ̀ϥⲁⲓ ⲛ̀ⲛⲉⲛϫⲓϫ ⲉ̀ⲡ̀ϣⲱⲓ ϩⲁⲣⲟⲕ ⲙ̀ⲡⲉⲕⲙ̀ⲑⲟ ⲭⲱⲣⲓⲥ ϫⲱⲛⲧ ⲛⲉⲙ ⲙⲟⲕⲙⲉⲕ ⲉϥϩⲱⲟ̀ⲩ.\n\n+ Ϧⲉⲛ ⲧⲁⲓ ϩⲁⲛⲁ̀ⲧⲟⲟⲩⲓ̀ ⲥⲟⲩⲧⲱⲛ ⲛⲉⲛⲙⲱⲓⲧ ⲉ̀ϧⲟⲩⲛ ⲛⲉⲙ ⲛⲉⲛⲙⲱⲓⲧ ⲉ̀ⲃⲟⲗ ϧⲉⲛ ⲡ̀ⲟ̀ⲩⲛⲟϥ ⲛ̀ⲧⲉ ⲧⲉⲕⲥ̀ⲕⲉⲡⲏ.\n\nⲈⲑⲣⲉⲛϫⲱ ⲛ̀ⲧⲉⲕⲙⲉⲑⲙⲏⲓ ⲛ̀ⲉ̀ϩⲟⲟ̀ⲩ ⲛⲓⲃⲉⲛ ⲛ̀ⲧⲉⲛϩⲱⲥ ⲉ̀ⲧⲉⲕϫⲟⲙ ⲛⲉⲙ Ⲇⲁⲩⲓⲇ ⲡⲓⲡ̀ⲣⲟⲫⲏⲧⲏⲥ.\n\n+ Ϫⲉ ϧⲉⲛ ⲧⲉⲕϩⲓⲣⲏⲛⲏ Ⲡⲭ̅ⲥ̅ ⲡⲉⲛⲤⲱⲧⲏⲣ ⲁ̀ⲛⲉⲛⲕⲟⲧ ⲁⲛⲧⲱⲟ̀ⲩⲛ ϫⲉ ⲁ̀ⲛⲉⲣϩⲉⲗⲡⲓⲥ ⲉ̀ⲣⲟⲕ." },
             { language: 'englishCoptic', audio: "alhan-nativity-piouoiny4.mp3", text: "Ethrenerepemepsha efai ennenjij e-epshōi harok empekemtho khōris jōnt nem mokmek efhō-ou.\n\n+ Khen tai hanatoou-i soutōn nenmōit ekhoun nem nenmōit evol khen epounof ente tekeskepē.\n\nEthrenjō entekmethmēi eneho-ou niven entenhōs etekjom nem Dauid pi-eprofētēs.\n\n+ Je khen tekhirēnē Pi-ekhristos pen-Sōtēr anenkot antō-oun je anerhelpis erok." },
             { language: 'english', text: "That we may be worthy, to lift up our hands, before You without anger, or evil thoughts.\n\n+ At this dawn, make straight our coming in, and our going out, in the joy of Your protection.\n\nThat we may proclaim, Your righteousness daily, and praise Your power, with David the prophet.\n\n+ Saying \"In Your peace, O Christ our Savior, we slept and arose, for we have hoped in You.\"" },
+            { language: 'arabic', text: "لنستحق أن نرفع، أيدينا اليك، أمامك بغير غضب، ولا فكر ردئ.\n\nفي هذا السحر، سهل طرقنا، الداخلية والخارجية، بسترك المفرح.\n\nلننطق بعدلك، كل يوم، ونمجد قوتك، مع داود النبي.\n\nقائلين بسلامك، أيها المسيح مخلصنا، رقدنا وقمنا، لأننا توكلنا عليك." },
+            { language: 'englishArabic', text: "Li-nastahiqq an narfa', aydeena ilayk, amamaka bi-ghayr ghadab, wala fikr radi'.\n\nFi hadha es-sahar, sahhil turuqana, ed-dakhiliyya wal-kharigiyya, bi-satrika el-mufrih.\n\nLi-nantiq bi-'adlik, kull yawm, wa numaggid quwwatak, ma'a Dawoud en-nabi.\n\nQa'ileen bi-salamik, ayyuha el-Maseeh mukhallisuna, raqadna wa qumna, li-annana tawakkalna 'alayk." },
           ],
         },
         {
@@ -295,6 +323,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-nativity-piouoiny5.mp3", text: "Ϩⲏⲡⲡⲉ ⲟ̀ⲩⲡⲉⲑⲛⲁⲛⲉϥ ⲓⲉ ⲟ̀ⲩⲡⲉⲧϩⲟⲗϫ ⲉ̀ⲃⲏⲗ ⲉ̀ⲡ̀ϯⲙⲁϯ ⲛ̀ϩⲁⲛⲥ̀ⲛⲏⲟⲩ ⲉⲩϣⲟⲡ ϩⲓ ⲟ̀ⲩⲙⲁ.\n\n+ Ⲉⲩⲉ̀ⲣⲥⲩⲙⲫⲱⲛⲓⲛ ϧⲉⲛ ⲟⲩⲁ̀ⲅⲁⲡⲏ ⲙ̀ⲙⲏⲓ ⲛ̀ⲉ̀ⲩⲁ̀ⲅⲅⲉⲗⲓⲕⲏ ⲕⲁⲧⲁ ⲛⲓⲁ̀ⲡⲟⲥⲧⲟⲗⲟⲥ.\n\nⲘ̀ⲫ̀ⲣⲏϯ ⲙ̀ⲡⲓⲥⲟϫⲉⲛ ⲉ̀ϯⲁ̀ⲫⲉ ⲙ̀Ⲡⲭ̅ⲥ̅ ⲉϥⲛⲏⲟⲩ ⲉ̀ϫⲉⲛ ϯⲙⲟⲣⲧ ϣⲁⲉ̀ϧ̀ⲣⲏⲓ ⲉ̀ⲛⲓϭⲁⲗⲁⲩϫ.\n\n+ Ⲉϥⲑⲱϩⲥ ⲙ̀ⲙⲏⲛⲓ ⲛⲓⲃⲉⲛ ⲛⲓϧⲉⲗⲗⲟⲓ ⲛⲉⲙ ⲛⲓⲁ̀ⲗⲱⲟⲩⲓ̀ ⲛⲉⲙ ⲛⲓϧⲉⲗϣⲓⲣⲓ ⲛⲉⲙ ⲛⲓⲇⲓⲁⲕⲟⲛⲓⲥⲧⲏⲥ." },
             { language: 'englishCoptic', audio: "alhan-nativity-piouoiny5.mp3", text: "Hēppe oupethnanef ie oupetholj evēl e-eptimati enhanesnēou eushop hi ouma.\n\n+ Eu-ersumfōnin khen ou-agapē emmēi eneu-aggelikē kata ni-apostolos.\n\nEmefrēti empisojen eti-afe em-Pi-ekhristos efnēou ejen timort sha-e-ekhrēi enitshalauj.\n\n+ Efthōhs emmēni niven nikhelloi nem ni-alōou-i nem nikhelshiri nem nidiakonistēs." },
             { language: 'english', text: "\"Behold how beneficent, and how pleasant, it is for brethren, to dwell together in unity.\"\n\n+ United, in the true, evangelic love, like the apostles.\n\nIt is like the fragrant oil, on the head of Christ, running down the beard, down to the feet.\n\n+ That anoints every day, the elders, the children and young men, and the deacons." },
+            { language: 'arabic', text: "ها ما هو الحسن، وما هو الحلو، إلا اتفاق اخوة، ساكنين معاً.\n\nمتفقين، بمحبة حقيقية، انجيلية، كمثل الرسل.\n\nمثل الطيب، علي رأس المسيح، النازل علي اللحية، إلي أسفل الرجلين.\n\nيمسح كل يوم، الشيوخ، والصبيان والفتيات، والخدام." },
+            { language: 'englishArabic', text: "Ha ma huwa el-hasan, wa ma huwa el-hulw, illa ittifaq ikhwa, sakineen ma'an.\n\nMuttafiqeen, bi-mahabba haqeeqiyya, ingeeliyya, ka-mithl er-rusul.\n\nMithl et-teeb, 'ala ra's el-Maseeh, en-nazil 'ala el-lihya, ila asfal er-riglayn.\n\nYamsah kull yawm, esh-shuyoukh, wal-sibyan wal-fatayat, wal-khuddam." },
           ],
         },
         {
@@ -304,6 +334,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-nativity-piouoiny6.mp3", text: "Ⲛⲁⲓ ⲉⲧⲁϥϩⲟⲧⲡⲟⲩ ⲉⲩⲥⲟⲡ ⲛ̀ϫⲉ ⲡⲓⲠ̀ⲛⲉⲩⲙⲁ ⲉ̅ⲑ̅ⲩ̅ ⲙ̀ⲫ̀ⲣⲏϯ ⲛ̀ⲟⲩⲕⲩⲑⲁⲣⲁ ⲉⲩⲥ̀ⲙⲟⲩ ⲉ̀Ⲫϯ ⲛ̀ⲥⲏⲟⲩ ⲛⲓⲃⲉⲛ.\n\n+ Ϧⲉⲛ ϩⲁⲛⲯ̀ⲁⲗⲙⲟⲥ ⲛⲉⲙ ϩⲁⲛϩⲱⲥ ⲛⲉⲙ ϩⲁⲛϩⲱⲇⲏ ⲙ̀ⲡ̅ⲛ̅ⲁ̅ⲧⲓⲕⲟⲛ ⲙ̀ⲡⲓⲉ̀ϩⲟⲟⲩ ⲛⲉⲙ ⲡⲓⲉ̀ϫⲱⲣϩ ϧⲉⲛ ⲟ̀ⲩϩⲏⲧ ⲛ̀ⲁ̀ⲧⲭⲁⲣⲱϥ." },
             { language: 'englishCoptic', audio: "alhan-nativity-piouoiny6.mp3", text: "Nai etafhotpou eusop enje pi-Epneuma ethouab emefrēti enoukuthara eu-esmou e-Efnouti ensēou niven.\n\n+ Khen hanepsalmos nem hanhōs nem hanhōdē emepneumatikon empi-ehoou nem pi-ejōrh khen ouhēt enatkharōf." },
             { language: 'english', text: "Those whom the Holy Spirit, has attuned together, as a stringed instrument, always blessing God.\n\n+ By psalms and hymns, and spiritual songs, by day and by night, with an incessant heart." },
+            { language: 'arabic', text: "هؤلاء الذين، ألفهم الروح القدس معاً، مثل قيثارة مسبحين، الله كل حين.\n\nبمزامير وتسابيح، وترانيم روحية، النهار والليل، بقلب لا يفتر." },
+            { language: 'englishArabic', text: "Ha'ula' elladheena, allafahum er-Rouh el-Qudus ma'an, mithl qeethara musabbiheen, Allah kull heen.\n\nBi-mazameer wa tasabeeh, wa taraneem rouhiyya, en-nahar wal-layl, bi-qalb la yafturu." },
           ],
         },
         {
@@ -331,6 +363,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-nativity-nat-psalm-mor.mp3", text: "Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ ⲁ̅ⲗ̅ Ⲓ̅ⲏ̅ⲥ̅ Ⲡⲭ̅ⲥ̅ ⲡ̀Ϣⲏⲣⲓ ⲙ̀Ⲫϯ ⲁⲥⲙⲁⲥϥ ⲛ̀ϫⲉ ϯⲠⲁⲣⲑⲉⲛⲟⲥ ϧⲉⲛ Ⲃⲏⲑⲗⲉⲉⲙ ⲛ̀ⲧⲉ ϯⲒⲟⲩⲇⲉⲁ̀ ⲕⲁⲧⲁ ⲛⲓⲥ̀ⲙⲏ ⲙ̀ⲡ̀ⲣⲟⲩⲫⲏⲧⲓⲕⲟⲛ. Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ ⲁ̅ⲗ̅." },
             { language: 'englishCoptic', audio: "alhan-nativity-nat-psalm-mor.mp3", text: "Allēlouia allēlouia Iēsous Pi-ekhristos ep-Shēri em-Efnouti asmasf enje ti-Parthenos khen Vēthleem ente ti-Ioude-a kata ni-esmē emeproufētikon. Allēlouia allēlouia." },
             { language: 'english', text: "Alleluia, Alleluia. Jesus Christ the Son of God was born of the Virgin in Bethlehem of Judea according to the prophetic sayings. Alleulia, Alleluia." },
+            { language: 'arabic', text: "هلليلويا هلليلويا. يسوع المسيح ابن الله ولدته العذراء في بيت لحم اليهودية كالأصوات النبوي. هلليلويا هلليلويا." },
+            { language: 'englishArabic', text: "Hallelouia hallelouia. Yasou' el-Maseeh Ibn Allah waladat-hu el-'Adhra' fi Bayt Lahm el-Yahoudiyya kal-aswat en-nabawiyya. Hallelouia hallelouia." },
           ],
         },
         {
@@ -364,6 +398,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-nativity-epraxis.mp3", text: "Ⲭⲉⲣⲉ Ⲃⲏⲉⲑⲗⲉⲉⲙ ⲧ̀ⲡⲟⲗⲓⲥ ⲛ̀ⲛⲓⲡⲣⲟⲫⲏⲧⲏⲥ ⲑⲏⲉ̀ⲧⲁⲩⲙⲉⲥ Ⲡⲭ̅ⲥ̅ ⲛ̀ϧⲏⲧⲥ ⲡⲓⲙⲁϩ ⲥ̀ⲛⲁⲩ ⲛ̀Ⲁⲇⲁⲙ.\n\nⲔ̀ⲥ̀ⲙⲁⲣⲱⲟ̀ⲩⲧ ⲁ̀ⲗⲏⲑⲱⲥ ⲛⲉⲙ Ⲡⲉⲕⲓⲱⲧ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ ⲛⲉⲙ ⲡⲓⲠ̀ⲛⲉⲩⲙⲁ ⲉ̅ⲑ̅ⲩ̅ ϫⲉ ⲁⲩⲙⲁⲥⲕ ⲁⲕⲥⲱϯ ⲙ̀ⲙⲟⲛ. Ⲛⲁⲓ ⲛⲁⲛ." },
             { language: 'englishCoptic', audio: "alhan-nativity-epraxis.mp3", text: "Shere Vēethleem etpolis enniprofētēs thē-etaumes Pi-ekhristos enkhēts pimah esnau en-Adam.\n\nEkesmarō-out alēthōs nem Pekiōt enagathos nem pi-Epneuma ethouab je aumask aksōti emmon. Nai nan." },
             { language: 'english', text: "Hail to Bethlehem, the city of the prophets, where Christ was born, the second Adam.\n\nBlessed are You indeed, with Your good Father and the Holy Spirit, for You were born and saved us. Have mercy upon us." },
+            { language: 'arabic', text: "السلام لبيت لحم مدينة الأنبياء التي ولد فيها المسيح أدم الثاني.\n\nمبارك أنت بالحقيقة مع أبيك الصالح، والروح القدس لأنك ولدت وخلَّصتنا. إرحمنا." },
+            { language: 'englishArabic', text: "Es-salam li-Bayt Lahm madeenat el-anbiya' allati wulida fiha el-Maseeh Adam eth-thani.\n\nMubarakun anta bil-haqeeqa ma'a abeeka es-salih, war-Rouh el-Qudus li-annaka wulidta wa khallastana. Irhamna." },
           ],
         },
         {
@@ -373,6 +409,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-nativity-eparthenos.mp3", text: "Ⲏ̀ⲡⲁⲣⲑⲉⲛⲟⲥ ⲥⲏⲙⲉⲣⲟⲛ ⲧⲟⲛ ⲩ̀ⲡⲉⲣⲟⲩⲥⲓⲟⲛ ⲧⲓⲕⲧⲓ ⲕⲉ ⲏⲅⲏⲧⲟ ⲥⲡⲏⲗⲉⲟⲛ ⲧⲱ ⲁⲡⲣⲟⲥⲓⲧⲱ ⲡ̀ⲣⲟⲥⲁⲅⲓ ⲁⲅⲅⲉⲗⲓ ⲙⲉⲧⲁ ⲡⲓⲙⲉⲛⲱⲛ ⲇⲟⲝⲟⲗⲟⲅⲟⲩⲥⲓ ⲙⲁⲅⲓ ⲇⲉ ⲙⲉⲧⲁ ⲁⲥⲧⲉⲣⲟⲥ ⲟ̀ⲇⲓⲡⲟⲣⲟⲩⲥⲓ ⲇⲓ ⲏ̀ⲙⲁⲥ ⲅⲁⲣ ⲉⲅⲉⲛⲛⲏⲑⲏ ⲡⲉⲇⲓⲟⲛ ⲛⲉⲟⲛ ⲟ̀ⲡ̀ⲣⲟⲉⲱⲛⲱⲛ ⲑⲉⲟⲥ." },
             { language: 'englishCoptic', audio: "alhan-nativity-eparthenos.mp3", text: "Ēparthenos sēmeron ton uperousion tikti ke ēgēto spēleon tō aprositō eprosagi aggeli meta pimenōn doksologousi magi de meta asteros odiporousi di ēmas gar egennēthē pedion neon o-eproeōnōn theos." },
             { language: 'english', text: "Today, the virgin bears Him who is transcendent, and the earth presents the cave to Him who is beyond reach. Angels, along with shepherds glorify Him. The Magi make their way to Him by a star. For a new child has been born for us, the God before all ages" },
+            { language: 'arabic', text: "اليوم البتول تلد الفائق الجوهر و الأرض تُقَرِّب المغارة لغير المُقْتَرَب إليه. الملائكة مع الرعاة يمجدون. و المجوس مع الكوكب في الطريق سائرون. لأن من أجلنا وُلد صبياً جديداً. الإله الذي قَبْلَ الدهور." },
+            { language: 'englishArabic', text: "El-yawm el-batoul talid el-fa'iq el-gawhar, wal-ard tuqarrib el-maghara li-ghayr el-muqtarab ilayh. El-mala'ika ma'a er-ru'ah yumaggidoun, wal-magous ma'a el-kawkab fit-tareeq sa'iroun. Li-annahu min aglina wulida sabiyyan gadeedan, el-Ilah elladhi qabl ed-duhour." },
           ],
         },
         {
@@ -382,6 +420,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-nativity-pigenmisi.mp3", text: "Ⲡⲓϫⲓⲛⲙⲓⲥⲓ ⲙ̀ⲡⲁⲣⲑⲉⲛⲓⲕⲟⲛ ⲟⲩⲟϩ ⲛⲓⲛⲁⲕϩⲓ ⲙ̀ⲡ̀ⲛⲉⲩⲙⲁⲧⲓⲕⲟⲛ ⲟⲩϣ̀ⲫⲏⲣⲓ ⲙ̀ⲡⲁⲣⲁⲇⲟⲝⲟⲛ ⲕⲁⲧⲁ ⲛⲓⲥ̀ⲙⲏⲓ ⲙ̀ⲡ̀ⲣⲟⲫⲏⲧⲓⲕⲟⲛ." },
             { language: 'englishCoptic', audio: "alhan-nativity-pigenmisi.mp3", text: "Pijinmisi emparthenikon ouoh ninakhi emepneumatikon ou-eshfēri emparadokson kata ni-esmēi emeprofētikon." },
             { language: 'english', text: "The virginal birth and spiritual contractions, are marvelous wonders according to the prophetic sayings." },
+            { language: 'arabic', text: "الميلاد البتولى والطلقات الروحانية عجب عجيب كالأخبار النبوية." },
+            { language: 'englishArabic', text: "El-meelad el-batouli wat-talaqat er-rouhaniyya 'agab 'ageeb kal-akhbar en-nabawiyya." },
           ],
         },
         {
@@ -391,6 +431,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-nativity-nat-apenshois.mp3", text: "Ⲁⲡⲉⲛ⳪ Ⲓ̅ⲏ̅ⲥ̅ Ⲡⲭ̅ⲥ̅ ⲫⲏⲉ̀ⲧⲁⲥ ⲙⲁⲥϥ ⲛ̀ϫⲉ ϯⲠⲁⲣⲑⲉⲛⲟⲥ ϧⲉⲛ Ⲃⲏⲑⲗⲉⲉⲙ ⲛ̀ⲧⲉ ϯⲒⲟⲩⲇⲉⲁ̀ ⲕⲁⲧⲁ ⲛⲓⲥ̀ⲙⲏ ⲙ̀ⲡ̀ⲣⲟⲫⲏⲧⲓⲕⲟⲛ\n\nⲚⲓⲬⲉⲣⲟⲩⲃⲓⲙ ⲛⲉⲙ ⲛⲓⲤⲉⲣⲁⲫⲓⲙ ⲛⲓⲁ̀ⲅⲅⲉⲗⲟⲥ ⲛⲉⲙ ⲛⲓⲁ̀ⲣⲭⲏⲁ̀ⲅⲅⲉⲗⲟⲥ ⲛⲓⲥ̀ⲧⲣⲁⲧⲓⲁ ⲛⲉⲙ ⲛⲓⲉ̀ⲝⲟⲩⲥⲓⲁ ⲛⲓⲑ̀ⲣⲟⲛⲟⲥ ⲛⲓⲙⲉⲧ⳪ ⲛⲓϫⲟⲙ.\n\nⲈⲩⲱϣ ⲉ̀ⲃⲟⲗ ⲉⲩϫⲟ ⲙ̀ⲙⲟⲥ ϫⲉ ⲟ̀ⲩⲱ̀ⲟ̀ⲩ ⲙ̀Ⲫϯ ϧⲉⲛ ⲛⲏⲉ̀ⲧϭⲟⲥⲓ ⲛⲉⲙ ⲟⲩϩⲓⲣⲏⲛⲏ ϩⲓϫⲉⲛ ⲡⲓⲕⲁϩⲓ ⲛⲉⲙ ⲟⲩϯⲙⲁϯ ϧⲉⲛ ⲛⲓⲣⲱⲙⲓ." },
             { language: 'englishCoptic', audio: "alhan-nativity-nat-apenshois.mp3", text: "Apentshois Iēsous Pi-ekhristos fē-etas masf enje ti-Parthenos khen Vēthleem ente ti-Ioude-a kata ni-esmē emeprofētikon\n\nNi-Kherouvim nem ni-Serafim ni-aggelos nem ni-arkhē-aggelos ni-estratia nem ni-eksousia ni-ethronos nimettshois nijom.\n\nEuōsh evol eujo emmos je ou-ō-ou em-Efnouti khen nē-ettshosi nem ouhirēnē hijen pikahi nem outimati khen nirōmi." },
             { language: 'english', text: "Our Lord Jesus Christ, was born of the Virgin, in Bethlehem of Judea, according to the prophetic sayings.\n\nThe Cherubim and the Seraphim, the angels and the archangels, the principalities and the authorities, the thrones and the powers.\n\nProclaiming and saying, \"Glory to God in the highest, peace on earth, and goodwill toward men.\"" },
+            { language: 'arabic', text: "يا ربنا يسوع المسيح، الذي ولدته العذراء، فى بيت لحم اليهودية، كالأصوات النبوية.\n\nالشاروبيم والسيرافيم، الملائكة ورؤساء الملائكة، والعساكر والسلاطين، والكراسى والأرباب.\n\nصارخين قائلين، المجد لله في الأعالي، وعلي الارض السلام، وفى الناس المسرة." },
+            { language: 'englishArabic', text: "Ya Rabbana Yasou' el-Maseeh, elladhi waladat-hu el-'Adhra', fi Bayt Lahm el-Yahoudiyya, kal-aswat en-nabawiyya.\n\nEsh-sharoubeem was-sarafeem, el-mala'ika wa ru'asa' el-mala'ika, wal-'asakir was-salateen, wal-karasi wal-arbab.\n\nSarikheen qa'ileen, el-magd lillah fil-a'ali, wa 'ala el-ard es-salam, wa fin-nas el-masarra." },
           ],
         },
         {
@@ -417,6 +459,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-epiphany-cymbals-verses.mp3", text: "Ϫⲉ ⲫⲁⲓ ⲡⲉ ⲠⲁϢⲏⲣⲓ ⲡⲁⲙⲉⲛⲣⲓⲧ ⲉ̀ⲧⲁ ⲧⲁⲯ̀ⲩⲭⲏ ϯⲙⲁϯ ⲛ̀ϧⲏⲧϥ ϫⲉ ⲁϥⲉ̀ⲣⲡⲁⲟ̀ⲩⲱ̀ϣ ⲥⲱⲧⲉⲙ ⲛ̀ⲥⲱϥ ϫⲉ ⲛ̀ⲑⲟϥ ⲡⲉ ⲡⲓⲢⲉϥⲧⲁⲛϧⲟ.\n\n+ Ⲓ̅ⲏ̅ⲥ̅ Ⲡⲭ̅ⲥ̅ ⲛ̀ⲥⲁϥ ⲛⲉⲙ ⲫⲟⲟ̀ⲩ ⲛ̀ⲑⲟϥ ⲛ̀ⲑⲟϥ ⲡⲉ ⲛⲉⲙ ϣⲁ ⲉ̀ⲛⲉϩ ϧⲉⲛ ⲟⲩϩⲩⲡⲟⲥⲧⲁⲥⲓⲥ ⲛ̀ⲟ̀ⲩⲱ̀ⲧ ⲧⲉⲛⲟ̀ⲩⲱ̀ϣⲧ ⲙ̀ⲙⲟϥ ⲧⲉⲛϯⲱ̀ⲟ̀ⲩ ⲛⲁϥ." },
             { language: 'englishCoptic', audio: "alhan-epiphany-cymbals-verses.mp3", text: "Je fai pe Pa-Shēri pamenrit eta ta-epsukhē timati enkhētf je aferpa-ou-ōsh sōtem ensōf je enthof pe pi-Reftankho.\n\n+ Iēsous Pi-ekhristos ensaf nem fo-ou enthof enthof pe nem sha eneh khen ouhupostasis enou-ōt tenou-ōsht emmof tenti-ō-ou naf." },
             { language: 'english', text: "\"This is My beloved Son, with whom My soul is well pleased, He does My will hear Him, for He is the life-Giver.\"\n\n+ Jesus Christ the same yesterday, today and forever, in one hypostasis, we worship and glorify Him." },
+            { language: 'arabic', text: "هذا هو إبني حبيبي الذي سُرّت به نفسي وصنع مشيئتي له إسمعوا لأنه هو المحيي.\n\nيسوع المسيح هو هو أمس، واليوم وإلى الأبد، بأُقنوم واحد، نسجد له ونمجده." },
+            { language: 'englishArabic', text: "Hadha huwa ibni habeebi elladhi surrat bihi nafsi, wa sana' masheeati, lahu isma'u li-annahu huwa el-muhyi.\n\nYasou' el-Maseeh huwa huwa ams, wal-yawm wa ila el-abad, bi-uqnoum wahid, nasgud lahu wa numaggiduh." },
           ],
         },
       ],
@@ -441,6 +485,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-epiphany-epi-lit-epraxis.mp3", text: "Ϫⲉ ⲫⲁⲓ ⲡⲉ ⲠⲁϢⲏⲣⲓ ⲡⲁⲙⲉⲛⲣⲓⲧ ⲉ̀ⲧⲁ ⲧⲁⲯ̀ⲩⲭⲏ ϯⲙⲁϯ ⲛ̀ϧⲏⲧϥ ⲁϥⲉ̀ⲣⲡⲁⲟ̀ⲩⲱ̀ϣ ⲥⲱⲧⲉⲙ ⲛ̀ⲥⲱϥ ϫⲉ ⲛ̀ⲑⲟϥ ⲡⲉ ⲡⲓⲢⲉϥⲧⲁⲛϧⲟ." },
             { language: 'englishCoptic', audio: "alhan-epiphany-epi-lit-epraxis.mp3", text: "Je fai pe Pa-Shēri pamenrit eta ta-epsukhē timati enkhētf aferpa-ou-ōsh sōtem ensōf je enthof pe pi-Reftankho." },
             { language: 'english', text: "This is My beloved Son, with whom My soul is well pleased, He does My will hear Him, for He is the life-Giver." },
+            { language: 'arabic', text: "\"هذا هو إبني حبيبي، الذي سُرَّت به نفسي، وصنع مشيئتي له إسمعوا، لأنه هو المحيي.\"" },
+            { language: 'englishArabic', text: "\"Hadha huwa ibni habeebi, elladhi surrat bihi nafsi, wa sana' masheeati lahu isma'u, li-annahu huwa el-muhyi.\"" },
           ],
         },
         {
@@ -450,6 +496,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-epiphany-ouranenshoushou.mp3", text: "Ⲟ̀ⲩⲣⲁⲛ ⲛ̀ϣⲟⲩϣⲟⲩ ⲡⲉ ⲡⲉⲕⲣⲁⲛ ⲱ̀ ⲡⲓⲥⲩⲅⲅⲉⲛⲏⲥ ⲛ̀Ⲉⲙⲙⲁⲛⲟⲩⲏ̀ⲗ ⲛ̀ⲑⲟⲕ ⲟ̀ⲩⲛⲓϣϯ ϧⲉⲛ ⲛⲏⲉ̅ⲑ̅ⲩ̅ ⲧⲏⲣⲟⲩ Ⲓⲱⲁⲛⲛⲏⲥ ⲡⲓⲣⲉϥϯⲱ̀ⲙⲥ.\n\nⲔ̀ϭⲟⲥⲓ ⲉ̀ⲛⲓⲡⲁⲧⲣⲓⲁⲣⲭⲏⲥ ⲕ̀ⲧⲁⲓⲏ̀ⲟⲩⲧ ⲉ̀ⲛⲓⲡ̀ⲣⲟⲫⲏⲧⲏⲥ ϫⲉ ⲙ̀ⲡⲉ ⲟ̀ⲩⲟ̀ⲛ ⲧⲱⲛϥ ϧⲉⲛ ⲛⲓϫⲓⲛⲙⲓⲥⲓ ⲛ̀ⲧⲉ ⲛⲓϩⲓⲟ̀ⲙⲓ ⲉϥⲟ̀ⲛⲓ ⲙ̀ⲙⲟⲕ.\n\nⲀ̀ⲙⲱⲓⲛⲓ ⲥⲟⲧⲉⲙ ⲉ̀ⲡⲓⲥⲟⲫⲟⲥ ⲡⲓⲗⲁⲥ ⲛ̀ⲛⲟⲩⲃ Ⲑⲉⲟ̀ⲇⲟⲥⲓⲟⲥ ⲉϥϫⲱ ⲙ̀ⲡ̀ⲧⲁⲓⲟ ⲙ̀ⲡⲓⲃⲁⲡⲧⲏⲥⲧⲏⲥ Ⲓⲱⲁⲛⲛⲏⲥ ⲡⲓⲣⲉϥϯⲱ̀ⲙⲥ." },
             { language: 'englishCoptic', audio: "alhan-epiphany-ouranenshoushou.mp3", text: "Ouran enshoushou pe pekran ō pisuggenēs en-Emmanou-ēl enthok ounishti khen nēethouab tērou Iōannēs pirefti-ōms.\n\nEktshosi enipatriarkhēs ektai-ēout eni-eprofētēs je empe ou-on tōnf khen nijinmisi ente nihi-omi efoni emmok.\n\nAmōini sotem episofos pilas ennoub The-odosios efjō emeptaio empivaptēstēs Iōannēs pirefti-ōms." },
             { language: 'english', text: "A name of pride is your name, O relative of Emmanuel, for you are great among all the saints, O John the Baptist.\n\nYou are higher than the patriarchs, more honored than the prophets, for no one born of women, is as great as you.\n\nCome and hear the wise, the golden tongued Theodosius, speaking of the honor of the baptizer, John the Baptist." },
+            { language: 'arabic', text: "إسم فخر هو إسمك، يا نسيب عمانوئيل، أنت عظيم في جميع القديسين، يا يوحنا المعمدان.\n\nأنت مرتفع أكثر من رؤساء الآباء، ومكرم أكثر من الأنبياء، لأنه لم يقم في مواليد النساء، مَنْ يشبهك.\n\nتعالوا إسمعوا الحكيم، لسان الذهب ثاودوسيوس، ينطق بكرامة الصابغ، يوحنا المعمدان." },
+            { language: 'englishArabic', text: "Ism fakhr huwa ismuk, ya naseeb 'Emmanu'eel, anta 'azeemun fi gamee' el-qiddiseen, ya Youhanna el-Ma'madan.\n\nAnta murtafi' akthar min ru'asa' el-aba', wa mukarram akthar min el-anbiya', li-annahu lam yaqum fi mawaleed en-nisa', man yushbihuk.\n\nTa'alu isma'u el-hakeem, lisan edh-dhahab Thawodosios, yantiq bi-karamat es-sabigh, Youhanna el-Ma'madan." },
           ],
         },
         {
@@ -468,6 +516,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-epiphany-epi-lit-psalm.mp3", text: "ϥ̀ⲥ̀ⲙⲁⲣⲱⲟ̀ⲩⲧ ⲛ̀ϫ̀ⲉ ⲫⲏⲉ̀ⲑⲛⲏⲟⲩ ϧⲉⲛ ⲫ̀ⲣⲁⲛ ⲙ̀Ⲡ⳪ ⲁⲛⲥ̀ⲙⲟⲩ ⲉ̀ⲣⲱⲧⲉⲛ ⲉ̀ⲃⲟⲗϧⲉⲛ ⲡ̀ⲏⲓ ⲙ̀Ⲡ⳪ ⲛ̀ⲑⲟⲕ ⲡⲉ ⲡⲁⲚⲟⲩϯ ϯⲛⲁⲟ̀ⲩⲱ̀ⲛϩ ⲛⲁⲕ ⲉ̀ⲃⲟⲗ ⲛ̀ⲑⲟⲕ ⲡⲉ ⲡⲁⲚⲟⲩϯ ϯⲛⲁϭ̀ⲁⲥⲕ ⲁ̅ⲗ̅." },
             { language: 'englishCoptic', audio: "alhan-epiphany-epi-lit-psalm.mp3", text: "efesmarō-out eneje fē-ethnēou khen efran em-Ptshois anesmou erōten evolkhen epēi em-Ptshois enthok pe pa-Nouti tina-ou-ōnh nak evol enthok pe pa-Nouti tina-etshask allēlouia." },
             { language: 'english', text: "Blessed is He who comes in the name of the Lord. We have blessed you out of the house of the Lord. You are my God, and I will give You thanks. You are my God, I will exalt You." },
+            { language: 'arabic', text: "مبارك الآتي باسم الرب، باركناكم من بيت الرب، أنت هو إلهي فأشكرك، إلهي أنت فأرفعك. هلليلويا" },
+            { language: 'englishArabic', text: "Mubarakun el-ati bism er-Rabb, barakna-kum min bayt er-Rabb, anta huwa ilahi fa-ashkuruk, ilahi anta fa-arfa'uk. Hallelouia." },
           ],
         },
         {
@@ -477,6 +527,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-epiphany-epi-lit-gospel-reply.mp3", text: "Ⲫⲁⲓ ⲡⲉ ⲡⲓϨⲓⲏⲃ ⲛ̀ⲧⲉ Ⲫϯ ⲫⲏⲉ̀ⲧⲱ̀ⲗⲓ ⲙ̀ⲫ̀ⲛⲟⲃⲓ ⲙ̀ⲡⲓⲕⲟⲥⲙⲟⲥ ⲫⲏⲉ̀ⲧⲁϥⲓⲛⲓ ⲛ̀ⲟⲩⲧⲁⲡ ⲛ̀ⲥⲱϯ ⲉⲑⲣⲉϥ ⲛⲟϩⲉⲙ ⲙ̀ⲡⲉϥⲗⲁⲟⲥ." },
             { language: 'englishCoptic', audio: "alhan-epiphany-epi-lit-gospel-reply.mp3", text: "Fai pe pi-Hiēb ente Efnouti fē-etōli emefnovi empikosmos fē-etafini enoutap ensōti ethref nohem empeflaos." },
             { language: 'english', text: "This is the Lamb of God, who carried the sin of the world, who brought a horn of salvation, in order to save His people." },
+            { language: 'arabic', text: "ها هوذا حمل الله، حامل خطايا العالم، الذي أقيم قرن، خلاص لشعبه." },
+            { language: 'englishArabic', text: "Ha huwadha hamal Allah, hamil khataya el-'alam, elladhi uqeema qarn, khalas li-sha'bih." },
           ],
         },
       ],
@@ -512,6 +564,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-jonah-jon-wed-mor.mp3", text: "Ϫⲉ ⲁ̀ⲙⲱⲓⲛⲓ ϩⲁⲣⲟⲓ ⲛⲏⲉⲧⲥ̀ⲙⲁⲣⲱⲟⲩⲧ ⲛ̀ⲧⲉ Ⲡⲁⲓⲱⲧ ⲁ̀ⲣⲓⲕ̀ⲗⲏⲣⲟⲛⲟⲙⲓⲛ ⲙ̀ⲡⲓⲱⲛϧ ⲉⲑⲙⲏⲛ ⲉ̀ⲃⲟⲗ ϣⲁ ⲉ̀ⲛⲉϩ." },
             { language: 'englishCoptic', audio: "alhan-jonah-jon-wed-mor.mp3", text: "Je amōini haroi nēetesmarōout ente Paiōt ari-eklēronomin empiōnkh ethmēn evol sha eneh." },
             { language: 'english', text: "\"Come unto Me, O blessed of My Father, and inherit the life, that endures forever.\"" },
+            { language: 'arabic', text: "\"تعالوا إليَّ، يا مُبارَكي أبي، رثوا الحياة، الدائمة إلى الأبد.\"" },
+            { language: 'englishArabic', text: "\"Ta'alu ilayya, ya mubaraki abi, rithu el-hayah, ed-da'ima ila el-abad.\"" },
           ],
         },
       ],
@@ -536,6 +590,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-jonah-nefsenty.mp3", text: "Ⲛⲉϥⲥⲉⲛϯ ϧⲉⲛ ⲛⲓⲧⲱⲟ̀ⲩ ⲉ̅ⲑ̅ⲩ̅. Ⲁ̀Ⲡ⳪ ⲙⲉⲓ ⲛ̀ⲛⲓⲡⲩⲗⲏ ⲛ̀ⲧⲉ Ⲥⲓⲱⲛ ⲉ̀ϩⲟⲧⲉ ⲛⲓⲙⲁ ⲛ̀ϣⲱⲡⲓ ⲧⲏⲣⲟⲩ ⲛ̀ⲧⲉ Ⲓⲁⲕⲱⲃ. Ⲁϥⲥⲁϫⲓ ⲉ̀ⲑⲃⲏϯ ⲛ̀ϩⲁⲛ ⲛ̀ⲃⲏⲟⲩⲓ̀ ⲉⲩⲧⲁⲓⲏⲟⲩⲧ ϯⲃⲁⲕⲓ ⲛ̀ⲧⲉ Ⲫϯ. Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ.\n\nⲤⲓⲱⲛ ϯⲙⲁⲩ ⲛⲁϫⲟⲥ ϫⲉ ⲟ̀ⲩⲣⲱⲙⲓ ⲛⲉⲙ ⲟ̀ⲩⲣⲱⲙⲓ ⲁϥϣⲱⲡⲓ ⲛ̀ϧⲏⲧⲥ ⲟⲩⲟϩ ⲛ̀ⲑⲟϥ Ⲡⲉⲧϭ̀ⲟⲥⲓ ⲁϥϩⲓⲥⲉⲛϯ ⲙ̀ⲙⲟⲥ ϣⲁ ⲉ̀ⲛⲉϩ. Ⲁ̀ⲗⲗⲏⲗⲟⲩⲓⲁ." },
             { language: 'englishCoptic', audio: "alhan-jonah-nefsenty.mp3", text: "Nefsenti khen nitō-ou ethouab. A-Ptshois mei ennipulē ente Siōn ehote nima enshōpi tērou ente Iakōb. Afsaji ethvēti enhan envēou-i eutaiēout tivaki ente Efnouti. Allēlouia.\n\nSiōn timau najos je ourōmi nem ourōmi afshōpi enkhēts ouoh enthof Petetshosi afhisenti emmos sha eneh. Allēlouia." },
             { language: 'english', text: "His foundation is in the holy mountains. The Lord loves the gates of Zion, more than all the dwellings of Jacob. Glorious things are spoken of you, O city of God. Alleluia.\n\nAnd of Zion it will be said, \"This one and that one were born in her, and the Most High Himself shall establish her.\" Alleluia." },
+            { language: 'arabic', text: "أساساتها في الجبال المقدسة، الرب أحب أبواب صهيون أفضل من جميع مساكن يعقوب. أعمال كريمة قيلت من أجلِك يا مدينة الله. الليلويا.\n\nالأم صهيون تقول أنَّ إنسانًا وإنسانًا حل فيها، وهو العلي الذى أسسها إلى الأبد. الليلويا." },
+            { language: 'englishArabic', text: "Asasatuha fil-gibal el-muqaddasa, er-Rabb ahabba abwab Sahyoun afdal min gamee' masakin Ya'qoub. A'mal kareema qeelat min aglik ya madeenat Allah. Hallelouia.\n\nEl-umm Sahyoun taqoul anna insanan wa insanan halla fiha, wa huwa el-'ali elladhi assasaha ila el-abad. Hallelouia." },
           ],
         },
         {
@@ -545,6 +601,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-jonah-enthotetishori.mp3", text: "Ⲛ̀ⲑⲟ ⲧⲉ ϯϣⲟⲩⲣⲏ ⲛ̀ⲛⲟⲩⲃ ⲛ̀ⲕⲁⲑⲁⲣⲟⲥ ⲉⲧϥⲁⲓ ϧⲁ ⲡⲓϫⲉⲃⲥ ⲛ̀ⲭ̀ⲣⲱⲙ ⲉⲧⲥ̀ⲙⲁⲣⲱⲟ̀ⲩⲧ." },
             { language: 'englishCoptic', audio: "alhan-jonah-enthotetishori.mp3", text: "Entho te tishourē ennoub enkatharos etfai kha pijebs enekhrōm etesmarō-out." },
             { language: 'english', text: "You are the golden censer, carrying the blessed and live coal." },
+            { language: 'arabic', text: "أنت هي المجمرة، الذهب النقي، حاملة جمر، النار المباركة." },
+            { language: 'englishArabic', text: "Anti hiya el-mighmara, edh-dhahab en-naqi, hamilat gamr, en-nar el-mubaraka." },
           ],
         },
         {
@@ -646,6 +704,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-palm-pmatin-refrain.mp3", text: "Ⲱⲥⲁⲛⲛⲁ ϧⲉⲛ ⲛⲏⲉⲧϭⲟⲥⲓ ⲫⲁⲓ ⲡⲉ ⲡ̀ⲟⲩⲣⲟ ⲙ̀ⲡⲒⲥⲣⲁⲏⲗ ϥ̀ⲥ̀ⲙⲁⲣⲱⲟⲩⲧ ⲛ̀ϫⲉ ⲫⲏⲉⲑⲛⲏⲟⲩ ϧⲉⲛ ⲫ̀ⲣⲁⲛ ⲙ̀Ⲡ̀⳪ ⲛ̀ⲧⲉ ⲛⲓϫⲟⲙ." },
             { language: 'englishCoptic', audio: "alhan-palm-pmatin-refrain.mp3", text: "Ōsanna khen nēettshosi fai pe epouro emp-Israēl efesmarōout enje fēethnēou khen efran em-Eptshois ente nijom." },
             { language: 'english', text: "Hosanna in the highest, this is the King of Israel, blessed is He who comes in the Name, of the Lord of Hosts." },
+            { language: 'arabic', text: "أوصنا في الأعالي، هذا هو ملك إسرائيل، مبارك الآتي، بإسم رب القوات." },
+            { language: 'englishArabic', text: "Osanna fil-a'ali, hadha huwa malik Isra'eel, mubarakun el-ati, bism Rabb el-quwwat." },
           ],
         },
         {
@@ -664,6 +724,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-palm-pmatin-mary.mp3", text: "Ⲧⲉⲛϭⲓⲥⲓ ⲙ̀ⲙⲟ ϧⲉⲛ ⲟⲩⲉⲙⲡ̀ϣⲁ ⲛⲉⲙ Ⲉ̀ⲗⲓⲥⲁⲃⲉⲧ ⲧⲉⲥⲩⲅⲅⲉⲛⲏⲥ ϫⲉ ⲧⲉⲥ̀ⲙⲁⲣⲱⲟⲩⲧ ⲛ̀ⲑⲟ ϧⲉⲛ ⲛⲓϩⲓⲟ̀ⲙⲓ ϥ̀ⲥ̀ⲙⲁⲣⲱⲟⲩⲧ ⲛ̀ϫⲉ ⲡ̀ⲟⲩⲧⲁϩ ⲛ̀ⲧⲉ ⲧⲉⲛⲉϫⲓ." },
             { language: 'englishCoptic', audio: "alhan-palm-pmatin-mary.mp3", text: "Tentshisi emmo khen ouemepsha nem Elisavet tesuggenēs je te-esmarōout entho khen nihi-omi efesmarōout enje epoutah ente teneji." },
             { language: 'english', text: "We indeed exalt you, with your cousin Elizabeth, saying \"Blessed are you among women, and blessed is the fruit of your womb.\"" },
+            { language: 'arabic', text: "نُعظِّمُكِ بإستحقاقٍ، مع أليصابات نَسيبَتكِ قائلين، \"مُباركةٌ أنتِ في النساء، ومُباركةٌ هي ثمرة بطنكِ.\"" },
+            { language: 'englishArabic', text: "Nu'azzimuki bi-istihqaq, ma'a Aleesabat naseebatiki qa'ileen, \"Mubarakatun anti fin-nisa', wa mubarakatun hiya thamaratu batniki.\"" },
           ],
         },
         {
@@ -727,6 +789,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-palm-pmatin-ndoor.mp3", text: "Ⲁⲕϣⲁⲛⲓ̀ ϧⲉⲛ ⲧⲉⲕⲙⲁϩⲥ̀ⲛⲟⲩϯ ⲙ̀ⲡⲁⲣⲟⲩⲥⲓⲁ̀ ⲉⲧⲟⲓ ⲛ̀ϩⲟϯ ⲙ̀ⲡⲉⲛⲑ̀ⲣⲉⲛⲥⲱⲧⲉⲙ ϧⲉⲛ ⲟⲩⲥ̀ⲑⲉⲣ-ⲧⲉⲣ ϫⲉ ϯⲥⲱⲟⲩⲛ ⲙ̀ⲙⲱⲧⲉⲛ ⲁⲛ." },
             { language: 'englishCoptic', audio: "alhan-palm-pmatin-ndoor.mp3", text: "Akshani khen tekmahesnouti emparousi-a etoi enhoti empenethrensōtem khen ou-esther-ter je tisōoun emmōten an." },
             { language: 'english', text: "And when You come again, in Your fearful appearance, may we never hear You say, \"I do not know you.\"" },
+            { language: 'arabic', text: "عند ظهورِك الثاني، المخوف لا نسمع، برعدةٍ \"أنَّنِي، لَستُ أعرفكم.\"" },
+            { language: 'englishArabic', text: "'Inda zuhourika eth-thani, el-mukhawwif la nasma', bi-ra'da \"innani, lastu a'rifukum.\"" },
           ],
         },
         {
@@ -736,6 +800,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-palm-pmatin-baptism.mp3", text: "Ⲁϥⲉⲣⲙⲉⲑⲣⲉ ⲛ̀ϫⲉ Ⲓⲱⲁⲛⲛⲏⲥ ϧⲉⲛ ⲡⲓϥ̀ⲧⲟⲟⲩ (ⲇ̅) ⲛ̀ⲉ̀ⲩⲁ̀ⲅⲅⲉⲗⲓⲟⲛ ϫⲉ ⲁⲓϯⲱⲙⲥ ⲙ̀ⲡⲁⲤⲱⲧⲏⲣ ϧⲉⲛ ⲛⲓⲙⲱⲟⲩ ⲛ̀ⲧⲉ ⲡⲓⲒⲟⲣⲇⲁⲛⲏⲥ." },
             { language: 'englishCoptic', audio: "alhan-palm-pmatin-baptism.mp3", text: "Afermethre enje Iōannēs khen pi-eftoou (d) eneu-aggelion je aitiōms empa-Sōtēr khen nimōou ente pi-Iordanēs." },
             { language: 'english', text: "John witnessed, in the four gospels, \"I baptized my Savior, in the waters of the Jordan.\"" },
+            { language: 'arabic', text: "شهد يوحنا، في الأناجيل الأربع، \"أني عمدَّت مخلصي، في مياه الأردن.\"" },
+            { language: 'englishArabic', text: "Shahida Youhanna, fil-anageel el-arba', \"inni 'ammadtu mukhallisi, fi miyah el-Urdunn.\"" },
           ],
         },
         {
@@ -754,6 +820,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-palm-pmatin-john.mp3", text: "Ⲙⲡⲉ ⲟⲩⲟⲛ ⲧⲱⲛϥ ϧⲉⲛ ⲛⲓϫⲓⲛⲙⲓⲥⲓ ⲛ̀ⲧⲉ ⲛⲓϩⲓⲟⲙⲓ ⲉϥⲟⲛⲓ ⲙ̀ⲙⲟⲕ ⲛ̀ⲑⲟⲕ ⲟⲩⲛⲓϣϯ ϧⲉⲛ ⲛⲏⲉ̅ⲑ̅ⲩ̅ ⲧⲏⲣⲟⲩ Ⲓⲱⲁⲛⲛⲏⲥ ⲡⲓⲣⲉϥϯⲱⲙⲥ." },
             { language: 'englishCoptic', audio: "alhan-palm-pmatin-john.mp3", text: "Mpe ouon tōnf khen nijinmisi ente nihiomi efoni emmok enthok ounishti khen nēethouab tērou Iōannēs pireftiōms." },
             { language: 'english', text: "Among those born of women, no one is like you, you are great among the saints, O John the Baptist." },
+            { language: 'arabic', text: "لم يقم في مواليد النساء، مَنْ يشبهك، أنت عظيم في جميع القديسين، يا يوحنا المعمدان." },
+            { language: 'englishArabic', text: "Lam yaqum fi mawaleed en-nisa', man yushbihuk, anta 'azeemun fi gamee' el-qiddiseen, ya Youhanna el-Ma'madan." },
           ],
         },
       ],
@@ -823,6 +891,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-palm-palm-lit-gos1.mp3", text: "Ⲱⲥⲁⲛⲛⲁ ϧⲉⲛ ⲛⲏⲉⲧϭⲟⲥⲓ ⲫⲁⲓ ⲡⲉ ⲡ̀ⲟⲩⲣⲟ ⲙ̀ⲡⲒⲥⲣⲁⲏⲗ ϥ̀ⲥ̀ⲙⲁⲣⲱⲟⲩⲧ ⲛ̀ϫⲉ ⲫⲏⲉⲑⲛⲏⲟⲩ ϧⲉⲛ ⲫ̀ⲣⲁⲛ ⲙ̀Ⲡ̀ϭⲟⲓⲥ ⲛ̀ⲧⲉ ⲛⲓϫⲟⲙ." },
             { language: 'englishCoptic', audio: "alhan-palm-palm-lit-gos1.mp3", text: "Ōsanna khen nēettshosi fai pe epouro emp-Israēl efesmarōout enje fēethnēou khen efran em-Eptshois ente nijom." },
             { language: 'english', text: "Hosanna in the highest, this is the King of Israel, blessed is He who comes in the Name, of the Lord of Hosts." },
+            { language: 'arabic', text: "أوصنا في الأعالي، هذا هو ملك إسرائيل، مبارك الآتي، بإسم رب القوات." },
+            { language: 'englishArabic', text: "Osanna fil-a'ali, hadha huwa malik Isra'eel, mubarakun el-ati, bism Rabb el-quwwat." },
           ],
         },
         {
@@ -915,6 +985,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-pascha-exp2.mp3", text: "Ⲡⲓⲟⲩⲱⲓⲛⲓ ⲛ̀ⲧⲁ ⲫ̀ⲙⲏⲓ ⲫⲏ ⲉⲧⲉⲣⲟⲩⲱⲓⲛⲓ ⲉ̀ⲣⲱⲙⲓ ⲛⲓⲃⲉⲛ ⲉⲑⲛⲏⲟⲩ ⲉ̀ⲡⲓⲕⲟⲥⲙⲟⲥ." },
             { language: 'englishCoptic', audio: "alhan-pascha-exp2.mp3", text: "Piouōini enta efmēi fē eterouōini erōmi niven ethnēou epikosmos." },
             { language: 'english', text: "O true light who gives light to every man that comes into the world." },
+            { language: 'arabic', text: "أيها النور الحقيقي، الذي يضئ، لكل إنسان، آتٍ إلى العالم." },
+            { language: 'englishArabic', text: "Ayyuha en-nour el-haqeeqi, elladhi yudee', li-kull insan, atin ila el-'alam." },
           ],
         },
         {
@@ -924,6 +996,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-pascha-exp3.mp3", text: "Ⲭⲉⲣⲉ ⲛⲉ Ⲙⲁⲣⲓⲁ̀ ϯϭ̀ⲣⲟⲙⲡⲓ ⲉⲑⲛⲉⲥⲱⲥ ⲑⲏⲉ̀ⲧⲁⲥⲙⲓⲥⲓ ⲛⲁⲛ ⲙ̀Ⲫϯ ⲡⲓⲖⲟⲅⲟⲥ." },
             { language: 'englishCoptic', audio: "alhan-pascha-exp3.mp3", text: "Shere ne Mari-a ti-etshrompi ethnesōs thē-etasmisi nan em-Efnouti pi-Logos." },
             { language: 'english', text: "Hail to you O Mary, the pure dove who, for us, gave birth to God the Logos." },
+            { language: 'arabic', text: "السلام لك يا مريم الحمامة الحسنة التي ولدت لنا الله الكلمة." },
+            { language: 'englishArabic', text: "Es-salam laki ya Maryam el-hamama el-hasana, allati waladat lana Allah el-Kalima." },
           ],
         },
         {
@@ -948,6 +1022,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-pascha-fai-etav-enf.mp3", text: "Ⲫⲁⲓ ⲉ̀ⲧⲁϥⲉⲛϥ ⲉ̀ⲡ̀ϣⲱⲓ ⲛ̀ⲟⲩⲑⲩⲥⲓⲁ ⲉⲥϣⲏⲡ: ϩⲓϫⲉⲛ ⲡⲓⲥ̀ⲧⲁⲩⲣⲟⲥ: ϧⲁ ⲡ̀ⲟⲩϫⲁⲓ ⲙ̀ⲡⲉⲛⲅⲉⲛⲟⲥ.\n\nⲀϥϣⲱⲗⲉⲙ ⲉ̀ⲣⲟϥ ⲛ̀ϫⲉ ⲡⲉϥⲓⲱⲧ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ: ⲙ̀ⲫ̀ⲛⲁⲩ ⲛ̀ⲧⲉ ϩⲁⲛⲁ̀ⲣⲟⲩϩⲓ: ϩⲓϫⲉⲛ ϯⲄⲟⲗⲅⲟⲑⲁ." },
             { language: 'englishCoptic', audio: "alhan-pascha-fai-etav-enf.mp3", text: "Fai etafenf e-epshōi enouthusia esshēp: hijen pi-estauros: kha epoujai empengenos.\n\nAfshōlem erof enje pefiōt enagathos: emefnau ente hanarouhi: hijen ti-Golgotha." },
             { language: 'english', text: "This is He who offered Himself up, as an acceptable sacrifice, on the Cross for the salvation of our race.\n\nHis Good Father smelled Him at the evening watch on Golgotha." },
+            { language: 'arabic', text: "هذا الذي أصعد ذاته، ذبيحة مقبولة، على الصليب، عن خلاص جنسنا.\n\nفإشتمه، أبوه الصالح، وقت المساء، على الجلجثة." },
+            { language: 'englishArabic', text: "Hadha elladhi as'ada dhatahu, dhabeeha maqboula, 'ala es-saleeb, 'an khalas gensina.\n\nFa-ishtammahu, abouhu es-salih, waqt el-masa', 'ala el-Gulgutha." },
           ],
         },
         {
@@ -981,6 +1057,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-pascha-taishori.mp3", text: "Ⲧⲁⲓϣⲟⲩⲣⲏ ⲛ̀ⲛⲟⲩⲃ ⲛ̀ⲕⲁⲑⲁⲣⲟⲥ ⲉⲧϥⲁⲓ ϧⲁ ⲡⲓⲁ̀ⲣⲱⲙⲁⲧⲁ ⲉⲧϧⲉⲛ ⲛⲉⲛϫⲓϫ ⲛ̀Ⲁ̀ⲁⲣⲱⲛ ⲡⲓⲟ̀ⲩⲏⲃ ⲉϥⲧⲁⲗⲉ ⲟⲩⲥ̀ⲑⲟⲓⲛⲟⲩϥⲓ ⲉ̀ⲡ̀ϣⲱⲓ ⲉ̀ϫⲉⲛ ⲡⲓⲙⲁ ⲛ̀ⲉ̀ⲣϣⲱⲟ̀ⲩϣⲓ." },
             { language: 'englishCoptic', audio: "alhan-pascha-taishori.mp3", text: "Taishourē ennoub enkatharos etfai kha pi-arōmata etkhen nenjij en-Aarōn pi-ouēb eftale ou-esthoinoufi e-epshōi ejen pima enershō-oushi." },
             { language: 'english', text: "This is the censer of pure gold bearing the aroma, in the hands of Aaron the priest, offering up incense on the altar." },
+            { language: 'arabic', text: "هذه المجمرة الذهب النقي الحاملة العنبر التي في يدي هرون الكاهن يرفع بخوراً فوق المذبح." },
+            { language: 'englishArabic', text: "Hadhihi el-mighmara edh-dhahab en-naqi el-hamila el-'anbar, allati fi yaday Haroun el-kahin, yarfa' bukhouran fawq el-madhbah." },
           ],
         },
         {
@@ -1017,6 +1095,8 @@ export const alhanSeasonServices: Record<string, Service[]> = {
             { language: 'coptic', audio: "alhan-pascha-teeshori.mp3", text: "Ϯϣⲟⲩⲣⲏ ⲛ̀ⲛⲟⲩⲃ ⲧⲉ ϯⲠⲁⲣⲑⲉⲛⲟⲥ ⲡⲉⲥⲁ̀ⲣⲱⲙⲁⲧⲁ ⲡⲉ ⲡⲉⲛⲥ̅ⲱ̅ⲣ̅ ⲁⲥⲙⲓⲥⲓ ⲙ̀ⲙⲟϥ ⲁϥⲥⲱϯ ⲙ̀ⲙⲟⲛ ⲟⲩⲟϩ ⲁϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ." },
             { language: 'englishCoptic', audio: "alhan-pascha-teeshori.mp3", text: "Tishourē ennoub te ti-Parthenos pesarōmata pe pensōtēr asmisi emmof afsōti emmon ouoh afkha nennovi nan evol." },
             { language: 'english', text: "The golden censer is the Virgin, her aroma is our Savior. She gave birth to Him; He saved us and forgave us our sins." },
+            { language: 'arabic', text: "المجمرة الذهب هي العذراء، وعنبرها هو مخلصنا. قد ولدته وخلصنا وغفر لنا خطايانا." },
+            { language: 'englishArabic', text: "El-mighmara edh-dhahab hiya el-'Adhra', wa 'anbaruha huwa mukhallisuna. Qad waladat-hu wa khallasana wa ghafara lana khatayana." },
           ],
         },
         {
