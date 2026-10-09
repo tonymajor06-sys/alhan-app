@@ -365,23 +365,24 @@ export const copticSentences: CopticWord[] = [
   { coptic: "Ⲧⲉⲛⲟⲩⲱϣⲧ ⲙ̀Ⲫ̀ⲓⲱⲧ ⲛⲉⲙ Ⲡ̀ϣⲏⲣⲓ ⲛⲉⲙ Ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ ⲉⲑⲟⲩⲁⲃ", sound: "Tenouōsht em-Efiōt nem Epshēri nem Pi-epneuma ethouab", meaning: { en: "We worship the Father and the Son and the Holy Spirit", ar: "نسجد للآب والابن والروح القدس" } },
 ];
 
-// Coptic to speak every day: greetings and wishes, mostly from the Coptic Orthodox Church Network's
-// common greetings (copticchurch.net), the birthday wish from tasbeha.org, and "what is your name"
-// as Mark 5:9 asks it in the Bohairic Gospel. Masculine forms unless the meaning says otherwise.
+// Coptic to speak every day, in Bohairic: greetings and wishes, mostly from the Coptic Orthodox Church
+// Network's common greetings (copticchurch.net), the birthday wish from tasbeha.org, and "what is your
+// name" as Mark 5:9 asks it in the Bohairic Gospel. Words are spelled as the app's Bohairic hymns spell
+// them (ⲁ̀ⲧⲟⲟⲩⲓ̀ morning, ⲁⲣⲟⲩϩⲓ evening, ϫⲓⲛⲙⲓⲥⲓ birth). Masculine unless the meaning says otherwise.
 export const copticEverydayPhrases: CopticWord[] = [
   { coptic: "Ⲭⲉⲣⲉ ⲛⲁⲕ", sound: "Shere nak", meaning: { en: "Hello (to a man)", ar: "السلام لك (لرجل)" } },
   { coptic: "Ⲭⲉⲣⲉ ⲛⲉ", sound: "Shere ne", meaning: { en: "Hello (to a woman)", ar: "السلام لكِ (لامرأة)" } },
   { coptic: "Ⲭⲉⲣⲉ ⲛⲱⲧⲉⲛ", sound: "Shere nōten", meaning: { en: "Hello (to everyone)", ar: "السلام لكم" } },
   { coptic: "Ϯϩⲓⲣⲏⲛⲏ ⲛⲁⲕ", sound: "Tihirēnē nak", meaning: { en: "Peace be with you", ar: "السلام معك" } },
-  { coptic: "Ⲛⲁⲛⲉ ⲧⲟⲟⲩⲓ", sound: "Nane tooui", meaning: { en: "Good morning", ar: "صباح الخير" } },
+  { coptic: "Ⲛⲁⲛⲉ ⲁ̀ⲧⲟⲟⲩⲓ̀", sound: "Nane atoou-i", meaning: { en: "Good morning", ar: "صباح الخير" } },
   { coptic: "Ⲛⲁⲛⲉ ⲉ̀ϩⲟⲟⲩ", sound: "Nane ehoou", meaning: { en: "Good day", ar: "نهارك سعيد" } },
-  { coptic: "Ⲛⲁⲛⲉ ⲣⲟⲩϩⲓ", sound: "Nane rouhi", meaning: { en: "Good evening", ar: "مساء الخير" } },
+  { coptic: "Ⲛⲁⲛⲉ ⲁⲣⲟⲩϩⲓ", sound: "Nane arouhi", meaning: { en: "Good evening", ar: "مساء الخير" } },
   { coptic: "Ⲛⲁⲛⲉ ⲉ̀ϫⲱⲣϩ", sound: "Nane ejōrh", meaning: { en: "Good night", ar: "تصبح على خير" } },
   { coptic: "Ⲛⲁⲛⲉ ⲉ̀ϫⲱⲣϩ ⲡⲁⲙⲉⲛⲣⲓⲧ", sound: "Nane ejōrh pamenrit", meaning: { en: "Good night, my dear", ar: "تصبح على خير يا حبيبي" } },
   { coptic: "Ⲁϣ ⲡⲉ ⲡⲉⲕⲣⲏϯ", sound: "Ash pe pekrēti", meaning: { en: "How are you? (to a man)", ar: "كيف حالك؟ (لرجل)" } },
   { coptic: "Ⲁϣ ⲡⲉ ⲡⲉⲣⲏϯ", sound: "Ash pe perēti", meaning: { en: "How are you? (to a woman)", ar: "كيف حالكِ؟ (لامرأة)" } },
-  { coptic: "Ⲛⲁⲛⲉϥ", sound: "Nanef", meaning: { en: "Good, fine", ar: "بخير" } },
-  { coptic: "Ⲛⲁⲛⲉϥ ⲉ̀ⲙⲁϣⲱ", sound: "Nanef emashō", meaning: { en: "Very good", ar: "بخير جداً" } },
+  { coptic: "Ϯⲟⲩⲟϫ", sound: "Ti-ouoj", meaning: { en: "I am well", ar: "أنا بخير" } },
+  { coptic: "Ⲛⲁⲛⲉⲥ ⲉ̀ⲙⲁϣⲱ", sound: "Nanes emashō", meaning: { en: "Very good", ar: "جيد جداً" } },
   { coptic: "Ϯϣⲉⲡϩ̀ⲙⲟⲧ ⲛ̀ⲧⲟⲧϥ ⲙ̀Ⲫ̀ⲛⲟⲩϯ", sound: "Tishepehmot entotf em-Efnouti", meaning: { en: "I thank God", ar: "أشكر الله" } },
   { coptic: "Ϯϣⲉⲡϩ̀ⲙⲟⲧ ⲛ̀ⲧⲟⲧⲕ", sound: "Tishepehmot entotk", meaning: { en: "Thank you", ar: "شكراً لك" } },
   { coptic: "Ⲙ̀ⲙⲟⲛ ϩ̀ⲗⲓ", sound: "Emmon ehli", meaning: { en: "You're welcome (it's nothing)", ar: "العفو" } },
@@ -395,8 +396,8 @@ export const copticEverydayPhrases: CopticWord[] = [
   { coptic: "Ⲁ̀ⲙⲱⲓⲛⲓ", sound: "Amōini", meaning: { en: "Come (everyone)", ar: "تعالوا" } },
   { coptic: "Ⲫ̀ⲛⲟⲩϯ ⲛⲉⲙⲁⲕ", sound: "Efnouti nemak", meaning: { en: "God be with you", ar: "الله معك" } },
   { coptic: "Ⲟⲩϫⲁⲓ ϧⲉⲛ Ⲡ̀ϭⲟⲓⲥ", sound: "Oujai khen Eptshois", meaning: { en: "Goodbye, be well in the Lord", ar: "مع السلامة في الرب" } },
-  { coptic: "Ⲛⲟϥⲣⲓ ⲡⲉ ⲡⲉⲕⲉ̀ϩⲟⲟⲩ ⲙ̀ⲙⲓⲥⲓ", sound: "Nofri pe pekehoou emmisi", meaning: { en: "Happy birthday (to a boy or man)", ar: "عيد ميلاد سعيد (لولد أو رجل)" } },
-  { coptic: "Ⲛⲟϥⲣⲓ ⲡⲉ ⲡⲉⲉ̀ϩⲟⲟⲩ ⲙ̀ⲙⲓⲥⲓ", sound: "Nofri pe pe-ehoou emmisi", meaning: { en: "Happy birthday (to a girl or woman)", ar: "عيد ميلاد سعيد (لبنت أو امرأة)" } },
+  { coptic: "Ⲛⲟϥⲣⲓ ⲡⲉ ⲡⲉⲕⲉ̀ϩⲟⲟⲩ ⲛ̀ϫⲓⲛⲙⲓⲥⲓ", sound: "Nofri pe pekehoou enjinmisi", meaning: { en: "Happy birthday (to a boy or man)", ar: "عيد ميلاد سعيد (لولد أو رجل)" } },
+  { coptic: "Ⲛⲟϥⲣⲓ ⲡⲉ ⲡⲉⲉ̀ϩⲟⲟⲩ ⲛ̀ϫⲓⲛⲙⲓⲥⲓ", sound: "Nofri pe pe-ehoou enjinmisi", meaning: { en: "Happy birthday (to a girl or woman)", ar: "عيد ميلاد سعيد (لبنت أو امرأة)" } },
   { coptic: "Ⲛⲟϥⲣⲓ ϣⲁⲓ", sound: "Nofri shai", meaning: { en: "Happy feast", ar: "عيد سعيد" } },
   { coptic: "Ⲛⲟϥⲣⲓ ⲣⲟⲙⲡⲓ ⲙ̀ⲃⲉⲣⲓ", sound: "Nofri rompi emveri", meaning: { en: "Happy New Year", ar: "سنة جديدة سعيدة" } },
   { coptic: "Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ ⲁⲩⲙⲁⲥϥ", sound: "Pi-ekhristos aumasf", meaning: { en: "Christ is born", ar: "المسيح وُلد" } },
