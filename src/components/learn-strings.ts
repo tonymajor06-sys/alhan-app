@@ -1,8 +1,8 @@
 // Text for the Learn Coptic screens, in both app languages
 
-export type LessonId = 'alphabet' | 'reading' | 'words' | 'quiz' | 'practice';
+export type LessonId = 'alphabet' | 'reading' | 'words' | 'speaking' | 'quiz' | 'practice';
 
-export const lessonIds: LessonId[] = ['alphabet', 'reading', 'words', 'quiz', 'practice'];
+export const lessonIds: LessonId[] = ['alphabet', 'reading', 'words', 'speaking', 'quiz', 'practice'];
 
 export const learnStrings = {
   en: {
@@ -12,7 +12,8 @@ export const learnStrings = {
       alphabet: { title: 'The Alphabet', desc: 'Every letter, its name and sound' },
       reading: { title: 'Reading Rules', desc: 'The jinkim, ⲟⲩ, Ϯ and shortened names' },
       words: { title: 'Words from the Hymns', desc: 'The words you will hear most in church' },
-      quiz: { title: 'Quiz', desc: 'Six levels, from letters to whole sentences' },
+      speaking: { title: 'Speak Coptic', desc: 'Good morning, good night, thank you, happy birthday and more' },
+      quiz: { title: 'Quiz', desc: 'Seven levels, from letters to speaking Coptic' },
       practice: { title: 'Read a Verse', desc: 'Real verses from the hymns in this app' },
     } as Record<LessonId, { title: string; desc: string }>,
     tapLetter: 'Tap a letter to see how it sounds',
@@ -41,6 +42,7 @@ export const learnStrings = {
       { title: 'Build Sentences', desc: 'Put the words in the right order' },
       { title: 'Challenge', desc: 'A bit of everything' },
     ],
+    everydayLevel: { title: 'Speak Coptic', desc: 'Greetings and wishes for every day' },
     correct: 'Correct!',
     wrongAnswer: (answer: string) => `The answer is ${answer}`,
     next: 'Next',
@@ -64,7 +66,8 @@ export const learnStrings = {
       alphabet: { title: 'الحروف', desc: 'كل الحروف وأسماؤها ونطقها' },
       reading: { title: 'قواعد القراءة', desc: 'الجنكم و ⲟⲩ و Ϯ والأسماء المختصرة' },
       words: { title: 'كلمات من الألحان', desc: 'أكثر الكلمات التي تسمعها في الكنيسة' },
-      quiz: { title: 'اختبار', desc: 'ستة مستويات، من الحروف إلى الجمل الكاملة' },
+      speaking: { title: 'تكلم قبطي', desc: 'صباح الخير، تصبح على خير، شكراً، عيد ميلاد سعيد والمزيد' },
+      quiz: { title: 'اختبار', desc: 'سبعة مستويات، من الحروف إلى التكلم بالقبطي' },
       practice: { title: 'اقرأ ربعاً', desc: 'أرباع حقيقية من ألحان التطبيق' },
     } as Record<LessonId, { title: string; desc: string }>,
     tapLetter: 'اضغط على حرف لترى نطقه',
@@ -93,6 +96,7 @@ export const learnStrings = {
       { title: 'كوّن جملة', desc: 'رتّب الكلمات بالترتيب الصحيح' },
       { title: 'تحدٍّ', desc: 'قليل من كل شيء' },
     ],
+    everydayLevel: { title: 'تكلم قبطي', desc: 'تحيات وتهاني لكل يوم' },
     correct: 'إجابة صحيحة!',
     wrongAnswer: (answer: string) => `الإجابة هي ${answer}`,
     next: 'التالي',

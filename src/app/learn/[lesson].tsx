@@ -7,7 +7,16 @@ import { learnStrings, LessonId, lessonIds } from '@/components/learn-strings';
 import { useLessonStyles } from '@/components/lesson-styles';
 import { QuizLevels } from '@/components/quiz-levels';
 import { displayTitle } from '@/data/arabic-titles';
-import { copticAlphabet, copticMoreWords, copticQuizLevels, copticWords, getPracticeVerses, readingRules } from '@/data/coptic-lessons';
+import {
+  copticAlphabet,
+  copticEverydayPhrases,
+  copticMoreWords,
+  copticQuizLevels,
+  CopticWord,
+  copticWords,
+  getPracticeVerses,
+  readingRules,
+} from '@/data/coptic-lessons';
 import { AppLanguage, useSettings } from '@/hooks/use-settings';
 
 // Build every page ahead of time, so a shared link or a refresh on the website works
@@ -29,7 +38,8 @@ export default function LessonScreen() {
     <ScreenShell lang={lang} title={t.lessons[id].title} subtitle={t.lessons[id].desc} onBack={goBackOrHome}>
       {id === 'alphabet' ? <Alphabet lang={lang} /> : null}
       {id === 'reading' ? <ReadingRules lang={lang} /> : null}
-      {id === 'words' ? <Words lang={lang} /> : null}
+      {id === 'words' ? <Words lang={lang} words={hymnWords} /> : null}
+      {id === 'speaking' ? <Words lang={lang} words={copticEverydayPhrases} /> : null}
       {id === 'quiz' ? <Quiz lang={lang} /> : null}
       {id === 'practice' ? <Practice lang={lang} /> : null}
     </ScreenShell>
@@ -111,7 +121,10 @@ function ReadingRules({ lang }: LessonProps) {
   );
 }
 
-function Words({ lang }: LessonProps) {
+const hymnWords = [...copticWords, ...copticMoreWords];
+
+// A list of words or phrases with their sound, and meanings that can be hidden to test yourself
+function Words({ lang, words }: LessonProps & { words: CopticWord[] }) {
   const t = learnStrings[lang];
   const { styles, shared, textAlign, rowDirection } = useLessonStyles(lang);
   const [hideMeanings, setHideMeanings] = useState(false);
@@ -134,7 +147,7 @@ function Words({ lang }: LessonProps) {
           {hideMeanings ? t.showMeanings : t.hideMeanings}
         </Text>
       </Pressable>
-      {[...copticWords, ...copticMoreWords].map((word) => {
+      {words.map((word) => {
         const shown = !hideMeanings || revealed.has(word.coptic);
         return (
           <Pressable
@@ -157,7 +170,7 @@ function Words({ lang }: LessonProps) {
 
 function Quiz({ lang }: LessonProps) {
   const t = learnStrings[lang];
-  const levels = useMemo(() => copticQuizLevels(lang, t.levelText), [lang, t]);
+  const levels = useMemo(() => copticQuizLevels(lang, t.levelText, t.everydayLevel), [lang, t]);
   return (
     <QuizLevels
       key={lang}

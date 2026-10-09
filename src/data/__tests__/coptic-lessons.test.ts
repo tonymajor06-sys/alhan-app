@@ -1,6 +1,7 @@
 import { learnStrings } from '../../components/learn-strings';
 import { arabicAlphabet, arabicForms, arabicQuizLevels, getArabicPracticeVerses } from '../arabic-lessons';
-import { copticAlphabet, copticQuizLevels, getPracticeVerses } from '../coptic-lessons';
+import { copticAlphabet, copticEverydayPhrases, copticMoreWords, copticQuizLevels, getPracticeVerses } from '../coptic-lessons';
+import { deaconCategories, flattenHymns, seasons } from '../hymns';
 import { englishQuizLevels } from '../english-lessons';
 import { QuizLevel } from '../quiz';
 
@@ -12,8 +13,8 @@ describe('copticAlphabet', () => {
 
 // Every level of a course gives ten questions: four different options with the right one among them,
 // or a sentence whose tiles are its own words, mixed up
-const checkLevels = (levels: QuizLevel[]) => {
-  expect(levels).toHaveLength(6);
+const checkLevels = (levels: QuizLevel[], count = 6) => {
+  expect(levels).toHaveLength(count);
   for (const level of levels) {
     for (let round = 0; round < 5; round++) {
       const quiz = level.build();
@@ -34,8 +35,13 @@ const checkLevels = (levels: QuizLevel[]) => {
 
 describe('quiz levels', () => {
   it('builds every Learn Coptic level in both languages', () => {
-    checkLevels(copticQuizLevels('en', learnStrings.en.levelText));
-    checkLevels(copticQuizLevels('ar', learnStrings.ar.levelText));
+    checkLevels(copticQuizLevels('en', learnStrings.en.levelText, learnStrings.en.everydayLevel), 7);
+    checkLevels(copticQuizLevels('ar', learnStrings.ar.levelText, learnStrings.ar.everydayLevel), 7);
+  });
+  it('asks the everyday phrases in the seventh Learn Coptic level', () => {
+    const level = copticQuizLevels('en', learnStrings.en.levelText, learnStrings.en.everydayLevel)[6];
+    const phrases = new Set(copticEverydayPhrases.flatMap((p) => [p.coptic, p.meaning.en]));
+    for (const q of level.build()) expect(phrases.has(q.prompt!)).toBe(true);
   });
   it('builds every Learn Arabic and Learn English level', () => {
     checkLevels(arabicQuizLevels(learnStrings.en.levelText));
@@ -45,6 +51,17 @@ describe('quiz levels', () => {
     const levels = copticQuizLevels('en', learnStrings.en.levelText);
     expect(levels[4].build().every((q) => q.kind === 'order')).toBe(true);
     expect(new Set(levels[5].build().map((q) => q.kind)).size).toBeGreaterThan(2);
+  });
+});
+
+describe('copticMoreWords', () => {
+  it('only teaches words found in the Coptic of the app\'s hymns', () => {
+    const coptic = [...seasons.flatMap((s) => s.services), ...deaconCategories.flatMap((c) => c.services)]
+      .flatMap((sv) => flattenHymns(sv.hymns))
+      .map((h) => h.versions.find((v) => v.language === 'coptic')?.text ?? '')
+      .join(' ')
+      .toLowerCase();
+    for (const w of copticMoreWords) expect([w.coptic, coptic.includes(w.coptic.toLowerCase())]).toEqual([w.coptic, true]);
   });
 });
 

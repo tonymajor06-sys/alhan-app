@@ -78,7 +78,7 @@ const meaningToWord = (items: QuizEntry[], pool: QuizEntry[], count: number, ran
     .map((e) => makeQuestion(e.foreign, pool.map((p) => p.foreign), random, { prompt: e.meaning, kind: 'meaning' }));
 
 // Half one way, half the other
-const bothWays = (items: QuizEntry[], count: number, random: () => number) => {
+export const bothWays = (items: QuizEntry[], count: number, random: () => number) => {
   const picked = shuffle(items, random).slice(0, count);
   const half = Math.ceil(picked.length / 2);
   return shuffle(
