@@ -7479,6 +7479,20 @@ for (const season of seasons) {
   }
 }
 
+// ---- Removed from every season: The Orthodox Creed, Our Father and the Trisagion (Ⲁ̀ⲅⲓⲟⲥ ⲟ̀ Ⲑⲉⲟⲥ) ----
+const isRemovedHymn = (title: string) =>
+  title === 'The Orthodox Creed' ||
+  title === 'Our Father' ||
+  title.startsWith('Our Father Who Art in Heaven') ||
+  /^Ⲁ̀?ⲅⲓⲟⲥ ⲟ̀? Ⲑⲉⲟⲥ \(Trisagion\)$/.test(title);
+const removeHymns = (hymns: Hymn[]): Hymn[] =>
+  hymns
+    .filter((h) => !isRemovedHymn(h.title))
+    .map((h) => (h.children ? { ...h, children: removeHymns(h.children) } : h));
+for (const season of seasons) {
+  for (const service of season.services) service.hymns = removeHymns(service.hymns);
+}
+
 // Keep these last: give every hymn a "Coptic in Arabic letters" and an "English in Arabic letters" version
 // (see arabic-coptic.ts and arabic-english.ts),
 // so it must run after all the changes above

@@ -833,7 +833,6 @@ describe('Kiahk Praises & Season > Liturgy', () => {
       'Ⲕⲁⲑⲟⲗⲓⲕⲟⲛ (Introduction to the Coptic Catholic Epistle)',
       'Ⲭⲉⲣⲉ ⲛⲉ Ⲙⲁⲣⲓⲁ (Praxis Response)',
       'Ⲡⲁϭⲟⲓⲥ (Paralex)',
-      'Ⲁⲅⲓⲟⲥ ⲟ̀ Ⲑⲉⲟⲥ (Trisagion)',
       'Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ (Psalm Chant)',
       'Ⲙⲁⲣⲟⲩϭⲁⲥϥ (Psalm Trailer for the Pope or a Bishop)',
       'Liturgy of the Faithful',
@@ -851,7 +850,7 @@ describe('Kiahk Praises & Season > Liturgy', () => {
       'Ⲙⲁⲣⲓⲁ ϯϭⲣⲟⲙⲡⲓ (A Third Standard Watos Aspasmos (Mary the Beautiful Dove))',
     ]);
     expect(service.hymns.filter((h) => h.isSectionHeader).map((h) => h.title)).toEqual(['Liturgy of the Word', 'Liturgy of the Faithful']);
-    expect(service.hymns.map((h, i) => (h.isSectionHeader ? i : -1)).filter((i) => i >= 0)).toEqual([0, 15]);
+    expect(service.hymns.map((h, i) => (h.isSectionHeader ? i : -1)).filter((i) => i >= 0)).toEqual([0, 14]);
     // the Psalm Chant is a group: it opens a list of four Sundays of Kiahk, titles only for now
     const psalmChant = service.hymns.find((h) => h.title === 'Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ (Psalm Chant)')!;
     expect(psalmChant.versions).toEqual([]);
@@ -881,7 +880,7 @@ describe('Kiahk Praises & Season > Liturgy', () => {
     expect(chantText(psalmChant.children![3], 'coptic').startsWith('Ⲫⲏⲉⲧϩⲉⲙⲥⲓ ϩⲓϫⲉⲛ Ⲛⲓϣⲉⲣⲟⲩⲃⲓⲙ')).toBe(true);
     expect(service.hymns.some((h) => h.title === 'Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ (Psalm Trailer)')).toBe(false);
     expect(new Set(service.hymns.map((h) => h.id)).size).toBe(service.hymns.length);
-    // the first eleven hymns of the Liturgy of the Word, the Trisagion and the Psalm Trailer for the Pope or a Bishop have lyrics so far
+    // the first eleven hymns of the Liturgy of the Word and the Psalm Trailer for the Pope or a Bishop have lyrics so far
     const withLyrics = [
       'Ϩⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ (Hymn of the Intercessions)',
       'Ⲡⲓϩ̀ⲙⲟⲧ ⲅⲁⲣ (Conclusion to the Coptic Pauline Epistle)',
@@ -894,7 +893,6 @@ describe('Kiahk Praises & Season > Liturgy', () => {
       'Ⲕⲁⲑⲟⲗⲓⲕⲟⲛ (Introduction to the Coptic Catholic Epistle)',
       'Ⲭⲉⲣⲉ ⲛⲉ Ⲙⲁⲣⲓⲁ (Praxis Response)',
       'Ⲡⲁϭⲟⲓⲥ (Paralex)',
-      'Ⲁⲅⲓⲟⲥ ⲟ̀ Ⲑⲉⲟⲥ (Trisagion)',
       'Ⲙⲁⲣⲟⲩϭⲁⲥϥ (Psalm Trailer for the Pope or a Bishop)',
       'Ⲧⲉⲛϯ ⲛⲉ ⲙ̀ⲡⲓⲭⲉⲣⲉⲧⲓⲥⲙⲟⲥ (Gospel Response)',
       'Ⲧⲉⲛϭⲓⲥⲓ ⲙ̀ⲙⲟ ϧⲉⲛ ⲟⲩⲉⲙⲡ̀ϣⲁ (Gospel Response)',
@@ -1030,10 +1028,9 @@ describe('Kiahk Praises & Season > Liturgy', () => {
     expect(stanzas(paralex, 'english')[0]).toBe('O My Lord Jesus Christ, the begotten of the Father, before all ages, have mercy on us according to Your great mercy.');
     expect(stanzas(paralex, 'coptic')[0].startsWith('Ⲡⲁϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ')).toBe(true);
     expect(stanzas(paralex, 'arabic')[2]).toBe('قدوس رب الألوف، مكرم بالربوات، أنت بخور يا مخلصي، لأنك أتيت وخلصتنا."');
-    // the Trisagion and the Psalm Trailer for the Pope or a Bishop: the same lyrics as in Annual Liturgy, without its recordings
+    // the Psalm Trailer for the Pope or a Bishop: the same lyrics as in Annual Liturgy, without its recordings
     const annualLiturgy = seasons.find((s) => s.id === 'annual')!.services.find((s) => s.id === 'annual-liturgy')!;
     for (const [title, annualId] of [
-      ['Ⲁⲅⲓⲟⲥ ⲟ̀ Ⲑⲉⲟⲥ (Trisagion)', 'annual-liturgy-agios'],
       ['Ⲙⲁⲣⲟⲩϭⲁⲥϥ (Psalm Trailer for the Pope or a Bishop)', 'annual-liturgy-psalm-trailer-pope-bishop'],
     ]) {
       const kiahk = service.hymns.find((h) => h.title === title)!;
