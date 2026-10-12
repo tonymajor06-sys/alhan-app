@@ -12,7 +12,8 @@ const ads: AdsLibrary | null =
       (require('react-native-google-mobile-ads') as AdsLibrary)
     : null;
 
-// Ads that suit a church app: rated for general audiences, not personalized (so no tracking prompt)
+// Kid-friendly ads that suit a church app: rated G, treated as for children (Google's family-safe ads only),
+// and not personalized (so no tracking prompt)
 const requestOptions = { requestNonPersonalizedAdsOnly: true };
 const unitFor = (unit: { ios: string; android: string }, test: string) => (Platform.OS === 'ios' ? unit.ios : unit.android) || test;
 
@@ -22,7 +23,11 @@ export function startAds() {
   started = true;
   ads
     .default()
-    .setRequestConfiguration({ maxAdContentRating: ads.MaxAdContentRating.G })
+    .setRequestConfiguration({
+      maxAdContentRating: ads.MaxAdContentRating.G,
+      tagForChildDirectedTreatment: true,
+      tagForUnderAgeOfConsent: true,
+    })
     .then(() => ads.default().initialize())
     .catch(() => {
       // no ads this session

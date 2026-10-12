@@ -73,6 +73,8 @@ export default function RootLayout() {
           <Stack.Screen name="index" />
           <Stack.Screen name="calendar" />
           <Stack.Screen name="settings" />
+          <Stack.Screen name="privacy" />
+          <Stack.Screen name="support" />
           <Stack.Screen name="hymn/[id]" />
           <Stack.Screen name="learn" />
           <Stack.Screen name="learn/[lesson]" />

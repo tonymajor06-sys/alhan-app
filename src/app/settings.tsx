@@ -1,3 +1,4 @@
+import { router } from 'expo-router';
 import { ReactNode } from 'react';
 import { Alert, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 
@@ -38,6 +39,9 @@ const strings = {
     playNextHint: 'When a recording ends, the next one in the service starts',
     reminders: 'Feast reminders',
     remindersHint: 'A notification the evening before each feast and fast',
+    about: 'About',
+    support: 'Support and feedback',
+    privacy: 'Privacy Policy',
     remindersDenied: 'Notifications are turned off for Coptic Hymns. You can allow them in your phone’s settings.',
   },
   ar: {
@@ -61,6 +65,9 @@ const strings = {
     playNextHint: 'عند انتهاء التسجيل يبدأ التالي في الخدمة',
     reminders: 'تذكير بالأعياد',
     remindersHint: 'رسالة تذكير مساء اليوم السابق لكل عيد وصوم',
+    about: 'عن التطبيق',
+    support: 'الدعم والملاحظات',
+    privacy: 'سياسة الخصوصية',
     remindersDenied: 'الإشعارات متوقفة لتطبيق الألحان القبطية. يمكنك السماح بها من إعدادات الهاتف.',
   },
 };
@@ -119,6 +126,16 @@ export default function SettingsScreen() {
       <View style={[styles.track, on && styles.trackOn]}>
         <View style={[styles.thumb, on && styles.thumbOn]} />
       </View>
+    </Pressable>
+  );
+
+  const linkRow = (label: string, href: '/support' | '/privacy', first = false) => (
+    <Pressable
+      onPress={() => router.push(href)}
+      accessibilityRole="link"
+      style={({ pressed }) => [styles.switchRow, rowDirection, !first && styles.divider, pressed && styles.pressed]}>
+      <Text style={[styles.switchLabel, shared.rowTextWrap, textAlign]}>{label}</Text>
+      <Text style={styles.switchHint}>{rtl ? '‹' : '›'}</Text>
     </Pressable>
   );
 
@@ -235,6 +252,13 @@ export default function SettingsScreen() {
           {switchRow(t.sideBySide, t.sideBySideHint, settings.sideBySide, () => updateSettings({ sideBySide: !settings.sideBySide }), true)}
           {switchRow(t.playNext, t.playNextHint, settings.playNext, () => updateSettings({ playNext: !settings.playNext }))}
           {Platform.OS !== 'web' ? switchRow(t.reminders, t.remindersHint, settings.feastReminders, toggleReminders) : null}
+        </View>
+      )}
+      {section(
+        t.about,
+        <View style={styles.group}>
+          {linkRow(t.support, '/support', true)}
+          {linkRow(t.privacy, '/privacy')}
         </View>
       )}
     </ScreenShell>
