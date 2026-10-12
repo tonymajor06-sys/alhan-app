@@ -13,6 +13,8 @@ export default function Root({ children }: PropsWithChildren) {
         <meta property="og:site_name" content="Coptic Psalmody" />
         {/* Google AdSense (same publisher as the app's AdMob): verifies the site, and shows Auto ads once approved */}
         <meta name="google-adsense-account" content="ca-pub-8657918561342604" />
+        {/* Asks AdSense for non-personalized ads on the website; it must run before the AdSense script below */}
+        <script dangerouslySetInnerHTML={{ __html: '(adsbygoogle=window.adsbygoogle||[]).requestNonPersonalizedAds=1;' }} />
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8657918561342604" crossOrigin="anonymous" />
         <ScrollViewStyleReset />
         <style dangerouslySetInnerHTML={{ __html: 'body{background-color:#1a0a0e}@media (prefers-color-scheme: light){body{background-color:#f4e8d2}}' }} />
