@@ -13,12 +13,15 @@ import { fileURLToPath } from 'node:url';
 const BUCKET = process.env.R2_BUCKET ?? 'coptic-psalmody-audio';
 const DIR = join(dirname(fileURLToPath(import.meta.url)), '..', 'assets', 'audio');
 const force = process.argv.includes('--force');
+const PUBLIC_URL = (process.env.EXPO_PUBLIC_AUDIO_BASE_URL || 'https://pub-60c0221d60934edd82ad462615afdbf6.r2.dev').replace(/\/+$/, '');
 const PARALLEL = 6;
 const types = { '.mp3': 'audio/mpeg', '.m4a': 'audio/mp4' };
 
 const run = (args) =>
   new Promise((resolve) => {
-    const p = spawn('npx', ['wrangler', ...args], { shell: true });
+    // the shell joins the arguments, so any with a space (many recording names have one) need quotes
+    const quoted = args.map((a) => (/\s/.test(a) && !a.startsWith('"') ? `"${a}"` : a));
+    const p = spawn('npx', ['wrangler', ...quoted], { shell: true });
     let out = '';
     p.stdout.on('data', (d) => (out += d));
     p.stderr.on('data', (d) => (out += d));
@@ -49,8 +52,9 @@ async function worker() {
     const ext = file.slice(file.lastIndexOf('.')).toLowerCase();
     const key = `${BUCKET}/${file}`;
     if (existed && !force) {
-      const head = await run(['r2', 'object', 'get', key, '--remote', '--file', process.platform === 'win32' ? 'NUL' : '/dev/null']);
-      if (head.status === 0) {
+      // Already uploaded? Ask the bucket's public address for the file's size (nothing is written to disk)
+      const head = await fetch(`${PUBLIC_URL}/${encodeURIComponent(file)}`, { method: 'HEAD' }).catch(() => null);
+      if (head?.ok && Number(head.headers.get('content-length')) === statSync(join(DIR, file)).size) {
         skipped++;
         continue;
       }
