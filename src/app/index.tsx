@@ -18,6 +18,7 @@ import { learnArabicStrings, learnEnglishStrings, learnStrings } from '../compon
 import { guideStrings } from '../data/deacon-guide';
 import { faithStrings } from '../data/faith-guide';
 import { displayTitle } from '../data/arabic-titles';
+import { titleLines } from '../data/hymn-titles';
 import {
   copticMonths,
   currentSeasonName,
@@ -42,7 +43,7 @@ import {
 import { searchHymns, SearchResult } from '../data/search';
 import { useAlhanColors, useThemedStyles } from '../hooks/use-alhan-colors';
 import { audioSourceFor, canDownload, downloadAudio, useAudioDownloads } from '../hooks/use-audio-downloads';
-import { AppLanguage, updateSettings, useSettings } from '../hooks/use-settings';
+import { useSettings } from '../hooks/use-settings';
 import { currentTrack, playQueue, QueueTrack, setRepeat, trackKey, useAudioQueue } from '../hooks/use-audio-queue';
 import {
   audioFor,
@@ -110,7 +111,7 @@ export default function HomeScreen() {
     const hymn = findHymn(item.hymnId);
     const file = audioFor(item);
     const source = file ? audioSourceFor(file) : null;
-    return hymn && source ? { ...item, title: displayTitle(hymn, lang), source } : null;
+    return hymn && source ? { ...item, title: titleLines(hymn, lang).main, source } : null;
   };
 
   const playPlaylist = (startIndex = 0) =>
@@ -129,8 +130,6 @@ export default function HomeScreen() {
   // Hymns open on their own page, which has its own address and Back
   const openHymn = (hymn: Hymn) => openHymnPage(hymn.id);
   const openSearchResult = (result: SearchResult) => openHymnPage(result.hymn.id, result.language ?? undefined);
-
-  const changeAppLanguage = (next: AppLanguage) => updateSettings({ language: next });
 
   // Steps back one level; returns false when already on the home screen
   const goBack = (): boolean => {
@@ -167,22 +166,30 @@ export default function HomeScreen() {
     </ScreenShell>
   );
 
-  // A tile in a two-column grid; `lead` is a small mark or number above the title
-  const tile = (key: string, title: string, onPress: () => void, lead?: string, desc?: string, badge?: string) => (
+  // A tile in a two-column grid; `lead` is a small mark or number above the title, `coptic` a hymn's Coptic words
+  // under its name, and `audio` marks a hymn with a recording
+  const tile = (
+    key: string,
+    title: string,
+    onPress: () => void,
+    { lead, desc, coptic, audio }: { lead?: string; desc?: string; coptic?: string | null; audio?: boolean } = {}
+  ) => (
     <Pressable
       key={key}
       onPress={onPress}
       accessibilityRole="button"
+      accessibilityLabel={[title, coptic, audio ? t.hasAudio : null].filter(Boolean).join(', ')}
       style={({ pressed }) => [styles.tile, !desc && styles.tileSmall, pressed && styles.rowCardPressed]}>
-      {lead ? <Text style={[styles.tileLead, textAlign]}>{lead}</Text> : null}
+      {lead || audio ? (
+        <View style={[styles.tileTopRow, rowDirection]}>
+          <Text style={styles.tileLead}>{lead}</Text>
+          {audio ? <Text style={styles.tileAudio}>♪ {t.hasAudio}</Text> : null}
+        </View>
+      ) : null}
       <View>
         <Text style={[styles.tileTitle, textAlign]}>{withCopticFont(title)}</Text>
+        {coptic ? <Text style={[styles.tileCoptic, textAlign]}>{coptic}</Text> : null}
         {desc ? <Text style={[styles.tileDesc, textAlign]}>{desc}</Text> : null}
-        {badge ? (
-          <View style={[styles.badge, isRTL && styles.selfEnd]}>
-            <Text style={styles.badgeText}>♪ {badge}</Text>
-          </View>
-        ) : null}
       </View>
     </Pressable>
   );
@@ -216,15 +223,13 @@ export default function HomeScreen() {
       const hasAudio = (hymn.children ? flattenHymns(hymn.children) : [hymn]).some((h) =>
         h.versions.some((v) => v.audio)
       );
+      const { main, coptic } = titleLines(hymn, lang, settings.titleStyle);
       tiles.push(
-        tile(
-          hymn.id,
-          displayTitle(hymn, lang),
-          () => (hymn.children ? setOpenGroups([...openGroups, hymn]) : onSelect(hymn)),
-          localDigits(number),
-          undefined,
-          hasAudio ? t.hasAudio : undefined
-        )
+        tile(hymn.id, main, () => (hymn.children ? setOpenGroups([...openGroups, hymn]) : onSelect(hymn)), {
+          lead: localDigits(number),
+          coptic,
+          audio: hasAudio,
+        })
       );
     }
     flush('end');
@@ -297,13 +302,22 @@ export default function HomeScreen() {
                 ) : null}
               </View>
             </Pressable>
-            <Pressable
-              onPress={() => setCurrentView('search')}
-              accessibilityRole="search"
-              accessibilityLabel={t.search}
-              style={({ pressed }) => [styles.searchButton, pressed && styles.rowCardPressed]}>
-              <Text style={styles.searchButtonIcon}>⌕</Text>
-            </Pressable>
+            <View style={styles.topButtons}>
+              <Pressable
+                onPress={() => setCurrentView('search')}
+                accessibilityRole="search"
+                accessibilityLabel={t.search}
+                style={({ pressed }) => [styles.searchButton, pressed && styles.rowCardPressed]}>
+                <Text style={styles.searchButtonIcon}>⌕</Text>
+              </Pressable>
+              <Pressable
+                onPress={() => router.push('/settings')}
+                accessibilityRole="button"
+                accessibilityLabel={t.settings}
+                style={({ pressed }) => [styles.searchButton, pressed && styles.rowCardPressed]}>
+                <Text style={styles.searchButtonIcon}>⚙︎</Text>
+              </Pressable>
+            </View>
           </View>
 
           <View style={styles.homeBody}>
@@ -313,22 +327,6 @@ export default function HomeScreen() {
                 <Text style={[styles.heroTitle, textAlign]}>{t.appTitle}</Text>
               </View>
               <Text style={[styles.heroSubtitle, textAlign]}>{t.appSubtitle}</Text>
-            </View>
-
-            <Text style={[styles.languagePrompt, textAlign]}>{t.languagePrompt}</Text>
-            <View style={styles.segmented}>
-              {(['en', 'ar'] as AppLanguage[]).map((option) => (
-                <Pressable
-                  key={option}
-                  onPress={() => changeAppLanguage(option)}
-                  accessibilityRole="button"
-                  accessibilityState={{ selected: lang === option }}
-                  style={[styles.segment, lang === option && styles.segmentActive]}>
-                  <Text style={[styles.segmentText, lang === option && styles.segmentTextActive]}>
-                    {option === 'en' ? 'English' : 'العربية'}
-                  </Text>
-                </Pressable>
-              ))}
             </View>
 
             {tileGrid([
@@ -347,7 +345,7 @@ export default function HomeScreen() {
                 ? [{ key: 'learn-english', title: learnEnglishStrings.title, desc: learnEnglishStrings.subtitle, view: null, href: '/learn-english' as const }]
                 : []),
             ].map(({ key, title, desc, view, href }) =>
-                tile(key, title, () => (view ? setCurrentView(view) : href && router.push(href)), undefined, desc)
+                tile(key, title, () => (view ? setCurrentView(view) : href && router.push(href)), { desc })
               )
             )}
           </View>
@@ -416,7 +414,7 @@ export default function HomeScreen() {
                   style={({ pressed }) => [styles.rowTextWrap, pressed && styles.pressed]}>
                   <Text style={[styles.rowTitle, textAlign]}>
                     {isCurrent ? (queue.status.playing ? '♪ ' : '❚❚ ') : `${index + 1}. `}
-                    {withCopticFont(displayTitle(hymn, lang))}
+                    {withCopticFont(titleLines(hymn, lang, settings.titleStyle).main)}
                   </Text>
                   <Text style={[styles.playlistMeta, textAlign]}>{languageLabel}</Text>
                 </Pressable>
@@ -486,6 +484,7 @@ export default function HomeScreen() {
           results.map((result) => {
             const { hymn, location, language } = result;
             const where = `${withoutNumber(displayTitle(location.group, lang))} › ${displayTitle(location.service, lang)}`;
+            const name = titleLines(hymn, lang, settings.titleStyle);
             const matchedIn = language ? languageLabels[lang].find((l) => l.key === language)?.label : t.titleMatch;
             return (
               <Pressable
@@ -494,7 +493,8 @@ export default function HomeScreen() {
                 accessibilityRole="button"
                 style={({ pressed }) => [styles.rowCard, rowDirection, pressed && styles.rowCardPressed]}>
                 <View style={styles.rowTextWrap}>
-                  <Text style={[styles.rowTitle, textAlign]}>{withCopticFont(displayTitle(hymn, lang))}</Text>
+                  <Text style={[styles.rowTitle, textAlign]}>{withCopticFont(name.main)}</Text>
+                  {name.coptic ? <Text style={[styles.tileCoptic, textAlign]}>{name.coptic}</Text> : null}
                   <Text style={[styles.playlistMeta, textAlign]} numberOfLines={1}>
                     {where} · {matchedIn}
                   </Text>
@@ -526,7 +526,7 @@ export default function HomeScreen() {
       t.chooseService,
       tileGrid(
         selectedSeason.services.map((service, index) =>
-          tile(service.id, displayTitle(service, lang), () => setSelectedService(service), localDigits(index + 1))
+          tile(service.id, displayTitle(service, lang), () => setSelectedService(service), { lead: localDigits(index + 1) })
         )
       )
     );
@@ -538,7 +538,7 @@ export default function HomeScreen() {
       t.chooseSeason,
       tileGrid(
         seasons.map((season, index) =>
-          tile(season.id, withoutNumber(displayTitle(season, lang)), () => setSelectedSeason(season), localDigits(index + 1))
+          tile(season.id, withoutNumber(displayTitle(season, lang)), () => setSelectedSeason(season), { lead: localDigits(index + 1) })
         )
       )
     );
@@ -555,7 +555,7 @@ export default function HomeScreen() {
       t.chooseService,
       tileGrid(
         selectedDeaconCategory.services.map((service, index) =>
-          tile(service.id, displayTitle(service, lang), () => setSelectedDeaconService(service), localDigits(index + 1))
+          tile(service.id, displayTitle(service, lang), () => setSelectedDeaconService(service), { lead: localDigits(index + 1) })
         )
       )
     );
@@ -566,7 +566,7 @@ export default function HomeScreen() {
     t.chooseCategory,
     tileGrid(
       deaconCategories.map((cat, index) =>
-        tile(cat.id, displayTitle(cat, lang), () => setSelectedDeaconCategory(cat), localDigits(index + 1))
+        tile(cat.id, displayTitle(cat, lang), () => setSelectedDeaconCategory(cat), { lead: localDigits(index + 1) })
       )
     )
   );

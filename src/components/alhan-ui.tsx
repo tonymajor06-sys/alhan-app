@@ -61,9 +61,9 @@ export const strings = {
     titleMatch: 'Title',
     sideBySide: '⇆ Side by side',
     compareWith: 'Next to it',
-    download: '⬇ Download for offline',
+    download: '⬇ Save offline',
     downloading: 'Downloading…',
-    downloaded: '✓ Downloaded · tap to remove',
+    downloaded: '✓ Saved offline',
     downloadFailed: 'Download failed. Check your connection and try again.',
     downloadAll: '⬇ Download all for offline',
     share: '↗ Share',
@@ -92,6 +92,9 @@ export const strings = {
     previousVerse: 'Previous verse',
     nextVerse: 'Next verse',
     shownLanguages: 'Show',
+    settings: 'Settings',
+    otherSeasons: 'In other seasons',
+    bishopAddition: 'In the presence of the Pope or a Bishop',
   },
   ar: {
     appTitle: 'الألحان القبطية',
@@ -140,9 +143,9 @@ export const strings = {
     titleMatch: 'العنوان',
     sideBySide: '⇆ جنباً إلى جنب',
     compareWith: 'بجانبه',
-    download: '⬇ تنزيل للاستماع بدون إنترنت',
+    download: '⬇ حفظ بدون إنترنت',
     downloading: 'جارٍ التنزيل…',
-    downloaded: '✓ تم التنزيل · اضغط للحذف',
+    downloaded: '✓ محفوظ بدون إنترنت',
     downloadFailed: 'فشل التنزيل. تحقق من الاتصال وحاول مرة أخرى.',
     downloadAll: '⬇ تنزيل الكل للاستماع بدون إنترنت',
     share: '↗ مشاركة',
@@ -171,6 +174,9 @@ export const strings = {
     previousVerse: 'المقطع السابق',
     nextVerse: 'المقطع التالي',
     shownLanguages: 'اعرض',
+    settings: 'الإعدادات',
+    otherSeasons: 'في المناسبات الأخرى',
+    bishopAddition: 'في حضور البابا أو الأسقف',
   },
 };
 
@@ -410,6 +416,7 @@ export function MiniPlayer({ lang, hideFor }: { lang: AppLanguage; hideFor?: str
 export function ScreenShell({
   lang,
   title,
+  titleCoptic,
   subtitle,
   onBack,
   hidePlayerFor,
@@ -418,6 +425,8 @@ export function ScreenShell({
 }: {
   lang: AppLanguage;
   title: string;
+  // A hymn's Coptic words, in smaller type under its name
+  titleCoptic?: string | null;
   subtitle?: string | null;
   onBack: () => void;
   hidePlayerFor?: string;
@@ -451,6 +460,7 @@ export function ScreenShell({
           <Text style={styles.backText}>{t.back}</Text>
         </Pressable>
         <Text style={[styles.headerTitle, textAlign]}>{withCopticFont(title)}</Text>
+        {titleCoptic ? <Text style={[styles.headerCoptic, textAlign]}>{titleCoptic}</Text> : null}
         {subtitle ? <Text style={[styles.subtitle, textAlign]}>{subtitle}</Text> : null}
         {children}
       </ScrollView>
@@ -587,6 +597,9 @@ export const createAlhanStyles = (colors: AlhanPalette) => StyleSheet.create({
     lineHeight: 30,
     color: colors.gold,
   },
+  topButtons: {
+    gap: 10,
+  },
   hero: {
     marginBottom: 28,
   },
@@ -671,6 +684,24 @@ export const createAlhanStyles = (colors: AlhanPalette) => StyleSheet.create({
     color: colors.text,
     lineHeight: 23,
   },
+  // A hymn's Coptic words under its name
+  tileCoptic: {
+    fontFamily: copticFont,
+    fontSize: 14,
+    lineHeight: 20,
+    color: colors.muted,
+    marginTop: 3,
+  },
+  // Number on one side, ♪ on the other
+  tileTopRow: {
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  tileAudio: {
+    fontSize: 13,
+    fontWeight: '700',
+    color: colors.gold,
+  },
   tileDesc: {
     fontSize: 13,
     color: colors.muted,
@@ -705,7 +736,15 @@ export const createAlhanStyles = (colors: AlhanPalette) => StyleSheet.create({
     fontSize: 28,
     fontWeight: '800',
     color: colors.gold,
-    lineHeight: 38,
+    lineHeight: 36,
+  },
+  headerCoptic: {
+    fontFamily: copticFont,
+    fontSize: 19,
+    lineHeight: 26,
+    color: colors.text,
+    opacity: 0.8,
+    marginTop: 4,
   },
   subtitle: {
     fontSize: 16,
@@ -780,10 +819,11 @@ export const createAlhanStyles = (colors: AlhanPalette) => StyleSheet.create({
     marginBottom: 12,
   },
   sectionHeaderText: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '800',
     color: colors.gold,
-    letterSpacing: 1,
+    letterSpacing: 1.2,
+    textTransform: 'uppercase',
   },
   sectionLine: {
     flex: 1,
@@ -874,6 +914,16 @@ export const createAlhanStyles = (colors: AlhanPalette) => StyleSheet.create({
   },
   controlTextActive: {
     color: colors.gold,
+  },
+  // Playlist and download, side by side under the controls
+  audioActions: {
+    gap: 8,
+    marginTop: 8,
+  },
+  audioAction: {
+    flex: 1,
+    marginTop: 0,
+    paddingHorizontal: 10,
   },
   playlistButton: {
     minHeight: 48,
@@ -1134,6 +1184,53 @@ export const createAlhanStyles = (colors: AlhanPalette) => StyleSheet.create({
   copticText: {
     fontFamily: copticFont,
     fontWeight: 'normal',
+  },
+  // What is added in the presence of the Pope or a bishop, folded under the hymn
+  bishopCard: {
+    marginTop: 18,
+    borderRadius: 14,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: colors.border,
+    backgroundColor: colors.surface,
+    overflow: 'hidden',
+  },
+  bishopHeader: {
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 12,
+    minHeight: 54,
+    paddingHorizontal: 16,
+  },
+  bishopTitle: {
+    flex: 1,
+    fontSize: 16,
+    fontWeight: '700',
+    color: colors.gold,
+  },
+  bishopToggle: {
+    fontSize: 24,
+    fontWeight: '600',
+    color: colors.gold,
+  },
+  bishopBody: {
+    gap: 12,
+    paddingHorizontal: 16,
+    paddingTop: 4,
+    paddingBottom: 16,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopColor: colors.border,
+  },
+  // The same hymn in other seasons
+  seasonSwitcher: {
+    marginTop: 4,
+    marginBottom: 2,
+  },
+  seasonSwitcherLabel: {
+    fontSize: 13,
+    fontWeight: '800',
+    letterSpacing: 0.6,
+    color: colors.muted,
+    marginBottom: 8,
   },
   // Share / projector / learn
   actionChips: {

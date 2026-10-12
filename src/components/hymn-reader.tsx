@@ -4,8 +4,9 @@ import { Alert, Pressable, ScrollView, Share, Text, View } from 'react-native';
 
 import { hymnWebUrl } from '../constants/site';
 import { displayTitle } from '../data/arabic-titles';
+import { titleLines } from '../data/hymn-titles';
 import { flattenHymns, Hymn, LanguageType } from '../data/hymns';
-import { hymnSlug, locateHymn, neighborHymns } from '../data/search';
+import { hymnAcrossSeasons, hymnSlug, locateHymn, neighborHymns } from '../data/search';
 import { useAlhanColors, useThemedStyles } from '../hooks/use-alhan-colors';
 import {
   audioSourceFor,
@@ -32,6 +33,7 @@ import { TEXT_SCALE_MAX, TEXT_SCALE_MIN, updateSettings, useSettings } from '../
 import { clearVerseTimings, saveVerseTimings, useVerseTimings, verseAt } from '../hooks/use-verse-timings';
 import {
   ChipScroller,
+  chipScrollerStyles,
   createAlhanStyles,
   defaultHymnLanguage,
   goBackOrHome,
@@ -72,7 +74,9 @@ export function HymnReader({
   const rowDirection = isRTL ? styles.rowReverse : styles.row;
   const textAlign = isRTL ? styles.alignRight : styles.alignLeft;
 
-  const [activeLanguage, setActiveLanguage] = useState<LanguageType>(initialLanguage ?? defaultHymnLanguage(lang));
+  const [activeLanguage, setActiveLanguage] = useState<LanguageType>(
+    initialLanguage ?? settings.hymnLanguage ?? defaultHymnLanguage(lang)
+  );
 
   // Only offer the languages this hymn actually has text for
   const availableLanguages = languageLabels[lang].filter((l) =>
@@ -95,7 +99,8 @@ export function HymnReader({
   const readerIsCurrent =
     !!nowPlaying && trackKey(nowPlaying) === trackKey(readerItem) && (!nowPlaying.file || nowPlaying.file === currentAudio);
   const status = readerIsCurrent ? queue.status : { playing: false, currentTime: 0, duration: 0 };
-  const title = displayTitle(hymn, lang);
+  const heading = titleLines(hymn, lang, settings.titleStyle);
+  const title = heading.main;
 
   const location = locateHymn(hymn.id)?.location;
   const breadcrumb = location
@@ -116,12 +121,49 @@ export function HymnReader({
           {end ? `${label} ${arrow}` : `${arrow} ${label}`}
         </Text>
         <Text style={[styles.hymnNavTitle, end ? styles.alignRight : styles.alignLeft]} numberOfLines={2}>
-          {withCopticFont(displayTitle(h, lang))}
+          {withCopticFont(titleLines(h, lang, settings.titleStyle).main)}
         </Text>
       </Pressable>
     ) : (
       <View style={styles.verseColumn} />
     );
+
+  // The same hymn as other seasons sing it; switching keeps the language, and Back still returns to the list.
+  // Chips name the season without its number or note: "Feast of the Nativity", not "6. Feast of the Nativity (Christmas)"
+  const shortSeasonName = (season: { id: string; title: string }, language: typeof lang) =>
+    withoutNumber(displayTitle(season, language))
+      .replace(/\s*\([^)]*\)$/, '')
+      .replace(' / Standard Services', '');
+  const acrossSeasons = hymnAcrossSeasons(hymn.id);
+  const seasonScroll = useRef<ScrollView>(null);
+  const seasonSwitcher =
+    acrossSeasons.length > 1 ? (
+      <View style={styles.seasonSwitcher}>
+        <Text style={[styles.seasonSwitcherLabel, textAlign]}>{t.otherSeasons}</Text>
+        <ScrollView
+          ref={seasonScroll}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={chipScrollerStyles.scroller}
+          contentContainerStyle={[chipScrollerStyles.content, styles.actionChips, rowDirection]}>
+          {acrossSeasons.map(({ season, hymn: other }) => {
+            const active = other.id === hymn.id;
+            return (
+              <Pressable
+                key={season.id}
+                // this season's chip starts in view, even when it is far along the row
+                onLayout={active ? (e) => seasonScroll.current?.scrollTo({ x: Math.max(0, e.nativeEvent.layout.x - 20), animated: false }) : undefined}
+                onPress={() => !active && router.replace(hymnHref(other.id, effectiveLanguage))}
+                accessibilityRole="button"
+                accessibilityState={{ selected: active }}
+                style={[styles.chip, styles.chipSmall, active && styles.chipActive]}>
+                <Text style={[styles.chipText, active && styles.chipTextActive]}>{shortSeasonName(season, lang)}</Text>
+              </Pressable>
+            );
+          })}
+        </ScrollView>
+      </View>
+    ) : null;
 
   // Play next: the hymns after this one in the service that have a recording in the same language
   const followingTracks = (): QueueTrack[] => {
@@ -131,7 +173,7 @@ export function HymnReader({
     return order.slice(order.findIndex((h) => h.id === hymn.id) + 1).flatMap((h) => {
       const file = h.versions.find((v) => v.language === effectiveLanguage)?.audio;
       const source = file ? audioSourceFor(file) : null;
-      return source ? [{ hymnId: h.id, language: effectiveLanguage, title: displayTitle(h, lang), source }] : [];
+      return source ? [{ hymnId: h.id, language: effectiveLanguage, title: titleLines(h, lang).main, source }] : [];
     });
   };
 
@@ -179,6 +221,7 @@ export function HymnReader({
   };
 
   const textFor = (language: LanguageType) => hymnPlainText(hymn, language) || t.notAvailable;
+
   const rawText = hymn.versions.find((v) => v.language === effectiveLanguage)?.text || t.notAvailable;
   const isArabicText = effectiveLanguage === 'arabic' || effectiveLanguage === 'arabicCoptic' || effectiveLanguage === 'arabicEnglish' || rawText === strings.ar.notAvailable;
   const fontSize = 20 * settings.textScale;
@@ -204,6 +247,18 @@ export function HymnReader({
   // Verse by verse, so each line sits next to its translation
   const verses = toVerses(textFor(effectiveLanguage));
   const compareVerses = compareLanguage ? toVerses(textFor(compareLanguage)) : [];
+
+  // What is added in the presence of the Pope or a bishop, folded under the text until opened (as in Spirit & Truth)
+  const [bishopOpen, setBishopOpen] = useState(false);
+  const bishopText = (language: LanguageType) =>
+    (hymn.bishop?.find((v) => v.language === language)?.text ?? '').replace(/(?:\\n)+/g, '\n\n');
+  const bishopVerses = toVerses(bishopText(effectiveLanguage));
+  const bishopCompareVerses = compareLanguage ? toVerses(bishopText(compareLanguage)) : [];
+  const bishopAudio = hymn.bishop?.find((v) => v.language === effectiveLanguage)?.audio;
+  const playBishop = () => {
+    const source = bishopAudio ? audioSourceFor(bishopAudio) : null;
+    if (source && bishopAudio) playQueue([{ ...readerItem, title: `${title} · ${t.bishopAddition}`, source, file: bishopAudio }]);
+  };
   const columnSize = fontSize * 0.85;
   const columnText = { fontSize: columnSize, lineHeight: columnSize * 1.6 };
   const speakerColor: Record<Speaker, string> = { deacon: colors.gold, people: colors.people, priest: colors.priest };
@@ -304,13 +359,15 @@ export function HymnReader({
   return (
     <ScreenShell
       lang={lang}
-      title={title}
+      title={heading.main}
+      titleCoptic={heading.coptic}
       subtitle={breadcrumb}
       onBack={goBackOrHome}
       hidePlayerFor={trackKey(readerItem)}
       scrollRef={scrollRef}>
       <KeepScreenAwake />
       {banner}
+      {seasonSwitcher}
       {availableLanguages.length > 1 ? (
         <ChipScroller rtl={isRTL} contentStyle={styles.readerChips}>
           {availableLanguages.map((l) => {
@@ -482,32 +539,35 @@ export function HymnReader({
             </View>
           ) : null}
 
-          <Pressable
-            onPress={() => togglePlaylistItem(readerItem)}
-            accessibilityRole="button"
-            accessibilityState={{ selected: inPlaylist }}
-            style={({ pressed }) => [styles.playlistButton, inPlaylist && styles.controlButtonActive, pressed && styles.pressed]}>
-            <Text style={[styles.controlText, inPlaylist && styles.controlTextActive]}>
-              {inPlaylist ? t.inPlaylist : t.addToPlaylist}
-            </Text>
-          </Pressable>
-          {canDownload(currentAudio) ? (
+          <View style={[styles.audioActions, rowDirection]}>
             <Pressable
-              onPress={() => toggleDownload(currentAudio)}
-              disabled={isDownloading}
+              onPress={() => togglePlaylistItem(readerItem)}
               accessibilityRole="button"
-              accessibilityState={{ selected: isDownloaded, busy: isDownloading }}
-              style={({ pressed }) => [
-                styles.playlistButton,
-                isDownloaded && styles.controlButtonActive,
-                pressed && styles.pressed,
-                isDownloading && styles.disabled,
-              ]}>
-              <Text style={[styles.controlText, isDownloaded && styles.controlTextActive]}>
-                {isDownloading ? t.downloading : isDownloaded ? t.downloaded : t.download}
+              accessibilityState={{ selected: inPlaylist }}
+              style={({ pressed }) => [styles.playlistButton, styles.audioAction, inPlaylist && styles.controlButtonActive, pressed && styles.pressed]}>
+              <Text style={[styles.controlText, inPlaylist && styles.controlTextActive]}>
+                {inPlaylist ? t.inPlaylist : t.addToPlaylist}
               </Text>
             </Pressable>
-          ) : null}
+            {canDownload(currentAudio) ? (
+              <Pressable
+                onPress={() => toggleDownload(currentAudio)}
+                disabled={isDownloading}
+                accessibilityRole="button"
+                accessibilityState={{ selected: isDownloaded, busy: isDownloading }}
+                style={({ pressed }) => [
+                  styles.playlistButton,
+                  styles.audioAction,
+                  isDownloaded && styles.controlButtonActive,
+                  pressed && styles.pressed,
+                  isDownloading && styles.disabled,
+                ]}>
+                <Text style={[styles.controlText, isDownloaded && styles.controlTextActive]} numberOfLines={1} adjustsFontSizeToFit>
+                  {isDownloading ? t.downloading : isDownloaded ? t.downloaded : t.download}
+                </Text>
+              </Pressable>
+            ) : null}
+          </View>
         </View>
       ) : null}
 
@@ -565,6 +625,52 @@ export function HymnReader({
           </Text>
         )}
       </View>
+
+      {hymn.bishop ? (
+        <View style={styles.bishopCard}>
+          <Pressable
+            onPress={() => setBishopOpen(!bishopOpen)}
+            accessibilityRole="button"
+            accessibilityState={{ expanded: bishopOpen }}
+            style={({ pressed }) => [styles.bishopHeader, rowDirection, pressed && styles.pressed]}>
+            <Text style={[styles.bishopTitle, textAlign]}>{t.bishopAddition}</Text>
+            <Text style={styles.bishopToggle}>{bishopOpen ? '−' : '+'}</Text>
+          </Pressable>
+          {bishopOpen ? (
+            <View style={styles.bishopBody}>
+              {bishopAudio ? <View style={[styles.learnRow, rowDirection]}>{actionChip(`▶ ${t.play}`, playBishop)}</View> : null}
+              {showSideBySide && compareLanguage ? (
+                Array.from({ length: Math.max(bishopVerses.length, bishopCompareVerses.length) }, (_, i) => (
+                  <View key={i} style={[styles.verseRow, rowDirection, i > 0 && styles.verseRowDivider]}>
+                    <Text style={[styles.hymnText, styles.verseColumn, columnText, columnStyle(effectiveLanguage)]}>
+                      {verseContent(bishopVerses[i])}
+                    </Text>
+                    <View style={styles.verseGutter} />
+                    <Text style={[styles.hymnText, styles.verseColumn, columnText, columnStyle(compareLanguage)]}>
+                      {verseContent(bishopCompareVerses[i])}
+                    </Text>
+                  </View>
+                ))
+              ) : (
+                <Text
+                  style={[
+                    styles.hymnText,
+                    { fontSize, lineHeight: fontSize * 1.65 },
+                    isArabicText ? styles.arabicText : styles.alignLeft,
+                    copticStyle,
+                  ]}>
+                  {bishopVerses.map((verse, i) => (
+                    <Text key={i}>
+                      {i > 0 ? '\n\n' : ''}
+                      {verseContent(verse)}
+                    </Text>
+                  ))}
+                </Text>
+              )}
+            </View>
+          ) : null}
+        </View>
+      ) : null}
 
       {previous || next ? (
         <View style={[styles.hymnNav, rowDirection]}>

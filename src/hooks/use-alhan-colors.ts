@@ -2,10 +2,14 @@ import { useMemo } from 'react';
 
 import { AlhanPalette, alhanColors, alhanLightColors } from '@/constants/alhan-colors';
 import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useSettings } from '@/hooks/use-settings';
 
-// Follows the phone's light/dark setting; dark is the app's original look, so it is the fallback
+// Follows the phone's light/dark setting unless Settings picks one; dark is the app's original look, so it is the fallback
 export function useAlhanColors(): AlhanPalette {
-  return useColorScheme() === 'light' ? alhanLightColors : alhanColors;
+  const scheme = useColorScheme();
+  const { theme } = useSettings();
+  const light = theme === 'system' ? scheme === 'light' : theme === 'light';
+  return light ? alhanLightColors : alhanColors;
 }
 
 // Builds a screen's StyleSheet for the current palette (once per palette, not every render)

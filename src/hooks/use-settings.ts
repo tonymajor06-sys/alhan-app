@@ -4,6 +4,9 @@ import { useSyncExternalStore } from 'react';
 import type { LanguageType } from '../data/hymns';
 
 export type AppLanguage = 'en' | 'ar';
+// How hymn names show: the name with its Coptic words in small type below, the name only, or the Coptic words only
+export type TitleStyle = 'both' | 'english' | 'coptic';
+export type ThemeChoice = 'system' | 'light' | 'dark';
 
 export interface Settings {
   language: AppLanguage;
@@ -15,6 +18,10 @@ export interface Settings {
   feastReminders: boolean;
   // When a hymn's recording ends, play the next hymn in the service that has one and open its words
   playNext: boolean;
+  titleStyle: TitleStyle;
+  theme: ThemeChoice;
+  // The language a hymn opens in; null follows the app language (Coptic in English, Arabic in Arabic)
+  hymnLanguage: LanguageType | null;
 }
 
 const STORAGE_KEY = 'alhan-settings';
@@ -22,7 +29,17 @@ export const TEXT_SCALE_MIN = 0.85;
 export const TEXT_SCALE_MAX = 1.9;
 
 const loadSettings = (): Settings => {
-  const defaults: Settings = { language: 'en', textScale: 1, sideBySide: false, compareLanguage: null, feastReminders: false, playNext: true };
+  const defaults: Settings = {
+    language: 'en',
+    textScale: 1,
+    sideBySide: false,
+    compareLanguage: null,
+    feastReminders: false,
+    playNext: true,
+    titleStyle: 'both',
+    theme: 'system',
+    hymnLanguage: null,
+  };
   try {
     const raw = readSetting(STORAGE_KEY);
     return raw ? { ...defaults, ...JSON.parse(raw) } : defaults;
