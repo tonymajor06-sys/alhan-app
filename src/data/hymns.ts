@@ -7533,7 +7533,7 @@ for (const season of seasons) {
 const englishNames: Record<string, string> = {
   'Ⲡⲓϩ̀ⲙⲟⲧ ⲅⲁⲣ': 'The Grace (Pauline Epistle Response)',
   'Ⲁ̀ ⲡⲉⲧϫⲏⲕ ⲉ̀ⲃⲟⲗ': 'Perfect is the Blessing',
-  'Ⲁⲅⲓⲟⲥ ⲟ̀ Ⲑⲉⲟⲥ': 'Trisagion',
+  'Ⲁⲅⲓⲟⲥ ⲟ̀ Ⲑⲉⲟⲥ': 'Holy God',
   'Ϩⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ ⲛ̀ⲧⲉ Ϯⲑⲉⲟ̀ⲧⲟⲕⲟⲥ': 'Through the Intercessions of the Theotokos',
   'Ⲥⲉⲙⲟⲩϯ ⲉ̀ⲣⲟ ⲇⲓⲕⲉⲟⲥ': 'They Rightly Call You (Sunday Theotokion)',
   'Ⲧⲉⲛⲟⲩⲱϣⲧ ⲙ̀Ⲫⲓⲱⲧ ⲛⲉⲙ Ⲡϣⲏⲣⲓ': 'We Worship the Father and the Son',
