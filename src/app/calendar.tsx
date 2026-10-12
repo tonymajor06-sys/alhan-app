@@ -42,7 +42,7 @@ const strings = {
     reminders: 'Feast reminders',
     remindersOn: 'On · the evening before each feast and fast',
     remindersOff: 'Off · tap to get a reminder the evening before',
-    remindersDenied: 'Notifications are turned off for Coptic Hymns. You can allow them in Settings.',
+    remindersDenied: 'Notifications are turned off for Coptic Psalmody. You can allow them in Settings.',
   },
   ar: {
     back: 'رجوع',

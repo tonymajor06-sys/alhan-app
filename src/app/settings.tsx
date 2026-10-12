@@ -38,7 +38,7 @@ const strings = {
     playNextHint: 'When a recording ends, the next one in the service starts',
     reminders: 'Feast reminders',
     remindersHint: 'A notification the evening before each feast and fast',
-    remindersDenied: 'Notifications are turned off for Coptic Hymns. You can allow them in your phone’s settings.',
+    remindersDenied: 'Notifications are turned off for Coptic Psalmody. You can allow them in your phone’s settings.',
   },
   ar: {
     title: 'الإعدادات',

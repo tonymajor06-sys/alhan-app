@@ -1,4 +1,4 @@
-# Alhan: App Store & Google Play listing
+# Coptic Psalmody: App Store & Google Play listing
 
 Copy each field into App Store Connect and the Google Play Console. Character limits are in brackets, and every field below fits its limit.
 
@@ -7,7 +7,7 @@ Copy each field into App Store Connect and the Google Play Console. Character li
 ## English
 
 **App name** [30]
-Alhan: Coptic Hymns
+Coptic Psalmody
 
 **Subtitle (App Store)** [30]
 Tasbeha, Alhan & Responses

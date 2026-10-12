@@ -9,7 +9,10 @@
     "userInterfaceStyle": "automatic",
     "ios": {
       "icon": "./assets/images/icon.png",
-      "bundleIdentifier": "com.coptic.psalmody"
+      "bundleIdentifier": "com.coptic.psalmody",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "package": "com.coptic.psalmody",
@@ -106,8 +109,10 @@
               ]
             }
           }
-        }
+        },
+        "projectId": "b944da42-98d4-4487-a16e-ec58225e29b0"
       }
-    }
+    },
+    "owner": "tonymajors-team"
   }
 }

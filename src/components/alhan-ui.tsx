@@ -15,7 +15,7 @@ import { AppLanguage } from '../hooks/use-settings';
 
 export const strings = {
   en: {
-    appTitle: 'Coptic Hymns',
+    appTitle: 'Coptic Psalmody',
     appSubtitle: 'Hymns & responses in Coptic, English and Arabic',
     languagePrompt: 'App language',
     back: 'Back',
@@ -84,7 +84,7 @@ export const strings = {
       'Tap “Mark verses”, play the recording and tap the button each time a new verse begins. After that the verse being sung lights up, and you can tap a verse to jump to it or repeat it.',
     learnReady: 'Tap a verse to jump to it.',
     markingProgress: (n: number, total: number) => `Verse ${n} of ${total}`,
-    getApp: 'Get the Coptic Hymns app',
+    getApp: 'Get the Coptic Psalmody app',
     notFound: 'This hymn could not be found.',
     goHome: 'Go to the home screen',
     exit: 'Exit',

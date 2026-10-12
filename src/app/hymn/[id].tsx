@@ -28,7 +28,7 @@ function HymnHead({ hymn }: { hymn: Hymn }) {
     .join(' · ')
     .replace(/\s+/g, ' ')
     .slice(0, 300);
-  const pageTitle = `${english}${arabic !== english ? ` · ${arabic}` : ''} | Coptic Hymns`;
+  const pageTitle = `${english}${arabic !== english ? ` · ${arabic}` : ''} | Coptic Psalmody`;
   const url = hymnWebUrl(hymn.id);
   return (
     <Head>
