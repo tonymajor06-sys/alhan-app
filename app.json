@@ -1,17 +1,18 @@
 {
   "expo": {
-    "name": "Coptic Hymns",
-    "slug": "alhan-app",
+    "name": "Coptic Psalmody",
+    "slug": "coptic-psalmody",
     "version": "1.0.0",
     "orientation": "default",
     "icon": "./assets/images/icon.png",
-    "scheme": "alhanapp",
+    "scheme": "copticpsalmody",
     "userInterfaceStyle": "automatic",
     "ios": {
       "icon": "./assets/images/icon.png",
-      "bundleIdentifier": "com.anthonymansour.alhanapp"
+      "bundleIdentifier": "com.coptic.psalmody"
     },
     "android": {
+      "package": "com.coptic.psalmody",
       "adaptiveIcon": {
         "backgroundColor": "#5c0f1a",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
@@ -95,20 +96,18 @@
               "appExtensions": [
                 {
                   "targetName": "ExpoWidgetsTarget",
-                  "bundleIdentifier": "com.anthonymansour.alhanapp.ExpoWidgetsTarget",
+                  "bundleIdentifier": "com.coptic.psalmody.ExpoWidgetsTarget",
                   "entitlements": {
                     "com.apple.security.application-groups": [
-                      "group.com.anthonymansour.alhanapp"
+                      "group.com.coptic.psalmody"
                     ]
                   }
                 }
               ]
             }
           }
-        },
-        "projectId": "c67c0677-dd12-4d18-9a1b-f97fe4e3aa4d"
+        }
       }
-    },
-    "owner": "tonymajors-team"
+    }
   }
 }

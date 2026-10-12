@@ -97,7 +97,7 @@ const CalendarWidget = (props: CalendarWidgetProps, environment: WidgetEnvironme
   return (
     <VStack
       spacing={large ? 6 : 4}
-      modifiers={[widgetURL('alhanapp://calendar'), containerBackground(bg, 'widget'), frame({ maxWidth: 10000, maxHeight: 10000, alignment: 'top' })]}>
+      modifiers={[widgetURL('copticpsalmody://calendar'), containerBackground(bg, 'widget'), frame({ maxWidth: 10000, maxHeight: 10000, alignment: 'top' })]}>
       {header}
       {large ? <Spacer /> : null}
       {weekdayRow}

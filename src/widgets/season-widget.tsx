@@ -40,7 +40,7 @@ const SeasonWidget = (props: SeasonWidgetProps, environment: WidgetEnvironment) 
   const fullColor = (environment.widgetRenderingMode ?? 'fullColor') === 'fullColor';
   const color = (c: string) => (fullColor ? [foregroundStyle(c)] : []);
   const align = props.rtl ? 'trailing' : 'leading';
-  const url = widgetURL('alhanapp://calendar');
+  const url = widgetURL('copticpsalmody://calendar');
 
   if (environment.widgetFamily === 'accessoryInline') {
     return <Text modifiers={[url]}>{`☩ ${props.copticDay} · ${props.season}`}</Text>;
