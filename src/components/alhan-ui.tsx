@@ -1,7 +1,7 @@
 import { useKeepAwake } from 'expo-keep-awake';
 import { router } from 'expo-router';
 import { ReactNode, RefObject, useRef } from 'react';
-import { Platform, Pressable, ScrollView, StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
+import { Modal, Platform, Pressable, ScrollView, StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { AlhanPalette } from '../constants/alhan-colors';
@@ -93,7 +93,11 @@ export const strings = {
     nextVerse: 'Next verse',
     shownLanguages: 'Show',
     settings: 'Settings',
-    otherSeasons: 'In other seasons',
+    language: 'Language',
+    season: 'Season',
+    more: 'More',
+    close: 'Close',
+    textSizeLabel: 'Text size',
     bishopAddition: 'In the presence of the Pope or a Bishop',
   },
   ar: {
@@ -175,7 +179,11 @@ export const strings = {
     nextVerse: 'المقطع التالي',
     shownLanguages: 'اعرض',
     settings: 'الإعدادات',
-    otherSeasons: 'في المناسبات الأخرى',
+    language: 'اللغة',
+    season: 'المناسبة',
+    more: 'المزيد',
+    close: 'إغلاق',
+    textSizeLabel: 'حجم الخط',
     bishopAddition: 'في حضور البابا أو الأسقف',
   },
 };
@@ -320,6 +328,62 @@ export const chipScrollerStyles = StyleSheet.create({
   scroller: { marginHorizontal: -20, flexGrow: 0 },
   content: { flexGrow: 1, alignItems: 'center', gap: 8, paddingHorizontal: 20 },
 });
+
+// A panel that slides up from the bottom with a list of choices; tapping outside closes it
+export function Sheet({
+  visible,
+  title,
+  rtl,
+  onClose,
+  children,
+}: {
+  visible: boolean;
+  title: string;
+  rtl: boolean;
+  onClose: () => void;
+  children: ReactNode;
+}) {
+  const styles = useThemedStyles(createAlhanStyles);
+  const insets = useSafeAreaInsets();
+  return (
+    <Modal visible={visible} transparent animationType="slide" onRequestClose={onClose}>
+      <Pressable style={styles.sheetBackdrop} onPress={onClose} accessibilityRole="button" accessibilityLabel={strings[rtl ? 'ar' : 'en'].close} />
+      <View style={[styles.sheet, { paddingBottom: insets.bottom + 16 }]}>
+        <View style={styles.sheetHandle} />
+        <Text style={[styles.sheetTitle, rtl ? styles.alignRight : styles.alignLeft]}>{title}</Text>
+        <ScrollView style={styles.sheetList}>{children}</ScrollView>
+      </View>
+    </Modal>
+  );
+}
+
+// One choice in a Sheet: a check mark when it is the current one, or something of its own at the end (e.g. a switch)
+export function SheetRow({
+  label,
+  selected,
+  rtl,
+  onPress,
+  end,
+}: {
+  label: string;
+  selected?: boolean;
+  rtl: boolean;
+  onPress?: () => void;
+  end?: ReactNode;
+}) {
+  const styles = useThemedStyles(createAlhanStyles);
+  return (
+    <Pressable
+      onPress={onPress}
+      disabled={!onPress}
+      accessibilityRole="button"
+      accessibilityState={{ selected: !!selected }}
+      style={({ pressed }) => [styles.sheetRow, rtl ? styles.rowReverse : styles.row, pressed && styles.sheetRowPressed]}>
+      <Text style={[styles.sheetRowText, selected && styles.sheetRowTextSelected, rtl ? styles.alignRight : styles.alignLeft]}>{label}</Text>
+      {end ?? (selected ? <Text style={styles.sheetCheck}>✓</Text> : null)}
+    </Pressable>
+  );
+}
 
 // Keeps the screen on while a hymn is open, so it doesn't dim in the middle of a service
 export function KeepScreenAwake() {
@@ -1220,17 +1284,109 @@ export const createAlhanStyles = (colors: AlhanPalette) => StyleSheet.create({
     borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor: colors.border,
   },
-  // The same hymn in other seasons
-  seasonSwitcher: {
-    marginTop: 4,
-    marginBottom: 2,
+  // Bottom sheets
+  sheetBackdrop: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.45)',
   },
-  seasonSwitcherLabel: {
+  sheet: {
+    maxHeight: '75%',
+    backgroundColor: colors.background,
+    borderTopLeftRadius: 22,
+    borderTopRightRadius: 22,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: colors.border,
+    paddingHorizontal: 20,
+    paddingTop: 10,
+  },
+  sheetHandle: {
+    alignSelf: 'center',
+    width: 40,
+    height: 5,
+    borderRadius: 3,
+    backgroundColor: colors.border,
+    marginBottom: 12,
+  },
+  sheetTitle: {
     fontSize: 13,
     fontWeight: '800',
-    letterSpacing: 0.6,
-    color: colors.muted,
-    marginBottom: 8,
+    letterSpacing: 0.8,
+    textTransform: 'uppercase',
+    color: colors.gold,
+    marginBottom: 6,
+  },
+  sheetList: {
+    flexGrow: 0,
+  },
+  sheetRow: {
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 12,
+    minHeight: 52,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: colors.border,
+  },
+  sheetRowPressed: {
+    opacity: 0.6,
+  },
+  sheetRowText: {
+    flex: 1,
+    fontSize: 17,
+    color: colors.text,
+  },
+  sheetRowTextSelected: {
+    color: colors.gold,
+    fontWeight: '700',
+  },
+  sheetCheck: {
+    fontSize: 18,
+    fontWeight: '800',
+    color: colors.gold,
+  },
+  // The reader's row of pickers: language, season, more
+  readerBar: {
+    alignItems: 'center',
+    gap: 8,
+    paddingTop: 16,
+    paddingBottom: 14,
+  },
+  pickerButton: {
+    flexShrink: 1,
+    minHeight: 44,
+    paddingHorizontal: 14,
+    borderRadius: 22,
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.border,
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 6,
+  },
+  pickerButtonText: {
+    flexShrink: 1,
+    fontSize: 15,
+    fontWeight: '700',
+    color: colors.text,
+  },
+  pickerCaret: {
+    fontSize: 12,
+    color: colors.gold,
+  },
+  moreButton: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.border,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  moreButtonText: {
+    fontSize: 20,
+    fontWeight: '800',
+    color: colors.gold,
+    lineHeight: 22,
   },
   // Share / projector / learn
   actionChips: {

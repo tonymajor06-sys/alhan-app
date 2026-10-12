@@ -43,3 +43,23 @@ const subscribe = (listener: () => void) => {
 export function useQuizBest(): Record<string, LevelScore> {
   return useSyncExternalStore(subscribe, () => best, () => best);
 }
+
+// ---- Quiz rounds finished, for the ad break every few rounds ----
+const ROUNDS_KEY = 'alhan-quiz-rounds';
+
+// Counts one more finished round and returns the total so far
+export function countQuizRound(): number {
+  let rounds = 0;
+  try {
+    rounds = Number(readSetting(ROUNDS_KEY) ?? 0) || 0;
+  } catch {
+    // counting starts again
+  }
+  rounds += 1;
+  try {
+    writeSetting(ROUNDS_KEY, String(rounds));
+  } catch {
+    // the count still works for this session
+  }
+  return rounds;
+}

@@ -32,8 +32,6 @@ import { isInPlaylist, PlaylistItem, togglePlaylistItem, usePlaylist } from '../
 import { TEXT_SCALE_MAX, TEXT_SCALE_MIN, updateSettings, useSettings } from '../hooks/use-settings';
 import { clearVerseTimings, saveVerseTimings, useVerseTimings, verseAt } from '../hooks/use-verse-timings';
 import {
-  ChipScroller,
-  chipScrollerStyles,
   createAlhanStyles,
   defaultHymnLanguage,
   goBackOrHome,
@@ -41,6 +39,8 @@ import {
   KeepScreenAwake,
   languageLabels,
   ScreenShell,
+  Sheet,
+  SheetRow,
   Speaker,
   strings,
   toVerses,
@@ -135,35 +135,9 @@ export function HymnReader({
       .replace(/\s*\([^)]*\)$/, '')
       .replace(' / Standard Services', '');
   const acrossSeasons = hymnAcrossSeasons(hymn.id);
-  const seasonScroll = useRef<ScrollView>(null);
-  const seasonSwitcher =
-    acrossSeasons.length > 1 ? (
-      <View style={styles.seasonSwitcher}>
-        <Text style={[styles.seasonSwitcherLabel, textAlign]}>{t.otherSeasons}</Text>
-        <ScrollView
-          ref={seasonScroll}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={chipScrollerStyles.scroller}
-          contentContainerStyle={[chipScrollerStyles.content, styles.actionChips, rowDirection]}>
-          {acrossSeasons.map(({ season, hymn: other }) => {
-            const active = other.id === hymn.id;
-            return (
-              <Pressable
-                key={season.id}
-                // this season's chip starts in view, even when it is far along the row
-                onLayout={active ? (e) => seasonScroll.current?.scrollTo({ x: Math.max(0, e.nativeEvent.layout.x - 20), animated: false }) : undefined}
-                onPress={() => !active && router.replace(hymnHref(other.id, effectiveLanguage))}
-                accessibilityRole="button"
-                accessibilityState={{ selected: active }}
-                style={[styles.chip, styles.chipSmall, active && styles.chipActive]}>
-                <Text style={[styles.chipText, active && styles.chipTextActive]}>{shortSeasonName(season, lang)}</Text>
-              </Pressable>
-            );
-          })}
-        </ScrollView>
-      </View>
-    ) : null;
+  const currentSeason = acrossSeasons.find((x) => x.hymn.id === hymn.id)?.season;
+  // Which sheet is open: the language, the season, the language beside it, or the other tools
+  const [sheet, setSheet] = useState<'language' | 'season' | 'compare' | 'more' | null>(null);
 
   // Play next: the hymns after this one in the service that have a recording in the same language
   const followingTracks = (): QueueTrack[] => {
@@ -345,6 +319,20 @@ export function HymnReader({
 
   const learnVerseStyle = (i: number) => [styles.learnVerse, i === highlighted && styles.learnVerseActive];
 
+  // A button showing the current choice, which opens its sheet
+  const pickerButton = (value: string, label: string, onPress: () => void) => (
+    <Pressable
+      onPress={onPress}
+      accessibilityRole="button"
+      accessibilityLabel={`${label}: ${value}`}
+      style={({ pressed }) => [styles.pickerButton, rowDirection, pressed && styles.pressed]}>
+      <Text style={styles.pickerButtonText} numberOfLines={1}>
+        {value}
+      </Text>
+      <Text style={styles.pickerCaret}>▾</Text>
+    </Pressable>
+  );
+
   const actionChip = (label: string, onPress: () => void, active = false) => (
     <Pressable
       key={label}
@@ -367,82 +355,134 @@ export function HymnReader({
       scrollRef={scrollRef}>
       <KeepScreenAwake />
       {banner}
-      {seasonSwitcher}
-      {availableLanguages.length > 1 ? (
-        <ChipScroller rtl={isRTL} contentStyle={styles.readerChips}>
-          {availableLanguages.map((l) => {
-            const active = effectiveLanguage === l.key;
-            return (
-              <Pressable
-                key={l.key}
-                onPress={() => setActiveLanguage(l.key)}
-                accessibilityRole="button"
-                accessibilityState={{ selected: active }}
-                style={[styles.chip, active && styles.chipActive]}>
-                <Text style={[styles.chipText, active && styles.chipTextActive]}>{l.label}</Text>
-              </Pressable>
-            );
-          })}
-        </ChipScroller>
-      ) : (
-        <View style={styles.readerChips} />
-      )}
-
-      {/* One row of tools: share, projector, learning and side by side scroll; text size stays at the end */}
-      <View style={[styles.toolbar, rowDirection]}>
-        <View style={styles.toolbarChips}>
-          <ChipScroller rtl={isRTL} endFlush contentStyle={styles.actionChips}>
-            {actionChip(t.share, share)}
-            {actionChip(t.present, () =>
-              router.push({ pathname: '/present/[id]', params: { id: hymnSlug(hymn.id), lang: effectiveLanguage } })
-            )}
-            {currentAudio ? actionChip(t.learn, () => setLearning(!learning), learning) : null}
-            {compareOptions.length > 0 ? (
-              <Pressable
-                onPress={() => updateSettings({ sideBySide: !settings.sideBySide })}
-                accessibilityRole="switch"
-                accessibilityState={{ checked: showSideBySide }}
-                style={[styles.chip, styles.chipSmall, showSideBySide && styles.controlButtonActive]}>
-                <Text style={[styles.chipText, showSideBySide && styles.controlTextActive]}>{t.sideBySide}</Text>
-              </Pressable>
-            ) : null}
-          </ChipScroller>
-        </View>
-        <View style={[styles.textSizeButtons, rowDirection]}>
-          <Pressable
-            onPress={() => changeTextScale(-0.15)}
-            disabled={settings.textScale <= TEXT_SCALE_MIN}
-            accessibilityLabel={`${t.textSize} -`}
-            style={({ pressed }) => [styles.sizeButton, pressed && styles.pressed, settings.textScale <= TEXT_SCALE_MIN && styles.disabled]}>
-            <Text style={styles.sizeButtonSmall}>A−</Text>
-          </Pressable>
-          <Pressable
-            onPress={() => changeTextScale(0.15)}
-            disabled={settings.textScale >= TEXT_SCALE_MAX}
-            accessibilityLabel={`${t.textSize} +`}
-            style={({ pressed }) => [styles.sizeButton, pressed && styles.pressed, settings.textScale >= TEXT_SCALE_MAX && styles.disabled]}>
-            <Text style={styles.sizeButtonLarge}>A+</Text>
-          </Pressable>
-        </View>
+      {/* Three pickers keep the page calm: the language, the season, and everything else under More */}
+      <View style={[styles.readerBar, rowDirection]}>
+        {availableLanguages.length > 1
+          ? pickerButton(languageLabels[lang].find((l) => l.key === effectiveLanguage)?.label ?? '', t.language, () => setSheet('language'))
+          : null}
+        {acrossSeasons.length > 1 && currentSeason ? pickerButton(shortSeasonName(currentSeason, lang), t.season, () => setSheet('season')) : null}
+        <View style={styles.verseColumn} />
+        <Pressable
+          onPress={() => setSheet('more')}
+          accessibilityRole="button"
+          accessibilityLabel={t.more}
+          style={({ pressed }) => [styles.moreButton, (learning || showSideBySide) && styles.controlButtonActive, pressed && styles.pressed]}>
+          <Text style={styles.moreButtonText}>⋯</Text>
+        </Pressable>
       </View>
-      {showSideBySide && compareOptions.length > 1 ? (
-        <ChipScroller rtl={isRTL} contentStyle={styles.compareChips}>
-          <Text style={styles.compareLabel}>{t.compareWith}:</Text>
-          {compareOptions.map((l) => {
-            const active = compareLanguage === l.key;
-            return (
-              <Pressable
-                key={l.key}
-                onPress={() => updateSettings({ compareLanguage: l.key })}
-                accessibilityRole="button"
-                accessibilityState={{ selected: active }}
-                style={[styles.chip, styles.chipSmall, active && styles.controlButtonActive]}>
-                <Text style={[styles.chipText, active && styles.controlTextActive]}>{l.label}</Text>
-              </Pressable>
-            );
-          })}
-        </ChipScroller>
+      {showSideBySide && compareLanguage ? (
+        <Pressable
+          onPress={() => compareOptions.length > 1 && setSheet('compare')}
+          accessibilityRole="button"
+          style={({ pressed }) => [styles.compareChips, rowDirection, { alignItems: 'center', gap: 6 }, pressed && styles.pressed]}>
+          <Text style={styles.compareLabel}>
+            {t.compareWith}: {languageLabels[lang].find((l) => l.key === compareLanguage)?.label}
+          </Text>
+          {compareOptions.length > 1 ? <Text style={styles.pickerCaret}>▾</Text> : null}
+        </Pressable>
       ) : null}
+
+      <Sheet visible={sheet === 'language'} title={t.language} rtl={isRTL} onClose={() => setSheet(null)}>
+        {availableLanguages.map((l) => (
+          <SheetRow
+            key={l.key}
+            rtl={isRTL}
+            label={l.label}
+            selected={l.key === effectiveLanguage}
+            onPress={() => {
+              setActiveLanguage(l.key);
+              setSheet(null);
+            }}
+          />
+        ))}
+      </Sheet>
+      <Sheet visible={sheet === 'season'} title={t.season} rtl={isRTL} onClose={() => setSheet(null)}>
+        {acrossSeasons.map(({ season, hymn: other }) => (
+          <SheetRow
+            key={season.id}
+            rtl={isRTL}
+            label={shortSeasonName(season, lang)}
+            selected={other.id === hymn.id}
+            onPress={() => {
+              setSheet(null);
+              if (other.id !== hymn.id) router.replace(hymnHref(other.id, effectiveLanguage));
+            }}
+          />
+        ))}
+      </Sheet>
+      <Sheet visible={sheet === 'compare'} title={t.compareWith} rtl={isRTL} onClose={() => setSheet(null)}>
+        {compareOptions.map((l) => (
+          <SheetRow
+            key={l.key}
+            rtl={isRTL}
+            label={l.label}
+            selected={l.key === compareLanguage}
+            onPress={() => {
+              updateSettings({ compareLanguage: l.key });
+              setSheet(null);
+            }}
+          />
+        ))}
+      </Sheet>
+      <Sheet visible={sheet === 'more'} title={t.more} rtl={isRTL} onClose={() => setSheet(null)}>
+        {compareOptions.length > 0 ? (
+          <SheetRow
+            rtl={isRTL}
+            label={t.sideBySide}
+            onPress={() => updateSettings({ sideBySide: !settings.sideBySide })}
+            end={<Text style={styles.sheetCheck}>{showSideBySide ? '✓' : ''}</Text>}
+          />
+        ) : null}
+        {currentAudio ? (
+          <SheetRow
+            rtl={isRTL}
+            label={t.learn}
+            onPress={() => {
+              setLearning(!learning);
+              setSheet(null);
+            }}
+            end={<Text style={styles.sheetCheck}>{learning ? '✓' : ''}</Text>}
+          />
+        ) : null}
+        <SheetRow
+          rtl={isRTL}
+          label={t.present}
+          onPress={() => {
+            setSheet(null);
+            router.push({ pathname: '/present/[id]', params: { id: hymnSlug(hymn.id), lang: effectiveLanguage } });
+          }}
+        />
+        <SheetRow
+          rtl={isRTL}
+          label={t.share}
+          onPress={() => {
+            setSheet(null);
+            share();
+          }}
+        />
+        <SheetRow
+          rtl={isRTL}
+          label={t.textSizeLabel}
+          end={
+            <View style={[styles.textSizeButtons, rowDirection]}>
+              <Pressable
+                onPress={() => changeTextScale(-0.15)}
+                disabled={settings.textScale <= TEXT_SCALE_MIN}
+                accessibilityLabel={`${t.textSize} -`}
+                style={({ pressed }) => [styles.sizeButton, pressed && styles.pressed, settings.textScale <= TEXT_SCALE_MIN && styles.disabled]}>
+                <Text style={styles.sizeButtonSmall}>A−</Text>
+              </Pressable>
+              <Pressable
+                onPress={() => changeTextScale(0.15)}
+                disabled={settings.textScale >= TEXT_SCALE_MAX}
+                accessibilityLabel={`${t.textSize} +`}
+                style={({ pressed }) => [styles.sizeButton, pressed && styles.pressed, settings.textScale >= TEXT_SCALE_MAX && styles.disabled]}>
+                <Text style={styles.sizeButtonLarge}>A+</Text>
+              </Pressable>
+            </View>
+          }
+        />
+      </Sheet>
 
       {currentAudio ? (
         <View style={styles.audioCard}>
