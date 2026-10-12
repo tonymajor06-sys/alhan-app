@@ -85,6 +85,19 @@
                   "systemLarge"
                 ]
               }
+            },
+            {
+              "name": "VerseWidget",
+              "displayName": "Verse of the Day",
+              "description": "Today’s Coptic date and a short verse from the hymns and the Bible, for your lock screen.",
+              "ios": {
+                "supportedFamilies": [
+                  "accessoryRectangular",
+                  "accessoryInline",
+                  "systemSmall",
+                  "systemMedium"
+                ]
+              }
             }
           ]
         }
