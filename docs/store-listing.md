@@ -19,11 +19,11 @@ Coptic hymns, Tasbeha & deacon responses in Coptic, English and Arabic.
 Pray the Midnight Praises, learn the hymns and follow the Liturgy in Coptic, English and Arabic, with audio, transliteration and the Coptic calendar.
 
 **Keywords (App Store)** [100, comma-separated, no spaces]
-coptic,orthodox,tasbeha,psalmody,hymns,alhan,liturgy,deacon,midnight praises,agpeya,church,kiahk
+coptic,orthodox,tasbeha,psalmody,hymns,chants,liturgy,deacon,midnight praises,agpeya,church,kiahk
 
 **Description** [4000]
 
-Alhan brings the hymns and responses of the Coptic Orthodox Church to your phone, in Coptic, English and Arabic.
+Coptic Psalmody brings the hymns and responses of the Coptic Orthodox Church to your phone, in Coptic, English and Arabic.
 
 EVERY HYMN IN FIVE WAYS
 Read each hymn in Coptic, Coptic in English letters, English, Arabic in English letters, or Arabic. Put two side by side, verse by verse, to follow the meaning as you chant.
@@ -51,7 +51,7 @@ MADE FOR CHURCH
 • Dark and light themes
 • Full Arabic interface
 
-Free, with no ads and no account.
+Free to use, with no account. Supported by family-friendly ads: a banner at the top and an occasional full-screen ad after quiz rounds.
 
 **What's new** [4000]
 First release: hymns, Midnight Praises, deacon responses, audio with learning mode, projector mode, the Coptic calendar with widgets, and feast reminders.
@@ -105,7 +105,7 @@ First release: hymns, Midnight Praises, deacon responses, audio with learning mo
 • الوضع الداكن والفاتح
 • واجهة عربية كاملة
 
-مجاني، بدون إعلانات وبدون حساب.
+مجاني وبدون حساب. مدعوم بإعلانات مناسبة للعائلة: شريط إعلاني في أعلى الشاشة وإعلان كامل الشاشة أحياناً بعد جولات الاختبار.
 
 **ما الجديد**
 الإصدار الأول: الألحان، وتسبحة نصف الليل، ومردات الشماس، والتسجيلات مع وضع التعلّم، ووضع العرض، والتقويم القبطي مع الأدوات، والتذكير بالأعياد.
@@ -115,9 +115,10 @@ First release: hymns, Midnight Praises, deacon responses, audio with learning mo
 ## Other store fields
 
 - **Category:** Reference (primary), Music (secondary). On Google Play: Books & Reference.
-- **Age rating:** 4+ / Everyone. There is no objectionable content.
-- **Privacy:** "Data Not Collected". The app has no accounts, analytics or ads. Settings, playlists and verse marks stay on the phone, and reminders are scheduled on the phone. Both stores still require a privacy policy URL, so publish a one-paragraph page that says this.
-- **Support URL:** the web version's address, or a simple contact page.
+- **Age rating:** 4+ / Everyone. There is no objectionable content, and ads are limited to rating G and non-personalized.
+- **Privacy:** The app has ads (Google AdMob), so do NOT choose "Data Not Collected". In App Store Connect, answer the App Privacy questions by following Google's AdMob guide for Apple's privacy details (device identifiers and ad interaction/usage data for advertising, not linked to identity, not used for tracking). On Google Play, answer yes to "Contains ads" and fill in Data safety the same way. The app itself has no accounts or analytics, settings, playlists and verse marks stay on the phone, and reminders are scheduled on the phone. 
+- **Privacy Policy URL:** https://copticpsalmody.com/privacy
+- **Support URL:** https://copticpsalmody.com/support
 - **Price:** Free.
 
 ## Screenshots to take (6.9" iPhone and a phone for Google Play)
