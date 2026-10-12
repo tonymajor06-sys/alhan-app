@@ -1,0 +1,17 @@
+// The website on Cloudflare (account copticpsalmody@gmail.com): the static web export in dist/,
+// served at copticpsalmody.com. Publish with: npx expo export -p web && npx wrangler deploy
+{
+  "name": "coptic-psalmody",
+  "compatibility_date": "2026-10-01",
+  // The site answers at the domain and at www
+  "routes": [
+    { "pattern": "copticpsalmody.com", "custom_domain": true },
+    { "pattern": "www.copticpsalmody.com", "custom_domain": true }
+  ],
+  "assets": {
+    "directory": "./dist",
+    // /settings serves settings.html, /learn/quiz serves learn/quiz.html
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  }
+}
