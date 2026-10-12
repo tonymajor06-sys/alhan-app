@@ -86,8 +86,15 @@ export function HymnReader({
     ? activeLanguage
     : (availableLanguages[0]?.key ?? activeLanguage);
 
-  const currentVersion = hymn.versions.find((v) => v.language === effectiveLanguage);
-  const recordings = [currentVersion?.audio, ...(currentVersion?.otherAudio ?? [])].filter((f): f is string => !!f);
+  // The recording for the language being read; when it has none (e.g. a Theotokia sung in English and Arabic),
+  // the hymn's recording in another language, preferring the app's language, so it can still be played
+  const appLanguageFirst: LanguageType[] = lang === 'ar' ? ['arabic', 'englishArabic', 'english'] : ['english', 'arabic', 'coptic'];
+  const audioVersion =
+    [effectiveLanguage, ...appLanguageFirst]
+      .map((l) => hymn.versions.find((v) => v.language === l && v.audio))
+      .find(Boolean) ?? hymn.versions.find((v) => v.audio);
+  const audioLanguage = audioVersion?.language ?? effectiveLanguage;
+  const recordings = [audioVersion?.audio, ...(audioVersion?.otherAudio ?? [])].filter((f): f is string => !!f);
   const [recordingIndex, setRecordingIndex] = useState(0);
   const currentAudio = recordings[recordingIndex] ?? recordings[0] ?? null;
   // Audio lives in a shared queue so it keeps playing after leaving the hymn or the app
@@ -95,7 +102,7 @@ export function HymnReader({
   const nowPlaying = currentTrack(queue);
   const playlist = usePlaylist();
   const downloads = useAudioDownloads();
-  const readerItem: PlaylistItem = { hymnId: hymn.id, language: effectiveLanguage };
+  const readerItem: PlaylistItem = { hymnId: hymn.id, language: audioLanguage };
   const readerIsCurrent =
     !!nowPlaying && trackKey(nowPlaying) === trackKey(readerItem) && (!nowPlaying.file || nowPlaying.file === currentAudio);
   const status = readerIsCurrent ? queue.status : { playing: false, currentTime: 0, duration: 0 };
@@ -145,9 +152,9 @@ export function HymnReader({
     if (!service) return [];
     const order = flattenHymns(service.hymns);
     return order.slice(order.findIndex((h) => h.id === hymn.id) + 1).flatMap((h) => {
-      const file = h.versions.find((v) => v.language === effectiveLanguage)?.audio;
+      const file = h.versions.find((v) => v.language === audioLanguage)?.audio;
       const source = file ? audioSourceFor(file) : null;
-      return source ? [{ hymnId: h.id, language: effectiveLanguage, title: titleLines(h, lang).main, source }] : [];
+      return source ? [{ hymnId: h.id, language: audioLanguage, title: titleLines(h, lang).main, source }] : [];
     });
   };
 
@@ -486,6 +493,11 @@ export function HymnReader({
 
       {currentAudio ? (
         <View style={styles.audioCard}>
+          {audioLanguage !== effectiveLanguage ? (
+            <Text style={[styles.compareLabel, textAlign, { marginBottom: 10 }]}>
+              ♪ {t.recordingIn(languageLabels[lang].find((l) => l.key === audioLanguage)?.label ?? '')}
+            </Text>
+          ) : null}
           <View style={[styles.audioTopRow, rowDirection]}>
             <Pressable
               onPress={toggleReaderAudio}

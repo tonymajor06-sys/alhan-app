@@ -98,6 +98,7 @@ export const strings = {
     more: 'More',
     close: 'Close',
     textSizeLabel: 'Text size',
+    recordingIn: (language: string) => `Recording in ${language}`,
     bishopAddition: 'In the presence of the Pope or a Bishop',
   },
   ar: {
@@ -184,6 +185,7 @@ export const strings = {
     more: 'المزيد',
     close: 'إغلاق',
     textSizeLabel: 'حجم الخط',
+    recordingIn: (language: string) => `التسجيل باللغة: ${language}`,
     bishopAddition: 'في حضور البابا أو الأسقف',
   },
 };
