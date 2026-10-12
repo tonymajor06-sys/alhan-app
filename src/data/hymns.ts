@@ -1,12 +1,12 @@
+import { alhanSeasonServices } from './alhan-seasons';
 import { addArabicCoptic } from './arabic-coptic';
 import { addArabicEnglish } from './arabic-english';
-import { alhanSeasonServices } from './alhan-seasons';
-import { stAdditions } from './st-hymns';
 import { stFills } from './st-fills';
-import { stMysteries } from './st-mysteries';
 import { stFullSeasons } from './st-full-seasons';
-import { stSeasonExtras } from './st-season-extras';
+import { stAdditions } from './st-hymns';
 import { stMore } from './st-more';
+import { stMysteries } from './st-mysteries';
+import { stSeasonExtras } from './st-season-extras';
 
 export type LanguageType = 'coptic' | 'englishCoptic' | 'arabicCoptic' | 'english' | 'arabicEnglish' | 'englishArabic' | 'arabic';
 
@@ -7468,6 +7468,8 @@ const sidarousAudio: Record<string, string> = {
   'nayrouz-liturgy-praxis-response-2': 'nayrouz-liturgy-praxis-response.mp3',
   'annual-vespers-blessed-is-he': 'annual-vespers-blessed-is-he.mp3',
   'nayrouz-matins-verses-of-the-cymbals@cross-matins': 'cross-matins-verses-of-the-cymbals.mp3',
+  'palmsunday-vespers-exposition-of-hosanna-sunday': 'palmsunday-vespers-exposition-of-hosanna-sunday.mp3',
+  'pentecost-matins-hymn-of-the-ascension': 'pentecost-matins-hymn-of-the-ascension.mp3',
 };
 for (const season of seasons) {
   for (const hymn of season.services.flatMap((s) => flattenHymns(s.hymns))) {
