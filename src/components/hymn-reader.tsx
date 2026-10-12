@@ -4,8 +4,9 @@ import { Alert, Pressable, ScrollView, Share, Text, View } from 'react-native';
 
 import { hymnWebUrl } from '../constants/site';
 import { displayTitle } from '../data/arabic-titles';
+import { titleLines } from '../data/hymn-titles';
 import { flattenHymns, Hymn, LanguageType } from '../data/hymns';
-import { hymnSlug, locateHymn, neighborHymns } from '../data/search';
+import { hymnAcrossSeasons, hymnSlug, locateHymn, neighborHymns } from '../data/search';
 import { useAlhanColors, useThemedStyles } from '../hooks/use-alhan-colors';
 import {
   audioSourceFor,
@@ -31,7 +32,6 @@ import { isInPlaylist, PlaylistItem, togglePlaylistItem, usePlaylist } from '../
 import { TEXT_SCALE_MAX, TEXT_SCALE_MIN, updateSettings, useSettings } from '../hooks/use-settings';
 import { clearVerseTimings, saveVerseTimings, useVerseTimings, verseAt } from '../hooks/use-verse-timings';
 import {
-  ChipScroller,
   createAlhanStyles,
   defaultHymnLanguage,
   goBackOrHome,
@@ -39,6 +39,8 @@ import {
   KeepScreenAwake,
   languageLabels,
   ScreenShell,
+  Sheet,
+  SheetRow,
   Speaker,
   strings,
   toVerses,
@@ -72,7 +74,9 @@ export function HymnReader({
   const rowDirection = isRTL ? styles.rowReverse : styles.row;
   const textAlign = isRTL ? styles.alignRight : styles.alignLeft;
 
-  const [activeLanguage, setActiveLanguage] = useState<LanguageType>(initialLanguage ?? defaultHymnLanguage(lang));
+  const [activeLanguage, setActiveLanguage] = useState<LanguageType>(
+    initialLanguage ?? settings.hymnLanguage ?? defaultHymnLanguage(lang)
+  );
 
   // Only offer the languages this hymn actually has text for
   const availableLanguages = languageLabels[lang].filter((l) =>
@@ -95,7 +99,8 @@ export function HymnReader({
   const readerIsCurrent =
     !!nowPlaying && trackKey(nowPlaying) === trackKey(readerItem) && (!nowPlaying.file || nowPlaying.file === currentAudio);
   const status = readerIsCurrent ? queue.status : { playing: false, currentTime: 0, duration: 0 };
-  const title = displayTitle(hymn, lang);
+  const heading = titleLines(hymn, lang, settings.titleStyle);
+  const title = heading.main;
 
   const location = locateHymn(hymn.id)?.location;
   const breadcrumb = location
@@ -116,12 +121,23 @@ export function HymnReader({
           {end ? `${label} ${arrow}` : `${arrow} ${label}`}
         </Text>
         <Text style={[styles.hymnNavTitle, end ? styles.alignRight : styles.alignLeft]} numberOfLines={2}>
-          {withCopticFont(displayTitle(h, lang))}
+          {withCopticFont(titleLines(h, lang, settings.titleStyle).main)}
         </Text>
       </Pressable>
     ) : (
       <View style={styles.verseColumn} />
     );
+
+  // The same hymn as other seasons sing it; switching keeps the language, and Back still returns to the list.
+  // Chips name the season without its number or note: "Feast of the Nativity", not "6. Feast of the Nativity (Christmas)"
+  const shortSeasonName = (season: { id: string; title: string }, language: typeof lang) =>
+    withoutNumber(displayTitle(season, language))
+      .replace(/\s*\([^)]*\)$/, '')
+      .replace(' / Standard Services', '');
+  const acrossSeasons = hymnAcrossSeasons(hymn.id);
+  const currentSeason = acrossSeasons.find((x) => x.hymn.id === hymn.id)?.season;
+  // Which sheet is open: the language, the season, the language beside it, or the other tools
+  const [sheet, setSheet] = useState<'language' | 'season' | 'compare' | 'more' | null>(null);
 
   // Play next: the hymns after this one in the service that have a recording in the same language
   const followingTracks = (): QueueTrack[] => {
@@ -131,7 +147,7 @@ export function HymnReader({
     return order.slice(order.findIndex((h) => h.id === hymn.id) + 1).flatMap((h) => {
       const file = h.versions.find((v) => v.language === effectiveLanguage)?.audio;
       const source = file ? audioSourceFor(file) : null;
-      return source ? [{ hymnId: h.id, language: effectiveLanguage, title: displayTitle(h, lang), source }] : [];
+      return source ? [{ hymnId: h.id, language: effectiveLanguage, title: titleLines(h, lang).main, source }] : [];
     });
   };
 
@@ -179,6 +195,7 @@ export function HymnReader({
   };
 
   const textFor = (language: LanguageType) => hymnPlainText(hymn, language) || t.notAvailable;
+
   const rawText = hymn.versions.find((v) => v.language === effectiveLanguage)?.text || t.notAvailable;
   const isArabicText = effectiveLanguage === 'arabic' || effectiveLanguage === 'arabicCoptic' || effectiveLanguage === 'arabicEnglish' || rawText === strings.ar.notAvailable;
   const fontSize = 20 * settings.textScale;
@@ -204,6 +221,18 @@ export function HymnReader({
   // Verse by verse, so each line sits next to its translation
   const verses = toVerses(textFor(effectiveLanguage));
   const compareVerses = compareLanguage ? toVerses(textFor(compareLanguage)) : [];
+
+  // What is added in the presence of the Pope or a bishop, folded under the text until opened (as in Spirit & Truth)
+  const [bishopOpen, setBishopOpen] = useState(false);
+  const bishopText = (language: LanguageType) =>
+    (hymn.bishop?.find((v) => v.language === language)?.text ?? '').replace(/(?:\\n)+/g, '\n\n');
+  const bishopVerses = toVerses(bishopText(effectiveLanguage));
+  const bishopCompareVerses = compareLanguage ? toVerses(bishopText(compareLanguage)) : [];
+  const bishopAudio = hymn.bishop?.find((v) => v.language === effectiveLanguage)?.audio;
+  const playBishop = () => {
+    const source = bishopAudio ? audioSourceFor(bishopAudio) : null;
+    if (source && bishopAudio) playQueue([{ ...readerItem, title: `${title} · ${t.bishopAddition}`, source, file: bishopAudio }]);
+  };
   const columnSize = fontSize * 0.85;
   const columnText = { fontSize: columnSize, lineHeight: columnSize * 1.6 };
   const speakerColor: Record<Speaker, string> = { deacon: colors.gold, people: colors.people, priest: colors.priest };
@@ -290,6 +319,20 @@ export function HymnReader({
 
   const learnVerseStyle = (i: number) => [styles.learnVerse, i === highlighted && styles.learnVerseActive];
 
+  // A button showing the current choice, which opens its sheet
+  const pickerButton = (value: string, label: string, onPress: () => void) => (
+    <Pressable
+      onPress={onPress}
+      accessibilityRole="button"
+      accessibilityLabel={`${label}: ${value}`}
+      style={({ pressed }) => [styles.pickerButton, rowDirection, pressed && styles.pressed]}>
+      <Text style={styles.pickerButtonText} numberOfLines={1}>
+        {value}
+      </Text>
+      <Text style={styles.pickerCaret}>▾</Text>
+    </Pressable>
+  );
+
   const actionChip = (label: string, onPress: () => void, active = false) => (
     <Pressable
       key={label}
@@ -304,88 +347,142 @@ export function HymnReader({
   return (
     <ScreenShell
       lang={lang}
-      title={title}
+      title={heading.main}
+      titleCoptic={heading.coptic}
       subtitle={breadcrumb}
       onBack={goBackOrHome}
       hidePlayerFor={trackKey(readerItem)}
       scrollRef={scrollRef}>
       <KeepScreenAwake />
       {banner}
-      {availableLanguages.length > 1 ? (
-        <ChipScroller rtl={isRTL} contentStyle={styles.readerChips}>
-          {availableLanguages.map((l) => {
-            const active = effectiveLanguage === l.key;
-            return (
-              <Pressable
-                key={l.key}
-                onPress={() => setActiveLanguage(l.key)}
-                accessibilityRole="button"
-                accessibilityState={{ selected: active }}
-                style={[styles.chip, active && styles.chipActive]}>
-                <Text style={[styles.chipText, active && styles.chipTextActive]}>{l.label}</Text>
-              </Pressable>
-            );
-          })}
-        </ChipScroller>
-      ) : (
-        <View style={styles.readerChips} />
-      )}
-
-      {/* One row of tools: share, projector, learning and side by side scroll; text size stays at the end */}
-      <View style={[styles.toolbar, rowDirection]}>
-        <View style={styles.toolbarChips}>
-          <ChipScroller rtl={isRTL} endFlush contentStyle={styles.actionChips}>
-            {actionChip(t.share, share)}
-            {actionChip(t.present, () =>
-              router.push({ pathname: '/present/[id]', params: { id: hymnSlug(hymn.id), lang: effectiveLanguage } })
-            )}
-            {currentAudio ? actionChip(t.learn, () => setLearning(!learning), learning) : null}
-            {compareOptions.length > 0 ? (
-              <Pressable
-                onPress={() => updateSettings({ sideBySide: !settings.sideBySide })}
-                accessibilityRole="switch"
-                accessibilityState={{ checked: showSideBySide }}
-                style={[styles.chip, styles.chipSmall, showSideBySide && styles.controlButtonActive]}>
-                <Text style={[styles.chipText, showSideBySide && styles.controlTextActive]}>{t.sideBySide}</Text>
-              </Pressable>
-            ) : null}
-          </ChipScroller>
-        </View>
-        <View style={[styles.textSizeButtons, rowDirection]}>
-          <Pressable
-            onPress={() => changeTextScale(-0.15)}
-            disabled={settings.textScale <= TEXT_SCALE_MIN}
-            accessibilityLabel={`${t.textSize} -`}
-            style={({ pressed }) => [styles.sizeButton, pressed && styles.pressed, settings.textScale <= TEXT_SCALE_MIN && styles.disabled]}>
-            <Text style={styles.sizeButtonSmall}>A−</Text>
-          </Pressable>
-          <Pressable
-            onPress={() => changeTextScale(0.15)}
-            disabled={settings.textScale >= TEXT_SCALE_MAX}
-            accessibilityLabel={`${t.textSize} +`}
-            style={({ pressed }) => [styles.sizeButton, pressed && styles.pressed, settings.textScale >= TEXT_SCALE_MAX && styles.disabled]}>
-            <Text style={styles.sizeButtonLarge}>A+</Text>
-          </Pressable>
-        </View>
+      {/* Three pickers keep the page calm: the language, the season, and everything else under More */}
+      <View style={[styles.readerBar, rowDirection]}>
+        {availableLanguages.length > 1
+          ? pickerButton(languageLabels[lang].find((l) => l.key === effectiveLanguage)?.label ?? '', t.language, () => setSheet('language'))
+          : null}
+        {acrossSeasons.length > 1 && currentSeason ? pickerButton(shortSeasonName(currentSeason, lang), t.season, () => setSheet('season')) : null}
+        <View style={styles.verseColumn} />
+        <Pressable
+          onPress={() => setSheet('more')}
+          accessibilityRole="button"
+          accessibilityLabel={t.more}
+          style={({ pressed }) => [styles.moreButton, (learning || showSideBySide) && styles.controlButtonActive, pressed && styles.pressed]}>
+          <Text style={styles.moreButtonText}>⋯</Text>
+        </Pressable>
       </View>
-      {showSideBySide && compareOptions.length > 1 ? (
-        <ChipScroller rtl={isRTL} contentStyle={styles.compareChips}>
-          <Text style={styles.compareLabel}>{t.compareWith}:</Text>
-          {compareOptions.map((l) => {
-            const active = compareLanguage === l.key;
-            return (
-              <Pressable
-                key={l.key}
-                onPress={() => updateSettings({ compareLanguage: l.key })}
-                accessibilityRole="button"
-                accessibilityState={{ selected: active }}
-                style={[styles.chip, styles.chipSmall, active && styles.controlButtonActive]}>
-                <Text style={[styles.chipText, active && styles.controlTextActive]}>{l.label}</Text>
-              </Pressable>
-            );
-          })}
-        </ChipScroller>
+      {showSideBySide && compareLanguage ? (
+        <Pressable
+          onPress={() => compareOptions.length > 1 && setSheet('compare')}
+          accessibilityRole="button"
+          style={({ pressed }) => [styles.compareChips, rowDirection, { alignItems: 'center', gap: 6 }, pressed && styles.pressed]}>
+          <Text style={styles.compareLabel}>
+            {t.compareWith}: {languageLabels[lang].find((l) => l.key === compareLanguage)?.label}
+          </Text>
+          {compareOptions.length > 1 ? <Text style={styles.pickerCaret}>▾</Text> : null}
+        </Pressable>
       ) : null}
+
+      <Sheet visible={sheet === 'language'} title={t.language} rtl={isRTL} onClose={() => setSheet(null)}>
+        {availableLanguages.map((l) => (
+          <SheetRow
+            key={l.key}
+            rtl={isRTL}
+            label={l.label}
+            selected={l.key === effectiveLanguage}
+            onPress={() => {
+              setActiveLanguage(l.key);
+              setSheet(null);
+            }}
+          />
+        ))}
+      </Sheet>
+      <Sheet visible={sheet === 'season'} title={t.season} rtl={isRTL} onClose={() => setSheet(null)}>
+        {acrossSeasons.map(({ season, hymn: other }) => (
+          <SheetRow
+            key={season.id}
+            rtl={isRTL}
+            label={shortSeasonName(season, lang)}
+            selected={other.id === hymn.id}
+            onPress={() => {
+              setSheet(null);
+              if (other.id !== hymn.id) router.replace(hymnHref(other.id, effectiveLanguage));
+            }}
+          />
+        ))}
+      </Sheet>
+      <Sheet visible={sheet === 'compare'} title={t.compareWith} rtl={isRTL} onClose={() => setSheet(null)}>
+        {compareOptions.map((l) => (
+          <SheetRow
+            key={l.key}
+            rtl={isRTL}
+            label={l.label}
+            selected={l.key === compareLanguage}
+            onPress={() => {
+              updateSettings({ compareLanguage: l.key });
+              setSheet(null);
+            }}
+          />
+        ))}
+      </Sheet>
+      <Sheet visible={sheet === 'more'} title={t.more} rtl={isRTL} onClose={() => setSheet(null)}>
+        {compareOptions.length > 0 ? (
+          <SheetRow
+            rtl={isRTL}
+            label={t.sideBySide}
+            onPress={() => updateSettings({ sideBySide: !settings.sideBySide })}
+            end={<Text style={styles.sheetCheck}>{showSideBySide ? '✓' : ''}</Text>}
+          />
+        ) : null}
+        {currentAudio ? (
+          <SheetRow
+            rtl={isRTL}
+            label={t.learn}
+            onPress={() => {
+              setLearning(!learning);
+              setSheet(null);
+            }}
+            end={<Text style={styles.sheetCheck}>{learning ? '✓' : ''}</Text>}
+          />
+        ) : null}
+        <SheetRow
+          rtl={isRTL}
+          label={t.present}
+          onPress={() => {
+            setSheet(null);
+            router.push({ pathname: '/present/[id]', params: { id: hymnSlug(hymn.id), lang: effectiveLanguage } });
+          }}
+        />
+        <SheetRow
+          rtl={isRTL}
+          label={t.share}
+          onPress={() => {
+            setSheet(null);
+            share();
+          }}
+        />
+        <SheetRow
+          rtl={isRTL}
+          label={t.textSizeLabel}
+          end={
+            <View style={[styles.textSizeButtons, rowDirection]}>
+              <Pressable
+                onPress={() => changeTextScale(-0.15)}
+                disabled={settings.textScale <= TEXT_SCALE_MIN}
+                accessibilityLabel={`${t.textSize} -`}
+                style={({ pressed }) => [styles.sizeButton, pressed && styles.pressed, settings.textScale <= TEXT_SCALE_MIN && styles.disabled]}>
+                <Text style={styles.sizeButtonSmall}>A−</Text>
+              </Pressable>
+              <Pressable
+                onPress={() => changeTextScale(0.15)}
+                disabled={settings.textScale >= TEXT_SCALE_MAX}
+                accessibilityLabel={`${t.textSize} +`}
+                style={({ pressed }) => [styles.sizeButton, pressed && styles.pressed, settings.textScale >= TEXT_SCALE_MAX && styles.disabled]}>
+                <Text style={styles.sizeButtonLarge}>A+</Text>
+              </Pressable>
+            </View>
+          }
+        />
+      </Sheet>
 
       {currentAudio ? (
         <View style={styles.audioCard}>
@@ -482,32 +579,35 @@ export function HymnReader({
             </View>
           ) : null}
 
-          <Pressable
-            onPress={() => togglePlaylistItem(readerItem)}
-            accessibilityRole="button"
-            accessibilityState={{ selected: inPlaylist }}
-            style={({ pressed }) => [styles.playlistButton, inPlaylist && styles.controlButtonActive, pressed && styles.pressed]}>
-            <Text style={[styles.controlText, inPlaylist && styles.controlTextActive]}>
-              {inPlaylist ? t.inPlaylist : t.addToPlaylist}
-            </Text>
-          </Pressable>
-          {canDownload(currentAudio) ? (
+          <View style={[styles.audioActions, rowDirection]}>
             <Pressable
-              onPress={() => toggleDownload(currentAudio)}
-              disabled={isDownloading}
+              onPress={() => togglePlaylistItem(readerItem)}
               accessibilityRole="button"
-              accessibilityState={{ selected: isDownloaded, busy: isDownloading }}
-              style={({ pressed }) => [
-                styles.playlistButton,
-                isDownloaded && styles.controlButtonActive,
-                pressed && styles.pressed,
-                isDownloading && styles.disabled,
-              ]}>
-              <Text style={[styles.controlText, isDownloaded && styles.controlTextActive]}>
-                {isDownloading ? t.downloading : isDownloaded ? t.downloaded : t.download}
+              accessibilityState={{ selected: inPlaylist }}
+              style={({ pressed }) => [styles.playlistButton, styles.audioAction, inPlaylist && styles.controlButtonActive, pressed && styles.pressed]}>
+              <Text style={[styles.controlText, inPlaylist && styles.controlTextActive]}>
+                {inPlaylist ? t.inPlaylist : t.addToPlaylist}
               </Text>
             </Pressable>
-          ) : null}
+            {canDownload(currentAudio) ? (
+              <Pressable
+                onPress={() => toggleDownload(currentAudio)}
+                disabled={isDownloading}
+                accessibilityRole="button"
+                accessibilityState={{ selected: isDownloaded, busy: isDownloading }}
+                style={({ pressed }) => [
+                  styles.playlistButton,
+                  styles.audioAction,
+                  isDownloaded && styles.controlButtonActive,
+                  pressed && styles.pressed,
+                  isDownloading && styles.disabled,
+                ]}>
+                <Text style={[styles.controlText, isDownloaded && styles.controlTextActive]} numberOfLines={1} adjustsFontSizeToFit>
+                  {isDownloading ? t.downloading : isDownloaded ? t.downloaded : t.download}
+                </Text>
+              </Pressable>
+            ) : null}
+          </View>
         </View>
       ) : null}
 
@@ -565,6 +665,52 @@ export function HymnReader({
           </Text>
         )}
       </View>
+
+      {hymn.bishop ? (
+        <View style={styles.bishopCard}>
+          <Pressable
+            onPress={() => setBishopOpen(!bishopOpen)}
+            accessibilityRole="button"
+            accessibilityState={{ expanded: bishopOpen }}
+            style={({ pressed }) => [styles.bishopHeader, rowDirection, pressed && styles.pressed]}>
+            <Text style={[styles.bishopTitle, textAlign]}>{t.bishopAddition}</Text>
+            <Text style={styles.bishopToggle}>{bishopOpen ? '−' : '+'}</Text>
+          </Pressable>
+          {bishopOpen ? (
+            <View style={styles.bishopBody}>
+              {bishopAudio ? <View style={[styles.learnRow, rowDirection]}>{actionChip(`▶ ${t.play}`, playBishop)}</View> : null}
+              {showSideBySide && compareLanguage ? (
+                Array.from({ length: Math.max(bishopVerses.length, bishopCompareVerses.length) }, (_, i) => (
+                  <View key={i} style={[styles.verseRow, rowDirection, i > 0 && styles.verseRowDivider]}>
+                    <Text style={[styles.hymnText, styles.verseColumn, columnText, columnStyle(effectiveLanguage)]}>
+                      {verseContent(bishopVerses[i])}
+                    </Text>
+                    <View style={styles.verseGutter} />
+                    <Text style={[styles.hymnText, styles.verseColumn, columnText, columnStyle(compareLanguage)]}>
+                      {verseContent(bishopCompareVerses[i])}
+                    </Text>
+                  </View>
+                ))
+              ) : (
+                <Text
+                  style={[
+                    styles.hymnText,
+                    { fontSize, lineHeight: fontSize * 1.65 },
+                    isArabicText ? styles.arabicText : styles.alignLeft,
+                    copticStyle,
+                  ]}>
+                  {bishopVerses.map((verse, i) => (
+                    <Text key={i}>
+                      {i > 0 ? '\n\n' : ''}
+                      {verseContent(verse)}
+                    </Text>
+                  ))}
+                </Text>
+              )}
+            </View>
+          ) : null}
+        </View>
+      ) : null}
 
       {previous || next ? (
         <View style={[styles.hymnNav, rowDirection]}>

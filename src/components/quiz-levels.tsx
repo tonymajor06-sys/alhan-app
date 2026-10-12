@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { Pressable, Text } from 'react-native';
 
+import { AdBreak, ADS_ENABLED, QUIZ_ROUNDS_PER_AD } from '@/components/ad-break';
 import { createAlhanStyles } from '@/components/alhan-ui';
 import { MenuList } from '@/components/menu-list';
 import { QuizRound, QuizStrings } from '@/components/quiz-round';
 import { toArabicDigits } from '@/data/coptic-calendar';
 import { QuizLevel, QuizQuestion } from '@/data/quiz';
 import { useThemedStyles } from '@/hooks/use-alhan-colors';
-import { recordQuizScore, useQuizBest } from '@/hooks/use-quiz-progress';
+import { countQuizRound, recordQuizScore, useQuizBest } from '@/hooks/use-quiz-progress';
 import { AppLanguage } from '@/hooks/use-settings';
 
 export interface QuizLevelStrings extends QuizStrings {
@@ -35,6 +36,12 @@ export function QuizLevels({
   const shared = useThemedStyles(createAlhanStyles);
   const best = useQuizBest();
   const [open, setOpen] = useState<number | null>(null);
+  // After every few finished rounds, an ad before the score
+  const [adBreak, setAdBreak] = useState(false);
+  const finishRound = (levelId: string, right: number, total: number) => {
+    recordQuizScore(levelId, right, total);
+    if (ADS_ENABLED && countQuizRound() % QUIZ_ROUNDS_PER_AD === 0) setAdBreak(true);
+  };
   const rtl = lang === 'ar';
   const n = (v: number) => (rtl ? toArabicDigits(v) : String(v));
   const textAlign = rtl ? shared.alignRight : shared.alignLeft;
@@ -77,9 +84,10 @@ export function QuizLevels({
         questionText={questionText}
         promptFont={promptFont}
         tilesRTL={tilesRTL}
-        onFinish={(right, total) => recordQuizScore(level.id, right, total)}
+        onFinish={(right, total) => finishRound(level.id, right, total)}
         onNext={open + 1 < levels.length ? () => setOpen(open + 1) : undefined}
       />
+      {adBreak ? <AdBreak lang={lang} onDone={() => setAdBreak(false)} /> : null}
     </>
   );
 }

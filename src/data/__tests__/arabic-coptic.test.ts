@@ -64,13 +64,14 @@ describe('Coptic in Arabic letters for every hymn', () => {
 describe('Kiahk Praises & Season > Midnight Praises', () => {
   const service = kiahkService('kiahk-midnight');
 
-  it('lists the 82 titles of the service, in order, with no placeholders left', () => {
-    expect(service.hymns).toHaveLength(82);
+  it('lists the 81 titles of the service, in order, with no placeholders left', () => {
+    expect(service.hymns).toHaveLength(81);
     // The Kiahk Ode from Spirit & Truth comes first, before Holy God
     expect(service.hymns[0].title).toBe('Kiahk Ode');
     expect(service.hymns[1].title).toBe('Holy God');
-    expect(service.hymns[81].title).toBe('Conclusion in the presence of the Pope or a Bishop');
-    expect(new Set(service.hymns.map((h) => h.id)).size).toBe(82);
+    // the Conclusion in the presence of the Pope or a Bishop is folded into the hymn before it
+    expect(service.hymns[80].bishop).toBeTruthy();
+    expect(new Set(service.hymns.map((h) => h.id)).size).toBe(81);
     expect(service.hymns.some((h) => /Hymn #\d+$/.test(h.title))).toBe(false);
   });
 
@@ -623,7 +624,7 @@ describe('Kiahk Praises & Season > Matins', () => {
       'Ⲛ̀ⲑⲟⲕ ⲟⲩⲛⲓϣϯ (Kiahk Doxology for Archangel Gabriel)',
       'Ϣⲱⲡⲓ Ⲛ̀ⲑⲟ (The Conclusion of the Doxologies)',
       '',
-      'Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ',
+      'Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ (Alleluia)',
       'Ⲥⲱⲧⲉⲙ ⲧⲁϣⲉⲣⲓ (Psalm Trailer)',
       'Ⲧⲉⲛϯ ⲛⲉ ⲙ̀ⲡⲓⲭⲉⲣⲉⲧⲓⲥⲙⲟⲥ (Gospel Response)',
       'Ⲧⲉⲛϭⲓⲥⲓ ⲙ̀ⲙⲟ ϧⲉⲛ ⲟⲩⲉⲙⲡ̀ϣⲁ (Gospel Response)',
@@ -634,7 +635,7 @@ describe('Kiahk Praises & Season > Matins', () => {
     const dividers = service.hymns.map((h, i) => (h.isSectionHeader ? i : -1)).filter((i) => i >= 0);
     expect(dividers).toEqual([1, 11]);
     // the Verses of the Cymbals open a list of two titles
-    expect(service.hymns[0].children?.map((h) => h.title)).toEqual(['Ⲧⲉⲛⲟⲩⲱϣⲧ ⲙ̀Ⲫⲓⲱⲧ ⲛⲉⲙ Ⲡϣⲏⲣⲓ', 'Ⲁⲙⲱⲓⲛⲓ ⲙⲁⲣⲉⲛⲟⲩⲱϣⲧ']);
+    expect(service.hymns[0].children?.map((h) => h.title)).toEqual(['Ⲧⲉⲛⲟⲩⲱϣⲧ ⲙ̀Ⲫⲓⲱⲧ ⲛⲉⲙ Ⲡϣⲏⲣⲓ (We Worship the Father and the Son)', 'Ⲁⲙⲱⲓⲛⲓ ⲙⲁⲣⲉⲛⲟⲩⲱϣⲧ (Come Let Us Worship)']);
     const [fatherSon, come] = service.hymns[0].children!;
     const text = (h: Hymn, language: string) => h.versions.find((v) => v.language === language)?.text ?? '';
     const stanzasOf = (h: Hymn, language: string) => text(h, language).split(/\n\s*\n/);
@@ -778,7 +779,7 @@ describe('Kiahk Praises & Season > Vespers', () => {
     const vespersOwn = vespers.hymns.filter(isPsalmTrailer);
     expect(vespersOwn.map((h) => h.title)).toEqual(['Ⲡϭⲟⲓⲥ ⲁⲓⲟϣ ⲟⲩⲃⲏⲕ ⲥⲱⲧⲉⲙ ⲉ̀ⲣⲟⲓ (Psalm Trailer)']);
     const vespersTitles = vespers.hymns.map((h) => h.title);
-    expect(vespersTitles.indexOf(vespersOwn[0].title)).toBe(vespersTitles.indexOf('Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ') + 1);
+    expect(vespersTitles.indexOf(vespersOwn[0].title)).toBe(vespersTitles.indexOf('Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ (Alleluia)') + 1);
     expect(vespersTitles.indexOf(vespersOwn[0].title) + 1).toBe(vespersTitles.indexOf('Ⲧⲉⲛϯ ⲛⲉ ⲙ̀ⲡⲓⲭⲉⲣⲉⲧⲓⲥⲙⲟⲥ (Gospel Response)'));
     const others = vespers.hymns.filter((h) => !isPsalmTrailer(h));
     expect(others.map((h) => h.title)).toEqual(matins.hymns.filter((h) => !isPsalmTrailer(h)).map((h) => h.title));
@@ -1034,7 +1035,11 @@ describe('Kiahk Praises & Season > Liturgy', () => {
       ['Ⲙⲁⲣⲟⲩϭⲁⲥϥ (Psalm Trailer for the Pope or a Bishop)', 'annual-liturgy-psalm-trailer-pope-bishop'],
     ]) {
       const kiahk = service.hymns.find((h) => h.title === title)!;
-      const original = annualLiturgy.hymns.find((h) => h.id === annualId)!;
+      // Annual's Psalm Trailer for the Pope or a Bishop is folded into its Psalm Trailer
+      const original =
+        annualId === 'annual-liturgy-psalm-trailer-pope-bishop'
+          ? ({ versions: annualLiturgy.hymns.find((h) => h.id === 'annual-liturgy-psalm-trailer')!.bishop! } as Hymn)
+          : annualLiturgy.hymns.find((h) => h.id === annualId)!;
       for (const language of ['coptic', 'englishCoptic', 'english', 'arabic']) {
         expect([title, language, text(kiahk, language)]).toEqual([title, language, text(original, language)]);
         expect(text(kiahk, language)).toBeTruthy();
@@ -1139,7 +1144,8 @@ describe('Kiahk Praises & Season > Distribution', () => {
   const service = kiahkService('kiahk-distribution');
 
   it('lists only the hymns that are in use, in order', () => {
-    expect(service.hymns.map((h) => h.id.replace('kiahk-distribution-hymn-', ''))).toEqual(['1', '2', '3', '4', '6', '7', '8']);
+    // 7, the Conclusion in the presence of the Pope or a Bishop, is folded into the Concluding Hymn before it
+    expect(service.hymns.map((h) => h.id.replace('kiahk-distribution-hymn-', ''))).toEqual(['1', '2', '3', '4', '6', '8']);
     expect(service.hymns.map((h) => h.title)).not.toContain(
       'The Prayer of the Laying-on of the Hands After the Distribution of the Holy Mysteries'
     );

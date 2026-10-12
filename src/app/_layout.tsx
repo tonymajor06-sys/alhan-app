@@ -4,6 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 
 import { copticFont } from '@/components/alhan-ui';
+import { alhanLightColors } from '@/constants/alhan-colors';
 import { useAlhanColors } from '@/hooks/use-alhan-colors';
 import { useSettings } from '@/hooks/use-settings';
 import { useTodayJdn } from '@/hooks/use-today';
@@ -33,8 +34,8 @@ export default function RootLayout() {
 
   return (
     <>
-      {/* Light status bar text on the dark theme, dark text on the light theme */}
-      <StatusBar style="auto" />
+      {/* Light status bar text on the dark theme, dark text on the light theme (which Settings can choose) */}
+      <StatusBar style={colors.background === alhanLightColors.background ? 'dark' : 'light'} />
       <Stack
         screenOptions={{
           headerShown: false,
@@ -52,6 +53,7 @@ export default function RootLayout() {
       >
         <Stack.Screen name="index" />
         <Stack.Screen name="calendar" />
+        <Stack.Screen name="settings" />
         <Stack.Screen name="hymn/[id]" />
         <Stack.Screen name="learn" />
         <Stack.Screen name="learn/[lesson]" />

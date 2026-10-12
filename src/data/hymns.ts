@@ -3,6 +3,7 @@ import { addArabicCoptic } from './arabic-coptic';
 import { addArabicEnglish } from './arabic-english';
 import { stFills } from './st-fills';
 import { stFullSeasons } from './st-full-seasons';
+import { stDeacon } from './st-deacon';
 import { stAdditions } from './st-hymns';
 import { stMore } from './st-more';
 import { stMysteries } from './st-mysteries';
@@ -24,6 +25,8 @@ export interface Hymn {
   title: string;
   versions: LanguageVersion[];
   isSectionHeader?: boolean;
+  // What is added when the Pope or a bishop is present; the reader shows it folded under the hymn
+  bishop?: LanguageVersion[];
   // Makes this item a group (e.g. "Doxologies") that opens its own list instead of the reader
   children?: Hymn[];
 }
@@ -5879,19 +5882,15 @@ for (const hymn of kiahkMidnight?.hymns ?? []) {
   }
 }
 
-// Midnight Praises recordings sung in Coptic and Arabic: the only one for Arabic, a second choice for Coptic
-const midnightCopticArabicAudio: Record<string, string> = {
+// Midnight Praises recordings sung in Arabic: they play for Arabic only, not as a second Coptic recording
+const midnightArabicAudio: Record<string, string> = {
   'annual-midnight-sunday-psali-lord-jesus': 'midnight-sunday-psali-lord-jesus-coptic-arabic.m4a',
 };
 for (const hymn of annualMidnight ? flattenHymns(annualMidnight.hymns) : []) {
-  const audio = midnightCopticArabicAudio[hymn.id];
+  const audio = midnightArabicAudio[hymn.id];
   if (!audio) continue;
   for (const version of hymn.versions) {
     if (version.language === 'arabic' || version.language === 'englishArabic') version.audio = audio;
-    if (version.language === 'coptic' || version.language === 'englishCoptic') {
-      if (version.audio) version.otherAudio = [...(version.otherAudio ?? []), audio];
-      else version.audio = audio;
-    }
   }
 }
 
@@ -7354,6 +7353,34 @@ for (const rite of stMysteries) {
   else category?.services.push({ id: rite.id, title: rite.title, hymns: rite.hymns });
 }
 
+// ---- Deacon responses from Spirit & Truth's Divine Liturgy that were missing (see st-deacon.ts) ----
+for (const { service: serviceId, after, hymn } of stDeacon) {
+  const service = deaconCategories.flatMap((c) => c.services).find((s) => s.id === serviceId);
+  if (!service || service.hymns.some((h) => h.id === hymn.id)) continue;
+  const index = service.hymns.findIndex((h) => h.id === after);
+  service.hymns.splice(index >= 0 ? index + 1 : service.hymns.length, 0, hymn);
+}
+
+// ---- Festival Special: the same responses as Annual, in the same order, sung in the festal tune ----
+// Copies ("<id>@<festival service>") without Annual's recordings, which are in the annual tune
+const festivalFromAnnual: Record<string, string> = {
+  'd-fest-matins': 'd-annual-matins',
+  'd-fest-offering-lamb': 'd-annual-offering-lamb',
+  'd-fest-liturgy-word': 'd-annual-liturgy-word',
+  'd-fest-liturgy-faithful': 'd-annual-liturgy-faithful',
+  'd-fest-bishop': 'd-annual-bishop',
+};
+const festivalCopy = (hymn: Hymn, serviceId: string): Hymn => ({
+  ...hymn,
+  id: `${hymn.id}@${serviceId}`,
+  versions: hymn.versions.map(({ audio: _audio, otherAudio: _otherAudio, ...version }) => ({ ...version })),
+  children: hymn.children?.map((child) => festivalCopy(child, serviceId)),
+});
+for (const service of deaconCategories.find((c) => c.id === 'deacon-festival')?.services ?? []) {
+  const annual = deaconCategories.flatMap((c) => c.services).find((s) => s.id === festivalFromAnnual[service.id]);
+  if (annual) service.hymns = annual.hymns.map((h) => festivalCopy(h, service.id));
+}
+
 // ---- Words from Spirit & Truth for hymns listed by title only (see st-fills.ts) ----
 const fillFromSt = (hymns: Hymn[]) => {
   for (const hymn of hymns) {
@@ -7461,6 +7488,65 @@ for (const extra of allExtras) {
 }
 
 
+// ---- Hymns taken out of the lists, after every season has copied what it needs ----
+// Each rule names the hymn by its id (a copy's id is "<id>@<service>") and where it leaves:
+// in Annual only, or in every season, only from the same spot (the Offering of the Lamb, the Liturgy)
+const leaves: { ids: RegExp; annualOnly?: boolean; spot?: (header: string) => boolean; keepIn?: string }[] = [
+  { ids: /^annual-vesper-praises-friday-exposition(-29th)?$/, annualOnly: true },
+  { ids: /^annual-vesper-praises-[a-z]+-watos-theotokia-conclusion$/, annualOnly: true },
+  { ids: /-the-orthodox-creed$/, annualOnly: true },
+  { ids: /^annual-vespers-god-have-mercy$/, annualOnly: true },
+  // Holy God, Holy Immortal in the Offering of the Lamb (it stays before the Gospel and in Vespers and Matins)
+  { ids: /^annual-liturgy-trisagion$/, spot: (header) => header.includes('Offering of the Lamb') },
+  // The priest's Agios Agios Agios, Khouab, Khouab, Khouab; the people's Holy, Holy, Holy, Lord of Hosts; and the
+  // Commemoration of the Saints, in the Liturgy (Midnight Praises keeps its Commemoration)
+  { ids: /-agios-agios-agios(-2)?$/ },
+  { ids: /-the-cherubim-worship-you$/ },
+  { ids: /^(lent-weekend-liturgy-commemoration|kiahk-liturgy-commemoration-of-the-saints)$/ },
+  // The deacon says Pinishti, so it is in the Deacon Responses (Liturgy of the Faithful) instead
+  { ids: /^(annual-liturgy-the-great-abba-antony|lent-weekend-liturgy-abba-antony)$/ },
+  // The Hymn of the Resurrection is only for the Holy Fifty Days
+  { ids: /^annual-midnight-the-hymn-of-the-resurrection$/, keepIn: 'pentecost' },
+];
+const dropLeaving = (list: Hymn[], seasonId: string): Hymn[] => {
+  let header = '';
+  return list.flatMap((hymn) => {
+    if (hymn.isSectionHeader) header = hymn.title;
+    if (hymn.children) return [{ ...hymn, children: dropLeaving(hymn.children, seasonId) }];
+    const base = hymn.id.split('@')[0];
+    const leaving = leaves.some(
+      (rule) =>
+        rule.ids.test(base) &&
+        (!rule.annualOnly || seasonId === 'annual') &&
+        (!rule.spot || rule.spot(header)) &&
+        rule.keepIn !== seasonId
+    );
+    return leaving ? [] : [hymn];
+  });
+};
+for (const season of seasons) {
+  for (const service of season.services) service.hymns = dropLeaving(service.hymns, season.id);
+  season.services = season.services.filter((s) => s.hymns.some((h) => !h.isSectionHeader));
+}
+
+// ---- English names for the hymns titled only in Coptic, so every list can show the name with its Coptic words below ----
+const englishNames: Record<string, string> = {
+  'Ⲡⲓϩ̀ⲙⲟⲧ ⲅⲁⲣ': 'The Grace (Pauline Epistle Response)',
+  'Ⲁ̀ ⲡⲉⲧϫⲏⲕ ⲉ̀ⲃⲟⲗ': 'Perfect is the Blessing',
+  'Ⲁⲅⲓⲟⲥ ⲟ̀ Ⲑⲉⲟⲥ': 'Holy God',
+  'Ϩⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ ⲛ̀ⲧⲉ Ϯⲑⲉⲟ̀ⲧⲟⲕⲟⲥ': 'Through the Intercessions of the Theotokos',
+  'Ⲥⲉⲙⲟⲩϯ ⲉ̀ⲣⲟ ⲇⲓⲕⲉⲟⲥ': 'They Rightly Call You (Sunday Theotokion)',
+  'Ⲧⲉⲛⲟⲩⲱϣⲧ ⲙ̀Ⲫⲓⲱⲧ ⲛⲉⲙ Ⲡϣⲏⲣⲓ': 'We Worship the Father and the Son',
+  'Ⲁⲙⲱⲓⲛⲓ ⲙⲁⲣⲉⲛⲟⲩⲱϣⲧ': 'Come Let Us Worship',
+  'Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ': 'Alleluia',
+};
+const nameHymns = (list: Hymn[]) => {
+  for (const hymn of list) {
+    if (hymn.children) nameHymns(hymn.children);
+    else if (englishNames[hymn.title]) hymn.title = `${hymn.title} (${englishNames[hymn.title]})`;
+  }
+};
+for (const group of [...seasons, ...deaconCategories]) for (const service of group.services) nameHymns(service.hymns);
 
 // ---- Audio: Arsani Sidarous recordings, each for the one hymn (id) it was recorded for; Coptic also plays for Coptic in English letters ----
 const sidarousAudio: Record<string, string> = {
@@ -7500,3 +7586,22 @@ for (const season of seasons) {
 // so it must run after all the changes above
 addArabicCoptic([...seasons, ...deaconCategories]);
 addArabicEnglish([...seasons, ...deaconCategories]);
+
+// ---- What is said in the presence of the Pope or a bishop folds into the hymn it extends ----
+// (the Concluding Hymn, the Psalm Trailer, Pray That God May Have Mercy), as Spirit & Truth shows it,
+// instead of being a hymn of its own. The In Presence of Bishop / Patriarch lists keep theirs as they are.
+// Runs after the Arabic letters are added, so the folded text has them too.
+const isBishopAddition = (hymn: Hymn) =>
+  /(presence of the Pope or a Bishop|for the Pope or a Bishop)/i.test(hymn.title) && !/Thanksgiving|Introduction to the Coptic Gospel/.test(hymn.title);
+const foldBishop = (list: Hymn[]): Hymn[] =>
+  list.reduce<Hymn[]>((kept, hymn) => {
+    const previous = kept[kept.length - 1];
+    if (hymn.children) return [...kept, { ...hymn, children: foldBishop(hymn.children) }];
+    if (isBishopAddition(hymn) && previous && !previous.isSectionHeader && !previous.children && !isBishopAddition(previous)) {
+      previous.bishop = hymn.versions;
+      return kept;
+    }
+    return [...kept, hymn];
+  }, []);
+for (const group of [...seasons, ...deaconCategories])
+  for (const service of group.services) if (!/-bishop$/.test(service.id)) service.hymns = foldBishop(service.hymns);

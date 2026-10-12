@@ -1,5 +1,6 @@
 import { displayTitle } from './arabic-titles';
-import { deaconCategories, flattenHymns, Hymn, LanguageType, seasons, Service } from './hymns';
+import { splitTitle } from './hymn-titles';
+import { deaconCategories, flattenHymns, Hymn, LanguageType, Season, seasons, Service } from './hymns';
 
 // Marks people rarely type: Latin accents, Coptic overlines and jinkims, Arabic tashkeel and tatweel
 const IGNORED_MARKS = /[̀-ͯ҃-҉ً-ٰٟۖ-ۭـ⳯-⳱︠-︯]/g;
@@ -97,6 +98,49 @@ export function neighborHymns(id: string): { previous?: Hymn; next?: Hymn } {
   return { previous: order[i - 1], next: order[i + 1] };
 }
 
+// ---- The same hymn in other seasons ----
+// Matched by its English name, without a season's note ("Gospel Response (Coptic New Year)" is a Gospel Response)
+const sameHymnKey = (title: string) =>
+  (splitTitle(title).english ?? title)
+    .toLowerCase()
+    .replace(/\s*\((feast of [^)]*|[^)]*kiahk[^)]*|coptic new year|[^)]*sunday[^)]*|[^)]*lent[^)]*|nativity|theophany|vespers|matins)\)$/, '')
+    .replace(/,\s*(vespers|matins|midnight praises)$/, '')
+    .replace(/^(the|a) /, '')
+    .replace(/^verses of the cymbals$/, 'verse of the cymbals')
+    .replace(/^doxology intro$/, 'introduction to the doxologies')
+    .trim();
+const servicePart = (serviceId: string) => serviceId.match(/(vesper-praises|vespers|morning-praises|matins|liturgy|distribution|midnight)$/)?.[1] ?? '';
+
+let bySameKey: Map<string, { season: Season; service: Service; hymn: Hymn }[]> | null = null;
+
+// One version of this hymn in each season that has it, in the seasons' order; this hymn's own season included.
+// Within a season, a copy of this very hymn wins, then the one in the same service (Vespers, Matins, ...).
+export function hymnAcrossSeasons(id: string): { season: Season; hymn: Hymn }[] {
+  const found = locateHymn(id);
+  if (!found || found.location.kind !== 'hymns') return [];
+  if (!bySameKey) {
+    bySameKey = new Map();
+    for (const season of seasons)
+      for (const service of season.services)
+        for (const hymn of flattenHymns(service.hymns)) {
+          const key = sameHymnKey(hymn.title);
+          bySameKey.set(key, [...(bySameKey.get(key) ?? []), { season, service, hymn }]);
+        }
+  }
+  const matches = bySameKey.get(sameHymnKey(found.hymn.title)) ?? [];
+  const part = servicePart(found.location.service.id);
+  const base = (hymnId: string) => hymnId.split('@')[0];
+  return seasons.flatMap((season) => {
+    if (season.id === found.location.group.id) return [{ season, hymn: found.hymn }];
+    const inSeason = matches.filter((m) => m.season === season);
+    const best =
+      inSeason.find((m) => base(m.hymn.id) === base(found.hymn.id)) ??
+      inSeason.find((m) => servicePart(m.service.id) === part) ??
+      inSeason[0];
+    return best ? [{ season, hymn: best.hymn }] : [];
+  });
+}
+
 const cleanText = (text: string) => text.replace(/(?:\\n)+/g, '\n\n');
 
 function buildIndex(): IndexEntry[] {
@@ -110,7 +154,8 @@ function buildIndex(): IndexEntry[] {
         hymn,
         location: { group, service, kind },
         titles: [normalizeForSearch(hymn.title), normalizeForSearch(displayTitle(hymn, 'ar'))],
-        versions: hymn.versions
+        // the words said in the presence of the Pope or a bishop are found too
+        versions: [...hymn.versions, ...(hymn.bishop ?? [])]
           .filter((v) => v.text)
           .map((v) => {
             const text = cleanText(v.text);

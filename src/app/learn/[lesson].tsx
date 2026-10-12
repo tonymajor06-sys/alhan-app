@@ -5,6 +5,7 @@ import { Pressable, Text, View } from 'react-native';
 import { copticFont, goBackOrHome, openHymnPage, ScreenShell, withCopticFont } from '@/components/alhan-ui';
 import { learnStrings, LessonId, lessonIds } from '@/components/learn-strings';
 import { useLessonStyles } from '@/components/lesson-styles';
+import { MenuList } from '@/components/menu-list';
 import { QuizLevels } from '@/components/quiz-levels';
 import { displayTitle } from '@/data/arabic-titles';
 import {
@@ -17,6 +18,8 @@ import {
   getPracticeVerses,
   readingRules,
 } from '@/data/coptic-lessons';
+import { toArabicDigits } from '@/data/coptic-calendar';
+import { copticVocabulary } from '@/data/coptic-vocabulary';
 import { AppLanguage, useSettings } from '@/hooks/use-settings';
 
 // Build every page ahead of time, so a shared link or a refresh on the website works
@@ -39,6 +42,7 @@ export default function LessonScreen() {
       {id === 'alphabet' ? <Alphabet lang={lang} /> : null}
       {id === 'reading' ? <ReadingRules lang={lang} /> : null}
       {id === 'words' ? <Words lang={lang} words={hymnWords} /> : null}
+      {id === 'vocabulary' ? <Vocabulary lang={lang} /> : null}
       {id === 'speaking' ? <Words lang={lang} words={copticEverydayPhrases} /> : null}
       {id === 'quiz' ? <Quiz lang={lang} /> : null}
       {id === 'practice' ? <Practice lang={lang} /> : null}
@@ -168,9 +172,44 @@ function Words({ lang, words }: LessonProps & { words: CopticWord[] }) {
   );
 }
 
+// The vocabulary by topic: pick one to see its words
+function Vocabulary({ lang }: LessonProps) {
+  const t = learnStrings[lang];
+  const rtl = lang === 'ar';
+  const { shared, textAlign } = useLessonStyles(lang);
+  const [open, setOpen] = useState<number | null>(null);
+  if (open === null) {
+    return (
+      <MenuList
+        rtl={rtl}
+        items={copticVocabulary.map((topic, i) => ({
+          key: topic.id,
+          lead: rtl ? toArabicDigits(i + 1) : String(i + 1),
+          title: topic.title[lang],
+          desc: `${topic.desc[lang]} · ${t.wordsCount(rtl ? toArabicDigits(topic.words.length) : String(topic.words.length))}`,
+          onPress: () => setOpen(i),
+        }))}
+      />
+    );
+  }
+  const topic = copticVocabulary[open];
+  return (
+    <>
+      <Pressable
+        onPress={() => setOpen(null)}
+        accessibilityRole="button"
+        style={({ pressed }) => [shared.controlButton, { alignSelf: rtl ? 'flex-end' : 'flex-start', marginBottom: 12, paddingHorizontal: 16 }, pressed && shared.pressed]}>
+        <Text style={shared.controlText}>{rtl ? `${t.chooseTopic} ›` : `‹ ${t.chooseTopic}`}</Text>
+      </Pressable>
+      <Text style={[shared.subtitle, textAlign]}>{topic.title[lang]}</Text>
+      <Words key={topic.id} lang={lang} words={topic.words} />
+    </>
+  );
+}
+
 function Quiz({ lang }: LessonProps) {
   const t = learnStrings[lang];
-  const levels = useMemo(() => copticQuizLevels(lang, t.levelText, t.everydayLevel), [lang, t]);
+  const levels = useMemo(() => copticQuizLevels(lang, t.levelText, t.everydayLevel, t.reviewLevel), [lang, t]);
   return (
     <QuizLevels
       key={lang}

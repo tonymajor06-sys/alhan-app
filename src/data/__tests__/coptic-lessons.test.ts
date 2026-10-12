@@ -1,6 +1,7 @@
 import { learnStrings } from '../../components/learn-strings';
 import { arabicAlphabet, arabicForms, arabicQuizLevels, getArabicPracticeVerses } from '../arabic-lessons';
 import { copticAlphabet, copticEverydayPhrases, copticMoreWords, copticQuizLevels, getPracticeVerses } from '../coptic-lessons';
+import { copticVocabulary } from '../coptic-vocabulary';
 import { deaconCategories, flattenHymns, seasons } from '../hymns';
 import { englishQuizLevels } from '../english-lessons';
 import { QuizLevel } from '../quiz';
@@ -18,7 +19,8 @@ const checkLevels = (levels: QuizLevel[], count = 6) => {
   for (const level of levels) {
     for (let round = 0; round < 5; round++) {
       const quiz = level.build();
-      expect(quiz).toHaveLength(10);
+      // the vocabulary review is a longer round
+      expect(quiz).toHaveLength(level.id.endsWith('-review') ? 20 : 10);
       for (const q of quiz) {
         if (q.kind === 'order') {
           expect([...q.tiles!].sort()).toEqual([...q.solution!].sort());
@@ -35,8 +37,10 @@ const checkLevels = (levels: QuizLevel[], count = 6) => {
 
 describe('quiz levels', () => {
   it('builds every Learn Coptic level in both languages', () => {
-    checkLevels(copticQuizLevels('en', learnStrings.en.levelText, learnStrings.en.everydayLevel), 7);
-    checkLevels(copticQuizLevels('ar', learnStrings.ar.levelText, learnStrings.ar.everydayLevel), 7);
+    // six levels, Speak Coptic, a level for each vocabulary topic and the review
+    const total = 7 + copticVocabulary.length + 1;
+    checkLevels(copticQuizLevels('en', learnStrings.en.levelText, learnStrings.en.everydayLevel, learnStrings.en.reviewLevel), total);
+    checkLevels(copticQuizLevels('ar', learnStrings.ar.levelText, learnStrings.ar.everydayLevel, learnStrings.ar.reviewLevel), total);
   });
   it('asks the everyday phrases in the seventh Learn Coptic level', () => {
     const level = copticQuizLevels('en', learnStrings.en.levelText, learnStrings.en.everydayLevel)[6];
@@ -101,5 +105,35 @@ describe('Learn Arabic', () => {
     const verse = verses.find((v) => v.arabic.startsWith('قوموا يا بني النور'));
     expect(verse?.sound).toMatch(/^Qumu ya bani en-nour/);
     expect(verse?.meaning).toMatch(/^Arise O you children of the light/);
+  });
+});
+
+describe('copticVocabulary', () => {
+  it('has many topics, each word with its sound and both meanings, and no word twice in a topic', () => {
+    expect(copticVocabulary.length).toBeGreaterThanOrEqual(12);
+    for (const topic of copticVocabulary) {
+      expect(topic.words.length).toBeGreaterThanOrEqual(10);
+      expect(new Set(topic.words.map((w) => w.coptic)).size).toBe(topic.words.length);
+      for (const word of topic.words) {
+        expect(word.coptic).toMatch(/[Ⲁ-⳿Ϣ-ϯ]/);
+        expect(word.sound).toMatch(/^[A-Za-zēōĒŌ\- ']+$/);
+        expect(word.meaning.en).toBeTruthy();
+        expect(word.meaning.ar).toMatch(/[؀-ۿ]/);
+      }
+    }
+    // the devil, Hades and Satan are there
+    const all = copticVocabulary.flatMap((t) => t.words.map((w) => w.meaning.en));
+    for (const meaning of ['devil', 'Satan', 'Hades, the underworld']) expect(all).toContain(meaning);
+  });
+
+  it('gives each topic its own quiz level, then a review of them all', () => {
+    const levels = copticQuizLevels('en', Array(6).fill({ title: 't', desc: 'd' }), { title: 'e', desc: 'd' }, { title: 'r', desc: 'd' });
+    expect(levels).toHaveLength(7 + copticVocabulary.length + 1);
+    expect(levels[levels.length - 1].build()).toHaveLength(20);
+    for (const level of levels.slice(7, -1)) {
+      const questions = level.build();
+      expect(questions).toHaveLength(10);
+      for (const q of questions) expect(q.options[q.answer]).toBeTruthy();
+    }
   });
 });

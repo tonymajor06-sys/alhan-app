@@ -1,7 +1,7 @@
 import { useKeepAwake } from 'expo-keep-awake';
 import { router } from 'expo-router';
 import { ReactNode, RefObject, useRef } from 'react';
-import { Platform, Pressable, ScrollView, StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
+import { Modal, Platform, Pressable, ScrollView, StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { AlhanPalette } from '../constants/alhan-colors';
@@ -61,9 +61,9 @@ export const strings = {
     titleMatch: 'Title',
     sideBySide: '⇆ Side by side',
     compareWith: 'Next to it',
-    download: '⬇ Download for offline',
+    download: '⬇ Save offline',
     downloading: 'Downloading…',
-    downloaded: '✓ Downloaded · tap to remove',
+    downloaded: '✓ Saved offline',
     downloadFailed: 'Download failed. Check your connection and try again.',
     downloadAll: '⬇ Download all for offline',
     share: '↗ Share',
@@ -92,6 +92,13 @@ export const strings = {
     previousVerse: 'Previous verse',
     nextVerse: 'Next verse',
     shownLanguages: 'Show',
+    settings: 'Settings',
+    language: 'Language',
+    season: 'Season',
+    more: 'More',
+    close: 'Close',
+    textSizeLabel: 'Text size',
+    bishopAddition: 'In the presence of the Pope or a Bishop',
   },
   ar: {
     appTitle: 'الألحان القبطية',
@@ -140,9 +147,9 @@ export const strings = {
     titleMatch: 'العنوان',
     sideBySide: '⇆ جنباً إلى جنب',
     compareWith: 'بجانبه',
-    download: '⬇ تنزيل للاستماع بدون إنترنت',
+    download: '⬇ حفظ بدون إنترنت',
     downloading: 'جارٍ التنزيل…',
-    downloaded: '✓ تم التنزيل · اضغط للحذف',
+    downloaded: '✓ محفوظ بدون إنترنت',
     downloadFailed: 'فشل التنزيل. تحقق من الاتصال وحاول مرة أخرى.',
     downloadAll: '⬇ تنزيل الكل للاستماع بدون إنترنت',
     share: '↗ مشاركة',
@@ -171,6 +178,13 @@ export const strings = {
     previousVerse: 'المقطع السابق',
     nextVerse: 'المقطع التالي',
     shownLanguages: 'اعرض',
+    settings: 'الإعدادات',
+    language: 'اللغة',
+    season: 'المناسبة',
+    more: 'المزيد',
+    close: 'إغلاق',
+    textSizeLabel: 'حجم الخط',
+    bishopAddition: 'في حضور البابا أو الأسقف',
   },
 };
 
@@ -315,6 +329,62 @@ export const chipScrollerStyles = StyleSheet.create({
   content: { flexGrow: 1, alignItems: 'center', gap: 8, paddingHorizontal: 20 },
 });
 
+// A panel that slides up from the bottom with a list of choices; tapping outside closes it
+export function Sheet({
+  visible,
+  title,
+  rtl,
+  onClose,
+  children,
+}: {
+  visible: boolean;
+  title: string;
+  rtl: boolean;
+  onClose: () => void;
+  children: ReactNode;
+}) {
+  const styles = useThemedStyles(createAlhanStyles);
+  const insets = useSafeAreaInsets();
+  return (
+    <Modal visible={visible} transparent animationType="slide" onRequestClose={onClose}>
+      <Pressable style={styles.sheetBackdrop} onPress={onClose} accessibilityRole="button" accessibilityLabel={strings[rtl ? 'ar' : 'en'].close} />
+      <View style={[styles.sheet, { paddingBottom: insets.bottom + 16 }]}>
+        <View style={styles.sheetHandle} />
+        <Text style={[styles.sheetTitle, rtl ? styles.alignRight : styles.alignLeft]}>{title}</Text>
+        <ScrollView style={styles.sheetList}>{children}</ScrollView>
+      </View>
+    </Modal>
+  );
+}
+
+// One choice in a Sheet: a check mark when it is the current one, or something of its own at the end (e.g. a switch)
+export function SheetRow({
+  label,
+  selected,
+  rtl,
+  onPress,
+  end,
+}: {
+  label: string;
+  selected?: boolean;
+  rtl: boolean;
+  onPress?: () => void;
+  end?: ReactNode;
+}) {
+  const styles = useThemedStyles(createAlhanStyles);
+  return (
+    <Pressable
+      onPress={onPress}
+      disabled={!onPress}
+      accessibilityRole="button"
+      accessibilityState={{ selected: !!selected }}
+      style={({ pressed }) => [styles.sheetRow, rtl ? styles.rowReverse : styles.row, pressed && styles.sheetRowPressed]}>
+      <Text style={[styles.sheetRowText, selected && styles.sheetRowTextSelected, rtl ? styles.alignRight : styles.alignLeft]}>{label}</Text>
+      {end ?? (selected ? <Text style={styles.sheetCheck}>✓</Text> : null)}
+    </Pressable>
+  );
+}
+
 // Keeps the screen on while a hymn is open, so it doesn't dim in the middle of a service
 export function KeepScreenAwake() {
   useKeepAwake(undefined, { suppressDeactivateWarnings: true });
@@ -410,6 +480,7 @@ export function MiniPlayer({ lang, hideFor }: { lang: AppLanguage; hideFor?: str
 export function ScreenShell({
   lang,
   title,
+  titleCoptic,
   subtitle,
   onBack,
   hidePlayerFor,
@@ -418,6 +489,8 @@ export function ScreenShell({
 }: {
   lang: AppLanguage;
   title: string;
+  // A hymn's Coptic words, in smaller type under its name
+  titleCoptic?: string | null;
   subtitle?: string | null;
   onBack: () => void;
   hidePlayerFor?: string;
@@ -451,6 +524,7 @@ export function ScreenShell({
           <Text style={styles.backText}>{t.back}</Text>
         </Pressable>
         <Text style={[styles.headerTitle, textAlign]}>{withCopticFont(title)}</Text>
+        {titleCoptic ? <Text style={[styles.headerCoptic, textAlign]}>{titleCoptic}</Text> : null}
         {subtitle ? <Text style={[styles.subtitle, textAlign]}>{subtitle}</Text> : null}
         {children}
       </ScrollView>
@@ -587,6 +661,9 @@ export const createAlhanStyles = (colors: AlhanPalette) => StyleSheet.create({
     lineHeight: 30,
     color: colors.gold,
   },
+  topButtons: {
+    gap: 10,
+  },
   hero: {
     marginBottom: 28,
   },
@@ -671,6 +748,24 @@ export const createAlhanStyles = (colors: AlhanPalette) => StyleSheet.create({
     color: colors.text,
     lineHeight: 23,
   },
+  // A hymn's Coptic words under its name
+  tileCoptic: {
+    fontFamily: copticFont,
+    fontSize: 14,
+    lineHeight: 20,
+    color: colors.muted,
+    marginTop: 3,
+  },
+  // Number on one side, ♪ on the other
+  tileTopRow: {
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  tileAudio: {
+    fontSize: 13,
+    fontWeight: '700',
+    color: colors.gold,
+  },
   tileDesc: {
     fontSize: 13,
     color: colors.muted,
@@ -705,7 +800,15 @@ export const createAlhanStyles = (colors: AlhanPalette) => StyleSheet.create({
     fontSize: 28,
     fontWeight: '800',
     color: colors.gold,
-    lineHeight: 38,
+    lineHeight: 36,
+  },
+  headerCoptic: {
+    fontFamily: copticFont,
+    fontSize: 19,
+    lineHeight: 26,
+    color: colors.text,
+    opacity: 0.8,
+    marginTop: 4,
   },
   subtitle: {
     fontSize: 16,
@@ -780,10 +883,11 @@ export const createAlhanStyles = (colors: AlhanPalette) => StyleSheet.create({
     marginBottom: 12,
   },
   sectionHeaderText: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '800',
     color: colors.gold,
-    letterSpacing: 1,
+    letterSpacing: 1.2,
+    textTransform: 'uppercase',
   },
   sectionLine: {
     flex: 1,
@@ -874,6 +978,16 @@ export const createAlhanStyles = (colors: AlhanPalette) => StyleSheet.create({
   },
   controlTextActive: {
     color: colors.gold,
+  },
+  // Playlist and download, side by side under the controls
+  audioActions: {
+    gap: 8,
+    marginTop: 8,
+  },
+  audioAction: {
+    flex: 1,
+    marginTop: 0,
+    paddingHorizontal: 10,
   },
   playlistButton: {
     minHeight: 48,
@@ -1134,6 +1248,145 @@ export const createAlhanStyles = (colors: AlhanPalette) => StyleSheet.create({
   copticText: {
     fontFamily: copticFont,
     fontWeight: 'normal',
+  },
+  // What is added in the presence of the Pope or a bishop, folded under the hymn
+  bishopCard: {
+    marginTop: 18,
+    borderRadius: 14,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: colors.border,
+    backgroundColor: colors.surface,
+    overflow: 'hidden',
+  },
+  bishopHeader: {
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 12,
+    minHeight: 54,
+    paddingHorizontal: 16,
+  },
+  bishopTitle: {
+    flex: 1,
+    fontSize: 16,
+    fontWeight: '700',
+    color: colors.gold,
+  },
+  bishopToggle: {
+    fontSize: 24,
+    fontWeight: '600',
+    color: colors.gold,
+  },
+  bishopBody: {
+    gap: 12,
+    paddingHorizontal: 16,
+    paddingTop: 4,
+    paddingBottom: 16,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopColor: colors.border,
+  },
+  // Bottom sheets
+  sheetBackdrop: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.45)',
+  },
+  sheet: {
+    maxHeight: '75%',
+    backgroundColor: colors.background,
+    borderTopLeftRadius: 22,
+    borderTopRightRadius: 22,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: colors.border,
+    paddingHorizontal: 20,
+    paddingTop: 10,
+  },
+  sheetHandle: {
+    alignSelf: 'center',
+    width: 40,
+    height: 5,
+    borderRadius: 3,
+    backgroundColor: colors.border,
+    marginBottom: 12,
+  },
+  sheetTitle: {
+    fontSize: 13,
+    fontWeight: '800',
+    letterSpacing: 0.8,
+    textTransform: 'uppercase',
+    color: colors.gold,
+    marginBottom: 6,
+  },
+  sheetList: {
+    flexGrow: 0,
+  },
+  sheetRow: {
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 12,
+    minHeight: 52,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: colors.border,
+  },
+  sheetRowPressed: {
+    opacity: 0.6,
+  },
+  sheetRowText: {
+    flex: 1,
+    fontSize: 17,
+    color: colors.text,
+  },
+  sheetRowTextSelected: {
+    color: colors.gold,
+    fontWeight: '700',
+  },
+  sheetCheck: {
+    fontSize: 18,
+    fontWeight: '800',
+    color: colors.gold,
+  },
+  // The reader's row of pickers: language, season, more
+  readerBar: {
+    alignItems: 'center',
+    gap: 8,
+    paddingTop: 16,
+    paddingBottom: 14,
+  },
+  pickerButton: {
+    flexShrink: 1,
+    minHeight: 44,
+    paddingHorizontal: 14,
+    borderRadius: 22,
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.border,
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 6,
+  },
+  pickerButtonText: {
+    flexShrink: 1,
+    fontSize: 15,
+    fontWeight: '700',
+    color: colors.text,
+  },
+  pickerCaret: {
+    fontSize: 12,
+    color: colors.gold,
+  },
+  moreButton: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.border,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  moreButtonText: {
+    fontSize: 20,
+    fontWeight: '800',
+    color: colors.gold,
+    lineHeight: 22,
   },
   // Share / projector / learn
   actionChips: {

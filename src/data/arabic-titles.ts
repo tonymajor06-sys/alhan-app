@@ -493,6 +493,11 @@ const arabicTitles: Record<string, string> = {
   'd-annual-matins-in-christ-jesus-our-lord': 'الثلاثة تحاليل (بالمسيح يسوع ربنا)',
 
   // Deacon Responses > Annual > Offering of the Lamb
+  'd-annual-liturgy-faithful-pray-for-the-assemblies': 'أوشية الاجتماعات',
+  'd-annual-liturgy-faithful-bow-your-heads': 'أحنوا رؤوسكم للرب',
+  'd-annual-liturgy-faithful-pray-for-the-priesthood-st-cyril': 'أوشية الكهنوت (القداس الكيرلسي)',
+  'd-annual-liturgy-faithful-pray-for-the-assemblies-st-cyril': 'أوشية الاجتماعات (القداس الكيرلسي)',
+  'd-annual-liturgy-faithful-worship-god-the-father-st-cyril': 'اسجدوا لله الآب (القداس الكيرلسي)',
   'd-annual-offering-lamb-pray-for-the-gifts': 'صلوا من أجل هذه القرابين',
   'd-annual-offering-lamb-one-is-the-holy-father': 'آمين. واحد هو الآب القدوس',
   'd-annual-offering-lamb-stand-up-for-prayer': 'للصلاة قفوا',
