@@ -257,7 +257,7 @@ export default function HomeScreen() {
     return (
       <View style={styles.root}>
         <Head>
-          <title>Coptic Psalmody · الألحان القبطية</title>
+          <title>Coptic Psalmody · التسبحة القبطية</title>
           <meta
             name="description"
             content="Coptic Orthodox hymns, Tasbeha (Midnight Praises) and deacon responses in Coptic, English and Arabic, with transliteration, audio and the Coptic calendar. ألحان وتسبحة ومردات الكنيسة القبطية."

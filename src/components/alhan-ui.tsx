@@ -102,7 +102,7 @@ export const strings = {
     bishopAddition: 'In the presence of the Pope or a Bishop',
   },
   ar: {
-    appTitle: 'الألحان القبطية',
+    appTitle: 'التسبحة القبطية',
     appSubtitle: 'الألحان والمردات بالقبطي والعربي والإنجليزي',
     languagePrompt: 'لغة التطبيق',
     back: 'رجوع',
@@ -171,7 +171,7 @@ export const strings = {
       'اضغط «حدّد المقاطع» وشغّل التسجيل واضغط الزر كلما بدأ مقطع جديد. بعد ذلك يُضاء المقطع الذي يُرتّل، ويمكنك الضغط على أي مقطع للانتقال إليه أو تكراره.',
     learnReady: 'اضغط على أي مقطع للانتقال إليه.',
     markingProgress: (n: number, total: number) => `المقطع ${n} من ${total}`,
-    getApp: 'حمّل تطبيق الألحان القبطية',
+    getApp: 'حمّل تطبيق التسبحة القبطية',
     notFound: 'لم يتم العثور على هذا اللحن.',
     goHome: 'اذهب إلى الصفحة الرئيسية',
     exit: 'خروج',
