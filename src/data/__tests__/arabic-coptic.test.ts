@@ -610,9 +610,18 @@ describe('Kiahk Praises & Season > Midnight Praises', () => {
 describe('Kiahk Praises & Season > Matins', () => {
   const service = kiahkService('kiahk-matins');
 
-  it('lists only the titles, in order, with the Doxologies as a divider and no lyrics yet', () => {
-    expect(service.hymns.map((h) => h.title)).toEqual([
+  it('lists the hymns, then the Doxologies: its own, the Annual ones in its tune, and the Conclusion', () => {
+    // the doxologies copied from Annual (without Annual's recordings) come after Kiahk's own
+    const fromAnnual = service.hymns.filter((h) => h.id.startsWith('annual-matins-doxology-') && h.id.endsWith('@kiahk-matins'));
+    expect(fromAnnual.length).toBeGreaterThanOrEqual(10);
+    expect(fromAnnual.every((h) => h.versions.every((v) => !v.audio))).toBe(true);
+    expect(service.hymns.filter((h) => !fromAnnual.includes(h)).map((h) => h.title)).toEqual([
       'Verses of the Cymbals',
+      'Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ (Alleluia)',
+      'Ⲥⲱⲧⲉⲙ ⲧⲁϣⲉⲣⲓ (Psalm Trailer)',
+      'Ⲧⲉⲛϯ ⲛⲉ ⲙ̀ⲡⲓⲭⲉⲣⲉⲧⲓⲥⲙⲟⲥ (Gospel Response)',
+      'Ⲧⲉⲛϭⲓⲥⲓ ⲙ̀ⲙⲟ ϧⲉⲛ ⲟⲩⲉⲙⲡ̀ϣⲁ (Gospel Response)',
+      'Concluding Hymn',
       'Doxologies',
       'Ϧⲉⲛ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ (Introduction to the Doxologies)',
       'Ⲕⲉ ⲅⲁⲣ ⲁⲓϣⲁⲛⲥⲁϫⲓ (First Doxology for Kiahk)',
@@ -623,17 +632,12 @@ describe('Kiahk Praises & Season > Matins', () => {
       'Ϥ̀ⲉⲙⲡ̀ϣⲁ ⲅⲁⲣ (Sixth Doxology for Kiahk)',
       'Ⲛ̀ⲑⲟⲕ ⲟⲩⲛⲓϣϯ (Kiahk Doxology for Archangel Gabriel)',
       'Ϣⲱⲡⲓ Ⲛ̀ⲑⲟ (The Conclusion of the Doxologies)',
-      '',
-      'Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ (Alleluia)',
-      'Ⲥⲱⲧⲉⲙ ⲧⲁϣⲉⲣⲓ (Psalm Trailer)',
-      'Ⲧⲉⲛϯ ⲛⲉ ⲙ̀ⲡⲓⲭⲉⲣⲉⲧⲓⲥⲙⲟⲥ (Gospel Response)',
-      'Ⲧⲉⲛϭⲓⲥⲓ ⲙ̀ⲙⲟ ϧⲉⲛ ⲟⲩⲉⲙⲡ̀ϣⲁ (Gospel Response)',
-      'Concluding Hymn',
     ]);
-    // two dividers: "Doxologies" and a blank one after the Conclusion of the Doxologies
-    expect(service.hymns.filter((h) => h.isSectionHeader).map((h) => h.title)).toEqual(['Doxologies', '']);
+    expect(service.hymns[service.hymns.length - 1].title).toBe('Ϣⲱⲡⲓ Ⲛ̀ⲑⲟ (The Conclusion of the Doxologies)');
+    // one divider, "Doxologies", after the hymns
+    expect(service.hymns.filter((h) => h.isSectionHeader).map((h) => h.title)).toEqual(['Doxologies']);
     const dividers = service.hymns.map((h, i) => (h.isSectionHeader ? i : -1)).filter((i) => i >= 0);
-    expect(dividers).toEqual([1, 11]);
+    expect(dividers).toEqual([6]);
     // the Verses of the Cymbals open a list of two titles
     expect(service.hymns[0].children?.map((h) => h.title)).toEqual(['Ⲧⲉⲛⲟⲩⲱϣⲧ ⲙ̀Ⲫⲓⲱⲧ ⲛⲉⲙ Ⲡϣⲏⲣⲓ (We Worship the Father and the Son)', 'Ⲁⲙⲱⲓⲛⲓ ⲙⲁⲣⲉⲛⲟⲩⲱϣⲧ (Come Let Us Worship)']);
     const [fatherSon, come] = service.hymns[0].children!;
@@ -675,7 +679,8 @@ describe('Kiahk Praises & Season > Matins', () => {
     ];
     const copied = ['Ϧⲉⲛ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ (Introduction to the Doxologies)', 'Ϣⲱⲡⲓ Ⲛ̀ⲑⲟ (The Conclusion of the Doxologies)'];
     for (const hymn of service.hymns) {
-      if (copied.includes(hymn.title) || writtenHere.includes(hymn.title)) expect(hymn.versions.length).toBeGreaterThan(0);
+      // the doxologies copied from Annual have Annual's words
+      if (copied.includes(hymn.title) || writtenHere.includes(hymn.title) || hymn.id.endsWith('@kiahk-matins')) expect(hymn.versions.length).toBeGreaterThan(0);
       else expect([hymn.title, hymn.versions.length]).toEqual([hymn.title, 0]);
     }
     const annualMatins = seasons.find((s) => s.id === 'annual')!.services.find((s) => s.id === 'annual-matins')!;
@@ -769,8 +774,10 @@ describe('Kiahk Praises & Season > Matins', () => {
 });
 
 describe('Kiahk Praises & Season > Vespers', () => {
-  const matins = kiahkService('kiahk-matins');
-  const vespers = kiahkService('kiahk-vespers');
+  // Annual's doxologies (Vespers and Matins each have their own) are left out of the comparison
+  const ownOnly = (service: Service): Service => ({ ...service, hymns: service.hymns.filter((h) => !h.id.includes('@')) });
+  const matins = ownOnly(kiahkService('kiahk-matins'));
+  const vespers = ownOnly(kiahkService('kiahk-vespers'));
   const isPsalmTrailer = (h: Hymn) => h.title.endsWith('(Psalm Trailer)');
 
   it('has every title of Matins in the same order, except the Psalm Trailer', () => {

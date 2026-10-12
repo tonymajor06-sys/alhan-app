@@ -7581,6 +7581,84 @@ for (const season of seasons) {
   for (const service of season.services) service.hymns = removeHymns(service.hymns);
 }
 
+// ---- Every season's Vespers and Matins laid out like Annual's ----
+// Separate Vespers and Matins (Spirit & Truth's "Vespers and Matins" is split, both with the same hymns), without the
+// Gloria, Blessed Are You, Blessed is He, God Have Mercy and the Cross's First and Second Expositions, and all the
+// doxologies at the end: the season's introduction and its own doxologies, then every Annual doxology the season
+// lacks (said in the season's tune, so without Annual's recordings), then the conclusion.
+// Holy Week and Great Lent are laid out by day and keep their own order.
+const baseOf = (id: string) => id.split('@')[0];
+const leavesVespersMatins =
+  /^(annual-matins-the-gloria-the-hymn-of-the-angels|annual-liturgy-offering-blessed-are-you|annual-vespers-blessed-is-he|annual-vespers-god-have-mercy|cross-matins-first-exposition|cross-matins-second-exposition)$/;
+// The Cross's doxologies are named after their saint or door, without the word "Doxology"
+const crossDoxologies = /^cross-matins-(doxology|main-sanctuary|st-mary|archangel-gabriel|archangel-michael|st-mark|st-george|st-anthony|northern-door|baptismal|southern-door|st-john-the-baptist)$/;
+const isDoxology = (h: Hymn) => /doxolog/i.test(h.title) || crossDoxologies.test(baseOf(h.id));
+const isDoxologyIntro = (h: Hymn) => /introduction to the doxologies|doxology intro/i.test(h.title);
+const isDoxologyConclusion = (h: Hymn) => /conclusion of the doxologies/i.test(h.title);
+const copyInto = (hymn: Hymn, serviceId: string, keepAudio: boolean): Hymn => ({
+  ...JSON.parse(JSON.stringify(hymn)),
+  id: `${baseOf(hymn.id)}@${serviceId}`,
+  ...(keepAudio ? {} : { versions: hymn.versions.map(({ audio: _a, otherAudio: _o, ...v }) => ({ ...v })) }),
+});
+const annualDoxologiesOf = (serviceId: string): Hymn[] => {
+  const hymns = seasons.find((s) => s.id === 'annual')?.services.find((s) => s.id === serviceId)?.hymns ?? [];
+  const header = hymns.findIndex((h) => h.isSectionHeader && h.title === 'Doxologies');
+  return header >= 0 ? hymns.slice(header + 1).filter((h) => !h.isSectionHeader) : [];
+};
+for (const season of seasons.filter((s) => !['annual', 'holy-week', 'great-lent'].includes(s.id))) {
+  // 1. "Vespers and Matins" becomes a Vespers and a Matins
+  season.services = season.services.flatMap((service): Service[] => {
+    if (service.title !== 'Vespers and Matins') return [service];
+    const at = (title: string) => service.hymns.findIndex((h) => h.isSectionHeader && h.title === title);
+    const vespersStart = at('Vespers');
+    const matinsStart = at('Matins');
+    const vespersPart = service.hymns.slice(vespersStart + 1, matinsStart >= 0 ? matinsStart : undefined);
+    const matinsPart = matinsStart >= 0 ? service.hymns.slice(matinsStart + 1) : [];
+    const vespersId = service.id.replace(/-matins$/, '-vespers');
+    // copies from elsewhere are named after the service they are in ("<hymn>@<service>"), so each one is unique
+    const inVespers = vespersPart.map((h) => (h.id.includes('@') ? { ...h, id: `${baseOf(h.id)}@${vespersId}` } : h));
+    return [
+      { id: vespersId, title: 'Vespers', hymns: inVespers },
+      { id: service.id, title: 'Matins', hymns: [...vespersPart.map((h) => copyInto(h, service.id, true)), ...matinsPart] },
+    ];
+  });
+  // 2. and 3. the hymns, then the doxologies
+  for (const service of season.services.filter((s) => /-(vespers|matins)$/.test(s.id))) {
+    const hymns: Hymn[] = [];
+    const doxologies: Hymn[] = [];
+    let inDoxologies = false;
+    for (const hymn of service.hymns) {
+      if (hymn.isSectionHeader) {
+        inDoxologies = hymn.title === 'Doxologies';
+        // the Vespers / Matins halves and empty dividers are gone; any other heading stays with the hymns
+        if (!inDoxologies && hymn.title.trim() && !['Vespers', 'Matins'].includes(hymn.title)) hymns.push(hymn);
+        continue;
+      }
+      if (leavesVespersMatins.test(baseOf(hymn.id))) continue;
+      // inside a group (e.g. Kiahk's Verses of the Cymbals) too
+      const kept = hymn.children ? { ...hymn, children: hymn.children.filter((c) => !leavesVespersMatins.test(baseOf(c.id))) } : hymn;
+      (inDoxologies || isDoxology(kept) ? doxologies : hymns).push(kept);
+    }
+    const annual = annualDoxologiesOf(service.id.endsWith('-vespers') ? 'annual-vespers' : 'annual-matins');
+    const own = doxologies.filter((h) => !isDoxologyIntro(h) && !isDoxologyConclusion(h));
+    const owned = new Set(own.map((h) => baseOf(h.id)));
+    const intro = doxologies.find(isDoxologyIntro) ?? annual.filter(isDoxologyIntro).map((h) => copyInto(h, service.id, false))[0];
+    const conclusion = doxologies.find(isDoxologyConclusion) ?? annual.filter(isDoxologyConclusion).map((h) => copyInto(h, service.id, false))[0];
+    const fromAnnual = annual
+      .filter((h) => !isDoxologyIntro(h) && !isDoxologyConclusion(h) && !owned.has(baseOf(h.id)))
+      .map((h) => copyInto(h, service.id, false));
+    service.hymns = [
+      // a trailing heading with nothing under it would be left empty
+      ...hymns.filter((h, i) => !(h.isSectionHeader && (i === hymns.length - 1 || hymns[i + 1].isSectionHeader))),
+      { id: `${service.id}-doxologies-header`, title: 'Doxologies', versions: [], isSectionHeader: true },
+      ...(intro ? [intro] : []),
+      ...own,
+      ...fromAnnual,
+      ...(conclusion ? [conclusion] : []),
+    ];
+  }
+}
+
 // Keep these last: give every hymn a "Coptic in Arabic letters" and an "English in Arabic letters" version
 // (see arabic-coptic.ts and arabic-english.ts),
 // so it must run after all the changes above

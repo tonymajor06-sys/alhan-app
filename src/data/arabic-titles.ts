@@ -1096,6 +1096,7 @@ const serviceTitles: Record<string, string> = {
   Distribution: 'التوزيع',
   Vespers: 'رفع بخور عشية',
   'Midnight Praises': 'تسبحة نصف الليل',
+  Doxologies: 'الذكصولوجيات',
   'Offering of Lamb': 'تقديم الحمل',
   'Offering of the Lamb': 'تقديم الحمل',
   'Liturgy of the Word': 'قداس الكلمة',
