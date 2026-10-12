@@ -3987,8 +3987,8 @@ if (deaconAnnualLiturgyFaithful) {
       id: 'd-annual-liturgy-faithful-pray-for-the-oblations',
       title: "Ⲡⲣⲟⲥⲉⲩⲝⲁⲥⲑⲉ ⲩ̀ⲡⲉⲣ ⲧⲱⲛ ⲁ̀ⲅⲓⲱⲛ (Pray for the Oblations)",
       versions: [
-        { language: 'coptic', text: "Ⲡⲣⲟⲥⲉⲩⲝⲁⲥⲑⲉ ⲩ̀ⲡⲉⲣ ⲧⲱⲛ ⲁ̀ⲅⲓⲱⲛ ⲧⲓⲙⲓⲱⲛ ⲇⲱⲣⲱⲛ ⲧⲟⲩⲧⲱⲛ ⲕⲉ ⲑⲩⲥⲓⲱⲛ ⲏ̀ⲙⲱⲛ ⲕⲉ ⲡ̀ⲣⲟⲥⲫⲉⲣⲟⲛⲧⲱⲛ." },
-        { language: 'englishCoptic', text: "Proseuksasthe uper tōn agiōn timiōn dōrōn toutōn ke thusiōn ēmōn ke eprosferontōn." },
+        { language: 'coptic', audio: 'deacon-pray-for-the-oblations-coptic.mp3', text: "Ⲡⲣⲟⲥⲉⲩⲝⲁⲥⲑⲉ ⲩ̀ⲡⲉⲣ ⲧⲱⲛ ⲁ̀ⲅⲓⲱⲛ ⲧⲓⲙⲓⲱⲛ ⲇⲱⲣⲱⲛ ⲧⲟⲩⲧⲱⲛ ⲕⲉ ⲑⲩⲥⲓⲱⲛ ⲏ̀ⲙⲱⲛ ⲕⲉ ⲡ̀ⲣⲟⲥⲫⲉⲣⲟⲛⲧⲱⲛ." },
+        { language: 'englishCoptic', audio: 'deacon-pray-for-the-oblations-coptic.mp3', text: "Proseuksasthe uper tōn agiōn timiōn dōrōn toutōn ke thusiōn ēmōn ke eprosferontōn." },
         { language: 'english', text: "Pray for these holy and precious gifts, our sacrifices and those who have brought them." },
         { language: 'englishArabic', text: "Sallu min agl hadhihi el-qarabeen el-muqaddasa el-kareema, wa taqdimatina, wal-ladheena qaddamuha." },
         { language: 'arabic', text: "صلوا من أجل هذه القرابين المقدسة الكريمة، وتقدماتنا، والذين قدموها." },
