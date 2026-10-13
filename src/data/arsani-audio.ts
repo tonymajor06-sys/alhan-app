@@ -129,6 +129,8 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   { file: "arsani-154-golgotha.m4a", hymns: ["holyweek-great-friday-golgotha"], language: "coptic" },
   // Kiahk Psalm 150 Alleluia-Arsani Sidarous
   { file: "arsani-155-kiahk-psalm-150-alleluia.m4a", hymns: ["kiahk-distribution-hymn-1"], language: "coptic" },
+  // Intro to Fraction (Alternate tune)| Arsani Sidarous | |مقدمة القسمة|أرساني سيدروس
+  { file: "arsani-156-intro-to-fraction-alternate-tune.m4a", hymns: ["annual-liturgy-introduction-to-the-fraction"], language: "coptic" },
   // O Nim Nai| Arsani Sidarous |  أو نيم ناي| ارسانى سيداروس
   { file: "arsani-157-o-nim-nai.m4a", hymns: ["pentecost-liturgy-o-nimnai"], language: "coptic" },
   // Festive Tenoweh Ensok I Archdeacon Arsani Sidarous and Chorus

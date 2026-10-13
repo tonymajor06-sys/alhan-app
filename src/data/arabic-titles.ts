@@ -493,6 +493,7 @@ const arabicTitles: Record<string, string> = {
   'd-annual-matins-in-christ-jesus-our-lord': 'الثلاثة تحاليل (بالمسيح يسوع ربنا)',
 
   // Deacon Responses > Annual > Offering of the Lamb
+  'annual-liturgy-introduction-to-the-fraction': 'مقدمة القسمة',
   'd-annual-liturgy-faithful-pray-for-the-assemblies': 'أوشية الاجتماعات',
   'd-annual-liturgy-faithful-bow-your-heads': 'أحنوا رؤوسكم للرب',
   'd-annual-liturgy-faithful-pray-for-the-priesthood-st-cyril': 'أوشية الكهنوت (القداس الكيرلسي)',
