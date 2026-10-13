@@ -23,6 +23,8 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   { file: "arsani-016-i-start-with-god-s-holy-name-arabic.m4a", hymns: ["annual-veneration-in-the-name"], language: "arabic" },
   // Satanastasis(Resurrection Doxology for Archangel Michael)|الذكصولوجية القيامة(رئيس الملائكة ميخائيل)
   { file: "arsani-018-satanastasis-resurrection-doxology-for-archangel-m.m4a", hymns: ["pentecost-matins-archangel-michael-doxology"], language: "coptic" },
+  // Hymn of the Nativity Paramoun - Arsani Sidarous
+  { file: "arsani-020-hymn-of-nativity-paramoun.m4a", hymns: ["nativity-distribution-your-star-appeared"], language: "coptic" },
   // Hymn for Judas Procession|Abouna Louka Sidarous + Arsani Sidarous| لحن يهوذا |ارسانى سيداروس
   { file: "arsani-023-hymn-for-judas-procession-abouna-louka.m4a", hymns: ["holyweek-covenant-thursday-the-procession-of-judas"], language: "coptic" },
   // Pekethronos - Arsani Sidarous
@@ -179,6 +181,8 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   { file: "arsani-255-litany-of-departed-english.m4a", hymns: ["d-annual-matins-pray-for-the-departed", "d-annual-vespers-pray-for-the-departed"], language: "english" },
   // Enthok Gar - Abouna Felimon Mikhail, Lipon (Coptic Resurrection Watos Aspasmos) - Arsani Sidarous
   { file: "arsani-257-enthok-gar-abouna-felimon-mikhail-lipon-coptic-res.m4a", hymns: ["pentecost-liturgy-aspasmos-vatos"], language: "coptic" },
+  // Nativity Paramoun Melody | Arsani Sidarous & Ramy Kyrillos
+  { file: "arsani-262-nativity-paramoun-melody-ramy-kyrillos.m4a", hymns: ["nativity-distribution-paramoun-melody"], language: "arabic" },
   // 2022 | فلنجتمع (Marentho Oti/Let us Gather) | Arsani Sidarous, Joe Mikhail, & Chorus
   { file: "arsani-269-2022-marentho-oti-let-us-ga-r-joe-mikhail.m4a", hymns: ["annual-veneration-let-us-gather"], language: "arabic" },
   // Thok Te Tea Gome-9th Hr Eve of Wed

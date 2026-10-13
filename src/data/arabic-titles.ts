@@ -701,6 +701,8 @@ const arabicTitles: Record<string, string> = {
   "minorfeasts-feast-of-circumcision-liturgy-gospel-response": "مرد الإنجيل",
   "theophany-matins-gospel-response": "مرد الإنجيل",
   "theophany-liturgy-praxis-response-theophany-paramoun": "مرد الإبركسيس (برامون الغطاس)",
+  "nativity-distribution-your-star-appeared": "نجمك ظهر للمجوس",
+  "nativity-distribution-paramoun-melody": "مديح برامون الميلاد",
   "theophany-distribution-hymn-for-theophany-paramoun": "لحن برامون الغطاس (يوحنا ابن زكريا)",
   "theophany-liturgy-a-proud-name": "اسم فخر",
   "theophany-liturgy-gospel-response-feast-of-theophany": "مرد الإنجيل (عيد الغطاس)",
