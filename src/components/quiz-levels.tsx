@@ -1,15 +1,13 @@
 import { useState } from 'react';
 import { Pressable, Text } from 'react-native';
 
-import { showFullScreenAd } from '@/ads/ads';
 import { createAlhanStyles } from '@/components/alhan-ui';
 import { MenuList } from '@/components/menu-list';
 import { QuizRound, QuizStrings } from '@/components/quiz-round';
-import { ADS_ENABLED, QUIZ_ROUNDS_PER_AD } from '@/constants/ads';
 import { toArabicDigits } from '@/data/coptic-calendar';
 import { QuizLevel, QuizQuestion } from '@/data/quiz';
 import { useThemedStyles } from '@/hooks/use-alhan-colors';
-import { countQuizRound, recordQuizScore, useQuizBest } from '@/hooks/use-quiz-progress';
+import { recordQuizScore, useQuizBest } from '@/hooks/use-quiz-progress';
 import { AppLanguage } from '@/hooks/use-settings';
 
 export interface QuizLevelStrings extends QuizStrings {
@@ -37,11 +35,7 @@ export function QuizLevels({
   const shared = useThemedStyles(createAlhanStyles);
   const best = useQuizBest();
   const [open, setOpen] = useState<number | null>(null);
-  // After every few finished rounds, a full-screen ad before the score
-  const finishRound = (levelId: string, right: number, total: number) => {
-    recordQuizScore(levelId, right, total);
-    if (ADS_ENABLED && countQuizRound() % QUIZ_ROUNDS_PER_AD === 0) showFullScreenAd(() => {});
-  };
+  const finishRound = (levelId: string, right: number, total: number) => recordQuizScore(levelId, right, total);
   const rtl = lang === 'ar';
   const n = (v: number) => (rtl ? toArabicDigits(v) : String(v));
   const textAlign = rtl ? shared.alignRight : shared.alignLeft;

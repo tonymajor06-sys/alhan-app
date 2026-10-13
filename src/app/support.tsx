@@ -1,7 +1,8 @@
-import { Linking, Pressable, Text } from 'react-native';
+import { Linking, Pressable, Text, View } from 'react-native';
 import { router } from 'expo-router';
 
 import { createAlhanStyles, goBackOrHome, ScreenShell } from '@/components/alhan-ui';
+import { DonationBox } from '@/components/donation-box';
 import { useThemedStyles } from '@/hooks/use-alhan-colors';
 import { useSettings } from '@/hooks/use-settings';
 
@@ -45,6 +46,8 @@ export default function SupportScreen() {
         style={({ pressed }) => [shared.playlistButton, pressed && shared.pressed]}>
         <Text style={shared.controlText}>{t.privacy}</Text>
       </Pressable>
+      <View style={{ height: 26 }} />
+      <DonationBox lang={lang} />
     </ScreenShell>
   );
 }

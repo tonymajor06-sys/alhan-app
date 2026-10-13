@@ -3,6 +3,7 @@ import { ReactNode } from 'react';
 import { Alert, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { ChipScroller, createAlhanStyles, goBackOrHome, languageLabels, ScreenShell, withCopticFont } from '@/components/alhan-ui';
+import { DonationBox } from '@/components/donation-box';
 import { AlhanPalette } from '@/constants/alhan-colors';
 import { LanguageType } from '@/data/hymns';
 import { useThemedStyles } from '@/hooks/use-alhan-colors';
@@ -254,6 +255,7 @@ export default function SettingsScreen() {
           {Platform.OS !== 'web' ? switchRow(t.reminders, t.remindersHint, settings.feastReminders, toggleReminders) : null}
         </View>
       )}
+      <DonationBox lang={lang} />
       {section(
         t.about,
         <View style={styles.group}>

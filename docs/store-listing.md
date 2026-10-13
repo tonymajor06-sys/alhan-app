@@ -51,7 +51,7 @@ MADE FOR CHURCH
 • Dark and light themes
 • Full Arabic interface
 
-Free to use, with no account. Supported by family-friendly ads: a banner at the top and an occasional full-screen ad after quiz rounds.
+Free to use, with no account and no ads.
 
 **What's new** [4000]
 First release: hymns, Midnight Praises, deacon responses, audio with learning mode, projector mode, the Coptic calendar with widgets, and feast reminders.
@@ -105,7 +105,7 @@ First release: hymns, Midnight Praises, deacon responses, audio with learning mo
 • الوضع الداكن والفاتح
 • واجهة عربية كاملة
 
-مجاني وبدون حساب. مدعوم بإعلانات مناسبة للعائلة: شريط إعلاني في أعلى الشاشة وإعلان كامل الشاشة أحياناً بعد جولات الاختبار.
+مجاني وبدون حساب وبدون إعلانات.
 
 **ما الجديد**
 الإصدار الأول: الألحان، وتسبحة نصف الليل، ومردات الشماس، والتسجيلات مع وضع التعلّم، ووضع العرض، والتقويم القبطي مع الأدوات، والتذكير بالأعياد.
@@ -115,8 +115,8 @@ First release: hymns, Midnight Praises, deacon responses, audio with learning mo
 ## Other store fields
 
 - **Category:** Reference (primary), Music (secondary). On Google Play: Books & Reference.
-- **Age rating:** 4+ / Everyone. There is no objectionable content, and ads are limited to rating G and non-personalized.
-- **Privacy:** The app has ads (Google AdMob), so do NOT choose "Data Not Collected". In App Store Connect, answer the App Privacy questions by following Google's AdMob guide for Apple's privacy details (device identifiers and ad interaction/usage data for advertising, not linked to identity, not used for tracking). On Google Play, answer yes to "Contains ads" and fill in Data safety the same way. The app itself has no accounts or analytics, settings, playlists and verse marks stay on the phone, and reminders are scheduled on the phone. 
+- **Age rating:** 4+ / Everyone. There is no objectionable content and no ads.
+- **Privacy:** Choose "Data Not Collected" in App Store Connect, and on Google Play answer no to "Contains ads" and declare no data collected in Data safety. The app has no ads, accounts or analytics; settings, playlists and verse marks stay on the phone, and reminders are scheduled on the phone. Donations go through Stripe or PayPal outside the app.
 - **Privacy Policy URL:** https://copticpsalmody.com/privacy
 - **Support URL:** https://copticpsalmody.com/support
 - **Price:** Free.
