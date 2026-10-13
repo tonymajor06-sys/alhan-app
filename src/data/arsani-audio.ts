@@ -49,8 +49,6 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   { file: "arsani-039-fai-etafenf.m4a", hymns: ["holyweek-covenant-thursday-fai-etav-enf"], language: "coptic" },
   // Tov hina (Coptic) | Archdeacon Arsani Sidarous | اطلبوا لكي يرحمنا
   { file: "arsani-043-tov-hina-coptic.m4a", hymns: ["d-annual-matins-pray-for-mercy", "d-annual-vespers-pray-for-mercy", "d-annual-offering-lamb-pray-for-mercy"], language: "coptic" },
-  // Ya Kol al Sefoof| Arsani Sidarous | يا كل الصفوف السمائيين | ارسانى سيداروس
-  { file: "arsani-044-ya-kol-al-sefoof.m4a", hymns: ["pentecost-liturgy-ya-kol-alsefoof"], language: "arabic" },
   // Tenen and Tenoweh Kiahk
   { file: "arsani-048-tenen-tenoweh-kiahk.m4a", hymns: ["kiahk-midnight-hymn-20"], language: "coptic" },
   // Teoi Enhikanos (Melismatic) - Arsani Sidarous and the Deacons of the LA Diocese
@@ -173,4 +171,14 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   { file: "arsani-243-avechenon.m4a", hymns: ["holyweek-covenant-thursday-avchnon"], language: "coptic" },
   // The Burning Bush- Arsani Sidarous
   { file: "arsani-247-burning-bush.m4a", hymns: ["kiahk-midnight-hymn-33"], language: "arabic" },
+  // Ya Kol A Sefoof - Arsani Sidarous
+  { file: "arsani-248-ya-kol-a-sefoof.m4a", hymns: ["pentecost-liturgy-ya-kol-alsefoof"], language: "arabic" },
+  // Litany of the Departed (English) | Archdeacon Arsani Sidarous | أوشية الراقدين
+  { file: "arsani-255-litany-of-departed-english.m4a", hymns: ["d-annual-matins-pray-for-the-departed", "d-annual-vespers-pray-for-the-departed"], language: "english" },
+  // Enthok Gar - Abouna Felimon Mikhail, Lipon (Coptic Resurrection Watos Aspasmos) - Arsani Sidarous
+  { file: "arsani-257-enthok-gar-abouna-felimon-mikhail-lipon-coptic-res.m4a", hymns: ["pentecost-liturgy-aspasmos-vatos"], language: "coptic" },
+  // 2022 | فلنجتمع (Marentho Oti/Let us Gather) | Arsani Sidarous, Joe Mikhail, & Chorus
+  { file: "arsani-269-2022-marentho-oti-let-us-ga-r-joe-mikhail.m4a", hymns: ["annual-veneration-let-us-gather"], language: "arabic" },
+  // Thok Te Tea Gome-9th Hr Eve of Wed
+  { file: "arsani-315-thok-te-tea-gome-9th-hr-eve-of-wed.m4a", hymns: ["holyweek-covenant-thursday-paschal-doxology"], language: "coptic" },
 ];
