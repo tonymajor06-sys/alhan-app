@@ -1,4 +1,5 @@
 import { alhanSeasonServices } from './alhan-seasons';
+import { arsaniAudio } from './arsani-audio';
 import { addArabicCoptic } from './arabic-coptic';
 import { addArabicEnglish } from './arabic-english';
 import { stFills } from './st-fills';
@@ -7579,6 +7580,27 @@ const removeHymns = (hymns: Hymn[]): Hymn[] =>
     .map((h) => (h.children ? { ...h, children: removeHymns(h.children) } : h));
 for (const season of seasons) {
   for (const service of season.services) service.hymns = removeHymns(service.hymns);
+}
+
+// ---- Recordings from the SoundCloud playlist "Archie Arsani Sidarous" (see arsani-audio.ts) ----
+// Coptic also plays for Coptic in English letters, Arabic for Arabic in English letters. A hymn that already has a
+// recording in that language keeps it and gets this one as another recording to choose. Annual hymns get it only
+// where they are (other seasons sing their copies in another tune); other hymns also in their copies.
+const audioLanguages: Partial<Record<LanguageType, LanguageType[]>> = {
+  coptic: ['coptic', 'englishCoptic'],
+  arabic: ['arabic', 'englishArabic'],
+  english: ['english'],
+};
+const allLists = [...seasons, ...deaconCategories].flatMap((g) => g.services.flatMap((s) => flattenHymns(s.hymns)));
+for (const { file, hymns: ids, language } of arsaniAudio) {
+  for (const hymn of allLists) {
+    const base = hymn.id.split('@')[0];
+    if (!ids.includes(hymn.id) && !(ids.includes(base) && !base.startsWith('annual-'))) continue;
+    for (const version of hymn.versions.filter((v) => audioLanguages[language]?.includes(v.language))) {
+      if (!version.audio) version.audio = file;
+      else if (version.audio !== file && !version.otherAudio?.includes(file)) version.otherAudio = [...(version.otherAudio ?? []), file];
+    }
+  }
 }
 
 // ---- Every season's Vespers and Matins laid out like Annual's ----
