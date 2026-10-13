@@ -24,7 +24,7 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   // Satanastasis(Resurrection Doxology for Archangel Michael)|الذكصولوجية القيامة(رئيس الملائكة ميخائيل)
   { file: "arsani-018-satanastasis-resurrection-doxology-for-archangel-m.m4a", hymns: ["pentecost-matins-archangel-michael-doxology"], language: "coptic" },
   // Hymn of the Nativity Paramoun - Arsani Sidarous
-  { file: "arsani-020-hymn-of-nativity-paramoun.m4a", hymns: ["nativity-distribution-your-star-appeared"], language: "coptic" },
+  { file: "arsani-020-hymn-of-nativity-paramoun.m4a", hymns: ["nativity-distribution-paramoun-melody"], language: "arabic" },
   // Hymn for Judas Procession|Abouna Louka Sidarous + Arsani Sidarous| لحن يهوذا |ارسانى سيداروس
   { file: "arsani-023-hymn-for-judas-procession-abouna-louka.m4a", hymns: ["holyweek-covenant-thursday-the-procession-of-judas"], language: "coptic" },
   // Pekethronos - Arsani Sidarous
@@ -67,6 +67,8 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   { file: "arsani-059-marahmak-ya-elahi.m4a", hymns: ["kiahk-midnight-hymn-75"], language: "arabic" },
   // Palm Sunday Doxology-احد الشعانين
   { file: "arsani-061-palm-sunday-doxology.m4a", hymns: ["palmsunday-vespers-doxology", "palmsunday-matins-doxology"], language: "coptic" },
+  // مديح توزيع برمون الميلاد Arsani Sidarous (Coptic/Arabic)
+  { file: "arsani-065-coptic-arabic.m4a", hymns: ["nativity-distribution-your-star-appeared"], language: "coptic" },
   // Tennav (We look at the Resurrection) | Arsani Sidarous and Chorus
   { file: "arsani-069-tennav-we-look-at-resurrection.m4a", hymns: ["annual-midnight-the-hymn-of-the-resurrection@pentecost-midnight"], language: "coptic" },
   // Etaven NiEskhai(Feast of the Cross)-Arsani Sidarous|ايطاف انياسخاي لعيد الصليب لشماس أرسانىى سيداروس
