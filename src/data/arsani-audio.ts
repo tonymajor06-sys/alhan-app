@@ -128,7 +128,7 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   // Ⲡ̀ⲟⲩⲣⲟ┃Festive Epouro - Arsani Sidarous┃إبؤرو - يا ملك السلام
   { file: "arsani-142-festive-epouro.m4a", hymns: ["annual-veneration-hymn-of-joy", "d-order-matrimony-hymn-of-joy"], language: "coptic" },
   // Introduction to the Gospel for Metropolitan Antonious of Jerusalem | Archdeacon Arsani Sidarous
-  { file: "arsani-146-introduction-to-gospel-for-metropolitan-antonious.m4a", hymns: ["d-annual-bishop-introduction-to-the-coptic-gospel-when-read-by-the"], language: "coptic" },
+  { file: "arsani-146-introduction-to-gospel-for-metropolitan-antonious.m4a", hymns: ["d-annual-bishop-introduction-to-the-coptic-gospel-when-read-by-the"], language: "arabic" },
   // Golgotha - Arsani Sidarous
   { file: "arsani-154-golgotha.m4a", hymns: ["holyweek-great-friday-golgotha"], language: "coptic" },
   // Kiahk Psalm 150 Alleluia-Arsani Sidarous
@@ -172,7 +172,7 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   // 03 Evlogimenos
   { file: "arsani-236-03-evlogimenos.m4a", hymns: ["annual-vespers-blessed-is-he"], language: "coptic" },
   // The Great Azpazesthe (Quick Tune) | Arsani Sidarous & Anton Ibrahim Ayad | قبلوا الكبير
-  { file: "arsani-241-great-azpazes-quick-tune-anton-ibrahim-ayad.m4a", hymns: ["d-annual-liturgy-faithful-greet-one-another-great"], language: "coptic" },
+  { file: "arsani-241-great-azpazes-quick-tune-anton-ibrahim-ayad.m4a", hymns: ["d-annual-liturgy-faithful-greet-one-another-great"], language: "arabic" },
   // Avechenon- Arsani Sidarous
   { file: "arsani-243-avechenon.m4a", hymns: ["holyweek-covenant-thursday-avchnon"], language: "coptic" },
   // The Burning Bush- Arsani Sidarous
