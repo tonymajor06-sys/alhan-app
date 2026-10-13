@@ -39,6 +39,7 @@ export const strings = {
     hasAudio: 'Audio',
     next: 'Next',
     openCalendar: 'Coptic calendar',
+    supportApp: '♥ Support this app',
     playlistTitle: 'My Playlist',
     playlistDesc: (n: number) => (n === 1 ? '1 hymn' : `${n} hymns`),
     playlistEmpty: 'Your playlist is empty. Open any hymn marked ♪ Audio and tap “Add to playlist”.',
@@ -126,6 +127,7 @@ export const strings = {
     hasAudio: 'صوت',
     next: 'القادم',
     openCalendar: 'التقويم القبطي',
+    supportApp: '♥ ادعم التطبيق',
     playlistTitle: 'قائمة التشغيل',
     playlistDesc: (n: number) => `${n} ${n >= 3 && n <= 10 ? 'ألحان' : 'لحن'}`,
     playlistEmpty: 'قائمة التشغيل فارغة. افتح أي لحن عليه ♪ صوت واضغط «أضف إلى قائمة التشغيل».',
@@ -686,6 +688,17 @@ export const createAlhanStyles = (colors: AlhanPalette) => StyleSheet.create({
     fontSize: 16,
     color: colors.muted,
     marginTop: 6,
+  },
+  // A quiet link under the home tiles to the donation box
+  supportLink: {
+    alignSelf: 'center',
+    marginTop: 28,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+  },
+  supportLinkText: {
+    fontSize: 14,
+    color: colors.muted,
   },
   languagePrompt: {
     fontSize: 14,

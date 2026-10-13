@@ -348,6 +348,12 @@ export default function HomeScreen() {
                 tile(key, title, () => (view ? setCurrentView(view) : href && router.push(href)), { desc })
               )
             )}
+            <Pressable
+              onPress={() => router.push('/support')}
+              accessibilityRole="link"
+              style={({ pressed }) => [styles.supportLink, pressed && styles.pressed]}>
+              <Text style={styles.supportLinkText}>{t.supportApp}</Text>
+            </Pressable>
           </View>
         </ScrollView>
         <MiniPlayer lang={lang} />
