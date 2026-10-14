@@ -6,6 +6,7 @@ import { createAlhanStyles, goBackOrHome, ScreenShell, strings, toVerses } from 
 import { hymnPlainText, HymnReader } from '@/components/hymn-reader';
 import { APP_STORE_URL, hymnWebUrl, PLAY_STORE_URL } from '@/constants/site';
 import { displayTitle } from '@/data/arabic-titles';
+import { praiseKinds, PraiseKind } from '@/data/follow-along';
 import { Hymn, LanguageType } from '@/data/hymns';
 import { allHymnSlugs, locateHymn } from '@/data/search';
 import { useThemedStyles } from '@/hooks/use-alhan-colors';
@@ -59,7 +60,7 @@ function GetAppBanner() {
 }
 
 export default function HymnPage() {
-  const { id, lang } = useLocalSearchParams<{ id: string; lang?: string }>();
+  const { id, lang, follow, night } = useLocalSearchParams<{ id: string; lang?: string; follow?: string; night?: string }>();
   const settings = useSettings();
   const styles = useThemedStyles(createAlhanStyles);
   const hymn = id ? locateHymn(id)?.hymn : undefined;
@@ -80,7 +81,13 @@ export default function HymnPage() {
     <View style={styles.root}>
       <HymnHead hymn={hymn} />
       {/* Remounts when another hymn opens in place, e.g. from the mini player */}
-      <HymnReader key={hymn.id} hymn={hymn} initialLanguage={initialLanguage} banner={<GetAppBanner />} />
+      <HymnReader
+        key={hymn.id}
+        hymn={hymn}
+        initialLanguage={initialLanguage}
+        banner={<GetAppBanner />}
+        follow={praiseKinds.includes(follow as PraiseKind) && Number(night) > 0 ? { kind: follow as PraiseKind, night: Number(night) } : undefined}
+      />
     </View>
   );
 }

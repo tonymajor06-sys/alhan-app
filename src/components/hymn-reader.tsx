@@ -1,5 +1,5 @@
 import { router } from 'expo-router';
-import { ReactNode, useEffect, useRef, useState } from 'react';
+import { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import { Alert, Pressable, ScrollView, Share, Text, View } from 'react-native';
 
 import { hymnWebUrl } from '../constants/site';
@@ -7,6 +7,8 @@ import { displayTitle } from '../data/arabic-titles';
 import { titleLines } from '../data/hymn-titles';
 import { flattenHymns, Hymn, LanguageType } from '../data/hymns';
 import { hymnAcrossSeasons, hymnSlug, locateHymn, neighborHymns } from '../data/search';
+import { followAlong, PraiseKind } from '../data/follow-along';
+import { followStrings } from './follow-strings';
 import { useAlhanColors, useThemedStyles } from '../hooks/use-alhan-colors';
 import {
   audioSourceFor,
@@ -59,11 +61,14 @@ export function HymnReader({
   hymn,
   initialLanguage,
   banner,
+  follow,
 }: {
   hymn: Hymn;
   initialLanguage?: LanguageType;
   // Shown above the language chips (the web version's "Get the app")
   banner?: ReactNode;
+  // Opened from tonight's Midnight or Vesper Praises: Previous and Next follow tonight's order
+  follow?: { kind: PraiseKind; night: number };
 }) {
   const settings = useSettings();
   const lang = settings.language;
@@ -110,13 +115,22 @@ export function HymnReader({
   const title = heading.main;
 
   const location = locateHymn(hymn.id)?.location;
-  const breadcrumb = location
-    ? `${withoutNumber(displayTitle(location.group, lang))} ${isRTL ? '‹' : '›'} ${displayTitle(location.service, lang)}`
-    : null;
+  const followKind = follow?.kind;
+  const followNight = follow?.night ?? 0;
+  const tonight = useMemo(() => (followKind ? followAlong(followKind, followNight).hymns : null), [followKind, followNight]);
+  const tonightIndex = tonight ? tonight.findIndex((h) => h.id === hymn.id) : -1;
+  const ft = followStrings[lang];
+  const breadcrumb =
+    tonight && tonightIndex >= 0
+      ? `${ft.title[follow!.kind]} · ${ft.position(tonightIndex + 1, tonight.length)}`
+      : location
+        ? `${withoutNumber(displayTitle(location.group, lang))} ${isRTL ? '‹' : '›'} ${displayTitle(location.service, lang)}`
+        : null;
 
-  // Step through the service in order, keeping the language; replace so Back still returns to the list
-  const { previous, next } = neighborHymns(hymn.id);
-  const openNeighbor = (h: Hymn) => router.replace(hymnHref(h.id, effectiveLanguage));
+  // Step through the service (or tonight's praises) in order, keeping the language; replace so Back still returns to the list
+  const { previous, next } =
+    tonight && tonightIndex >= 0 ? { previous: tonight[tonightIndex - 1], next: tonight[tonightIndex + 1] } : neighborHymns(hymn.id);
+  const openNeighbor = (h: Hymn) => router.replace(hymnHref(h.id, effectiveLanguage, tonightIndex >= 0 ? follow : undefined));
   const navButton = (h: Hymn | undefined, label: string, arrow: string, end: boolean) =>
     h ? (
       <Pressable
@@ -148,6 +162,13 @@ export function HymnReader({
 
   // Play next: the hymns after this one in the service that have a recording in the same language
   const followingTracks = (): QueueTrack[] => {
+    // Tonight's praises go on in tonight's order, in whichever language each hymn is recorded
+    if (tonight && tonightIndex >= 0)
+      return tonight.slice(tonightIndex + 1).flatMap((h) => {
+        const version = h.versions.find((v) => v.language === audioLanguage && v.audio) ?? h.versions.find((v) => v.audio);
+        const source = version?.audio ? audioSourceFor(version.audio) : null;
+        return version && source ? [{ hymnId: h.id, language: version.language, title: titleLines(h, lang).main, source }] : [];
+      });
     const service = location?.service;
     if (!service) return [];
     const order = flattenHymns(service.hymns);
@@ -175,10 +196,11 @@ export function HymnReader({
   const wasCurrent = useRef(false);
   useEffect(() => {
     if (wasCurrent.current && !readerIsCurrent && nowPlaying && queue.origin === 'single' && settings.playNext) {
-      router.replace(hymnHref(nowPlaying.hymnId, nowPlaying.language));
+      const stillTonight = followKind && tonight?.some((h) => h.id === nowPlaying.hymnId);
+      router.replace(hymnHref(nowPlaying.hymnId, nowPlaying.language, stillTonight ? { kind: followKind, night: followNight } : undefined));
     }
     wasCurrent.current = readerIsCurrent;
-  }, [readerIsCurrent, nowPlaying, queue.origin, settings.playNext]);
+  }, [readerIsCurrent, nowPlaying, queue.origin, settings.playNext, followKind, followNight, tonight]);
 
   const toggleDownload = (file: string) => {
     if (downloads.downloaded.has(file)) return removeDownload(file);
@@ -507,7 +529,7 @@ export function HymnReader({
               <Text style={styles.playIcon}>{status.playing ? '❚❚' : '▶'}</Text>
             </Pressable>
             <View style={styles.rowTextWrap}>
-              <SeekBar currentTime={status.currentTime} duration={status.duration} onSeek={seekTo} label={t.position} />
+              <SeekBar currentTime={status.currentTime} duration={status.duration} onSeek={seekTo} label={t.position} goToLabel={t.goToTime} />
             </View>
           </View>
           {recordings.length > 1 ? (
