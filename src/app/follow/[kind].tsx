@@ -14,6 +14,11 @@ import { audioSourceFor } from '@/hooks/use-audio-downloads';
 import { playQueue, QueueTrack } from '@/hooks/use-audio-queue';
 import { useSettings } from '@/hooks/use-settings';
 
+// Midnight and Vesper Praises each get their own page in the web version (/follow/midnight, /follow/vesper)
+export async function generateStaticParams(): Promise<Record<string, string>[]> {
+  return praiseKinds.map((kind) => ({ kind }));
+}
+
 // Tonight's Midnight or Vesper Praises in the order they are prayed, from the calendar: one list from the
 // first hymn to the last, so nobody has to go back and forth between General and the day of the week
 export default function FollowScreen() {
