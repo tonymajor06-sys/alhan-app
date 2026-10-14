@@ -31,12 +31,14 @@ export const strings = {
     play: 'Play',
     pause: 'Pause',
     position: 'Position in the recording',
+    goToTime: 'Go to a time',
     repeat: 'Repeat',
     playNext: 'Play next',
     recording: 'Recording',
     textSize: 'Text size',
     notAvailable: 'Text not available in this language.',
     hasAudio: 'Audio',
+    groupCount: (n: number) => (n === 1 ? '1 hymn' : `${n} hymns`),
     next: 'Next',
     openCalendar: 'Coptic calendar',
     supportApp: '♥ Support this app',
@@ -119,12 +121,14 @@ export const strings = {
     play: 'تشغيل',
     pause: 'إيقاف',
     position: 'الموضع في التسجيل',
+    goToTime: 'انتقل إلى وقت',
     repeat: 'تكرار',
     playNext: 'تشغيل التالي',
     recording: 'تسجيل',
     textSize: 'حجم الخط',
     notAvailable: 'النص غير متوفر بهذه اللغة.',
     hasAudio: 'صوت',
+    groupCount: (n: number) => (n === 1 ? 'لحن واحد' : n === 2 ? 'لحنان' : `${String(n).replace(/\d/g, (d) => '٠١٢٣٤٥٦٧٨٩'[Number(d)])} ألحان`),
     next: 'القادم',
     openCalendar: 'التقويم القبطي',
     supportApp: '♥ ادعم التطبيق',
@@ -402,8 +406,16 @@ export const formatTime = (seconds: number) => {
 };
 
 // Opens a hymn on its own page (also its web address, so it can be shared)
-export const hymnHref = (id: string, language?: LanguageType) =>
-  ({ pathname: '/hymn/[id]', params: language ? { id: hymnSlug(id), lang: language } : { id: hymnSlug(id) } }) as const;
+// `follow` keeps Previous and Next on tonight's Midnight or Vesper Praises (see follow-along.ts)
+export const hymnHref = (id: string, language?: LanguageType, follow?: { kind: string; night: number }) =>
+  ({
+    pathname: '/hymn/[id]',
+    params: {
+      id: hymnSlug(id),
+      ...(language ? { lang: language } : {}),
+      ...(follow ? { follow: follow.kind, night: String(follow.night) } : {}),
+    },
+  }) as const;
 
 export const openHymnPage = (id: string, language?: LanguageType) => router.push(hymnHref(id, language));
 
@@ -752,6 +764,13 @@ export const createAlhanStyles = (colors: AlhanPalette) => StyleSheet.create({
   tileSmall: {
     minHeight: 76,
   },
+  // The home screen's pictures: small, so the tiles stay tiles on a computer too
+  tileImage: {
+    width: 56,
+    height: 56,
+    borderRadius: 16,
+    marginBottom: 4,
+  },
   tileLead: {
     fontSize: 15,
     fontWeight: '700',
@@ -785,6 +804,142 @@ export const createAlhanStyles = (colors: AlhanPalette) => StyleSheet.create({
     fontSize: 13,
     color: colors.muted,
     lineHeight: 18,
+  },
+
+  // "Follow tonight's Midnight Praises" at the top of the praises' lists
+  followCard: {
+    alignItems: 'center',
+    gap: 14,
+    padding: 16,
+    marginBottom: 20,
+    borderRadius: 16,
+    backgroundColor: colors.surface,
+    borderWidth: 1.5,
+    borderColor: colors.gold,
+  },
+  followCardIcon: { fontSize: 26, color: colors.gold },
+  followCardTitle: { fontSize: 17, fontWeight: '700', color: colors.text },
+
+  // Lists of seasons, services and hymns: rows in one rounded panel, divided by thin lines, like a phone's own lists
+  listGroup: {
+    backgroundColor: colors.surface,
+    borderRadius: 18,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: colors.border,
+    overflow: 'hidden',
+    marginBottom: 8,
+  },
+  listRow: {
+    alignItems: 'center',
+    gap: 14,
+    minHeight: 64,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+  },
+  listRowPressed: {
+    backgroundColor: colors.surfacePressed,
+  },
+  listDivider: {
+    height: StyleSheet.hairlineWidth,
+    backgroundColor: colors.border,
+  },
+  // A season's picture
+  listThumb: {
+    width: 60,
+    height: 60,
+    borderRadius: 14,
+  },
+  listLead: {
+    minWidth: 30,
+    height: 30,
+    paddingHorizontal: 6,
+    borderRadius: 15,
+    backgroundColor: colors.goldSoft,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  listLeadText: {
+    fontSize: 14,
+    fontWeight: '800',
+    color: colors.gold,
+    fontVariant: ['tabular-nums'],
+  },
+  listTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: colors.text,
+    lineHeight: 24,
+  },
+  listSub: {
+    fontSize: 14,
+    color: colors.muted,
+    lineHeight: 19,
+    marginTop: 2,
+  },
+  listEnd: {
+    alignItems: 'center',
+    gap: 8,
+  },
+  listAudio: {
+    fontSize: 16,
+    color: colors.gold,
+  },
+  listChevron: {
+    fontSize: 26,
+    color: colors.muted,
+    fontWeight: '300',
+    marginTop: -2,
+  },
+  // The seasons as small cards side by side: two on a phone, more on a wide screen
+  seasonGrid: {
+    flexWrap: 'wrap',
+    gap: 10,
+  },
+  seasonCard: {
+    flexGrow: 1,
+    flexBasis: '45%',
+    minWidth: 150,
+    maxWidth: 360,
+    alignItems: 'center',
+    gap: 10,
+    minHeight: 64,
+    paddingVertical: 8,
+    paddingHorizontal: 8,
+    borderRadius: 32,
+    backgroundColor: colors.surface,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: colors.border,
+  },
+  // A round picture
+  seasonCardImage: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+  },
+  seasonCardTitle: {
+    flex: 1,
+    fontSize: 15,
+    fontWeight: '700',
+    lineHeight: 19,
+    color: colors.text,
+  },
+  // A season's picture and when it is prayed, above its list of services
+  seasonHeader: {
+    alignItems: 'center',
+    gap: 16,
+    marginTop: 4,
+    marginBottom: 18,
+  },
+  seasonHeaderImage: {
+    width: 84,
+    height: 84,
+    borderRadius: 20,
+  },
+  seasonHeaderAbout: {
+    flex: 1,
+    fontSize: 16,
+    lineHeight: 22,
+    color: colors.muted,
   },
 
   // Screen header
@@ -968,13 +1123,17 @@ export const createAlhanStyles = (colors: AlhanPalette) => StyleSheet.create({
     height: '100%',
     backgroundColor: colors.gold,
   },
+  // Two buttons to a row on a phone, so each one has room for its words
   audioControls: {
+    flexWrap: 'wrap',
     gap: 8,
     marginTop: 14,
   },
   controlButton: {
-    flex: 1,
+    flexGrow: 1,
+    flexBasis: '45%',
     minHeight: 48,
+    paddingHorizontal: 8,
     borderRadius: 12,
     borderWidth: 1,
     borderColor: colors.border,

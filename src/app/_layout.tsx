@@ -56,6 +56,9 @@ export default function RootLayout() {
         <Stack.Screen name="privacy" />
         <Stack.Screen name="support" />
         <Stack.Screen name="hymn/[id]" />
+        <Stack.Screen name="follow/[kind]" />
+        <Stack.Screen name="saints" />
+        <Stack.Screen name="saints/[id]" />
         <Stack.Screen name="learn" />
         <Stack.Screen name="learn/[lesson]" />
         <Stack.Screen name="learn-arabic" />

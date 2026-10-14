@@ -1,7 +1,7 @@
 import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
 import Head from 'expo-router/head';
 import { ReactNode, useCallback, useEffect, useRef, useState } from 'react';
-import { Alert, BackHandler, Image, Pressable, ScrollView, Text, TextInput, View } from 'react-native';
+import { Alert, BackHandler, Image, ImageSourcePropType, Pressable, ScrollView, Text, TextInput, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import {
@@ -15,6 +15,9 @@ import {
   withoutNumber,
 } from '../components/alhan-ui';
 import { learnArabicStrings, learnEnglishStrings, learnStrings } from '../components/learn-strings';
+import { homeArt } from '../constants/home-art';
+import { seasonArt } from '../constants/season-art';
+import { saintsStrings } from '../data/saints';
 import { guideStrings } from '../data/deacon-guide';
 import { faithStrings } from '../data/faith-guide';
 import { displayTitle } from '../data/arabic-titles';
@@ -41,6 +44,8 @@ import {
   Service,
 } from '../data/hymns';
 import { searchHymns, SearchResult } from '../data/search';
+import { PraiseKind, tonightJdn, weekdayNames, weekdayOf } from '../data/follow-along';
+import { followStrings } from '../components/follow-strings';
 import { useAlhanColors, useThemedStyles } from '../hooks/use-alhan-colors';
 import { audioSourceFor, canDownload, downloadAudio, useAudioDownloads } from '../hooks/use-audio-downloads';
 import { useSettings } from '../hooks/use-settings';
@@ -172,7 +177,7 @@ export default function HomeScreen() {
     key: string,
     title: string,
     onPress: () => void,
-    { lead, desc, coptic, audio }: { lead?: string; desc?: string; coptic?: string | null; audio?: boolean } = {}
+    { lead, desc, coptic, audio, image }: { lead?: string; desc?: string; coptic?: string | null; audio?: boolean; image?: ImageSourcePropType } = {}
   ) => (
     <Pressable
       key={key}
@@ -180,6 +185,7 @@ export default function HomeScreen() {
       accessibilityRole="button"
       accessibilityLabel={[title, coptic, audio ? t.hasAudio : null].filter(Boolean).join(', ')}
       style={({ pressed }) => [styles.tile, !desc && styles.tileSmall, pressed && styles.rowCardPressed]}>
+      {image ? <Image source={image} style={[styles.tileImage, isRTL && { alignSelf: 'flex-end' }]} accessibilityIgnoresInvertColors /> : null}
       {lead || audio ? (
         <View style={[styles.tileTopRow, rowDirection]}>
           <Text style={styles.tileLead}>{lead}</Text>
@@ -203,14 +209,56 @@ export default function HomeScreen() {
     </View>
   );
 
-  // Two by two, numbered in order, starting again from 1 after each section header
+  // A row in a list: a picture or number at the start, the name with a line under it, ♪ for a recording, and ›
+  const listRow = (
+    key: string,
+    title: string,
+    onPress: () => void,
+    { lead, image, sub, coptic, audio }: { lead?: string; image?: ImageSourcePropType; sub?: string | null; coptic?: string | null; audio?: boolean } = {}
+  ) => (
+    <Pressable
+      key={key}
+      onPress={onPress}
+      accessibilityRole="button"
+      accessibilityLabel={[title, coptic, sub, audio ? t.hasAudio : null].filter(Boolean).join(', ')}
+      style={({ pressed }) => [styles.listRow, rowDirection, pressed && styles.listRowPressed]}>
+      {image ? <Image source={image} style={styles.listThumb} accessibilityIgnoresInvertColors /> : null}
+      {lead ? (
+        <View style={styles.listLead}>
+          <Text style={styles.listLeadText}>{lead}</Text>
+        </View>
+      ) : null}
+      <View style={styles.rowTextWrap}>
+        <Text style={[styles.listTitle, textAlign]}>{withCopticFont(title)}</Text>
+        {coptic ? <Text style={[styles.tileCoptic, textAlign]}>{coptic}</Text> : null}
+        {sub ? (
+          <Text style={[styles.listSub, textAlign]} numberOfLines={2}>
+            {sub}
+          </Text>
+        ) : null}
+      </View>
+      <View style={[styles.listEnd, rowDirection]}>
+        {audio ? <Text style={styles.listAudio}>♪</Text> : null}
+        <Text style={styles.listChevron}>{isRTL ? '‹' : '›'}</Text>
+      </View>
+    </Pressable>
+  );
+
+  // Rows together in one rounded panel, with a thin line between them
+  const listGroup = (key: string, rows: ReactNode[]) => (
+    <View key={key} style={styles.listGroup}>
+      {rows.flatMap((row, i) => (i === 0 ? [row] : [<View key={`divider-${i}`} style={styles.listDivider} />, row]))}
+    </View>
+  );
+
+  // Numbered in order, starting again from 1 after each section header
   const hymnList = (hymns: Hymn[], onSelect: (h: Hymn) => void) => {
     const out: ReactNode[] = [];
-    let tiles: ReactNode[] = [];
+    let rows: ReactNode[] = [];
     let number = 0;
     const flush = (key: string) => {
-      if (tiles.length) out.push(<View key={`grid-${key}`}>{tileGrid(tiles)}</View>);
-      tiles = [];
+      if (rows.length) out.push(listGroup(`list-${key}`, rows));
+      rows = [];
     };
     for (const hymn of hymns) {
       if (hymn.isSectionHeader) {
@@ -220,14 +268,14 @@ export default function HomeScreen() {
         continue;
       }
       number += 1;
-      const hasAudio = (hymn.children ? flattenHymns(hymn.children) : [hymn]).some((h) =>
-        h.versions.some((v) => v.audio)
-      );
+      const inside = hymn.children ? flattenHymns(hymn.children) : [hymn];
+      const hasAudio = inside.some((h) => h.versions.some((v) => v.audio));
       const { main, coptic } = titleLines(hymn, lang, settings.titleStyle);
-      tiles.push(
-        tile(hymn.id, main, () => (hymn.children ? setOpenGroups([...openGroups, hymn]) : onSelect(hymn)), {
+      rows.push(
+        listRow(hymn.id, main, () => (hymn.children ? setOpenGroups([...openGroups, hymn]) : onSelect(hymn)), {
           lead: localDigits(number),
           coptic,
+          sub: hymn.children ? t.groupCount(inside.length) : null,
           audio: hasAudio,
         })
       );
@@ -241,14 +289,31 @@ export default function HomeScreen() {
     const group = openGroups[openGroups.length - 1];
     const items = group ? (group.children ?? []) : service.hymns;
     const path = [service, ...openGroups.slice(0, -1)].map((g) => displayTitle(g, lang)).join(isRTL ? ' ‹ ' : ' › ');
+    // Midnight and Vesper Praises open tonight's order from the calendar, straight through
+    const praiseKind: PraiseKind | null = group ? null : /-midnight$/.test(service.id) ? 'midnight' : /-vesper-praises$/.test(service.id) ? 'vesper' : null;
+    const night = tonightJdn();
+    const nightDay = weekdayNames[lang][weekdayOf(night)];
     return screen(
       displayTitle(group ?? service, lang),
       group ? path : chooseLabel,
-      items.length === 0 ? (
-        <Text style={[styles.emptyText, textAlign]}>{t.nothingYet}</Text>
-      ) : (
-        hymnList(items, onSelect)
-      )
+      <>
+        {praiseKind ? (
+          <Pressable
+            onPress={() => router.push({ pathname: '/follow/[kind]', params: { kind: praiseKind } })}
+            accessibilityRole="button"
+            style={({ pressed }) => [styles.followCard, rowDirection, pressed && styles.rowCardPressed]}>
+            <Text style={styles.followCardIcon}>☾</Text>
+            <View style={styles.rowTextWrap}>
+              <Text style={[styles.followCardTitle, textAlign]}>{followStrings[lang].open[praiseKind]}</Text>
+              <Text style={[styles.listSub, textAlign]} numberOfLines={2}>
+                {isRTL ? followStrings.ar.night(nightDay) : followStrings.en.night(nightDay, weekdayNames.en[(weekdayOf(night) + 6) % 7])}
+              </Text>
+            </View>
+            <Text style={styles.listChevron}>{isRTL ? '‹' : '›'}</Text>
+          </Pressable>
+        ) : null}
+        {items.length === 0 ? <Text style={[styles.emptyText, textAlign]}>{t.nothingYet}</Text> : hymnList(items, onSelect)}
+      </>
     );
   };
 
@@ -330,22 +395,23 @@ export default function HomeScreen() {
             </View>
 
             {tileGrid([
-              { key: 'hymns', title: displayTitle(mainCategories[1], lang), desc: t.hymnsDesc, view: 'seasons-home' as const },
-              { key: 'responses', title: displayTitle(mainCategories[0], lang), desc: t.responsesDesc, view: 'responses-home' as const },
-              { key: 'playlist', title: t.playlistTitle, desc: t.playlistDesc(playlist.length), view: 'playlist' as const },
-              { key: 'guide', title: guideStrings[lang].title, desc: guideStrings[lang].subtitle, view: null, href: '/guide' as const },
-              { key: 'faith', title: faithStrings[lang].title, desc: faithStrings[lang].subtitle, view: null, href: '/faith' as const },
-              { key: 'learn', title: learnStrings[lang].title, desc: learnStrings[lang].subtitle, view: null, href: '/learn' as const },
+              { key: 'hymns', title: displayTitle(mainCategories[1], lang), desc: t.hymnsDesc, view: 'seasons-home' as const, image: homeArt.hymns },
+              { key: 'responses', title: displayTitle(mainCategories[0], lang), desc: t.responsesDesc, view: 'responses-home' as const, image: homeArt.responses },
+              { key: 'saints', title: saintsStrings[lang].title, desc: saintsStrings[lang].subtitle, view: null, href: '/saints' as const, image: homeArt.saints },
+              { key: 'playlist', title: t.playlistTitle, desc: t.playlistDesc(playlist.length), view: 'playlist' as const, image: homeArt.playlist },
+              { key: 'guide', title: guideStrings[lang].title, desc: guideStrings[lang].subtitle, view: null, href: '/guide' as const, image: homeArt.guide },
+              { key: 'faith', title: faithStrings[lang].title, desc: faithStrings[lang].subtitle, view: null, href: '/faith' as const, image: homeArt.faith },
+              { key: 'learn', title: learnStrings[lang].title, desc: learnStrings[lang].subtitle, view: null, href: '/learn' as const, image: homeArt.learn },
               // Learn Arabic is for English speakers
               ...(lang === 'en'
-                ? [{ key: 'learn-arabic', title: learnArabicStrings.title, desc: learnArabicStrings.subtitle, view: null, href: '/learn-arabic' as const }]
+                ? [{ key: 'learn-arabic', title: learnArabicStrings.title, desc: learnArabicStrings.subtitle, view: null, href: '/learn-arabic' as const, image: homeArt.learnArabic }]
                 : []),
               // Learn English is for Arabic speakers
               ...(lang === 'ar'
-                ? [{ key: 'learn-english', title: learnEnglishStrings.title, desc: learnEnglishStrings.subtitle, view: null, href: '/learn-english' as const }]
+                ? [{ key: 'learn-english', title: learnEnglishStrings.title, desc: learnEnglishStrings.subtitle, view: null, href: '/learn-english' as const, image: homeArt.learnEnglish }]
                 : []),
-            ].map(({ key, title, desc, view, href }) =>
-                tile(key, title, () => (view ? setCurrentView(view) : href && router.push(href)), { desc })
+            ].map(({ key, title, desc, view, href, image }) =>
+                tile(key, title, () => (view ? setCurrentView(view) : href && router.push(href)), { desc, image })
               )
             )}
             <Pressable
@@ -527,26 +593,69 @@ export default function HomeScreen() {
   }
 
   if (selectedSeason) {
+    const art = seasonArt[selectedSeason.id];
+    // Services named "<feast>: <service>" (the Minor Feasts of the Lord) are listed feast by feast
+    const sections: { feast: string | null; services: Service[] }[] = [];
+    for (const service of selectedSeason.services) {
+      const feast = service.title.includes(': ') ? service.title.split(': ')[0] : null;
+      const last = sections[sections.length - 1];
+      if (last && last.feast === feast) last.services.push(service);
+      else sections.push({ feast, services: [service] });
+    }
+    const serviceName = (service: Service) => {
+      const name = displayTitle(service, lang);
+      return name.includes(': ') ? name.split(': ').slice(1).join(': ') : name;
+    };
     return screen(
-      displayTitle(selectedSeason, lang),
-      t.chooseService,
-      tileGrid(
-        selectedSeason.services.map((service, index) =>
-          tile(service.id, displayTitle(service, lang), () => setSelectedService(service), { lead: localDigits(index + 1) })
-        )
-      )
+      withoutNumber(displayTitle(selectedSeason, lang)),
+      null,
+      <>
+        {art ? (
+          <View style={[styles.seasonHeader, rowDirection]}>
+            <Image source={art.image} style={styles.seasonHeaderImage} accessibilityIgnoresInvertColors />
+            <Text style={[styles.seasonHeaderAbout, textAlign]}>{art.about[lang]}</Text>
+          </View>
+        ) : null}
+        {sections.map(({ feast, services }, s) => (
+          <View key={feast ?? `section-${s}`}>
+            {feast ? sectionHeader(`feast-${feast}`, lang === 'ar' ? displayTitle(services[0], lang).split(': ')[0] : feast) : null}
+            {listGroup(
+              `services-${s}`,
+              services.map((service, index) =>
+                listRow(service.id, serviceName(service), () => setSelectedService(service), { lead: localDigits(index + 1) })
+              )
+            )}
+          </View>
+        ))}
+      </>
     );
   }
 
   if (currentView === 'seasons-home') {
+    // Small cards side by side (two on a phone, more on a wide screen): a round picture and the name
+    const shortName = (season: Season) => withoutNumber(displayTitle(season, lang))
+        .replace(/\s*\([^)]*\)$/, '')
+        .replace(' / Standard Services', '');
     return screen(
       t.seasonsTitle,
       t.chooseSeason,
-      tileGrid(
-        seasons.map((season, index) =>
-          tile(season.id, withoutNumber(displayTitle(season, lang)), () => setSelectedSeason(season), { lead: localDigits(index + 1) })
-        )
-      )
+      <View style={[styles.seasonGrid, rowDirection]}>
+        {seasons.map((season) => (
+          <Pressable
+            key={season.id}
+            onPress={() => setSelectedSeason(season)}
+            accessibilityRole="button"
+            accessibilityLabel={[withoutNumber(displayTitle(season, lang)), seasonArt[season.id]?.about[lang]].filter(Boolean).join(', ')}
+            style={({ pressed }) => [styles.seasonCard, rowDirection, pressed && styles.rowCardPressed]}>
+            {seasonArt[season.id] ? (
+              <Image source={seasonArt[season.id].image} style={styles.seasonCardImage} accessibilityIgnoresInvertColors />
+            ) : null}
+            <Text style={[styles.seasonCardTitle, textAlign]} numberOfLines={2}>
+              {seasonArt[season.id]?.card?.[lang] ?? shortName(season)}
+            </Text>
+          </Pressable>
+        ))}
+      </View>
     );
   }
 
@@ -559,9 +668,10 @@ export default function HomeScreen() {
     return screen(
       displayTitle(selectedDeaconCategory, lang),
       t.chooseService,
-      tileGrid(
+      listGroup(
+        'deacon-services',
         selectedDeaconCategory.services.map((service, index) =>
-          tile(service.id, displayTitle(service, lang), () => setSelectedDeaconService(service), { lead: localDigits(index + 1) })
+          listRow(service.id, displayTitle(service, lang), () => setSelectedDeaconService(service), { lead: localDigits(index + 1) })
         )
       )
     );
@@ -570,9 +680,10 @@ export default function HomeScreen() {
   return screen(
     t.responsesTitle,
     t.chooseCategory,
-    tileGrid(
+    listGroup(
+      'deacon-categories',
       deaconCategories.map((cat, index) =>
-        tile(cat.id, displayTitle(cat, lang), () => setSelectedDeaconCategory(cat), { lead: localDigits(index + 1) })
+        listRow(cat.id, displayTitle(cat, lang), () => setSelectedDeaconCategory(cat), { lead: localDigits(index + 1) })
       )
     )
   );

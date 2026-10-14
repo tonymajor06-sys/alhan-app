@@ -190,10 +190,17 @@ export default function SettingsScreen() {
             settings.titleStyle,
             (titleStyle) => updateSettings({ titleStyle })
           )}
-          <View style={[shared.tile, styles.sampleTile]}>
-            <Text style={[shared.tileLead, textAlign]}>{rtl ? '١' : '1'}</Text>
-            <Text style={[shared.tileTitle, textAlign]}>{withCopticFont(sample.main)}</Text>
-            {sample.coptic ? <Text style={[shared.tileCoptic, textAlign]}>{sample.coptic}</Text> : null}
+          {/* How a hymn shows in the lists */}
+          <View style={[shared.listGroup, styles.sampleTile]}>
+            <View style={[shared.listRow, rowDirection]}>
+              <View style={shared.listLead}>
+                <Text style={shared.listLeadText}>{rtl ? '١' : '1'}</Text>
+              </View>
+              <View style={shared.rowTextWrap}>
+                <Text style={[shared.listTitle, textAlign]}>{withCopticFont(sample.main)}</Text>
+                {sample.coptic ? <Text style={[shared.tileCoptic, textAlign]}>{sample.coptic}</Text> : null}
+              </View>
+            </View>
           </View>
         </>
       )}
@@ -315,8 +322,6 @@ const createStyles = (colors: AlhanPalette) =>
     },
     sampleTile: {
       marginTop: 12,
-      flexBasis: 'auto',
-      flexGrow: 0,
     },
     chips: {
       paddingVertical: 2,
