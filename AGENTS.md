@@ -39,3 +39,15 @@ Docs: https://docs.expo.dev/eas/index.md
 - If `ios/` and `android/` directories do not exist, they are generated (Continuous Native Generation). Never create or edit them by hand — configure native behavior in `app.json` and config plugins.
 - Expo Go only includes its bundled native modules. After adding a library with native code, the app needs a development build: `npx expo run:ios|android` locally, or `eas build --profile development`.
 - Prefer recommended Expo modules over third-party libraries, and check your available skills before adding dependencies. Docs: https://docs.expo.dev/versions/latest/index.md
+
+## Project notes (shared by every AI assistant working on this repo)
+
+Several assistants (Claude Code, Antigravity) work in this repo. Commit finished work in small commits so the others see a clean state, and don't edit the same files at the same time.
+
+- **Transliterations:** if a hymn comes without "Coptic in English letters" or "Arabic in English letters", write it yourself and say which parts you wrote.
+- **English Coptic** follows the owner's alphabet chart: ⲃ = v before a vowel, b otherwise; ⲏ ē, ⲱ ō, ⲭ/ϧ kh, ϭ tsh, ϫ j, ϯ ti; a jinkim adds "e" before its letter; abbreviations are written out (Ⲡ̅ⲟ̅ⲥ̅ Eptshois, Ⲫϯ Efnouti). Exception: Ⲭⲉⲣⲉ is always "Shere". See `src/data/english-coptic.ts`.
+- **Arabic in English letters:** write ج as "g" (Egyptian Coptic pronunciation), never "j".
+- **Permissions already granted** (don't raise them again): Archdeacon Arsani Sidarous's recordings (KlickAud, alhan.org, his YouTube playlist), every track in the SoundCloud playlist "Archie Arsani Sidarous", and the texts of the Spirit & Truth app (its creator approved). Keep Spirit & Truth source captures out of git.
+- **Audio** lives in `assets/audio` and is mirrored to Cloudflare R2 with `node scripts/upload-audio-r2.mjs`; upload new files after adding them.
+- **No ads** for now (removed 2026-10-13; the old setup is in commit aae287c). Donations go through the box in `src/components/donation-box.tsx` (links in `src/constants/donate.ts`). Never call donations tax-deductible.
+- **Website:** https://copticpsalmody.com is a Cloudflare Worker. Publish with `rm -rf dist && npx expo export -p web && npx wrangler deploy`.
