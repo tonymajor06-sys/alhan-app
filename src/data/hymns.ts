@@ -7928,10 +7928,13 @@ for (const hymn of seasons.find((s) => s.id === 'great-lent')?.services.flatMap(
   const key = baseOf(hymn.id).match(/^lent-(?:weekday|weekend)-distribution-melody-(.+)$/)?.[1];
   const melody = key ? lentMelodies[key] : undefined;
   if (!melody || hymn.versions.some((v) => v.text.trim())) continue;
+  // These versions are made after the Arsani recordings were matched above, so give them theirs here
+  // (the weekday melody of a week is the same tune as its Sunday's)
+  const audio = arsaniAudio.find((a) => a.language === 'arabic' && a.hymns.includes(`lent-weekend-distribution-melody-${key}`))?.file;
   hymn.versions = [
     { language: 'english', text: melody.english },
-    { language: 'englishArabic', text: melody.englishArabic },
-    { language: 'arabic', text: melody.arabic },
+    { language: 'englishArabic', text: melody.englishArabic, audio },
+    { language: 'arabic', text: melody.arabic, audio },
   ];
 }
 addArabicCoptic([...seasons, ...deaconCategories]);

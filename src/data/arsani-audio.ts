@@ -189,4 +189,11 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   { file: "arsani-269-2022-marentho-oti-let-us-ga-r-joe-mikhail.m4a", hymns: ["annual-veneration-let-us-gather"], language: "arabic" },
   // Thok Te Tea Gome-9th Hr Eve of Wed
   { file: "arsani-315-thok-te-tea-gome-9th-hr-eve-of-wed.m4a", hymns: ["holyweek-covenant-thursday-paschal-doxology"], language: "coptic" },
+
+  // From his YouTube playlist, cut out of the full service by the words sung (transcribed to place them)
+  // 6th Sunday of the Great Lent, Distribution of the Mysteries (Apr 14, 2019): Psalm 150 in Coptic, then in Arabic
+  // with the Coptic doxa, then the melody of the Man Born Blind (its first verses)
+  { file: "arsani-yt-lent-psalm-150-coptic.m4a", hymns: ["lent-weekend-psalm-150"], language: "coptic" },
+  { file: "arsani-yt-lent-psalm-150-arabic.m4a", hymns: ["lent-weekend-psalm-150"], language: "arabic" },
+  { file: "arsani-yt-lent-sixth-sunday-melody.m4a", hymns: ["lent-weekend-distribution-melody-sixth-sunday"], language: "arabic" },
 ];
