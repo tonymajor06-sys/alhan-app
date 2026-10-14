@@ -3,6 +3,8 @@ import { AppLanguage } from '@/hooks/use-settings';
 import { dateToJdn, getSeasonInfo, jdnToCoptic } from './coptic-calendar';
 import { flattenHymns, Hymn, Season, seasons, Service } from './hymns';
 import { hymnAcrossSeasons } from './search';
+import { kiahkWeekdayOrder } from './kiahk-weekday-order';
+import { stFullSeasons } from './st-full-seasons';
 
 // Midnight Praises and Vesper Praises read straight through in the order they are prayed tonight:
 // Midnight's general hymns, then tonight's Psali and Theotokia after the Fourth Canticle, then the conclusion.
@@ -46,6 +48,41 @@ export interface FollowAlong {
 }
 
 const hasContent = (h: Hymn) => h.versions.some((v) => v.text.trim() || v.audio);
+
+// Hymns Spirit & Truth sings in every night's Midnight Praises that the app keeps in other lists
+let anywhere: Map<string, Hymn> | null = null;
+const hymnById = (id: string): Hymn | undefined => {
+  if (!anywhere) {
+    anywhere = new Map();
+    for (const season of seasons)
+      for (const service of season.services)
+        for (const hymn of flattenHymns(service.hymns)) if (!anywhere.has(hymn.id.split('@')[0])) anywhere.set(hymn.id.split('@')[0], hymn);
+    for (const full of stFullSeasons)
+      for (const item of full.items) if ('hymn' in item && !anywhere.has(item.hymn.id)) anywhere.set(item.hymn.id, item.hymn);
+  }
+  return anywhere.get(id);
+};
+// Readings and prayers in a service's list: following along shows only the hymns
+const notSung = /-(gospel-according-to-st-luke|luke-\d[-\d]*|our-father|the-short-blessing|concluding-prayer|the-orthodox-creed)$/;
+// The doxologies, one after another, become one entry that opens to show them all
+export const doxologyGroupId = 'follow-doxologies';
+const isDoxology = (h: Hymn) => /-doxology-/.test(h.id.split('@')[0]);
+function withDoxologyGroup(list: Hymn[]): Hymn[] {
+  const first = list.findIndex(isDoxology);
+  if (first < 0) return list;
+  let end = first;
+  while (end < list.length && isDoxology(list[end])) end++;
+  const doxologies = list.slice(first, end);
+  if (doxologies.length < 2) return list;
+  return [...list.slice(0, first), { id: doxologyGroupId, title: 'Doxologies', versions: [], children: doxologies }, ...list.slice(end)];
+}
+// Tonight's hymns one by one (the doxologies inside their entry), for Next / Previous and Play All
+const flatten = (sections: FollowSection[]) => sections.flatMap((s) => s.hymns.flatMap((h) => h.children ?? [h]));
+const shared = (...ids: string[]) => ids.map(hymnById).filter((h): h is Hymn => !!h);
+// Hymns that stand in for a part already in the list (sung in another tune), so reading straight through skips them
+const alternates = /-(esmou-epchois-melismatic|arihoo-chasf|sunday-psali-adam-lord-jesus)$/;
+// The part of the Sunday Theotokia sung on weekdays after the First Canticle's Lobsh
+const weekdaySundayParts = /-(sunday-theotokion-[789]|semouti-ero-dikeos)$/;
 const annual = () => seasons.find((s) => s.id === 'annual')!;
 const serviceOf = (season: Season | undefined, suffix: string) => season?.services.find((s) => s.id.endsWith(suffix));
 
@@ -149,22 +186,48 @@ export function followAlong(kind: PraiseKind, jdn: number): FollowAlong {
   // Kiahk's Saturday night is its own long Tasbeha, with the Sunday Theotokia and its explanations
   if (season.id === 'kiahk' && own && weekday === 0) {
     const forSunday = (h: Hymn) => !anyWeekday.test(h.title) || /Sunday/.test(h.title);
-    const sections = splitNight(flattenHymns(own.hymns).filter((h) => hasContent(h) && forSunday(h))).filter((s) => s.hymns.length);
-    return { kind, jdn, weekday, season, service: own, sections, hymns: sections.flatMap((s) => s.hymns) };
+    const sections = splitNight(flattenHymns(own.hymns).filter((h) => hasContent(h) && forSunday(h) && !notSung.test(h.id.split('@')[0]) && !/\(English Revised\)$/.test(h.title)))
+      .map((s) => ({ ...s, hymns: withDoxologyGroup(s.hymns) }))
+      .filter((s) => s.hymns.length);
+    return { kind, jdn, weekday, season, service: own, sections, hymns: flatten(sections) };
+  }
+  // Kiahk's weekday nights are their own long Tasbeha too, in the order Spirit & Truth gives for each day
+  const kiahkOrder = season.id === 'kiahk' && own ? kiahkWeekdayOrder[weekday] : undefined;
+  if (kiahkOrder) {
+    const inKiahk = new Map(season.services.flatMap((s) => flattenHymns(s.hymns)).map((h) => [h.id.split('@')[0], h] as const));
+    const list = kiahkOrder.map((id) => inKiahk.get(id) ?? hymnById(id)).filter((h): h is Hymn => !!h && hasContent(h));
+    const fourth = list.findIndex((h) => h.title === 'Exposition on the Fourth Canticle');
+    const end = list.findIndex((h) => /-introduction-to-the-creed$/.test(h.id.split('@')[0]));
+    const cut = end > fourth ? end : list.length;
+    const sections = [
+      { key: 'praises' as const, hymns: list.slice(0, fourth + 1) },
+      { key: 'day' as const, hymns: list.slice(fourth + 1, cut) },
+      { key: 'conclusion' as const, hymns: list.slice(cut) },
+    ].filter((s) => s.hymns.length);
+    return { kind, jdn, weekday, season, service: own!, sections, hymns: flatten(sections) };
   }
   // Great Lent's Midnight Praises has the same General and weekday groups as the Annual one
   const structured = own && group(own, 'general') ? own : serviceOf(annual(), '-midnight')!;
-  const general = flattenHymns(group(structured, 'general')?.children ?? []);
+  const general = flattenHymns(group(structured, 'general')?.children ?? []).filter((h) => !alternates.test(h.id));
   const fourth = general.findIndex((h) => /-fourth-canticle$/.test(h.id));
-  const before = general.slice(0, fourth + 1);
+  // As Spirit & Truth sings it: on weekdays Sunday Theotokia 7-9 follow the First Canticle's Lobsh;
+  // on Sunday they are in their place inside the whole Sunday Theotokia
+  const before = general.slice(0, fourth + 1).filter((h) => weekday !== 0 || !weekdaySundayParts.test(h.id));
+  // A Sunday outside the fasts begins with the Hymn of the Resurrection, after "Arise, O children of the light"
+  if (weekday === 0 && !own) {
+    const arise = before.findIndex((h) => /-arise-o-children$/.test(h.id));
+    before.splice(arise + 1, 0, ...shared('annual-midnight-the-hymn-of-the-resurrection'));
+  }
   const rest = general.slice(fourth + 1);
   // The Psali for the Virgin Mary on the 21st of the Coptic month comes right after the Fourth Canticle
   const on21st = rest.filter((h) => /21st/.test(h.id) && copticDay === 21);
-  const conclusion = rest.filter((h) => !/21st/.test(h.id));
+  // The end, as Spirit & Truth has it, with only what is sung (no Creed, prayers or blessing):
+  // the Introduction to the Creed, then Holy Holy Holy and the Concluding Hymn
+  const conclusion = [...shared('palmsunday-vespers-introduction-to-the-creed'), ...rest.filter((h) => !/21st/.test(h.id))];
   const dayHymns = [
     ...on21st,
     ...(season.id === 'kiahk' ? kiahkPsalis(weekday) : []),
-    ...flattenHymns(group(structured, day)?.children ?? []),
+    ...flattenHymns(group(structured, day)?.children ?? []).filter((h) => !alternates.test(h.id)),
   ];
 
   let sections: FollowSection[] = [
@@ -173,9 +236,11 @@ export function followAlong(kind: PraiseKind, jdn: number): FollowAlong {
     { key: 'conclusion', hymns: conclusion },
   ];
   if (own && structured !== own && season.id !== 'kiahk') sections = withSeason(sections, season, own, weekday);
-  sections = sections.map((s) => ({ ...s, hymns: s.hymns.filter(hasContent) })).filter((s) => s.hymns.length);
+  sections = sections
+    .map((s) => ({ ...s, hymns: withDoxologyGroup(s.hymns.filter((h) => hasContent(h) && !notSung.test(h.id.split('@')[0]))) }))
+    .filter((s) => s.hymns.length);
   const service = own ?? structured;
-  return { kind, jdn, weekday, season, service, sections, hymns: sections.flatMap((s) => s.hymns) };
+  return { kind, jdn, weekday, season, service, sections, hymns: flatten(sections) };
 }
 
 // Tonight's order for a hymn page opened from the follow-along list (?follow=midnight&night=<jdn>)

@@ -37,6 +37,7 @@ export default function FollowScreen() {
   const [tonight] = useState(() => tonightJdn());
   const [jdn, setJdn] = useState(() => (Number(night) > 0 ? Number(night) : tonight));
   const plan = useMemo(() => followAlong(kind, jdn), [kind, jdn]);
+  const [openGroup, setOpenGroup] = useState<string | null>(null);
 
   const days = weekdayNames[lang];
   const dayName = days[plan.weekday];
@@ -57,6 +58,31 @@ export default function FollowScreen() {
   const sectionTitle = (section: FollowSection) =>
     section.key === 'praises' ? ft.praises : section.key === 'conclusion' ? ft.conclusion : ft.day(dayName);
 
+  // One row of tonight's list: its number, its title, and whether it has a recording
+  const row = (hymn: Hymn, lead: string, onPress: () => void, chevron?: string) => {
+    const { main, coptic } = titleLines(hymn, lang, settings.titleStyle);
+    const hasAudio = hymn.versions.some((v) => v.audio);
+    return (
+      <Pressable
+        onPress={onPress}
+        accessibilityRole="button"
+        accessibilityLabel={[main, coptic, hasAudio ? t.hasAudio : null].filter(Boolean).join(', ')}
+        style={({ pressed }) => [styles.listRow, rowDirection, pressed && styles.listRowPressed]}>
+        <View style={styles.listLead}>
+          <Text style={styles.listLeadText}>{lead}</Text>
+        </View>
+        <View style={styles.rowTextWrap}>
+          <Text style={[styles.listTitle, textAlign]}>{withCopticFont(main)}</Text>
+          {coptic ? <Text style={[styles.tileCoptic, textAlign]}>{coptic}</Text> : null}
+        </View>
+        <View style={[styles.listEnd, rowDirection]}>
+          {hasAudio ? <Text style={styles.listAudio}>♪</Text> : null}
+          <Text style={styles.listChevron}>{chevron ?? (isRTL ? '‹' : '›')}</Text>
+        </View>
+      </Pressable>
+    );
+  };
+
   // Numbered straight through the night, not from 1 in each section
   const firstNumber = plan.sections.map((_, i) => plan.sections.slice(0, i).reduce((n, s) => n + s.hymns.length, 1));
   const sections: ReactNode[] = plan.sections.map((section, sectionIndex) => (
@@ -68,28 +94,21 @@ export default function FollowScreen() {
       <View style={styles.listGroup}>
         {section.hymns.map((hymn, i) => {
           const number = firstNumber[sectionIndex] + i;
-          const { main, coptic } = titleLines(hymn, lang, settings.titleStyle);
-          const hasAudio = hymn.versions.some((v) => v.audio);
+          const group = hymn.children?.length ? hymn.children : null;
+          const opened = group && openGroup === hymn.id;
           return (
             <View key={hymn.id}>
               {i > 0 ? <View style={styles.listDivider} /> : null}
-              <Pressable
-                onPress={() => open(hymn)}
-                accessibilityRole="button"
-                accessibilityLabel={[main, coptic, hasAudio ? t.hasAudio : null].filter(Boolean).join(', ')}
-                style={({ pressed }) => [styles.listRow, rowDirection, pressed && styles.listRowPressed]}>
-                <View style={styles.listLead}>
-                  <Text style={styles.listLeadText}>{digits(number)}</Text>
-                </View>
-                <View style={styles.rowTextWrap}>
-                  <Text style={[styles.listTitle, textAlign]}>{withCopticFont(main)}</Text>
-                  {coptic ? <Text style={[styles.tileCoptic, textAlign]}>{coptic}</Text> : null}
-                </View>
-                <View style={[styles.listEnd, rowDirection]}>
-                  {hasAudio ? <Text style={styles.listAudio}>♪</Text> : null}
-                  <Text style={styles.listChevron}>{isRTL ? '‹' : '›'}</Text>
-                </View>
-              </Pressable>
+              {row(hymn, digits(number), group ? () => setOpenGroup(opened ? null : hymn.id) : () => open(hymn), group ? (opened ? '⌄' : isRTL ? '‹' : '›') : undefined)}
+              {/* The doxologies' entry opens to show each of them */}
+              {opened
+                ? group.map((child) => (
+                    <View key={child.id}>
+                      <View style={styles.listDivider} />
+                      {row(child, '•', () => open(child))}
+                    </View>
+                  ))
+                : null}
             </View>
           );
         })}

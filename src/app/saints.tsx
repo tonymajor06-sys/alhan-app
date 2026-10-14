@@ -1,15 +1,23 @@
 import { router } from 'expo-router';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Pressable, Text, TextInput, View } from 'react-native';
 
 import { createAlhanStyles, goBackOrHome, ScreenShell } from '@/components/alhan-ui';
-import { copticMonths, formatGregorianDate, jdnToCoptic } from '@/data/coptic-calendar';
-import { copticDayName, Saint, saintJdn, saints, saintsOn, saintsStrings, searchSaints } from '@/data/saints';
+import { formatGregorianDate, jdnToCoptic } from '@/data/coptic-calendar';
+import {
+  copticDayName,
+  Saint,
+  saintJdn,
+  saintsByAlphabet,
+  saintsOn,
+  saintsStrings,
+  searchSaints,
+} from '@/data/saints';
 import { useAlhanColors, useThemedStyles } from '@/hooks/use-alhan-colors';
 import { useSettings } from '@/hooks/use-settings';
 import { useTodayJdn } from '@/hooks/use-today';
 
-// The Synaxarium: today's saints first, a search over every saint, and every day of the year by month
+// The Synaxarium: today's saints first, search, and all saints in alphabetical order
 export default function SaintsScreen() {
   const { language: lang } = useSettings();
   const isRTL = lang === 'ar';
@@ -22,7 +30,7 @@ export default function SaintsScreen() {
   const today = useTodayJdn();
   const todayCoptic = jdnToCoptic(today);
   const [query, setQuery] = useState('');
-  const [month, setMonth] = useState(todayCoptic.month);
+  const [selectedLetter, setSelectedLetter] = useState<string>('all');
 
   const open = (saint: Saint) => router.push({ pathname: '/saints/[id]', params: { id: saint.id } });
   const dateOf = (s: { month: number; day: number }) =>
@@ -37,7 +45,11 @@ export default function SaintsScreen() {
         style={({ pressed }) => [styles.listRow, rowDirection, pressed && styles.listRowPressed]}>
         <View style={styles.rowTextWrap}>
           <Text style={[styles.listTitle, textAlign]}>{saint.name[lang]}</Text>
-          {sub ? <Text style={[styles.listSub, textAlign]} numberOfLines={2}>{sub}</Text> : null}
+          {sub ? (
+            <Text style={[styles.listSub, textAlign]} numberOfLines={2}>
+              {sub}
+            </Text>
+          ) : null}
         </View>
         <Text style={styles.listChevron}>{isRTL ? '‹' : '›'}</Text>
       </Pressable>
@@ -53,7 +65,12 @@ export default function SaintsScreen() {
 
   const results = searchSaints(query);
   const todays = saintsOn(todayCoptic.month, todayCoptic.day);
-  const days = [...new Set(saints.filter((s) => s.month === month).map((s) => s.day))].sort((a, b) => a - b);
+  const alphabetGroups = useMemo(() => saintsByAlphabet(lang), [lang]);
+
+  const displayedGroups = useMemo(() => {
+    if (selectedLetter === 'all') return alphabetGroups;
+    return alphabetGroups.filter((g) => g.letter === selectedLetter);
+  }, [alphabetGroups, selectedLetter]);
 
   return (
     <ScreenShell lang={lang} title={t.title} subtitle={t.subtitle} onBack={goBackOrHome}>
@@ -87,7 +104,11 @@ export default function SaintsScreen() {
                 key={saint.id}
                 onPress={() => open(saint)}
                 accessibilityRole="button"
-                style={({ pressed }) => [styles.followCard, { alignItems: 'stretch', flexDirection: 'column', gap: 6 }, pressed && styles.rowCardPressed]}>
+                style={({ pressed }) => [
+                  styles.followCard,
+                  { alignItems: 'stretch', flexDirection: 'column', gap: 6 },
+                  pressed && styles.rowCardPressed,
+                ]}>
                 <Text style={[styles.followCardTitle, textAlign]}>{saint.name[lang]}</Text>
                 <Text style={[styles.listSub, textAlign]} numberOfLines={4}>
                   {saint.story[lang]}
@@ -98,34 +119,56 @@ export default function SaintsScreen() {
             <Text style={[styles.emptyText, textAlign]}>{t.none}</Text>
           )}
 
-          {header('months', t.byMonth)}
-          <View style={[rowDirection, { flexWrap: 'wrap', gap: 8, marginBottom: 16 }]}>
-            {copticMonths[lang].map((name, i) => {
-              const selected = month === i + 1;
+          {header('alphabetical', t.alphabetical)}
+          <View style={[rowDirection, { flexWrap: 'wrap', gap: 6, marginBottom: 16 }]}>
+            <Pressable
+              key="all"
+              onPress={() => setSelectedLetter('all')}
+              accessibilityRole="button"
+              accessibilityState={{ selected: selectedLetter === 'all' }}
+              style={({ pressed }) => [
+                styles.chip,
+                styles.chipSmall,
+                selectedLetter === 'all' && styles.controlButtonActive,
+                pressed && styles.pressed,
+              ]}>
+              <Text style={[styles.chipText, selectedLetter === 'all' && styles.controlTextActive]}>
+                {t.allLetters}
+              </Text>
+            </Pressable>
+            {alphabetGroups.map((g) => {
+              const selected = selectedLetter === g.letter;
               return (
                 <Pressable
-                  key={name}
-                  onPress={() => setMonth(i + 1)}
+                  key={g.letter}
+                  onPress={() => setSelectedLetter(g.letter)}
                   accessibilityRole="button"
                   accessibilityState={{ selected }}
-                  style={({ pressed }) => [styles.chip, styles.chipSmall, selected && styles.controlButtonActive, pressed && styles.pressed]}>
-                  <Text style={[styles.chipText, selected && styles.controlTextActive]}>{name}</Text>
+                  style={({ pressed }) => [
+                    styles.chip,
+                    styles.chipSmall,
+                    { minWidth: 36, paddingHorizontal: 10 },
+                    selected && styles.controlButtonActive,
+                    pressed && styles.pressed,
+                  ]}>
+                  <Text style={[styles.chipText, selected && styles.controlTextActive]}>{g.letter}</Text>
                 </Pressable>
               );
             })}
           </View>
-          {days.length ? (
-            days.map((day) => (
-              <View key={day}>
-                <Text style={[styles.listSub, textAlign, { marginTop: 8, marginBottom: 6, fontWeight: '700' }]}>
-                  {dateOf({ month, day })}
+
+          {displayedGroups.map((group) => (
+            <View key={group.letter} style={{ marginBottom: 16 }}>
+              {selectedLetter === 'all' ? (
+                <Text style={[styles.listSub, textAlign, { marginTop: 4, marginBottom: 6, fontWeight: '700', fontSize: 16, color: colors.gold }]}>
+                  {group.letter}
                 </Text>
-                <View style={styles.listGroup}>{saintsOn(month, day).map((s, i) => row(s, i))}</View>
+              ) : null}
+              <View style={styles.listGroup}>
+                {group.saints.map((s, i) => row(s, i, dateOf(s)))}
               </View>
-            ))
-          ) : (
-            <Text style={[styles.emptyText, textAlign]}>{t.none}</Text>
-          )}
+            </View>
+          ))}
         </>
       )}
     </ScreenShell>

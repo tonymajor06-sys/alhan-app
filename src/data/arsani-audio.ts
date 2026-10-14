@@ -196,4 +196,6 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   { file: "arsani-yt-lent-psalm-150-coptic.m4a", hymns: ["lent-weekend-psalm-150"], language: "coptic" },
   { file: "arsani-yt-lent-psalm-150-arabic.m4a", hymns: ["lent-weekend-psalm-150"], language: "arabic" },
   { file: "arsani-yt-lent-sixth-sunday-melody.m4a", hymns: ["lent-weekend-distribution-melody-sixth-sunday"], language: "arabic" },
+  // Feast of El Nayrouz: Verses of the Cymbals (Coptic)
+  { file: "arsani-yt-nayrouz-verses-of-cymbals.m4a", hymns: ["nayrouz-matins-verses-of-the-cymbals"], language: "coptic" },
 ];

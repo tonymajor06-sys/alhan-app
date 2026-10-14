@@ -2,6 +2,7 @@ import type { AppLanguage } from '@/hooks/use-settings';
 
 // Arabic display names, keyed by the id used in hymns.ts
 const arabicTitles: Record<string, string> = {
+  "follow-doxologies": "الذكصولوجيات",
   // Main categories
   responses: 'مردات الشماس والهيكل',
   hymns: 'الألحان',
@@ -1080,6 +1081,25 @@ const arabicTitles: Record<string, string> = {
   "kiahk-midnight-another-adam-psali-before-tuesday-theotokia": "مديح على ثيؤتوكية يوم الثلاثاء (يا مريم أنا عبدك)",
   "kiahk-midnight-second-adam-lobsh-on-tuesday-theotokion": "لبش آدام ثاني على ثيؤطوكية يوم الثلاثاء",
   "kiahk-midnight-exposition-on-tuesday-theotokion": "طرح آدام على تذاكية الثلاثاء",
+  "kiahk-midnight-watos-psali-after-friday-theotokion": "مديح واطس بعد ثيؤطوكية يوم الجمعة",
+  "kiahk-midnight-exposition-on-saturday-theotokia": "طرح واطس على تذاكية السبت",
+  "kiahk-midnight-watos-psali-for-gabriel-before-first-shiraat": "مديح واطس لرئيس الملائكة غبريال قبل الشيرات الأولى",
+  "kiahk-midnight-lobsh-after-first-shiraat": "لبش بعد الشيرات الأولى",
+  "kiahk-midnight-exposition-on-first-shiraat": "طرح على الشيرات الأولى",
+  "kiahk-midnight-watos-psali-for-gabriel-before-second-shiraat": "مديح واطس لرئيس الملائكة غبريال قبل الشيرات الثانية",
+  "kiahk-midnight-exposition-on-second-shiraat": "طرح على الشيرات الثانية",
+  "kiahk-midnight-watos-psali-before-the-conclusion-of-watos-theotokia": "مديح واطس قبل ختام الثيؤطوكية الواطس",
+  "kiahk-midnight-watos-psali-for-st-mary-before-first-shiraat": "مديح واطس للعذراء قبل الشيرات الأولى",
+  "kiahk-midnight-second-adam-lobsh-on-monday-theotokion": "لبش آدام ثاني على ثيؤطوكية يوم الاثنين",
+  "kiahk-midnight-exposition-on-monday-theotokion": "طرح آدام على تذاكية يوم الاثنين",
+  "kiahk-midnight-watos-psali-after-wednesday-theotokion": "مديح واطس بعد ثيؤطوكية يوم الأربعاء",
+  "kiahk-midnight-second-watos-lobsh-on-wednesday-theotokion": "لبش واطس ثاني على ثيؤطوكية يوم الأربعاء",
+  "kiahk-midnight-exposition-on-wednesday-theotokion": "طرح واطس على تذاكية يوم الأربعاء",
+  "kiahk-midnight-exposition-on-our-lord-jesus-christ": "طرح واطس يقال بعد \"ياربنا يسوع المسيح\"",
+  "kiahk-midnight-watos-praise-after-thursday-theotokia": "مديح واطس بعد ثيؤطوكية يوم الخميس",
+  "kiahk-midnight-second-watos-lobsh-on-thursday-theotokia": "لبش واطس ثاني على ثيؤطوكية يوم الخميس",
+  "kiahk-midnight-exposition-on-thursday-theotokia": "طرح واطس على تذاكية الخميس",
+  "kiahk-midnight-exposition-on-friday-theotokion": "طرح واطس يقال علي تذاكية الجمعة",
   "nativity-midnight-adam-exposition-on-second-hoos": "الطرح الآدام على الهوس الثاني",
   "kiahk-morning-praises": "تسبحة باكر",
   "jonah-vespers": "رفع بخور عشية",
