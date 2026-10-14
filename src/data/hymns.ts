@@ -1,5 +1,12 @@
 import { alhanSeasonServices } from './alhan-seasons';
 import { arsaniAudio } from './arsani-audio';
+import { distributionConclusionVerses } from './distribution-conclusions';
+import { addEnglishCoptic } from './english-coptic';
+import { arabicInEnglishLetters } from './arabic-in-english-letters';
+import { stArabic } from './st-arabic';
+import { lentMelodies } from './lent-melodies';
+import { stGeorgeDoxology2 } from './st-george-doxology';
+import { nativityMatinsMelody } from './nativity-matins-melody';
 import { addArabicCoptic } from './arabic-coptic';
 import { addArabicEnglish } from './arabic-english';
 import { stFills } from './st-fills';
@@ -245,17 +252,17 @@ export const seasons: Season[] = [
   { id: 'nayrouz', title: '2. Nayrouz (Coptic New Year)', services: createServices('nayrouz') },
   { id: 'cross', title: '3. Feast of the Cross', services: createServices('cross') },
   { id: 'nativity-fast', title: '4. Nativity Fast (Advent)', services: createServices('nativityfast') },
-  { id: 'kiahk', title: '5. Kiahk Praises & Season', services: createServices('kiahk') },
-  { id: 'nativity', title: '6. Feast of the Nativity (Christmas)', services: createServices('nativity') },
+  { id: 'kiahk', title: '5. Kiahk', services: createServices('kiahk') },
+  { id: 'nativity', title: '6. Nativity Feast', services: createServices('nativity') },
   { id: 'theophany', title: '7. Feast of Theophany (Epiphany)', services: createServices('theophany') },
   { id: 'jonah', title: '8. Jonahs Fast & Feast (Nineveh)', services: createServices('jonah') },
   { id: 'great-lent', title: '9. Great Lent', services: createServices('lent') },
-  { id: 'palm-sunday', title: '10. Palm Sunday & Hosanna Sunday', services: createServices('palmsunday') },
+  { id: 'palm-sunday', title: '10. Palm Sunday', services: createServices('palmsunday') },
   { id: 'holy-week', title: '11. Holy Week (Pascha)', services: createServices('holyweek') },
   { id: 'pentecost', title: '12. Holy Resurrection & Holy Fifty Days', services: createServices('pentecost') },
   { id: 'apostles-fast', title: '13. Apostles Fast & Feast', services: createServices('apostles') },
   { id: 'st-mary', title: '14. St. Mary Fast & Assumption Feast', services: createServices('stmary') },
-  { id: 'minor-feasts', title: '15. Lord’s Minor Feasts', services: createServices('minorfeasts') },
+  { id: 'minor-feasts', title: '15. Minor Feasts of the Lord', services: createServices('minorfeasts') },
 ];
 
 // Deacon Categories corresponding to Annual, Special Holy Orders, and Festival Special
@@ -7681,9 +7688,252 @@ for (const season of seasons.filter((s) => !['annual', 'holy-week', 'great-lent'
   }
 }
 
+// ---- Fixes the user asked for (2026-10-13): recordings, removals, and how some lists are grouped ----
+// A hymn's recordings in the given languages, edited as one list (the first is the one that plays first)
+const COPTIC_AUDIO: LanguageType[] = ['coptic', 'englishCoptic', 'arabicCoptic'];
+const ALL_LANGUAGES: LanguageType[] = ['coptic', 'englishCoptic', 'arabicCoptic', 'english', 'arabicEnglish', 'englishArabic', 'arabic'];
+const editRecordings = (hymn: Hymn, languages: LanguageType[], edit: (files: string[]) => string[]) => {
+  hymn.versions = hymn.versions.map((version) => {
+    if (!languages.includes(version.language)) return version;
+    const files = [...new Set(edit([...(version.audio ? [version.audio] : []), ...(version.otherAudio ?? [])]))];
+    const { audio: _a, otherAudio: _o, ...rest } = version;
+    return { ...rest, ...(files[0] ? { audio: files[0] } : {}), ...(files.length > 1 ? { otherAudio: files.slice(1) } : {}) };
+  });
+};
+const without = (file: string) => (files: string[]) => files.filter((f) => f !== file);
+const swap = (from: string, to: string) => (files: string[]) => files.map((f) => (f === from ? to : f));
+// Recording lengths in seconds, so the Verses of the Cymbals and the Hitens play their longer recording first
+const recordingSeconds: Record<string, number> = {
+  'verse-of-the-cymbals-annual.m4a': 206,
+  'arsani-002-teno-osht-emefiot-long-watos-antiphonary-sidaros.m4a': 147,
+  'alhan-cross-cross-cymbals.mp3': 79,
+  'arsani-003-joyful-verses-of-cymbals-adam-feast-of-cross.m4a': 280,
+  'alhan-resurrection-verses-of-the-cymbals.mp3': 264,
+  'arsani-092-resurrection-verses-of-cymbals.m4a': 508,
+  'liturgy-hitens-annual.m4a': 356,
+  'arsani-125-hiteniat.m4a': 396,
+};
+const longerFirst = (files: string[]) =>
+  files.every((f) => recordingSeconds[f]) ? [...files].sort((a, b) => recordingSeconds[b] - recordingSeconds[a]) : files;
+const POURO = 'pouro-hymn-of-joy-arsani-sidarous.m4a';
+const TENTHENO = 'arsani-232-01-tenthino.m4a';
+
+// Hymns that leave one service
+const dropFrom: Record<string, string[]> = {
+  // the first Verses of the Cymbal (Ⲭⲉⲣⲉ ⲡⲓⲥ̀ⲧⲁⲩⲣⲟⲥ) in the Cross's Vespers
+  'cross-vespers': ['cross-matins-verses-of-the-cymbal'],
+  // the second Verses of the Cymbals in Nativity Matins, which has no recording
+  'nativity-matins': ['nativity-matins-verses-of-the-cymbals-feast-of-nativity'],
+};
+const dropIds = (list: Hymn[], ids: string[]): Hymn[] =>
+  list.filter((h) => !ids.includes(h.id)).map((h) => (h.children ? { ...h, children: dropIds(h.children, ids) } : h));
+
+for (const season of seasons) {
+  // Nativity Fast has no Vesper Praises of its own
+  season.services = season.services.filter((s) => s.id !== 'nativity-fast-vesper-praises');
+  for (const service of season.services) {
+    if (dropFrom[service.id]) service.hymns = dropIds(service.hymns, dropFrom[service.id]);
+
+    for (const hymn of flattenHymns(service.hymns)) {
+      const base = baseOf(hymn.id);
+      // The feasts' Verses of the Cymbals (Ⲕⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ, Ⲧⲉⲛⲟⲩⲱϣⲧ) is named after Nativity only in Nativity
+      if (base === 'nativity-matins-verses-of-the-cymbals-feast-of-nativity' && season.id !== 'nativity')
+        hymn.title = 'Ⲕⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ (Verses of the Cymbals for Feasts)';
+      // The 5:41 Psalm 150 is Kiahk's tune only
+      if (season.id !== 'kiahk') editRecordings(hymn, ALL_LANGUAGES, without('arsani-155-kiahk-psalm-150-alleluia.m4a'));
+      // Ⲧⲟⲩ ⲙⲁⲕⲁⲣⲓⲱ keeps one recording
+      if (base === 'kiahk-liturgy-hymn-8') editRecordings(hymn, ALL_LANGUAGES, without('arsani-111-recording.m4a'));
+      // Ⲡⲟⲩⲣⲟ everywhere: Abouna Mina Girgis and Arsani Sidarous's Epouro only
+      if (base === 'annual-veneration-hymn-of-joy') editRecordings(hymn, COPTIC_AUDIO, () => [POURO]);
+      // Ⲧⲉⲛⲑⲏⲛⲟⲩ: every season sings Annual's second recording instead of the melismatic one
+      if (season.id !== 'annual' && /-midnight-arise-o-children$/.test(base)) editRecordings(hymn, COPTIC_AUDIO, () => [TENTHENO]);
+      if (/cymbal|hiten/i.test(`${hymn.title} ${base}`)) editRecordings(hymn, ALL_LANGUAGES, longerFirst);
+
+      // The Distribution's Concluding Hymn: Annual's recording does not fit the seasons, and each feast has its own verse
+      if (base === 'annual-distribution-concluding-hymn' && season.id !== 'annual') {
+        editRecordings(hymn, ALL_LANGUAGES, without('Conclusion hymn.m4a'));
+        const verses = distributionConclusionVerses[service.id];
+        if (verses) {
+          hymn.versions = hymn.versions
+            // the Arabic-letter versions are made again from the changed text
+            .filter((v) => v.language !== 'arabicCoptic' && v.language !== 'arabicEnglish')
+            .map((v) => {
+              const verse = verses[v.language];
+              if (!verse) return v;
+              const paragraphs = v.text.split('\n\n');
+              const at = paragraphs.findIndex((p) => /^(Ⲧⲉⲛⲱϣ|Tenōsh|We proclaim|نصرخ|Nasrukh)/.test(p.trim()));
+              return at < 0 ? v : { ...v, text: paragraphs.map((p, i) => (i === at ? verse : p)).join('\n\n') };
+            });
+        }
+      }
+
+      // The Cross's second Doxology recording holds three doxologies: the introduction until 1:47,
+      // Ⲁⲛⲟⲛ ϩⲱⲛ until 9:44.5, then the conclusion
+      if (season.id === 'cross') {
+        if (base === 'cross-matins-doxology') editRecordings(hymn, ALL_LANGUAGES, swap('arsani-109-doxology-for-feast-of-cross.m4a', 'cross-doxology-anon-hon-arsani.m4a'));
+        if (/^annual-(vespers|matins)-intro-doxologies$/.test(base)) editRecordings(hymn, COPTIC_AUDIO, (f) => [...f, 'cross-doxology-intro-arsani.m4a']);
+        if (/^annual-(vespers|matins)-doxology-conclusion$/.test(base)) editRecordings(hymn, COPTIC_AUDIO, (f) => [...f, 'cross-doxology-conclusion-arsani.m4a']);
+      }
+      // Nativity's First Doxology (Ⲧⲟⲧⲉ ⲣⲱⲛ): the first recording from 2:11, the second from 1:59 to 4:36; that second
+      // recording then has the Arabic Nativity Matins Melody (4:36 to 8:51) and the Conclusion of the Doxologies
+      if (service.id === 'nativity-matins') {
+        if (base === 'nativity-matins-first-doxology') {
+          editRecordings(hymn, ALL_LANGUAGES, (f) =>
+            f.map((file) =>
+              file === 'alhan-nativity-nat-toteron.mp3'
+                ? 'nativity-tote-ron-from-2-11.mp3'
+                : file === 'arsani-122-nativity-doxology-st-mercurius-st-abraam-torrance.m4a'
+                  ? 'nativity-tote-ron-arsani.m4a'
+                  : file
+            )
+          );
+        }
+        if (base === 'annual-matins-doxology-conclusion') editRecordings(hymn, COPTIC_AUDIO, (f) => [...f, 'nativity-doxology-conclusion-arsani.m4a']);
+      }
+    }
+  }
+}
+
+// The 15:34 Psalm 150 (and its words) is Kiahk's own. Other seasons that had a copy of it sing the Psalm with their
+// own tune, so they get the Psalm's words without a recording (as Spirit & Truth has them on those feasts).
+const KIAHK_PSALM_150 = ['kiahk-psalm-150.mp3', 'alhan-advent-psalm150.mp3'];
+const psalm150 = seasons
+  .find((s) => s.id === 'annual')
+  ?.services.find((s) => s.id === 'annual-distribution')
+  ?.hymns.find((h) => h.id === 'annual-distribution-psalm-150');
+for (const season of seasons.filter((s) => s.id !== 'kiahk')) {
+  for (const service of season.services) {
+    service.hymns = service.hymns.map((h) =>
+      baseOf(h.id) === 'kiahk-distribution-hymn-1' && psalm150 ? copyInto(psalm150, service.id, false) : h
+    );
+    for (const hymn of flattenHymns(service.hymns)) editRecordings(hymn, ALL_LANGUAGES, (f) => f.filter((x) => !KIAHK_PSALM_150.includes(x)));
+  }
+}
+
+// The Arabic Nativity Matins Melody, with the hymns above the Doxologies
+const nativityMatins = seasons.find((s) => s.id === 'nativity')?.services.find((s) => s.id === 'nativity-matins');
+if (nativityMatins) {
+  const doxologies = nativityMatins.hymns.findIndex((h) => h.isSectionHeader && h.title === 'Doxologies');
+  nativityMatins.hymns.splice(doxologies >= 0 ? doxologies : nativityMatins.hymns.length, 0, nativityMatinsMelody);
+}
+
+// Ⲧⲁⲓϣⲟⲩⲣⲏ and Ϯϣⲟⲩⲣⲏ in every season's Liturgy (Great Lent and Holy Week have their own censer hymns)
+const annualLiturgyHymns = seasons.find((s) => s.id === 'annual')?.services.find((s) => s.id === 'annual-liturgy')?.hymns ?? [];
+const TAISHORI = 'annual-liturgy-offering-golden-censer';
+const TISHORI = 'annual-liturgy-offering-golden-censer-virgin';
+for (const season of seasons.filter((s) => !['annual', 'great-lent', 'holy-week'].includes(s.id))) {
+  for (const service of season.services.filter((s) => s.id.endsWith('-liturgy'))) {
+    const at = (base: string) => service.hymns.findIndex((h) => baseOf(h.id) === base);
+    for (const [missing, beside, after] of [
+      [TISHORI, TAISHORI, true],
+      [TAISHORI, TISHORI, false],
+    ] as const) {
+      const source = annualLiturgyHymns.find((h) => h.id === missing);
+      if (!source || at(missing) >= 0) continue;
+      const near = at(beside);
+      const offering = service.hymns.findIndex((h) => h.isSectionHeader && /Offering of the Lamb/.test(h.title));
+      const position = near >= 0 ? near + (after ? 1 : 0) : offering + 1;
+      service.hymns.splice(position, 0, copyInto(source, service.id, true));
+    }
+  }
+}
+
+// A season's Hitens for its own saints open together from one tile (Annual's Hitens, with all the saints, stays as it is)
+const isSaintHiten = (h: Hymn) => !h.children && !baseOf(h.id).startsWith('annual-') && /\(Hiten (for )?[A-Z]/.test(h.title);
+for (const season of seasons) {
+  for (const service of season.services) {
+    const saints = service.hymns.filter(isSaintHiten);
+    if (saints.length < 2) continue;
+    const first = service.hymns.indexOf(saints[0]);
+    service.hymns = service.hymns.filter((h) => !saints.includes(h));
+    service.hymns.splice(first, 0, { id: `${service.id}-saints-hitens`, title: 'Hitens for the Saints', versions: [], children: saints });
+  }
+}
+
+// The Holy Fifty Days: the Ascension's and Pentecost's hymns open from their own tile in each service,
+// so what is left in the list is the Resurrection's
+const pentecostFeasts = [
+  { key: 'ascension', title: 'Feast of the Ascension', test: /Feast of the Ascension/ },
+  { key: 'pentecost-feast', title: 'Feast of Pentecost', test: /Feast of Pentecost|for Pentecost/ },
+];
+for (const service of seasons.find((s) => s.id === 'pentecost')?.services ?? []) {
+  for (const feast of pentecostFeasts) {
+    const belongs = service.hymns.filter((h) => !h.isSectionHeader && !h.children && feast.test.test(h.title));
+    if (!belongs.length) continue;
+    const first = service.hymns.indexOf(belongs[0]);
+    service.hymns = service.hymns.filter((h) => !belongs.includes(h));
+    service.hymns.splice(first, 0, {
+      id: `${service.id}-${feast.key}`,
+      title: feast.title,
+      versions: [],
+      children: belongs.map((h) => ({ ...h, title: h.title.replace(/\s*\(Feast of (the Ascension|Pentecost)\)/, '') })),
+    });
+  }
+}
+
+// Midnight's second doxology for St George gets its words (Spirit & Truth), and Kiahk Midnight's "Doxologies" is a heading
+// Great Lent's Veneration tiles open the whole Veneration (from Annual > Veneration)
+const venerationHymns = seasons.find((s) => s.id === 'annual')?.services.find((s) => s.id === 'annual-veneration')?.hymns ?? [];
+for (const season of seasons) {
+  for (const service of season.services) {
+    for (const hymn of flattenHymns(service.hymns)) {
+      if (hymn.versions.length || hymn.children) continue;
+      if (/-midnight-doxology-st-george-2$/.test(hymn.id)) {
+        hymn.title = 'Ⲛⲓⲭⲟⲣⲟⲥ ⲛ̀ⲧⲉ ⲛⲓⲙⲁⲣⲧⲩⲣⲟⲥ (Another Doxology for St George)';
+        hymn.versions = (['english', 'coptic', 'arabic', 'englishArabic'] as const).map((language) => ({ language, text: stGeorgeDoxology2[language] }));
+      } else if (hymn.id === 'kiahk-midnight-hymn-28') {
+        hymn.isSectionHeader = true;
+      } else if (/^lent-weekend-(liturgy|vespers)-veneration$/.test(hymn.id)) {
+        hymn.children = venerationHymns.map((h) => copyInto(h, hymn.id, true));
+      }
+    }
+  }
+}
+
 // Keep these last: give every hymn a "Coptic in Arabic letters" and an "English in Arabic letters" version
 // (see arabic-coptic.ts and arabic-english.ts),
-// so it must run after all the changes above
+// so it must run after all the changes above. Hymns that came without Coptic in English letters get it first,
+// and Arabic hymns without Arabic in English letters get the one written for them (with the Arabic's recording).
+addEnglishCoptic([...seasons, ...deaconCategories]);
+const arabicInEnglish = new Map(arabicInEnglishLetters.flatMap(([ids, text]) => ids.map((id) => [id, text] as const)));
+const addArabicInEnglish = (list: Hymn[]) => {
+  for (const hymn of list) {
+    if (hymn.children) addArabicInEnglish(hymn.children);
+    const text = arabicInEnglish.get(baseOf(hymn.id));
+    if (!text || hymn.versions.some((v) => v.language === 'englishArabic' && v.text.trim())) continue;
+    const arabic = hymn.versions.find((v) => v.language === 'arabic');
+    const version: LanguageVersion = { language: 'englishArabic', text, ...(arabic?.audio ? { audio: arabic.audio } : {}), ...(arabic?.otherAudio ? { otherAudio: arabic.otherAudio } : {}) };
+    const at = hymn.versions.findIndex((v) => v.language === 'englishArabic');
+    if (at >= 0) hymn.versions[at] = version;
+    else hymn.versions.push(version);
+  }
+};
+for (const group of [...seasons, ...deaconCategories]) for (const service of group.services) addArabicInEnglish(service.hymns);
+// Hymns that came without Arabic get Spirit & Truth's, and its Arabic in English letters
+const addStArabic = (list: Hymn[]) => {
+  for (const hymn of list) {
+    if (hymn.children) addStArabic(hymn.children);
+    const found = stArabic[baseOf(hymn.id)];
+    if (!found || hymn.versions.some((v) => v.language === 'arabic' && v.text.trim())) continue;
+    hymn.versions = [
+      ...hymn.versions.filter((v) => v.language !== 'arabic' && v.language !== 'englishArabic'),
+      { language: 'englishArabic', text: found.englishArabic },
+      { language: 'arabic', text: found.arabic },
+    ];
+  }
+};
+for (const group of [...seasons, ...deaconCategories]) for (const service of group.services) addStArabic(service.hymns);
+// Great Lent's Distribution melodies, which came as names only
+for (const hymn of seasons.find((s) => s.id === 'great-lent')?.services.flatMap((s) => flattenHymns(s.hymns)) ?? []) {
+  const key = baseOf(hymn.id).match(/^lent-(?:weekday|weekend)-distribution-melody-(.+)$/)?.[1];
+  const melody = key ? lentMelodies[key] : undefined;
+  if (!melody || hymn.versions.some((v) => v.text.trim())) continue;
+  hymn.versions = [
+    { language: 'english', text: melody.english },
+    { language: 'englishArabic', text: melody.englishArabic },
+    { language: 'arabic', text: melody.arabic },
+  ];
+}
 addArabicCoptic([...seasons, ...deaconCategories]);
 addArabicEnglish([...seasons, ...deaconCategories]);
 

@@ -5,7 +5,8 @@ import type { Hymn } from './hymns';
 
 const COPTIC = /[Ⲁ-⳿Ϣ-ϯ]/;
 const LATIN = /[A-Za-z]/;
-const SPEAKER = /^(Ⲡⲓⲇⲓⲁⲕⲱⲛ|Ⲡⲓⲗⲁⲟⲥ|Ⲡⲓⲟⲩⲏⲃ|Ⲡⲓⲟⲩⲏⲃ ⲛⲉⲙ ⲡⲓⲗⲁⲟⲥ):$/;
+// a speaker's name, alone on its line: "Ⲡⲓⲗⲁⲟⲥ:" or "(Ⲡⲓⲗⲁⲟⲥ)"
+const SPEAKER = /^\(?(Ⲡⲓⲇⲓⲁⲕⲱⲛ|Ⲡⲓⲗⲁⲟⲥ|Ⲡⲓⲟⲩⲏⲃ|Ⲡⲓⲟⲩⲏⲃ ⲛⲉⲙ ⲡⲓⲗⲁⲟⲥ)\)?:?$/;
 
 // A hymn title as written in the data, e.g. "Ⲧⲉⲛⲟⲩⲱϣⲧ ⲙ̀Ⲫ̀ⲓⲱⲧ (Morning Doxology)", split into its English name and its
 // Coptic opening words. Titles with only one of them leave the other null.

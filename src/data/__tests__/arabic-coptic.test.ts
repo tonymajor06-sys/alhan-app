@@ -95,12 +95,13 @@ describe('Kiahk Praises & Season > Midnight Praises', () => {
     }
   });
 
-  it('plays the recording of "I Open my Mouth with Praise" on its English and Arabic versions (and English in Arabic letters)', () => {
+  it('plays the recording of "I Open my Mouth with Praise" on its English and Arabic versions (and both letter versions)', () => {
     const hymn = service.hymns.find((h) => h.title === 'I Open my Mouth with Praise')!;
     const file = 'kiahk-midnight-i-open-my-mouth-with-praise.mp3';
     expect(hymn.versions.map((v) => [v.language, v.audio])).toEqual([
       ['english', file],
       ['arabic', file],
+      ['englishArabic', file],
       ['arabicEnglish', file],
     ]);
     // the recording is in the repo, so it can stream from GitHub once it is pushed
@@ -124,7 +125,7 @@ describe('Kiahk Praises & Season > Midnight Praises', () => {
       const hymn = service.hymns.find((h) => h.title === title)!;
       expect([title, hymn.versions.map((v) => [v.language, v.audio])]).toEqual([
         title,
-        [['english', file], ['arabic', file], ['arabicEnglish', file]],
+        [['english', file], ['arabic', file], ['englishArabic', file], ['arabicEnglish', file]],
       ]);
       expect(nodeFs.statSync('assets/audio/' + file).size).toBeGreaterThan(1000000);
       const withThisFile = flattenHymns(service.hymns).filter((h) => h.versions.some((v) => v.audio === file));

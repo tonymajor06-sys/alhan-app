@@ -11,8 +11,8 @@ const arabicTitles: Record<string, string> = {
   nayrouz: 'عيد النيروز (رأس السنة القبطية)',
   cross: 'عيد الصليب',
   'nativity-fast': 'صوم الميلاد',
-  kiahk: 'شهر كيهك وتسابيحه',
-  nativity: 'عيد الميلاد المجيد',
+  kiahk: 'كيهك',
+  nativity: 'عيد الميلاد',
   theophany: 'عيد الغطاس المجيد',
   jonah: 'صوم وفصح يونان (نينوى)',
   'great-lent': 'الصوم الكبير',
@@ -265,6 +265,27 @@ const arabicTitles: Record<string, string> = {
   'apostles-fast': 'صوم وعيد الرسل',
   'st-mary': 'صوم السيدة العذراء وعيد صعود جسدها',
   'minor-feasts': 'الأعياد السيدية الصغرى',
+
+  // Groups and hymns added on 2026-10-13
+  ...Object.fromEntries(
+    ['theophany-matins', 'holyweek-bright-saturday', 'pentecost-vespers', 'pentecost-matins'].map((service) => [
+      `nativity-matins-verses-of-the-cymbals-feast-of-nativity@${service}`,
+      'أرباع الناقوس للأعياد',
+    ])
+  ),
+  'nativity-matins-melody': 'قطع لباكر عيد الميلاد (الله الحي المتعالى)',
+  'nativity-fast-liturgy-saints-hitens': 'هيتنيات القديسين',
+  'pentecost-liturgy-saints-hitens': 'هيتنيات القديسين',
+  'pentecost-vespers-ascension': 'عيد الصعود',
+  'pentecost-matins-ascension': 'عيد الصعود',
+  'pentecost-liturgy-ascension': 'عيد الصعود',
+  'pentecost-distribution-ascension': 'عيد الصعود',
+  'pentecost-midnight-ascension': 'عيد الصعود',
+  'pentecost-vespers-pentecost-feast': 'عيد العنصرة',
+  'pentecost-matins-pentecost-feast': 'عيد العنصرة',
+  'pentecost-liturgy-pentecost-feast': 'عيد العنصرة',
+  'pentecost-distribution-pentecost-feast': 'عيد العنصرة',
+  'pentecost-midnight-pentecost-feast': 'عيد العنصرة',
 
   // Deacon categories
   'deacon-annual': 'السنوي',
