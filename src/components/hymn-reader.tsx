@@ -186,6 +186,16 @@ export function HymnReader({
       playQueue([{ ...readerItem, title, source, file: currentAudio }, ...(settings.playNext ? followingTracks() : [])]);
   };
 
+  const selectRecording = (index: number) => {
+    setRecordingIndex(index);
+    const chosenFile = recordings[index];
+    if (!chosenFile) return;
+    const source = audioSourceFor(chosenFile);
+    if (!source) return;
+    playQueue([{ ...readerItem, title, source, file: chosenFile }, ...(settings.playNext ? followingTracks() : [])]);
+  };
+
+
   const togglePlayNext = () => {
     const on = !settings.playNext;
     updateSettings({ playNext: on });
@@ -521,19 +531,7 @@ export function HymnReader({
             </Text>
           ) : null}
 
-          {/* Full-width SeekBar so scrubbing is smooth and accurate across the phone screen */}
-          <SeekBar currentTime={status.currentTime} duration={status.duration} onSeek={seekTo} label={t.position} goToLabel={t.goToTime} />
-
-          {/* Primary playback controls: skip back, play/pause, skip forward */}
-          <View style={[styles.audioPlayerMain, rowDirection]}>
-            <Pressable
-              onPress={() => seekBy(-10)}
-              disabled={!readerIsCurrent}
-              accessibilityLabel="Skip back 10 seconds"
-              style={({ pressed }) => [styles.audioSkipButton, pressed && styles.pressed, !readerIsCurrent && styles.disabled]}>
-              <Text style={styles.audioSkipIcon}>↺ 10</Text>
-            </Pressable>
-
+          <View style={[styles.audioTopRow, rowDirection]}>
             <Pressable
               onPress={toggleReaderAudio}
               accessibilityRole="button"
@@ -541,24 +539,48 @@ export function HymnReader({
               style={({ pressed }) => [styles.playButton, pressed && styles.pressed]}>
               <Text style={styles.playIcon}>{status.playing ? '❚❚' : '▶'}</Text>
             </Pressable>
-
-            <Pressable
-              onPress={() => seekBy(10)}
-              disabled={!readerIsCurrent}
-              accessibilityLabel="Skip forward 10 seconds"
-              style={({ pressed }) => [styles.audioSkipButton, pressed && styles.pressed, !readerIsCurrent && styles.disabled]}>
-              <Text style={styles.audioSkipIcon}>10 ↻</Text>
-            </Pressable>
+            <View style={styles.rowTextWrap}>
+              <SeekBar currentTime={status.currentTime} duration={status.duration} onSeek={seekTo} label={t.position} goToLabel={t.goToTime} />
+            </View>
           </View>
-
-          {/* Multiple recordings selector if available */}
           {recordings.length > 1 ? (
-            <View style={[styles.audioControls, rowDirection, { justifyContent: 'center', marginVertical: 6 }]}>
+            <View style={[styles.audioControls, rowDirection]}>
               {recordings.map((file, i) =>
-                actionChip(`${t.recording} ${isRTL ? String(i + 1).replace(/\d/g, (d) => '٠١٢٣٤٥٦٧٨٩'[Number(d)]) : i + 1}`, () => setRecordingIndex(i), file === currentAudio)
+                actionChip(
+                  `${t.recording} ${isRTL ? String(i + 1).replace(/\d/g, (d) => '٠١٢٣٤٥٦٧٨٩'[Number(d)]) : i + 1}`,
+                  () => selectRecording(i),
+                  file === currentAudio
+                )
               )}
             </View>
           ) : null}
+          <View style={[styles.audioControls, rowDirection]}>
+            <Pressable
+              onPress={() => seekBy(-10)}
+              disabled={!readerIsCurrent}
+              style={({ pressed }) => [styles.controlButton, pressed && styles.pressed, !readerIsCurrent && styles.disabled]}>
+              <Text style={styles.controlText}>↺ 10s</Text>
+            </Pressable>
+            <Pressable
+              onPress={() => seekBy(10)}
+              disabled={!readerIsCurrent}
+              style={({ pressed }) => [styles.controlButton, pressed && styles.pressed, !readerIsCurrent && styles.disabled]}>
+              <Text style={styles.controlText}>10s ↻</Text>
+            </Pressable>
+            <Pressable
+              onPress={() => setRepeat(repeatOne ? 'none' : 'one')}
+              accessibilityState={{ selected: repeatOne }}
+              style={[styles.controlButton, repeatOne && styles.controlButtonActive]}>
+              <Text style={[styles.controlText, repeatOne && styles.controlTextActive]}>⟳ {t.repeat}</Text>
+            </Pressable>
+            <Pressable
+              onPress={togglePlayNext}
+              accessibilityRole="switch"
+              accessibilityState={{ checked: settings.playNext }}
+              style={[styles.controlButton, settings.playNext && styles.controlButtonActive]}>
+              <Text style={[styles.controlText, settings.playNext && styles.controlTextActive]}>⏭ {t.playNext}</Text>
+            </Pressable>
+          </View>
 
           {learning ? (
             <View style={styles.learnPanel}>
@@ -606,33 +628,16 @@ export function HymnReader({
             </View>
           ) : null}
 
-          {/* Secondary controls row: Repeat, Play next, Playlist, Download */}
-          <View style={[styles.audioPillsRow, rowDirection]}>
-            <Pressable
-              onPress={() => setRepeat(repeatOne ? 'none' : 'one')}
-              accessibilityState={{ selected: repeatOne }}
-              style={({ pressed }) => [styles.audioPill, repeatOne && styles.audioPillActive, pressed && styles.pressed]}>
-              <Text style={[styles.audioPillText, repeatOne && styles.audioPillTextActive]}>⟳ {t.repeat}</Text>
-            </Pressable>
-
-            <Pressable
-              onPress={togglePlayNext}
-              accessibilityRole="switch"
-              accessibilityState={{ checked: settings.playNext }}
-              style={({ pressed }) => [styles.audioPill, settings.playNext && styles.audioPillActive, pressed && styles.pressed]}>
-              <Text style={[styles.audioPillText, settings.playNext && styles.audioPillTextActive]}>⏭ {t.playNext}</Text>
-            </Pressable>
-
+          <View style={[styles.audioActions, rowDirection]}>
             <Pressable
               onPress={() => togglePlaylistItem(readerItem)}
               accessibilityRole="button"
               accessibilityState={{ selected: inPlaylist }}
-              style={({ pressed }) => [styles.audioPill, inPlaylist && styles.audioPillActive, pressed && styles.pressed]}>
-              <Text style={[styles.audioPillText, inPlaylist && styles.audioPillTextActive]}>
+              style={({ pressed }) => [styles.playlistButton, styles.audioAction, inPlaylist && styles.controlButtonActive, pressed && styles.pressed]}>
+              <Text style={[styles.controlText, inPlaylist && styles.controlTextActive]}>
                 {inPlaylist ? t.inPlaylist : t.addToPlaylist}
               </Text>
             </Pressable>
-
             {canDownload(currentAudio) ? (
               <Pressable
                 onPress={() => toggleDownload(currentAudio)}
@@ -640,12 +645,13 @@ export function HymnReader({
                 accessibilityRole="button"
                 accessibilityState={{ selected: isDownloaded, busy: isDownloading }}
                 style={({ pressed }) => [
-                  styles.audioPill,
-                  isDownloaded && styles.audioPillActive,
+                  styles.playlistButton,
+                  styles.audioAction,
+                  isDownloaded && styles.controlButtonActive,
                   pressed && styles.pressed,
                   isDownloading && styles.disabled,
                 ]}>
-                <Text style={[styles.audioPillText, isDownloaded && styles.audioPillTextActive]}>
+                <Text style={[styles.controlText, isDownloaded && styles.controlTextActive]} numberOfLines={1} adjustsFontSizeToFit>
                   {isDownloading ? t.downloading : isDownloaded ? t.downloaded : t.download}
                 </Text>
               </Pressable>
