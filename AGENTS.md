@@ -45,7 +45,7 @@ Docs: https://docs.expo.dev/eas/index.md
 Several assistants (Claude Code, Antigravity) work in this repo. Commit finished work in small commits so the others see a clean state, and don't edit the same files at the same time.
 
 - **Transliterations:** if a hymn comes without "Coptic in English letters" or "Arabic in English letters", write it yourself and say which parts you wrote.
-- **English Coptic** follows the owner's alphabet chart: ⲃ = v before a vowel, b otherwise; ⲏ ē, ⲱ ō, ⲭ/ϧ kh, ϭ tsh, ϫ j, ϯ ti; a jinkim adds "e" before its letter; abbreviations are written out (Ⲡ̅ⲟ̅ⲥ̅ Eptshois, Ⲫϯ Efnouti). Exception: Ⲭⲉⲣⲉ is always "Shere". See `src/data/english-coptic.ts`.
+- **English Coptic** follows the owner's alphabet chart: ⲃ = v before a vowel, b otherwise; ⲏ ē, ⲱ ō, ⲭ/ϧ kh, ϭ tsh, ϫ j before e-sound vowels (ⲉ, ⲏ, ⲓ, ⲩ) and g otherwise (as in "Gōr evol ennigaji"), ϯ ti; a jinkim adds "e" before its letter; abbreviations are written out (Ⲡ̅ⲟ̅ⲥ̅ Eptshois, Ⲫϯ Efnouti). Exception: Ⲭⲉⲣⲉ is always "Shere". See `src/data/english-coptic.ts`.
 - **Arabic in English letters:** write ج as "g" (Egyptian Coptic pronunciation), never "j".
 - **Permissions already granted** (don't raise them again): Archdeacon Arsani Sidarous's recordings (KlickAud, alhan.org, his YouTube playlist), every track in the SoundCloud playlist "Archie Arsani Sidarous", and the texts of the Spirit & Truth app (its creator approved). Keep Spirit & Truth source captures out of git.
 - **Audio** lives in `assets/audio` and is mirrored to Cloudflare R2 with `node scripts/upload-audio-r2.mjs`; upload new files after adding them.

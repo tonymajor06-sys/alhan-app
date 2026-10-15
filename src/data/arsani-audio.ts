@@ -87,7 +87,7 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   // Commemoration of the Saints- Arsani Sidarous
   { file: "arsani-082-commemoration-of-saints.m4a", hymns: ["annual-midnight-commemoration"], language: "coptic" },
   // 1st & 2nd Joyful Sherat (Coptic)| Arsani Sidarous and Archangel Michael Chorus
-  { file: "arsani-085-1st-2nd-joyful-sherat-coptic-archangel-michael.m4a", hymns: ["annual-midnight-saturday-watos-lobsh-1", "annual-vesper-praises-saturday-watos-lobsh-1"], language: "coptic" },
+  { file: "arsani-085-1st-2nd-joyful-sherat-coptic-archangel-michael.m4a", hymns: [], language: "coptic" },
   // Kyrie Eleyson (Lent weekday Matins Verses of the Cymbals) | Archdeacon Arsani Sidarous
   { file: "arsani-088-kyrie-eleyson-lent-weekday-matins-verses-of-cymbal.m4a", hymns: ["lent-weekday-matins-verse-of-cymbals"], language: "coptic" },
   // Shere Theotoke- Arsani Sidarous
@@ -139,7 +139,7 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   // O Nim Nai| Arsani Sidarous |  أو نيم ناي| ارسانى سيداروس
   { file: "arsani-157-o-nim-nai.m4a", hymns: ["pentecost-liturgy-o-nimnai"], language: "coptic" },
   // Festive Tenoweh Ensok I Archdeacon Arsani Sidarous and Chorus
-  { file: "arsani-162-festive-tenoweh-ensok-i.m4a", hymns: ["annual-midnight-psali-watos-three-holy-youth"], language: "coptic" },
+  { file: "arsani-162-festive-tenoweh-ensok-i.m4a", hymns: [], language: "coptic" },
   // Third Hoos I Archdeacon Arsani Sidarous and Chorus
   { file: "arsani-163-third-hoos-i.m4a", hymns: ["annual-midnight-third-canticle"], language: "coptic" },
   // Khristos Analimepsis (Minor) - Greek Hymn for the Ascension - Arsani Sidarous | المسيح صعد
@@ -166,6 +166,16 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   { file: "arsani-210-introduction-to-exposition-for-holy-week.m4a", hymns: ["holyweek-pascha-general-exposition-introduction"], language: "coptic" },
   // Ommonogenees - Arsani Sidarous
   { file: "arsani-213-ommonogenees.m4a", hymns: ["holyweek-great-friday-omonogenyc"], language: "coptic" },
+  // 17- Sunday Theotokeya | JoeSeif
+  // Lipon (Conclusion of Adam Psalis)
+  { file: "arsani-223-sunday-adam-psali-conclusion.m4a", hymns: ["annual-midnight-sunday-adam-psali-conclusion", "annual-midnight-monday-adam-psali-conclusion", "annual-midnight-tuesday-adam-psali-conclusion", "annual-vesper-praises-sunday-adam-psali-conclusion", "annual-vesper-praises-monday-adam-psali-conclusion", "annual-vesper-praises-tuesday-adam-psali-conclusion"], language: "coptic" },
+  // Sunday Theotokia (Parts 1 to 6)
+  { file: "arsani-223-sunday-theotokia-part-1.m4a", hymns: ["annual-midnight-sunday-theotokia-part-1", "annual-vesper-praises-sunday-theotokia-part-1"], language: "coptic" },
+  { file: "arsani-223-sunday-theotokia-part-2.m4a", hymns: ["annual-midnight-sunday-theotokia-part-2", "annual-vesper-praises-sunday-theotokia-part-2"], language: "coptic" },
+  { file: "arsani-223-sunday-theotokia-part-3.m4a", hymns: ["annual-midnight-sunday-theotokia-part-3", "annual-vesper-praises-sunday-theotokia-part-3"], language: "coptic" },
+  { file: "arsani-223-sunday-theotokia-part-4.m4a", hymns: ["annual-midnight-sunday-theotokia-part-4", "annual-vesper-praises-sunday-theotokia-part-4"], language: "coptic" },
+  { file: "arsani-223-sunday-theotokia-part-5.m4a", hymns: ["annual-midnight-sunday-theotokia-part-5", "annual-vesper-praises-sunday-theotokia-part-5"], language: "coptic" },
+  { file: "arsani-223-sunday-theotokia-part-6.m4a", hymns: ["annual-midnight-sunday-theotokia-part-6", "annual-vesper-praises-sunday-theotokia-part-6"], language: "coptic" },
   // 16- Aikoti
   { file: "arsani-224-16-aikoti.m4a", hymns: ["annual-midnight-sunday-psali-lord-jesus", "annual-vesper-praises-sunday-psali-lord-jesus"], language: "coptic" },
   // 01- Tenthino
@@ -202,6 +212,11 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
 
   // Bright Saturday Third Hoos (Evlogite): Arsani Sidarous & St. Abraam Deacons
   { file: "arsani-012-bright-saturday-third-hoos-evlogite.m4a", hymns: ["annual-midnight-third-canticle@holyweek-bright-saturday"], language: "coptic" },
+  // Bright Saturday Watos Psali for the Three Holy Youth (Tenoweh Ensok)
+  { file: "holyweek-bright-saturday-psali-watos-three-holy-youth.m4a", hymns: ["annual-midnight-psali-watos-three-holy-youth@holyweek-bright-saturday"], language: "coptic" },
+  // Bright Saturday - The Hymn of Bright Saturday
+  { file: "holyweek-bright-saturday-the-hymn-of-bright-saturday.m4a", hymns: ["holyweek-bright-saturday-the-hymn-of-bright-saturday"], language: "coptic" },
+  { file: "holyweek-bright-saturday-the-hymn-of-bright-saturday.m4a", hymns: ["holyweek-bright-saturday-the-hymn-of-bright-saturday"], language: "arabic" },
   // Adam Psali Resurrection - Arsani Sidarous
   { file: "arsani-062-adam-psali-resurrection.m4a", hymns: ["pentecost-midnight-psali-adam-for-the-holy-fifty-days"], language: "coptic" },
   // Palm Sunday Melismatic Sherat - Arsani Sidarous | الشيرات(لبش السبت) الشعنيني

@@ -44,10 +44,12 @@ const OVERLINES = /[̅︦]/;
 // Holy names written short under a line, written out in full
 const ABBREVIATIONS: Record<string, string> = {
   'ⲉⲑⲩ': 'ⲉⲑⲟⲩⲁⲃ',
+  'ⲫⲏⲉⲑⲩ': 'ⲫⲏⲉⲑⲟⲩⲁⲃ',
   'ⲡⲛⲁ': 'ⲡ̀ⲛⲉⲩⲙⲁ',
   'ⲡⲓⲡⲛⲁ': 'ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ',
   'ⲡⲛⲁⲧⲓ': 'ⲡ̀ⲛⲉⲩⲙⲁⲧⲓ',
   'ⲡⲓⲉⲑⲩ': 'ⲡⲓⲉⲑⲟⲩⲁⲃ',
+  'ⲧⲉⲛⲟⲥ': 'ⲧⲉⲛϭⲟⲓⲥ',
   'ⲡⲉⲛⲟⲥ': 'ⲡⲉⲛϭⲟⲓⲥ',
   'ⲡⲟⲥ': 'ⲡ̀ϭⲟⲓⲥ',
   'ⲡⲉⲛⲥⲱⲣ': 'ⲡⲉⲛⲥⲱⲧⲏⲣ',
@@ -62,6 +64,7 @@ const ABBREVIATIONS: Record<string, string> = {
   'ⲓⲏⲥ': 'ⲓⲏⲥⲟⲩⲥ',
   'ⲡⲭⲥ': 'ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ',
   'ⲭⲉ': 'ⲭⲉⲣⲉ ⲛⲉ ⲱ ϯⲡⲁⲣⲑⲉⲛⲟⲥ',
+  'ⲓⲗⲏⲙ': 'ⲓⲉⲣⲟⲩⲥⲁⲗⲏⲙ',
 };
 // Letters under a line are also numbers: ⲣⲙⲏ̅ = 100 + 40 + 8 = 148
 const NUMBER_VALUES: Record<string, number> = {
@@ -80,14 +83,19 @@ function convertWord(core: string): string {
 
   const plain = core.replace(/[̀̅︦]/g, '').toLowerCase();
   if (OVERLINES.test(core)) {
-    // a short name, perhaps after ⲙ̀ / ⲛ̀ / ⲉ̀ (ⲙ̀Ⲡⲭ̅ⲥ̅ = em-Pikhristos)
-    const prefix = !ABBREVIATIONS[plain] && /^[ⲙⲛⲉ]/.test(plain) && ABBREVIATIONS[plain.slice(1)] ? plain.charAt(0) : '';
+    // a short name, perhaps after ⲙ̀ / ⲛ̀ / ⲉ̀ / ⲁ̀ (ⲙ̀Ⲡⲭ̅ⲥ̅ = em-Pikhristos, ⲀⲠⲭ̅ⲥ̅ = A-Pikhristos)
+    const prefix = !ABBREVIATIONS[plain] && /^[ⲙⲛⲉⲁ]/.test(plain) && ABBREVIATIONS[plain.slice(1)] ? plain.charAt(0) : '';
     const full = ABBREVIATIONS[plain.slice(prefix.length)];
     if (full) {
       const words = full.split(' ').map(convertWord);
-      const rest = core.replace(/^[^Ⲁ-⳿Ϣ-ϯ]*[ⲙⲛⲉ][̀]?/, '');
+      const rest = core.replace(/^[^Ⲁ-⳿Ϣ-ϯ]*[ⲙⲛⲉⲁ][̀]?/, '');
       if (isUpper((prefix ? rest : core).charAt(0))) words[0] = capitalize(words[0]);
-      return prefix ? `e${LETTERS[prefix]}-${words.join(' ')}` : words.join(' ');
+      if (prefix) {
+        const prefSound = VOWELS.has(prefix) ? LETTERS[prefix] || prefix : `e${LETTERS[prefix] || prefix}`;
+        const prefFormatted = isUpper(core.charAt(0)) ? capitalize(prefSound) : prefSound;
+        return `${prefFormatted}-${words.join(' ')}`;
+      }
+      return words.join(' ');
     }
     const digits = [...plain];
     if (digits.every((d) => NUMBER_VALUES[d])) return String(digits.reduce((sum, d) => sum + NUMBER_VALUES[d], 0));
@@ -113,6 +121,9 @@ function convertWord(core: string): string {
     if (base === 'ⲃ') {
       const doubled = next?.base === 'ⲃ' || (i > 0 && letters[i - 1].base === 'ⲃ');
       sound = !doubled && next && VOWELS.has(next.base) ? 'v' : 'b';
+    } else if (base === 'ϫ') {
+      const eSoundVowel = next && ['ⲉ', 'ⲏ', 'ⲓ', 'ⲩ'].includes(next.base);
+      sound = eSoundVowel ? 'j' : 'g';
     } else if (base === 'ⲟ' && next?.base === 'ⲩ' && !next.jinkim) {
       sound = 'ou';
       i++;

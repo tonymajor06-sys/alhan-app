@@ -41,7 +41,7 @@ export const stDeacon: { service: string; after: string; hymn: Hymn }[] = [
       title: 'Ⲧⲱⲃϩ ⲉ̀ϫⲉⲛ ⲡⲁⲓⲕⲉⲓⲉⲣⲁⲧⲓⲟⲛ (Pray for the Priesthood, St Cyril)',
       versions: [
         { language: 'coptic', text: 'Ⲡⲓⲇⲓⲁⲕⲱⲛ:\n\nⲦⲱⲃϩ ⲉ̀ϫⲉⲛ ⲡⲁⲓⲕⲉⲓⲉⲣⲁⲧⲓⲟⲛ ⲉⲑⲟⲩⲁⲃ ⲫⲁⲓ ⲛⲉⲙ ⲧⲁⲅⲙⲁ ⲛⲓⲃⲉⲛ ⲛ̀ⲓⲉⲣⲁⲧⲓⲕⲟⲛ ⲛ̀ⲟⲣⲑⲟⲇⲟⲝⲟⲥ: ϩⲓⲛⲁ ⲛ̀ⲧⲉ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ Ⲡⲉⲛⲛⲟⲩϯ ⲥⲱⲧⲉⲙ ⲉ̀ⲣⲱⲟⲩ: ⲛ̀ⲧⲉϥⲣⲱⲓⲥ ⲉ̀ⲣⲱⲟⲩ: ⲟⲩⲟϩ ⲛ̀ⲧⲉϥϯϫⲟⲙ ⲛⲱⲟⲩ: ⲛ̀ⲧⲉϥⲛⲁⲓ ⲛⲱⲟⲩ: ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ.\n\nⲠⲓⲗⲁⲟⲥ:\n\nⲔⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ.' },
-        { language: 'englishCoptic', text: 'Pi-diakon:\n\nTōbh ejen paikeieration ethouab fai nem tagma niven enieratikon enorthodoksos: hina ente Pikhristos Pennouti sōtem erōou: entefrōis erōou: ouoh entefti-jom nōou: entefnai nōou: entefkha nennovi nan evol.\n\nPi-laos:\n\nKurie eleēson.' },
+        { language: 'englishCoptic', text: 'Pi-diakon:\n\nTōbh ejen paikeieration ethouab fai nem tagma niven enieratikon enorthodoksos: hina ente Pikhristos Pennouti sōtem erōou: entefrōis erōou: ouoh entefti-gom nōou: entefnai nōou: entefkha nennovi nan evol.\n\nPi-laos:\n\nKurie eleēson.' },
         { language: 'english', text: 'Deacon:\n\nPray for this holy priesthood and all the orthodox priestly orders, that Christ our God may hearken unto them, guard them, strengthen them, have mercy on them, and forgive us our sins.\n\nPeople:\n\nLord have mercy.' },
         { language: 'englishArabic', text: "Esh-shammas:\n\nUtlubu 'an hadha el-kahanout el-muqaddas, wa kull er-rutab el-kahanoutiyya el-orthodoksiyya, likay yastagib lahum el-Masih ilahuna, wa yahrusahum wa yuqawwihim wa yarhamahum, wa yaghfir lana khatayana.\n\nEsh-sha'b:\n\nYa Rabb irham." },
         { language: 'arabic', text: 'الشماس:\n\nاطلبوا عن هذا الكهنوت المقدس، وكل الرتب الكهنوتية الأرثوذكسية، لكي يستجيب لهم المسيح إلهنا، ويحرسهم ويقويهم ويرحمهم، ويغفر لنا خطايانا.\n\nالشعب:\n\nيا رب ارحم.' },
@@ -56,7 +56,7 @@ export const stDeacon: { service: string; after: string; hymn: Hymn }[] = [
       title: 'Ⲧⲱⲃϩ ⲉ̀ϫⲉⲛ ⲡⲉⲛϫⲓⲛⲑⲱⲟⲩϯ (Pray for the Assemblies, St Cyril)',
       versions: [
         { language: 'coptic', text: 'Ⲡⲓⲇⲓⲁⲕⲱⲛ:\n\nⲦⲱⲃϩ ⲉ̀ϫⲉⲛ ⲡⲉⲛϫⲓⲛⲑⲱⲟⲩϯ ⲉ̀ϧⲟⲩⲛ ⲫⲁⲓ ⲛⲉⲙ ϫⲓⲛⲑⲱⲟⲩϯ ⲉ̀ϧⲟⲩⲛ ⲛⲓⲃⲉⲛ ⲛ̀ⲧⲉ ⲛⲓⲗⲁⲟⲥ ⲛ̀ⲟⲣⲑⲟⲇⲟⲝⲟⲥ: ϩⲓⲛⲁ ⲛ̀ⲧⲉ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ Ⲡⲉⲛⲛⲟⲩϯ ⲥ̀ⲙⲟⲩ ⲉ̀ⲣⲱⲟⲩ: ⲛ̀ⲧⲉϥϫⲟⲕⲟⲩ ⲉ̀ⲃⲟⲗ ϧⲉⲛ ⲟⲩϩⲓⲣⲏⲛⲏ: ⲛ̀ⲧⲉϥⲭⲁ ⲛⲉⲛⲛⲟⲃⲓ ⲛⲁⲛ ⲉ̀ⲃⲟⲗ.\n\nⲠⲓⲗⲁⲟⲥ:\n\nⲔⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ.' },
-        { language: 'englishCoptic', text: 'Pi-diakon:\n\nTōbh ejen penjinthōouti ekhoun fai nem jinthōouti ekhoun niven ente nilaos enorthodoksos: hina ente Pikhristos Pennouti esmou erōou: entefjokou evol khen ouhirēnē: entefkha nennovi nan evol.\n\nPi-laos:\n\nKurie eleēson.' },
+        { language: 'englishCoptic', text: 'Pi-diakon:\n\nTōbh ejen penjinthōouti ekhoun fai nem jinthōouti ekhoun niven ente nilaos enorthodoksos: hina ente Pikhristos Pennouti esmou erōou: entefgokou evol khen ouhirēnē: entefkha nennovi nan evol.\n\nPi-laos:\n\nKurie eleēson.' },
         { language: 'english', text: 'Deacon:\n\nPray for this assembly of ours, and for every assembly of the Orthodox people, that Christ our God may bless them and perfect them in peace, and forgive us our sins.\n\nPeople:\n\nLord have mercy.' },
         { language: 'englishArabic', text: "Esh-shammas:\n\nUtlubu 'an igtima'ina hadha, wa 'an kull igtima' esh-shu'oub el-orthodoksiyyeen, likay yubarikaha el-Masih ilahuna wa yukammilaha bi-salam, wa yaghfir lana khatayana.\n\nEsh-sha'b:\n\nYa Rabb irham." },
         { language: 'arabic', text: 'الشماس:\n\nاطلبوا عن اجتماعنا هذا، وعن كل اجتماع الشعوب الأرثوذكسيين، لكي يباركها المسيح إلهنا ويكملها بسلام، ويغفر لنا خطايانا.\n\nالشعب:\n\nيا رب ارحم.' },
