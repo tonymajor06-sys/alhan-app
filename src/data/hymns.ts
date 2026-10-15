@@ -7604,8 +7604,15 @@ for (const { file, hymns: ids, language } of arsaniAudio) {
     const base = hymn.id.split('@')[0];
     if (!ids.includes(hymn.id) && !(ids.includes(base) && !base.startsWith('annual-'))) continue;
     for (const version of hymn.versions.filter((v) => audioLanguages[language]?.includes(v.language))) {
-      if (!version.audio) version.audio = file;
-      else if (version.audio !== file && !version.otherAudio?.includes(file)) version.otherAudio = [...(version.otherAudio ?? []), file];
+      if (ids.includes(hymn.id) && hymn.id.includes('@')) {
+        if (version.audio && version.audio !== file) {
+          version.otherAudio = [version.audio, ...(version.otherAudio ?? []).filter((f) => f !== file)];
+        }
+        version.audio = file;
+      } else {
+        if (!version.audio) version.audio = file;
+        else if (version.audio !== file && !version.otherAudio?.includes(file)) version.otherAudio = [...(version.otherAudio ?? []), file];
+      }
     }
   }
 }

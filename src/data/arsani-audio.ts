@@ -199,4 +199,17 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   { file: "arsani-yt-lent-sixth-sunday-melody.m4a", hymns: ["lent-weekend-distribution-melody-sixth-sunday"], language: "arabic" },
   // Feast of El Nayrouz: Verses of the Cymbals (Coptic)
   { file: "arsani-yt-nayrouz-verses-of-cymbals.m4a", hymns: ["nayrouz-matins-verses-of-the-cymbals"], language: "coptic" },
+
+  // Bright Saturday Third Hoos (Evlogite): Arsani Sidarous & St. Abraam Deacons
+  { file: "arsani-012-bright-saturday-third-hoos-evlogite.m4a", hymns: ["annual-midnight-third-canticle@holyweek-bright-saturday"], language: "coptic" },
+  // Adam Psali Resurrection - Arsani Sidarous
+  { file: "arsani-062-adam-psali-resurrection.m4a", hymns: ["pentecost-midnight-psali-adam-for-the-holy-fifty-days"], language: "coptic" },
+  // Palm Sunday Melismatic Sherat - Arsani Sidarous | الشيرات(لبش السبت) الشعنيني
+  { file: "arsani-150-palm-sunday-melismatic-sherat.m4a", hymns: ["annual-midnight-saturday-watos-lobsh-1@palmsunday-midnight", "annual-midnight-saturday-watos-lobsh-2@palmsunday-midnight"], language: "coptic" },
+  // Joyful Talabtoka (Arabic Aikoti Ensok) I Archdeacon Arsani Sidarous and Chorus
+  { file: "arsani-182-joyful-talabtoka.m4a", hymns: ["annual-midnight-sunday-psali-lord-jesus", "annual-vesper-praises-sunday-psali-lord-jesus"], language: "arabic" },
+  // Festive Psalm & Marouchasf | Mina Hanna & Arsani Sidarous
+  { file: "arsani-266-festive-psalm-marouchasf.m4a", hymns: ["d-annual-bishop-psalm-trailer-for-the-pope-or-a-bishop@d-fest-bishop"], language: "coptic" },
+  // Kiahk Coptic Psalm & Marou Chasf Ft. Arsani Sidarous and Deacons of Los Angeles (live)
+  { file: "arsani-267-kiahk-coptic-psalm-marou-chasf.m4a", hymns: ["kiahk-vespers-psalm-trailer"], language: "coptic" },
 ];
