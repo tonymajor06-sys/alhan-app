@@ -634,26 +634,30 @@ export default function HomeScreen() {
   }
 
   if (currentView === 'seasons-home') {
+    // Small cards side by side (two on a phone, more on a wide screen): a round picture and the name
     const shortName = (season: Season) => withoutNumber(displayTitle(season, lang))
         .replace(/\s*\([^)]*\)$/, '')
         .replace(' / Standard Services', '');
     return screen(
       t.seasonsTitle,
       t.chooseSeason,
-      listGroup(
-        'seasons-list',
-        seasons.map((season) =>
-          listRow(
-            season.id,
-            seasonArt[season.id]?.card?.[lang] ?? shortName(season),
-            () => setSelectedSeason(season),
-            {
-              image: seasonArt[season.id]?.image,
-              sub: seasonArt[season.id]?.about?.[lang] ?? null,
-            }
-          )
-        )
-      )
+      <View style={[styles.seasonGrid, rowDirection]}>
+        {seasons.map((season) => (
+          <Pressable
+            key={season.id}
+            onPress={() => setSelectedSeason(season)}
+            accessibilityRole="button"
+            accessibilityLabel={[withoutNumber(displayTitle(season, lang)), seasonArt[season.id]?.about[lang]].filter(Boolean).join(', ')}
+            style={({ pressed }) => [styles.seasonCard, rowDirection, pressed && styles.rowCardPressed]}>
+            {seasonArt[season.id] ? (
+              <Image source={seasonArt[season.id].image} style={styles.seasonCardImage} accessibilityIgnoresInvertColors />
+            ) : null}
+            <Text style={[styles.seasonCardTitle, textAlign]} numberOfLines={2}>
+              {seasonArt[season.id]?.card?.[lang] ?? shortName(season)}
+            </Text>
+          </Pressable>
+        ))}
+      </View>
     );
   }
 
