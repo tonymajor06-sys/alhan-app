@@ -3,6 +3,7 @@ import type { AppLanguage } from '@/hooks/use-settings';
 // Arabic display names, keyed by the id used in hymns.ts
 const arabicTitles: Record<string, string> = {
   "follow-doxologies": "الذكصولوجيات",
+  "cross-midnight-watos-psali-for-feast-of-the-cross": "إبصالية واطس لعيد الصليب",
   // Main categories
   responses: 'مردات الشماس والهيكل',
   hymns: 'الألحان',

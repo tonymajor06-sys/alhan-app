@@ -15,6 +15,7 @@ import { stDeacon } from './st-deacon';
 import { stAdditions } from './st-hymns';
 import { stMore } from './st-more';
 import { kiahkWeekdayHymns } from './kiahk-weekday-hymns';
+import { crossWatosPsali } from './cross-watos-psali';
 import { stMysteries } from './st-mysteries';
 import { stSeasonExtras } from './st-season-extras';
 
@@ -7469,6 +7470,7 @@ const allExtras: { season: string; service: string; serviceTitle?: string; group
   ...stSeasonExtras,
   ...stMore,
   ...kiahkWeekdayHymns,
+  ...crossWatosPsali,
 ];
 for (const extra of allExtras) {
   const season = seasons.find((s) => s.id === extra.season);

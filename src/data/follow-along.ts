@@ -1,6 +1,6 @@
 import { AppLanguage } from '@/hooks/use-settings';
 
-import { dateToJdn, getSeasonInfo, jdnToCoptic } from './coptic-calendar';
+import { dateToJdn, getSeasonInfo, jdnToCoptic, jdnToGregorian, paschaJdn } from './coptic-calendar';
 import { flattenHymns, Hymn, Season, seasons, Service } from './hymns';
 import { hymnAcrossSeasons } from './search';
 import { kiahkWeekdayOrder } from './kiahk-weekday-order';
@@ -95,7 +95,14 @@ function seasonFor(jdn: number, kind: PraiseKind): { season: Season; own?: Servi
     season.id === 'minor-feasts'
       ? season.services.find((s) => s.title.startsWith(`${current!.name.en}:`) && s.id.endsWith('-midnight'))
       : serviceOf(season, '-midnight');
-  return own ? { season, own } : { season: annual() };
+  if (own) return { season, own };
+  // A minor feast without its own Midnight Praises (Thomas Sunday, say) keeps the season around it
+  if (season.id === 'minor-feasts') {
+    const around = seasons.find((s) => s.id === getSeasonInfo(jdn + 1, 0).current?.seasonId && s.id !== 'minor-feasts');
+    const aroundOwn = around && serviceOf(around, '-midnight');
+    if (around && aroundOwn) return { season: around, own: aroundOwn };
+  }
+  return { season: annual() };
 }
 
 // A day's group of the structured Midnight / Vesper Praises (General, Sunday, Monday, ...)
@@ -136,7 +143,7 @@ function kiahkPsalis(weekday: number): Hymn[] {
 // A season whose Midnight Praises is one list (as Spirit & Truth gives it for one day of the season):
 // each of tonight's hymns becomes the season's own version when it has one, and the season's other hymns
 // come in where its list has them, leaving out those for other days of the week
-function withSeason(sections: FollowSection[], season: Season, own: Service, weekday: number): FollowSection[] {
+function withSeason(sections: FollowSection[], season: Season, own: Service, weekday: number, addOwn: boolean): FollowSection[] {
   const list = flattenHymns(own.hymns);
   const inOwn = new Set(list.map((h) => h.id));
   const used = new Set<string>();
@@ -150,7 +157,9 @@ function withSeason(sections: FollowSection[], season: Season, own: Service, wee
     }),
   }));
   // The season's own hymns, each after the last of the season's hymns before it that is already in tonight's order
+  // (seasons whose Psalis Spirit & Truth places by rule, below, only swap in their own versions)
   const after = new Map<string | null, Hymn[]>();
+  if (!addOwn) return replaced;
   let anchor: string | null = null;
   for (const hymn of list) {
     if (used.has(hymn.id)) {
@@ -165,8 +174,81 @@ function withSeason(sections: FollowSection[], season: Season, own: Service, wee
   }
   return replaced.map((section, i) => ({
     ...section,
-    hymns: [...(i === 0 ? (after.get(null) ?? []) : []), ...section.hymns.flatMap((h) => [h, ...(after.get(h.id) ?? [])])],
+    hymns: section.hymns.flatMap((h) => [h, ...(after.get(h.id) ?? [])]),
   }));
+}
+
+// The Holy Fifty Days and the Apostles' Fast as Spirit & Truth sings them: the season's Psali (Adam on Sunday,
+// Monday and Tuesday, Watos from Wednesday to Saturday) either stands in for the day's own Psali (the Fifty Days,
+// whose weekdays also end their Theotokia with the last three parts of Sunday's) or comes before it (the fast).
+// On Thomas Sunday the Fifty Days' Psali follows the one for Thomas Sunday.
+interface SeasonPsalis {
+  adam: RegExp;
+  watos: RegExp;
+  replaces: boolean;
+  thomas?: RegExp;
+}
+const seasonPsalis: Record<string, SeasonPsalis> = {
+  pentecost: { adam: /-psali-adam-for-the-holy-fifty-days$/, watos: /-psali-watos-for-the-holy-fifty-days$/, replaces: true, thomas: /-adam-psali-for-thomas-sunday$/ },
+  'apostles-fast': { adam: /-adam-psali-for-the-apostles-fast$/, watos: /-watos-psali-for-the-apostles-fast$/, replaces: false },
+};
+const dayPsali = /-(sunday|monday|tuesday|wednesday|thursday|friday|saturday)-(watos-)?psali$/;
+function withSeasonPsalis(sections: FollowSection[], own: Service, weekday: number, rule: SeasonPsalis, jdn: number): FollowSection[] {
+  const list = flattenHymns(own.hymns);
+  const byTitle = (re: RegExp) => list.find((h) => re.test(h.id));
+  const psali = byTitle(weekday <= 2 ? rule.adam : rule.watos);
+  const year = jdnToGregorian(jdn).year;
+  const thomas = rule.thomas && weekday === 0 && jdn === paschaJdn(year) + 7 ? byTitle(rule.thomas) : undefined;
+  const ownIds = new Set(list.map((h) => h.id));
+  return sections.map((section) => {
+    if (section.key !== 'day') return section;
+    // the season's other Psalis (for its feasts) are not sung on an ordinary day
+    let hymns = section.hymns.filter((h) => !(ownIds.has(h.id) && h.id.startsWith(own.id) && /psali/i.test(h.title)));
+    hymns = hymns.flatMap((h) => {
+      if (!dayPsali.test(h.id.split('@')[0]) || !psali) return [h];
+      const seasonal = [...(thomas ? [thomas] : []), psali];
+      return rule.replaces ? seasonal : [...seasonal, h];
+    });
+    if (rule.replaces && weekday !== 0) {
+      const last = hymns.map((h) => /-theotokia-part-\d+$/.test(h.id.split('@')[0])).lastIndexOf(true);
+      const sundayEnd = [16, 17, 18].map((n) => hymnById(`annual-midnight-sunday-theotokia-part-${n}`)).filter((h): h is Hymn => !!h);
+      if (last >= 0) hymns.splice(last + 1, 0, ...sundayEnd);
+    }
+    return { ...section, hymns };
+  });
+}
+
+// Great Lent as Spirit & Truth sings it. On a weekday the Lent Psali (Adam on Monday and Tuesday, Watos from
+// Wednesday to Saturday) stands in for the day's own Psali, and the weekday part of the Sunday Theotokia and the
+// Lent Psalis on the canticles are left out. On Sunday those Psalis stay; the Psali Adam on the Sunday Theotokia
+// stands in for the Sunday Psali, and the Psali Watos on its eighth part comes before that part.
+// On 10 Baramhat, the Feast of the Cross in the fast, there is no Lent Ode and the Cross's Psali is sung instead.
+const lentSundayPsalis = /-(psali-(adam|watos)-on-.*|watos-psali-on-great-lent-doxology)$/;
+const lentPsalis = /-(adam-psali-great-lent|watos-psali-for-great-lent)$/;
+function forLent(sections: FollowSection[], weekday: number, feastOfCross: boolean): FollowSection[] {
+  const all = sections.flatMap((s) => s.hymns);
+  const find = (re: RegExp) => all.find((h) => re.test(h.id.split('@')[0]));
+  const eighth = find(/-psali-watos-on-eighth-part-of-sunday-theotokia$/);
+  const onSundayTheotokia = find(/-psali-adam-on-sunday-theotokia$/);
+  const lentPsali = feastOfCross
+    ? hymnById(weekday <= 2 ? 'cross-midnight-adam-psali-for-feast-of-the-cross' : 'cross-midnight-watos-psali-for-feast-of-the-cross')
+    : find(weekday <= 2 ? /-adam-psali-great-lent$/ : /-watos-psali-for-great-lent$/);
+  return sections.map((section) => {
+    let hymns = section.hymns.filter(
+      (h) => !lentPsalis.test(h.id) && h !== onSundayTheotokia && h !== eighth && !(feastOfCross && /-great-lent-ode$/.test(h.id))
+    );
+    if (weekday !== 0) hymns = hymns.filter((h) => !weekdaySundayParts.test(h.id) && !lentSundayPsalis.test(h.id));
+    if (section.key === 'day') {
+      hymns = hymns.flatMap((h) => {
+        const base = h.id.split('@')[0];
+        if (/-(sunday|monday|tuesday|wednesday|thursday|friday|saturday)-psali$/.test(base))
+          return weekday === 0 ? (onSundayTheotokia ? [onSundayTheotokia] : [h]) : lentPsali ? [lentPsali] : [h];
+        if (weekday === 0 && eighth && /-sunday-theotokia-part-8$/.test(base)) return [eighth, h];
+        return [h];
+      });
+    }
+    return { ...section, hymns };
+  });
 }
 
 export function followAlong(kind: PraiseKind, jdn: number): FollowAlong {
@@ -214,7 +296,7 @@ export function followAlong(kind: PraiseKind, jdn: number): FollowAlong {
   // on Sunday they are in their place inside the whole Sunday Theotokia
   const before = general.slice(0, fourth + 1).filter((h) => weekday !== 0 || !weekdaySundayParts.test(h.id));
   // A Sunday outside the fasts begins with the Hymn of the Resurrection, after "Arise, O children of the light"
-  if (weekday === 0 && !own) {
+  if (weekday === 0 && !['great-lent', 'kiahk'].includes(season.id) && !before.some((h) => /the-hymn-of-the-resurrection$/.test(h.id.split('@')[0]))) {
     const arise = before.findIndex((h) => /-arise-o-children$/.test(h.id));
     before.splice(arise + 1, 0, ...shared('annual-midnight-the-hymn-of-the-resurrection'));
   }
@@ -235,7 +317,10 @@ export function followAlong(kind: PraiseKind, jdn: number): FollowAlong {
     { key: 'day', hymns: dayHymns },
     { key: 'conclusion', hymns: conclusion },
   ];
-  if (own && structured !== own && season.id !== 'kiahk') sections = withSeason(sections, season, own, weekday);
+  if (season.id === 'great-lent') sections = forLent(sections, weekday, jdnToCoptic(jdn).month === 7 && copticDay === 10);
+  if (own && structured !== own && season.id !== 'kiahk')
+    sections = withSeason(sections, season, own, weekday, !(season.id in seasonPsalis) && season.id !== 'nativity-fast');
+  if (own && season.id in seasonPsalis) sections = withSeasonPsalis(sections, own, weekday, seasonPsalis[season.id], jdn);
   sections = sections
     .map((s) => ({ ...s, hymns: withDoxologyGroup(s.hymns.filter((h) => hasContent(h) && !notSung.test(h.id.split('@')[0]))) }))
     .filter((s) => s.hymns.length);
