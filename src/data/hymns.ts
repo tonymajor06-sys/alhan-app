@@ -4872,7 +4872,7 @@ if (annualMidnight) {
       children: [
         {
           id: 'annual-midnight-arise-o-children',
-          title: 'Ⲧⲉⲛⲑⲏⲛⲟⲩ ⲉ̀ⲡ̀ϣⲱⲓ (Arise, O Children of the Light, Melismatic)',
+          title: 'Ⲧⲉⲛⲑⲏⲛⲟⲩ ⲉ̀ⲡ̀ϣⲱⲓ (Arise, O Children of the Light)',
           versions: [
             {
               language: 'coptic',
@@ -6002,10 +6002,6 @@ if (annualVesperPraises) {
       ...fromMidnight('wednesday-watos-lobsh', 'wednesday-watos-theotokia-conclusion'),
     ]),
     vesperPraisesDay('thursday', 'Thursday', [
-      titleOnly(
-        'annual-vesper-praises-thursday-psali-apatir-irini',
-        'Watos Psali for the Martyrdom of Saints Apatir and His Sister Irini'
-      ),
       ...fromMidnight('thursday-psali', 'thursday-watos-psali-conclusion'),
       ...vesperTheotokia('thursday'),
       ...fromMidnight('thursday-watos-lobsh', 'thursday-watos-theotokia-conclusion'),
