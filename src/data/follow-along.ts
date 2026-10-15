@@ -219,9 +219,9 @@ function withSeasonPsalis(sections: FollowSection[], own: Service, weekday: numb
 }
 
 // Great Lent as Spirit & Truth sings it. On a weekday the Lent Psali (Adam on Monday and Tuesday, Watos from
-// Wednesday to Saturday) stands in for the day's own Psali, and the weekday part of the Sunday Theotokia and the
-// Lent Psalis on the canticles are left out. On Sunday those Psalis stay; the Psali Adam on the Sunday Theotokia
-// stands in for the Sunday Psali, and the Psali Watos on its eighth part comes before that part.
+// Wednesday to Saturday) stands in for the day's own Psali, and the Lent Psalis on the canticles are left out.
+// On Sunday those Psalis stay; the Psali Adam on the Sunday Theotokia stands in for the Sunday Psali, and the
+// Psali Watos on its eighth part comes before that part.
 // On 10 Baramhat, the Feast of the Cross in the fast, there is no Lent Ode and the Cross's Psali is sung instead.
 const lentSundayPsalis = /-(psali-(adam|watos)-on-.*|watos-psali-on-great-lent-doxology)$/;
 const lentPsalis = /-(adam-psali-great-lent|watos-psali-for-great-lent)$/;
@@ -237,7 +237,7 @@ function forLent(sections: FollowSection[], weekday: number, feastOfCross: boole
     let hymns = section.hymns.filter(
       (h) => !lentPsalis.test(h.id) && h !== onSundayTheotokia && h !== eighth && !(feastOfCross && /-great-lent-ode$/.test(h.id))
     );
-    if (weekday !== 0) hymns = hymns.filter((h) => !weekdaySundayParts.test(h.id) && !lentSundayPsalis.test(h.id));
+    if (weekday !== 0) hymns = hymns.filter((h) => !lentSundayPsalis.test(h.id));
     if (section.key === 'day') {
       hymns = hymns.flatMap((h) => {
         const base = h.id.split('@')[0];
@@ -296,7 +296,8 @@ export function followAlong(kind: PraiseKind, jdn: number): FollowAlong {
   // on Sunday they are in their place inside the whole Sunday Theotokia
   const before = general.slice(0, fourth + 1).filter((h) => weekday !== 0 || !weekdaySundayParts.test(h.id));
   // A Sunday outside the fasts begins with the Hymn of the Resurrection, after "Arise, O children of the light"
-  if (weekday === 0 && !['great-lent', 'kiahk'].includes(season.id) && !before.some((h) => /the-hymn-of-the-resurrection$/.test(h.id.split('@')[0]))) {
+  // (and every night of the Holy Fifty Days)
+  if ((weekday === 0 || season.id === 'pentecost') && !['great-lent', 'kiahk'].includes(season.id) && !before.some((h) => /the-hymn-of-the-resurrection$/.test(h.id.split('@')[0]))) {
     const arise = before.findIndex((h) => /-arise-o-children$/.test(h.id));
     before.splice(arise + 1, 0, ...shared('annual-midnight-the-hymn-of-the-resurrection'));
   }
