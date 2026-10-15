@@ -34,7 +34,8 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   // Tin Anastasin
   { file: "arsani-027-tin-anastasin.m4a", hymns: ["pentecost-liturgy-your-resurrection"], language: "coptic" },
   // Ϣⲁϣϥ ⲛⲥ̀ⲟⲡ ⲙⲙ̀ⲏⲛⲓ ( Arsani Sidarous & St. Abraam Deacons )
-  { file: "arsani-028-st-abraam-s.m4a", hymns: ["annual-midnight-sunday-theotokia-part-8", "annual-vesper-praises-sunday-theotokia-part-8", "annual-veneration-sunday-theotokia"], language: "coptic" },
+  { file: "arsani-028-st-abraam-s.m4a", hymns: [], language: "coptic" },
+
   // Aripsalin-Joe Seif and Deacons from the Diocese of Los Angeles (Live)
   { file: "arsani-029-aripsalin-joe-seif-s-from-diocese-of-los-angeles-l.m4a", hymns: ["annual-midnight-greek-psali-watos"], language: "coptic" },
   // Ⲧⲁⲓϣⲟⲩⲣⲏ + Ϩⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ̀ ┃ Taishori + Hymn of the Intercessions - Arsani Sidarous
