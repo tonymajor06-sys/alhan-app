@@ -868,10 +868,17 @@ describe('Kiahk Praises & Season > Liturgy', () => {
       'Second Sunday of Kiahk',
       'Third Sunday of Kiahk',
       'Fourth Sunday of Kiahk',
+      'In Presence of a Bishop (Psalm 96)',
     ]);
     // each Sunday is one stanza in Coptic, Coptic-English, English and Arabic, ending with the Alleluia
     const chantText = (h: Hymn, language: string) => h.versions.find((v) => v.language === language)?.text ?? '';
-    const sundayStarts = ['You will arise and have mercy on Zion', 'Hear, O daughter, and see', 'Mercy and truth are met together', 'You Who sits upon the cherubim'];
+    const sundayStarts = [
+      'You will arise and have mercy on Zion',
+      'Hear, O daughter, and see',
+      'Mercy and truth are met together',
+      'You Who sits upon the cherubim',
+      'Sing to the Lord, bless His name',
+    ];
     psalmChant.children!.forEach((sunday, i) => {
       for (const language of ['coptic', 'englishCoptic', 'english', 'arabic', 'arabicCoptic', 'arabicEnglish']) {
         expect([sunday.title, language, chantText(sunday, language).split(/\n\s*\n/).length]).toEqual([sunday.title, language, 1]);
@@ -881,8 +888,12 @@ describe('Kiahk Praises & Season > Liturgy', () => {
       expect(chantText(sunday, 'coptic').endsWith('ⲁ︦ⲗ︦.')).toBe(true);
       expect(chantText(sunday, 'englishCoptic').endsWith('allēlouia.')).toBe(true);
       expect(chantText(sunday, 'coptic')).not.toContain('⳪');
-      // each Sunday has its own recording, on Coptic
-      expect(sunday.versions.find((v) => v.language === 'coptic')!.audio).toMatch(/^kiahk-liturgy-psalm-sunday-\d\.mp3$/);
+      // Sunday chants have their own recordings; Bishop chant has Arsani audio
+      if (i < 4) {
+        expect(sunday.versions.find((v) => v.language === 'coptic')!.audio).toMatch(/^kiahk-liturgy-psalm-sunday-\d\.mp3$/);
+      } else {
+        expect(sunday.versions.find((v) => v.language === 'coptic')!.audio).toBe('arsani-267-kiahk-coptic-psalm-chant.m4a');
+      }
     });
     expect(chantText(psalmChant.children![0], 'coptic')).toContain('ϫⲉ Ⲡ̀ϭⲟⲓⲥ ⲉϥⲉ̀ⲕⲱⲧ ⲛ̀Ⲥⲓⲱⲛ');
     expect(chantText(psalmChant.children![1], 'arabic').startsWith('إسمعي يا إبنتي')).toBe(true);
@@ -1054,7 +1065,7 @@ describe('Kiahk Praises & Season > Liturgy', () => {
       }
       expect(kiahk.versions.some((v) => v.language === 'arabicCoptic')).toBe(true);
       expect(kiahk.versions.some((v) => v.language === 'arabicEnglish')).toBe(true);
-      expect(kiahk.versions.every((v) => v.audio === undefined)).toBe(true);
+      expect(kiahk.versions.find((v) => v.language === 'coptic')?.audio).toBe('arsani-267-kiahk-marou-chasf.m4a');
     }
     expect(annualLiturgy.hymns.find((h) => h.id === 'annual-liturgy-agios')!.versions.some((v) => v.audio)).toBe(true);
     // Liturgy of the Faithful: the two Gospel Responses are the same as in Matins and Vespers, then the two Adam Aspasmos

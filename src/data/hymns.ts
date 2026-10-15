@@ -1987,6 +1987,28 @@ if (kiahkLiturgy) {
           text: 'يا جالســاً على الشــاروبيم اظهــر، قــدام إفـرايم وبنيــامين ومنسى، لخلاصنــا ياالله أرددنا، ولينر وجهــك علينا فنخلص. هلليلويا',
         },
     ];
+    kiahkLiturgyPsalmChant.children.push({
+      id: 'kiahk-liturgy-psalm-chant-bishop',
+      title: 'In Presence of a Bishop (Psalm 96)',
+      versions: [
+        {
+          language: 'coptic',
+          text: 'Ϩⲱⲥ ⲉ̀Ⲡ̀ϭⲟⲓⲥ ⲥ̀ⲙⲟⲩ ⲉ̀ⲡⲉϥⲣⲁⲛ: ϩⲓϣⲉⲛⲛⲟⲩϥⲓ ⲙ̀ⲡⲉϥⲟⲩϫⲁⲓ ⲛ̀ⲉ̀ϩⲟⲟⲩ ϧⲁ ⲧ̀ϩⲏ ⲛ̀ⲉ̀ϩⲟⲟⲩ: Ⲥⲁϫⲓ ⲙ̀ⲡⲉϥⲱ̀ⲟⲩ ϧⲉⲛ ⲛⲓⲉⲑⲛⲟⲥ ⲛⲉⲙ ⲛⲉϥϣ̀ⲫⲏⲣⲓ ϧⲉⲛ ⲛⲓⲗⲁⲟⲥ ⲧⲏⲣⲟⲩ. ⲁ︦ⲗ︦.',
+        },
+        {
+          language: 'englishCoptic',
+          text: 'Hōs e-Eptshois esmou epefran: hishennoufi empefoujai enehoou kha ethē enehoou: Saji empef-ōou khen ni-ethnos nem nefeshfēri khen ni-laos tērou. allēlouia.',
+        },
+        {
+          language: 'english',
+          text: 'Sing to the Lord, bless His name; proclaim the good news of His salvation from day to day: Declare His glory among the nations, His wonders among all peoples. Alleluia',
+        },
+        {
+          language: 'arabic',
+          text: 'رنموا للرب، باركوا اسمه، بشروا من يوم إلى يوم بخلاصه: حدثوا بين الأمم بمجده، وبين جميع الشعوب بعجائبه. هلليلويا',
+        },
+      ],
+    });
   }
   const kiahkLiturgyIntercessions = kiahkLiturgy.hymns.find((h) => h.title === 'Ϩⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ (Hymn of the Intercessions)');
   if (kiahkLiturgyIntercessions) {
