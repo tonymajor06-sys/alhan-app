@@ -330,44 +330,13 @@ export default function HomeScreen() {
         </Head>
         <ScrollView
           contentContainerStyle={[styles.homeContent, { paddingTop: insets.top + 12, paddingBottom: bottomPadding }]}>
-          {/* Today in the church calendar, with search in the corner */}
+          {/* Top header bar with title and action buttons */}
           <View style={[styles.topBar, rowDirection]}>
-            <Pressable
-              onPress={() => router.push('/calendar')}
-              accessibilityRole="button"
-              accessibilityLabel={`${formatCopticDate(today, lang)}, ${currentSeasonName(seasonInfo, lang)}`}
-              accessibilityHint={t.openCalendar}
-              style={({ pressed }) => [styles.calendarBox, rowDirection, pressed && styles.rowCardPressed]}>
-              {/* Today's Coptic date as a calendar page */}
-              <View style={styles.calendarTile}>
-                <Text style={styles.calendarTileDay}>{localDigits(todayCoptic.day)}</Text>
-                <Text style={styles.calendarTileMonth} numberOfLines={1}>
-                  {copticMonths[lang][todayCoptic.month - 1]}
-                </Text>
-                <Text style={styles.calendarTileYear}>{localDigits(todayCoptic.year)}</Text>
-              </View>
-              <View style={styles.calendarInfo}>
-                <Text
-                  style={[styles.calendarSeason, textAlign, seasonInfo.current?.kind === 'fast' && { color: colors.fast }]}
-                  numberOfLines={2}>
-                  {currentSeasonName(seasonInfo, lang)}
-                </Text>
-                <Text style={[styles.calendarMeta, textAlign]} numberOfLines={1}>
-                  {seasonInfo.current ? kindName[lang][seasonInfo.current.kind] : tuneName[lang][seasonInfo.tune]}
-                </Text>
-                {seasonInfo.upcoming[0] ? (
-                  <View style={styles.calendarNext}>
-                    <Text style={[styles.calendarNextText, textAlign]} numberOfLines={1}>
-                      {t.next}: {seasonInfo.upcoming[0].name[lang]}
-                    </Text>
-                    <Text style={[styles.calendarNextWhen, textAlign]}>
-                      {formatDaysUntil(seasonInfo.upcoming[0].daysUntil, lang)}
-                    </Text>
-                  </View>
-                ) : null}
-              </View>
-            </Pressable>
-            <View style={styles.topButtons}>
+            <View style={[styles.heroTitleRow, rowDirection]}>
+              <Image source={require('../../assets/images/coptic-cross.png')} style={styles.heroCross} accessibilityIgnoresInvertColors />
+              <Text style={styles.navTitle}>{t.appTitle}</Text>
+            </View>
+            <View style={[styles.topButtons, rowDirection]}>
               <Pressable
                 onPress={() => setCurrentView('search')}
                 accessibilityRole="search"
@@ -385,12 +354,45 @@ export default function HomeScreen() {
             </View>
           </View>
 
+          {/* Today in the church calendar */}
+          <Pressable
+            onPress={() => router.push('/calendar')}
+            accessibilityRole="button"
+            accessibilityLabel={`${formatCopticDate(today, lang)}, ${currentSeasonName(seasonInfo, lang)}`}
+            accessibilityHint={t.openCalendar}
+            style={({ pressed }) => [styles.calendarBox, rowDirection, pressed && styles.rowCardPressed]}>
+            {/* Today's Coptic date as a calendar page */}
+            <View style={styles.calendarTile}>
+              <Text style={styles.calendarTileDay}>{localDigits(todayCoptic.day)}</Text>
+              <Text style={styles.calendarTileMonth} numberOfLines={1}>
+                {copticMonths[lang][todayCoptic.month - 1]}
+              </Text>
+              <Text style={styles.calendarTileYear}>{localDigits(todayCoptic.year)}</Text>
+            </View>
+            <View style={styles.calendarInfo}>
+              <Text
+                style={[styles.calendarSeason, textAlign, seasonInfo.current?.kind === 'fast' && { color: colors.fast }]}
+                numberOfLines={2}>
+                {currentSeasonName(seasonInfo, lang)}
+              </Text>
+              <Text style={[styles.calendarMeta, textAlign]} numberOfLines={1}>
+                {seasonInfo.current ? kindName[lang][seasonInfo.current.kind] : tuneName[lang][seasonInfo.tune]}
+              </Text>
+              {seasonInfo.upcoming[0] ? (
+                <View style={styles.calendarNext}>
+                  <Text style={[styles.calendarNextText, textAlign]} numberOfLines={1}>
+                    {t.next}: {seasonInfo.upcoming[0].name[lang]}
+                  </Text>
+                  <Text style={[styles.calendarNextWhen, textAlign]}>
+                    {formatDaysUntil(seasonInfo.upcoming[0].daysUntil, lang)}
+                  </Text>
+                </View>
+              ) : null}
+            </View>
+          </Pressable>
+
           <View style={styles.homeBody}>
             <View style={styles.hero}>
-              <View style={[styles.heroTitleRow, rowDirection]}>
-                <Image source={require('../../assets/images/coptic-cross.png')} style={styles.heroCross} accessibilityIgnoresInvertColors />
-                <Text style={[styles.heroTitle, textAlign]}>{t.appTitle}</Text>
-              </View>
               <Text style={[styles.heroSubtitle, textAlign]}>{t.appSubtitle}</Text>
             </View>
 
@@ -632,30 +634,26 @@ export default function HomeScreen() {
   }
 
   if (currentView === 'seasons-home') {
-    // Small cards side by side (two on a phone, more on a wide screen): a round picture and the name
     const shortName = (season: Season) => withoutNumber(displayTitle(season, lang))
         .replace(/\s*\([^)]*\)$/, '')
         .replace(' / Standard Services', '');
     return screen(
       t.seasonsTitle,
       t.chooseSeason,
-      <View style={[styles.seasonGrid, rowDirection]}>
-        {seasons.map((season) => (
-          <Pressable
-            key={season.id}
-            onPress={() => setSelectedSeason(season)}
-            accessibilityRole="button"
-            accessibilityLabel={[withoutNumber(displayTitle(season, lang)), seasonArt[season.id]?.about[lang]].filter(Boolean).join(', ')}
-            style={({ pressed }) => [styles.seasonCard, rowDirection, pressed && styles.rowCardPressed]}>
-            {seasonArt[season.id] ? (
-              <Image source={seasonArt[season.id].image} style={styles.seasonCardImage} accessibilityIgnoresInvertColors />
-            ) : null}
-            <Text style={[styles.seasonCardTitle, textAlign]} numberOfLines={2}>
-              {seasonArt[season.id]?.card?.[lang] ?? shortName(season)}
-            </Text>
-          </Pressable>
-        ))}
-      </View>
+      listGroup(
+        'seasons-list',
+        seasons.map((season) =>
+          listRow(
+            season.id,
+            seasonArt[season.id]?.card?.[lang] ?? shortName(season),
+            () => setSelectedSeason(season),
+            {
+              image: seasonArt[season.id]?.image,
+              sub: seasonArt[season.id]?.about?.[lang] ?? null,
+            }
+          )
+        )
+      )
     );
   }
 
