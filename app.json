@@ -8,7 +8,6 @@
     "scheme": "copticpsalmody",
     "userInterfaceStyle": "automatic",
     "ios": {
-      "icon": "./assets/images/icon.png",
       "bundleIdentifier": "com.coptic.psalmody",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
