@@ -14,6 +14,7 @@ import { stFullSeasons } from './st-full-seasons';
 import { stDeacon } from './st-deacon';
 import { stAdditions } from './st-hymns';
 import { stMore } from './st-more';
+import { kiahkWeekdayHymns } from './kiahk-weekday-hymns';
 import { stMysteries } from './st-mysteries';
 import { stSeasonExtras } from './st-season-extras';
 
@@ -7467,6 +7468,7 @@ if (kiahkLiturgyService && kiahkLiturgyService.hymns[0]?.title !== 'Offering of 
 const allExtras: { season: string; service: string; serviceTitle?: string; group: string | null; section?: string | null; after: string | null; item: { copy: string } | { hymn: Hymn } }[] = [
   ...stSeasonExtras,
   ...stMore,
+  ...kiahkWeekdayHymns,
 ];
 for (const extra of allExtras) {
   const season = seasons.find((s) => s.id === extra.season);

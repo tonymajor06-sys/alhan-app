@@ -22,4 +22,16 @@ describe('follow-along praise service builder', () => {
     expect(plan.kind).toBe('vesper');
     expect(plan.sections.length).toBeGreaterThan(0);
   });
+
+  it('builds Kiahk weekday Midnight Praises', () => {
+    // 2026-12-16 is a Wednesday in Kiahk (4 Kiahk)
+    const jdn = gregorianToJdn(2026, 12, 16);
+    const plan = followAlong('midnight', jdn);
+    expect(plan.season.id).toBe('kiahk');
+    expect(plan.hymns.length).toBeGreaterThan(20);
+    // Every hymn should have versions
+    for (const h of plan.hymns) {
+      expect(h.versions.length).toBeGreaterThan(0);
+    }
+  });
 });
