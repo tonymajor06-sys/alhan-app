@@ -109,6 +109,8 @@ export const saintsStrings = {
     title: 'Saints',
     subtitle: 'The Synaxarium: every saint with a short story',
     today: 'Today',
+    todayFeast: "Today's Feast",
+    readStory: 'Read commemoration ›',
     search: 'Search saints by name or story',
     noResults: 'No saints found',
     alphabetical: 'All Saints (A–Z)',
@@ -116,11 +118,14 @@ export const saintsStrings = {
     alsoToday: 'Also on this day',
     results: (n: number) => `${n} ${n === 1 ? 'saint' : 'saints'}`,
     none: 'No commemoration for this day yet',
+    clear: 'Clear',
   },
   ar: {
     title: 'القديسون',
     subtitle: 'السنكسار: كل قديس مع قصة قصيرة',
     today: 'اليوم',
+    todayFeast: 'تذكار اليوم',
+    readStory: 'اقرأ التذكار ‹',
     search: 'ابحث عن قديس بالاسم أو القصة',
     noResults: 'لا يوجد قديسون بهذا البحث',
     alphabetical: 'جميع القديسين (أبجدياً)',
@@ -128,5 +133,7 @@ export const saintsStrings = {
     alsoToday: 'وأيضاً في هذا اليوم',
     results: (n: number) => `${toArabicDigits(n)} ${n === 1 ? 'قديس' : 'قديسين'}`,
     none: 'لا يوجد تذكار لهذا اليوم بعد',
+    clear: 'مسح',
   },
 };
+

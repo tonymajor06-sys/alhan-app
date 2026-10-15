@@ -1,8 +1,9 @@
 import { router } from 'expo-router';
 import { useMemo, useState } from 'react';
-import { Pressable, Text, TextInput, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import { createAlhanStyles, goBackOrHome, ScreenShell } from '@/components/alhan-ui';
+import { AlhanPalette } from '@/constants/alhan-colors';
 import { formatGregorianDate, jdnToCoptic } from '@/data/coptic-calendar';
 import {
   copticDayName,
@@ -10,6 +11,7 @@ import {
   saintJdn,
   saintsByAlphabet,
   saintsOn,
+  saintSortLetter,
   saintsStrings,
   searchSaints,
 } from '@/data/saints';
@@ -24,6 +26,7 @@ export default function SaintsScreen() {
   const t = saintsStrings[lang];
   const styles = useThemedStyles(createAlhanStyles);
   const colors = useAlhanColors();
+  const localStyles = useThemedStyles(createLocalStyles);
   const rowDirection = isRTL ? styles.rowReverse : styles.row;
   const textAlign = isRTL ? styles.alignRight : styles.alignLeft;
 
@@ -36,25 +39,31 @@ export default function SaintsScreen() {
   const dateOf = (s: { month: number; day: number }) =>
     `${copticDayName(s.month, s.day, lang)} · ${formatGregorianDate(saintJdn(s.month, s.day, today), lang)}`;
 
-  const row = (saint: Saint, i: number, sub?: string) => (
-    <View key={saint.id}>
-      {i > 0 ? <View style={styles.listDivider} /> : null}
-      <Pressable
-        onPress={() => open(saint)}
-        accessibilityRole="button"
-        style={({ pressed }) => [styles.listRow, rowDirection, pressed && styles.listRowPressed]}>
-        <View style={styles.rowTextWrap}>
-          <Text style={[styles.listTitle, textAlign]}>{saint.name[lang]}</Text>
-          {sub ? (
-            <Text style={[styles.listSub, textAlign]} numberOfLines={2}>
-              {sub}
-            </Text>
-          ) : null}
-        </View>
-        <Text style={styles.listChevron}>{isRTL ? '‹' : '›'}</Text>
-      </Pressable>
-    </View>
-  );
+  const row = (saint: Saint, i: number, sub?: string) => {
+    const initial = saintSortLetter(saint, lang);
+    return (
+      <View key={saint.id}>
+        {i > 0 ? <View style={styles.listDivider} /> : null}
+        <Pressable
+          onPress={() => open(saint)}
+          accessibilityRole="button"
+          style={({ pressed }) => [styles.listRow, rowDirection, pressed && styles.listRowPressed]}>
+          <View style={localStyles.avatarBadge}>
+            <Text style={localStyles.avatarLetter}>{initial}</Text>
+          </View>
+          <View style={styles.rowTextWrap}>
+            <Text style={[styles.listTitle, textAlign]}>{saint.name[lang]}</Text>
+            {sub ? (
+              <Text style={[styles.listSub, textAlign]} numberOfLines={1}>
+                {sub}
+              </Text>
+            ) : null}
+          </View>
+          <Text style={styles.listChevron}>{isRTL ? '‹' : '›'}</Text>
+        </Pressable>
+      </View>
+    );
+  };
 
   const header = (key: string, title: string) => (
     <View key={key} style={[styles.sectionHeader, rowDirection]}>
@@ -74,7 +83,7 @@ export default function SaintsScreen() {
 
   return (
     <ScreenShell lang={lang} title={t.title} subtitle={t.subtitle} onBack={goBackOrHome}>
-      <View style={[styles.searchField, rowDirection, { marginBottom: 16 }]}>
+      <View style={[styles.searchField, rowDirection, localStyles.searchBox]}>
         <Text style={styles.searchButtonIcon}>⌕</Text>
         <TextInput
           value={query}
@@ -83,9 +92,18 @@ export default function SaintsScreen() {
           placeholderTextColor={colors.muted}
           style={[styles.searchInput, textAlign]}
           autoCorrect={false}
-          clearButtonMode="while-editing"
           accessibilityLabel={t.search}
         />
+        {query.trim().length > 0 ? (
+          <Pressable
+            onPress={() => setQuery('')}
+            hitSlop={12}
+            accessibilityRole="button"
+            accessibilityLabel={t.clear}
+            style={localStyles.clearButton}>
+            <Text style={localStyles.clearButtonText}>✕</Text>
+          </Pressable>
+        ) : null}
       </View>
 
       {query.trim() ? (
@@ -97,7 +115,7 @@ export default function SaintsScreen() {
         </>
       ) : (
         <>
-          {header('today', `${t.today} · ${copticDayName(todayCoptic.month, todayCoptic.day, lang)}`)}
+          {header('today', `${t.todayFeast} · ${copticDayName(todayCoptic.month, todayCoptic.day, lang)}`)}
           {todays.length ? (
             todays.map((saint) => (
               <Pressable
@@ -105,34 +123,52 @@ export default function SaintsScreen() {
                 onPress={() => open(saint)}
                 accessibilityRole="button"
                 style={({ pressed }) => [
-                  styles.followCard,
-                  { alignItems: 'stretch', flexDirection: 'column', gap: 6 },
-                  pressed && styles.rowCardPressed,
+                  localStyles.todayCard,
+                  pressed && localStyles.todayCardPressed,
                 ]}>
-                <Text style={[styles.followCardTitle, textAlign]}>{saint.name[lang]}</Text>
-                <Text style={[styles.listSub, textAlign]} numberOfLines={4}>
+                <View style={[rowDirection, localStyles.todayTopRow]}>
+                  <View style={[rowDirection, localStyles.todayBadge]}>
+                    <Text style={localStyles.todayBadgeIcon}>⳩</Text>
+                    <Text style={localStyles.todayBadgeText}>{t.today}</Text>
+                  </View>
+                  <Text style={localStyles.todayDateText}>
+                    {formatGregorianDate(today, lang)}
+                  </Text>
+                </View>
+                <Text style={[localStyles.todayName, textAlign]}>{saint.name[lang]}</Text>
+                <Text style={[localStyles.todayStory, textAlign]} numberOfLines={3}>
                   {saint.story[lang]}
                 </Text>
+                <View style={[rowDirection, localStyles.todayFooter]}>
+                  <Text style={localStyles.todayPrompt}>{t.readStory}</Text>
+                </View>
               </Pressable>
             ))
           ) : (
-            <Text style={[styles.emptyText, textAlign]}>{t.none}</Text>
+            <Text style={[styles.emptyText, textAlign, { marginBottom: 16 }]}>{t.none}</Text>
           )}
 
           {header('alphabetical', t.alphabetical)}
-          <View style={[rowDirection, { flexWrap: 'wrap', gap: 6, marginBottom: 16 }]}>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={[rowDirection, localStyles.alphabetScrollContent]}
+            style={localStyles.alphabetScroll}>
             <Pressable
               key="all"
               onPress={() => setSelectedLetter('all')}
               accessibilityRole="button"
               accessibilityState={{ selected: selectedLetter === 'all' }}
               style={({ pressed }) => [
-                styles.chip,
-                styles.chipSmall,
-                selectedLetter === 'all' && styles.controlButtonActive,
+                localStyles.letterPill,
+                selectedLetter === 'all' && localStyles.letterPillActive,
                 pressed && styles.pressed,
               ]}>
-              <Text style={[styles.chipText, selectedLetter === 'all' && styles.controlTextActive]}>
+              <Text
+                style={[
+                  localStyles.letterPillText,
+                  selectedLetter === 'all' && localStyles.letterPillTextActive,
+                ]}>
                 {t.allLetters}
               </Text>
             </Pressable>
@@ -145,24 +181,35 @@ export default function SaintsScreen() {
                   accessibilityRole="button"
                   accessibilityState={{ selected }}
                   style={({ pressed }) => [
-                    styles.chip,
-                    styles.chipSmall,
-                    { minWidth: 36, paddingHorizontal: 10 },
-                    selected && styles.controlButtonActive,
+                    localStyles.letterPill,
+                    localStyles.letterPillRound,
+                    selected && localStyles.letterPillActive,
                     pressed && styles.pressed,
                   ]}>
-                  <Text style={[styles.chipText, selected && styles.controlTextActive]}>{g.letter}</Text>
+                  <Text
+                    style={[
+                      localStyles.letterPillText,
+                      selected && localStyles.letterPillTextActive,
+                    ]}>
+                    {g.letter}
+                  </Text>
                 </Pressable>
               );
             })}
-          </View>
+          </ScrollView>
 
           {displayedGroups.map((group) => (
-            <View key={group.letter} style={{ marginBottom: 16 }}>
+            <View key={group.letter} style={localStyles.groupSection}>
               {selectedLetter === 'all' ? (
-                <Text style={[styles.listSub, textAlign, { marginTop: 4, marginBottom: 6, fontWeight: '700', fontSize: 16, color: colors.gold }]}>
-                  {group.letter}
-                </Text>
+                <View style={[rowDirection, localStyles.letterHeader]}>
+                  <View style={localStyles.letterHeaderBadge}>
+                    <Text style={localStyles.letterHeaderText}>{group.letter}</Text>
+                  </View>
+                  <Text style={localStyles.letterHeaderCount}>
+                    {group.saints.length}
+                  </Text>
+                  <View style={styles.sectionLine} />
+                </View>
               ) : null}
               <View style={styles.listGroup}>
                 {group.saints.map((s, i) => row(s, i, dateOf(s)))}
@@ -173,4 +220,178 @@ export default function SaintsScreen() {
       )}
     </ScreenShell>
   );
+}
+
+function createLocalStyles(colors: AlhanPalette) {
+  return StyleSheet.create({
+    searchBox: {
+      marginBottom: 16,
+      borderColor: colors.border,
+      backgroundColor: colors.surface,
+    },
+    clearButton: {
+      width: 28,
+      height: 28,
+      borderRadius: 14,
+      backgroundColor: colors.surfacePressed,
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginLeft: 6,
+    },
+    clearButtonText: {
+      fontSize: 13,
+      color: colors.muted,
+      fontWeight: '700',
+    },
+    avatarBadge: {
+      width: 40,
+      height: 40,
+      borderRadius: 20,
+      backgroundColor: colors.goldSoft,
+      borderWidth: StyleSheet.hairlineWidth,
+      borderColor: colors.border,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    avatarLetter: {
+      fontSize: 16,
+      fontWeight: '800',
+      color: colors.gold,
+    },
+    todayCard: {
+      backgroundColor: colors.surface,
+      borderRadius: 20,
+      borderWidth: 1.5,
+      borderColor: colors.gold,
+      padding: 18,
+      marginBottom: 18,
+      shadowColor: '#000',
+      shadowOpacity: 0.18,
+      shadowRadius: 8,
+      shadowOffset: { width: 0, height: 2 },
+      elevation: 2,
+    },
+    todayCardPressed: {
+      backgroundColor: colors.surfacePressed,
+      borderColor: colors.gold,
+      opacity: 0.95,
+    },
+    todayTopRow: {
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      marginBottom: 10,
+    },
+    todayBadge: {
+      alignItems: 'center',
+      gap: 6,
+      paddingHorizontal: 10,
+      paddingVertical: 4,
+      borderRadius: 12,
+      backgroundColor: colors.goldSoft,
+    },
+    todayBadgeIcon: {
+      fontSize: 14,
+      color: colors.gold,
+      fontWeight: '800',
+    },
+    todayBadgeText: {
+      fontSize: 13,
+      fontWeight: '800',
+      color: colors.gold,
+      letterSpacing: 0.4,
+      textTransform: 'uppercase',
+    },
+    todayDateText: {
+      fontSize: 13,
+      fontWeight: '600',
+      color: colors.muted,
+    },
+    todayName: {
+      fontSize: 20,
+      fontWeight: '800',
+      color: colors.text,
+      lineHeight: 27,
+      marginBottom: 8,
+    },
+    todayStory: {
+      fontSize: 15,
+      lineHeight: 22,
+      color: colors.muted,
+      marginBottom: 12,
+    },
+    todayFooter: {
+      alignItems: 'center',
+      justifyContent: 'flex-start',
+      marginTop: 2,
+    },
+    todayPrompt: {
+      fontSize: 14,
+      fontWeight: '700',
+      color: colors.gold,
+    },
+    alphabetScroll: {
+      marginBottom: 18,
+    },
+    alphabetScrollContent: {
+      gap: 8,
+      paddingVertical: 2,
+      paddingHorizontal: 2,
+    },
+    letterPill: {
+      minHeight: 38,
+      paddingHorizontal: 16,
+      borderRadius: 19,
+      backgroundColor: colors.surface,
+      borderWidth: 1,
+      borderColor: colors.border,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    letterPillRound: {
+      minWidth: 38,
+      paddingHorizontal: 10,
+    },
+    letterPillActive: {
+      backgroundColor: colors.gold,
+      borderColor: colors.gold,
+    },
+    letterPillText: {
+      fontSize: 15,
+      fontWeight: '700',
+      color: colors.text,
+    },
+    letterPillTextActive: {
+      color: colors.onGold,
+      fontWeight: '800',
+    },
+    groupSection: {
+      marginBottom: 16,
+    },
+    letterHeader: {
+      alignItems: 'center',
+      gap: 10,
+      marginTop: 6,
+      marginBottom: 8,
+    },
+    letterHeaderBadge: {
+      width: 32,
+      height: 32,
+      borderRadius: 16,
+      backgroundColor: colors.goldSoft,
+      borderWidth: StyleSheet.hairlineWidth,
+      borderColor: colors.border,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    letterHeaderText: {
+      fontSize: 15,
+      fontWeight: '800',
+      color: colors.gold,
+    },
+    letterHeaderCount: {
+      fontSize: 13,
+      fontWeight: '700',
+      color: colors.muted,
+    },
+  });
 }
