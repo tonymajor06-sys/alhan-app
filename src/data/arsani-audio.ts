@@ -229,4 +229,11 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   { file: "arsani-267-kiahk-coptic-psalm-chant.m4a", hymns: ["kiahk-liturgy-psalm-chant-bishop"], language: "coptic" },
   // Marouchasf (Psalm Trailer for the Pope or a Bishop) in Kiahk Liturgy
   { file: "arsani-267-kiahk-marou-chasf.m4a", hymns: ["kiahk-liturgy-hymn-15"], language: "coptic" },
+  // Bright Saturday Liturgy Psalm: Arsani Sidarous (St. Mina & Pope Kyrillos)
+  { file: "bright-saturday-liturgy-psalm.m4a", hymns: ["holyweek-bright-saturday-my-god-my-god"], language: "coptic" },
+  { file: "bright-saturday-liturgy-psalm.m4a", hymns: ["holyweek-bright-saturday-my-god-my-god"], language: "arabic" },
+  // Doxology for St. Abraam, Bishop of Fayoum (Coptic): Arsani Sidarous & St. Mercurius & St. Abraam Chorus
+  { file: "arsani-yt-doxology-anba-abraam.m4a", hymns: ["annual-vespers-doxology-anba-abraam", "annual-matins-doxology-anba-abraam", "annual-midnight-doxology-anba-abraam"], language: "coptic" },
+  // Arabic Madih for St. Abraam (El-Salam lil-Anba Abraam): Arsani Sidarous & Chorus
+  { file: "arsani-yt-madih-anba-abraam.m4a", hymns: ["annual-vespers-doxology-anba-abraam", "annual-matins-doxology-anba-abraam", "annual-midnight-doxology-anba-abraam"], language: "arabic" },
 ];
