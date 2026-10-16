@@ -69,6 +69,7 @@ export default function RootLayout() {
         {/* Home, Hymns, Calendar, Playlist and Settings; everything else opens over the tab bar */}
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="privacy" />
+        <Stack.Screen name="downloads" />
         <Stack.Screen name="support" />
         <Stack.Screen name="hymn/[id]" />
         <Stack.Screen name="follow/[kind]" />

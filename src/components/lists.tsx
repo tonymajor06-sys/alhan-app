@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import { Image, ImageSourcePropType, Pressable, Text, View } from 'react-native';
+import Animated, { FadeIn } from 'react-native-reanimated';
 
 import { createAlhanStyles, strings, withCopticFont } from './alhan-ui';
 import { tapFeedback } from './haptics';
@@ -75,7 +76,11 @@ export function Tile({
 
 export function TileGrid({ children }: { children: ReactNode }) {
   const { styles, rowDirection } = useDirection();
-  return <View style={[styles.tileGrid, rowDirection]}>{children}</View>;
+  return (
+    <Animated.View entering={FadeIn.duration(200)} style={[styles.tileGrid, rowDirection]}>
+      {children}
+    </Animated.View>
+  );
 }
 
 export function SectionHeader({ title }: { title: string }) {
@@ -139,13 +144,13 @@ export function ListRow({
   );
 }
 
-// Rows together in one rounded panel, with a thin line between them
+// Rows together in one rounded panel, with a thin line between them; it fades in rather than popping up
 export function ListGroup({ rows }: { rows: ReactNode[] }) {
   const { styles } = useDirection();
   return (
-    <View style={styles.listGroup}>
+    <Animated.View entering={FadeIn.duration(200)} style={styles.listGroup}>
       {rows.flatMap((row, i) => (i === 0 ? [row] : [<View key={`divider-${i}`} style={styles.listDivider} />, row]))}
-    </View>
+    </Animated.View>
   );
 }
 

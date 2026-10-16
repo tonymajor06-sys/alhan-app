@@ -43,6 +43,8 @@ const strings = {
     about: 'About',
     support: 'Support and feedback',
     privacy: 'Privacy Policy',
+    offline: 'Offline',
+    downloads: 'Downloaded recordings',
     remindersDenied: 'Notifications are turned off for Coptic Psalmody. You can allow them in your phone’s settings.',
   },
   ar: {
@@ -69,6 +71,8 @@ const strings = {
     about: 'عن التطبيق',
     support: 'الدعم والملاحظات',
     privacy: 'سياسة الخصوصية',
+    offline: 'بدون إنترنت',
+    downloads: 'التسجيلات المحفوظة',
     remindersDenied: 'الإشعارات متوقفة لتطبيق التسبحة القبطية. يمكنك السماح بها من إعدادات الهاتف.',
   },
 };
@@ -130,7 +134,7 @@ export default function SettingsScreen() {
     </Pressable>
   );
 
-  const linkRow = (label: string, href: '/support' | '/privacy', first = false) => (
+  const linkRow = (label: string, href: '/support' | '/privacy' | '/downloads', first = false) => (
     <Pressable
       onPress={() => router.push(href)}
       accessibilityRole="link"
@@ -262,6 +266,8 @@ export default function SettingsScreen() {
           {Platform.OS !== 'web' ? switchRow(t.reminders, t.remindersHint, settings.feastReminders, toggleReminders) : null}
         </View>
       )}
+      {/* Recordings saved on the phone, and the space they take */}
+      {Platform.OS !== 'web' ? section(t.offline, <View style={styles.group}>{linkRow(t.downloads, '/downloads', true)}</View>) : null}
       <DonationBox lang={lang} />
       {section(
         t.about,
