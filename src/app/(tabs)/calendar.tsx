@@ -3,7 +3,11 @@ import { useState } from 'react';
 import { Alert, Platform, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { MiniPlayer } from '@/components/alhan-ui';
+import { StatusBarBlur } from '@/components/status-bar-blur';
+import { useTabChrome } from '@/components/tab-chrome';
 import { AlhanPalette } from '@/constants/alhan-colors';
+import { currentTrack, useAudioQueue } from '@/hooks/use-audio-queue';
 import {
   ChurchEvent,
   copticMonths,
@@ -27,7 +31,6 @@ import { requestReminderPermission } from '@/notifications/feast-reminders';
 
 const strings = {
   en: {
-    back: 'Back',
     title: 'Coptic Calendar',
     today: 'Today',
     nowIn: 'Now in',
@@ -45,7 +48,6 @@ const strings = {
     remindersDenied: 'Notifications are turned off for Coptic Psalmody. You can allow them in Settings.',
   },
   ar: {
-    back: 'رجوع',
     title: 'التقويم القبطي',
     today: 'اليوم',
     nowIn: 'نحن الآن في',
@@ -64,14 +66,16 @@ const strings = {
   },
 };
 
-const openSeasonHymns = (seasonId: string) =>
-  router.dismissTo({ pathname: '/', params: { season: seasonId, at: String(Date.now()) } });
+// Switches to the Hymns tab, on that season's page
+const openSeasonHymns = (seasonId: string) => router.navigate({ pathname: '/hymns/[season]', params: { season: seasonId } });
 
 export default function CalendarScreen() {
   const { language: lang, feastReminders } = useSettings();
   const t = strings[lang];
   const isRTL = lang === 'ar';
   const insets = useSafeAreaInsets();
+  const chrome = useTabChrome();
+  const playing = !!currentTrack(useAudioQueue());
   const colors = useAlhanColors();
   const styles = useThemedStyles(createStyles);
   const today = useTodayJdn();
@@ -115,18 +119,18 @@ export default function CalendarScreen() {
   ];
 
   return (
-    <View style={styles.root}>
+    <View style={styles.root} collapsable={false}>
       <ScrollView
-        contentContainerStyle={[styles.content, { paddingTop: insets.top + 12, paddingBottom: insets.bottom + 40 }]}>
+        contentInsetAdjustmentBehavior={chrome.autoInsets ? 'automatic' : 'never'}
+        contentContainerStyle={[
+          styles.content,
+          {
+            paddingTop: (chrome.autoInsets ? 0 : insets.top) + 12,
+            paddingBottom: chrome.pageBottom + 40 + (playing && chrome.floatingPlayer ? 96 : 0),
+          },
+        ]}>
         <View style={[styles.topBar, rowDirection]}>
-          <Pressable
-            onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}
-            accessibilityRole="button"
-            accessibilityLabel={t.back}
-            style={({ pressed }) => [styles.pillButton, rowDirection, pressed && styles.pressed]}>
-            <Text style={styles.backArrow}>{isRTL ? '›' : '‹'}</Text>
-            <Text style={styles.pillText}>{t.back}</Text>
-          </Pressable>
+          <Text style={[styles.headerTitle, styles.topBarTitle, textAlign]}>{t.title}</Text>
           {selected !== today || monthIndex !== todayCoptic.year * 13 + todayCoptic.month - 1 ? (
             <Pressable
               onPress={goToToday}
@@ -136,8 +140,6 @@ export default function CalendarScreen() {
             </Pressable>
           ) : null}
         </View>
-
-        <Text style={[styles.headerTitle, textAlign]}>{t.title}</Text>
 
         {/* Selected day */}
         <View style={styles.todayCard}>
@@ -304,6 +306,8 @@ export default function CalendarScreen() {
           </Pressable>
         ))}
       </ScrollView>
+      <StatusBarBlur />
+      <MiniPlayer lang={lang} />
     </View>
   );
 }
@@ -321,7 +325,13 @@ const createStyles = (colors: AlhanPalette) => StyleSheet.create({
   topBar: {
     justifyContent: 'space-between',
     alignItems: 'center',
+    gap: 12,
+    minHeight: 48,
     marginBottom: 16,
+  },
+  topBarTitle: {
+    flex: 1,
+    marginBottom: 0,
   },
   pillButton: {
     alignItems: 'center',
@@ -334,7 +344,6 @@ const createStyles = (colors: AlhanPalette) => StyleSheet.create({
     borderColor: colors.border,
     justifyContent: 'center',
   },
-  backArrow: { fontSize: 28, lineHeight: 32, color: colors.gold, fontWeight: '600' },
   pillText: { fontSize: 18, color: colors.text, fontWeight: '600' },
   headerTitle: {
     fontSize: 28,

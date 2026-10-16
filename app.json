@@ -101,7 +101,8 @@
           ]
         }
       ],
-      "expo-asset"
+      "expo-asset",
+      "expo-quick-actions"
     ],
     "experiments": {
       "typedRoutes": true,

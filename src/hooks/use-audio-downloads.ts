@@ -5,6 +5,7 @@ import { bundledAudio, remoteAudioUrl } from '../data/audio';
 import {
   deleteAudioFile,
   downloadAudioFile,
+  downloadedFileSize,
   downloadsSupported,
   listDownloadedFiles,
   localAudioUri,
@@ -65,6 +66,23 @@ export async function downloadAudio(file: string): Promise<boolean> {
     setState({ downloading: without(state.downloading, file) });
   }
 }
+
+// Downloads every recording given, one at a time; false as soon as one fails
+export async function downloadAll(files: string[]): Promise<boolean> {
+  for (const file of files) {
+    if (state.downloaded.has(file)) continue;
+    if (!(await downloadAudio(file))) return false;
+  }
+  return true;
+}
+
+export const downloadSize = (file: string): number => {
+  try {
+    return downloadedFileSize(file);
+  } catch {
+    return 0;
+  }
+};
 
 export function removeDownload(file: string) {
   try {

@@ -1,8 +1,9 @@
 import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
+import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import { copticFont } from '@/components/alhan-ui';
+import { useHomeScreenQuickActions } from '@/components/quick-actions';
 import { alhanLightColors } from '@/constants/alhan-colors';
 import { useAlhanColors } from '@/hooks/use-alhan-colors';
 import { useSettings } from '@/hooks/use-settings';
@@ -28,13 +29,28 @@ export default function RootLayout() {
   }, [language, feastReminders, today]);
 
   useReminderNavigation();
+  useHomeScreenQuickActions(language, today);
 
   if (!fontsLoaded && !fontError) return null;
 
+  const light = colors.background === alhanLightColors.background;
+  // The app's own colours for the native tab bar and screen backgrounds, so nothing flashes white between tabs
+  const theme = {
+    ...(light ? DefaultTheme : DarkTheme),
+    colors: {
+      ...(light ? DefaultTheme : DarkTheme).colors,
+      primary: colors.gold,
+      background: colors.background,
+      card: colors.surface,
+      text: colors.text,
+      border: colors.border,
+    },
+  };
+
   return (
-    <>
+    <ThemeProvider value={theme}>
       {/* Light status bar text on the dark theme, dark text on the light theme (which Settings can choose) */}
-      <StatusBar style={colors.background === alhanLightColors.background ? 'dark' : 'light'} />
+      <StatusBar style={light ? 'dark' : 'light'} />
       <Stack
         screenOptions={{
           headerShown: false,
@@ -50,9 +66,8 @@ export default function RootLayout() {
           },
         }}
       >
-        <Stack.Screen name="index" />
-        <Stack.Screen name="calendar" />
-        <Stack.Screen name="settings" />
+        {/* Home, Hymns, Calendar, Playlist and Settings; everything else opens over the tab bar */}
+        <Stack.Screen name="(tabs)" />
         <Stack.Screen name="privacy" />
         <Stack.Screen name="support" />
         <Stack.Screen name="hymn/[id]" />
@@ -74,6 +89,6 @@ export default function RootLayout() {
           options={{ orientation: 'all', animation: 'fade', contentStyle: { backgroundColor: '#000' } }}
         />
       </Stack>
-    </>
+    </ThemeProvider>
   );
 }

@@ -71,7 +71,7 @@ export async function syncFeastReminders(lang: AppLanguage, enabled: boolean) {
         content: {
           title,
           body,
-          data: { url: hasHymns ? `/?season=${ev.seasonId}&at=${ev.start}` : '/calendar' },
+          data: { url: hasHymns ? `/hymns/${ev.seasonId}` : '/calendar' },
         },
         trigger: { type: Notifications.SchedulableTriggerInputTypes.DATE, date, channelId: CHANNEL_ID },
       });

@@ -2,6 +2,7 @@ import { AudioPlayer, AudioSource, AudioStatus, createAudioPlayer, setAudioModeA
 import { useSyncExternalStore } from 'react';
 
 import { LanguageType } from '../data/hymns';
+import { writeSetting } from './settings-storage';
 
 export interface QueueTrack {
   hymnId: string;
@@ -22,8 +23,14 @@ export interface QueueState {
   repeat: RepeatMode;
   // Playback speed (learning mode slows recordings down); 1 = normal
   rate: number;
-  status: Pick<AudioStatus, 'playing' | 'currentTime' | 'duration'>;
+  // isBuffering: waiting for the recording to load or stream in, so the play button can show it is working
+  status: Pick<AudioStatus, 'playing' | 'currentTime' | 'duration' | 'isBuffering'>;
 }
+
+// The last hymn played, for the home screen's "Continue" shortcut
+export const LAST_PLAYED_KEY = 'lastPlayed';
+// Shown on the lock screen; served from the website's public folder
+const LOCK_SCREEN_ARTWORK = 'https://copticpsalmody.com/artwork.png';
 
 export const trackKey = (t: { hymnId: string; language: LanguageType }) => `${t.hymnId}:${t.language}`;
 
@@ -64,7 +71,7 @@ let state: QueueState = {
   origin: 'single',
   repeat: 'none',
   rate: 1,
-  status: { playing: false, currentTime: 0, duration: 0 },
+  status: { playing: false, currentTime: 0, duration: 0, isBuffering: false },
 };
 const listeners = new Set<() => void>();
 
@@ -85,7 +92,12 @@ const applyRate = (p: AudioPlayer) => {
 const loadTrack = (index: number, autoplay: boolean) => {
   const track = state.tracks[index];
   if (!track) return;
-  setState({ index, status: { playing: autoplay, currentTime: 0, duration: 0 } });
+  setState({ index, status: { playing: autoplay, currentTime: 0, duration: 0, isBuffering: autoplay } });
+  try {
+    writeSetting(LAST_PLAYED_KEY, JSON.stringify({ hymnId: track.hymnId, language: track.language }));
+  } catch {
+    // only the shortcut is lost
+  }
   const player = getPlayer();
   player.replace(track.source);
   player.loop = state.repeat === 'one';
@@ -95,7 +107,7 @@ const loadTrack = (index: number, autoplay: boolean) => {
     // Also keeps Android's foreground service alive; without it background audio stops after ~3 minutes
     player.setActiveForLockScreen(
       true,
-      { title: track.title, artist: 'Coptic Psalmody' },
+      { title: track.title, artist: 'Coptic Psalmody', artworkUrl: LOCK_SCREEN_ARTWORK },
       { showSeekBackward: true, showSeekForward: true }
     );
   } catch {
@@ -110,9 +122,9 @@ function onStatus(s: AudioStatus) {
     if (state.repeat === 'all' && state.tracks.length > 0) return loadTrack(0, true);
     // End of the queue: rewind so Play starts the last track again
     getPlayer().seekTo(0);
-    return setState({ status: { playing: false, currentTime: 0, duration: s.duration } });
+    return setState({ status: { playing: false, currentTime: 0, duration: s.duration, isBuffering: false } });
   }
-  setState({ status: { playing: s.playing, currentTime: s.currentTime, duration: s.duration } });
+  setState({ status: { playing: s.playing, currentTime: s.currentTime, duration: s.duration, isBuffering: s.isBuffering || (s.playing && !s.isLoaded) } });
 }
 
 export function playQueue(tracks: QueueTrack[], startIndex = 0, origin: QueueState['origin'] = 'single') {
@@ -171,7 +183,7 @@ export function stopQueue() {
   } catch {
     // nothing to clear
   }
-  setState({ tracks: [], index: 0, origin: 'single', status: { playing: false, currentTime: 0, duration: 0 } });
+  setState({ tracks: [], index: 0, origin: 'single', status: { playing: false, currentTime: 0, duration: 0, isBuffering: false } });
 }
 
 const subscribe = (listener: () => void) => {

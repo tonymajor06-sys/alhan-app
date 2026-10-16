@@ -10,6 +10,12 @@ export const listDownloadedFiles = (): string[] =>
 
 export const localAudioUri = (file: string) => new File(audioDir, file).uri;
 
+// Bytes on the phone, for the Downloads page
+export const downloadedFileSize = (file: string): number => {
+  const target = new File(audioDir, file);
+  return target.exists ? (target.size ?? 0) : 0;
+};
+
 export async function downloadAudioFile(url: string, file: string) {
   audioDir.create({ idempotent: true, intermediates: true });
   await File.downloadFileAsync(url, new File(audioDir, file), { idempotent: true });
