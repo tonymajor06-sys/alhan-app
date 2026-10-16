@@ -1,4 +1,4 @@
-import { Link, router, useLocalSearchParams } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import { Alert, Image, Pressable, Text, View } from 'react-native';
 
 import { createAlhanStyles, goBackOrHome, ScreenShell, strings, withoutNumber } from '@/components/alhan-ui';
@@ -80,9 +80,7 @@ export default function SeasonScreen() {
     <ScreenShell lang={lang} title={withoutNumber(displayTitle(season, lang))} onBack={goBackOrHome}>
       {art ? (
         <View style={[styles.seasonHeader, rowDirection]}>
-          <Link.AppleZoomTarget>
-            <Image source={art.image} style={styles.seasonHeaderImage} accessibilityIgnoresInvertColors />
-          </Link.AppleZoomTarget>
+          <Image source={art.image} style={styles.seasonHeaderImage} accessibilityIgnoresInvertColors />
           <Text style={[styles.seasonHeaderAbout, textAlign]}>{art.about[lang]}</Text>
         </View>
       ) : null}
