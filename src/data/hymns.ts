@@ -7604,10 +7604,10 @@ for (const season of seasons) {
 }
 
 // ---- Removed from every season: The Orthodox Creed, Our Father and the Trisagion (Ⲁ̀ⲅⲓⲟⲥ ⲟ̀ Ⲑⲉⲟⲥ) ----
+// (the Distribution hymn "Our Father Who Art in Heaven" stays)
 const isRemovedHymn = (title: string) =>
   title === 'The Orthodox Creed' ||
   title === 'Our Father' ||
-  title.startsWith('Our Father Who Art in Heaven') ||
   /^Ⲁ̀?ⲅⲓⲟⲥ ⲟ̀? Ⲑⲉⲟⲥ \(Trisagion\)$/.test(title);
 const removeHymns = (hymns: Hymn[]): Hymn[] =>
   hymns
@@ -7962,6 +7962,49 @@ for (const season of seasons) {
       } else if (/^lent-weekend-(liturgy|vespers)-veneration$/.test(hymn.id)) {
         hymn.children = venerationHymns.map((h) => copyInto(h, hymn.id, true));
       }
+    }
+  }
+}
+
+// ---- Fixes the user asked for (2026-10-16) ----
+// Out of every season: the Gloria (a chant, not a hymn), the fourteen Lord Have Mercy, Annual's first Alternate Praxis
+// Response (the same as the one after it), and Annual's first Third Standard Adam Aspasmos (the same as the one after it)
+const leavesEverywhere = /^(annual-matins-the-gloria-the-hymn-of-the-angels|kiahk-liturgy-lord-have-mercy|lent-weekday-lord-have-mercy)(@|$)/;
+const annualDuplicates = ['stmary-liturgy-alternate-praxis-response@annual-liturgy', 'annual-liturgy-a-third-standard-adam-aspasmos-o-christ-our-savior'];
+const dropEverywhere = (list: Hymn[]): Hymn[] =>
+  list
+    .filter((h) => !leavesEverywhere.test(h.id) && !annualDuplicates.includes(h.id))
+    .map((h) => (h.children ? { ...h, children: dropEverywhere(h.children) } : h));
+// The aspasmos in Kiahk's order: the season's Adam aspasmos, the three standard Adam, Great Greet One Another, the
+// season's Watos aspasmos, then the three standard Watos. They go where the first standard Adam aspasmos was.
+const aspasmosRank = (title: string): number => {
+  if (/Great Greet/i.test(title)) return 4;
+  if (!/aspasmos/i.test(title)) return -1;
+  const watos = /watos|vatos/i.test(title);
+  if (!/Standard/.test(title)) return watos ? 5 : 0;
+  const nth = /Third Standard/.test(title) ? 2 : /Second Standard/.test(title) ? 1 : 0;
+  return (watos ? 6 : 1) + nth;
+};
+const orderAspasmos = (list: Hymn[]): Hymn[] => {
+  const aspasmos = list.filter((h) => !h.children && !h.isSectionHeader && aspasmosRank(h.title) >= 0);
+  if (aspasmos.length < 2) return list;
+  const anchor = list.find((h) => aspasmos.includes(h) && aspasmosRank(h.title) === 1) ?? aspasmos[0];
+  const rest = list.filter((h) => !aspasmos.includes(h));
+  const at = list.slice(0, list.indexOf(anchor)).filter((h) => !aspasmos.includes(h)).length;
+  const sorted = [...aspasmos].sort((a, b) => aspasmosRank(a.title) - aspasmosRank(b.title));
+  return [...rest.slice(0, at), ...sorted, ...rest.slice(at)];
+};
+const kiahkPaulineAlternate = seasons
+  .find((s) => s.id === 'kiahk')
+  ?.services.find((s) => s.id === 'kiahk-liturgy')
+  ?.hymns.find((h) => h.id === 'kiahk-liturgy-hymn-6');
+for (const season of seasons) {
+  for (const service of season.services) {
+    service.hymns = orderAspasmos(dropEverywhere(service.hymns));
+    // Annual's Liturgy: the Alternate Response to the Pauline Epistle (Ⲏ̀ ⲁ̀ⲅⲁⲡⲏ, مرد البولس محبة الله) after the Pauline Response
+    if (service.id === 'annual-liturgy' && kiahkPaulineAlternate) {
+      const at = service.hymns.findIndex((h) => h.id === 'annual-liturgy-pihmot-gar');
+      if (at >= 0) service.hymns.splice(at + 1, 0, copyInto(kiahkPaulineAlternate, service.id, true));
     }
   }
 }
