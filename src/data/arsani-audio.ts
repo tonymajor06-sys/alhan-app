@@ -8,10 +8,12 @@ import type { LanguageType } from './hymns';
 export const arsaniAudio: { file: string; hymns: string[]; language: LanguageType }[] = [
   // Ⲧⲉⲛⲟⲩⲱϣⲧ ⲙ̀Ⲫⲓⲱⲧ | Teno osht emefiot | Long Watos Antiphonary - Archdeacon Arsani Sidaros
   { file: "arsani-002-teno-osht-emefiot-long-watos-antiphonary-sidaros.m4a", hymns: ["annual-vespers-verse-of-cymbals", "annual-matins-verse-of-cymbals"], language: "coptic" },
-  // Joyful Verses of the Cymbals (Adam) Feast of the Cross | Archdeacon Arsani Sidarous (Primary: score 59.47 vs 44.22)
-  { file: "arsani-003-joyful-verses-of-cymbals-adam-feast-of-cross.m4a", hymns: ["cross-matins-verses-of-the-cymbal"], language: "coptic" },
-  // Verses of Cymbals Feast of Cross (Secondary: score 44.22)
-  { file: "arsani-097-verses-of-cymbals-feast-of-cross.m4a", hymns: ["cross-matins-verses-of-the-cymbal"], language: "coptic" },
+  // Joyful Verses of the Cymbals (Adam) Feast of the Cross | Archdeacon Arsani Sidarous (Primary: score 59.47 vs 52.48 vs 44.22)
+  { file: "arsani-003-joyful-verses-of-cymbals-adam-feast-of-cross.m4a", hymns: ["cross-matins-verses-of-the-cymbal", "cross-vespers-verses-of-the-cymbal"], language: "coptic" },
+  // Verses of the Cymbals Feast of Cross - YouTube recording (Secondary: score 52.48)
+  { file: "arsani-yt-cross-verses-of-cymbals.m4a", hymns: ["cross-matins-verses-of-the-cymbal", "cross-vespers-verses-of-the-cymbal"], language: "coptic" },
+  // Verses of Cymbals Feast of Cross (Tertiary: score 44.22)
+  { file: "arsani-097-verses-of-cymbals-feast-of-cross.m4a", hymns: ["cross-matins-verses-of-the-cymbal", "cross-vespers-verses-of-the-cymbal"], language: "coptic" },
   // Lipon (Conclusion of Adam Psalis)| Arsani Sidarous and Chorus
   { file: "arsani-004-lipon-conclusion-of-adam-psalis.m4a", hymns: ["annual-midnight-sunday-adam-psali-conclusion", "annual-midnight-monday-adam-psali-conclusion", "annual-midnight-tuesday-adam-psali-conclusion", "annual-vesper-praises-sunday-adam-psali-conclusion", "annual-vesper-praises-monday-adam-psali-conclusion", "annual-vesper-praises-tuesday-adam-psali-conclusion"], language: "coptic" },
   // Asomen (Let Us Praise) - Fifty Days Distribution / Liturgy Adam Aspasmos
@@ -46,11 +48,17 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   { file: "arsani-332-nativity-paramoun-distribution-melody.m4a", hymns: ["nativity-distribution-paramoun-melody"], language: "arabic" },
   // Great Aspazesthe Nativity 2024 (Watos Aspasmos) - Arsani Sidarous (Score 72.80)
   { file: "arsani-263-great-aspazesthe-nativity-2024.m4a", hymns: ["nativity-liturgy-watos-aspasmos-who-is-born"], language: "coptic" },
-  // Hymn for Judas Procession
-  { file: "arsani-023-hymn-for-judas-procession-abouna-louka.m4a", hymns: ["holyweek-covenant-thursday-the-procession-of-judas"], language: "coptic" },
-  // Pekethronos - Arsani Sidarous
+  // Hymn for Judas Procession (Primary: score 51.77)
+  { file: "arsani-yt-covenant-thursday-youdas.m4a", hymns: ["holyweek-covenant-thursday-the-procession-of-judas", "holyweek-covenant-thursday-avchnon"], language: "coptic" },
+  // Hymn for Judas Procession - Abouna Louka (Secondary: score 48.20)
+  { file: "arsani-023-hymn-for-judas-procession-abouna-louka.m4a", hymns: ["holyweek-covenant-thursday-the-procession-of-judas", "holyweek-covenant-thursday-avchnon"], language: "coptic" },
+  // Pekethronos - Arsani Sidarous (Primary)
   { file: "arsani-024-pekethronos.m4a", hymns: ["holyweek-great-friday-12th-hour-pekethronos"], language: "coptic" },
-  // Anok Pe Pikoji Psalm 151 - Arsani Sidarous & Fr Luke Sidarous
+  // Pekethronos - 12th Hour Good Friday (Secondary: score 50.29)
+  { file: "arsani-yt-good-friday-pekethronos.m4a", hymns: ["holyweek-great-friday-12th-hour-pekethronos"], language: "coptic" },
+  // Anok Pe Pikoji Psalm 151 - Bright Saturday (Primary: score 62.38)
+  { file: "arsani-yt-bright-saturday-psalm-151.m4a", hymns: ["holyweek-apocalypse-praises-psalm-151"], language: "coptic" },
+  // Anok Pe Pikoji Psalm 151 - Arsani Sidarous & Fr Luke Sidarous (Secondary: score 52.10)
   { file: "arsani-026-anok-pe-pikoji-psalm-151-fr-luke.m4a", hymns: ["holyweek-apocalypse-praises-psalm-151"], language: "coptic" },
   // Tin Anastasin
   { file: "arsani-027-tin-anastasin.m4a", hymns: ["pentecost-liturgy-your-resurrection"], language: "coptic" },
@@ -70,8 +78,10 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   { file: "arsani-036-feast-of-apostles-tamgeed.m4a", hymns: ["apostles-liturgy-watos-aspasmos-for-feast-of-apostles-hail-to-the-t"], language: "coptic" },
   // Saturday Psali - Coptic Monastery of St. Shenouda, Rochester, NY
   { file: "arsani-038-saturday-psali-coptic-monastery-of-st-shenouda-roc.m4a", hymns: ["annual-midnight-saturday-watos-psali", "annual-vesper-praises-saturday-watos-psali"], language: "coptic" },
-  // Fai Etafenf- Arsani Sidarous (Covenant Thursday)
+  // Fai Etafenf- Arsani Sidarous (Covenant Thursday) - Primary: score 70.75
   { file: "arsani-039-fai-etafenf.m4a", hymns: ["holyweek-covenant-thursday-fai-etav-enf"], language: "coptic" },
+  // Covenant Thursday Fai Etafenf - YouTube (Secondary: score 57.50)
+  { file: "arsani-yt-covenant-thursday-fai-etafenf.m4a", hymns: ["holyweek-covenant-thursday-fai-etav-enf"], language: "coptic" },
   // Feast of the Cross Praxis Response (Fai Etafenf) - Arsani Sidarous 2023
   { file: "arsani-084-fai-etafenf-feast-of-cross-2023.m4a", hymns: ["cross-liturgy-praxis-response-feast-of-the-cross"], language: "coptic" },
   // Tov hina (Coptic) | Archdeacon Arsani Sidarous
@@ -80,15 +90,19 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   { file: "arsani-044-ya-kol-al-sefoof.m4a", hymns: ["pentecost-liturgy-ya-kol-alsefoof"], language: "arabic" },
   // Ya Kol A Sefoof - Secondary: score 54.62
   { file: "arsani-248-ya-kol-a-sefoof.m4a", hymns: ["pentecost-liturgy-ya-kol-alsefoof"], language: "arabic" },
-  // Tenen and Tenoweh Kiahk
-  { file: "arsani-048-tenen-tenoweh-kiahk.m4a", hymns: ["kiahk-midnight-hymn-20"], language: "coptic" },
-  // Tenen - Kiahk 2010 (Score 71.20)
+  // Tenen - Kiahk 2010 (Primary: score 71.20)
   { file: "arsani-275-tenen-kiahk-2010.m4a", hymns: ["kiahk-midnight-hymn-20", "annual-midnight-three-holy-children@kiahk-midnight"], language: "coptic" },
+  // Tenen - Kiahk 2016 (Secondary: score 64.19)
+  { file: "arsani-yt-kiahk-tenen-2016.m4a", hymns: ["kiahk-midnight-hymn-20", "annual-midnight-three-holy-children@kiahk-midnight"], language: "coptic" },
+  // Tenen and Tenoweh Kiahk (Tertiary: score 40.21)
+  { file: "arsani-048-tenen-tenoweh-kiahk.m4a", hymns: ["kiahk-midnight-hymn-20"], language: "coptic" },
   // Holy Week Mournful Agios - Primary: score 77.33
   { file: "arsani-049-agios-mournful-tune.m4a", hymns: ["holyweek-pascha-agios", "annual-liturgy-agios@holyweek-bright-saturday"], language: "coptic" },
-  // Holy Week Mournful Agios - Secondary: score 39.02
+  // Covenant Thursday Agios - YouTube (Secondary: score 51.66)
+  { file: "arsani-yt-covenant-thursday-agios.m4a", hymns: ["holyweek-pascha-agios", "annual-liturgy-agios@holyweek-bright-saturday"], language: "coptic" },
+  // Holy Week Mournful Agios - Tertiary: score 39.02
   { file: "arsani-270-agios-mournful-tune.m4a", hymns: ["holyweek-pascha-agios", "annual-liturgy-agios@holyweek-bright-saturday"], language: "coptic" },
-  // Holy Week Agios - Tertiary: score 38.08
+  // Holy Week Agios - Quaternary: score 38.08
   { file: "arsani-237-agios-holy-week.m4a", hymns: ["holyweek-pascha-agios", "annual-liturgy-agios@holyweek-bright-saturday"], language: "coptic" },
   // Teoi Enhikanos (Melismatic) - Arsani Sidarous and the Deacons of the LA Diocese
   { file: "arsani-050-teoi-enhikanos-melismatic-s-of-la-diocese.m4a", hymns: ["annual-midnight-sunday-theotokia-part-10", "annual-vesper-praises-sunday-theotokia-part-10"], language: "coptic" },
@@ -122,9 +136,11 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   { file: "arsani-064-owoh-menensa-doxology-ascension.m4a", hymns: ["pentecost-matins-ascension-doxology"], language: "coptic" },
   // مديح توزيع برمون الميلاد Arsani Sidarous (Coptic/Arabic)
   { file: "arsani-065-coptic-arabic.m4a", hymns: ["nativity-distribution-your-star-appeared"], language: "coptic" },
-  // Kiahk Sixth Explanation (Aaron's Censer) - Primary: score 52.44
+  // Kiahk Sixth Explanation (Aaron's Censer) - Primary Coptic: score 52.44
   { file: "arsani-335-aarons-censer.m4a", hymns: ["kiahk-midnight-hymn-51"], language: "coptic" },
-  // Kiahk Sixth Explanation - Secondary: score 45.28
+  // Kiahk 6th Explanation - YouTube (Primary Arabic: score 52.27)
+  { file: "arsani-yt-kiahk-sixth-explanation.m4a", hymns: ["kiahk-midnight-hymn-51"], language: "arabic" },
+  // Kiahk Sixth Explanation - Secondary Coptic: score 45.28
   { file: "arsani-068-kiahk-sixth-explanation-censer-of-aaron.m4a", hymns: ["kiahk-midnight-hymn-51"], language: "coptic" },
   // Tennav (We look at the Resurrection)
   { file: "arsani-069-tennav-we-look-at-resurrection.m4a", hymns: ["annual-midnight-the-hymn-of-the-resurrection@pentecost-midnight"], language: "coptic" },
@@ -134,12 +150,16 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   { file: "arsani-074-tenen.m4a", hymns: ["annual-midnight-three-holy-children"], language: "coptic" },
   // Maren Ouonh
   { file: "arsani-075-06-maren-ouonh.m4a", hymns: ["annual-midnight-second-canticle-lobsh"], language: "coptic" },
-  // Mournful Ti Shoree+Fai Etaf Enf (Good Friday)
+  // Mournful Ti Shoree+Fai Etaf Enf (Good Friday) - Primary: score 62.00
   { file: "arsani-077-mournful-ti-shoree-fai-etaf-enf-good-friday.m4a", hymns: ["holyweek-great-friday-9th-hour-teeshoory"], language: "coptic" },
+  // Good Friday 9th Hour Ti Shouri - YouTube (Secondary: score 54.94)
+  { file: "arsani-yt-good-friday-9th-tishouri.m4a", hymns: ["holyweek-great-friday-9th-hour-teeshoory"], language: "coptic" },
   // Annual Aspasmos Watos (Epchois Efnoti)
   { file: "arsani-078-annual-aspasmos-watos-epchois-efnoti-archi-seattle.m4a", hymns: ["annual-liturgy-aspasmos-watos"], language: "coptic" },
-  // Ti Epistoly (Good Friday 6th Hour)
+  // Ti Epistoly (Good Friday 6th Hour) - Primary: score 86.27
   { file: "arsani-081-ti-epistoly-introduction-to-6th-hour-pauline-epist.m4a", hymns: ["holyweek-great-friday-6th-hour-pauline"], language: "coptic" },
+  // Good Friday 6th Hour Pauline - YouTube (Secondary: score 58.48)
+  { file: "arsani-yt-good-friday-6th-pauline.m4a", hymns: ["holyweek-great-friday-6th-hour-pauline"], language: "coptic" },
   // Commemoration of the Saints
   { file: "arsani-082-commemoration-of-saints.m4a", hymns: ["annual-midnight-commemoration"], language: "coptic" },
   // 1st & 2nd Joyful Sherat
@@ -180,8 +200,10 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   { file: "arsani-121-first-hoos-lobsh-khen-oushot-s-of-la-diocese.m4a", hymns: ["annual-midnight-first-canticle-lobsh"], language: "coptic" },
   // Nativity Doxology
   { file: "arsani-122-nativity-doxology-st-mercurius-st-abraam-torrance.m4a", hymns: ["nativity-matins-first-doxology"], language: "coptic" },
-  // Agios O Theos (Kiahk Holy God)
+  // Agios O Theos (Kiahk Holy God) - Primary: score 59.68
   { file: "arsani-123-agios-o-theos-kiahk.m4a", hymns: ["kiahk-midnight-hymn-1"], language: "coptic" },
+  // Kiahk Agios O Theos 2015 - YouTube (Secondary: score 45.77)
+  { file: "arsani-yt-kiahk-agios-2015.m4a", hymns: ["kiahk-midnight-hymn-1"], language: "coptic" },
   // Nisavev
   { file: "arsani-124-nisavev.m4a", hymns: ["annual-liturgy-offering-all-the-wise-men"], language: "coptic" },
   // Hiteniat
@@ -190,9 +212,13 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   { file: "arsani-127-apekran.m4a", hymns: ["annual-veneration-your-name"], language: "coptic" },
   // Coptic Paschal Praxis | Praxeonton - Primary: score 63.33
   { file: "arsani-130-coptic-paschal-praxis-praxeonton.m4a", hymns: ["holyweek-covenant-thursday-acts-of-the-apostles"], language: "coptic" },
-  // Praxeon Ton The Acts - Secondary: score 40.08
+  // Covenant Thursday Praxis - YouTube (Secondary: score 55.90)
+  { file: "arsani-yt-covenant-thursday-praxis.m4a", hymns: ["holyweek-covenant-thursday-acts-of-the-apostles"], language: "coptic" },
+  // Praxeon Ton The Acts - Tertiary: score 40.08
   { file: "arsani-151-praxeon-ton-the-acts.m4a", hymns: ["holyweek-covenant-thursday-acts-of-the-apostles"], language: "coptic" },
-  // Tayshori Good Friday
+  // Good Friday 6th Hour Tai Shouri - YouTube (Primary: score 54.44)
+  { file: "arsani-yt-good-friday-6th-taishouri.m4a", hymns: ["holyweek-great-friday-6th-hour-taishoury"], language: "coptic" },
+  // Tayshori Good Friday - Secondary: score 44.48
   { file: "arsani-132-tayshori-good-friday.m4a", hymns: ["holyweek-great-friday-6th-hour-taishoury"], language: "coptic" },
   // Pentecost Melismatic Praxis Response - Primary: score 63.95
   { file: "arsani-133-pentecost-melismatic-praxis-response.m4a", hymns: ["pentecost-liturgy-praxis-response", "pentecost-liturgy-alternate-praxis-response"], language: "coptic" },
@@ -261,7 +287,9 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   { file: "arsani-204-tenthinou.m4a", hymns: ["annual-midnight-arise-o-children"], language: "coptic" },
   // Evlogimenos (Blessed is He) - Primary: score 83.20
   { file: "arsani-236-evlogimenos.m4a", hymns: ["palmsunday-distribution-the-hymn-of-palm-sunday", "palmsunday-liturgy-evlogymenos", "annual-vespers-blessed-is-he"], language: "coptic" },
-  // Evlogimenos - Secondary: score 43.42
+  // Palm Sunday Distribution - YouTube (Secondary: score 61.29)
+  { file: "arsani-yt-palm-sunday-distribution.m4a", hymns: ["palmsunday-distribution-the-hymn-of-palm-sunday", "palmsunday-liturgy-evlogymenos", "annual-vespers-blessed-is-he"], language: "coptic" },
+  // Evlogimenos - Tertiary: score 43.42
   { file: "arsani-114-evlogimenos.m4a", hymns: ["palmsunday-distribution-the-hymn-of-palm-sunday", "palmsunday-liturgy-evlogymenos", "annual-vespers-blessed-is-he"], language: "coptic" },
   // The Great Azpazesthe (Quick Tune)
   { file: "arsani-241-great-azpazes-quick-tune-anton-ibrahim-ayad.m4a", hymns: ["d-annual-liturgy-faithful-greet-one-another-great"], language: "arabic" },
@@ -281,8 +309,10 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   { file: "arsani-300-the-great-high-priest-meeghalo.m4a", hymns: ["lent-weekday-the-great-high-priest", "lent-weekend-liturgy-the-great-high-priest"], language: "coptic" },
   // Meghalo + Apenchoice - Secondary: score 53.28
   { file: "arsani-208-meghalo-apenchoice.m4a", hymns: ["lent-weekday-the-great-high-priest", "lent-weekend-liturgy-the-great-high-priest"], language: "coptic" },
-  // Saint Mary - Ya M R Y M
-  { file: "arsani-307-saint-mary-ya-m-r-y-m.m4a", hymns: ["annual-veneration-o-mother-of-light"], language: "arabic" },
+  // Saint Mary - Ya M R Y M - YouTube (Primary: score 62.67)
+  { file: "arsani-yt-kiahk-ya-mrym.m4a", hymns: ["kiahk-midnight-hymn-61", "annual-veneration-o-mother-of-light"], language: "arabic" },
+  // Saint Mary - Ya M R Y M - Secondary: score 57.23
+  { file: "arsani-307-saint-mary-ya-m-r-y-m.m4a", hymns: ["kiahk-midnight-hymn-61", "annual-veneration-o-mother-of-light"], language: "arabic" },
   // Thok Te Tea Gome
   { file: "arsani-315-thok-te-tea-gome-9th-hr-eve-of-wed.m4a", hymns: ["holyweek-covenant-thursday-paschal-doxology"], language: "coptic" },
   // Great Lent Psalm 150
@@ -291,9 +321,11 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   { file: "arsani-334-efrahi-ya-mariam-onof-emmo-maria.m4a", hymns: ["kiahk-midnight-hymn-60"], language: "coptic" },
   // St. Mary Glorification - Primary: score 68.93
   { file: "arsani-165-st-mary-glorification.m4a", hymns: ["annual-veneration-hail-to-you-o-mary-2", "annual-veneration-hail-to-you-o-mary"], language: "arabic" },
-  // Veneration for St. Mary (Arabic) - Secondary: score 57.95
+  // St Mary Glorification - YouTube (Secondary: score 58.04)
+  { file: "arsani-yt-st-mary-tamgeed.m4a", hymns: ["annual-veneration-hail-to-you-o-mary-2", "annual-veneration-hail-to-you-o-mary"], language: "arabic" },
+  // Veneration for St. Mary (Arabic) - Tertiary: score 57.95
   { file: "arsani-040-veneration-for-st-mary-arabic.m4a", hymns: ["annual-veneration-hail-to-you-o-mary-2", "annual-veneration-hail-to-you-o-mary"], language: "arabic" },
-  // St. Mary Glorification - Tertiary: score 49.81
+  // St. Mary Glorification - Quaternary: score 49.81
   { file: "arsani-112-st-mary-glorification.m4a", hymns: ["annual-veneration-hail-to-you-o-mary-2", "annual-veneration-hail-to-you-o-mary"], language: "arabic" },
   // YouTube recordings and additional tracks...
   { file: "arsani-yt-lent-psalm-150-coptic.m4a", hymns: ["lent-weekend-psalm-150"], language: "coptic" },
@@ -312,4 +344,50 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   { file: "bright-saturday-my-god-my-god.m4a", hymns: ["holyweek-bright-saturday-my-god-my-god"], language: "arabic" },
   { file: "arsani-yt-doxology-anba-abraam.m4a", hymns: ["annual-vespers-doxology-anba-abraam", "annual-matins-doxology-anba-abraam", "annual-midnight-doxology-anba-abraam"], language: "coptic" },
   { file: "arsani-yt-madih-anba-abraam.m4a", hymns: ["annual-vespers-doxology-anba-abraam", "annual-matins-doxology-anba-abraam", "annual-midnight-doxology-anba-abraam"], language: "arabic" },
+  // Kiahk 1st Explanation
+  { file: "arsani-yt-kiahk-first-explanation.m4a", hymns: ["kiahk-midnight-hymn-41"], language: "arabic" },
+  // Kiahk 2nd Explanation
+  { file: "arsani-yt-kiahk-second-explanation.m4a", hymns: ["kiahk-midnight-hymn-43"], language: "arabic" },
+  // Luke 1 / Adam Aspasmos Zechariah (Khatarat Hamama)
+  { file: "arsani-yt-kiahk-aspasmos-adam-zechariah.m4a", hymns: ["kiahk-liturgy-hymn-19"], language: "arabic" },
+  // Kiahk Ode
+  { file: "arsani-yt-kiahk-ode.m4a", hymns: ["kiahk-midnight-kiahk-ode"], language: "coptic" },
+  // Cross Vespers (Exposition Intro & Gospel Response)
+  { file: "arsani-yt-cross-vespers.m4a", hymns: ["cross-matins-exposition-introduction", "cross-liturgy-gospel-response"], language: "coptic" },
+  // Cross Doxologies
+  { file: "arsani-yt-cross-doxologies.m4a", hymns: ["cross-matins-doxology"], language: "coptic" },
+  // Kiahk St Anthony Praise
+  { file: "arsani-yt-kiahk-st-anthony.m4a", hymns: ["kiahk-midnight-hymn-24"], language: "arabic" },
+  // Kiahk St Moses the Black Praise
+  { file: "arsani-yt-kiahk-anba-mousa.m4a", hymns: ["kiahk-midnight-hymn-26"], language: "arabic" },
+  // Good Friday Agios (Omonogenyc)
+  { file: "arsani-yt-good-friday-agios.m4a", hymns: ["holyweek-great-friday-omonogenyc"], language: "coptic" },
+  // Lazarus Saturday Gospel
+  { file: "arsani-yt-lazarus-saturday-gospel.m4a", hymns: ["palmsunday-vespers-gospel-response", "palmsunday-vespers-gospel-response-lazarus-saturday"], language: "coptic" },
+  // Palm Sunday Vespers Praises
+  { file: "arsani-yt-palm-sunday-vesper-praises.m4a", hymns: ["palmsunday-vespers-graciously-accord-o-lord", "palmsunday-vespers-introduction-to-the-creed", "palmsunday-vespers-watos-exposition", "palmsunday-vespers-adam-exposition", "palmsunday-vespers-concluding-canon"], language: "coptic" },
+  // Kiahk I Open My Mouth With Praise
+  { file: "arsani-yt-kiahk-i-open-my-mouth.m4a", hymns: ["kiahk-midnight-hymn-37"], language: "arabic" },
+  // Kiahk Praise Amdah Azraa Wa Batoul
+  { file: "arsani-yt-kiahk-amdah-azraa.m4a", hymns: ["kiahk-midnight-hymn-35"], language: "arabic" },
+  // Kiahk Praise Ashkorak Ya Rabb Israeel
+  { file: "arsani-yt-kiahk-ashkorak.m4a", hymns: ["kiahk-midnight-hymn-12", "nativity-fast-midnight-third-hos-psali"], language: "arabic" },
+  // Nativity Paramoun Distribution Melody (Ana Awel Kalami)
+  { file: "arsani-yt-nativity-paramoun-ana-awel-kalami.m4a", hymns: ["nativity-distribution-paramoun-melody"], language: "arabic" },
+  // Resurrection Distribution
+  { file: "arsani-yt-resurrection-distribution.m4a", hymns: ["pentecost-distribution-all-the-choirs"], language: "coptic" },
+  // Pentecost Distribution
+  { file: "arsani-yt-pentecost-distribution.m4a", hymns: ["pentecost-distribution-pentecost-feast"], language: "coptic" },
+  // Apostles Fast Distribution
+  { file: "arsani-yt-apostles-distribution.m4a", hymns: ["pentecost-distribution-let-us-praise@apostles-distribution", "apostles-liturgy-o-you-who@apostles-distribution"], language: "coptic" },
+  // Apostles Glorification
+  { file: "arsani-yt-apostles-tamgeed.m4a", hymns: ["annual-matins-doxology-apostles", "annual-vespers-doxology-apostles"], language: "arabic" },
+  // Pope Kyrillos VI Glorification
+  { file: "arsani-yt-pope-kyrillos-tamgeed.m4a", hymns: ["annual-matins-doxology-pope-kyrillos-vi", "annual-vespers-doxology-pope-kyrillos-vi", "annual-midnight-doxology-pope-kyrillos"], language: "arabic" },
+  // St Mina Glorification
+  { file: "arsani-yt-st-mina-tamgeed.m4a", hymns: ["annual-matins-doxology-st-mena", "annual-vespers-doxology-st-mena", "annual-midnight-doxology-st-mena"], language: "arabic" },
+  // St George Glorification
+  { file: "arsani-yt-st-george-tamgeed.m4a", hymns: ["annual-matins-doxology-st-george", "annual-vespers-doxology-st-george", "annual-midnight-doxology-st-george"], language: "arabic" },
+  // St Mercurius Glorification
+  { file: "arsani-yt-st-mercurius-tamgeed.m4a", hymns: ["annual-matins-doxology-philopater-mercurius", "annual-vespers-doxology-philopater-mercurius", "annual-midnight-doxology-philopater-mercurius"], language: "arabic" },
 ];

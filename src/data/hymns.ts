@@ -7803,6 +7803,36 @@ for (const season of seasons) {
           return [...sefoofOrder.filter((f) => files.includes(f)), ...files.filter((f) => !sefoofOrder.includes(f))];
         });
       }
+      if (base === 'holyweek-great-friday-6th-hour-taishoury') {
+        editRecordings(hymn, ALL_LANGUAGES, (files) => {
+          const order = ['arsani-yt-good-friday-6th-taishouri.m4a', 'arsani-132-tayshori-good-friday.m4a', 'alhan-pascha-taishori.mp3'];
+          return [...order.filter((f) => files.includes(f)), ...files.filter((f) => !order.includes(f))];
+        });
+      }
+      if (base === 'holyweek-apocalypse-praises-psalm-151') {
+        editRecordings(hymn, ALL_LANGUAGES, (files) => {
+          const order = ['arsani-yt-bright-saturday-psalm-151.m4a', 'arsani-026-anok-pe-pikoji-psalm-151-fr-luke.m4a', 'alhan-brightsat-anok.mp3'];
+          return [...order.filter((f) => files.includes(f)), ...files.filter((f) => !order.includes(f))];
+        });
+      }
+      if (base === 'kiahk-midnight-hymn-20') {
+        editRecordings(hymn, ALL_LANGUAGES, (files) => {
+          const order = ['arsani-275-tenen-kiahk-2010.m4a', 'arsani-yt-kiahk-tenen-2016.m4a', 'midnight-tenen.m4a', 'arsani-048-tenen-tenoweh-kiahk.m4a', 'kiahk-midnight-tenen.mp3'];
+          return [...order.filter((f) => files.includes(f)), ...files.filter((f) => !order.includes(f))];
+        });
+      }
+      if (base === 'kiahk-midnight-hymn-61') {
+        editRecordings(hymn, ALL_LANGUAGES, (files) => {
+          const order = ['arsani-yt-kiahk-ya-mrym.m4a', 'kiahk-midnight-o-mary.mp3', 'arsani-307-saint-mary-ya-m-r-y-m.m4a'];
+          return [...order.filter((f) => files.includes(f)), ...files.filter((f) => !order.includes(f))];
+        });
+      }
+      if (base === 'annual-veneration-hail-to-you-o-mary-2' || base === 'annual-veneration-hail-to-you-o-mary') {
+        editRecordings(hymn, ALL_LANGUAGES, (files) => {
+          const order = ['arsani-165-st-mary-glorification.m4a', 'arsani-yt-st-mary-tamgeed.m4a', 'arsani-040-veneration-for-st-mary-arabic.m4a', 'Hail to you o Mary 2.m4a', 'arsani-112-st-mary-glorification.m4a'];
+          return [...order.filter((f) => files.includes(f)), ...files.filter((f) => !order.includes(f))];
+        });
+      }
       // Ⲡⲟⲩⲣⲟ everywhere: Abouna Mina Girgis and Arsani Sidarous's Epouro only
       if (base === 'annual-veneration-hymn-of-joy') editRecordings(hymn, COPTIC_AUDIO, () => [POURO]);
       // Ⲧⲉⲛⲑⲏⲛⲟⲩ: every season sings Annual's second recording instead of the melismatic one

@@ -123,12 +123,20 @@ describe('Kiahk Praises & Season > Midnight Praises', () => {
     ];
     for (const [title, file] of englishArabic) {
       const hymn = service.hymns.find((h) => h.title === title)!;
-      expect([title, hymn.versions.map((v) => [v.language, v.audio])]).toEqual([
-        title,
-        [['english', file], ['arabic', file], ['englishArabic', file], ['arabicEnglish', file]],
-      ]);
+      if (title === 'O Mary') {
+        expect([title, hymn.versions.map((v) => [v.language, v.audio])]).toEqual([
+          title,
+          [['english', file], ['arabic', 'arsani-yt-kiahk-ya-mrym.m4a'], ['englishArabic', 'arsani-yt-kiahk-ya-mrym.m4a'], ['arabicEnglish', file]],
+        ]);
+        expect(hymn.versions.find((v) => v.language === 'arabic')?.otherAudio).toContain(file);
+      } else {
+        expect([title, hymn.versions.map((v) => [v.language, v.audio])]).toEqual([
+          title,
+          [['english', file], ['arabic', file], ['englishArabic', file], ['arabicEnglish', file]],
+        ]);
+      }
       expect(nodeFs.statSync('assets/audio/' + file).size).toBeGreaterThan(1000000);
-      const withThisFile = flattenHymns(service.hymns).filter((h) => h.versions.some((v) => v.audio === file));
+      const withThisFile = flattenHymns(service.hymns).filter((h) => h.versions.some((v) => v.audio === file || v.otherAudio?.includes(file)));
       expect(withThisFile.map((h) => h.title)).toEqual([title]);
     }
     // the Commemoration of the Saints: the Kiahk recording on the Coptic versions, the Annual one kept as the second choice
@@ -1089,7 +1097,12 @@ describe('Kiahk Praises & Season > Liturgy', () => {
       for (const language of ['coptic', 'englishCoptic', 'english', 'arabic', 'arabicCoptic', 'arabicEnglish']) {
         expect([hymn.title, language, stanzas(hymn, language).length]).toEqual([hymn.title, language, count]);
       }
-      expect(hymn.versions.every((v) => !v.text.includes('\\n') && !v.text.includes('⳪') && v.audio === undefined)).toBe(true);
+      expect(hymn.versions.every((v) => !v.text.includes('\\n') && !v.text.includes('⳪'))).toBe(true);
+      if (hymn === zechariah) {
+        expect(hymn.versions.find((v) => v.language === 'arabic')?.audio).toBe('arsani-yt-kiahk-aspasmos-adam-zechariah.m4a');
+      } else {
+        expect(hymn.versions.every((v) => v.audio === undefined)).toBe(true);
+      }
       // the Lord's symbol is written out, the symbol itself is not in the Coptic font
       expect(stanzas(hymn, 'coptic')[hymn === zechariah ? 5 : 6]).toContain('Ⲡ̀ϭⲟⲓⲥ ⲡⲓⲡⲁⲛⲧⲟⲕⲣⲁⲧⲱⲣ');
     }
