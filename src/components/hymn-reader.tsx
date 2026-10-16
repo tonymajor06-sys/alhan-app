@@ -416,53 +416,21 @@ export function HymnReader({
           scrollRef={scrollRef}>
           <KeepScreenAwake />
           {banner}
-          {/* Top language selector: active language clearly highlighted at the top, and direct 1-tap chips to switch */}
-          {availableLanguages.length > 1 || (acrossSeasons.length > 1 && currentSeason) ? (
-            <ChipScroller rtl={isRTL} contentStyle={styles.readerLanguageRow}>
-              {availableLanguages.map((l) => {
-                const isSelected = l.key === effectiveLanguage;
-                return (
-                  <Pressable
-                    key={l.key}
-                    onPress={() => {
-                      if (isSelected) {
-                        setSheet('language');
-                      } else {
-                        setActiveLanguage(l.key);
-                      }
-                    }}
-                    accessibilityRole="button"
-                    accessibilityState={{ selected: isSelected }}
-                    accessibilityLabel={`${t.language}: ${l.label}`}
-                    style={({ pressed }) => [
-                      styles.readerChip,
-                      isSelected && styles.readerChipActive,
-                      pressed && styles.pressed,
-                    ]}>
-                    <Text style={[styles.readerChipText, isSelected && styles.readerChipTextActive]}>
-                      {l.label}
-                    </Text>
-                    {isSelected ? <Text style={styles.readerChipCaret}>▾</Text> : null}
-                  </Pressable>
-                );
-              })}
-              {acrossSeasons.length > 1 && currentSeason ? (
-                <Pressable
-                  onPress={() => setSheet('season')}
-                  accessibilityRole="button"
-                  accessibilityLabel={`${t.season}: ${shortSeasonName(currentSeason, lang)}`}
-                  style={({ pressed }) => [styles.readerChip, pressed && styles.pressed]}>
-                  <Text style={styles.readerChipText}>
-                    {shortSeasonName(currentSeason, lang)}
-                  </Text>
-                  <Text style={styles.pickerCaret}>▾</Text>
-                </Pressable>
-              ) : null}
-            </ChipScroller>
-          ) : null}
-
-          {/* Settings out in the open: Side by Side, Learn, Project, Text scale, More */}
+          {/* Settings out in the open: Season, Side by Side, Learn, Project, Text scale, More */}
           <ChipScroller rtl={isRTL} contentStyle={styles.readerActionsRow}>
+            {acrossSeasons.length > 1 && currentSeason ? (
+              <Pressable
+                onPress={() => setSheet('season')}
+                accessibilityRole="button"
+                accessibilityLabel={`${t.season}: ${shortSeasonName(currentSeason, lang)}`}
+                style={({ pressed }) => [styles.actionToolbarButton, pressed && styles.pressed]}>
+                <Text style={styles.actionToolbarButtonText}>
+                  {shortSeasonName(currentSeason, lang)}
+                </Text>
+                <Text style={styles.pickerCaret}>▾</Text>
+              </Pressable>
+            ) : null}
+
             {compareOptions.length > 0 ? (
               <Pressable
                 onPress={() => updateSettings({ sideBySide: !settings.sideBySide })}
@@ -542,18 +510,6 @@ export function HymnReader({
               <Text style={styles.moreCircleText}>⋯</Text>
             </Pressable>
           </ChipScroller>
-
-          {showSideBySide && compareLanguage ? (
-            <Pressable
-              onPress={() => compareOptions.length > 1 && setSheet('compare')}
-              accessibilityRole="button"
-              style={({ pressed }) => [styles.compareChips, rowDirection, { alignItems: 'center', gap: 6 }, pressed && styles.pressed]}>
-              <Text style={styles.compareLabel}>
-                {t.compareWith}: {compareLanguageLabel}
-              </Text>
-              {compareOptions.length > 1 ? <Text style={styles.pickerCaret}>▾</Text> : null}
-            </Pressable>
-          ) : null}
 
           <Sheet visible={sheet === 'language'} title={t.language} rtl={isRTL} onClose={() => setSheet(null)}>
             {availableLanguages.map((l) => (
