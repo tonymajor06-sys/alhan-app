@@ -6227,7 +6227,7 @@ const venerationAudio: Record<string, { file: string; languages: LanguageType[];
   'holy-is-the-father': { file: 'Holy is the Father.m4a', languages: COPTIC },
   intercede: { file: 'Ariprecvavin.m4a', languages: COPTIC },
   'your-name': { file: 'Apekran.m4a', languages: COPTIC },
-  'ten-strings': { file: 'Atai Parthenos.m4a', languages: [...COPTIC, ...ARABIC] },
+  'ten-strings': { file: 'arsani-008-atai-parthenos.m4a', other: 'Atai Parthenos.m4a', languages: [...COPTIC, ...ARABIC] },
   'hymn-of-joy': { file: 'Hymn of joy.m4a', languages: COPTIC },
   'hail-to-you-o-mary': { file: 'veneration-hail-to-you-o-mary.m4a', languages: [...ENGLISH, ...ARABIC] },
   'hail-to-you-o-mary-2': { file: 'Hail to you o Mary 2.m4a', languages: [...ENGLISH, ...ARABIC] },
@@ -7777,10 +7777,32 @@ for (const season of seasons) {
       // The feasts' Verses of the Cymbals (Ⲕⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ, Ⲧⲉⲛⲟⲩⲱϣⲧ) is named after Nativity only in Nativity
       if (base === 'nativity-matins-verses-of-the-cymbals-feast-of-nativity' && season.id !== 'nativity')
         hymn.title = 'Ⲕⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ (Verses of the Cymbals for Feasts)';
-      // The 5:41 Psalm 150 is Kiahk's tune only
-      if (season.id !== 'kiahk') editRecordings(hymn, ALL_LANGUAGES, without('arsani-155-kiahk-psalm-150-alleluia.m4a'));
-      // Ⲧⲟⲩ ⲙⲁⲕⲁⲣⲓⲱ keeps one recording
+      // Seasonal Psalm 150 recordings only attach to their respective season
+      if (season.id !== 'kiahk') {
+        editRecordings(hymn, ALL_LANGUAGES, (files) =>
+          files.filter(
+            (f) =>
+              f !== 'arsani-155-kiahk-psalm-150-alleluia.m4a' &&
+              f !== 'arsani-190-kiahk-psalm-150-2022.m4a' &&
+              f !== 'arsani-194-kiahk-psalm-150-live-la.m4a'
+          )
+        );
+      }
+      if (season.id !== 'lent') editRecordings(hymn, ALL_LANGUAGES, without('arsani-333-great-lent-psalm-150.m4a'));
+      if (season.id !== 'palmsunday') editRecordings(hymn, ALL_LANGUAGES, without('arsani-060-palm-sunday-psalm-150.m4a'));
+      if (season.id === 'kiahk' && (base.includes('psalm-150') || base === 'kiahk-distribution-hymn-1')) {
+        editRecordings(hymn, ALL_LANGUAGES, (files) => {
+          const kiahkOrder = ['arsani-194-kiahk-psalm-150-live-la.m4a', 'arsani-190-kiahk-psalm-150-2022.m4a', 'arsani-155-kiahk-psalm-150-alleluia.m4a'];
+          return [...kiahkOrder.filter((f) => files.includes(f)), ...files.filter((f) => !kiahkOrder.includes(f))];
+        });
+      }
       if (base === 'kiahk-liturgy-hymn-8') editRecordings(hymn, ALL_LANGUAGES, without('arsani-111-recording.m4a'));
+      if (base === 'pentecost-liturgy-ya-kol-alsefoof' || base === 'resurrection-liturgy-pentecost-hymn-arabic') {
+        editRecordings(hymn, ALL_LANGUAGES, (files) => {
+          const sefoofOrder = ['arsani-044-ya-kol-al-sefoof.m4a', 'arsani-248-ya-kol-a-sefoof.m4a', 'alhan-resurrection-yakolalsefoof.mp3'];
+          return [...sefoofOrder.filter((f) => files.includes(f)), ...files.filter((f) => !sefoofOrder.includes(f))];
+        });
+      }
       // Ⲡⲟⲩⲣⲟ everywhere: Abouna Mina Girgis and Arsani Sidarous's Epouro only
       if (base === 'annual-veneration-hymn-of-joy') editRecordings(hymn, COPTIC_AUDIO, () => [POURO]);
       // Ⲧⲉⲛⲑⲏⲛⲟⲩ: every season sings Annual's second recording instead of the melismatic one
