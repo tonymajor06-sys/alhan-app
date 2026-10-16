@@ -2,7 +2,7 @@ import { router } from 'expo-router';
 import { ReactNode } from 'react';
 import { Alert, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { ChipScroller, createAlhanStyles, goBackOrHome, languageLabels, ScreenShell, withCopticFont } from '@/components/alhan-ui';
+import { ChipScroller, createAlhanStyles, languageLabels, ScreenShell, withCopticFont } from '@/components/alhan-ui';
 import { DonationBox } from '@/components/donation-box';
 import { AlhanPalette } from '@/constants/alhan-colors';
 import { LanguageType } from '@/data/hymns';
@@ -160,7 +160,7 @@ export default function SettingsScreen() {
   const hymnLanguages: { key: LanguageType | null; label: string }[] = [{ key: null, label: t.automatic }, ...languageLabels[lang]];
 
   return (
-    <ScreenShell lang={lang} title={t.title} subtitle={t.subtitle} onBack={goBackOrHome}>
+    <ScreenShell lang={lang} title={t.title} subtitle={t.subtitle} >
       {section(
         t.language,
         segmented<AppLanguage>(

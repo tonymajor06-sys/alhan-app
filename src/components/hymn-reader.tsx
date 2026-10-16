@@ -34,6 +34,7 @@ import { isInPlaylist, PlaylistItem, togglePlaylistItem, usePlaylist } from '../
 import { TEXT_SCALE_MAX, TEXT_SCALE_MIN, updateSettings, useSettings } from '../hooks/use-settings';
 import { clearVerseTimings, saveVerseTimings, useVerseTimings, verseAt } from '../hooks/use-verse-timings';
 import {
+  ChipScroller,
   createAlhanStyles,
   defaultHymnLanguage,
   goBackOrHome,
@@ -250,6 +251,8 @@ export function HymnReader({
     (compareOptions.find((l) => l.key === 'english') ?? compareOptions[0])?.key ??
     null;
   const showSideBySide = settings.sideBySide && compareLanguage !== null;
+  const currentLanguageLabel = languageLabels[lang].find((l) => l.key === effectiveLanguage)?.label ?? '';
+  const compareLanguageLabel = languageLabels[lang].find((l) => l.key === compareLanguage)?.label ?? '';
   const columnStyle = (language: LanguageType) =>
     language === 'arabic' || language === 'arabicCoptic' || language === 'arabicEnglish'
       ? styles.arabicText
@@ -358,19 +361,6 @@ export function HymnReader({
 
   const learnVerseStyle = (i: number) => [styles.learnVerse, i === highlighted && styles.learnVerseActive];
 
-  // A button showing the current choice, which opens its sheet
-  const pickerButton = (value: string, label: string, onPress: () => void) => (
-    <Pressable
-      onPress={onPress}
-      accessibilityRole="button"
-      accessibilityLabel={`${label}: ${value}`}
-      style={({ pressed }) => [styles.pickerButton, rowDirection, pressed && styles.pressed]}>
-      <Text style={styles.pickerButtonText} numberOfLines={1}>
-        {value}
-      </Text>
-      <Text style={styles.pickerCaret}>▾</Text>
-    </Pressable>
-  );
 
   const actionChip = (label: string, onPress: () => void, active = false) => (
     <Pressable
@@ -394,28 +384,140 @@ export function HymnReader({
       scrollRef={scrollRef}>
       <KeepScreenAwake />
       {banner}
-      {/* Three pickers keep the page calm: the language, the season, and everything else under More */}
-      <View style={[styles.readerBar, rowDirection]}>
-        {availableLanguages.length > 1
-          ? pickerButton(languageLabels[lang].find((l) => l.key === effectiveLanguage)?.label ?? '', t.language, () => setSheet('language'))
-          : null}
-        {acrossSeasons.length > 1 && currentSeason ? pickerButton(shortSeasonName(currentSeason, lang), t.season, () => setSheet('season')) : null}
-        <View style={styles.verseColumn} />
+      {/* Top language selector: active language clearly highlighted at the top, and direct 1-tap chips to switch */}
+      {availableLanguages.length > 1 || (acrossSeasons.length > 1 && currentSeason) ? (
+        <ChipScroller rtl={isRTL} contentStyle={styles.readerLanguageRow}>
+          {availableLanguages.map((l) => {
+            const isSelected = l.key === effectiveLanguage;
+            return (
+              <Pressable
+                key={l.key}
+                onPress={() => {
+                  if (isSelected) {
+                    setSheet('language');
+                  } else {
+                    setActiveLanguage(l.key);
+                  }
+                }}
+                accessibilityRole="button"
+                accessibilityState={{ selected: isSelected }}
+                accessibilityLabel={`${t.language}: ${l.label}`}
+                style={({ pressed }) => [
+                  styles.readerChip,
+                  isSelected && styles.readerChipActive,
+                  pressed && styles.pressed,
+                ]}>
+                <Text style={[styles.readerChipText, isSelected && styles.readerChipTextActive]}>
+                  {l.label}
+                </Text>
+                {isSelected ? <Text style={styles.readerChipCaret}>▾</Text> : null}
+              </Pressable>
+            );
+          })}
+          {acrossSeasons.length > 1 && currentSeason ? (
+            <Pressable
+              onPress={() => setSheet('season')}
+              accessibilityRole="button"
+              accessibilityLabel={`${t.season}: ${shortSeasonName(currentSeason, lang)}`}
+              style={({ pressed }) => [styles.readerChip, pressed && styles.pressed]}>
+              <Text style={styles.readerChipText}>
+                {shortSeasonName(currentSeason, lang)}
+              </Text>
+              <Text style={styles.pickerCaret}>▾</Text>
+            </Pressable>
+          ) : null}
+        </ChipScroller>
+      ) : null}
+
+      {/* Settings out in the open: Side by Side, Learn, Project, Text scale, More */}
+      <ChipScroller rtl={isRTL} contentStyle={styles.readerActionsRow}>
+        {compareOptions.length > 0 ? (
+          <Pressable
+            onPress={() => updateSettings({ sideBySide: !settings.sideBySide })}
+            accessibilityRole="button"
+            accessibilityState={{ selected: showSideBySide }}
+            accessibilityLabel={t.sideBySide}
+            style={({ pressed }) => [
+              styles.actionToolbarButton,
+              showSideBySide && styles.actionToolbarButtonActive,
+              pressed && styles.pressed,
+            ]}>
+            <Text style={[styles.actionToolbarButtonText, showSideBySide && styles.actionToolbarButtonTextActive]}>
+              {t.sideBySide}
+            </Text>
+          </Pressable>
+        ) : null}
+
+        {currentAudio ? (
+          <Pressable
+            onPress={() => setLearning(!learning)}
+            accessibilityRole="button"
+            accessibilityState={{ selected: learning }}
+            accessibilityLabel={t.learn}
+            style={({ pressed }) => [
+              styles.actionToolbarButton,
+              learning && styles.actionToolbarButtonActive,
+              pressed && styles.pressed,
+            ]}>
+            <Text style={[styles.actionToolbarButtonText, learning && styles.actionToolbarButtonTextActive]}>
+              {t.learn}
+            </Text>
+          </Pressable>
+        ) : null}
+
+        <Pressable
+          onPress={() => router.push({ pathname: '/present/[id]', params: { id: hymnSlug(hymn.id), lang: effectiveLanguage } })}
+          accessibilityRole="button"
+          accessibilityLabel={t.present}
+          style={({ pressed }) => [styles.actionToolbarButton, pressed && styles.pressed]}>
+          <Text style={styles.actionToolbarButtonText}>{t.present}</Text>
+        </Pressable>
+
+        <View style={[styles.textSizeGroup, rowDirection]}>
+          <Pressable
+            onPress={() => changeTextScale(-0.15)}
+            disabled={settings.textScale <= TEXT_SCALE_MIN}
+            accessibilityRole="button"
+            accessibilityLabel={`${t.textSize} -`}
+            style={({ pressed }) => [
+              styles.actionToolbarButton,
+              styles.textSizeBtn,
+              pressed && styles.pressed,
+              settings.textScale <= TEXT_SCALE_MIN && styles.disabled,
+            ]}>
+            <Text style={styles.actionToolbarButtonText}>A−</Text>
+          </Pressable>
+          <Pressable
+            onPress={() => changeTextScale(0.15)}
+            disabled={settings.textScale >= TEXT_SCALE_MAX}
+            accessibilityRole="button"
+            accessibilityLabel={`${t.textSize} +`}
+            style={({ pressed }) => [
+              styles.actionToolbarButton,
+              styles.textSizeBtn,
+              pressed && styles.pressed,
+              settings.textScale >= TEXT_SCALE_MAX && styles.disabled,
+            ]}>
+            <Text style={styles.actionToolbarButtonText}>A+</Text>
+          </Pressable>
+        </View>
+
         <Pressable
           onPress={() => setSheet('more')}
           accessibilityRole="button"
           accessibilityLabel={t.more}
-          style={({ pressed }) => [styles.moreButton, (learning || showSideBySide) && styles.controlButtonActive, pressed && styles.pressed]}>
-          <Text style={styles.moreButtonText}>⋯</Text>
+          style={({ pressed }) => [styles.actionToolbarButton, styles.moreCircleButton, pressed && styles.pressed]}>
+          <Text style={styles.moreCircleText}>⋯</Text>
         </Pressable>
-      </View>
+      </ChipScroller>
+
       {showSideBySide && compareLanguage ? (
         <Pressable
           onPress={() => compareOptions.length > 1 && setSheet('compare')}
           accessibilityRole="button"
           style={({ pressed }) => [styles.compareChips, rowDirection, { alignItems: 'center', gap: 6 }, pressed && styles.pressed]}>
           <Text style={styles.compareLabel}>
-            {t.compareWith}: {languageLabels[lang].find((l) => l.key === compareLanguage)?.label}
+            {t.compareWith}: {compareLanguageLabel}
           </Text>
           {compareOptions.length > 1 ? <Text style={styles.pickerCaret}>▾</Text> : null}
         </Pressable>
@@ -661,6 +763,26 @@ export function HymnReader({
       ) : null}
 
       <View style={styles.textCard} onLayout={(e) => (textCardY.current = e.nativeEvent.layout.y)}>
+        <View style={[styles.textCardHeader, rowDirection]}>
+          <Pressable
+            onPress={() => setSheet('language')}
+            accessibilityRole="button"
+            accessibilityLabel={`${t.language}: ${currentLanguageLabel}`}
+            style={({ pressed }) => [styles.textCardLangBadge, pressed && styles.pressed]}>
+            <Text style={styles.textCardLangText}>{currentLanguageLabel}</Text>
+            <Text style={styles.textCardLangCaret}>▾</Text>
+          </Pressable>
+          {showSideBySide && compareLanguage ? (
+            <Pressable
+              onPress={() => compareOptions.length > 1 && setSheet('compare')}
+              accessibilityRole="button"
+              accessibilityLabel={`${t.compareWith}: ${compareLanguageLabel}`}
+              style={({ pressed }) => [styles.textCardLangBadge, pressed && styles.pressed]}>
+              <Text style={styles.textCardLangText}>{compareLanguageLabel}</Text>
+              {compareOptions.length > 1 ? <Text style={styles.textCardLangCaret}>▾</Text> : null}
+            </Pressable>
+          ) : null}
+        </View>
         {showSideBySide && compareLanguage ? (
           Array.from({ length: Math.max(verses.length, compareVerses.length) }, (_, i) => (
             <Pressable

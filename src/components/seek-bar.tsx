@@ -31,51 +31,30 @@ export function SeekBar({
   const styles = useThemedStyles(createStyles);
   const colors = useAlhanColors();
   const [width, setWidth] = useState(0);
-  // Where the drag is, from 0 to 1, and how slowly it moves
+  // Where the drag is, from 0 to 1
   const [drag, setDrag] = useState<number | null>(null);
-  const [fine, setFine] = useState(1);
   const [typing, setTyping] = useState<string | null>(null);
-  // The bar's left edge on screen, and where the finger and handle were when the drag last changed speed
   const barRef = useRef<View>(null);
-  const left = useRef(0);
-  const anchor = useRef({ x: 0, ratio: 0 });
-  const anchorY = useRef<number | null>(null);
+  const anchor = useRef({ startX: 0, startRatio: 0 });
   const enabled = duration > 0 && width > 0;
 
   const clamp = (r: number) => Math.min(1, Math.max(0, r));
-  const speedFor = (e: GestureResponderEvent) => {
-    const away = Math.abs(e.nativeEvent.pageY - (anchorY.current ?? e.nativeEvent.pageY));
-    return away > 120 ? 0.25 : away > 60 ? 0.5 : 1;
-  };
   const shown = drag ?? (duration > 0 ? Math.min(1, currentTime / duration) : 0);
 
   const grant = (e: GestureResponderEvent) => {
-    const { pageX, pageY, locationX } = e.nativeEvent;
-    // pageX keeps working when the finger leaves the bar; work out the bar's edge from where the touch began
-    left.current = pageX - locationX;
-    barRef.current?.measureInWindow((x) => (left.current = x));
+    const { pageX, locationX } = e.nativeEvent;
     const ratio = clamp(locationX / width);
-    anchor.current = { x: pageX, ratio };
-    anchorY.current = pageY;
-    setFine(1);
+    anchor.current = { startX: pageX, startRatio: ratio };
     setDrag(ratio);
   };
   const move = (e: GestureResponderEvent) => {
     const { pageX } = e.nativeEvent;
-    const speed = speedFor(e);
-    if (speed !== fine) {
-      // carry on from where the handle is, at the new speed
-      anchor.current = { x: pageX, ratio: drag ?? anchor.current.ratio };
-      setFine(speed);
-      return;
-    }
-    setDrag(speed === 1 ? clamp((pageX - left.current) / width) : clamp(anchor.current.ratio + ((pageX - anchor.current.x) / width) * speed));
+    const deltaRatio = (pageX - anchor.current.startX) / width;
+    setDrag(clamp(anchor.current.startRatio + deltaRatio));
   };
   const release = () => {
     if (drag !== null) onSeek(drag * duration);
     setDrag(null);
-    setFine(1);
-    anchorY.current = null;
   };
 
   const submitTyped = () => {
@@ -84,11 +63,15 @@ export function SeekBar({
     setTyping(null);
   };
 
+  const thumbSize = drag !== null ? 28 : 22;
+  const thumbLeft = Math.max(0, Math.min(width - thumbSize, shown * width - thumbSize / 2));
+
   return (
     <View>
       <View
         ref={barRef}
         style={styles.touchArea}
+        hitSlop={{ top: 12, bottom: 12, left: 0, right: 0 }}
         onLayout={(e) => setWidth(e.nativeEvent.layout.width)}
         onStartShouldSetResponder={() => enabled}
         onMoveShouldSetResponder={() => enabled}
@@ -97,10 +80,7 @@ export function SeekBar({
         onResponderGrant={grant}
         onResponderMove={move}
         onResponderRelease={release}
-        onResponderTerminate={() => {
-          setDrag(null);
-          setFine(1);
-        }}
+        onResponderTerminate={() => setDrag(null)}
         accessible
         accessibilityRole="adjustable"
         accessibilityLabel={label}
@@ -109,20 +89,19 @@ export function SeekBar({
         onAccessibilityAction={(e) =>
           onSeek(Math.min(duration, Math.max(0, currentTime + (e.nativeEvent.actionName === 'increment' ? 10 : -10))))
         }>
-        {/* Children ignore touches so the position is always measured across the whole bar */}
+        {/* Track and fill */}
         <View style={[styles.track, drag !== null && styles.trackActive]} pointerEvents="none">
           <View style={[styles.fill, { width: `${shown * 100}%` }]} />
         </View>
         {enabled ? (
           <View
             pointerEvents="none"
-            style={[styles.thumb, drag !== null && styles.thumbActive, { left: shown * width - (drag !== null ? 14 : 10) }]}
+            style={[styles.thumb, drag !== null && styles.thumbActive, { left: thumbLeft }]}
           />
         ) : null}
         {drag !== null ? (
-          <View pointerEvents="none" style={[styles.bubble, { left: Math.min(Math.max(shown * width - 44, -8), width - 80) }]}>
+          <View pointerEvents="none" style={[styles.bubble, { left: Math.min(Math.max(shown * width - 36, 0), Math.max(0, width - 72)) }]}>
             <Text style={styles.bubbleTime}>{formatTime(shown * duration)}</Text>
-            {fine < 1 ? <Text style={styles.bubbleSpeed}>{fine === 0.5 ? '½×' : '¼×'}</Text> : null}
           </View>
         ) : null}
       </View>
@@ -160,21 +139,33 @@ export function SeekBar({
 const createStyles = (colors: AlhanPalette) =>
   StyleSheet.create({
     // Much taller than the bar so it is easy to grab with a thumb
-    touchArea: { height: 48, justifyContent: 'center' },
+    touchArea: { height: 52, justifyContent: 'center' },
     track: { height: 8, borderRadius: 4, backgroundColor: colors.border, overflow: 'hidden' },
     trackActive: { height: 10, borderRadius: 5 },
     fill: { height: '100%', backgroundColor: colors.gold },
     thumb: {
       position: 'absolute',
-      top: 14,
-      width: 20,
-      height: 20,
-      borderRadius: 10,
+      top: '50%',
+      marginTop: -11,
+      width: 22,
+      height: 22,
+      borderRadius: 11,
       backgroundColor: colors.gold,
-      borderWidth: 2,
+      borderWidth: 2.5,
       borderColor: colors.surface,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.25,
+      shadowRadius: 3,
+      elevation: 4,
     },
-    thumbActive: { top: 10, width: 28, height: 28, borderRadius: 14 },
+    thumbActive: {
+      marginTop: -14,
+      width: 28,
+      height: 28,
+      borderRadius: 14,
+      borderWidth: 3,
+    },
     // The time above the finger while dragging
     bubble: {
       position: 'absolute',

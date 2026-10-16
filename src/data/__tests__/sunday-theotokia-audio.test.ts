@@ -55,4 +55,28 @@ describe('Sunday Theotokia Audio Recordings', () => {
     expect(coptic?.audio).toBe('midnight-adam-psali-conclusion.m4a');
     expect(coptic?.otherAudio).toContain('arsani-223-sunday-adam-psali-conclusion.m4a');
   });
+
+  test('Annual Aripsalin has only midnight-aripsalin.m4a (no Kiahk Joe Seif recording)', () => {
+    const hymn = findHymn(annualMidnight?.hymns, 'annual-midnight-greek-psali-watos');
+    expect(hymn).toBeDefined();
+    const coptic = hymn?.versions.find((v) => v.language === 'coptic');
+    expect(coptic?.audio).toBe('midnight-aripsalin.m4a');
+    expect(coptic?.otherAudio).toBeUndefined();
+  });
+
+  test('Kiahk Aripsalin has Kiahk Joe Seif recording', () => {
+    const kiahkMidnight = seasons.find((s) => s.id === 'kiahk')?.services.find((s) => s.id === 'kiahk-midnight');
+    const hymn = findHymn(kiahkMidnight?.hymns, 'kiahk-midnight-hymn-17');
+    expect(hymn).toBeDefined();
+    const coptic = hymn?.versions.find((v) => v.language === 'coptic');
+    expect(coptic?.audio).toBe('arsani-029-aripsalin-joe-seif-s-from-diocese-of-los-angeles-l.m4a');
+  });
+
+  test('Kata Nikhoros has 2nd recording by Arsani Sidarous & Mena Fawzy', () => {
+    const pentecostLiturgy = seasons.find((s) => s.id === 'pentecost')?.services.find((s) => s.id === 'pentecost-liturgy');
+    const hymn = findHymn(pentecostLiturgy?.hymns, 'pentecost-liturgy-kata-nichorous');
+    expect(hymn).toBeDefined();
+    const coptic = hymn?.versions.find((v) => v.language === 'coptic');
+    expect(coptic?.otherAudio).toContain('kata-nikhoros-arsani-mena-fawzy.m4a');
+  });
 });

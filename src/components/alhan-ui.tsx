@@ -4,6 +4,10 @@ import { ReactNode, RefObject, useRef } from 'react';
 import { Modal, Platform, Pressable, ScrollView, StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { pressFeedback } from './haptics';
+import { BusyPulse } from './busy-pulse';
+import { StatusBarBlur } from './status-bar-blur';
+import { useTabChrome } from './tab-chrome';
 import { AlhanPalette } from '../constants/alhan-colors';
 import { LanguageType } from '../data/hymns';
 import { hymnSlug } from '../data/search';
@@ -422,22 +426,23 @@ export const openHymnPage = (id: string, language?: LanguageType) => router.push
 // Back to the previous screen, or home when the page was opened straight from a link
 export const goBackOrHome = () => (router.canGoBack() ? router.back() : router.replace('/'));
 
-// Shown at the bottom of every screen while audio plays, except on the hymn that is playing
+// Shown at the bottom of every screen while audio plays, except on the hymn that is playing.
+// Inside the tabs on iOS 26 and later the tab bar shows it instead (see TabBarPlayer).
 export function MiniPlayer({ lang, hideFor }: { lang: AppLanguage; hideFor?: string }) {
   const styles = useThemedStyles(createAlhanStyles);
-  const insets = useSafeAreaInsets();
+  const chrome = useTabChrome();
   const queue = useAudioQueue();
   const nowPlaying = currentTrack(queue);
   const t = strings[lang];
   const isRTL = lang === 'ar';
-  if (!nowPlaying || `${nowPlaying.hymnId}:${nowPlaying.language}` === hideFor) return null;
+  if (!chrome.floatingPlayer || !nowPlaying || `${nowPlaying.hymnId}:${nowPlaying.language}` === hideFor) return null;
   const rowDirection = isRTL ? styles.rowReverse : styles.row;
   const textAlign = isRTL ? styles.alignRight : styles.alignLeft;
   const { playing, currentTime, duration } = queue.status;
   const progress = duration > 0 ? Math.min(1, currentTime / duration) : 0;
   const hasQueue = queue.tracks.length > 1;
   return (
-    <View style={[styles.miniPlayer, { bottom: insets.bottom + 12 }]}>
+    <View style={[styles.miniPlayer, { bottom: chrome.playerBottom }]}>
       <View style={styles.miniProgressTrack}>
         <View style={[styles.progressFill, { width: `${progress * 100}%` }]} />
       </View>
@@ -457,7 +462,10 @@ export function MiniPlayer({ lang, hideFor }: { lang: AppLanguage; hideFor?: str
         </Pressable>
         {hasQueue ? (
           <Pressable
-            onPress={() => skip(-1)}
+            onPress={() => {
+              pressFeedback();
+              skip(-1);
+            }}
             accessibilityRole="button"
             accessibilityLabel={t.previousTrack}
             style={({ pressed }) => [styles.miniButton, pressed && styles.pressed]}>
@@ -465,15 +473,24 @@ export function MiniPlayer({ lang, hideFor }: { lang: AppLanguage; hideFor?: str
           </Pressable>
         ) : null}
         <Pressable
-          onPress={togglePlay}
+          onPress={() => {
+            pressFeedback();
+            togglePlay();
+          }}
           accessibilityRole="button"
           accessibilityLabel={playing ? t.pause : t.play}
-          style={({ pressed }) => [styles.miniPlayButton, pressed && styles.pressed]}>
-          <Text style={styles.miniPlayIcon}>{playing ? '❚❚' : '▶'}</Text>
+          accessibilityState={{ busy: queue.status.isBuffering }}
+          style={({ pressed }) => [pressed && styles.pressed]}>
+          <BusyPulse busy={queue.status.isBuffering} style={styles.miniPlayButton}>
+            <Text style={styles.miniPlayIcon}>{playing ? '❚❚' : '▶'}</Text>
+          </BusyPulse>
         </Pressable>
         {hasQueue ? (
           <Pressable
-            onPress={() => skip(1)}
+            onPress={() => {
+              pressFeedback();
+              skip(1);
+            }}
             accessibilityRole="button"
             accessibilityLabel={t.nextTrack}
             style={({ pressed }) => [styles.miniButton, pressed && styles.pressed]}>
@@ -508,42 +525,53 @@ export function ScreenShell({
   // A hymn's Coptic words, in smaller type under its name
   titleCoptic?: string | null;
   subtitle?: string | null;
-  onBack: () => void;
+  // Left out on the tabs' first screens, which have nothing to go back to
+  onBack?: () => void;
   hidePlayerFor?: string;
   scrollRef?: RefObject<ScrollView | null>;
   children: ReactNode;
 }) {
   const styles = useThemedStyles(createAlhanStyles);
   const insets = useSafeAreaInsets();
+  const chrome = useTabChrome();
   const queue = useAudioQueue();
   const nowPlaying = currentTrack(queue);
   const t = strings[lang];
   const isRTL = lang === 'ar';
   const rowDirection = isRTL ? styles.rowReverse : styles.row;
   const textAlign = isRTL ? styles.alignRight : styles.alignLeft;
-  const showMiniPlayer = !!nowPlaying && `${nowPlaying.hymnId}:${nowPlaying.language}` !== hidePlayerFor;
+  const showMiniPlayer =
+    chrome.floatingPlayer && !!nowPlaying && `${nowPlaying.hymnId}:${nowPlaying.language}` !== hidePlayerFor;
   return (
-    <View style={styles.root}>
+    // Not collapsable, so iOS finds the scroll view and scrolls it to the top when its tab is tapped again
+    <View style={styles.root} collapsable={false}>
       <ScrollView
         ref={scrollRef}
         keyboardShouldPersistTaps="handled"
+        contentInsetAdjustmentBehavior={chrome.autoInsets ? 'automatic' : 'never'}
         contentContainerStyle={[
           styles.scrollContent,
-          { paddingTop: insets.top + 12, paddingBottom: insets.bottom + 40 + (showMiniPlayer ? 96 : 0) },
+          {
+            paddingTop: (chrome.autoInsets ? 0 : insets.top) + 12,
+            paddingBottom: chrome.pageBottom + 40 + (showMiniPlayer ? 96 : 0),
+          },
         ]}>
-        <Pressable
-          onPress={onBack}
-          accessibilityRole="button"
-          accessibilityLabel={t.back}
-          style={({ pressed }) => [styles.backButton, rowDirection, isRTL && styles.selfEnd, pressed && styles.pressed]}>
-          <Text style={styles.backArrow}>{isRTL ? '›' : '‹'}</Text>
-          <Text style={styles.backText}>{t.back}</Text>
-        </Pressable>
+        {onBack ? (
+          <Pressable
+            onPress={onBack}
+            accessibilityRole="button"
+            accessibilityLabel={t.back}
+            style={({ pressed }) => [styles.backButton, rowDirection, isRTL && styles.selfEnd, pressed && styles.pressed]}>
+            <Text style={styles.backArrow}>{isRTL ? '›' : '‹'}</Text>
+            <Text style={styles.backText}>{t.back}</Text>
+          </Pressable>
+        ) : null}
         <Text style={[styles.headerTitle, textAlign]}>{withCopticFont(title)}</Text>
         {titleCoptic ? <Text style={[styles.headerCoptic, textAlign]}>{titleCoptic}</Text> : null}
         {subtitle ? <Text style={[styles.subtitle, textAlign]}>{subtitle}</Text> : null}
         {children}
       </ScrollView>
+      <StatusBarBlur />
       <MiniPlayer lang={lang} hideFor={hidePlayerFor} />
     </View>
   );
@@ -1623,6 +1651,123 @@ export const createAlhanStyles = (colors: AlhanPalette) => StyleSheet.create({
     fontWeight: '800',
     color: colors.gold,
     lineHeight: 22,
+  },
+  // Reader language chips bar
+  readerLanguageRow: {
+    paddingTop: 14,
+    paddingBottom: 8,
+    gap: 8,
+  },
+  readerChip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    minHeight: 40,
+    paddingHorizontal: 14,
+    borderRadius: 20,
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.border,
+    gap: 6,
+  },
+  readerChipActive: {
+    backgroundColor: colors.gold,
+    borderColor: colors.gold,
+  },
+  readerChipText: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: colors.text,
+  },
+  readerChipTextActive: {
+    color: colors.onGold,
+    fontWeight: '800',
+  },
+  readerChipCaret: {
+    fontSize: 11,
+    color: colors.onGold,
+    fontWeight: '800',
+  },
+  // Open action toolbar (side by side, learn, project, text scale, more)
+  readerActionsRow: {
+    paddingTop: 2,
+    paddingBottom: 12,
+    gap: 8,
+  },
+  actionToolbarButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: 38,
+    paddingHorizontal: 12,
+    borderRadius: 12,
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.border,
+    gap: 6,
+  },
+  actionToolbarButtonActive: {
+    borderColor: colors.gold,
+    backgroundColor: colors.goldSoft,
+  },
+  actionToolbarButtonText: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: colors.text,
+  },
+  actionToolbarButtonTextActive: {
+    color: colors.gold,
+    fontWeight: '800',
+  },
+  textSizeGroup: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+  },
+  textSizeBtn: {
+    minWidth: 38,
+    paddingHorizontal: 8,
+  },
+  moreCircleButton: {
+    width: 38,
+    height: 38,
+    paddingHorizontal: 0,
+    borderRadius: 19,
+  },
+  moreCircleText: {
+    fontSize: 18,
+    fontWeight: '800',
+    color: colors.gold,
+    lineHeight: 18,
+  },
+  // Header on top of the text card showing active language
+  textCardHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 12,
+    paddingBottom: 8,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: colors.border,
+  },
+  textCardLangBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 5,
+    paddingVertical: 4,
+    paddingHorizontal: 10,
+    borderRadius: 8,
+    backgroundColor: colors.goldSoft,
+  },
+  textCardLangText: {
+    fontSize: 13,
+    fontWeight: '700',
+    color: colors.gold,
+    letterSpacing: 0.3,
+  },
+  textCardLangCaret: {
+    fontSize: 11,
+    color: colors.gold,
+    fontWeight: '700',
   },
   // Share / projector / learn
   actionChips: {

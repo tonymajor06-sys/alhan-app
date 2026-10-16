@@ -6472,6 +6472,12 @@ if (kiahkMidnight && annualMidnight) {
     const source = annualMidnightById.get(sources[timesSeen[hymn.title] - 1] ?? '');
     if (source) hymn.versions = source.versions.map((version) => ({ ...version }));
   }
+  // Kiahk Aripsalin is sung in the Kiahk tune, not the Annual tune
+  const kiahkAripsalin = kiahkMidnight.hymns.find((h) => h.id === 'kiahk-midnight-hymn-17');
+  for (const v of kiahkAripsalin?.versions ?? []) {
+    delete v.audio;
+    delete v.otherAudio;
+  }
 }
 
 // ---- Audio: Annual > Matins and Vespers > Psalm Trailer for the Pope or a Bishop ----
@@ -7956,6 +7962,19 @@ for (const season of seasons) {
       } else if (/^lent-weekend-(liturgy|vespers)-veneration$/.test(hymn.id)) {
         hymn.children = venerationHymns.map((h) => copyInto(h, hymn.id, true));
       }
+    }
+  }
+}
+
+// ---- Remove priest parts from deacon and congregation hymns ----
+const PRIEST_BLOCK =
+  /(?:^|\n\n)(?:Priest|Ⲡⲓⲟⲩⲏⲃ|Piouēb|الكاهن|El-[Kk]ahin)\s*:\s*\n+[\s\S]*?(?=(?:\n\n(?:People|Ⲡⲓⲗⲁⲟⲥ|Pilaos|الشعب|Esh-[Ss]ha'b|Deacon|Ⲡⲓⲇⲓⲁⲕⲱⲛ|Pi-diakon|الشماس|Esh-shammas|Reader|القارئ)|\s*$))/gi;
+for (const group of [...seasons, ...deaconCategories]) {
+  for (const service of group.services) {
+    for (const hymn of flattenHymns(service.hymns)) {
+      hymn.versions = hymn.versions
+        .map((v) => ({ ...v, text: v.text.replace(PRIEST_BLOCK, '').trim() }))
+        .filter((v) => v.text.length > 0);
     }
   }
 }

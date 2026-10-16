@@ -13,6 +13,8 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   { file: "arsani-004-lipon-conclusion-of-adam-psalis.m4a", hymns: ["annual-midnight-sunday-adam-psali-conclusion", "annual-midnight-monday-adam-psali-conclusion", "annual-midnight-tuesday-adam-psali-conclusion", "annual-vesper-praises-sunday-adam-psali-conclusion", "annual-vesper-praises-monday-adam-psali-conclusion", "annual-vesper-praises-tuesday-adam-psali-conclusion"], language: "coptic" },
   // Kata Ni Khoros- Arsani Sidarous
   { file: "arsani-009-kata-ni-khoros.m4a", hymns: ["pentecost-liturgy-kata-nichorous", "pentecost-liturgy-all-the-choirs", "pentecost-distribution-all-the-choirs"], language: "coptic" },
+  // Kata Nikhoros - Arsani Sidarous & Mena Fawzy (2nd recording)
+  { file: "kata-nikhoros-arsani-mena-fawzy.m4a", hymns: ["pentecost-liturgy-kata-nichorous", "pentecost-liturgy-all-the-choirs", "pentecost-distribution-all-the-choirs"], language: "coptic" },
   // 2nd Hoos + Lobsh (Coptic) | Archdeacon Arsani Sidarous + Chorus
   { file: "arsani-010-2nd-hoos-lobsh-coptic.m4a", hymns: ["annual-midnight-second-canticle"], language: "coptic" },
   // 1st Hos (Coptic)| Archdeacon Arsani Sidarous+ Seattle Deacons
@@ -36,8 +38,8 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   // Ϣⲁϣϥ ⲛⲥ̀ⲟⲡ ⲙⲙ̀ⲏⲛⲓ ( Arsani Sidarous & St. Abraam Deacons )
   { file: "arsani-028-st-abraam-s.m4a", hymns: [], language: "coptic" },
 
-  // Aripsalin-Joe Seif and Deacons from the Diocese of Los Angeles (Live)
-  { file: "arsani-029-aripsalin-joe-seif-s-from-diocese-of-los-angeles-l.m4a", hymns: ["annual-midnight-greek-psali-watos"], language: "coptic" },
+  // Aripsalin-Joe Seif and Deacons from the Diocese of Los Angeles (Live) - Kiahk tune
+  { file: "arsani-029-aripsalin-joe-seif-s-from-diocese-of-los-angeles-l.m4a", hymns: ["kiahk-midnight-hymn-17"], language: "coptic" },
   // Ⲧⲁⲓϣⲟⲩⲣⲏ + Ϩⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ̀ ┃ Taishori + Hymn of the Intercessions - Arsani Sidarous
   { file: "arsani-030-taishori-hymn-of-intercessions.m4a", hymns: ["annual-liturgy-offering-golden-censer"], language: "coptic" },
   // Afrek Etfe (Hymn of the Ascension) - Arsani Sidarous
