@@ -48,3 +48,6 @@ example
 # Not needed inside app builds: recordings stream from Cloudflare R2, and dist is the website
 assets/audio/
 dist/
+
+# The build servers do not need git history, which holds every past recording and makes the upload too big
+.git
