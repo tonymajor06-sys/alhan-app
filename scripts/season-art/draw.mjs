@@ -16,8 +16,10 @@ const circle = (cx, cy, r, fill, extra = '') => `<circle cx="${cx}" cy="${cy}" r
 function head(cx, cy, r, o = {}) {
   const s = [];
   const hr = r * 1.6;
-  s.push(circle(cx, cy - r * 0.1, hr, o.halo ?? C.gold));
-  s.push(`<circle cx="${cx}" cy="${cy - r * 0.1}" r="${hr - 5}" fill="none" stroke="${C.goldLight}" stroke-width="2"/>`);
+  if (!o.noHalo) {
+    s.push(circle(cx, cy - r * 0.1, hr, o.halo ?? C.gold));
+    s.push(`<circle cx="${cx}" cy="${cy - r * 0.1}" r="${hr - 5}" fill="none" stroke="${C.goldLight}" stroke-width="2"/>`);
+  }
   if (o.christ) {
     // cross in the halo
     s.push(`<g stroke="${C.redDark}" stroke-width="${r * 0.12}" stroke-linecap="round"><line x1="${cx}" y1="${cy - hr * 0.95}" x2="${cx}" y2="${cy - r * 0.9}"/><line x1="${cx - hr * 0.92}" y1="${cy - r * 0.1}" x2="${cx - r * 0.9}" y2="${cy - r * 0.1}"/><line x1="${cx + hr * 0.92}" y1="${cy - r * 0.1}" x2="${cx + r * 0.9}" y2="${cy - r * 0.1}"/></g>`);
@@ -325,6 +327,129 @@ svg('minor-feasts', [
   P('M250,260 L300,250 L306,310 L256,318 Z', C.gold), `<path d="M262,268 L296,262 L300,302 L266,308 Z M281,265 L283,305 M264,288 L298,282" fill="none" stroke="${C.goldDark}" stroke-width="2"/>`,
   head(240, 150, 36, { christ: true, beard: true, longHair: true }),
 ].join(''), C.gold);
+
+// ---- The home screen tiles ----
+// A deacon in his white tonia with the red stole crossed over the chest
+function deacon(cx, top, w, h) {
+  return [
+    robe(cx, top, w, h, C.white, null),
+    P(`M${cx - w * 0.3},${top + 4} L${cx + w * 0.22},${top + h * 0.55} L${cx + w * 0.34},${top + h * 0.5} L${cx - w * 0.16},${top} Z`, C.red),
+    P(`M${cx + w * 0.3},${top + 4} L${cx - w * 0.22},${top + h * 0.55} L${cx - w * 0.34},${top + h * 0.5} L${cx + w * 0.16},${top} Z`, C.red),
+    `<path d="M${cx - 8},${top + h * 0.2} h16 M${cx},${top + h * 0.2 - 8} v16" stroke="${C.gold}" stroke-width="4"/>`,
+  ].join('');
+}
+const cymbal = (x, y, r) => `<ellipse cx="${x}" cy="${y}" rx="${r}" ry="${r * 0.35}" fill="${C.goldLight}" stroke="${C.goldDark}" stroke-width="3"/><ellipse cx="${x}" cy="${y - r * 0.08}" rx="${r * 0.3}" ry="${r * 0.12}" fill="${C.gold}" stroke="${C.goldDark}" stroke-width="2"/>`;
+const book = (x, y, w, h, left, right, font = "Georgia, 'Noto Sans Coptic', serif", size = 34) => [
+  P(`M${x - w / 2},${y} C${x - w / 4},${y - 14} ${x - 10},${y - 10} ${x},${y} C${x + 10},${y - 10} ${x + w / 4},${y - 14} ${x + w / 2},${y} L${x + w / 2},${y + h} C${x + w / 4},${y + h - 14} ${x + 10},${y + h - 10} ${x},${y + h} C${x - 10},${y + h - 10} ${x - w / 4},${y + h - 14} ${x - w / 2},${y + h} Z`, C.white),
+  `<path d="M${x},${y} v${h}" stroke="${C.line}" stroke-width="2.5"/>`,
+  P(`M${x - w / 2 - 8},${y + h} L${x + w / 2 + 8},${y + h} L${x + w / 2 + 8},${y + h + 12} L${x - w / 2 - 8},${y + h + 12} Z`, C.redDark),
+  `<text x="${x - w / 4}" y="${y + h * 0.6}" font-family="${font}" font-size="${size}" text-anchor="middle" fill="${C.redDark}">${left}</text>`,
+  `<text x="${x + w / 4}" y="${y + h * 0.6}" font-family="${font}" font-size="${size}" text-anchor="middle" fill="${C.line}">${right}</text>`,
+].join('');
+const lamp = (x, y) => `${P(`M${x - 30},${y} C${x - 30},${y - 24} ${x + 30},${y - 24} ${x + 34},${y - 6} L${x + 52},${y - 14} L${x + 40},${y + 4} C${x + 20},${y + 14} ${x - 20},${y + 14} ${x - 30},${y} Z`, C.gold)}<path d="M${x + 50},${y - 16} C${x + 44},${y - 40} ${x + 62},${y - 46} ${x + 56},${y - 70} C${x + 72},${y - 50} ${x + 66},${y - 30} ${x + 50},${y - 16} Z" fill="#f59a2a" stroke="${C.goldDark}" stroke-width="2"/>`;
+
+// Hymns: a cantor chanting with the cymbals, notes of praise rising
+svg('home-hymns', [
+  rays(240, 120, 28, '#fff3c8', 500, 0.3),
+  ...[['Ⲁ', 70, 90], ['Ⲱ', 410, 90], ['♪', 100, 200], ['♫', 380, 190]].map(([t, x, y]) => `<text x="${x}" y="${y}" font-family="Georgia, 'Noto Sans Coptic', serif" font-size="50" text-anchor="middle" fill="${C.redDark}" opacity=".75">${t}</text>`),
+  deacon(240, 230, 190, 260),
+  head(240, 180, 40, { beard: true, hair: '#4a2c14', noHalo: true }),
+  `<path d="M170,300 L120,268 M310,300 L360,268" stroke="${C.skin}" stroke-width="18" stroke-linecap="round"/>`,
+  cymbal(112, 262, 42), cymbal(368, 262, 42),
+  hand(124, 270, 10), hand(356, 270, 10),
+].join(''), C.gold);
+
+// Deacon / Altar Responses: a deacon at the altar holding the cross, the censer's smoke rising
+svg('home-responses', [
+  `<path d="M60,480 L60,140 C60,40 420,40 420,140 L420,480 Z" fill="#2f5d8a" stroke="${C.line}" stroke-width="3"/>`,
+  `<path d="M80,480 L80,150 C80,64 400,64 400,150 L400,480 Z" fill="none" stroke="${C.gold}" stroke-width="4"/>`,
+  // the altar
+  P('M90,330 L390,330 L390,480 L90,480 Z', C.white),
+  P('M90,330 L390,330 L390,350 L90,350 Z', C.red),
+  copticCross(160, 410, 60, C.red), copticCross(320, 410, 60, C.red),
+  // censer
+  `<path d="M380,190 L380,280" stroke="${C.goldDark}" stroke-width="3"/>`, P('M362,280 L398,280 L392,312 L368,312 Z', C.gold),
+  `<path d="M380,276 C370,250 392,236 380,210 C372,190 392,170 384,150" fill="none" stroke="#fff" stroke-width="5" opacity=".7"/>`,
+  // the deacon
+  deacon(220, 220, 150, 200),
+  head(220, 175, 34, { noHalo: true }),
+  `<path d="M260,250 L300,230" stroke="${C.skin}" stroke-width="16" stroke-linecap="round"/>`, hand(304, 228, 10),
+  `<path d="M306,250 L306,120" stroke="${C.goldDark}" stroke-width="6"/>`, copticCross(306, 112, 44, C.gold),
+].join(''), '#1f3e66');
+
+// Saints: three saints with their haloes, one holding the Synaxarium
+svg('home-saints', [
+  rays(240, 0, 24, '#fff6dc', 600, 0.35),
+  // St Anthony in black
+  robe(110, 230, 120, 250, '#2a2a2e', '#3a3a40'), head(110, 196, 30, { beard: true, longBeard: true, hair: C.hairGrey }),
+  `<path d="M60,250 L60,470" stroke="${C.brown}" stroke-width="6"/>`, `<path d="M48,262 h24" stroke="${C.brown}" stroke-width="5"/>`,
+  // a martyr in red with a cross
+  robe(370, 230, 120, 250, C.red, C.white, { mantleRight: true }), head(370, 196, 30, { hair: C.hair }),
+  hand(340, 300), `<path d="M340,290 L340,240" stroke="${C.goldDark}" stroke-width="5"/>`, copticCross(340, 232, 30, C.gold),
+  // a bishop in the middle holding the book
+  robe(240, 250, 140, 230, C.cream, C.gold),
+  `<path d="M220,252 L220,480 M260,252 L260,480" stroke="${C.red}" stroke-width="10"/>`,
+  head(240, 206, 34, { beard: true, longBeard: true, hair: C.hairGrey }),
+  book(240, 330, 120, 70, 'ⲥ', 'ⲁ', "Georgia, 'Noto Sans Coptic', serif", 30),
+  hand(186, 400), hand(294, 400),
+].join(''), '#ead9b4');
+
+// Playlist: the cymbals and triangle, a play button and the hymns saved in a list
+svg('home-playlist', [
+  rays(240, 240, 24, '#fff3c8', 400, 0.35),
+  P('M70,80 L300,80 L300,400 L70,400 Z', C.white),
+  ...[0, 1, 2, 3, 4].map((i) => `<circle cx="104" cy="${130 + i * 60}" r="9" fill="${C.red}"/><path d="M128,${130 + i * 60} h${140 - (i % 2) * 40}" stroke="${C.line}" stroke-width="8" stroke-linecap="round" opacity=".7"/>`),
+  circle(330, 320, 80, C.red), `<path d="M306,280 L306,360 L372,320 Z" fill="${C.white}"/>`,
+  cymbal(360, 130, 50), cymbal(380, 170, 50),
+  `<path d="M60,470 L110,380 L160,470 Z" fill="none" stroke="${C.goldDark}" stroke-width="7" stroke-linejoin="round"/>`,
+  `<path d="M150,400 L190,440" stroke="${C.goldDark}" stroke-width="5"/>`,
+].join(''), C.gold);
+
+// Deacon's Guide: a young deacon climbing the steps to the sanctuary with the book of readings
+svg('home-guide', [
+  `<path d="M150,0 L150,120 C150,40 330,40 330,120 L330,0 Z" fill="${C.gold}" opacity=".5"/>`,
+  `<path d="M160,360 L160,130 C160,60 320,60 320,130 L320,360 Z" fill="${C.redDark}" stroke="${C.line}" stroke-width="3"/>`,
+  copticCross(240, 150, 70, C.gold),
+  P('M0,480 L0,440 L100,440 L100,410 L190,410 L190,380 L290,380 L290,350 L480,350 L480,480 Z', C.cream),
+  `<path d="M0,440 h100 v-30 h90 v-30 h100 v-30 h190" fill="none" stroke="${C.goldDark}" stroke-width="3"/>`,
+  // the deacon
+  deacon(140, 260, 120, 170),
+  head(140, 222, 30, { hair: C.hair, noHalo: true }),
+  P('M150,300 L210,288 L214,330 L154,340 Z', C.redDark), `<path d="M160,306 L204,298 M166,318 L206,312" stroke="${C.gold}" stroke-width="3"/>`,
+  hand(150, 330), hand(212, 322),
+  // footsteps numbered up the stairs
+  ...[[60, 452, '1'], [150, 422, '2'], [240, 392, '3'], [340, 362, '4']].map(([x, y, t]) => `<circle cx="${x}" cy="${y}" r="14" fill="${C.red}"/><text x="${x}" y="${y + 6}" font-family="Georgia, serif" font-size="18" text-anchor="middle" fill="#fff">${t}</text>`),
+].join(''), '#f0dcae');
+
+// Our Faith: St Athanasius holding the Creed before a church dome
+svg('home-faith', [
+  P('M300,300 C300,150 470,150 470,300 Z', '#cfa96a'), `<path d="M385,150 L385,110" stroke="${C.goldDark}" stroke-width="5"/>`, copticCross(385, 100, 30, C.gold),
+  P('M290,300 L480,300 L480,480 L290,480 Z', C.cream),
+  ...[320, 370, 420].map((x) => P(`M${x},360 C${x},334 ${x + 30},334 ${x + 30},360 L${x + 30},420 L${x},420 Z`, '#2f5d8a')),
+  // the bishop
+  robe(170, 230, 170, 250, C.cream, C.gold),
+  ...[150, 190].map((x) => `<path d="M${x},232 L${x},480" stroke="${C.red}" stroke-width="12"/>`),
+  ...[0, 1, 2].map((i) => copticCross(170, 290 + i * 60, 22, C.red)),
+  head(170, 180, 38, { beard: true, longBeard: true, hair: C.hairGrey }),
+  P('M120,120 C140,96 200,96 220,120 L214,150 L126,150 Z', C.gold),
+  // the scroll of the Creed
+  P('M240,250 L320,236 L330,350 L250,364 Z', C.white),
+  ...[0, 1, 2, 3, 4].map((i) => `<path d="M256,${270 + i * 16} L314,${260 + i * 16}" stroke="${C.line}" stroke-width="3" opacity=".6"/>`),
+  `<text x="285" y="356" font-family="Georgia, serif" font-size="16" text-anchor="middle" fill="${C.redDark}" transform="rotate(-9 285 356)">325</text>`,
+  hand(244, 330), hand(326, 260),
+].join(''), '#e9cf98');
+
+// Learn Coptic, Learn Arabic, Learn English: an open book with the first letters, and an oil lamp
+const learnTile = (name, left, right, font, size, bg) =>
+  svg(name, [
+    rays(240, 140, 24, '#fff3c8', 400, 0.3),
+    book(240, 150, 340, 210, left, right, font, size),
+    lamp(110, 430), `<path d="M300,440 L420,330" stroke="${C.brown}" stroke-width="8" stroke-linecap="round"/>`,
+    `<path d="M420,330 L430,316" stroke="${C.line}" stroke-width="5"/>`,
+  ].join(''), bg);
+learnTile('home-learn', 'Ⲁⲃ', 'Ⲅⲇ', "Georgia, 'Noto Sans Coptic', serif", 70, C.gold);
+learnTile('home-learn-arabic', 'أ ب', 'ت ث', "'Geeza Pro', Arial", 70, '#e7c27c');
+learnTile('home-learn-english', 'Aa', 'Bb', 'Georgia, serif', 70, '#d9b96a');
 
 writeFileSync('svg/list.txt', out.join('\n'));
 console.log(out.join(' '));
