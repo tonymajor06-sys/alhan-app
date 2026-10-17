@@ -63,5 +63,10 @@
       "^@/assets/(.*)$": "<rootDir>/assets/$1",
       "^@/(.*)$": "<rootDir>/src/$1"
     }
+  },
+  "overrides": {
+    "expo-quick-actions": {
+      "@expo/require-utils": "~57.0.6"
+    }
   }
 }
