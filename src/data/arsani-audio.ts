@@ -382,8 +382,7 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   { file: "arsani-yt-apostles-distribution.m4a", hymns: ["pentecost-distribution-let-us-praise@apostles-distribution", "apostles-liturgy-o-you-who@apostles-distribution"], language: "coptic" },
   // Apostles Glorification
   { file: "arsani-yt-apostles-tamgeed.m4a", hymns: ["annual-matins-doxology-apostles", "annual-vespers-doxology-apostles"], language: "arabic" },
-  // Pope Kyrillos VI Glorification
-  { file: "arsani-yt-pope-kyrillos-tamgeed.m4a", hymns: ["annual-matins-doxology-pope-kyrillos-vi", "annual-vespers-doxology-pope-kyrillos-vi", "annual-midnight-doxology-pope-kyrillos"], language: "arabic" },
+
   // St Mina Glorification
   { file: "arsani-yt-st-mina-tamgeed.m4a", hymns: ["annual-matins-doxology-st-mena", "annual-vespers-doxology-st-mena", "annual-midnight-doxology-st-mena"], language: "arabic" },
   // St George Glorification

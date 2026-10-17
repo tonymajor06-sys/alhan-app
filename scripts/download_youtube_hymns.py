@@ -247,13 +247,7 @@ TARGETS = [
         'language': 'arabic',
         'title': 'St Mary Glorification'
     },
-    {
-        'id': 'jnlBZjpcusM',
-        'file': 'arsani-yt-pope-kyrillos-tamgeed.m4a',
-        'hymns': ['annual-matins-doxology-pope-kyrillos-vi', 'annual-vespers-doxology-pope-kyrillos-vi', 'annual-midnight-doxology-pope-kyrillos'],
-        'language': 'arabic',
-        'title': 'Pope Kyrillos VI Glorification'
-    },
+
     {
         'id': 'kbKtUG7SP10',
         'file': 'arsani-yt-st-mina-tamgeed.m4a',
