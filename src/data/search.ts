@@ -1,4 +1,5 @@
 import { displayTitle } from './arabic-titles';
+import { copticToEnglish } from './english-coptic';
 import { splitTitle } from './hymn-titles';
 import { deaconCategories, flattenHymns, Hymn, LanguageType, Season, seasons, Service } from './hymns';
 
@@ -49,6 +50,8 @@ interface IndexEntry {
   hymn: Hymn;
   location: HymnLocation;
   titles: string[];
+  // the first words of each text (after a speaker's name), where a hymn is known by its opening
+  openings: string[];
   versions: { language: LanguageType; text: string; folded: string; origin: number[] }[];
 }
 
@@ -143,6 +146,10 @@ export function hymnAcrossSeasons(id: string): { season: Season; hymn: Hymn }[] 
 
 const cleanText = (text: string) => text.replace(/(?:\\n)+/g, '\n\n');
 
+// "Ⲡⲓⲗⲁⲟⲥ:", "People:", "الشعب:" and the like, alone on the first line
+const SPEAKER_LINE = /^\s*\(?[^\n:]{1,30}\)?:\s*\n+/;
+const openingOf = (text: string) => normalizeForSearch(text.replace(SPEAKER_LINE, '').slice(0, 80));
+
 function buildIndex(): IndexEntry[] {
   const groups = [
     ...seasons.map((g) => ({ group: g, kind: 'hymns' as const })),
@@ -150,18 +157,22 @@ function buildIndex(): IndexEntry[] {
   ];
   return groups.flatMap(({ group, kind }) =>
     group.services.flatMap((service) =>
-      flattenHymns(service.hymns).map((hymn) => ({
-        hymn,
-        location: { group, service, kind },
-        titles: [normalizeForSearch(hymn.title), normalizeForSearch(displayTitle(hymn, 'ar'))],
-        // the words said in the presence of the Pope or a bishop are found too
-        versions: [...hymn.versions, ...(hymn.bishop ?? [])]
-          .filter((v) => v.text)
-          .map((v) => {
+      flattenHymns(service.hymns).map((hymn) => {
+        const versions = [...hymn.versions, ...(hymn.bishop ?? [])].filter((v) => v.text);
+        const { coptic } = splitTitle(hymn.title);
+        return {
+          hymn,
+          location: { group, service, kind },
+          // the title as written, in Arabic, and its Coptic words in English letters ("Ⲡⲟⲩⲣⲟ" is found by "pouro")
+          titles: [hymn.title, displayTitle(hymn, 'ar'), ...(coptic ? [copticToEnglish(coptic)] : [])].map(normalizeForSearch),
+          openings: hymn.versions.filter((v) => v.text).map((v) => openingOf(cleanText(v.text))),
+          // the words said in the presence of the Pope or a bishop are found too
+          versions: versions.map((v) => {
             const text = cleanText(v.text);
             return { language: v.language, text, ...normalizeWithMap(text) };
           }),
-      }))
+        };
+      })
     )
   );
 }
@@ -176,26 +187,26 @@ function snippetAround(text: string, start: number, end: number): string {
 const escapeRegExp = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 // Every word of the query must appear (in any order) in the title or in one language's text.
-// Title matches come first, then texts containing the words as a phrase, then the rest.
+// The hymn whose name is what was typed comes first: titles that start with it, then titles that contain it,
+// then hymns that open with those words, then texts containing them as a phrase, then the rest.
+// Within each, the hymn in its own place comes before its copies in other services.
 export function searchHymns(query: string, limit = 50): SearchResult[] {
   const words = normalizeForSearch(query).split(/\s+/).filter(Boolean);
   if (words.length === 0 || words.join('').length < 2) return [];
   index ??= buildIndex();
   // The words in order, allowing punctuation between them ("holy god" finds "Holy God,")
   const phrase = new RegExp(words.map(escapeRegExp).join('[\\s\\p{P}]+'), 'u');
+  // ...and at the very start, or right after an opening bracket ("Ⲡⲟⲩⲣⲟ (Hymn of Joy)" for "hymn of joy")
+  const atStart = new RegExp(`(^|\\()[\\s\\p{P}]*${words.map(escapeRegExp).join('[\\s\\p{P}]+')}`, 'u');
 
-  const titleMatches: SearchResult[] = [];
-  const phraseMatches: SearchResult[] = [];
-  const wordMatches: SearchResult[] = [];
+  const tiers: SearchResult[][] = [[], [], [], [], []];
   for (const entry of index) {
-    if (entry.titles.some((t) => words.every((w) => t.includes(w)))) {
+    const add = (tier: number, language: LanguageType | null, snippet: string) =>
+      tiers[tier].push({ hymn: entry.hymn, location: entry.location, language, snippet });
+    const titleStarts = entry.titles.some((t) => atStart.test(t));
+    if (titleStarts || entry.titles.some((t) => words.every((w) => t.includes(w)))) {
       const first = entry.versions[0];
-      titleMatches.push({
-        hymn: entry.hymn,
-        location: entry.location,
-        language: null,
-        snippet: first ? snippetAround(first.text, 0, 0) : '',
-      });
+      add(titleStarts ? 0 : 1, null, first ? snippetAround(first.text, 0, 0) : '');
       continue;
     }
     const withPhrase = entry.versions.find((v) => phrase.test(v.folded));
@@ -206,13 +217,10 @@ export function searchHymns(query: string, limit = 50): SearchResult[] {
       const length = found ? found[0].length : words[0].length;
       const start = version.origin[at] ?? 0;
       const end = version.origin[at + length - 1] ?? start;
-      (withPhrase ? phraseMatches : wordMatches).push({
-        hymn: entry.hymn,
-        location: entry.location,
-        language: version.language,
-        snippet: snippetAround(version.text, start, end + 1),
-      });
+      const opens = entry.openings.some((o) => phrase.test(o) && phrase.exec(o)!.index === o.search(/\S/));
+      add(opens ? 2 : withPhrase ? 3 : 4, version.language, snippetAround(version.text, start, end + 1));
     }
   }
-  return [...titleMatches, ...phraseMatches, ...wordMatches].slice(0, limit);
+  const isCopy = (r: SearchResult) => (r.hymn.id.includes('@') ? 1 : 0);
+  return tiers.flatMap((tier) => tier.sort((a, b) => isCopy(a) - isCopy(b))).slice(0, limit);
 }

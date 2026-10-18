@@ -30,6 +30,12 @@ describe('searchHymns', () => {
     expect(results[0]?.language).toBeNull();
   });
 
+  it('puts the hymn named what was typed first, even typed in English letters', () => {
+    expect(searchHymns('pouro')[0]?.hymn.id).toBe('annual-veneration-hymn-of-joy');
+    expect(searchHymns('Ⲡⲟⲩⲣⲟ')[0]?.hymn.id).toBe('annual-veneration-hymn-of-joy');
+    expect(searchHymns('hymn of joy')[0]?.hymn.id).toBe('annual-veneration-hymn-of-joy');
+  });
+
   it('finds a hymn by its Arabic title', () => {
     expect(searchHymns('أرباع الناقوس').some((r) => r.hymn.id === 'annual-matins-verse-of-cymbals')).toBe(true);
   });
