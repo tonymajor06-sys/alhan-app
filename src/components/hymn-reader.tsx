@@ -33,7 +33,8 @@ import {
   trackKey,
   useAudioQueue,
 } from '../hooks/use-audio-queue';
-import { isInPlaylist, PlaylistItem, togglePlaylistItem, usePlaylist } from '../hooks/use-playlist';
+import { isInAnyPlaylist, PlaylistItem, usePlaylists } from '../hooks/use-playlist';
+import { PlaylistPicker } from './playlist-picker';
 import { TEXT_SCALE_MAX, TEXT_SCALE_MIN, updateSettings, useSettings } from '../hooks/use-settings';
 import { clearVerseTimings, saveVerseTimings, useVerseTimings, verseAt } from '../hooks/use-verse-timings';
 import {
@@ -109,7 +110,8 @@ export function HymnReader({
   // Audio lives in a shared queue so it keeps playing after leaving the hymn or the app
   const queue = useAudioQueue();
   const nowPlaying = currentTrack(queue);
-  const playlist = usePlaylist();
+  const playlists = usePlaylists();
+  const [choosingPlaylist, setChoosingPlaylist] = useState(false);
   const downloads = useAudioDownloads();
   const readerItem: PlaylistItem = { hymnId: hymn.id, language: audioLanguage };
   const readerIsCurrent =
@@ -258,7 +260,7 @@ export function HymnReader({
   const isArabicText = effectiveLanguage === 'arabic' || effectiveLanguage === 'arabicCoptic' || effectiveLanguage === 'arabicEnglish' || rawText === strings.ar.notAvailable;
   const fontSize = 20 * settings.textScale;
   const repeatOne = queue.repeat === 'one';
-  const inPlaylist = isInPlaylist(playlist, readerItem);
+  const inPlaylist = isInAnyPlaylist(playlists, readerItem);
   const isDownloading = !!currentAudio && downloads.downloading.has(currentAudio);
   const isDownloaded = !!currentAudio && downloads.downloaded.has(currentAudio);
 
@@ -728,10 +730,10 @@ export function HymnReader({
                 <Pressable
                   onPress={() => {
                     pressFeedback();
-                    togglePlaylistItem(readerItem);
+                    setChoosingPlaylist((open) => !open);
                   }}
                   accessibilityRole="button"
-                  accessibilityState={{ selected: inPlaylist }}
+                  accessibilityState={{ selected: inPlaylist, expanded: choosingPlaylist }}
                   style={({ pressed }) => [styles.playlistButton, styles.audioAction, inPlaylist && styles.controlButtonActive, pressed && styles.pressed]}>
                   <Text style={[styles.controlText, inPlaylist && styles.controlTextActive]}>
                     {inPlaylist ? t.inPlaylist : t.addToPlaylist}
@@ -756,6 +758,7 @@ export function HymnReader({
                   </Pressable>
                 ) : null}
               </View>
+              {choosingPlaylist ? <PlaylistPicker lang={lang} item={readerItem} onDone={() => setChoosingPlaylist(false)} /> : null}
             </View>
           ) : null}
 

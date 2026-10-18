@@ -1,7 +1,8 @@
+import { router } from 'expo-router';
 import { NativeTabs } from 'expo-router/unstable-native-tabs';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { openHymnPage, strings, withCopticFont } from './alhan-ui';
+import { openHymnPage, strings, useSwipeToSkip, withCopticFont } from './alhan-ui';
 import { BusyPulse } from './busy-pulse';
 import { pressFeedback } from './haptics';
 import { useAlhanColors } from '../hooks/use-alhan-colors';
@@ -18,14 +19,16 @@ export function TabBarPlayer() {
   const nowPlaying = currentTrack(queue);
   const t = strings[lang];
   const isRTL = lang === 'ar';
+  const swipe = useSwipeToSkip(isRTL);
   if (!nowPlaying) return null;
   const { playing, isBuffering } = queue.status;
   const hasQueue = queue.tracks.length > 1;
 
   return (
-    <View style={[styles.row, isRTL && styles.rowReverse]}>
+    <View style={[styles.row, isRTL && styles.rowReverse]} {...swipe.panHandlers}>
       <Pressable
-        onPress={() => openHymnPage(nowPlaying.hymnId, nowPlaying.language)}
+        onPress={() => router.push('/now-playing')}
+        onLongPress={() => openHymnPage(nowPlaying.hymnId, nowPlaying.language)}
         accessibilityRole="button"
         accessibilityLabel={`${t.nowPlaying}: ${nowPlaying.title}`}
         style={styles.titleWrap}>

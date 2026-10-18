@@ -1,7 +1,7 @@
 import { useKeepAwake } from 'expo-keep-awake';
 import { router } from 'expo-router';
-import { ReactNode, RefObject, useRef } from 'react';
-import { Modal, Platform, Pressable, ScrollView, StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
+import { ReactNode, RefObject, useMemo, useRef } from 'react';
+import { Modal, PanResponder, Platform, Pressable, ScrollView, StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { pressFeedback } from './haptics';
@@ -46,11 +46,34 @@ export const strings = {
     next: 'Next',
     openCalendar: 'Coptic calendar',
     supportApp: '♥ Support this app',
-    playlistTitle: 'My Playlist',
+    playlistTitle: 'Playlists',
     playlistDesc: (n: number) => (n === 1 ? '1 hymn' : `${n} hymns`),
-    playlistEmpty: 'Your playlist is empty. Open any hymn marked ♪ Audio and tap “Add to playlist”.',
+    playlistsDesc: (n: number) => (n === 1 ? '1 playlist' : `${n} playlists`),
+    playlistEmpty: 'This playlist is empty. Open any hymn marked ♪ Audio and tap “Add to playlist”.',
+    playlistsEmpty: 'Make playlists of the hymns you love, like SoundCloud: name one below, then open any hymn marked ♪ Audio and tap “Add to playlist”.',
     addToPlaylist: '+ Add to playlist',
-    inPlaylist: '✓ In playlist',
+    inPlaylist: '✓ In a playlist',
+    chooseList: 'Add to which playlist?',
+    newPlaylist: '+ New playlist',
+    playlistName: 'Playlist name',
+    create: 'Create',
+    rename: 'Rename',
+    save: 'Save',
+    cancel: 'Cancel',
+    deletePlaylist: 'Delete playlist',
+    confirmDelete: (name: string) => `Delete “${name}”? The hymns stay in the app.`,
+    shufflePlay: '⤨ Shuffle',
+    shuffle: 'Shuffle',
+    repeatOff: 'Repeat off',
+    repeatAll: 'Repeat all',
+    repeatOne: 'Repeat one',
+    upNext: 'Up next',
+    showWords: 'Show the words',
+    back15: 'Back 15 seconds',
+    forward15: 'Forward 15 seconds',
+    swipeToSkip: 'Swipe left or right to skip',
+    close: 'Close',
+    addToQueue: 'Add to queue',
     playAll: '▶ Play all',
     repeatPlaylist: '⟳ Repeat playlist',
     previousTrack: 'Previous',
@@ -103,7 +126,6 @@ export const strings = {
     language: 'Language',
     season: 'Season',
     more: 'More',
-    close: 'Close',
     textSizeLabel: 'Text size',
     recordingIn: (language: string) => `Recording in ${language}`,
     bishopAddition: 'In the presence of the Pope or a Bishop',
@@ -136,11 +158,34 @@ export const strings = {
     next: 'القادم',
     openCalendar: 'التقويم القبطي',
     supportApp: '♥ ادعم التطبيق',
-    playlistTitle: 'قائمة التشغيل',
+    playlistTitle: 'قوائم التشغيل',
     playlistDesc: (n: number) => `${n} ${n >= 3 && n <= 10 ? 'ألحان' : 'لحن'}`,
-    playlistEmpty: 'قائمة التشغيل فارغة. افتح أي لحن عليه ♪ صوت واضغط «أضف إلى قائمة التشغيل».',
+    playlistsDesc: (n: number) => `${n} ${n >= 3 && n <= 10 ? 'قوائم' : 'قائمة'}`,
+    playlistEmpty: 'هذه القائمة فارغة. افتح أي لحن عليه ♪ صوت واضغط «أضف إلى قائمة التشغيل».',
+    playlistsEmpty: 'اصنع قوائم بالألحان التي تحبها: اكتب اسم قائمة بالأسفل، ثم افتح أي لحن عليه ♪ صوت واضغط «أضف إلى قائمة التشغيل».',
     addToPlaylist: '+ أضف إلى قائمة التشغيل',
-    inPlaylist: '✓ في قائمة التشغيل',
+    inPlaylist: '✓ في قائمة',
+    chooseList: 'أضف إلى أي قائمة؟',
+    newPlaylist: '+ قائمة جديدة',
+    playlistName: 'اسم القائمة',
+    create: 'إنشاء',
+    rename: 'إعادة تسمية',
+    save: 'حفظ',
+    cancel: 'إلغاء',
+    deletePlaylist: 'حذف القائمة',
+    confirmDelete: (name: string) => `حذف «${name}»؟ تبقى الألحان في التطبيق.`,
+    shufflePlay: '⤨ عشوائي',
+    shuffle: 'عشوائي',
+    repeatOff: 'بدون تكرار',
+    repeatAll: 'تكرار الكل',
+    repeatOne: 'تكرار اللحن',
+    upNext: 'التالي في القائمة',
+    showWords: 'اعرض الكلمات',
+    back15: 'رجوع ١٥ ثانية',
+    forward15: 'تقديم ١٥ ثانية',
+    swipeToSkip: 'اسحب يميناً أو يساراً للتخطي',
+    close: 'إغلاق',
+    addToQueue: 'أضف إلى قائمة الانتظار',
     playAll: '▶ تشغيل الكل',
     repeatPlaylist: '⟳ تكرار القائمة',
     previousTrack: 'السابق',
@@ -193,7 +238,6 @@ export const strings = {
     language: 'اللغة',
     season: 'المناسبة',
     more: 'المزيد',
-    close: 'إغلاق',
     textSizeLabel: 'حجم الخط',
     recordingIn: (language: string) => `التسجيل باللغة: ${language}`,
     bishopAddition: 'في حضور البابا أو الأسقف',
@@ -428,6 +472,22 @@ export const goBackOrHome = () => (router.canGoBack() ? router.back() : router.r
 
 // Shown at the bottom of every screen while audio plays, except on the hymn that is playing.
 // Inside the tabs on iOS 26 and later the tab bar shows it instead (see TabBarPlayer).
+// A horizontal swipe on a player skips to the next or previous hymn in the queue
+export function useSwipeToSkip(isRTL: boolean) {
+  return useMemo(
+    () =>
+      PanResponder.create({
+        onMoveShouldSetPanResponder: (_, g) => Math.abs(g.dx) > 24 && Math.abs(g.dx) > Math.abs(g.dy) * 2,
+        onPanResponderRelease: (_, g) => {
+          if (Math.abs(g.dx) < 60) return;
+          pressFeedback();
+          skip((g.dx < 0) !== isRTL ? 1 : -1);
+        },
+      }),
+    [isRTL]
+  );
+}
+
 export function MiniPlayer({ lang, hideFor }: { lang: AppLanguage; hideFor?: string }) {
   const styles = useThemedStyles(createAlhanStyles);
   const chrome = useTabChrome();
@@ -435,6 +495,8 @@ export function MiniPlayer({ lang, hideFor }: { lang: AppLanguage; hideFor?: str
   const nowPlaying = currentTrack(queue);
   const t = strings[lang];
   const isRTL = lang === 'ar';
+  // Swipe the player left for the next hymn and right for the previous one (the other way round in Arabic)
+  const swipe = useSwipeToSkip(isRTL);
   if (!chrome.floatingPlayer || !nowPlaying || `${nowPlaying.hymnId}:${nowPlaying.language}` === hideFor) return null;
   const rowDirection = isRTL ? styles.rowReverse : styles.row;
   const textAlign = isRTL ? styles.alignRight : styles.alignLeft;
@@ -442,15 +504,17 @@ export function MiniPlayer({ lang, hideFor }: { lang: AppLanguage; hideFor?: str
   const progress = duration > 0 ? Math.min(1, currentTime / duration) : 0;
   const hasQueue = queue.tracks.length > 1;
   return (
-    <View style={[styles.miniPlayer, { bottom: chrome.playerBottom }]}>
+    <View style={[styles.miniPlayer, { bottom: chrome.playerBottom }]} {...swipe.panHandlers}>
       <View style={styles.miniProgressTrack}>
         <View style={[styles.progressFill, { width: `${progress * 100}%` }]} />
       </View>
       <View style={[styles.miniRow, rowDirection]}>
         <Pressable
-          onPress={() => openHymnPage(nowPlaying.hymnId, nowPlaying.language)}
+          onPress={() => router.push('/now-playing')}
+          onLongPress={() => openHymnPage(nowPlaying.hymnId, nowPlaying.language)}
           accessibilityRole="button"
           accessibilityLabel={`${t.nowPlaying}: ${nowPlaying.title}`}
+          accessibilityHint={hasQueue ? t.swipeToSkip : undefined}
           style={({ pressed }) => [styles.rowTextWrap, pressed && styles.pressed]}>
           <Text style={[styles.miniLabel, textAlign]}>
             ♪ {t.nowPlaying}

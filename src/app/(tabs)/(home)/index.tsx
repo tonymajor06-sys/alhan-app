@@ -19,7 +19,7 @@ import { mainCategories, seasons } from '@/data/hymns';
 import { saintsStrings } from '@/data/saints';
 import { useAlhanColors, useThemedStyles } from '@/hooks/use-alhan-colors';
 import { currentTrack, useAudioQueue } from '@/hooks/use-audio-queue';
-import { usePlaylist } from '@/hooks/use-playlist';
+import { usePlaylists } from '@/hooks/use-playlist';
 import { useSettings } from '@/hooks/use-settings';
 import { useTodayJdn } from '@/hooks/use-today';
 
@@ -34,7 +34,7 @@ export default function HomeScreen() {
   const styles = useThemedStyles(createAlhanStyles);
   const rowDirection = isRTL ? styles.rowReverse : styles.row;
   const textAlign = isRTL ? styles.alignRight : styles.alignLeft;
-  const playlist = usePlaylist();
+  const playlists = usePlaylists();
   const nowPlaying = currentTrack(useAudioQueue());
 
   const today = useTodayJdn();
@@ -53,7 +53,7 @@ export default function HomeScreen() {
     { key: 'hymns', title: displayTitle(mainCategories[1], lang), desc: t.hymnsDesc, href: '/hymns' as const, image: homeArt.hymns, tab: true },
     { key: 'responses', title: displayTitle(mainCategories[0], lang), desc: t.responsesDesc, href: '/responses' as const, image: homeArt.responses },
     { key: 'saints', title: saintsStrings[lang].title, desc: saintsStrings[lang].subtitle, href: '/saints' as const, image: homeArt.saints },
-    { key: 'playlist', title: t.playlistTitle, desc: t.playlistDesc(playlist.length), href: '/playlist' as const, image: homeArt.playlist, tab: true },
+    { key: 'playlist', title: t.playlistTitle, desc: t.playlistsDesc(playlists.length), href: '/playlist' as const, image: homeArt.playlist, tab: true },
     { key: 'guide', title: guideStrings[lang].title, desc: guideStrings[lang].subtitle, href: '/guide' as const, image: homeArt.guide },
     { key: 'faith', title: faithStrings[lang].title, desc: faithStrings[lang].subtitle, href: '/faith' as const, image: homeArt.faith },
     { key: 'learn', title: learnStrings[lang].title, desc: learnStrings[lang].subtitle, href: '/learn' as const, image: homeArt.learn },

@@ -1,140 +1,97 @@
-import { Alert, Pressable, Text, View } from 'react-native';
+import { router } from 'expo-router';
+import { useState } from 'react';
+import { Pressable, Text, TextInput, View } from 'react-native';
 
-import { createAlhanStyles, languageLabels, ScreenShell, strings, withCopticFont } from '@/components/alhan-ui';
-import { pressFeedback, successFeedback, tapFeedback } from '@/components/haptics';
-import { titleLines } from '@/data/hymn-titles';
-import { useThemedStyles } from '@/hooks/use-alhan-colors';
-import { audioSourceFor, canDownload, downloadAll, useAudioDownloads } from '@/hooks/use-audio-downloads';
-import { currentTrack, playQueue, QueueTrack, setRepeat, trackKey, useAudioQueue } from '@/hooks/use-audio-queue';
-import { audioFor, findHymn, movePlaylistItem, PlaylistItem, removePlaylistItem, usePlaylist } from '@/hooks/use-playlist';
+import { createAlhanStyles, ScreenShell, strings } from '@/components/alhan-ui';
+import { pressFeedback, successFeedback } from '@/components/haptics';
+import { playlistTracks } from '@/components/playlist-tracks';
+import { useAlhanColors, useThemedStyles } from '@/hooks/use-alhan-colors';
+import { currentTrack, playQueue, useAudioQueue } from '@/hooks/use-audio-queue';
+import { createPlaylist, DEFAULT_PLAYLIST_NAME, Playlist, usePlaylists } from '@/hooks/use-playlist';
 import { useSettings } from '@/hooks/use-settings';
 
-// The Playlist tab: the hymns saved to play in order
-export default function PlaylistScreen() {
+// The Playlists tab: every playlist, each one opens to its hymns; Play and Shuffle start one right away
+export default function PlaylistsScreen() {
   const settings = useSettings();
   const lang = settings.language;
   const t = strings[lang];
   const isRTL = lang === 'ar';
   const styles = useThemedStyles(createAlhanStyles);
+  const colors = useAlhanColors();
   const rowDirection = isRTL ? styles.rowReverse : styles.row;
   const textAlign = isRTL ? styles.alignRight : styles.alignLeft;
+  const lists = usePlaylists();
   const queue = useAudioQueue();
   const nowPlaying = currentTrack(queue);
-  const playlist = usePlaylist();
-  const downloads = useAudioDownloads();
+  const [name, setName] = useState('');
 
-  const toTrack = (item: PlaylistItem): QueueTrack | null => {
-    const hymn = findHymn(item.hymnId);
-    const file = audioFor(item);
-    const source = file ? audioSourceFor(file) : null;
-    return hymn && source ? { ...item, title: titleLines(hymn, lang).main, source } : null;
-  };
-
-  const playPlaylist = (startIndex = 0) => {
+  const play = (list: Playlist, shuffle: boolean) => {
     pressFeedback();
-    playQueue(
-      playlist.map(toTrack).filter((track): track is QueueTrack => track !== null),
-      startIndex,
-      'playlist'
-    );
+    playQueue(playlistTracks(list, lang), 0, 'playlist', shuffle);
   };
-
-  const playingFromPlaylist = queue.origin === 'playlist' && nowPlaying;
-  const repeatAll = queue.repeat === 'all';
-  const toDownload = [...new Set(playlist.map(audioFor).filter((f): f is string => !!f && canDownload(f)))].filter(
-    (f) => !downloads.downloaded.has(f)
-  );
-  const downloadingAny = toDownload.some((f) => downloads.downloading.has(f));
+  const create = () => {
+    const id = createPlaylist(name || (lists.length ? `${t.playlistName} ${lists.length + 1}` : DEFAULT_PLAYLIST_NAME[lang]));
+    setName('');
+    successFeedback();
+    router.push({ pathname: '/playlist/[id]', params: { id } });
+  };
 
   return (
-    <ScreenShell lang={lang} title={t.playlistTitle} subtitle={t.playlistDesc(playlist.length)}>
-      {playlist.length === 0 ? (
-        <Text style={[styles.emptyText, textAlign]}>{t.playlistEmpty}</Text>
-      ) : (
-        <>
-          <View style={[styles.audioControls, styles.playlistActions, rowDirection]}>
+    <ScreenShell lang={lang} title={t.playlistTitle} subtitle={t.playlistsDesc(lists.length)}>
+      {lists.length === 0 ? <Text style={[styles.emptyText, textAlign]}>{t.playlistsEmpty}</Text> : null}
+
+      {lists.map((list) => {
+        const playingThis = queue.origin === 'playlist' && !!nowPlaying && list.items.some((i) => i.hymnId === nowPlaying.hymnId);
+        return (
+          <View key={list.id} style={[styles.rowCard, styles.playlistRow, rowDirection, playingThis && styles.rowCardPressed]}>
             <Pressable
-              onPress={() => playPlaylist(0)}
+              onPress={() => router.push({ pathname: '/playlist/[id]', params: { id: list.id } })}
               accessibilityRole="button"
-              style={({ pressed }) => [styles.controlButton, styles.playAllButton, pressed && styles.pressed]}>
-              <Text style={[styles.controlText, styles.playAllText]}>{t.playAll}</Text>
+              style={({ pressed }) => [styles.rowTextWrap, pressed && styles.pressed]}>
+              <Text style={[styles.rowTitle, textAlign]} numberOfLines={1}>
+                {playingThis ? (queue.status.playing ? '♪ ' : '❚❚ ') : ''}
+                {list.name}
+              </Text>
+              <Text style={[styles.playlistMeta, textAlign]}>{t.playlistDesc(list.items.length)}</Text>
             </Pressable>
-            <Pressable
-              onPress={() => {
-                tapFeedback();
-                setRepeat(repeatAll ? 'none' : 'all');
-              }}
-              accessibilityRole="button"
-              accessibilityState={{ selected: repeatAll }}
-              style={[styles.controlButton, repeatAll && styles.controlButtonActive]}>
-              <Text style={[styles.controlText, repeatAll && styles.controlTextActive]}>{t.repeatPlaylist}</Text>
-            </Pressable>
-          </View>
-          {toDownload.length > 0 ? (
-            <Pressable
-              onPress={async () => {
-                if (await downloadAll(toDownload)) successFeedback();
-                else Alert.alert(t.downloadFailed);
-              }}
-              disabled={downloadingAny}
-              accessibilityRole="button"
-              style={({ pressed }) => [styles.playlistButton, styles.playlistDownload, pressed && styles.pressed, downloadingAny && styles.disabled]}>
-              <Text style={styles.controlText}>{downloadingAny ? t.downloading : t.downloadAll}</Text>
-            </Pressable>
-          ) : null}
-          {playlist.map((item, index) => {
-            const hymn = findHymn(item.hymnId);
-            if (!hymn) return null;
-            const isCurrent = !!playingFromPlaylist && trackKey(playingFromPlaylist) === trackKey(item);
-            const languageLabel = languageLabels[lang].find((l) => l.key === item.language)?.label;
-            return (
-              <View key={trackKey(item)} style={[styles.rowCard, styles.playlistRow, rowDirection, isCurrent && styles.rowCardPressed]}>
+            {list.items.length ? (
+              <View style={[styles.playlistRowButtons, rowDirection]}>
                 <Pressable
-                  onPress={() => playPlaylist(index)}
+                  onPress={() => play(list, true)}
                   accessibilityRole="button"
-                  style={({ pressed }) => [styles.rowTextWrap, pressed && styles.pressed]}>
-                  <Text style={[styles.rowTitle, textAlign]}>
-                    {isCurrent ? (queue.status.playing ? '♪ ' : '❚❚ ') : `${index + 1}. `}
-                    {withCopticFont(titleLines(hymn, lang, settings.titleStyle).main)}
-                  </Text>
-                  <Text style={[styles.playlistMeta, textAlign]}>{languageLabel}</Text>
+                  accessibilityLabel={`${t.shuffle}: ${list.name}`}
+                  style={({ pressed }) => [styles.iconButton, pressed && styles.pressed]}>
+                  <Text style={styles.iconButtonText}>⤨</Text>
                 </Pressable>
-                <View style={[styles.playlistRowButtons, rowDirection]}>
-                  <Pressable
-                    onPress={() => {
-                      tapFeedback();
-                      movePlaylistItem(index, -1);
-                    }}
-                    disabled={index === 0}
-                    accessibilityLabel={t.moveUp}
-                    style={({ pressed }) => [styles.iconButton, pressed && styles.pressed, index === 0 && styles.disabled]}>
-                    <Text style={styles.iconButtonText}>▲</Text>
-                  </Pressable>
-                  <Pressable
-                    onPress={() => {
-                      tapFeedback();
-                      movePlaylistItem(index, 1);
-                    }}
-                    disabled={index === playlist.length - 1}
-                    accessibilityLabel={t.moveDown}
-                    style={({ pressed }) => [styles.iconButton, pressed && styles.pressed, index === playlist.length - 1 && styles.disabled]}>
-                    <Text style={styles.iconButtonText}>▼</Text>
-                  </Pressable>
-                  <Pressable
-                    onPress={() => {
-                      tapFeedback();
-                      removePlaylistItem(index);
-                    }}
-                    accessibilityLabel={t.remove}
-                    style={({ pressed }) => [styles.iconButton, pressed && styles.pressed]}>
-                    <Text style={styles.iconButtonText}>✕</Text>
-                  </Pressable>
-                </View>
+                <Pressable
+                  onPress={() => play(list, false)}
+                  accessibilityRole="button"
+                  accessibilityLabel={`${t.play}: ${list.name}`}
+                  style={({ pressed }) => [styles.iconButton, { backgroundColor: colors.gold }, pressed && styles.pressed]}>
+                  <Text style={[styles.iconButtonText, { color: colors.onGold }]}>▶</Text>
+                </Pressable>
               </View>
-            );
-          })}
-        </>
-      )}
+            ) : null}
+          </View>
+        );
+      })}
+
+      {/* A new playlist: type its name, or leave it empty for a numbered one */}
+      <View style={[styles.searchField, rowDirection, { marginTop: 12 }]}>
+        <TextInput
+          value={name}
+          onChangeText={setName}
+          onSubmitEditing={create}
+          placeholder={t.playlistName}
+          placeholderTextColor={colors.muted}
+          returnKeyType="done"
+          style={[styles.searchInput, textAlign]}
+          accessibilityLabel={t.playlistName}
+        />
+        <Pressable onPress={create} accessibilityRole="button" hitSlop={8} style={({ pressed }) => [pressed && styles.pressed]}>
+          <Text style={[styles.controlText, { color: colors.gold, paddingHorizontal: 8 }]}>{t.newPlaylist}</Text>
+        </Pressable>
+      </View>
     </ScreenShell>
   );
 }

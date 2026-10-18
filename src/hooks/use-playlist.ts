@@ -8,7 +8,17 @@ export interface PlaylistItem {
   language: LanguageType;
 }
 
-const STORAGE_KEY = 'alhan-playlist';
+// A named list of recordings, played in order (or shuffled)
+export interface Playlist {
+  id: string;
+  name: string;
+  items: PlaylistItem[];
+}
+
+const STORAGE_KEY = 'alhan-playlists';
+// The single playlist from before there could be several; it becomes "My Playlist"
+const OLD_STORAGE_KEY = 'alhan-playlist';
+export const DEFAULT_PLAYLIST_NAME = { en: 'My Playlist', ar: 'قائمتي' };
 
 const hymnsById = new Map<string, Hymn>(
   [...seasons, ...deaconCategories].flatMap((group) =>
@@ -21,48 +31,84 @@ export const findHymn = (id: string): Hymn | undefined => hymnsById.get(id);
 export const audioFor = (item: PlaylistItem) =>
   findHymn(item.hymnId)?.versions.find((v) => v.language === item.language)?.audio;
 
-const loadPlaylist = (): PlaylistItem[] => {
+const newId = () => `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`;
+
+const parse = <T>(raw: string | null | undefined, fallback: T): T => {
   try {
-    const raw = readSetting(STORAGE_KEY);
-    const parsed: PlaylistItem[] = raw ? JSON.parse(raw) : [];
-    // Drop anything whose recording has since been removed from the app
-    return parsed.filter((item) => audioFor(item));
+    return raw ? (JSON.parse(raw) as T) : fallback;
   } catch {
-    return [];
+    return fallback;
   }
 };
 
-let playlist = loadPlaylist();
+const loadPlaylists = (): Playlist[] => {
+  let lists: Playlist[];
+  try {
+    lists = parse<Playlist[]>(readSetting(STORAGE_KEY), []);
+    if (!lists.length) {
+      const old = parse<PlaylistItem[]>(readSetting(OLD_STORAGE_KEY), []);
+      if (old.length) lists = [{ id: newId(), name: DEFAULT_PLAYLIST_NAME.en, items: old }];
+    }
+  } catch {
+    lists = [];
+  }
+  // Drop anything whose recording has since been removed from the app
+  return lists.map((list) => ({ ...list, items: list.items.filter((item) => audioFor(item)) }));
+};
+
+let playlists = loadPlaylists();
 const listeners = new Set<() => void>();
 
-const save = (next: PlaylistItem[]) => {
-  playlist = next;
+const save = (next: Playlist[]) => {
+  playlists = next;
   try {
-    writeSetting(STORAGE_KEY, JSON.stringify(playlist));
+    writeSetting(STORAGE_KEY, JSON.stringify(playlists));
   } catch {
-    // playlist still applies for this session
+    // the playlists still apply for this session
   }
   listeners.forEach((l) => l());
 };
 
+const update = (id: string, change: (list: Playlist) => Playlist) => save(playlists.map((l) => (l.id === id ? change(l) : l)));
+
 const sameItem = (a: PlaylistItem, b: PlaylistItem) => a.hymnId === b.hymnId && a.language === b.language;
 
 export const isInPlaylist = (items: PlaylistItem[], item: PlaylistItem) => items.some((i) => sameItem(i, item));
+export const isInAnyPlaylist = (lists: Playlist[], item: PlaylistItem) => lists.some((l) => isInPlaylist(l.items, item));
+export const playlistById = (lists: Playlist[], id: string | undefined) => lists.find((l) => l.id === id);
 
-export function togglePlaylistItem(item: PlaylistItem) {
-  save(isInPlaylist(playlist, item) ? playlist.filter((i) => !sameItem(i, item)) : [...playlist, item]);
+// A new playlist, optionally with its first hymn; returns its id
+export function createPlaylist(name: string, first?: PlaylistItem): string {
+  const id = newId();
+  save([...playlists, { id, name: name.trim() || DEFAULT_PLAYLIST_NAME.en, items: first ? [first] : [] }]);
+  return id;
 }
 
-export function removePlaylistItem(index: number) {
-  save(playlist.filter((_, i) => i !== index));
+export function renamePlaylist(id: string, name: string) {
+  if (name.trim()) update(id, (l) => ({ ...l, name: name.trim() }));
 }
 
-export function movePlaylistItem(index: number, direction: 1 | -1) {
-  const target = index + direction;
-  if (target < 0 || target >= playlist.length) return;
-  const next = [...playlist];
-  [next[index], next[target]] = [next[target], next[index]];
-  save(next);
+export function deletePlaylist(id: string) {
+  save(playlists.filter((l) => l.id !== id));
+}
+
+// Adds the hymn to that playlist, or takes it out if it is already there
+export function togglePlaylistItem(id: string, item: PlaylistItem) {
+  update(id, (l) => ({ ...l, items: isInPlaylist(l.items, item) ? l.items.filter((i) => !sameItem(i, item)) : [...l.items, item] }));
+}
+
+export function removePlaylistItem(id: string, index: number) {
+  update(id, (l) => ({ ...l, items: l.items.filter((_, i) => i !== index) }));
+}
+
+export function movePlaylistItem(id: string, index: number, direction: 1 | -1) {
+  update(id, (l) => {
+    const target = index + direction;
+    if (target < 0 || target >= l.items.length) return l;
+    const items = [...l.items];
+    [items[index], items[target]] = [items[target], items[index]];
+    return { ...l, items };
+  });
 }
 
 const subscribe = (listener: () => void) => {
@@ -70,6 +116,6 @@ const subscribe = (listener: () => void) => {
   return () => listeners.delete(listener);
 };
 
-export function usePlaylist(): PlaylistItem[] {
-  return useSyncExternalStore(subscribe, () => playlist, () => playlist);
+export function usePlaylists(): Playlist[] {
+  return useSyncExternalStore(subscribe, () => playlists, () => playlists);
 }

@@ -76,6 +76,9 @@ export default function RootLayout() {
           <Stack.Screen name="support" />
           <Stack.Screen name="hymn/[id]" />
           <Stack.Screen name="follow/[kind]" />
+          <Stack.Screen name="playlist/[id]" />
+          {/* The full player slides up over everything, like a music app's */}
+          <Stack.Screen name="now-playing" options={{ presentation: 'modal', animation: 'slide_from_bottom' }} />
           <Stack.Screen name="saints" />
           <Stack.Screen name="saints/[id]" />
           <Stack.Screen name="learn" />

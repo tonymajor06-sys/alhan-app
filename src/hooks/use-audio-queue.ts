@@ -21,6 +21,9 @@ export interface QueueState {
   // 'playlist' when the queue was started from the saved playlist, so the playlist screen can highlight it
   origin: 'single' | 'playlist';
   repeat: RepeatMode;
+  // Shuffle: the tracks still to come were put in a random order; `unshuffled` keeps the order to go back to
+  shuffle: boolean;
+  unshuffled: QueueTrack[] | null;
   // Playback speed (learning mode slows recordings down); 1 = normal
   rate: number;
   // isBuffering: waiting for the recording to load or stream in, so the play button can show it is working
@@ -70,6 +73,8 @@ let state: QueueState = {
   index: 0,
   origin: 'single',
   repeat: 'none',
+  shuffle: false,
+  unshuffled: null,
   rate: 1,
   status: { playing: false, currentTime: 0, duration: 0, isBuffering: false },
 };
@@ -127,10 +132,63 @@ function onStatus(s: AudioStatus) {
   setState({ status: { playing: s.playing, currentTime: s.currentTime, duration: s.duration, isBuffering: s.isBuffering || (s.playing && !s.isLoaded) } });
 }
 
-export function playQueue(tracks: QueueTrack[], startIndex = 0, origin: QueueState['origin'] = 'single') {
+const shuffled = <T>(list: T[]): T[] => {
+  const out = [...list];
+  for (let i = out.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [out[i], out[j]] = [out[j], out[i]];
+  }
+  return out;
+};
+
+// `shuffle` starts the list in a random order (and turns Shuffle on); otherwise the queue keeps the Shuffle setting
+export function playQueue(tracks: QueueTrack[], startIndex = 0, origin: QueueState['origin'] = 'single', shuffle?: boolean) {
   if (tracks.length === 0) return;
-  setState({ tracks, origin });
+  const on = shuffle ?? state.shuffle;
+  if (on) {
+    const start = shuffle ? Math.floor(Math.random() * tracks.length) : Math.min(Math.max(0, startIndex), tracks.length - 1);
+    const first = tracks[start];
+    setState({ tracks: [first, ...shuffled(tracks.filter((_, i) => i !== start))], unshuffled: tracks, shuffle: true, origin });
+    return loadTrack(0, true);
+  }
+  setState({ tracks, origin, unshuffled: null, shuffle: false });
   loadTrack(Math.min(Math.max(0, startIndex), tracks.length - 1), true);
+}
+
+// Shuffle on: what is still to come plays in a random order. Off: back to the original order, from the current track
+export function setShuffle(on: boolean) {
+  const current = state.tracks[state.index];
+  if (!current) return setState({ shuffle: on });
+  if (on) {
+    const rest = state.tracks.filter((_, i) => i !== state.index);
+    setState({ shuffle: true, unshuffled: state.unshuffled ?? state.tracks, tracks: [current, ...shuffled(rest)], index: 0 });
+  } else {
+    const original = state.unshuffled ?? state.tracks;
+    const at = original.findIndex((t) => trackKey(t) === trackKey(current) && t.file === current.file);
+    setState({ shuffle: false, unshuffled: null, tracks: original, index: Math.max(0, at) });
+  }
+}
+
+// Jump straight to a track in the queue (the Up Next list)
+export function jumpTo(index: number) {
+  if (index >= 0 && index < state.tracks.length) loadTrack(index, true);
+}
+
+// Take a track that is still to come out of the queue
+export function removeFromQueue(index: number) {
+  if (index <= state.index || index >= state.tracks.length) return;
+  setState({ tracks: state.tracks.filter((_, i) => i !== index) });
+}
+
+// Add hymns to the end of the queue (or start playing them when nothing is playing)
+export function addToQueue(tracks: QueueTrack[]) {
+  if (state.tracks.length === 0) return playQueue(tracks);
+  setState({ tracks: [...state.tracks, ...tracks] });
+}
+
+// Off, then the whole queue, then this one track, like most music players
+export function cycleRepeat() {
+  setRepeat(state.repeat === 'none' ? 'all' : state.repeat === 'all' ? 'one' : 'none');
 }
 
 // Play next: add hymns after the current one, or drop the ones still waiting
@@ -183,7 +241,7 @@ export function stopQueue() {
   } catch {
     // nothing to clear
   }
-  setState({ tracks: [], index: 0, origin: 'single', status: { playing: false, currentTime: 0, duration: 0, isBuffering: false } });
+  setState({ tracks: [], index: 0, origin: 'single', unshuffled: null, status: { playing: false, currentTime: 0, duration: 0, isBuffering: false } });
 }
 
 const subscribe = (listener: () => void) => {
