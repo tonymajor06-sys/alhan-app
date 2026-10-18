@@ -6,7 +6,7 @@ import { createAlhanStyles, goBackOrHome, hymnHref, ScreenShell, strings, withCo
 import { followStrings } from '@/components/follow-strings';
 import { displayTitle } from '@/data/arabic-titles';
 import { formatCopticDate, toArabicDigits } from '@/data/coptic-calendar';
-import { followAlong, FollowSection, PraiseKind, praiseKinds, tonightJdn, weekdayNames, weekdayOf } from '@/data/follow-along';
+import { followAlong, FollowSection, PraiseKind, praiseKinds, tonightJdn, weekdayNames } from '@/data/follow-along';
 import { titleLines } from '@/data/hymn-titles';
 import { Hymn, LanguageType } from '@/data/hymns';
 import { useThemedStyles } from '@/hooks/use-alhan-colors';
@@ -19,8 +19,9 @@ export async function generateStaticParams(): Promise<Record<string, string>[]> 
   return praiseKinds.map((kind) => ({ kind }));
 }
 
-// Tonight's Midnight or Vesper Praises in the order they are prayed, from the calendar: one list from the
-// first hymn to the last, so nobody has to go back and forth between General and the day of the week
+// A day's Midnight or Vesper Praises in the order they are prayed (hold the day on the calendar, or tonight's from the
+// home screen shortcut): one list from the first hymn to the last, so nobody has to go back and forth between General
+// and the day of the week
 export default function FollowScreen() {
   const { kind: kindParam, night } = useLocalSearchParams<{ kind: string; night?: string }>();
   const kind: PraiseKind = praiseKinds.includes(kindParam as PraiseKind) ? (kindParam as PraiseKind) : 'midnight';
@@ -34,8 +35,8 @@ export default function FollowScreen() {
   const textAlign = isRTL ? styles.alignRight : styles.alignLeft;
   const digits = (n: number) => (isRTL ? toArabicDigits(n) : String(n));
 
-  const [tonight] = useState(() => tonightJdn());
-  const [jdn, setJdn] = useState(() => (Number(night) > 0 ? Number(night) : tonight));
+  // The day held on the calendar, or tonight's
+  const [jdn] = useState(() => (Number(night) > 0 ? Number(night) : tonightJdn()));
   const plan = useMemo(() => followAlong(kind, jdn), [kind, jdn]);
   const [openGroup, setOpenGroup] = useState<string | null>(null);
 
@@ -118,21 +119,18 @@ export default function FollowScreen() {
 
   return (
     <ScreenShell lang={lang} title={ft.title[kind]} subtitle={`${nightLabel} · ${seasonName}`} onBack={goBackOrHome}>
-      {/* Which night: tonight first, then the rest of the week */}
-      <Text style={[styles.listSub, textAlign]}>{ft.whichNight}</Text>
+      {/* Midnight or Vesper Praises of the day held on the calendar */}
       <View style={[rowDirection, { flexWrap: 'wrap', gap: 8, paddingVertical: 8 }]}>
-        {Array.from({ length: 7 }, (_, i) => tonight + i).map((day, i) => {
-          const selected = day === jdn;
+        {praiseKinds.map((k) => {
+          const selected = k === kind;
           return (
             <Pressable
-              key={day}
-              onPress={() => setJdn(day)}
+              key={k}
+              onPress={() => router.setParams({ kind: k })}
               accessibilityRole="button"
               accessibilityState={{ selected }}
               style={({ pressed }) => [styles.chip, styles.chipSmall, selected && styles.controlButtonActive, pressed && styles.pressed]}>
-              <Text style={[styles.chipText, selected && styles.controlTextActive]}>
-                {i === 0 ? `${ft.tonight} · ${days[weekdayOf(day)]}` : days[weekdayOf(day)]}
-              </Text>
+              <Text style={[styles.chipText, selected && styles.controlTextActive]}>{ft.kind[k]}</Text>
             </Pressable>
           );
         })}

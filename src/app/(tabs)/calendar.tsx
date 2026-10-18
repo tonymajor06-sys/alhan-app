@@ -4,6 +4,7 @@ import { Alert, Platform, Pressable, ScrollView, StyleSheet, Text, View } from '
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { MiniPlayer } from '@/components/alhan-ui';
+import { pressFeedback } from '@/components/haptics';
 import { StatusBarBlur } from '@/components/status-bar-blur';
 import { useTabChrome } from '@/components/tab-chrome';
 import { AlhanPalette } from '@/constants/alhan-colors';
@@ -46,6 +47,7 @@ const strings = {
     remindersOn: 'On · the evening before each feast and fast',
     remindersOff: 'Off · tap to get a reminder the evening before',
     remindersDenied: 'Notifications are turned off for Coptic Psalmody. You can allow them in Settings.',
+    holdHint: 'Hold a day to follow its praises in order',
   },
   ar: {
     title: 'التقويم القبطي',
@@ -63,11 +65,14 @@ const strings = {
     remindersOn: 'مفعّل · مساء اليوم السابق لكل عيد وصوم',
     remindersOff: 'متوقف · اضغط لتصلك رسالة تذكير مساء اليوم السابق',
     remindersDenied: 'الإشعارات متوقفة لتطبيق التسبحة القبطية. يمكنك السماح بها من الإعدادات.',
+    holdHint: 'اضغط مطولاً على يوم لتتابع تسبحته بالترتيب',
   },
 };
 
 // Switches to the Hymns tab, on that season's page
 const openSeasonHymns = (seasonId: string) => router.navigate({ pathname: '/hymns/[season]', params: { season: seasonId } });
+// Holding a day opens its praises in the order they are prayed (the night before it: Saturday night is Sunday's)
+const followDay = (jdn: number) => router.push({ pathname: '/follow/[kind]', params: { kind: 'midnight', night: String(jdn) } });
 
 export default function CalendarScreen() {
   const { language: lang, feastReminders } = useSettings();
@@ -224,6 +229,12 @@ export default function CalendarScreen() {
                 <Pressable
                   key={jdn}
                   onPress={() => setSelected(jdn)}
+                  onLongPress={() => {
+                    pressFeedback();
+                    setSelected(jdn);
+                    followDay(jdn);
+                  }}
+                  accessibilityHint={t.holdHint}
                   accessibilityRole="button"
                   accessibilityState={{ selected: isSelected }}
                   accessibilityLabel={`${formatCopticDate(jdn, lang)}${ev ? `, ${ev.name[lang]}` : ''}`}
@@ -258,6 +269,7 @@ export default function CalendarScreen() {
               <Text style={styles.legendText}>{t.fast}</Text>
             </View>
           </View>
+          <Text style={styles.holdHint}>{t.holdHint}</Text>
         </View>
 
         {/* Upcoming */}
@@ -443,6 +455,7 @@ const createStyles = (colors: AlhanPalette) => StyleSheet.create({
   legendItem: { alignItems: 'center', gap: 6 },
   legendSwatch: { width: 14, height: 14, borderRadius: 4 },
   legendText: { fontSize: 13, color: colors.muted },
+  holdHint: { fontSize: 13, color: colors.muted, textAlign: 'center', marginTop: 8 },
 
   reminderRow: { marginBottom: 22 },
   reminderRowOn: { borderColor: colors.gold },
