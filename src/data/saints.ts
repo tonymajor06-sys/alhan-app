@@ -4,8 +4,8 @@ import { copticMonths, copticToJdn, jdnToCoptic, toArabicDigits } from './coptic
 import { saintsData } from './saints-data';
 import { normalizeForSearch } from './search';
 
-// Every saint of the Synaxarium, day by day through the Coptic year, each with a short story
-// (summarized for the app from the Synaxarium readings in Spirit & Truth)
+// The saints whose stories are well known, each with their story (see saints-data.ts),
+// and the day of the Coptic year the Church remembers them
 
 export interface Saint {
   id: string;
@@ -24,7 +24,6 @@ export const saints: Saint[] = saintsData.map(([month, day, index, nameEn, nameA
 }));
 
 export const saintById = (id: string) => saints.find((s) => s.id === id);
-export const saintsOn = (month: number, day: number) => saints.filter((s) => s.month === month && s.day === day);
 
 // "4 Babah" / "٤ بابه"
 export const copticDayName = (month: number, day: number, lang: AppLanguage) =>
@@ -57,7 +56,7 @@ export function saintSortKey(title: string, lang: AppLanguage): string {
     let prev = '';
     while (prev !== s) {
       prev = s;
-      s = s.replace(/^(القديس[ةين]*|الشهيد[ةين]*|الأنبا|البابا|أبونا|رئيس الملائكة|النبي|الصدّيق[ة]*|الاب|الأب|مار\s*|المكرم[ة]*|العظيم[ة]*)\s*/, '');
+      s = s.replace(/^(القديس(?:ة|ان|ين|ات)?|الشهيد[ةين]*|الأنبا|البابا|أبونا|رئيس الملائكة|النبي|الصدّيق[ة]*|الاب|الأب|مار\s+|المكرم[ة]*|العظيم[ة]*|الأمير|القمص|الأرشيدياكون)\s*/, '');
     }
     s = s.replace(/^[أإآ]/, 'ا');
     return s.trim();
@@ -71,7 +70,7 @@ export function saintSortKey(title: string, lang: AppLanguage): string {
     s = s.replace(/^(the\s+)?(holy\s+|great\s+|blessed\s+|honored\s+|righteous\s+)/i, '');
     s = s.replace(/^(sts?\.|saints?\b|pope\b|anba\b|abba\b|father\b|fr\.\b|prophet\b|archangel\b|righteous\b)\s*/i, '');
   }
-  s = s.replace(/^["'\u2018\u2019]/, '');
+  s = s.replace(/^["'\u2018\u2019]/, '').replace(/^the\s+/i, '');
   return s.trim();
 }
 
@@ -107,7 +106,7 @@ export function saintsByAlphabet(lang: AppLanguage): SaintLetterGroup[] {
 export const saintsStrings = {
   en: {
     title: 'Saints',
-    subtitle: 'The Synaxarium: every saint with a short story',
+    subtitle: 'The stories of the saints',
     today: 'Today',
     todayFeast: "Today's Feast",
     readStory: 'Read commemoration ›',
@@ -115,14 +114,13 @@ export const saintsStrings = {
     noResults: 'No saints found',
     alphabetical: 'All Saints (A–Z)',
     allLetters: 'All',
-    alsoToday: 'Also on this day',
     results: (n: number) => `${n} ${n === 1 ? 'saint' : 'saints'}`,
-    none: 'No commemoration for this day yet',
+    none: 'This saint was not found',
     clear: 'Clear',
   },
   ar: {
     title: 'القديسون',
-    subtitle: 'السنكسار: كل قديس مع قصة قصيرة',
+    subtitle: 'سير القديسين',
     today: 'اليوم',
     todayFeast: 'تذكار اليوم',
     readStory: 'اقرأ التذكار ‹',
@@ -130,9 +128,8 @@ export const saintsStrings = {
     noResults: 'لا يوجد قديسون بهذا البحث',
     alphabetical: 'جميع القديسين (أبجدياً)',
     allLetters: 'الكل',
-    alsoToday: 'وأيضاً في هذا اليوم',
     results: (n: number) => `${toArabicDigits(n)} ${n === 1 ? 'قديس' : 'قديسين'}`,
-    none: 'لا يوجد تذكار لهذا اليوم بعد',
+    none: 'لم يُعثر على هذا القديس',
     clear: 'مسح',
   },
 };

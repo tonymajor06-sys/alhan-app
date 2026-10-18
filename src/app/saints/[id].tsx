@@ -1,10 +1,10 @@
-import { router, useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams } from 'expo-router';
 import Head from 'expo-router/head';
-import { Pressable, Text, View } from 'react-native';
+import { Text } from 'react-native';
 
 import { createAlhanStyles, goBackOrHome, ScreenShell, strings } from '@/components/alhan-ui';
 import { formatGregorianDate } from '@/data/coptic-calendar';
-import { copticDayName, saintById, saintJdn, saints, saintsOn, saintsStrings } from '@/data/saints';
+import { copticDayName, saintById, saintJdn, saints, saintsStrings } from '@/data/saints';
 import { useThemedStyles } from '@/hooks/use-alhan-colors';
 import { useSettings } from '@/hooks/use-settings';
 import { useTodayJdn } from '@/hooks/use-today';
@@ -14,14 +14,13 @@ export async function generateStaticParams(): Promise<Record<string, string>[]> 
   return saints.map((s) => ({ id: s.id }));
 }
 
-// One saint's short story, with the other saints of the same day
+// One saint's story, with the day the Church remembers them
 export default function SaintPage() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { language: lang } = useSettings();
   const isRTL = lang === 'ar';
   const t = saintsStrings[lang];
   const styles = useThemedStyles(createAlhanStyles);
-  const rowDirection = isRTL ? styles.rowReverse : styles.row;
   const textAlign = isRTL ? styles.alignRight : styles.alignLeft;
   const today = useTodayJdn();
   const saint = id ? saintById(id) : undefined;
@@ -35,7 +34,6 @@ export default function SaintPage() {
   }
 
   const date = `${copticDayName(saint.month, saint.day, lang)} · ${formatGregorianDate(saintJdn(saint.month, saint.day, today), lang)}`;
-  const others = saintsOn(saint.month, saint.day).filter((s) => s.id !== saint.id);
 
   return (
     <ScreenShell lang={lang} title={saint.name[lang]} subtitle={date} onBack={goBackOrHome}>
@@ -50,30 +48,6 @@ export default function SaintPage() {
         </Text>
       ))}
 
-      {others.length ? (
-        <>
-          <View style={[styles.sectionHeader, rowDirection, { marginTop: 20, marginBottom: 8 }]}>
-            <Text style={styles.sectionHeaderText}>{t.alsoToday}</Text>
-            <View style={styles.sectionLine} />
-          </View>
-          <View style={styles.listGroup}>
-            {others.map((other, i) => (
-              <View key={other.id}>
-                {i > 0 ? <View style={styles.listDivider} /> : null}
-                <Pressable
-                  onPress={() => router.replace({ pathname: '/saints/[id]', params: { id: other.id } })}
-                  accessibilityRole="button"
-                  style={({ pressed }) => [styles.listRow, rowDirection, pressed && styles.listRowPressed]}>
-                  <View style={styles.rowTextWrap}>
-                    <Text style={[styles.listTitle, textAlign]}>{other.name[lang]}</Text>
-                  </View>
-                  <Text style={styles.listChevron}>{isRTL ? '‹' : '›'}</Text>
-                </Pressable>
-              </View>
-            ))}
-          </View>
-        </>
-      ) : null}
     </ScreenShell>
   );
 }
