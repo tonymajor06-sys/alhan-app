@@ -1,4 +1,4 @@
-import { seasons, flattenHymns, Hymn } from '../hymns';
+import { seasons, deaconCategories, flattenHymns, Hymn } from '../hymns';
 import { arsaniAudio } from '../arsani-audio';
 
 describe('Sunday Theotokia Audio Recordings', () => {
@@ -124,3 +124,71 @@ describe('Sunday Theotokia Audio Recordings', () => {
     expect(evlogimenosCoptic?.otherAudio).toContain('arsani-114-evlogimenos.m4a');
   });
 });
+
+describe('Divine Liturgy Audio and Bishop Updates', () => {
+  const annualLiturgy = seasons.find((s) => s.id === 'annual')?.services.find((s) => s.id === 'annual-liturgy');
+
+  test('Taishori in Annual Liturgy has only single recording and no second audio', () => {
+    const taishori = annualLiturgy?.hymns.find((h) => h.id === 'annual-liturgy-offering-golden-censer');
+    expect(taishori).toBeDefined();
+    const coptic = taishori?.versions.find((v) => v.language === 'coptic');
+    expect(coptic?.audio).toBe('liturgy-taishori.m4a');
+    expect(coptic?.otherAudio).toBeUndefined();
+  });
+
+  test('In the Presence of a Bishop section header and Taishori + Hitens hymn exist in Annual Liturgy', () => {
+    const header = annualLiturgy?.hymns.find((h) => h.id === 'annual-liturgy-bishop-header');
+    expect(header).toBeDefined();
+    expect(header?.isSectionHeader).toBe(true);
+    expect(header?.title).toBe('In the Presence of a Bishop');
+
+    const bishopHymn = annualLiturgy?.hymns.find((h) => h.id === 'annual-liturgy-taishori-hitens-bishop');
+    expect(bishopHymn).toBeDefined();
+    expect(bishopHymn?.title).toBe('Ⲧⲁⲓϣⲟⲩⲣⲏ ⲛⲉⲙ Ϩⲓⲧⲉⲛ (Taishori and Hitens)');
+
+    const coptic = bishopHymn?.versions.find((v) => v.language === 'coptic');
+    expect(coptic?.audio).toBe('arsani-030-taishori-hymn-of-intercessions.m4a');
+    expect(coptic?.text).toContain('Ⲧⲁⲓϣⲟⲩⲣⲏ');
+    expect(coptic?.text).toContain('Ϩⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ');
+
+    const english = bishopHymn?.versions.find((v) => v.language === 'english');
+    expect(english?.text).toContain('This is the censer of pure gold');
+    expect(english?.text).toContain('Through the intercessions');
+  });
+
+  test('Standard Adam Aspasmos audio recordings are assigned', () => {
+    const aspasmosAdam1 = annualLiturgy?.hymns.find((h) => h.id === 'annual-liturgy-aspasmos-adam');
+    expect(aspasmosAdam1?.versions.find((v) => v.language === 'coptic')?.audio).toBe('arsani-aspasmos-adam-onof-emmo.m4a');
+
+    const aspasmosAdam3 = annualLiturgy?.hymns.find((h) => h.id === 'annual-liturgy-aspasmos-adam-3');
+    expect(aspasmosAdam3?.versions.find((v) => v.language === 'coptic')?.audio).toBe('arsani-aspasmos-adam-o-christ-our-savior.m4a');
+  });
+
+  test('Before Confession has trimmed text ending at "And with your spirit" and English audio', () => {
+    const allHymns = [...seasons, ...deaconCategories].flatMap((g) => g.services.flatMap((s) => flattenHymns(s.hymns)));
+    const beforeConfession = allHymns.find((h) => h.id === 'd-annual-liturgy-faithful-in-christ-jesus-our-lord');
+    expect(beforeConfession).toBeDefined();
+
+    const english = beforeConfession?.versions.find((v) => v.language === 'english');
+    expect(english?.audio).toBe('liturgy-before-confession-english.m4a');
+    expect(english?.text).toMatch(/And with your spirit\.\s*$/);
+    expect(english?.text).not.toContain('One is the All-Holy Father');
+
+    const coptic = beforeConfession?.versions.find((v) => v.language === 'coptic');
+    expect(coptic?.text).toMatch(/Ⲕⲉ ⲧⲱ ⲡ̀ⲛⲉⲩⲙⲁⲧⲓ ⲥⲟⲩ\.\s*$/);
+
+    const arabic = beforeConfession?.versions.find((v) => v.language === 'arabic');
+    expect(arabic?.text).toMatch(/ولروحِكَ أيضاً\.\s*$/);
+  });
+
+  test('Duplicate alleluia ID does not exist in any service', () => {
+    const allHymns = [...seasons, ...deaconCategories].flatMap((g) => g.services.flatMap((s) => flattenHymns(s.hymns)));
+    const dup = allHymns.filter((h) => h.id === 'annual-liturgy-alleluia-the-thought-of-man');
+    expect(dup).toHaveLength(0);
+
+    const canonical = allHymns.filter((h) => h.id.startsWith('annual-liturgy-offering-alleluia-thought-of-man'));
+    expect(canonical.length).toBeGreaterThan(0);
+    expect(canonical[0].versions.find((v) => v.language === 'coptic')?.audio).toBe('liturgy-je-fmevi.m4a');
+  });
+});
+

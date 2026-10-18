@@ -4152,11 +4152,26 @@ if (deaconAnnualLiturgyFaithful) {
       id: 'd-annual-liturgy-faithful-in-christ-jesus-our-lord',
       title: 'Ϧⲉⲛ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲉⲛϭⲟⲓⲥ (Before Confession)',
       versions: [
-        { language: 'coptic', text: 'Ⲡⲓⲗⲁⲟⲥ:\n\nϦⲉⲛ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲉⲛϭⲟⲓⲥ.\n\nⲠⲓⲇⲓⲁⲕⲱⲛ:\n\nⲦⲁⲥ ⲕⲉⲫⲁⲗⲁⲥ ⲩ̀ⲙⲱⲛ ⲧⲱ ⲕⲩⲣⲓⲱ ⲕ̀ⲗⲓⲛⲁⲧⲉ.\n\nⲠⲓⲗⲁⲟⲥ:\n\nⲈⲛⲱⲡⲓⲟⲛ ⲥⲟⲩ Ⲕⲩⲣⲓⲉ.\n\nⲠⲓⲇⲓⲁⲕⲱⲛ:\n\nⲠ̀ⲣⲟⲥⲭⲱⲙⲉⲛ Ⲑⲉⲟⲩ ⲙⲉⲧⲁ ⲫⲟⲃⲟⲩ: ⲁ̀ⲙⲏⲛ.\n\nⲠⲓⲟⲩⲏⲃ:\n\nⲒⲣⲏⲛⲏ ⲡⲁⲥⲓ.\n\nⲠⲓⲗⲁⲟⲥ:\n\nⲔⲉ ⲧⲱ ⲡ̀ⲛⲉⲩⲙⲁⲧⲓ ⲥⲟⲩ.\n\nⲠⲓⲇⲓⲁⲕⲱⲛ:\n\nⲤⲱⲑⲓⲥ ⲁ̀ⲙⲏⲛ: ⲕⲉ ⲧⲱ ⲡ̀ⲛⲉⲩⲙⲁⲧⲓ ⲥⲟⲩ: ⲙⲉⲧⲁ ⲫⲟⲃⲟⲩ Ⲑⲉⲟⲩ ⲡ̀ⲣⲟⲥⲭⲱⲙⲉⲛ.\n\nⲠⲓⲗⲁⲟⲥ:\n\nⲀ̀ⲙⲏⲛ: Ⲕⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ: Ⲕⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ: Ⲕⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ.\n\nⲠⲓⲟⲩⲏⲃ:\n\nⲦⲁ ⲁ̀ⲅⲓⲁ ⲧⲟⲓⲥ ⲁ̀ⲅⲓⲟⲓⲥ.\n\nⲠⲓⲗⲁⲟⲥ:\n\nⲒⲥ ⲟ̀ ⲡⲁⲛⲁⲅⲓⲟⲥ Ⲡⲁⲧⲏⲣ: Ⲓⲥ ⲟ̀ ⲡⲁⲛⲁⲅⲓⲟⲥ Ⲩ̀ⲓⲟⲥ: ⲉⲛ ⲧⲟ ⲡⲁⲛⲁⲅⲓⲟⲛ Ⲡ̀ⲛⲉⲩⲙⲁ: ⲁ̀ⲙⲏⲛ.' },
-        { language: 'englishCoptic', text: 'Pi-laos:\n\nKhen Pi-ekhristos Iēsous Pentshois.\n\nPi-diakon:\n\nTas kefalas umōn tō kuriō eklinate.\n\nPi-laos:\n\nEnōpion sou Kurie.\n\nPi-diakon:\n\nEproskhōmen Theou meta fovou: amēn.\n\nPi-ouib:\n\nIrēnē pasi.\n\nPi-laos:\n\nKe tō epneumati sou.\n\nPi-diakon:\n\nSōthis amēn: ke tō epneumati sou: meta fovou Theou eproskhōmen.\n\nPi-laos:\n\nAmēn: Kurie ele-ēson: Kurie ele-ēson: Kurie ele-ēson.\n\nPi-ouib:\n\nTa agia tois agiois.\n\nPi-laos:\n\nIs o panagios Patēr: Is o panagios Uios: en to panagion Epneuma: amēn.' },
-        { language: 'english', text: 'People:\n\nIn Christ Jesus our Lord.\n\nDeacon:\n\nBow your heads to the Lord.\n\nPeople:\n\nBefore You, O Lord.\n\nDeacon:\n\nLet us attend in the fear of God. Amen.\n\nPriest:\n\nPeace be with all.\n\nPeople:\n\nAnd with your spirit.\n\nDeacon:\n\nSaved. Amen. And with your spirit. In the fear of God, let us attend.\n\nPeople:\n\nAmen. Lord have mercy. Lord have mercy. Lord have mercy.\n\nPriest:\n\nThe holies for the holy.\n\nPeople:\n\nOne is the All-Holy Father, one is the All-Holy Son, one is the All-Holy Spirit. Amen.' },
-        { language: 'englishArabic', text: 'Esh-sha\'b:\n\nBil-Maseeh Yasou\' Rabbina.\n\nEsh-shammas:\n\nIhnou ru\'ousakum lir-Rabb.\n\nEsh-sha\'b:\n\nAmamak ya Rabb.\n\nEsh-shammas:\n\nAnsitou bi-khawf Allah. Ameen.\n\nEl-kahin:\n\nEs-salam lil-kull.\n\nEsh-sha\'b:\n\nWa li-rouhika aydan.\n\nEsh-shammas:\n\nKhalasta haqqan, wa ma\'a rouhika, nunsit bi-khawf Allah.\n\nEsh-sha\'b:\n\nAmeen. Ya Rabbu irham. Ya Rabbu irham. Ya Rabbu irham.\n\nEl-kahin:\n\nEl-qudsat lil-qiddiseen.\n\nEsh-sha\'b:\n\nWahid huwa el-Ab el-quddous, wahid huwa el-Ibn el-quddous, wahid huwa er-Rouh el-Qudus. Ameen.' },
-        { language: 'arabic', text: 'الشعب:\n\nبالمسيحِ يسوع ربنا.\n\nالشماس:\n\nإحنوا رؤوسَكم للربِ.\n\nالشعب:\n\nأمامك ياربُ.\n\nالشماس:\n\nأنصتوا بخوفِ الله. آمين.\n\nالكاهن:\n\nالسلامُ للكلِّ.\n\nالشعب:\n\nولروحِكَ أيضاً.\n\nالشماس:\n\nخلصت حقاً، ومع روحك، ننصت بخوف الله.\n\nالشعب:\n\nآمين. يا رب ارحم. يا رب ارحم. يا رب ارحم.\n\nالكاهن:\n\nالقدسات للقديسين.\n\nالشعب:\n\nواحد هو الآب القدوس. واحد هو الابن القدوس. واحد هو الروح القدس. آمين.' },
+        {
+          language: 'coptic',
+          text: 'Ⲡⲓⲗⲁⲟⲥ:\n\nϦⲉⲛ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲉⲛϭⲟⲓⲥ.\n\nⲠⲓⲇⲓⲁⲕⲱⲛ:\n\nⲦⲁⲥ ⲕⲉⲫⲁⲗⲁⲥ ⲩ̀ⲙⲱⲛ ⲧⲟⲩ Ⲕⲩⲣⲓⲱ ⲕ̀ⲗⲓⲛⲁⲧⲉ.\n\nⲠⲓⲗⲁⲟⲥ:\n\nⲈⲛⲱⲡⲓⲟⲛ ⲥⲟⲩ Ⲕⲩⲣⲓⲉ.\n\nⲠⲓⲇⲓⲁⲕⲱⲛ:\n\nⲠⲣⲟⲥⲭⲱⲙⲉⲛ Ⲑⲉⲟⲩ ⲙⲉⲧⲁ ⲫⲟⲃⲟⲩ: ⲁ̀ⲙⲏⲛ.\n\nⲠⲓⲟⲩⲏⲃ:\n\nⲒⲣⲏⲛⲏ ⲡⲁⲥⲓ.\n\nⲠⲓⲗⲁⲟⲥ:\n\nⲔⲉ ⲧⲱ ⲡ̀ⲛⲉⲩⲙⲁⲧⲓ ⲥⲟⲩ.',
+        },
+        {
+          language: 'englishCoptic',
+          text: 'Pi-laos:\n\nKhen Pi-ekhristos Iēsous Pentshois.\n\nPi-diakon:\n\nTas kefalas umōn tou Kuriō eklinate.\n\nPi-laos:\n\nEnōpion sou Kurie.\n\nPi-diakon:\n\nEproskhōmen Theou meta fovou: amēn.\n\nPi-ouib:\n\nIrēnē pasi.\n\nPi-laos:\n\nKe tō epneumati sou.',
+        },
+        {
+          language: 'english',
+          text: 'People:\n\nIn Christ Jesus our Lord.\n\nDeacon:\n\nBow your heads to the Lord.\n\nPeople:\n\nBefore You, O Lord.\n\nDeacon:\n\nLet us attend in the fear of God. Amen.\n\nPriest:\n\nPeace be with all.\n\nPeople:\n\nAnd with your spirit.',
+        },
+        {
+          language: 'englishArabic',
+          text: "Esh-sha'b:\n\nBil-Maseeh Yasou' Rabbina.\n\nEsh-shammas:\n\nIhnou ru'ousakum lir-Rabb.\n\nEsh-sha'b:\n\nAmamak ya Rabb.\n\nEsh-shammas:\n\nAnsitou bi-khawf Allah. Ameen.\n\nEl-kahin:\n\nEs-salam lil-kull.\n\nEsh-sha'b:\n\nWa li-rouhika aydan.",
+        },
+        {
+          language: 'arabic',
+          text: 'الشعب:\n\nبالمسيحِ يسوعَ ربِنا.\n\nالشماس:\n\nأحنوا رؤوسَكم للربِ.\n\nالشعب:\n\nأمامك ياربُ.\n\nالشماس:\n\nأنصتوا بخوفِ الله. آمين.\n\nالكاهن:\n\nالسلامُ للكلِّ.\n\nالشعب:\n\nولروحِكَ أيضاً.',
+        },
       ],
     },
     {
@@ -6291,6 +6306,28 @@ if (annualLiturgy) {
   }
 }
 
+// ---- Annual > Liturgy: In the Presence of a Bishop (Taishori and Hitens) ----
+if (annualLiturgy) {
+  const taishori = annualLiturgy.hymns.find((h) => h.id === 'annual-liturgy-offering-golden-censer');
+  const long = annualLiturgy.hymns.find((h) => h.id === 'annual-liturgy-hymn-of-intercessions');
+  const hitenIndex = annualLiturgy.hymns.findIndex((h) => h.id === 'annual-liturgy-hymn-of-intercessions');
+  if (taishori && long && hitenIndex >= 0) {
+    const combinedVersions = taishori.versions.map((tv) => {
+      const lv = long.versions.find((v) => v.language === tv.language);
+      return {
+        language: tv.language,
+        text: lv ? `${tv.text}\n\n${lv.text}` : tv.text,
+      };
+    });
+    annualLiturgy.hymns.splice(
+      hitenIndex + 1,
+      0,
+      { id: 'annual-liturgy-bishop-header', title: 'In the Presence of a Bishop', versions: [], isSectionHeader: true },
+      { id: 'annual-liturgy-taishori-hitens-bishop', title: 'Ⲧⲁⲓϣⲟⲩⲣⲏ ⲛⲉⲙ Ϩⲓⲧⲉⲛ (Taishori and Hitens)', versions: combinedVersions }
+    );
+  }
+}
+
 // ---- Audio: Annual > Liturgy ----
 for (const [id, audio] of [
   ['annual-liturgy-offering-golden-censer', 'liturgy-taishori.m4a'],
@@ -8164,7 +8201,9 @@ addArabicEnglish([...seasons, ...deaconCategories]);
 // instead of being a hymn of its own. The In Presence of Bishop / Patriarch lists keep theirs as they are.
 // Runs after the Arabic letters are added, so the folded text has them too.
 const isBishopAddition = (hymn: Hymn) =>
-  /(presence of the Pope or a Bishop|for the Pope or a Bishop)/i.test(hymn.title) && !/Thanksgiving|Introduction to the Coptic Gospel/.test(hymn.title);
+  !hymn.isSectionHeader &&
+  /(presence of the Pope or a Bishop|for the Pope or a Bishop)/i.test(hymn.title) &&
+  !/Thanksgiving|Introduction to the Coptic Gospel|Taishori and Hitens/.test(hymn.title);
 const foldBishop = (list: Hymn[]): Hymn[] =>
   list.reduce<Hymn[]>((kept, hymn) => {
     const previous = kept[kept.length - 1];

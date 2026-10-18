@@ -66,8 +66,8 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   { file: "arsani-028-st-abraam-s.m4a", hymns: ["kiahk-midnight-hymn-59"], language: "coptic" },
   // Aripsalin-Joe Seif and Deacons from the Diocese of Los Angeles (Live) - Kiahk tune
   { file: "arsani-029-aripsalin-joe-seif-s-from-diocese-of-los-angeles-l.m4a", hymns: ["kiahk-midnight-hymn-17"], language: "coptic" },
-  // Ⲧⲁⲓϣⲟⲩⲣⲏ + Ϩⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ̀ ┃ Taishori + Hymn of the Intercessions - Arsani Sidarous
-  { file: "arsani-030-taishori-hymn-of-intercessions.m4a", hymns: ["annual-liturgy-offering-golden-censer"], language: "coptic" },
+  // Ⲧⲁⲓϣⲟⲩⲣⲏ + Ϩⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ̀ ┃ Taishori + Hymn of the Intercessions (In Presence of Bishop) - Arsani Sidarous
+  { file: "arsani-030-taishori-hymn-of-intercessions.m4a", hymns: ["annual-liturgy-taishori-hitens-bishop"], language: "coptic" },
   // Afrek Etfe (Hymn of the Ascension) - Arsani Sidarous
   { file: "arsani-031-afrek-etfe-hymn-of-ascension.m4a", hymns: ["pentecost-liturgy-he-bowed-heaven"], language: "coptic" },
   // Annual Psalm 150 - Arsani Sidarous
@@ -387,4 +387,10 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   { file: "arsani-yt-st-george-tamgeed.m4a", hymns: ["annual-matins-doxology-st-george", "annual-vespers-doxology-st-george", "annual-midnight-doxology-st-george"], language: "arabic" },
   // St Mercurius Glorification
   { file: "arsani-yt-st-mercurius-tamgeed.m4a", hymns: ["annual-matins-doxology-philopater-mercurius", "annual-vespers-doxology-philopater-mercurius", "annual-midnight-doxology-philopater-mercurius"], language: "arabic" },
+  // A Third Standard Adam Aspasmos (O Christ Our Savior)
+  { file: "arsani-aspasmos-adam-o-christ-our-savior.m4a", hymns: ["annual-liturgy-aspasmos-adam-3"], language: "coptic" },
+  // Standard Adam Aspasmos (Rejoice O Mary / Onof Emmo Maria)
+  { file: "arsani-aspasmos-adam-onof-emmo.m4a", hymns: ["annual-liturgy-aspasmos-adam"], language: "coptic" },
+  // Before Confession (English)
+  { file: "liturgy-before-confession-english.m4a", hymns: ["d-annual-liturgy-faithful-in-christ-jesus-our-lord"], language: "english" },
 ];

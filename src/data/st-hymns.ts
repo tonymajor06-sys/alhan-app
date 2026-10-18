@@ -77,23 +77,6 @@ export const stAdditions: StAddition[] = [
     season: "annual",
     service: "annual-liturgy",
     serviceTitle: "Liturgy",
-    after: "annual-liturgy-offering-the-time-has-come",
-    hymn: {
-      id: "annual-liturgy-alleluia-the-thought-of-man",
-      title: "Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ ϫⲉ ⲫ̀ⲙⲉⲩⲓ̀ (Alleluia The Thought of Man)",
-      versions: [
-        { language: 'coptic', text: "Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ: ϫⲉ ⲫ̀ⲙⲉⲩⲓ̀ ⲛ̀ⲟⲩⲣⲱⲙⲓ ⲉϥⲉ̀ⲟⲩⲱⲛϩ ⲛⲁⲕ ⲉ̀ⲃⲟⲗ Ⲡϭⲟⲓⲥ: ⲟⲩⲟϩ ⲡ̀ⲥⲱϫⲡ ⲛ̀ⲧⲉ ⲟⲩⲙⲉⲩⲓ̀ ⲉϥⲉ̀ⲉⲣϣⲁⲓ ⲛⲁⲕ. Ⲛⲓⲑⲩⲥⲓⲁ̀ ⲛⲓⲡ̀ⲣⲟⲥⲫⲟⲣⲁ ϣⲟⲡⲟⲩ ⲉ̀ⲣⲟⲕ: ⲁⲗⲗⲏⲗⲟⲩⲓⲁ̀." },
-        { language: 'englishCoptic', text: "Allēlouia: je efmeu-i enourōmi efeouōnh nak evol Ptshois: ouoh epsōjp ente oumeu-i efeershai nak. Nithusi-a ni-eprosfora shopou erok: allēloui-a." },
-        { language: 'english', text: "Alleluia. The thought of man shall confess You, O Lord, and the remainder of thought shall keep a feast to You. The sacrifices and the offerings, receive them to Yourself. Alleluia." },
-        { language: 'arabic', text: "هلليلويا. إن فِكْرَ الإنسانِ يعترفُ لكَ ياربُ . وبقية الفكرِ تُعيّدُ لكَ. الذبائح والقرابين اقبلها إليك. هلليلويا." },
-        { language: 'englishArabic', text: "Hallelouia. Inna fikr el-insan ya'tarifu laka ya Rabb, wa baqiyyat el-fikr tu'ayyidu lak. Edh-dhaba'ih wal-qarabeen iqbalha ilayk. Hallelouia." },
-      ],
-    },
-  },
-  {
-    season: "annual",
-    service: "annual-liturgy",
-    serviceTitle: "Liturgy",
     after: "annual-liturgy-aspasmos-adam-3",
     hymn: {
       id: "annual-liturgy-great-greet-one-another",
