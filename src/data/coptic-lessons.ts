@@ -308,7 +308,6 @@ export const copticMoreWords: CopticWord[] = [
   { coptic: "ϩ̀ⲃⲏⲟⲩⲓ", sound: "ehvēoui", meaning: { en: "works, deeds", ar: "أعمال" } },
   { coptic: "ⲇⲓⲕⲉⲟ̀ⲥⲩⲛⲏ", sound: "dikeosunē", meaning: { en: "righteousness", ar: "بر" } },
   { coptic: "ⲡⲁⲣⲁⲡⲧⲱⲙⲁ", sound: "paraptōma", meaning: { en: "trespass", ar: "زلة" } },
-  { coptic: "ⲑⲗⲓⲯⲓⲥ", sound: "thlipsis", meaning: { en: "tribulation", ar: "ضيقة" } },
   { coptic: "ⲟⲩϫⲁⲓ", sound: "oujai", meaning: { en: "salvation, health", ar: "خلاص، صحة" } },
   { coptic: "ⲁ̀ⲙⲁϩⲓ", sound: "amahi", meaning: { en: "authority", ar: "سلطان" } },
   { coptic: "ⲧⲁⲓⲟ", sound: "taio", meaning: { en: "honor", ar: "كرامة" } },

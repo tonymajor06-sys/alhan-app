@@ -68,7 +68,6 @@ export const kiahkWeekdayOrder: Record<number, string[]> = {
     "kiahk-midnight-hymn-77",
     "palmsunday-vespers-introduction-to-the-creed",
     "kiahk-midnight-hymn-79",
-    "kiahk-midnight-holy-holy-holy",
     "kiahk-vespers-hymn-17",
   ],
   2: [
@@ -135,7 +134,6 @@ export const kiahkWeekdayOrder: Record<number, string[]> = {
     "kiahk-midnight-hymn-77",
     "palmsunday-vespers-introduction-to-the-creed",
     "kiahk-midnight-hymn-79",
-    "kiahk-midnight-holy-holy-holy",
     "kiahk-vespers-hymn-17",
   ],
   3: [
@@ -203,7 +201,6 @@ export const kiahkWeekdayOrder: Record<number, string[]> = {
     "kiahk-midnight-exposition-on-our-lord-jesus-christ",
     "palmsunday-vespers-introduction-to-the-creed",
     "kiahk-midnight-hymn-79",
-    "kiahk-midnight-holy-holy-holy",
     "kiahk-vespers-hymn-17",
   ],
   4: [
@@ -272,7 +269,6 @@ export const kiahkWeekdayOrder: Record<number, string[]> = {
     "kiahk-midnight-exposition-on-our-lord-jesus-christ",
     "palmsunday-vespers-introduction-to-the-creed",
     "kiahk-midnight-hymn-79",
-    "kiahk-midnight-holy-holy-holy",
     "kiahk-vespers-hymn-17",
   ],
   5: [
@@ -339,7 +335,6 @@ export const kiahkWeekdayOrder: Record<number, string[]> = {
     "kiahk-midnight-exposition-on-our-lord-jesus-christ",
     "palmsunday-vespers-introduction-to-the-creed",
     "kiahk-midnight-hymn-79",
-    "kiahk-midnight-holy-holy-holy",
     "kiahk-vespers-hymn-17",
   ],
   6: [
@@ -415,7 +410,6 @@ export const kiahkWeekdayOrder: Record<number, string[]> = {
     "kiahk-midnight-exposition-on-our-lord-jesus-christ",
     "palmsunday-vespers-introduction-to-the-creed",
     "kiahk-midnight-hymn-79",
-    "kiahk-midnight-holy-holy-holy",
     "kiahk-vespers-hymn-17",
   ],
 };

@@ -287,8 +287,6 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   { file: "arsani-204-tenthinou.m4a", hymns: ["annual-midnight-arise-o-children"], language: "coptic" },
   // Evlogimenos (Blessed is He) - Primary: score 83.20
   { file: "arsani-236-evlogimenos.m4a", hymns: ["palmsunday-distribution-the-hymn-of-palm-sunday", "palmsunday-liturgy-evlogymenos", "annual-vespers-blessed-is-he"], language: "coptic" },
-  // Palm Sunday Distribution - YouTube (Secondary: score 61.29)
-  { file: "arsani-yt-palm-sunday-distribution.m4a", hymns: ["palmsunday-distribution-the-hymn-of-palm-sunday", "palmsunday-liturgy-evlogymenos", "annual-vespers-blessed-is-he"], language: "coptic" },
   // Evlogimenos - Tertiary: score 43.42
   { file: "arsani-114-evlogimenos.m4a", hymns: ["palmsunday-distribution-the-hymn-of-palm-sunday", "palmsunday-liturgy-evlogymenos", "annual-vespers-blessed-is-he"], language: "coptic" },
   // The Great Azpazesthe (Quick Tune)
