@@ -1,9 +1,9 @@
 import { ReactNode } from 'react';
-import { Image, ImageSourcePropType, Pressable, Text, View } from 'react-native';
+import { Image, ImageSourcePropType, Platform, Pressable, Text, View } from 'react-native';
 import Animated, { FadeIn } from 'react-native-reanimated';
 
 import { createAlhanStyles, strings, withCopticFont } from './alhan-ui';
-import { tapFeedback } from './haptics';
+import { pressFeedback, tapFeedback } from './haptics';
 import { displayTitle } from '../data/arabic-titles';
 import { titleLines } from '../data/hymn-titles';
 import { toArabicDigits } from '../data/coptic-calendar';
@@ -97,6 +97,7 @@ export function SectionHeader({ title }: { title: string }) {
 export function ListRow({
   title,
   onPress,
+  onLongPress,
   lead,
   image,
   sub,
@@ -105,6 +106,7 @@ export function ListRow({
 }: {
   title: string;
   onPress: () => void;
+  onLongPress?: () => void;
   lead?: string;
   image?: ImageSourcePropType;
   sub?: string | null;
@@ -118,6 +120,23 @@ export function ListRow({
         tapFeedback();
         onPress();
       }}
+      onLongPress={
+        onLongPress
+          ? () => {
+              pressFeedback();
+              onLongPress();
+            }
+          : undefined
+      }
+      {...(Platform.OS === 'web' && onLongPress
+        ? {
+            onContextMenu: (e: any) => {
+              e.preventDefault?.();
+              pressFeedback();
+              onLongPress();
+            },
+          }
+        : {})}
       accessibilityRole="button"
       accessibilityLabel={[title, coptic, sub, audio ? t.hasAudio : null].filter(Boolean).join(', ')}
       style={({ pressed }) => [styles.listRow, rowDirection, pressed && styles.listRowPressed]}>
@@ -160,10 +179,14 @@ export function HymnList({
   hymns,
   onOpenHymn,
   onOpenGroup,
+  onLongPressHymn,
+  onLongPressGroup,
 }: {
   hymns: Hymn[];
   onOpenHymn: (hymn: Hymn) => void;
   onOpenGroup: (group: Hymn) => void;
+  onLongPressHymn?: (hymn: Hymn) => void;
+  onLongPressGroup?: (group: Hymn) => void;
 }) {
   const settings = useSettings();
   const { lang, isRTL, t } = useDirection();
@@ -190,6 +213,15 @@ export function HymnList({
         key={hymn.id}
         title={main}
         onPress={() => (hymn.children ? onOpenGroup(hymn) : onOpenHymn(hymn))}
+        onLongPress={
+          hymn.children
+            ? onLongPressGroup
+              ? () => onLongPressGroup(hymn)
+              : undefined
+            : onLongPressHymn
+              ? () => onLongPressHymn(hymn)
+              : undefined
+        }
         lead={localDigits(number, isRTL)}
         coptic={coptic}
         sub={hymn.children ? t.groupCount(inside.length) : null}

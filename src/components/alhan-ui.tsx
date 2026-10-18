@@ -1327,6 +1327,26 @@ export const createAlhanStyles = (colors: AlhanPalette) => StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  followOrderButton: {
+    minHeight: 48,
+    borderRadius: 14,
+    backgroundColor: colors.gold,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 16,
+    marginBottom: 14,
+  },
+  followOrderButtonText: {
+    fontSize: 16,
+    fontWeight: '800',
+    color: colors.onGold,
+  },
+  praiseHintText: {
+    fontSize: 13,
+    color: colors.muted,
+    textAlign: 'center',
+    marginBottom: 12,
+  },
 
   // Mini player
   miniPlayer: {

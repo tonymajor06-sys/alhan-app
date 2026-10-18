@@ -1,4 +1,4 @@
-import { followAlong, doxologyGroupId } from '../follow-along';
+import { followAlong, doxologyGroupId, praiseJdnFor, weekdayOf } from '../follow-along';
 import { gregorianToJdn } from '../coptic-calendar';
 
 describe('follow-along praise service builder', () => {
@@ -33,5 +33,24 @@ describe('follow-along praise service builder', () => {
     for (const h of plan.hymns) {
       expect(h.versions.length).toBeGreaterThan(0);
     }
+  });
+
+  it('resolves correct weekday jdn using praiseJdnFor', () => {
+    const wednesdayJdn = gregorianToJdn(2026, 10, 14);
+    // Sunday group:
+    const sundayGroup = { id: 'annual-midnight-sunday', title: 'Sunday', versions: [] };
+    const sundayTarget = praiseJdnFor(sundayGroup, undefined, wednesdayJdn);
+    expect(weekdayOf(sundayTarget)).toBe(0); // 0 = Sunday
+
+    // Friday group:
+    const fridayGroup = { id: 'annual-vesper-praises-friday', title: 'Friday', versions: [] };
+    const fridayTarget = praiseJdnFor(fridayGroup, undefined, wednesdayJdn);
+    expect(weekdayOf(fridayTarget)).toBe(5); // 5 = Friday
+
+    // Item inside Tuesday group:
+    const item = { id: 'annual-midnight-tuesday-theotokia-part-1', title: 'Part 1', versions: [] };
+    const tuesdayGroup = { id: 'annual-midnight-tuesday', title: 'Tuesday', versions: [] };
+    const tuesdayTarget = praiseJdnFor(item, tuesdayGroup, wednesdayJdn);
+    expect(weekdayOf(tuesdayTarget)).toBe(2); // 2 = Tuesday
   });
 });

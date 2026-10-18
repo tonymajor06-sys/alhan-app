@@ -17,7 +17,7 @@ export const weekdayNames: Record<AppLanguage, string[]> = {
   en: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
   ar: ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'],
 };
-const weekdayIds = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+export const weekdayIds = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
 const anyWeekday = /\b(Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday)\b/;
 
 // JDN 0 was a Monday, so (jdn + 1) % 7 gives 0 = Sunday
@@ -31,6 +31,18 @@ export function tonightJdn(now = new Date()): number {
 
 // The next day from `from` that falls on `weekday`
 export const nextWeekday = (from: number, weekday: number) => from + ((weekday - weekdayOf(from) + 7) % 7);
+
+// Resolves the liturgical date (JDN) for a praise item or group in Midnight or Vesper Praises
+export function praiseJdnFor(item: Hymn, parentGroup?: Hymn, baseJdn = tonightJdn()): number {
+  const text = `${parentGroup?.id ?? ''} ${parentGroup?.title ?? ''} ${item.id} ${item.title}`.toLowerCase();
+  for (let w = 0; w < 7; w++) {
+    const day = weekdayIds[w];
+    if (text.includes(`-${day}`) || text.includes(` ${day}`)) {
+      return nextWeekday(baseJdn, w);
+    }
+  }
+  return baseJdn;
+}
 
 export interface FollowSection {
   key: 'praises' | 'day' | 'conclusion';
