@@ -1,5 +1,6 @@
 import { deaconCategories, flattenHymns, Hymn, seasons } from './hymns';
 import { copticVocabulary } from './coptic-vocabulary';
+import { grammarQuizEntries } from './coptic-grammar';
 import { bothWays, buildLevels, LevelText, makeQuestion, QuizEntry, QuizLevel, shuffle } from './quiz';
 
 // Lessons for reading Coptic as it is sung in church (the same pronunciation as the app's transliterations)
@@ -412,8 +413,8 @@ const copticEntries = (list: CopticWord[], lang: 'en' | 'ar'): QuizEntry[] =>
   list.map((w) => ({ foreign: w.coptic, meaning: w.meaning[lang] }));
 
 // Six levels, from naming letters up to putting whole lines from the hymns back in order,
-// then the everyday phrases, a level for each vocabulary topic, and a review of all of them
-export function copticQuizLevels(lang: 'en' | 'ar', text: LevelText[], everyday?: LevelText, review?: LevelText): QuizLevel[] {
+// then the grammar, the everyday phrases, a level for each vocabulary topic, and a review of all of them
+export function copticQuizLevels(lang: 'en' | 'ar', text: LevelText[], everyday?: LevelText, review?: LevelText, grammar?: LevelText): QuizLevel[] {
   const letterNames = copticAlphabet.map((l) => l.name);
   const levels = buildLevels('coptic', text, {
     letters: (count, random) =>
@@ -438,6 +439,7 @@ export function copticQuizLevels(lang: 'en' | 'ar', text: LevelText[], everyday?
   const everything = copticEntries(copticVocabulary.flatMap((t) => t.words), lang);
   return [
     ...levels,
+    ...(grammar ? [{ id: 'coptic-level-grammar', ...grammar, build: (random = Math.random) => bothWays(copticEntries(grammarQuizEntries(), lang), 10, random) }] : []),
     { id: 'coptic-level-everyday', ...everyday, build: (random = Math.random) => bothWays(phrases, 10, random) },
     ...topics,
     ...(review ? [{ id: 'coptic-vocabulary-review', ...review, build: (random = Math.random) => bothWays(everything, 20, random) }] : []),

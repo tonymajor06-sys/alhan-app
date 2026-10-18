@@ -1,8 +1,8 @@
 // Text for the Learn Coptic screens, in both app languages
 
-export type LessonId = 'alphabet' | 'reading' | 'words' | 'vocabulary' | 'speaking' | 'quiz' | 'practice';
+export type LessonId = 'alphabet' | 'reading' | 'words' | 'vocabulary' | 'grammar' | 'speaking' | 'conversation' | 'quiz' | 'practice';
 
-export const lessonIds: LessonId[] = ['alphabet', 'reading', 'words', 'vocabulary', 'speaking', 'quiz', 'practice'];
+export const lessonIds: LessonId[] = ['alphabet', 'reading', 'words', 'vocabulary', 'grammar', 'speaking', 'conversation', 'quiz', 'practice'];
 
 export const learnStrings = {
   en: {
@@ -13,8 +13,10 @@ export const learnStrings = {
       reading: { title: 'Reading Rules', desc: 'The jinkim, ⲟⲩ, Ϯ and shortened names' },
       words: { title: 'Words from the Hymns', desc: 'The words you will hear most in church' },
       vocabulary: { title: 'Coptic Vocabulary', desc: 'Faith, the devil and Hades, family, the body, animals, numbers, names and more' },
+      grammar: { title: 'Grammar', desc: 'Pronouns, my and your, present, past and future, questions and more' },
       speaking: { title: 'Speak Coptic', desc: 'Good morning, good night, thank you, happy birthday and more' },
-      quiz: { title: 'Quiz', desc: 'Over 20 quizzes, from letters to every topic of vocabulary' },
+      conversation: { title: 'Conversations', desc: 'Short dialogues to read aloud with a friend' },
+      quiz: { title: 'Quiz', desc: 'Over 20 quizzes, from letters and grammar to every topic of vocabulary' },
       practice: { title: 'Read a Verse', desc: 'Real verses from the hymns in this app' },
     } as Record<LessonId, { title: string; desc: string }>,
     tapLetter: 'Tap a letter to see how it sounds',
@@ -44,6 +46,8 @@ export const learnStrings = {
       { title: 'Challenge', desc: 'A bit of everything' },
     ],
     everydayLevel: { title: 'Speak Coptic', desc: 'Greetings and wishes for every day' },
+    grammarLevel: { title: 'Grammar', desc: 'What do these forms mean?' },
+    chooseLesson: 'Choose a lesson',
     reviewLevel: { title: 'Vocabulary Review', desc: 'Twenty words from every topic' },
     chooseTopic: 'Choose a topic',
     wordsCount: (n: string) => `${n} words`,
@@ -71,8 +75,10 @@ export const learnStrings = {
       reading: { title: 'قواعد القراءة', desc: 'الجنكم و ⲟⲩ و Ϯ والأسماء المختصرة' },
       words: { title: 'كلمات من الألحان', desc: 'أكثر الكلمات التي تسمعها في الكنيسة' },
       vocabulary: { title: 'مفردات قبطية', desc: 'الإيمان، الشيطان والجحيم، العائلة، الجسد، الحيوانات، الأعداد، الأسماء والمزيد' },
+      grammar: { title: 'القواعد', desc: 'الضمائر، الملكية، المضارع والماضي والمستقبل، الأسئلة والمزيد' },
       speaking: { title: 'تكلم قبطي', desc: 'صباح الخير، تصبح على خير، شكراً، عيد ميلاد سعيد والمزيد' },
-      quiz: { title: 'اختبار', desc: 'أكثر من ٢٠ اختباراً، من الحروف إلى كل موضوع من المفردات' },
+      conversation: { title: 'محادثات', desc: 'حوارات قصيرة تقرأها بصوت عالٍ مع صديق' },
+      quiz: { title: 'اختبار', desc: 'أكثر من ٢٠ اختباراً، من الحروف والقواعد إلى كل موضوع من المفردات' },
       practice: { title: 'اقرأ ربعاً', desc: 'أرباع حقيقية من ألحان التطبيق' },
     } as Record<LessonId, { title: string; desc: string }>,
     tapLetter: 'اضغط على حرف لترى نطقه',
@@ -102,6 +108,8 @@ export const learnStrings = {
       { title: 'تحدٍّ', desc: 'قليل من كل شيء' },
     ],
     everydayLevel: { title: 'تكلم قبطي', desc: 'تحيات وتهاني لكل يوم' },
+    grammarLevel: { title: 'القواعد', desc: 'ما معنى هذه الصيغ؟' },
+    chooseLesson: 'اختر درساً',
     reviewLevel: { title: 'مراجعة المفردات', desc: 'عشرون كلمة من كل المواضيع' },
     chooseTopic: 'اختر موضوعاً',
     wordsCount: (n: string) => `${n} كلمة`,

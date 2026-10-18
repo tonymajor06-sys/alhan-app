@@ -1,5 +1,5 @@
 import { Redirect, useLocalSearchParams } from 'expo-router';
-import { useMemo, useState } from 'react';
+import { ReactNode, useMemo, useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
 import { copticFont, goBackOrHome, openHymnPage, ScreenShell, withCopticFont } from '@/components/alhan-ui';
@@ -16,9 +16,11 @@ import {
   CopticWord,
   copticWords,
   getPracticeVerses,
+  ReadingRule,
   readingRules,
 } from '@/data/coptic-lessons';
 import { toArabicDigits } from '@/data/coptic-calendar';
+import { copticConversations, copticGrammar } from '@/data/coptic-grammar';
 import { copticVocabulary } from '@/data/coptic-vocabulary';
 import { AppLanguage, useSettings } from '@/hooks/use-settings';
 
@@ -40,10 +42,12 @@ export default function LessonScreen() {
   return (
     <ScreenShell lang={lang} title={t.lessons[id].title} subtitle={t.lessons[id].desc} onBack={goBackOrHome}>
       {id === 'alphabet' ? <Alphabet lang={lang} /> : null}
-      {id === 'reading' ? <ReadingRules lang={lang} /> : null}
+      {id === 'reading' ? <ReadingRules lang={lang} rules={readingRules} /> : null}
       {id === 'words' ? <Words lang={lang} words={hymnWords} /> : null}
       {id === 'vocabulary' ? <Vocabulary lang={lang} /> : null}
+      {id === 'grammar' ? <Grammar lang={lang} /> : null}
       {id === 'speaking' ? <Words lang={lang} words={copticEverydayPhrases} /> : null}
+      {id === 'conversation' ? <Conversations lang={lang} /> : null}
       {id === 'quiz' ? <Quiz lang={lang} /> : null}
       {id === 'practice' ? <Practice lang={lang} /> : null}
     </ScreenShell>
@@ -104,11 +108,11 @@ function Alphabet({ lang }: LessonProps) {
   );
 }
 
-function ReadingRules({ lang }: LessonProps) {
+function ReadingRules({ lang, rules }: LessonProps & { rules: ReadingRule[] }) {
   const { styles, textAlign } = useLessonStyles(lang);
   return (
     <>
-      {readingRules.map((rule) => (
+      {rules.map((rule) => (
         <View key={rule.title.en} style={styles.card}>
           <Text style={[styles.cardTitle, textAlign]}>{rule.title[lang]}</Text>
           <Text style={[styles.body, textAlign]}>{rule.body[lang]}</Text>
@@ -207,9 +211,71 @@ function Vocabulary({ lang }: LessonProps) {
   );
 }
 
+// A list of lessons (grammar units or conversations): pick one to open it, with a button back to the list
+function Chooser({
+  lang,
+  items,
+  back,
+  render,
+}: LessonProps & { items: { id: string; title: string; desc: string }[]; back: string; render: (index: number) => ReactNode }) {
+  const rtl = lang === 'ar';
+  const { shared, textAlign } = useLessonStyles(lang);
+  const [open, setOpen] = useState<number | null>(null);
+  if (open === null) {
+    return (
+      <MenuList
+        rtl={rtl}
+        items={items.map((item, i) => ({
+          key: item.id,
+          lead: rtl ? toArabicDigits(i + 1) : String(i + 1),
+          title: item.title,
+          desc: item.desc,
+          onPress: () => setOpen(i),
+        }))}
+      />
+    );
+  }
+  return (
+    <>
+      <Pressable
+        onPress={() => setOpen(null)}
+        accessibilityRole="button"
+        style={({ pressed }) => [shared.controlButton, { alignSelf: rtl ? 'flex-end' : 'flex-start', marginBottom: 12, paddingHorizontal: 16 }, pressed && shared.pressed]}>
+        <Text style={shared.controlText}>{rtl ? `${back} ›` : `‹ ${back}`}</Text>
+      </Pressable>
+      <Text style={[shared.subtitle, textAlign]}>{items[open].title}</Text>
+      {render(open)}
+    </>
+  );
+}
+
+// Grammar, unit by unit: each rule with examples from the hymns
+function Grammar({ lang }: LessonProps) {
+  return (
+    <Chooser
+      lang={lang}
+      back={learnStrings[lang].chooseLesson}
+      items={copticGrammar.map((u) => ({ id: u.id, title: u.title[lang], desc: u.desc[lang] }))}
+      render={(i) => <ReadingRules key={copticGrammar[i].id} lang={lang} rules={copticGrammar[i].rules} />}
+    />
+  );
+}
+
+// Short dialogues, line by line, with meanings that can be hidden
+function Conversations({ lang }: LessonProps) {
+  return (
+    <Chooser
+      lang={lang}
+      back={learnStrings[lang].chooseLesson}
+      items={copticConversations.map((c) => ({ id: c.id, title: c.title[lang], desc: c.desc[lang] }))}
+      render={(i) => <Words key={copticConversations[i].id} lang={lang} words={copticConversations[i].lines} />}
+    />
+  );
+}
+
 function Quiz({ lang }: LessonProps) {
   const t = learnStrings[lang];
-  const levels = useMemo(() => copticQuizLevels(lang, t.levelText, t.everydayLevel, t.reviewLevel), [lang, t]);
+  const levels = useMemo(() => copticQuizLevels(lang, t.levelText, t.everydayLevel, t.reviewLevel, t.grammarLevel), [lang, t]);
   return (
     <QuizLevels
       key={lang}
