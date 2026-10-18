@@ -364,32 +364,6 @@ export const guideSections: GuideSection[] = [
     ],
   },
   {
-    id: 'mistakes',
-    icon: '!',
-    title: { en: 'Common Mistakes', ar: 'أخطاء شائعة' },
-    desc: { en: 'Small things to watch for', ar: 'أشياء صغيرة انتبه لها' },
-    items: [
-      {
-        text: {
-          en: 'Answering before the priest finishes his part.',
-          ar: 'الرد قبل أن ينهي الكاهن كلامه.',
-        },
-      },
-      {
-        text: {
-          en: 'Starting before the priest signals with the cross.',
-          ar: 'البدء قبل أن يرشم الكاهن بالصليب.',
-        },
-      },
-      {
-        text: {
-          en: 'Tilting the candle so wax drips on the books, the carpet or other people. Hold it straight up, in front of you.',
-          ar: 'إمالة الشمعة فيسقط الشمع على الكتب أو السجاد أو الناس. أمسكها مستقيمة أمامك.',
-        },
-      },
-    ],
-  },
-  {
     id: 'glossary',
     icon: 'Ⲁ',
     title: { en: 'Glossary', ar: 'مصطلحات' },
@@ -591,7 +565,7 @@ const guideQuestions: GuideQuestion[] = [
       b('The Martyrs', 'الشهداء'),
     ],
   },
-  // What to bring, where to stand, mistakes
+  // What to bring, where to stand
   {
     q: b('What do you bring for holding the hot censer?', 'ماذا تحضر لتمسك الشورية الساخنة؟'),
     right: b('A handkerchief', 'منديل'),
@@ -606,16 +580,6 @@ const guideQuestions: GuideQuestion[] = [
     q: b('How do you know which choir starts?', 'كيف تعرف أي خورس يبدأ؟'),
     right: b('Follow whoever is leading the choir', 'تتبع من يقود الخورس'),
     wrong: [b('The north choir always starts', 'البحري يبدأ دائماً'), b('The south choir always starts', 'القبلي يبدأ دائماً'), b('Whoever is loudest', 'الأعلى صوتاً')],
-  },
-  {
-    q: b('When do you answer the priest?', 'متى ترد على الكاهن؟'),
-    right: b('After he finishes his part', 'بعد أن ينهي كلامه'),
-    wrong: [b('As soon as he starts', 'بمجرد أن يبدأ'), b('Before he starts', 'قبل أن يبدأ'), b('Whenever you are ready', 'عندما تكون مستعداً')],
-  },
-  {
-    q: b('How do you hold a candle?', 'كيف تمسك الشمعة؟'),
-    right: b('Straight up, in front of you', 'مستقيمة أمامك'),
-    wrong: [b('Tilted toward the book', 'مائلة نحو الكتاب'), b('Above your head', 'فوق رأسك'), b('Low by your side', 'منخفضة بجانبك')],
   },
   // Glossary
   ...(
