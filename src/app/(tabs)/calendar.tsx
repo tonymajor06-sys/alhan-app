@@ -47,7 +47,8 @@ const strings = {
     remindersOn: 'On · the evening before each feast and fast',
     remindersOff: 'Off · tap to get a reminder the evening before',
     remindersDenied: 'Notifications are turned off for Coptic Psalmody. You can allow them in Settings.',
-    holdHint: 'Hold a day to follow its praises in order',
+    holdHint: 'Hold or click a day above to follow its praises in order',
+    followAlong: 'Follow along',
   },
   ar: {
     title: 'التقويم القبطي',
@@ -65,7 +66,8 @@ const strings = {
     remindersOn: 'مفعّل · مساء اليوم السابق لكل عيد وصوم',
     remindersOff: 'متوقف · اضغط لتصلك رسالة تذكير مساء اليوم السابق',
     remindersDenied: 'الإشعارات متوقفة لتطبيق التسبحة القبطية. يمكنك السماح بها من الإعدادات.',
-    holdHint: 'اضغط مطولاً على يوم لتتابع تسبحته بالترتيب',
+    holdHint: 'اضغط مطولاً أو اختر يوماً بالأعلى لتتابع تسبحته بالترتيب',
+    followAlong: 'تتبع التسبحة',
   },
 };
 
@@ -177,12 +179,22 @@ export default function CalendarScreen() {
               <Text style={styles.tagText}>{tuneName[lang][selectedInfo.tune]}</Text>
             </View>
           </View>
-          <Pressable
-            onPress={() => openSeasonHymns(selectedInfo.current?.seasonId ?? 'annual')}
-            accessibilityRole="button"
-            style={({ pressed }) => [styles.primaryButton, pressed && styles.pressed]}>
-            <Text style={styles.primaryButtonText}>♫ {t.openHymns}</Text>
-          </Pressable>
+          <View style={[styles.cardActions, rowDirection]}>
+            <Pressable
+              onPress={() => followDay(selected)}
+              accessibilityRole="button"
+              accessibilityLabel={t.followAlong}
+              style={({ pressed }) => [styles.primaryButton, styles.cardActionBtn, pressed && styles.pressed]}>
+              <Text style={styles.primaryButtonText}>📖 {t.followAlong}</Text>
+            </Pressable>
+            <Pressable
+              onPress={() => openSeasonHymns(selectedInfo.current?.seasonId ?? 'annual')}
+              accessibilityRole="button"
+              accessibilityLabel={t.openHymns}
+              style={({ pressed }) => [styles.secondaryButton, styles.cardActionBtn, pressed && styles.pressed]}>
+              <Text style={styles.secondaryButtonText}>♫ {t.openHymns}</Text>
+            </Pressable>
+          </View>
         </View>
 
         {/* Month grid */}
@@ -234,6 +246,16 @@ export default function CalendarScreen() {
                     setSelected(jdn);
                     followDay(jdn);
                   }}
+                  {...(Platform.OS === 'web'
+                    ? {
+                        onContextMenu: (e: any) => {
+                          e.preventDefault?.();
+                          pressFeedback();
+                          setSelected(jdn);
+                          followDay(jdn);
+                        },
+                      }
+                    : {})}
                   accessibilityHint={t.holdHint}
                   accessibilityRole="button"
                   accessibilityState={{ selected: isSelected }}
@@ -395,15 +417,33 @@ const createStyles = (colors: AlhanPalette) => StyleSheet.create({
   tagFast: { backgroundColor: colors.fastSoft },
   tagText: { fontSize: 14, fontWeight: '700', color: colors.gold },
   tagTextFast: { color: colors.fast },
-  primaryButton: {
+  cardActions: {
+    gap: 10,
     marginTop: 18,
-    minHeight: 52,
+  },
+  cardActionBtn: {
+    flex: 1,
+  },
+  primaryButton: {
+    minHeight: 48,
     borderRadius: 14,
     backgroundColor: colors.gold,
     alignItems: 'center',
     justifyContent: 'center',
+    paddingHorizontal: 12,
   },
-  primaryButtonText: { fontSize: 18, fontWeight: '800', color: colors.onGold },
+  primaryButtonText: { fontSize: 16, fontWeight: '800', color: colors.onGold },
+  secondaryButton: {
+    minHeight: 48,
+    borderRadius: 14,
+    backgroundColor: colors.surface,
+    borderWidth: 1.5,
+    borderColor: colors.border,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 12,
+  },
+  secondaryButtonText: { fontSize: 16, fontWeight: '700', color: colors.text },
 
   monthCard: {
     backgroundColor: colors.surface,

@@ -1,11 +1,11 @@
 import { router, useLocalSearchParams } from 'expo-router';
 import Head from 'expo-router/head';
 import { useEffect } from 'react';
-import { Image, Pressable, ScrollView, Text, View } from 'react-native';
+import { Image, Platform, Pressable, ScrollView, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { createAlhanStyles, MiniPlayer, strings } from '@/components/alhan-ui';
-import { tapFeedback } from '@/components/haptics';
+import { pressFeedback, tapFeedback } from '@/components/haptics';
 import { learnArabicStrings, learnEnglishStrings, learnStrings } from '@/components/learn-strings';
 import { localDigits, Tile, TileGrid } from '@/components/lists';
 import { StatusBarBlur } from '@/components/status-bar-blur';
@@ -117,6 +117,19 @@ export default function HomeScreen() {
             tapFeedback();
             router.navigate('/calendar');
           }}
+          onLongPress={() => {
+            pressFeedback();
+            router.push({ pathname: '/follow/[kind]', params: { kind: 'midnight', night: String(today) } });
+          }}
+          {...(Platform.OS === 'web'
+            ? {
+                onContextMenu: (e: any) => {
+                  e.preventDefault?.();
+                  pressFeedback();
+                  router.push({ pathname: '/follow/[kind]', params: { kind: 'midnight', night: String(today) } });
+                },
+              }
+            : {})}
           accessibilityRole="button"
           accessibilityLabel={`${formatCopticDate(today, lang)}, ${currentSeasonName(seasonInfo, lang)}`}
           accessibilityHint={t.openCalendar}
