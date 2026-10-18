@@ -18,6 +18,7 @@ import { kiahkWeekdayHymns } from './kiahk-weekday-hymns';
 import { crossWatosPsali } from './cross-watos-psali';
 import { stMysteries } from './st-mysteries';
 import { stSeasonExtras } from './st-season-extras';
+import { stVesperPraises, vpNewHymns } from './st-vesper-praises';
 
 export type LanguageType = 'coptic' | 'englishCoptic' | 'arabicCoptic' | 'english' | 'arabicEnglish' | 'englishArabic' | 'arabic';
 
@@ -7645,6 +7646,42 @@ for (const { file, hymns: ids, language } of arsaniAudio) {
   }
 }
 
+// ---- Vesper Praises for every season, as Spirit & Truth prays them (see st-vesper-praises.ts) ----
+// A group for each day of the week; each hymn is copied in from where the app has it (words and recordings),
+// named "<hymn>@<day's group>". Annual's Vesper Praises is replaced by Spirit & Truth's too.
+{
+  const sources = new Map<string, Hymn>();
+  for (const hymn of allLists) if (!sources.has(hymn.id)) sources.set(hymn.id, hymn);
+  for (const hymn of allLists) if (!sources.has(hymn.id.split('@')[0])) sources.set(hymn.id.split('@')[0], hymn);
+  for (const hymn of vpNewHymns) sources.set(hymn.id, hymn);
+  const dayIds = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+  const dayTitles = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  for (const vp of stVesperPraises) {
+    const season = seasons.find((s) => s.id === vp.season);
+    if (!season) continue;
+    const groups: Hymn[] = vp.groups.map((g) => {
+      const groupId = `${vp.service}-${dayIds[g.day]}`;
+      const children = g.items.flatMap((ref): Hymn[] => {
+        const [id, nth] = ref.split('#');
+        const source = sources.get(id);
+        if (!source) return [];
+        return [{ ...JSON.parse(JSON.stringify(source)), id: `${id.split('@')[0]}@${groupId}${nth ? `-${nth}` : ''}` }];
+      });
+      return { id: groupId, title: dayTitles[g.day], versions: [], children };
+    });
+    // A minor feast's list is named after its feast, like its other services
+    const feast = vp.season === 'minor-feasts' ? season.services.find((s) => s.id === vp.service.replace(/-vesper-praises$/, '-vespers'))?.title.split(':')[0] : undefined;
+    const service: Service = { id: vp.service, title: feast ? `${feast}: Vesper Praises` : 'Vesper Praises', hymns: groups };
+    const existing = season.services.findIndex((s) => s.id === vp.service);
+    if (existing >= 0) season.services[existing] = service;
+    else {
+      // first, before Vespers (for a minor feast, before that feast's Vespers)
+      const before = season.services.findIndex((s) => (feast ? s.title.startsWith(`${feast}:`) : true));
+      season.services.splice(Math.max(0, before), 0, service);
+    }
+  }
+}
+
 // ---- Every season's Vespers and Matins laid out like Annual's ----
 // Separate Vespers and Matins (Spirit & Truth's "Vespers and Matins" is split, both with the same hymns), without the
 // Gloria, Blessed Are You, Blessed is He, God Have Mercy and the Cross's First and Second Expositions, and all the
@@ -7767,8 +7804,6 @@ const dropIds = (list: Hymn[], ids: string[]): Hymn[] =>
   list.filter((h) => !ids.includes(h.id)).map((h) => (h.children ? { ...h, children: dropIds(h.children, ids) } : h));
 
 for (const season of seasons) {
-  // Nativity Fast has no Vesper Praises of its own
-  season.services = season.services.filter((s) => s.id !== 'nativity-fast-vesper-praises');
   for (const service of season.services) {
     if (dropFrom[service.id]) service.hymns = dropIds(service.hymns, dropFrom[service.id]);
 

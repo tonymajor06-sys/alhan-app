@@ -1,5 +1,7 @@
 import type { AppLanguage } from '@/hooks/use-settings';
 
+import { vpArabicTitles } from './st-vesper-praises-titles';
+
 // Arabic display names, keyed by the id used in hymns.ts
 const arabicTitles: Record<string, string> = {
   "follow-doxologies": "الذكصولوجيات",
@@ -1150,6 +1152,12 @@ const toArabicDigits = (n: string) => n.replace(/\d/g, (d) => '٠١٢٣٤٥٦٧�
 export function displayTitle(item: { id: string; title: string }, lang: AppLanguage): string {
   if (lang !== 'ar') return item.title;
   if (arabicTitles[item.id]) return arabicTitles[item.id];
+  if (vpArabicTitles[item.id]) return vpArabicTitles[item.id];
+  // Each season's Vesper Praises (a minor feast's is named after its feast) and its days
+  const vesperDay = item.id.match(/-vesper-praises-(sunday|monday|tuesday|wednesday|thursday|friday|saturday)$/);
+  if (vesperDay) return ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'][['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'].indexOf(vesperDay[1])];
+  const feastVespers = item.id.match(/^(minorfeasts-.*)-vesper-praises$/);
+  if (feastVespers && arabicTitles[`${feastVespers[1]}-vespers`]) return arabicTitles[`${feastVespers[1]}-vespers`].replace(/رفع بخور عشية$/, 'تسبحة عشية');
 
   // A hymn copied into a season's service ("<hymn id>@<service id>") has the Arabic name of the hymn it copies
   if (item.id.includes('@')) return displayTitle({ ...item, id: item.id.split('@')[0] }, lang);

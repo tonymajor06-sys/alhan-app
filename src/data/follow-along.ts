@@ -257,11 +257,19 @@ export function followAlong(kind: PraiseKind, jdn: number): FollowAlong {
   const day = weekdayIds[weekday];
 
   if (kind === 'vesper') {
-    const service = serviceOf(annual(), '-vesper-praises')!;
+    // The season's own Vesper Praises when it has that day of the week (a minor feast's on its day), else Annual's
+    const current = getSeasonInfo(jdn, 0).current;
+    const inSeason = seasons.find((s) => s.id === current?.seasonId);
+    const own =
+      inSeason?.id === 'minor-feasts'
+        ? inSeason.services.find((s) => s.title.startsWith(`${current!.name.en}:`) && s.id.endsWith('-vesper-praises'))
+        : serviceOf(inSeason, '-vesper-praises');
+    const seasonal = own && group(own, day) ? { season: inSeason!, service: own } : null;
+    const { season, service } = seasonal ?? { season: annual(), service: serviceOf(annual(), '-vesper-praises')! };
     const hymns = flattenHymns(group(service, day)?.children ?? []).filter(
       (h) => hasContent(h) && (!/psali-29th$/.test(h.id) || copticDay === 29)
     );
-    return { kind, jdn, weekday, season: annual(), service, sections: [{ key: 'day', hymns }], hymns };
+    return { kind, jdn, weekday, season, service, sections: [{ key: 'day', hymns }], hymns };
   }
 
   const { season, own } = seasonFor(jdn, kind);

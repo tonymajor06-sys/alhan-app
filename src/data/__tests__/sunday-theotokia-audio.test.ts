@@ -38,13 +38,13 @@ describe('Sunday Theotokia Audio Recordings', () => {
     }
   });
 
-  test('Sunday Theotokia parts 1 to 6 in Vesper Praises have original audio and second recording', () => {
-    for (let i = 1; i <= 6; i++) {
-      const hymn = findHymn(annualVesperPraises?.hymns, `annual-vesper-praises-sunday-theotokia-part-${i}`);
+  test("Vesper Praises' Sunday Theotokia (parts 11 to 18, as Spirit & Truth has it) plays Midnight Praises' recordings", () => {
+    for (let i = 11; i <= 18; i++) {
+      const midnight = findHymn(annualMidnight?.hymns, `annual-midnight-sunday-theotokia-part-${i}`);
+      const hymn = findHymn(annualVesperPraises?.hymns, `annual-midnight-sunday-theotokia-part-${i}@annual-vesper-praises-sunday`);
       expect(hymn).toBeDefined();
-      const coptic = hymn?.versions.find((v) => v.language === 'coptic');
-      expect(coptic?.audio).toBe(`midnight-sunday-theotokion-${i}.m4a`);
-      expect(coptic?.otherAudio).toContain(`arsani-223-sunday-theotokia-part-${i}.m4a`);
+      const audio = (h?: Hymn) => h?.versions.find((v) => v.language === 'coptic')?.audio;
+      expect(audio(hymn)).toBe(audio(midnight));
     }
   });
 
