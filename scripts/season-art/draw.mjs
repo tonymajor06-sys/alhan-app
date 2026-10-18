@@ -451,5 +451,18 @@ learnTile('home-learn', 'Ⲁⲃ', 'Ⲅⲇ', "Georgia, 'Noto Sans Coptic', serif"
 learnTile('home-learn-arabic', 'أ ب', 'ت ث', "'Geeza Pro', Arial", 70, '#e7c27c');
 learnTile('home-learn-english', 'Aa', 'Bb', 'Georgia, serif', 70, '#d9b96a');
 
+// Ask AI: A wise monastic teacher holding an open scroll of wisdom, with a lamp and radiant Coptic cross
+svg('home-ask', [
+  rays(240, 180, 24, '#fff3c8', 500, 0.35),
+  robe(240, 240, 140, 240, '#2a2a2e', '#3a3a40'),
+  head(240, 196, 34, { beard: true, longBeard: true, hair: C.hairGrey }),
+  P('M180,290 L300,280 L305,390 L185,400 Z', C.white),
+  ...[0, 1, 2, 3].map((i) => `<path d="M195,${305 + i * 20} L290,${295 + i * 20}" stroke="${C.line}" stroke-width="3" opacity=".6"/>`),
+  hand(180, 370), hand(300, 360),
+  lamp(90, 420),
+  copticCross(390, 260, 40, C.gold),
+  circle(390, 260, 48, 'none', `stroke="${C.goldLight}" stroke-width="2" stroke-dasharray="4,4"`),
+].join(''), '#eedbb7');
+
 writeFileSync('svg/list.txt', out.join('\n'));
 console.log(out.join(' '));

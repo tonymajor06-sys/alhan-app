@@ -11,4 +11,5 @@ export const homeArt: Record<string, ImageSourcePropType> = {
   learn: require('../../assets/images/home/learn.png'),
   learnArabic: require('../../assets/images/home/learn-arabic.png'),
   learnEnglish: require('../../assets/images/home/learn-english.png'),
+  ask: require('../../assets/images/home/ask.png'),
 };
