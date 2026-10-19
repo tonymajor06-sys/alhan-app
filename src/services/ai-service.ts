@@ -3,7 +3,8 @@ import { Platform } from 'react-native';
 import { displayTitle } from '@/data/arabic-titles';
 import { copticMonths, dateToJdn, jdnToCoptic, toArabicDigits } from '@/data/coptic-calendar';
 import { copticDayName, Saint, saints, saintSortKey } from '@/data/saints';
-import { searchHymns } from '@/data/search';
+import { LanguageType } from '@/data/hymns';
+import { locateHymn, searchHymns } from '@/data/search';
 
 export interface ChatAction {
   type: 'hymn' | 'saint' | 'route';
@@ -614,12 +615,23 @@ function findHymnMatches(cleanQ: string, lang: 'en' | 'ar'): AskResult | null {
   };
 }
 
+const APP_ROUTES: Record<string, string> = {
+  '/calendar': 'Coptic Calendar',
+  '/guide': "Deacon's Guide",
+  '/saints': 'Saints & Synaxarium',
+  '/faith': 'Coptic Faith & Creed',
+  '/learn': 'Learn Coptic',
+  '/playlist': 'My Playlists',
+  '/downloads': 'Downloads',
+  '/settings': 'Settings',
+};
+
 function parseActionsFromText(text: string): { cleanText: string; actions: ChatAction[] } {
   const actions: ChatAction[] = [];
   let cleanText = text;
 
   // Pattern: [ACTION:type:id:title] or [HYMN:query]
-  const hymnMatches = [...text.matchAll(/\[HYMN:([^\]]+)\]/g)];
+  const hymnMatches = [...text.matchAll(/\[\s*HYMN\s*:([^\]]+)\]/g)];
   for (const m of hymnMatches) {
     const query = m[1].trim();
     cleanText = cleanText.replace(m[0], '');
@@ -634,18 +646,22 @@ function parseActionsFromText(text: string): { cleanText: string; actions: ChatA
     }
   }
 
-  const actionMatches = [...text.matchAll(/\[ACTION:(hymn|saint|route):([^:\]]+):?([^\]]*)\]/g)];
+  // The AI sometimes leaves out the type ([ACTION:<id>:<title>]) or the title, so the type is
+  // optional, and only buttons that lead somewhere real are kept
+  const actionMatches = [...text.matchAll(/\[\s*ACTION\s*:\s*(?:(hymn|saint|route)\s*:)?([^:\]]+):?([^\]]*)\]/g)];
   for (const m of actionMatches) {
     cleanText = cleanText.replace(m[0], '');
-    const actType = m[1] as 'hymn' | 'saint' | 'route';
     const target = m[2].trim();
-    const title = m[3]?.trim() || target;
+    const givenTitle = m[3]?.trim();
+    const actType = m[1] ?? (target.startsWith('/') ? 'route' : saints.some((s) => s.id === target) ? 'saint' : 'hymn');
     if (actType === 'hymn') {
-      actions.push({ type: 'hymn', id: target, title });
+      const hymn = locateHymn(target)?.hymn ?? (givenTitle ? searchHymns(givenTitle, 1)[0]?.hymn : undefined);
+      if (hymn) actions.push({ type: 'hymn', id: hymn.id, title: givenTitle || hymn.title });
     } else if (actType === 'saint') {
-      actions.push({ type: 'saint', id: target, title });
-    } else {
-      actions.push({ type: 'route', route: target, title });
+      const saint = saints.find((s) => s.id === target);
+      if (saint) actions.push({ type: 'saint', id: target, title: givenTitle || saint.name.en });
+    } else if (APP_ROUTES[target]) {
+      actions.push({ type: 'route', route: target, title: givenTitle || APP_ROUTES[target] });
     }
   }
 
@@ -724,6 +740,22 @@ function buildAppContext(cleanQ: string, lang: 'en' | 'ar'): string {
         `- ${r.hymn.id} | ${r.hymn.title} | ${ar && ar !== r.hymn.title ? ar : '-'} | ${r.location.group.title} · ${r.location.service.title}`
       );
     }
+
+    // The words of the closest matches, so the AI explains the real text instead of guessing
+    const translation: LanguageType = lang === 'ar' ? 'arabic' : 'english';
+    hymns.slice(0, 2).forEach((r, i) => {
+      // Best match: Coptic, English letters and translation; runner-up: translation only
+      const languages: LanguageType[] = i === 0 ? ['coptic', 'englishCoptic', translation] : [translation];
+      const excerpts = languages
+        .map((l) => {
+          const text = r.hymn.versions.find((v) => v.language === l)?.text.trim();
+          return text ? `[${l}]\n${text.length > 500 ? text.slice(0, 500) + ' …' : text}` : null;
+        })
+        .filter((e): e is string => e !== null);
+      if (excerpts.length > 0) {
+        lines.push('', `Text of ${r.hymn.id} (opening):`, ...excerpts);
+      }
+    });
   }
 
   const saint = findSaintAnswer(cleanQ, 'en');

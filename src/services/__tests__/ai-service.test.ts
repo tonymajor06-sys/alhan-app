@@ -2,7 +2,7 @@ import { askAiQuestion, findSaintAnswer } from '../ai-service';
 
 // Tests run offline unless a test says otherwise; never call the live server
 const fetchMock = jest.fn();
-global.fetch = fetchMock as unknown as typeof fetch;
+globalThis.fetch = fetchMock as unknown as typeof fetch;
 
 beforeEach(() => {
   fetchMock.mockReset();
@@ -138,5 +138,30 @@ describe('ai-service Coptic knowledge and saint lookup', () => {
   it('answers "find me" commands instantly without calling the AI', async () => {
     await askAiQuestion('find me Tai Shouri', [], 'en');
     expect(fetchMock).not.toHaveBeenCalled();
+  });
+
+  it('keeps only AI buttons that lead somewhere real, even with sloppy tags', async () => {
+    fetchMock.mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        answer: [
+          'Answer text.',
+          '[ ACTION:hymn:annual-liturgy-offering-golden-censer:The Golden Censer ]',
+          '[ACTION:3-15-0:St. Mina]',
+          '[ACTION:route:/saints]',
+          '[ACTION:hymn:not-a-real-hymn-id-xyz:]',
+          '[ACTION:route:/admin:Admin]',
+        ].join('\n'),
+        configured: true,
+      }),
+    });
+
+    const res = await askAiQuestion('tell me something about the censer', [], 'en');
+    expect(res.answer).toBe('Answer text.');
+    expect(res.actions).toEqual([
+      { type: 'hymn', id: 'annual-liturgy-offering-golden-censer', title: 'The Golden Censer' },
+      expect.objectContaining({ type: 'saint', id: '3-15-0' }),
+      { type: 'route', route: '/saints', title: 'Saints & Synaxarium' },
+    ]);
   });
 });
