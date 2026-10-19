@@ -2,13 +2,12 @@ import { seasons, deaconCategories, flattenHymns, Hymn } from '../hymns';
 import { arsaniAudio } from '../arsani-audio';
 import { displayTitle } from '../arabic-titles';
 
+const findHymn = (hymns: Hymn[] | undefined, id: string): Hymn | undefined => (hymns ? flattenHymns(hymns).find((h) => h.id === id) : undefined);
+
 describe('Sunday Theotokia Audio Recordings', () => {
   const annualMidnight = seasons.find((s) => s.id === 'annual')?.services.find((s) => s.id === 'annual-midnight');
   const annualVesperPraises = seasons.find((s) => s.id === 'annual')?.services.find((s) => s.id === 'annual-vesper-praises');
 
-  const findHymn = (hymns: Hymn[] | undefined, id: string): Hymn | undefined => {
-    return hymns ? flattenHymns(hymns).find((h) => h.id === id) : undefined;
-  };
 
   test('Joe Seif recordings are added to arsaniAudio registry', () => {
     for (let i = 1; i <= 6; i++) {
@@ -158,10 +157,10 @@ describe('Divine Liturgy Audio and Bishop Updates', () => {
   });
 
   test('Standard Adam Aspasmos audio recordings are assigned', () => {
-    const aspasmosAdam1 = annualLiturgy?.hymns.find((h) => h.id === 'annual-liturgy-aspasmos-adam');
+    const aspasmosAdam1 = findHymn(annualLiturgy?.hymns, 'annual-liturgy-aspasmos-adam');
     expect(aspasmosAdam1?.versions.find((v) => v.language === 'coptic')?.audio).toBe('arsani-aspasmos-adam-onof-emmo.m4a');
 
-    const aspasmosAdam3 = annualLiturgy?.hymns.find((h) => h.id === 'annual-liturgy-aspasmos-adam-3');
+    const aspasmosAdam3 = findHymn(annualLiturgy?.hymns, 'annual-liturgy-aspasmos-adam-3');
     expect(aspasmosAdam3?.versions.find((v) => v.language === 'coptic')?.audio).toBe('arsani-aspasmos-adam-o-christ-our-savior.m4a');
   });
 
@@ -274,7 +273,7 @@ describe('Divine Liturgy Audio and Bishop Updates', () => {
   });
 
   test('Standard Watos Aspasmos (O Lord God) has only first audio (2nd duplicate removed)', () => {
-    const aspasmos = annualLiturgy?.hymns.find((h) => h.id === 'annual-liturgy-aspasmos-watos');
+    const aspasmos = findHymn(annualLiturgy?.hymns, 'annual-liturgy-aspasmos-watos');
     expect(aspasmos).toBeDefined();
     const coptic = aspasmos?.versions.find((v) => v.language === 'coptic');
     expect(coptic?.audio).toBe('liturgy-aspasmos-watos.m4a');
@@ -297,3 +296,70 @@ describe('Divine Liturgy Audio and Bishop Updates', () => {
   });
 });
 
+describe('The three Divine Liturgies', () => {
+  const annual = seasons.find((s) => s.id === 'annual')!;
+  const liturgy = annual.services.find((s) => s.id === 'annual-liturgy')!;
+  const deaconAnnual = deaconCategories.find((c) => c.id === 'deacon-annual')!;
+  const ids = (hymns: Hymn[]) => hymns.filter((h) => !h.isSectionHeader).map((h) => h.id.split('@')[0]);
+
+  test('Deacon Responses > Annual has St Basil, St Gregory and St Cyril instead of one Liturgy of the Faithful', () => {
+    const services = deaconAnnual.services.map((s) => s.id);
+    expect(services).not.toContain('d-annual-liturgy-faithful');
+    expect(services.slice(services.indexOf('d-annual-liturgy-word') + 1, services.indexOf('d-annual-liturgy-word') + 4)).toEqual([
+      'd-annual-liturgy-basil',
+      'd-annual-liturgy-gregory',
+      'd-annual-liturgy-cyril',
+    ]);
+    expect(deaconCategories.find((c) => c.id === 'deacon-festival')!.services.map((s) => s.id)).toEqual(
+      expect.arrayContaining(['d-fest-liturgy-basil', 'd-fest-liturgy-gregory', 'd-fest-liturgy-cyril'])
+    );
+  });
+
+  test("each liturgy has its own responses, in Spirit & Truth's order", () => {
+    const of = (id: string) => ids(deaconAnnual.services.find((s) => s.id === id)!.hymns);
+    const basil = of('d-annual-liturgy-basil');
+    const gregory = of('d-annual-liturgy-gregory');
+    const cyril = of('d-annual-liturgy-cyril');
+    expect(basil).toContain('d-annual-liturgy-faithful-epiclesis');
+    expect(basil.some((id) => /st-(gregory|cyril)/.test(id))).toBe(false);
+    expect(gregory).toContain('d-annual-liturgy-faithful-pray-for-the-captives-st-gregory');
+    expect(gregory.some((id) => /st-cyril/.test(id))).toBe(false);
+    expect(cyril).toContain('d-annual-liturgy-faithful-pray-for-the-patriarch-st-cyril');
+    expect(cyril.some((id) => /st-gregory/.test(id))).toBe(false);
+    // St Cyril has no Commemoration with Pinishti
+    expect(cyril.some((id) => id.includes('pinishti'))).toBe(false);
+    for (const list of [basil, gregory, cyril]) {
+      expect(list.indexOf('d-annual-liturgy-faithful-greet-one-another')).toBeLessThan(list.indexOf('d-annual-liturgy-faithful-anaphora'));
+      expect(list[list.length - 1]).toBe('d-annual-liturgy-faithful-peace-and-love');
+    }
+    // Every response has its words in every language the reader offers
+    for (const service of deaconAnnual.services.filter((s) => /-liturgy-(basil|gregory|cyril)$/.test(s.id))) {
+      for (const hymn of service.hymns.filter((h) => !h.isSectionHeader)) {
+        expect(hymn.versions.map((v) => v.language)).toEqual(expect.arrayContaining(['coptic', 'englishCoptic', 'english', 'englishArabic', 'arabic']));
+      }
+    }
+  });
+
+  test('Annual > Liturgy groups the Liturgy of the Faithful hymns by liturgy', () => {
+    const header = liturgy.hymns.findIndex((h) => h.id === 'annual-liturgy-faithful-header');
+    const groups = liturgy.hymns.slice(header + 1);
+    expect(groups.map((g) => g.id)).toEqual(['annual-liturgy-basil', 'annual-liturgy-gregory', 'annual-liturgy-cyril']);
+    const [basil, gregory, cyril] = groups.map((g) => ids(g.children!));
+    expect(basil).toContain('annual-liturgy-may-their-holy-blessings');
+    expect(gregory).toEqual(basil);
+    expect(cyril).not.toContain('annual-liturgy-may-their-holy-blessings');
+    // St Basil sings According to Your Mercy before Your Death, O Lord; St Cyril after it
+    expect(basil.indexOf('annual-liturgy-kata-to-eleos')).toBeLessThan(basil.indexOf('annual-liturgy-amen-ton-thanaton'));
+    expect(cyril.indexOf('annual-liturgy-kata-to-eleos')).toBeGreaterThan(cyril.indexOf('annual-liturgy-amen-ton-thanaton'));
+    // The copies keep the recordings
+    const audio = (g: Hymn) => g.children!.find((h) => h.id.startsWith('annual-liturgy-aspasmos-adam'))!.versions.find((v) => v.language === 'coptic')?.audio;
+    expect(audio(groups[2])).toBe(audio(groups[0]));
+  });
+
+  test('Arabic names for the liturgies and their sections', () => {
+    expect(displayTitle(deaconAnnual.services.find((s) => s.id === 'd-annual-liturgy-cyril')!, 'ar')).toBe('قداس القديس كيرلس الكبير');
+    expect(displayTitle(liturgy.hymns.find((h) => h.id === 'annual-liturgy-basil')!, 'ar')).toBe('قداس القديس باسيليوس الكبير');
+    const header = deaconAnnual.services.find((s) => s.id === 'd-annual-liturgy-basil')!.hymns[0];
+    expect(displayTitle(header, 'ar')).toBe('الثلاث أواشي الكبار');
+  });
+});

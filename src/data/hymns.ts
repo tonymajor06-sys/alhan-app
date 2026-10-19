@@ -15,6 +15,7 @@ import { stFills } from './st-fills';
 import { stFullSeasons } from './st-full-seasons';
 import { stGeorgeDoxology2 } from './st-george-doxology';
 import { stAdditions } from './st-hymns';
+import { deaconOrder, hymnOrder, liturgies, liturgyFromMatins, stLiturgyDeacon } from './st-liturgies';
 import { stMore } from './st-more';
 import { stMysteries } from './st-mysteries';
 import { stSeasonExtras } from './st-season-extras';
@@ -302,7 +303,8 @@ export const deaconCategories: DeaconCategory[] = [
       { id: 'd-fest-matins', title: 'Matins', hymns: generateDeaconResponses('d-fest', 'Matins') },
       { id: 'd-fest-offering-lamb', title: 'Offering of Lamb', hymns: generateDeaconResponses('d-fest', 'Offering of Lamb') },
       { id: 'd-fest-liturgy-word', title: 'Liturgy of the Word', hymns: generateDeaconResponses('d-fest', 'Liturgy of the Word') },
-      { id: 'd-fest-liturgy-faithful', title: 'Liturgy of the Faithful', hymns: generateDeaconResponses('d-fest', 'Liturgy of the Faithful') },
+      // One for each Divine Liturgy, as in Annual (filled from Annual below)
+      ...liturgies.map((l) => ({ id: `d-fest-liturgy-${l.id}`, title: l.title, hymns: [] })),
       { id: 'd-fest-bishop', title: 'Vespers in Presence of Bishop / Patriarch', hymns: generateDeaconResponses('d-fest', 'Vespers in Presence of Bishop / Patriarch') },
     ],
   },
@@ -7458,18 +7460,44 @@ for (const { service: serviceId, after, hymn } of stDeacon) {
   service.hymns.splice(index >= 0 ? index + 1 : service.hymns.length, 0, hymn);
 }
 
+// ---- Deacon Responses > Annual: the Liturgy of the Faithful becomes one service for each Divine Liturgy ----
+// (St Basil, St Gregory, St Cyril), in Spirit & Truth's order (see st-liturgies.ts). St Basil keeps the responses'
+// ids; the other two get copies ("<id>@<service>"), and a response said twice gets "-2" the second time.
+const deaconAnnual = deaconCategories.find((c) => c.id === 'deacon-annual');
+const deaconFaithful = deaconAnnual?.services.find((s) => s.id === 'd-annual-liturgy-faithful');
+if (deaconAnnual && deaconFaithful) {
+  const prefix = 'd-annual-liturgy-faithful-';
+  const pool = new Map<string, Hymn>();
+  for (const hymn of [...deaconFaithful.hymns, ...stLiturgyDeacon, ...liturgyFromMatins.flatMap(([from, to]) => fromMatins(from, to))]) pool.set(hymn.id, hymn);
+  const clone = (hymn: Hymn, id: string): Hymn => ({ ...JSON.parse(JSON.stringify(hymn)), id });
+  const services = liturgies.map(({ id: liturgy, title }): Service => {
+    const serviceId = `d-annual-liturgy-${liturgy}`;
+    let headers = 0;
+    const hymns = deaconOrder[liturgy].flatMap((entry): Hymn[] => {
+      if (typeof entry !== 'string') return [{ id: `${serviceId}-header-${++headers}`, title: entry.header, versions: [], isSectionHeader: true }];
+      const again = entry.endsWith('-2') ? pool.get(prefix + entry.slice(0, -2)) : undefined;
+      const hymn = pool.get(prefix + entry) ?? (again && clone(again, prefix + entry));
+      if (!hymn) return [];
+      if (!pool.has(hymn.id)) pool.set(hymn.id, hymn);
+      return [liturgy === 'basil' ? hymn : clone(hymn, `${hymn.id}@${serviceId}`)];
+    });
+    return { id: serviceId, title, hymns };
+  });
+  deaconAnnual.services.splice(deaconAnnual.services.indexOf(deaconFaithful), 1, ...services);
+}
+
 // ---- Festival Special: the same responses as Annual, in the same order, sung in the festal tune ----
 // Copies ("<id>@<festival service>") without Annual's recordings, which are in the annual tune
 const festivalFromAnnual: Record<string, string> = {
   'd-fest-matins': 'd-annual-matins',
   'd-fest-offering-lamb': 'd-annual-offering-lamb',
   'd-fest-liturgy-word': 'd-annual-liturgy-word',
-  'd-fest-liturgy-faithful': 'd-annual-liturgy-faithful',
+  ...Object.fromEntries(liturgies.map((l) => [`d-fest-liturgy-${l.id}`, `d-annual-liturgy-${l.id}`])),
   'd-fest-bishop': 'd-annual-bishop',
 };
 const festivalCopy = (hymn: Hymn, serviceId: string): Hymn => ({
   ...hymn,
-  id: `${hymn.id}@${serviceId}`,
+  id: `${hymn.id.split('@')[0]}@${serviceId}`,
   versions: hymn.versions.map(({ audio: _audio, otherAudio: _otherAudio, ...version }) => ({ ...version })),
   children: hymn.children?.map((child) => festivalCopy(child, serviceId)),
 });
@@ -8241,3 +8269,28 @@ const foldBishop = (list: Hymn[]): Hymn[] =>
   }, []);
 for (const group of [...seasons, ...deaconCategories])
   for (const service of group.services) if (!/-bishop$/.test(service.id)) service.hymns = foldBishop(service.hymns);
+
+// ---- Annual > Liturgy: the Liturgy of the Faithful as a group for each Divine Liturgy (St Basil, St Gregory, St Cyril) ----
+// with the hymns each sings, in Spirit & Truth's order (see st-liturgies.ts). Last, so the hymns are complete; St Basil
+// keeps their ids and the other two get copies ("<id>@<group>") with the same words and recordings.
+// (Looked up again: the steps above rebuilt the Annual services.)
+const annualLiturgyNow = seasons.find((s) => s.id === 'annual')?.services.find((s) => s.id === 'annual-liturgy');
+if (annualLiturgyNow) {
+  const header = annualLiturgyNow.hymns.findIndex((h) => h.id === 'annual-liturgy-faithful-header');
+  if (header >= 0) {
+    const faithful = annualLiturgyNow.hymns.slice(header + 1);
+    const byId = new Map(faithful.map((h) => [h.id, h]));
+    const groups = liturgies.map(({ id: liturgy, title }): Hymn => {
+      const groupId = `annual-liturgy-${liturgy}`;
+      const children = hymnOrder[liturgy].flatMap((id) => {
+        const hymn = byId.get(id);
+        if (!hymn) return [];
+        return [liturgy === 'basil' ? hymn : { ...JSON.parse(JSON.stringify(hymn)), id: `${baseOf(id)}@${groupId}` }];
+      });
+      return { id: groupId, title, versions: [], children };
+    });
+    // Anything not in a liturgy's list stays after the groups
+    const placed = new Set(Object.values(hymnOrder).flat());
+    annualLiturgyNow.hymns = [...annualLiturgyNow.hymns.slice(0, header + 1), ...groups, ...faithful.filter((h) => !placed.has(h.id))];
+  }
+}
