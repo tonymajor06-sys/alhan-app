@@ -28,7 +28,8 @@ function nextMessageId(prefix: string): string {
 export default function AskScreen() {
   const insets = useSafeAreaInsets();
   const colors = useAlhanColors();
-  const { language } = useSettings();
+  const settings = useSettings();
+  const language = settings.language;
   const isRTL = language === 'ar';
 
   const [input, setInput] = useState('');
@@ -78,7 +79,7 @@ export default function AskScreen() {
     setLoading(true);
 
     try {
-      const answer = await askAiQuestion(q, messages, language);
+      const answer = await askAiQuestion(q, messages, language, settings.geminiApiKey);
       const assistantMsg: ChatMessage = {
         id: nextMessageId('assistant'),
         role: 'assistant',

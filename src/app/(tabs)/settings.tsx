@@ -1,12 +1,12 @@
 import { router } from 'expo-router';
 import { ReactNode } from 'react';
-import { Alert, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Alert, Platform, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import { ChipScroller, createAlhanStyles, languageLabels, ScreenShell, withCopticFont } from '@/components/alhan-ui';
 import { DonationBox } from '@/components/donation-box';
 import { AlhanPalette } from '@/constants/alhan-colors';
 import { LanguageType } from '@/data/hymns';
-import { useThemedStyles } from '@/hooks/use-alhan-colors';
+import { useAlhanColors, useThemedStyles } from '@/hooks/use-alhan-colors';
 import {
   AppLanguage,
   TEXT_SCALE_MAX,
@@ -84,6 +84,7 @@ const strings = {
 const SAMPLE_COPTIC = 'Ⲧⲉⲛⲟⲩⲱϣⲧ ⲙ̀Ⲫ̀ⲓⲱⲧ';
 
 export default function SettingsScreen() {
+  const colors = useAlhanColors();
   const settings = useSettings();
   const lang = settings.language;
   const t = strings[lang];
@@ -146,6 +147,40 @@ export default function SettingsScreen() {
       <Text style={[styles.switchLabel, shared.rowTextWrap, textAlign]}>{label}</Text>
       <Text style={styles.switchHint}>{rtl ? '‹' : '›'}</Text>
     </Pressable>
+  );
+
+  const apiKeyRow = () => (
+    <View style={[styles.switchRow, styles.divider, { flexDirection: 'column', alignItems: 'stretch', gap: 6 }]}>
+      <Text style={[styles.switchLabel, textAlign]}>
+        {lang === 'ar' ? 'مفتاح Gemini الذكي (اختياري)' : 'Gemini AI API Key (optional)'}
+      </Text>
+      <Text style={[styles.switchHint, textAlign]}>
+        {lang === 'ar'
+          ? 'لتفعيل الذكاء الاصطناعي مجاناً من Google AI Studio، أو اتركه فارغاً للاعتماد على خادم الموقع وقاعدة البيانات القبطية.'
+          : 'Free key from aistudio.google.com — or leave empty to use server / local Coptic database.'}
+      </Text>
+      <TextInput
+        value={settings.geminiApiKey}
+        onChangeText={(text) => updateSettings({ geminiApiKey: text.trim() })}
+        placeholder={lang === 'ar' ? 'الصق مفتاح API هنا (AIza...)' : 'Paste API Key here (AIza...)'}
+        placeholderTextColor={colors.muted}
+        autoCapitalize="none"
+        autoCorrect={false}
+        secureTextEntry
+        style={{
+          backgroundColor: colors.background,
+          color: colors.text,
+          borderWidth: StyleSheet.hairlineWidth,
+          borderColor: colors.border,
+          borderRadius: 8,
+          paddingHorizontal: 12,
+          paddingVertical: 8,
+          fontSize: 14,
+          textAlign: rtl ? 'right' : 'left',
+          marginTop: 4,
+        }}
+      />
+    </View>
   );
 
   const toggleReminders = async () => {
@@ -268,6 +303,7 @@ export default function SettingsScreen() {
           {switchRow(t.sideBySide, t.sideBySideHint, settings.sideBySide, () => updateSettings({ sideBySide: !settings.sideBySide }), true)}
           {switchRow(t.playNext, t.playNextHint, settings.playNext, () => updateSettings({ playNext: !settings.playNext }))}
           {switchRow(t.aiBubble, t.aiBubbleHint, settings.showAiBubble, () => updateSettings({ showAiBubble: !settings.showAiBubble }))}
+          {apiKeyRow()}
           {Platform.OS !== 'web' ? switchRow(t.reminders, t.remindersHint, settings.feastReminders, toggleReminders) : null}
         </View>
       )}

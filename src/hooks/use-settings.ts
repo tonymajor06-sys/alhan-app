@@ -24,6 +24,8 @@ export interface Settings {
   hymnLanguage: LanguageType | null;
   // Floating AI Assistant bubble shown on screen
   showAiBubble: boolean;
+  // Optional custom Google Gemini API Key for direct AI queries
+  geminiApiKey: string;
 }
 
 const STORAGE_KEY = 'alhan-settings';
@@ -42,6 +44,7 @@ const loadSettings = (): Settings => {
     theme: 'system',
     hymnLanguage: null,
     showAiBubble: true,
+    geminiApiKey: '',
   };
   try {
     const raw = readSetting(STORAGE_KEY);
