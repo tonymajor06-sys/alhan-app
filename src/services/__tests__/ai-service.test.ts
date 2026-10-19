@@ -46,3 +46,4 @@ describe('ai-service Coptic knowledge and saint lookup', () => {
     expect(result).toContain('Sunday, Monday, Tuesday');
   });
 });
+

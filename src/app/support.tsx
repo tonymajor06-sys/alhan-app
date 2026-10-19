@@ -7,21 +7,24 @@ import { useThemedStyles } from '@/hooks/use-alhan-colors';
 import { useSettings } from '@/hooks/use-settings';
 
 const EMAIL = 'copticpsalmody@gmail.com';
+export const INSTAGRAM_URL = 'https://www.instagram.com/copticpsalmody?obrf=ZzJ2ZHFjcmRvNzBs&utm_source=qr';
 
 // The support page the App Store links to
 const text = {
   en: {
-    title: 'Support',
+    title: 'Support & Reach Out',
     subtitle: 'Coptic Psalmody',
-    body: 'Found a mistake in a hymn, a recording in the wrong place, or something that does not work? Email us and tell us the hymn and the season. Suggestions for hymns and recordings to add are welcome too.',
-    email: `Email ${EMAIL}`,
+    body: 'Found a mistake in a hymn, a recording in the wrong place, or something that does not work? Reach out and tell us the hymn and the season. Suggestions for hymns and recordings to add are welcome too.',
+    email: `Email: ${EMAIL}`,
+    instagram: 'Instagram: @copticpsalmody',
     privacy: 'Privacy Policy',
   },
   ar: {
-    title: 'الدعم',
+    title: 'الدعم والتواصل',
     subtitle: 'التسبحة القبطية',
-    body: 'وجدت خطأ في لحن، أو تسجيلاً في غير مكانه، أو شيئاً لا يعمل؟ راسلنا واذكر اسم اللحن والمناسبة. نرحب أيضاً باقتراحات الألحان والتسجيلات.',
-    email: `راسلنا: ${EMAIL}`,
+    body: 'وجدت خطأ في لحن، أو تسجيلاً في غير مكانه، أو شيئاً لا يعمل؟ تواصل معنا واذكر اسم اللحن والمناسبة. نرحب أيضاً باقتراحات الألحان والتسجيلات.',
+    email: `البريد: ${EMAIL}`,
+    instagram: 'إنستغرام: @copticpsalmody',
     privacy: 'سياسة الخصوصية',
   },
 };
@@ -39,6 +42,12 @@ export default function SupportScreen() {
         accessibilityRole="link"
         style={({ pressed }) => [shared.playlistButton, pressed && shared.pressed]}>
         <Text style={shared.controlText}>{t.email}</Text>
+      </Pressable>
+      <Pressable
+        onPress={() => Linking.openURL(INSTAGRAM_URL)}
+        accessibilityRole="link"
+        style={({ pressed }) => [shared.playlistButton, pressed && shared.pressed]}>
+        <Text style={shared.controlText}>{t.instagram}</Text>
       </Pressable>
       <Pressable
         onPress={() => router.push('/privacy')}

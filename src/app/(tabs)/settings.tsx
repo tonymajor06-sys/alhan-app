@@ -1,7 +1,8 @@
 import { router } from 'expo-router';
 import { ReactNode } from 'react';
-import { Alert, Platform, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Alert, Linking, Platform, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
+import { INSTAGRAM_URL } from '@/app/support';
 import { ChipScroller, createAlhanStyles, languageLabels, ScreenShell, withCopticFont } from '@/components/alhan-ui';
 import { DonationBox } from '@/components/donation-box';
 import { AlhanPalette } from '@/constants/alhan-colors';
@@ -142,6 +143,16 @@ export default function SettingsScreen() {
   const linkRow = (label: string, href: '/support' | '/privacy' | '/downloads', first = false) => (
     <Pressable
       onPress={() => router.push(href)}
+      accessibilityRole="link"
+      style={({ pressed }) => [styles.switchRow, rowDirection, !first && styles.divider, pressed && styles.pressed]}>
+      <Text style={[styles.switchLabel, shared.rowTextWrap, textAlign]}>{label}</Text>
+      <Text style={styles.switchHint}>{rtl ? '‹' : '›'}</Text>
+    </Pressable>
+  );
+
+  const externalLinkRow = (label: string, url: string, first = false) => (
+    <Pressable
+      onPress={() => Linking.openURL(url)}
       accessibilityRole="link"
       style={({ pressed }) => [styles.switchRow, rowDirection, !first && styles.divider, pressed && styles.pressed]}>
       <Text style={[styles.switchLabel, shared.rowTextWrap, textAlign]}>{label}</Text>
@@ -314,6 +325,7 @@ export default function SettingsScreen() {
         t.about,
         <View style={styles.group}>
           {linkRow(t.support, '/support', true)}
+          {externalLinkRow(lang === 'ar' ? 'إنستغرام (@copticpsalmody)' : 'Instagram (@copticpsalmody)', INSTAGRAM_URL)}
           {linkRow(t.privacy, '/privacy')}
         </View>
       )}
