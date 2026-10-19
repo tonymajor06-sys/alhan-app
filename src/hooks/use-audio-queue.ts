@@ -46,6 +46,8 @@ const getPlayer = (): AudioPlayer => {
   if (player) return player;
   player = createAudioPlayer(null, { updateInterval: 500 });
   player.addListener('playbackStatusUpdate', onStatus);
+  // Next/previous on the lock screen, in the car or on headphones (added to expo-audio in patches/)
+  player.addListener('remoteCommand', ({ command }) => skip(command === 'next' ? 1 : -1));
   // On web expo-audio drops the promise from <audio>.play(), so a recording that can't load (not online yet,
   // or no internet) becomes an "Uncaught Error". Give every play() a handler; the player already shows it as stopped.
   if (typeof HTMLMediaElement !== 'undefined' && !(HTMLMediaElement.prototype as { alhanSafePlay?: boolean }).alhanSafePlay) {
@@ -113,7 +115,8 @@ const loadTrack = (index: number, autoplay: boolean) => {
     player.setActiveForLockScreen(
       true,
       { title: track.title, artist: 'Coptic Psalmody', artworkUrl: LOCK_SCREEN_ARTWORK },
-      { showSeekBackward: true, showSeekForward: true }
+      // Next/previous hymn instead of 10-second jumps, so the car's skip buttons move through the queue
+      { showPreviousTrack: true, showNextTrack: true }
     );
   } catch {
     // lock screen controls are unavailable on this platform
