@@ -150,6 +150,29 @@ const cleanText = (text: string) => text.replace(/(?:\\n)+/g, '\n\n');
 const SPEAKER_LINE = /^\s*\(?[^\n:]{1,30}\)?:\s*\n+/;
 const openingOf = (text: string) => normalizeForSearch(text.replace(SPEAKER_LINE, '').slice(0, 80));
 
+function titleVariants(coptic: string): string[] {
+  const base = copticToEnglish(coptic);
+  const variants = [base];
+
+  // Split after common Coptic demonstratives / articles (Ⲧⲁⲓ, Ϯ, Ⲡⲓ, Ⲧⲓ, Ⲛⲓ, Ⲫⲁⲓ)
+  const prefixMatch = coptic.match(/^(Ⲧⲁⲓ|Ϯ|Ⲡⲓ|Ⲧⲓ|Ⲛⲓ|Ⲫⲁⲓ|ⲧⲁⲓ|ϯ|ⲡⲓ|ⲧⲓ|ⲛⲓ|ⲫⲁⲓ)(.+)$/);
+  if (prefixMatch) {
+    const p = copticToEnglish(prefixMatch[1]);
+    const rest = copticToEnglish(prefixMatch[2]);
+    variants.push(`${p} ${rest}`);
+  }
+
+  // Common vowel variants in English transliteration (ē -> i/e, ou -> o)
+  for (const v of [...variants]) {
+    variants.push(v.replace(/ē/g, 'i'));
+    variants.push(v.replace(/ē/g, 'e'));
+    variants.push(v.replace(/ou/g, 'o'));
+    variants.push(v.replace(/ē/g, 'i').replace(/ou/g, 'o'));
+  }
+
+  return [...new Set(variants)];
+}
+
 function buildIndex(): IndexEntry[] {
   const groups = [
     ...seasons.map((g) => ({ group: g, kind: 'hymns' as const })),
@@ -164,7 +187,7 @@ function buildIndex(): IndexEntry[] {
           hymn,
           location: { group, service, kind },
           // the title as written, in Arabic, and its Coptic words in English letters ("Ⲡⲟⲩⲣⲟ" is found by "pouro")
-          titles: [hymn.title, displayTitle(hymn, 'ar'), ...(coptic ? [copticToEnglish(coptic)] : [])].map(normalizeForSearch),
+          titles: [hymn.title, displayTitle(hymn, 'ar'), ...(coptic ? titleVariants(coptic) : [])].map(normalizeForSearch),
           openings: hymn.versions.filter((v) => v.text).map((v) => openingOf(cleanText(v.text))),
           // the words said in the presence of the Pope or a bishop are found too
           versions: versions.map((v) => {

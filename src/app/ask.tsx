@@ -17,7 +17,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { tapFeedback } from '@/components/haptics';
 import { useAlhanColors } from '@/hooks/use-alhan-colors';
 import { useSettings } from '@/hooks/use-settings';
-import { askAiQuestion, ChatMessage } from '@/services/ai-service';
+import { askAiQuestion, ChatAction, ChatMessage } from '@/services/ai-service';
 
 let messageCounter = 0;
 function nextMessageId(prefix: string): string {
@@ -47,16 +47,16 @@ export default function AskScreen() {
     clear: isRTL ? 'مسح' : 'Clear',
     suggestions: isRTL
       ? [
+          'ابحث لي عن لحن تاي شوري وخذني إليه',
           'ما الفرق بين نغمة الآدام ونغمة الواطس؟',
-          'ما معنى لحن إبؤرو ومتى يقال؟',
-          'ما قصة وتأملات مديح تنين في كيهك؟',
-          'أخبرني عن سيرة القديس البابا كيرلس السادس',
+          'أخبرني عن سيرة القديس الأنبا أنطونيوس',
+          'ما هو تاريخ اليوم في التقويم القبطي؟',
         ]
       : [
+          'Find me the hymn Tai Shouri and take me there',
           'What is the difference between Adam and Watos tunes?',
-          'What does the hymn Epouro mean and when is it said?',
-          'Why do we sing Tenen in Kiahk Midnight Praises?',
-          'Tell me about the life of St. Pope Kyrillos VI',
+          'Tell me the story of St. Anthony',
+          "What is today's Coptic date?",
         ],
   };
 
@@ -79,14 +79,22 @@ export default function AskScreen() {
     setLoading(true);
 
     try {
-      const answer = await askAiQuestion(q, messages, language, settings.geminiApiKey);
+      const result = await askAiQuestion(q, messages, language, settings.geminiApiKey);
       const assistantMsg: ChatMessage = {
         id: nextMessageId('assistant'),
         role: 'assistant',
-        content: answer,
+        content: result.answer,
+        actions: result.actions,
         timestamp: messageCounter,
       };
       setMessages([...newHistory, assistantMsg]);
+
+      if (result.autoNavigate) {
+        setTimeout(() => {
+          tapFeedback();
+          router.push(result.autoNavigate!.route as any);
+        }, 500);
+      }
     } catch {
       const errMsg: ChatMessage = {
         id: nextMessageId('err'),
@@ -201,13 +209,13 @@ export default function AskScreen() {
             </View>
           </View>
         ) : (
-          <FlatList
+          <FlatList<ChatMessage>
             ref={flatListRef}
             data={messages}
             keyExtractor={(item) => item.id}
             contentContainerStyle={styles.messageList}
             onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })}
-            renderItem={({ item }) => {
+            renderItem={({ item }: { item: ChatMessage }) => {
               const isUser = item.role === 'user';
               return (
                 <View
@@ -246,6 +254,63 @@ export default function AskScreen() {
                       ]}>
                       {item.content}
                     </Text>
+
+                    {!isUser && item.actions && item.actions.length > 0 && (
+                      <View style={styles.actionsWrap}>
+                        {item.actions.map((act: ChatAction, idx: number) => (
+                          <Pressable
+                            key={idx}
+                            onPress={() => {
+                              tapFeedback();
+                              if (act.type === 'hymn' && act.id) {
+                                router.push(`/hymn/${act.id}`);
+                              } else if (act.type === 'saint' && act.id) {
+                                router.push(`/saints/${act.id}`);
+                              } else if (act.route) {
+                                router.push(act.route as any);
+                              }
+                            }}
+                            accessibilityRole="button"
+                            style={({ pressed }) => [
+                              styles.actionCard,
+                              { backgroundColor: colors.background, borderColor: colors.gold },
+                              isRTL && { flexDirection: 'row-reverse' },
+                              pressed && styles.actionCardPressed,
+                            ]}>
+                            <View style={styles.actionIconWrap}>
+                              <Text style={styles.actionIcon}>
+                                {act.type === 'hymn' ? '🎵' : act.type === 'saint' ? '✝️' : '📖'}
+                              </Text>
+                            </View>
+                            <View style={styles.actionTextWrap}>
+                              <Text
+                                style={[
+                                  styles.actionTitle,
+                                  { color: colors.text, textAlign: isRTL ? 'right' : 'left' },
+                                ]}
+                                numberOfLines={1}>
+                                {act.title}
+                              </Text>
+                              {act.subtitle ? (
+                                <Text
+                                  style={[
+                                    styles.actionSubtitle,
+                                    { color: colors.muted, textAlign: isRTL ? 'right' : 'left' },
+                                  ]}
+                                  numberOfLines={1}>
+                                  {act.subtitle}
+                                </Text>
+                              ) : null}
+                            </View>
+                            <View style={[styles.actionGoBtn, { backgroundColor: colors.gold }]}>
+                              <Text style={styles.actionGoText}>
+                                {isRTL ? 'فتح ‹' : 'Open ›'}
+                              </Text>
+                            </View>
+                          </Pressable>
+                        ))}
+                      </View>
+                    )}
                   </View>
                 </View>
               );
@@ -493,5 +558,51 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontSize: 20,
     fontWeight: '800',
+  },
+  actionsWrap: {
+    marginTop: 12,
+    gap: 8,
+  },
+  actionCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    borderRadius: 12,
+    borderWidth: 1,
+    gap: 10,
+  },
+  actionCardPressed: {
+    opacity: 0.7,
+  },
+  actionIconWrap: {
+    width: 28,
+    height: 28,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  actionIcon: {
+    fontSize: 18,
+  },
+  actionTextWrap: {
+    flex: 1,
+  },
+  actionTitle: {
+    fontSize: 14,
+    fontWeight: '700',
+  },
+  actionSubtitle: {
+    fontSize: 12,
+    marginTop: 2,
+  },
+  actionGoBtn: {
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 8,
+  },
+  actionGoText: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: '#ffffff',
   },
 });
