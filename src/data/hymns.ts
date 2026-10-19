@@ -3096,6 +3096,32 @@ if (annualLiturgy) {
       ],
     },
     {
+      id: 'annual-liturgy-pauline-intro',
+      title: 'Ⲡⲁⲩⲗⲟⲥ (Introduction to the Pauline Epistle)',
+      versions: [
+        {
+          language: 'coptic',
+          text: 'Ⲡⲓⲁⲛⲁⲅⲛⲱⲥⲧⲏⲥ:\n\nⲠⲁⲩⲗⲟⲥ ⲫ̀ⲃⲱⲕ ⲙ̀Ⲡⲉⲛϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ ⲡⲓⲁⲡⲟⲥⲧⲟⲗⲟⲥ ⲉⲧⲑⲁϩⲉⲙ ⲫⲏⲉⲧⲁⲩⲑⲁϣϥ ⲉ̀ⲡⲓϩⲓϣⲉⲛⲛⲟⲩϥⲓ ⲛ̀ⲧⲉ Ⲫϯ.',
+        },
+        {
+          language: 'englishCoptic',
+          text: 'Pi-anagnōstēs:\n\nPaulos efvōk em-Pentshois Iēsous Pi-ekhristos pi-apostolos etthahem fē-etauthashf e-pihishennoufi ente Efnouti.',
+        },
+        {
+          language: 'english',
+          text: 'Reader:\n\nPaul, the servant of our Lord Jesus Christ, called to be an apostle, appointed to the Gospel of God.',
+        },
+        {
+          language: 'englishArabic',
+          text: "El-Qari':\n\nBoulus 'abd Yasou' el-Maseeh er-rasoul, el-mad'ou el-mufraz li-bushra Allah.",
+        },
+        {
+          language: 'arabic',
+          text: 'القارئ:\n\nبولس عبد يسوع المسيح الرسول، المدعو المفرز لبشرى الله.',
+        },
+      ],
+    },
+    {
       id: 'annual-liturgy-pihmot-gar',
       title: 'Ⲡⲓϩ̀ⲙⲟⲧ ⲅⲁⲣ',
       versions: [
@@ -3908,6 +3934,32 @@ const deaconAnnualLiturgyWord = deaconCategories
 
 if (deaconAnnualLiturgyWord) {
   deaconAnnualLiturgyWord.hymns = [
+    {
+      id: 'd-annual-liturgy-word-pauline-intro',
+      title: 'Ⲡⲁⲩⲗⲟⲥ (Introduction to the Pauline Epistle)',
+      versions: [
+        {
+          language: 'coptic',
+          text: 'Ⲡⲓⲁⲛⲁⲅⲛⲱⲥⲧⲏⲥ:\n\nⲠⲁⲩⲗⲟⲥ ⲫ̀ⲃⲱⲕ ⲙ̀Ⲡⲉⲛϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ ⲡⲓⲁⲡⲟⲥⲧⲟⲗⲟⲥ ⲉⲧⲑⲁϩⲉⲙ ⲫⲏⲉⲧⲁⲩⲑⲁϣϥ ⲉ̀ⲡⲓϩⲓϣⲉⲛⲛⲟⲩϥⲓ ⲛ̀ⲧⲉ Ⲫϯ.',
+        },
+        {
+          language: 'englishCoptic',
+          text: 'Pi-anagnōstēs:\n\nPaulos efvōk em-Pentshois Iēsous Pi-ekhristos pi-apostolos etthahem fē-etauthashf e-pihishennoufi ente Efnouti.',
+        },
+        {
+          language: 'english',
+          text: 'Reader:\n\nPaul, the servant of our Lord Jesus Christ, called to be an apostle, appointed to the Gospel of God.',
+        },
+        {
+          language: 'englishArabic',
+          text: "El-Qari':\n\nBoulus 'abd Yasou' el-Maseeh er-rasoul, el-mad'ou el-mufraz li-bushra Allah.",
+        },
+        {
+          language: 'arabic',
+          text: 'القارئ:\n\nبولس عبد يسوع المسيح الرسول، المدعو المفرز لبشرى الله.',
+        },
+      ],
+    },
     ...fromMatins('d-annual-matins-stand-up-for-prayer', 'd-annual-liturgy-word-stand-up-for-prayer'),
     ...fromMatins('d-annual-matins-pray-for-the-gospel', 'd-annual-liturgy-word-pray-for-the-gospel'),
     ...fromMatins('d-annual-matins-stand-in-the-fear-of-god', 'd-annual-liturgy-word-stand-in-the-fear-of-god'),
@@ -6955,6 +7007,7 @@ if (greatLent) {
           ...fromAnnual(annualLiturgy?.hymns, 'annual-liturgy-offering-golden-censer-virgin', 'hymn-of-the-censer', 'Ϯϣⲟⲩⲣⲏ (Hymn of the Censer)'),
           lentHymnOfIntercessions(`${id}-hymn-of-intercessions`),
           // From here on, the same words as Annual or Kiahk where the hymn is the same in Lent
+          ...fromAnnual(annualLiturgy?.hymns, 'annual-liturgy-pauline-intro', 'pauline-intro'),
           ...fromAnnual(annualLiturgy?.hymns, 'annual-liturgy-pihmot-gar', 'pihmot-gar', 'Ⲡⲓϩ̀ⲙⲟⲧ ⲅⲁⲣ'),
           ...fromKiahk('Ⲏ̀ ⲁ̀ⲅⲁⲡⲏ (Alternate Response to the Pauline Epistle)', 'pauline-alternate-response'),
           ...fromKiahk('Ϯⲙⲏⲧ ⲥ̀ⲛⲟⲩϯ (Hymn of the Virtues)', 'hymn-of-the-virtues'),
@@ -7110,6 +7163,7 @@ if (greatLent) {
             ],
           },
           lentHymnOfIntercessions(`${id}-hymn-of-intercessions`),
+          ...fromAnnual(annualLiturgy?.hymns, 'annual-liturgy-pauline-intro', 'pauline-intro'),
           ...fromAnnual(annualLiturgy?.hymns, 'annual-liturgy-pihmot-gar', 'pihmot-gar'),
           ...fromKiahk('Ϯⲙⲏⲧ ⲥ̀ⲛⲟⲩϯ (Hymn of the Virtues)', 'hymn-of-the-virtues'),
           ...fromKiahk('Ⲧⲟⲩ ⲙⲁⲕⲁⲣⲓⲱ (The Blessed)', 'the-blessed'),

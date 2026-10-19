@@ -229,6 +229,8 @@ const arabicTitles: Record<string, string> = {
   'lent-weekend-liturgy-abba-antony': 'العظيم أنبا أنطوني',
   'lent-weekend-liturgy-as-it-was': 'كما كان',
   'lent-weekend-liturgy-hymn-of-intercessions': 'الهيتنيات',
+  'lent-weekend-liturgy-pauline-intro': 'البولس',
+  'lent-weekday-liturgy-pauline-intro': 'البولس',
   'lent-weekend-liturgy-pihmot-gar': 'نعمة ربنا',
   'lent-weekend-liturgy-offering-all-the-wise-men': 'يا كل حكماء إسرائيل',
   'lent-weekend-liturgy-pauline-alternate-response': 'مرد البولس (محبة الله)',
@@ -343,6 +345,7 @@ const arabicTitles: Record<string, string> = {
   'annual-liturgy-hitens': 'بشفاعات',
   'annual-liturgy-hymn-of-intercessions': 'بشفاعات (الطويلة)',
   'annual-liturgy-taishori-hitens-bishop': 'طاي شوري وهيتين (في حضور الأب الأسقف)',
+  'annual-liturgy-pauline-intro': 'البولس',
   'annual-liturgy-pihmot-gar': 'نعمة ربنا',
   'annual-liturgy-perfect-is-the-blessing': 'الكامل بركة أبيه',
   'annual-liturgy-praxis-response': 'السلام لك يا مريم (مرد الإبركسيس)',
@@ -534,6 +537,7 @@ const arabicTitles: Record<string, string> = {
   'd-annual-offering-lamb-pray-for-mercy-pope-bishop': 'اطلبوا لكي يرحمنا الله (في حضور البابا أو الأسقف)',
 
   // Deacon Responses > Annual > Liturgy of the Word
+  'd-annual-liturgy-word-pauline-intro': 'البولس',
   'd-annual-liturgy-word-stand-up-for-prayer': 'للصلاة قفوا',
   'd-annual-liturgy-word-pray-for-the-gospel': 'صلوا من أجل الإنجيل المقدس',
   'd-annual-liturgy-word-stand-in-the-fear-of-god': 'قفوا بخوف الله',

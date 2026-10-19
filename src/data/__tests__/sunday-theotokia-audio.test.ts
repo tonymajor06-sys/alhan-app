@@ -1,5 +1,6 @@
 import { seasons, deaconCategories, flattenHymns, Hymn } from '../hymns';
 import { arsaniAudio } from '../arsani-audio';
+import { displayTitle } from '../arabic-titles';
 
 describe('Sunday Theotokia Audio Recordings', () => {
   const annualMidnight = seasons.find((s) => s.id === 'annual')?.services.find((s) => s.id === 'annual-midnight');
@@ -189,6 +190,44 @@ describe('Divine Liturgy Audio and Bishop Updates', () => {
     const canonical = allHymns.filter((h) => h.id.startsWith('annual-liturgy-offering-alleluia-thought-of-man'));
     expect(canonical.length).toBeGreaterThan(0);
     expect(canonical[0].versions.find((v) => v.language === 'coptic')?.audio).toBe('liturgy-je-fmevi.m4a');
+  });
+
+  test('Introduction to Pauline Epistle is present in Annual Liturgy and Deacon Liturgy of the Word', () => {
+    const paulineIntro = annualLiturgy?.hymns.find((h) => h.id === 'annual-liturgy-pauline-intro');
+    expect(paulineIntro).toBeDefined();
+
+    // Ordered immediately before annual-liturgy-pihmot-gar
+    const paulineIndex = annualLiturgy?.hymns.findIndex((h) => h.id === 'annual-liturgy-pauline-intro') ?? -1;
+    const pihmotIndex = annualLiturgy?.hymns.findIndex((h) => h.id === 'annual-liturgy-pihmot-gar') ?? -1;
+    expect(paulineIndex).toBeGreaterThan(-1);
+    expect(pihmotIndex).toBe(paulineIndex + 1);
+
+    // Verify all 5 versions
+    const coptic = paulineIntro?.versions.find((v) => v.language === 'coptic');
+    expect(coptic?.text).toContain('Ⲡⲓⲁⲛⲁⲅⲛⲱⲥⲧⲏⲥ:\n\nⲠⲁⲩⲗⲟⲥ ⲫ̀ⲃⲱⲕ');
+
+    const engCoptic = paulineIntro?.versions.find((v) => v.language === 'englishCoptic');
+    expect(engCoptic?.text).toContain('Pi-anagnōstēs:\n\nPaulos efvōk');
+
+    const english = paulineIntro?.versions.find((v) => v.language === 'english');
+    expect(english?.text).toContain('Reader:\n\nPaul, the servant of our Lord Jesus Christ');
+
+    const engArabic = paulineIntro?.versions.find((v) => v.language === 'englishArabic');
+    expect(engArabic?.text).toContain("El-Qari':\n\nBoulus 'abd");
+
+    const arabic = paulineIntro?.versions.find((v) => v.language === 'arabic');
+    expect(arabic?.text).toContain('القارئ:\n\nبولس عبد');
+
+    // Deacon Liturgy of the Word has it too
+    const deaconWord = deaconCategories
+      .find((c) => c.id === 'deacon-annual')
+      ?.services.find((s) => s.id === 'd-annual-liturgy-word');
+    const deaconPauline = deaconWord?.hymns.find((h) => h.id === 'd-annual-liturgy-word-pauline-intro');
+    expect(deaconPauline).toBeDefined();
+
+    // Arabic title
+    expect(displayTitle(paulineIntro!, 'ar')).toBe('البولس');
+    expect(displayTitle(deaconPauline!, 'ar')).toBe('البولس');
   });
 });
 
