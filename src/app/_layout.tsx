@@ -3,6 +3,7 @@ import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { AiBubble } from '@/components/ai-bubble';
 import { copticFont } from '@/components/alhan-ui';
 import { useHomeScreenQuickActions } from '@/components/quick-actions';
 import { alhanLightColors } from '@/constants/alhan-colors';
@@ -97,6 +98,7 @@ export default function RootLayout() {
             options={{ orientation: 'all', animation: 'fade', contentStyle: { backgroundColor: '#000' } }}
           />
         </Stack>
+        <AiBubble />
       </ThemeProvider>
     </GestureHandlerRootView>
   );

@@ -1,5 +1,6 @@
 export interface Env {
   ASSETS?: { fetch: (request: Request) => Promise<Response> };
+  GEMINI_API_KEY?: string;
   ANTHROPIC_API_KEY?: string;
 }
 
@@ -34,6 +35,49 @@ Tone and Guidelines:
 - Be clear, kind, and informative. If quoting Bible verses or hymns, cite them accurately.
 - Respond in the language used by the user (English or Arabic). If the question is in Arabic, respond in clear, articulate Arabic. If in English, respond in clear English.
 - Keep answers accessible and well-organized with clear headings, bullet points, or short paragraphs when explaining multi-step rites or hymns.`;
+
+function buildGeminiContents(
+  history: { role: 'user' | 'assistant'; content: string }[] | undefined,
+  currentQuestion: string
+) {
+  const raw: { role: 'user' | 'model'; text: string }[] = [];
+  if (Array.isArray(history)) {
+    for (const item of history.slice(-8)) {
+      if (typeof item.content === 'string' && item.content.trim()) {
+        raw.push({
+          role: item.role === 'assistant' ? 'model' : 'user',
+          text: item.content.trim(),
+        });
+      }
+    }
+  }
+  raw.push({ role: 'user', text: currentQuestion.trim() });
+
+  // Gemini requirements:
+  // 1. Must start with a user message
+  // 2. Turns must alternate strictly between user and model
+  const contents: { role: 'user' | 'model'; parts: { text: string }[] }[] = [];
+  for (const msg of raw) {
+    if (contents.length === 0) {
+      if (msg.role === 'user') {
+        contents.push({ role: 'user', parts: [{ text: msg.text }] });
+      }
+    } else {
+      const prev = contents[contents.length - 1];
+      if (prev.role === msg.role) {
+        prev.parts[0].text += '\n\n' + msg.text;
+      } else {
+        contents.push({ role: msg.role, parts: [{ text: msg.text }] });
+      }
+    }
+  }
+
+  if (contents.length === 0) {
+    contents.push({ role: 'user', parts: [{ text: currentQuestion.trim() }] });
+  }
+
+  return contents;
+}
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
@@ -73,71 +117,120 @@ export default {
           });
         }
 
-        const apiKey = env.ANTHROPIC_API_KEY;
-        if (!apiKey) {
-          return new Response(
-            JSON.stringify({
-              answer:
-                body.language === 'ar'
-                  ? 'خدمة المساعد الذكي قيد التجهيز في خادم الموقع. يُرجى تفعيل مفتاح Claude في أسرار Cloudflare Worker.'
-                  : 'The AI assistant is being configured on the server. Please set the ANTHROPIC_API_KEY secret in Cloudflare Workers.',
-              configured: false,
-            }),
-            { status: 200, headers: corsHeaders }
+        // 1. Check for Google Gemini (Free tier from Google AI Studio)
+        if (env.GEMINI_API_KEY) {
+          const contents = buildGeminiContents(body.history, question);
+          const geminiRes = await fetch(
+            `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${env.GEMINI_API_KEY}`,
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                system_instruction: {
+                  parts: [{ text: SYSTEM_PROMPT }],
+                },
+                contents,
+                generationConfig: {
+                  maxOutputTokens: 1024,
+                  temperature: 0.7,
+                },
+              }),
+            }
           );
+
+          if (!geminiRes.ok) {
+            const errText = await geminiRes.text();
+            return new Response(
+              JSON.stringify({
+                error: `Gemini API error: ${geminiRes.status}`,
+                details: errText,
+              }),
+              { status: 502, headers: corsHeaders }
+            );
+          }
+
+          const data = (await geminiRes.json()) as {
+            candidates?: {
+              content?: {
+                parts?: { text: string }[];
+              };
+            }[];
+          };
+          const answer = data.candidates?.[0]?.content?.parts?.[0]?.text ?? '';
+
+          return new Response(JSON.stringify({ answer, configured: true }), {
+            status: 200,
+            headers: corsHeaders,
+          });
         }
 
-        // Build messages array for Anthropic Claude API
-        const messages: { role: 'user' | 'assistant'; content: string }[] = [];
-        if (Array.isArray(body.history)) {
-          for (const item of body.history.slice(-8)) {
-            if (
-              (item.role === 'user' || item.role === 'assistant') &&
-              typeof item.content === 'string' &&
-              item.content.trim()
-            ) {
-              messages.push({ role: item.role, content: item.content.trim() });
+        // 2. Fallback to Anthropic Claude if ANTHROPIC_API_KEY is configured
+        if (env.ANTHROPIC_API_KEY) {
+          const messages: { role: 'user' | 'assistant'; content: string }[] = [];
+          if (Array.isArray(body.history)) {
+            for (const item of body.history.slice(-8)) {
+              if (
+                (item.role === 'user' || item.role === 'assistant') &&
+                typeof item.content === 'string' &&
+                item.content.trim()
+              ) {
+                messages.push({ role: item.role, content: item.content.trim() });
+              }
             }
           }
-        }
-        messages.push({ role: 'user', content: question });
+          messages.push({ role: 'user', content: question });
 
-        const anthropicRes = await fetch('https://api.anthropic.com/v1/messages', {
-          method: 'POST',
-          headers: {
-            'x-api-key': apiKey,
-            'anthropic-version': '2023-06-01',
-            'content-type': 'application/json',
-          },
-          body: JSON.stringify({
-            model: 'claude-3-5-haiku-20241022',
-            max_tokens: 1024,
-            system: SYSTEM_PROMPT,
-            messages,
-          }),
-        });
-
-        if (!anthropicRes.ok) {
-          const errText = await anthropicRes.text();
-          return new Response(
-            JSON.stringify({
-              error: `Claude API error: ${anthropicRes.status}`,
-              details: errText,
+          const anthropicRes = await fetch('https://api.anthropic.com/v1/messages', {
+            method: 'POST',
+            headers: {
+              'x-api-key': env.ANTHROPIC_API_KEY,
+              'anthropic-version': '2023-06-01',
+              'content-type': 'application/json',
+            },
+            body: JSON.stringify({
+              model: 'claude-3-5-haiku-20241022',
+              max_tokens: 1024,
+              system: SYSTEM_PROMPT,
+              messages,
             }),
-            { status: 502, headers: corsHeaders }
-          );
+          });
+
+          if (!anthropicRes.ok) {
+            const errText = await anthropicRes.text();
+            return new Response(
+              JSON.stringify({
+                error: `Claude API error: ${anthropicRes.status}`,
+                details: errText,
+              }),
+              { status: 502, headers: corsHeaders }
+            );
+          }
+
+          const data = (await anthropicRes.json()) as {
+            content?: { type: string; text: string }[];
+          };
+          const textBlock = data.content?.find((c) => c.type === 'text');
+          const answer = textBlock?.text ?? '';
+
+          return new Response(JSON.stringify({ answer, configured: true }), {
+            status: 200,
+            headers: corsHeaders,
+          });
         }
 
-        const data = (await anthropicRes.json()) as {
-          content?: { type: string; text: string }[];
-        };
-        const textBlock = data.content?.find((c) => c.type === 'text');
-        const answer = textBlock?.text ?? '';
-
-        return new Response(JSON.stringify({ answer, configured: true }), {
-          status: 200,
-          headers: corsHeaders,
-        });
+        // Neither key configured
+        return new Response(
+          JSON.stringify({
+            answer:
+              body.language === 'ar'
+                ? 'خدمة المساعد الذكي قيد التجهيز. يمكنك إضافة مفتاح Google Gemini المجاني في أسرار Cloudflare Worker (GEMINI_API_KEY) من موقع Google AI Studio.'
+                : 'The AI assistant is being configured. You can add a free Google Gemini API key to Cloudflare Worker secrets (GEMINI_API_KEY) from Google AI Studio (aistudio.google.com).',
+            configured: false,
+          }),
+          { status: 200, headers: corsHeaders }
+        );
       } catch (err: unknown) {
         const message = err instanceof Error ? err.message : String(err);
         return new Response(JSON.stringify({ error: message }), {

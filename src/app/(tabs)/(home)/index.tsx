@@ -54,7 +54,6 @@ export default function HomeScreen() {
     { key: 'responses', title: displayTitle(mainCategories[0], lang), desc: t.responsesDesc, href: '/responses' as const, image: homeArt.responses },
     { key: 'saints', title: saintsStrings[lang].title, desc: saintsStrings[lang].subtitle, href: '/saints' as const, image: homeArt.saints },
     { key: 'playlist', title: t.playlistTitle, desc: t.playlistsDesc(playlists.length), href: '/playlist' as const, image: homeArt.playlist, tab: true },
-    { key: 'ask', title: lang === 'ar' ? 'المساعد الذكي' : 'Ask AI', desc: lang === 'ar' ? 'إجابات عن الألحان والطقوس والقديسين' : 'Questions on hymns, rites & saints', href: '/ask' as const, image: homeArt.ask },
     { key: 'guide', title: guideStrings[lang].title, desc: guideStrings[lang].subtitle, href: '/guide' as const, image: homeArt.guide },
     { key: 'faith', title: faithStrings[lang].title, desc: faithStrings[lang].subtitle, href: '/faith' as const, image: homeArt.faith },
     { key: 'learn', title: learnStrings[lang].title, desc: learnStrings[lang].subtitle, href: '/learn' as const, image: homeArt.learn },
@@ -88,16 +87,6 @@ export default function HomeScreen() {
             <Text style={styles.navTitle}>{t.appTitle}</Text>
           </View>
           <View style={[styles.topButtons, rowDirection]}>
-            <Pressable
-              onPress={() => {
-                tapFeedback();
-                router.push('/ask');
-              }}
-              accessibilityRole="button"
-              accessibilityLabel={lang === 'ar' ? 'المساعد الذكي' : 'Ask AI'}
-              style={({ pressed }) => [styles.searchButton, pressed && styles.rowCardPressed]}>
-              <Text style={styles.searchButtonIcon}>✨</Text>
-            </Pressable>
             <Pressable
               onPress={() => {
                 tapFeedback();

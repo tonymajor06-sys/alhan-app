@@ -40,6 +40,8 @@ const strings = {
     playNextHint: 'When a recording ends, the next one in the service starts',
     reminders: 'Feast reminders',
     remindersHint: 'A notification the evening before each feast and fast',
+    aiBubble: 'AI Assistant bubble',
+    aiBubbleHint: 'Floating bubble to ask questions about hymns, rites and Coptic',
     about: 'About',
     support: 'Support and feedback',
     privacy: 'Privacy Policy',
@@ -68,6 +70,8 @@ const strings = {
     playNextHint: 'عند انتهاء التسجيل يبدأ التالي في الخدمة',
     reminders: 'تذكير بالأعياد',
     remindersHint: 'رسالة تذكير مساء اليوم السابق لكل عيد وصوم',
+    aiBubble: 'أيقونة المساعد الذكي',
+    aiBubbleHint: 'أيقونة عائمة على الشاشة للسؤال عن الألحان والطقوس والقبطي',
     about: 'عن التطبيق',
     support: 'الدعم والملاحظات',
     privacy: 'سياسة الخصوصية',
@@ -263,6 +267,7 @@ export default function SettingsScreen() {
         <View style={styles.group}>
           {switchRow(t.sideBySide, t.sideBySideHint, settings.sideBySide, () => updateSettings({ sideBySide: !settings.sideBySide }), true)}
           {switchRow(t.playNext, t.playNextHint, settings.playNext, () => updateSettings({ playNext: !settings.playNext }))}
+          {switchRow(t.aiBubble, t.aiBubbleHint, settings.showAiBubble, () => updateSettings({ showAiBubble: !settings.showAiBubble }))}
           {Platform.OS !== 'web' ? switchRow(t.reminders, t.remindersHint, settings.feastReminders, toggleReminders) : null}
         </View>
       )}
