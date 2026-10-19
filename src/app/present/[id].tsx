@@ -19,19 +19,34 @@ export async function generateStaticParams(): Promise<Record<string, string>[]> 
   return allHymnSlugs().map((id) => ({ id }));
 }
 
-// Projector mode: one verse at a time, in up to three languages at once, big enough for a church screen.
+// Projector mode: one verse at a time, side-by-side columns (up to 4 languages), like Spirit & Truth.
 // Always dark, whatever the phone's theme, because light text on black reads best on a projector.
 const colors = alhanColors;
 const preferred: LanguageType[] = ['coptic', 'english', 'arabic'];
-const MAX_SHOWN = 3;
+const MAX_SHOWN = 4;
 
-// Rough font size that lets all the text fill the screen without overflowing
-function fitFontSize(texts: string[], width: number, height: number): number {
-  const chars = texts.reduce((n, t) => n + t.length, 0) || 1;
-  const lines = texts.reduce((n, t) => n + t.split('\n').length, 0);
-  // Each character takes about 0.55em × 1.45em; leave room for the gaps between languages
-  const size = Math.sqrt((width * height * 0.62) / (chars * 0.8 + lines * 6));
-  return Math.max(18, Math.min(88, Math.floor(size)));
+// Fit font size so text fills each side-by-side column without overflowing the screen height
+function fitFontSize(texts: string[], colWidth: number, height: number): number {
+  if (texts.length === 0) return 32;
+  for (let fs = 56; fs >= 14; fs -= 2) {
+    const charsPerLine = Math.max(8, Math.floor(colWidth / (fs * 0.58)));
+    let fits = true;
+    for (const text of texts) {
+      if (!text) continue;
+      const paragraphs = text.split('\n');
+      let lines = 0;
+      for (const p of paragraphs) {
+        lines += Math.max(1, Math.ceil((p.length || 1) / charsPerLine));
+      }
+      const neededHeight = lines * (fs * 1.35) + 24;
+      if (neededHeight > height) {
+        fits = false;
+        break;
+      }
+    }
+    if (fits) return fs;
+  }
+  return 14;
 }
 
 export default function PresentScreen() {
@@ -95,14 +110,21 @@ export default function PresentScreen() {
     if (shown.includes(l)) {
       if (shown.length > 1) setShown(shown.filter((s) => s !== l));
     } else {
-      setShown([...shown, l].slice(-MAX_SHOWN));
+      if (shown.length < MAX_SHOWN) {
+        setShown([...shown, l]);
+      } else {
+        setShown([...shown.slice(1), l]);
+      }
     }
   };
 
   const digits = (n: number) => (isRTL ? toArabicDigits(n) : String(n));
   const verseText = (v: Verse | undefined) => (v ? [v.label, v.text].filter(Boolean).join('\n') : '');
   const texts = ordered.map((l) => verseText(versesBy.get(l)?.[current]));
-  const fontSize = fitFontSize(texts, width - 64, height - insets.top - insets.bottom - 120);
+  const numCols = Math.max(1, ordered.length);
+  const colWidth = Math.floor((width - 32 - (numCols - 1) * 16) / numCols);
+  const availHeight = height - insets.top - insets.bottom - 110;
+  const fontSize = fitFontSize(texts, colWidth, availHeight);
   const speakerColor = { deacon: colors.gold, people: colors.people, priest: colors.priest };
 
   if (!hymn) {
@@ -122,14 +144,14 @@ export default function PresentScreen() {
       <StatusBar hidden />
       <KeepScreenAwake />
 
-      {/* The verse, each language under the other */}
+      {/* The verse, side-by-side columns like Spirit & Truth */}
       <View style={[styles.stage, { paddingTop: insets.top + 64, paddingBottom: insets.bottom + 48 }]}>
         {ordered.map((l, i) => {
           const verse = versesBy.get(l)?.[current];
           if (!verse) return null;
           const arabic = l === 'arabic' || l === 'arabicCoptic' || l === 'arabicEnglish';
           return (
-            <View key={l} style={[styles.block, i > 0 && styles.blockDivider]}>
+            <View key={l} style={[styles.column, i > 0 && styles.columnDivider]}>
               <Text
                 style={[
                   styles.verse,
@@ -139,7 +161,7 @@ export default function PresentScreen() {
                   i > 0 && l === 'english' && styles.translation,
                 ]}>
                 {verse.speaker ? (
-                  <Text style={[styles.speaker, { color: speakerColor[verse.speaker], fontSize: fontSize * 0.6 }]}>
+                  <Text style={[styles.speaker, { color: speakerColor[verse.speaker], fontSize: fontSize * 0.65 }]}>
                     {verse.label}
                     {verse.text ? '\n' : ''}
                   </Text>
@@ -216,11 +238,21 @@ const styles = StyleSheet.create({
   message: { color: colors.text, fontSize: 22, textAlign: 'center', marginTop: 120 },
   stage: {
     flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 32,
+    paddingHorizontal: 16,
   },
-  block: { paddingVertical: 10 },
-  blockDivider: { borderTopWidth: 1, borderTopColor: 'rgba(217, 173, 85, 0.25)' },
+  column: {
+    flex: 1,
+    height: '100%',
+    justifyContent: 'center',
+    paddingHorizontal: 10,
+  },
+  columnDivider: {
+    borderLeftWidth: 1,
+    borderLeftColor: 'rgba(217, 173, 85, 0.25)',
+  },
   verse: {
     color: '#fff',
     textAlign: 'center',

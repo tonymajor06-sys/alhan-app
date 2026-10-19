@@ -7,7 +7,7 @@ import type { LanguageType } from './hymns';
 // Note: When multiple recordings exist for the same hymn, the clearer recording is listed first (primary audio).
 export const arsaniAudio: { file: string; hymns: string[]; language: LanguageType }[] = [
   // Ⲧⲉⲛⲟⲩⲱϣⲧ ⲙ̀Ⲫⲓⲱⲧ | Teno osht emefiot | Long Watos Antiphonary - Archdeacon Arsani Sidaros
-  { file: "arsani-002-teno-osht-emefiot-long-watos-antiphonary-sidaros.m4a", hymns: ["annual-vespers-verse-of-cymbals", "annual-matins-verse-of-cymbals"], language: "coptic" },
+  { file: "arsani-002-teno-osht-emefiot-long-watos-antiphonary-sidaros.m4a", hymns: [], language: "coptic" },
   // Joyful Verses of the Cymbals (Adam) Feast of the Cross | Archdeacon Arsani Sidarous (Primary: score 59.47 vs 52.48 vs 44.22)
   { file: "arsani-003-joyful-verses-of-cymbals-adam-feast-of-cross.m4a", hymns: ["cross-matins-verses-of-the-cymbal", "cross-vespers-verses-of-the-cymbal"], language: "coptic" },
   // Verses of the Cymbals Feast of Cross - YouTube recording (Secondary: score 52.48)
@@ -238,8 +238,6 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   { file: "arsani-190-kiahk-psalm-150-2022.m4a", hymns: ["kiahk-distribution-hymn-1", "annual-distribution-psalm-150@kiahk-distribution"], language: "coptic" },
   // Kiahk Psalm 150 Alleluia - Tertiary: score 58.62
   { file: "arsani-155-kiahk-psalm-150-alleluia.m4a", hymns: ["kiahk-distribution-hymn-1", "annual-distribution-psalm-150@kiahk-distribution"], language: "coptic" },
-  // Intro to Fraction (Alternate tune)
-  { file: "arsani-156-intro-to-fraction-alternate-tune.m4a", hymns: ["annual-liturgy-introduction-to-the-fraction"], language: "coptic" },
   // O Nim Nai
   { file: "arsani-157-o-nim-nai.m4a", hymns: ["pentecost-liturgy-o-nimnai"], language: "coptic" },
   // Festive Tenoweh Ensok
@@ -288,7 +286,7 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   // Evlogimenos (Blessed is He) - Primary: score 83.20
   { file: "arsani-236-evlogimenos.m4a", hymns: ["palmsunday-distribution-the-hymn-of-palm-sunday", "palmsunday-liturgy-evlogymenos", "annual-vespers-blessed-is-he"], language: "coptic" },
   // Evlogimenos - Tertiary: score 43.42
-  { file: "arsani-114-evlogimenos.m4a", hymns: ["palmsunday-distribution-the-hymn-of-palm-sunday", "palmsunday-liturgy-evlogymenos", "annual-vespers-blessed-is-he"], language: "coptic" },
+  { file: "arsani-114-evlogimenos.m4a", hymns: [], language: "coptic" },
   // The Great Azpazesthe (Quick Tune)
   { file: "arsani-241-great-azpazes-quick-tune-anton-ibrahim-ayad.m4a", hymns: ["d-annual-liturgy-faithful-greet-one-another-great"], language: "arabic" },
   // Avechenon

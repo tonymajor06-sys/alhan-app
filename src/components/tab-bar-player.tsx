@@ -27,8 +27,8 @@ export function TabBarPlayer() {
   return (
     <View style={[styles.row, isRTL && styles.rowReverse]} {...swipe.panHandlers}>
       <Pressable
-        onPress={() => router.push('/now-playing')}
-        onLongPress={() => openHymnPage(nowPlaying.hymnId, nowPlaying.language)}
+        onPress={() => openHymnPage(nowPlaying.hymnId, nowPlaying.language)}
+        onLongPress={() => router.push('/now-playing')}
         accessibilityRole="button"
         accessibilityLabel={`${t.nowPlaying}: ${nowPlaying.title}`}
         style={styles.titleWrap}>

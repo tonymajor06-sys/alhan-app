@@ -116,13 +116,13 @@ describe('Sunday Theotokia Audio Recordings', () => {
     expect(highPriestCoptic?.audio).toBe('arsani-300-the-great-high-priest-meeghalo.m4a');
     expect(highPriestCoptic?.otherAudio).toContain('arsani-208-meghalo-apenchoice.m4a');
 
-    // 5. Palm Sunday Evlogimenos: arsani-236 (clearer) is primary, arsani-114 is secondary
+    // 5. Palm Sunday Evlogimenos: arsani-236 (clearer) is primary, duplicate arsani-114 is removed
     const palmDist = seasons.find((s) => s.id === 'palm-sunday')?.services.find((s) => s.id === 'palmsunday-distribution');
     const evlogimenos = palmDist?.hymns.find((h) => h.id.startsWith('palmsunday-distribution-the-hymn-of-palm-sunday'));
     expect(evlogimenos).toBeDefined();
     const evlogimenosCoptic = evlogimenos?.versions.find((v) => v.language === 'coptic');
     expect(evlogimenosCoptic?.audio).toBe('arsani-236-evlogimenos.m4a');
-    expect(evlogimenosCoptic?.otherAudio).toContain('arsani-114-evlogimenos.m4a');
+    expect(evlogimenosCoptic?.otherAudio ?? []).not.toContain('arsani-114-evlogimenos.m4a');
   });
 });
 
@@ -228,6 +228,29 @@ describe('Divine Liturgy Audio and Bishop Updates', () => {
     // Arabic title
     expect(displayTitle(paulineIntro!, 'ar')).toBe('البولس');
     expect(displayTitle(deaconPauline!, 'ar')).toBe('البولس');
+  });
+
+  test('Verse of the Cymbals has single recording (no second recording)', () => {
+    const annualMatins = seasons.find((s) => s.id === 'annual')?.services.find((s) => s.id === 'annual-matins');
+    const verseOfCymbals = annualMatins?.hymns.find((h) => h.id === 'annual-matins-verse-of-cymbals');
+    expect(verseOfCymbals).toBeDefined();
+    const coptic = verseOfCymbals?.versions.find((v) => v.language === 'coptic');
+    expect(coptic?.audio).toBe('verse-of-the-cymbals-annual.m4a');
+    expect(coptic?.otherAudio ?? []).toHaveLength(0);
+  });
+
+  test('Blessed Are You has Blessed are you.m4a as primary audio and no liturgy-ksmarout.m4a', () => {
+    const blessed = annualLiturgy?.hymns.find((h) => h.id === 'annual-liturgy-offering-blessed-are-you');
+    expect(blessed).toBeDefined();
+    const coptic = blessed?.versions.find((v) => v.language === 'coptic');
+    expect(coptic?.audio).toBe('Blessed are you.m4a');
+    expect(coptic?.otherAudio ?? []).not.toContain('liturgy-ksmarout.m4a');
+  });
+
+  test('Introduction to the Fraction is removed from Liturgy', () => {
+    const allHymns = [...seasons, ...deaconCategories].flatMap((g) => g.services.flatMap((s) => flattenHymns(s.hymns)));
+    const fraction = allHymns.find((h) => h.id === 'annual-liturgy-introduction-to-the-fraction');
+    expect(fraction).toBeUndefined();
   });
 });
 

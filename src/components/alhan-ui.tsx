@@ -510,8 +510,8 @@ export function MiniPlayer({ lang, hideFor }: { lang: AppLanguage; hideFor?: str
       </View>
       <View style={[styles.miniRow, rowDirection]}>
         <Pressable
-          onPress={() => router.push('/now-playing')}
-          onLongPress={() => openHymnPage(nowPlaying.hymnId, nowPlaying.language)}
+          onPress={() => openHymnPage(nowPlaying.hymnId, nowPlaying.language)}
+          onLongPress={() => router.push('/now-playing')}
           accessibilityRole="button"
           accessibilityLabel={`${t.nowPlaying}: ${nowPlaying.title}`}
           accessibilityHint={hasQueue ? t.swipeToSkip : undefined}
