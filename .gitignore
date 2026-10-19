@@ -49,3 +49,4 @@ example
 
 # Intermediate art generator svgs
 svg/
+.wrangler/
