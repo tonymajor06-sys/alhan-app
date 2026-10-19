@@ -2,6 +2,9 @@ export interface Env {
   ASSETS?: { fetch: (request: Request) => Promise<Response> };
   GEMINI_API_KEY?: string;
   ANTHROPIC_API_KEY?: string;
+  AI?: {
+    run: (model: string, inputs: Record<string, unknown>) => Promise<any>;
+  };
 }
 
 const SYSTEM_PROMPT = `You are a reverent, knowledgeable, and caring Coptic Orthodox Christian assistant ("Coptic Psalmody AI" / "خادم التسبحة").
@@ -221,13 +224,52 @@ export default {
           });
         }
 
-        // Neither key configured
+        // 3. Built-in Cloudflare Workers AI (100% Free on Cloudflare, zero external API keys needed!)
+        let lastAiErr: string | undefined = env.AI ? undefined : 'env.AI is undefined in worker';
+        if (env.AI) {
+          try {
+            const chatMessages: { role: 'system' | 'user' | 'assistant'; content: string }[] = [
+              { role: 'system', content: SYSTEM_PROMPT },
+            ];
+            if (Array.isArray(body.history)) {
+              for (const item of body.history.slice(-8)) {
+                if (
+                  (item.role === 'user' || item.role === 'assistant') &&
+                  typeof item.content === 'string' &&
+                  item.content.trim()
+                ) {
+                  chatMessages.push({ role: item.role, content: item.content.trim() });
+                }
+              }
+            }
+            chatMessages.push({ role: 'user', content: question });
+
+            const aiRes = (await env.AI.run('@cf/meta/llama-3.3-70b-instruct-fp8-fast', {
+              messages: chatMessages,
+              max_tokens: 1024,
+            })) as { response?: string };
+
+            const answer = typeof aiRes?.response === 'string' ? aiRes.response.trim() : '';
+            if (answer) {
+              return new Response(JSON.stringify({ answer, configured: true }), {
+                status: 200,
+                headers: corsHeaders,
+              });
+            }
+            lastAiErr = `Empty response: ${JSON.stringify(aiRes)}`;
+          } catch (aiErr) {
+            lastAiErr = aiErr instanceof Error ? aiErr.message : String(aiErr);
+            console.error('Cloudflare Workers AI execution error:', aiErr);
+          }
+        }
+
+        // Neither external key nor Workers AI answered
         return new Response(
           JSON.stringify({
             answer:
               body.language === 'ar'
-                ? 'خدمة المساعد الذكي قيد التجهيز. يمكنك إضافة مفتاح Google Gemini المجاني في أسرار Cloudflare Worker (GEMINI_API_KEY) من موقع Google AI Studio.'
-                : 'The AI assistant is being configured. You can add a free Google Gemini API key to Cloudflare Worker secrets (GEMINI_API_KEY) from Google AI Studio (aistudio.google.com).',
+                ? 'خادم الذكاء الاصطناعي قيد التجهيز. يرجى المحاولة بعد قليل أو كتابة اسم أي لحن أو قديس لعرضه فوراً.'
+                : 'The AI assistant is connecting. Please ask any question about Coptic hymns, saints, or rites, or ask to find a specific hymn.',
             configured: false,
           }),
           { status: 200, headers: corsHeaders }

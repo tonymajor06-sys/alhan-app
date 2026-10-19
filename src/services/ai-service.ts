@@ -318,6 +318,31 @@ const OFFLINE_KNOWLEDGE: { keywords: string[]; en: string; ar: string }[] = [
     en: `### Meaning of "Alleluia" (ⲁⲗⲗⲏⲗⲟⲩⲓⲁ)\n\n"Alleluia" is derived from the Hebrew *Hallelu-Yah*, meaning **"Praise the Lord"**.\nIn the Coptic Church, it is the royal triumphant song of the Resurrection and eternity, chanted with long melismatic joyful tunes during feasts and at the close of praises.`,
     ar: `### معنى كلمة «هلليلويا» (ⲁⲗⲗⲏⲗⲟⲩⲓⲁ)\n\n«هلليلويا» كلمة مركبة من مقطعين تعني **«سبحوا الله»** (هللو = سبحوا، ياه = يهوه / الله).\nوهي ترنيمة الفرح والنصرة والقيامة في الكنيسة، وتُنشد بنغمات فرحة ممتدة في الأعياد وختام الصلوات.`,
   },
+  {
+    keywords: ['fraction', 'fraction prayer', 'القسمة', 'صلاة القسمة'],
+    en: `### The Fraction Prayers in the Divine Liturgy (ⲡⲓⲫⲱϣ)\n\n* **Purpose:** The priest solemnly divides the Holy Body into 12 parts around the central Spadikon (representing Christ surrounded by His twelve apostles), symbolizing Christ's sacrifice on the Cross for the life of the world.\n* **Types of Fractions:** Over 30 beautiful fraction prayers exist for different liturgical seasons:\n  * *Annual Fraction:* Fraction to the Father or Son, focusing on repentance and divine mercy.\n  * *Festive Fractions:* Nativity, Epiphany, Resurrection, Ascension, Pentecost.\n  * *Fasting Fractions:* Great Lent (e.g. the 100-year-old prayers of the desert fathers) and Jonah's Fast.`,
+    ar: `### صلوات القِسْمَة في القداس الإلهي (ⲡⲓⲫⲱϣ)\n\n* **الهدف والرمزية:** يقوم الكاهن بتقسيم الجسد المقدس إلى ١٢ جزءاً حول الإسباديكون الأوسط (رمز للسيد المسيح وحوله تلاميذه الاثنا عشر)، تذكاراً لآلام المسيح وذبيحة الصليب المحيية.\n* **أنواع القسم:** يوجد في الخولاجي القبطي أكثر من ٣٠ قسمة لمختلف المناسبات الكنسية:\n  * *القسم السنوية:* للآب أو للابن، وتركز على التوبة والانسحاق وطلب الرحمة.\n  * *قسم الأعياد السيدية:* للقيامة، الميلاد، الغطاس، الصعود، والعنصرة.\n  * *قسم الأصوام:* للصوم الكبير (مثل قسمة ذبح إسحاق أو قسمة الآباء الرهبان) وصوم يونان.`,
+  },
+  {
+    keywords: ['thanksgiving', 'thanksgiving prayer', 'صلاة الشكر'],
+    en: `### The Prayer of Thanksgiving (Ⲡ̀ϣⲗⲏⲗ ⲛ̀ⲧⲉ ⲡⲓϣⲉⲡϩ̀ⲙⲟⲧ)\n\n* **The Golden Key:** In the Coptic Orthodox Church, every liturgical service, sacrament, canonical hour of the Agpeya, and private devotion must begin with the Thanksgiving Prayer.\n* **Four Attributes of God:** We thank the Lord because He has:\n  1. *Sheltered us* (ⲁϥⲉⲣⲥ̀ⲕⲉⲡⲁⲍⲓⲛ ⲉ̀ϫⲱⲛ)\n  2. *Helped us* (ⲁϥⲉⲣⲃⲟⲏ̀ⲑⲓⲛ ⲉ̀ⲣⲟⲛ)\n  3. *Preserved us* (ⲁϥⲁ̀ⲣⲉϩ ⲉ̀ⲣⲟⲛ)\n  4. *Accepted us unto Himself* (ⲁϥϣⲟⲡⲧⲉⲛ ⲉ̀ⲣⲟϥ)\n  5. *Brought us to this hour* (ⲁϥⲉⲛⲧⲉⲛ ⲉ̀ϧⲟⲩⲛ ⲉ̀ⲧⲁⲓⲟⲩⲛⲟⲩ ⲑⲁⲓ).`,
+    ar: `### صلاة الشكر (Ⲡ̀ϣⲗⲏⲗ ⲛ̀ⲧⲉ ⲡⲓϣⲉⲡϩ̀ⲙⲟⲧ)\n\n* **المفتاح الذهبي للصلوات:** تبدأ الكنيسة القبطية الأرثوذكسية جميع صلواتها الطقسية وأسرارها وسواعي الأجبية بصلاة الشكر، اقتداءً بالوصية: «اشكروا في كل شيء».\n* **أفعال الشكر الخمسة:** نشكر الله لأنه:\n  ١. *سترنا* (ستر على خطايانا وضعفاتنا)\n  ٢. *أعاننا* (في تجاربنا وأتعابنا)\n  ٣. *حفظنا* (من مكايد العدو والشرور)\n  ٤. *قبلنا إليه* (بالمراحم والحب الأبوي)\n  ٥. *أشفق علينا وعضدنا وأتى بنا إلى هذه الساعة*.`,
+  },
+  {
+    keywords: ['deacon ranks', 'orders of deacons', 'رتب الشمامسة', 'درجات الشماس'],
+    en: `### The Five Orders of Coptic Deaconhood\n\n1. **Epsaltos (Chanter / ⲯⲁⲗⲧⲏⲥ):** Ordained to learn and chant the Church hymns and responses.\n2. **Anagnostis (Reader / ⲁⲛⲁⲅⲛⲱⲥⲧⲏⲥ):** Reads the daily Scripture readings (Pauline, Catholic Epistles, Praxis, Synaxarium, and Psalms).\n3. **Hypodeacon (Subdeacon / ⲩ̀ⲡⲟⲇⲓⲁⲕⲱⲛ):** Guards the sanctuary doors, lights the altar candles, and assists the full deacons.\n4. **Deacon (Full Deacon / ⲇⲓⲁⲕⲱⲛ):** Carries the chalice during Holy Communion, proclaims the major liturgical litanies, and assists the priest during the Holy Mysteries.\n5. **Archdeacon (Leader of Deacons / ⲁⲣⲭⲏⲇⲓⲁⲕⲱⲛ):** The highest deacon rank, responsible for directing all choir and liturgical order.`,
+    ar: `### رتب الشمامسة الخمس في الكنيسة القبطية\n\n١. **إبصالتس (مرتل / ⲯⲁⲗⲧⲏⲥ):** وظيفته ترتيل ألحان وتسابيح الكنيسة ومردات الشعب.\n٢. **أغنسطس (قارئ / ⲁⲛⲁⲅⲛⲱⲥⲧⲏⲥ):** يقرأ القراءات الكنسية في القداس (البولس، الكاثوليكون، الإبركسيس، والسنكسار والمزمور).\n٣. **إيبودياكون (مساعد شماس / ⲩ̀ⲡⲟⲇⲓⲁⲕⲱⲛ):** حراسة أبواب الهيكل وإيقاد قناديل المذبح وخدمة الأواني المقدسة.\n٤. **دياكون (شماس كامل / ⲇⲓⲁⲕⲱⲛ):** يناول الشعب من الدم الكريم بالكأس، وينادي بالأواشي الكبرى في القداس، ويساعد الكاهن في طقوس الأسرار.\n٥. **أرشيدياكون (رئيس شمامسة / ⲁⲣⲭⲏⲇⲓⲁⲕⲱⲛ):** أعلى درجات الشمامسة، يتولى قيادة وتنسيق خدمة الشمامسة وتنظيم الهيكل.`,
+  },
+  {
+    keywords: ['qorban', 'holy bread', 'al-hamal', 'قربان', 'القربان', 'الحمل'],
+    en: `### The Holy Bread (Qorban / ⲟⲩⲕⲟⲩⲣⲃⲁⲛ)\n\n* **Round Shape:** Represents eternity without beginning or end, like our Lord Jesus Christ.\n* **The 12 Crosses:** Represent the 12 Apostles who proclaimed Christ's Gospel to the four corners of the world.\n* **The Central Cross (Spadikon / ⲥ̀ⲡⲁⲇⲓⲕⲟⲛ):** Represents Christ, the Master and Head of the Church.\n* **The 5 Holes:** Symbolize the five wounds of Christ on the Cross (the three nails, the spear in His side, and the crown of thorns).\n* **The Inscription:** Inscribed in Coptic around the border: *"Agios O Theos, Agios Ischyros, Agios Athanatos"* ("Holy God, Holy Mighty, Holy Immortal").`,
+    ar: `### قربانة الحمل في الكنيسة القبطية (الحمل / ⲟⲩⲕⲟⲩⲣⲃⲁⲛ)\n\n* **الشكل الدائري:** يرمز إلى الأبدية التي لا بداية لها ولا نهاية، كشخص الفادي ربنا يسوع المسيح.\n* **الصلبان الاثنا عشر:** ترمز لتلاميذ المسيح الاثني عشر الذين كرزوا بإنجيل الخلاص في المسكونة كلها.\n* **الصليب الكبير الأوسط (الإسباديكون):** يرمز للسيد المسيح رئيس الكنيسة وفاديها.\n* **الثقوب الخمسة:** ترمز لجراحات السيد المسيح الخمس على عود الصليب (المسامير الثلاثة، طعنة الحربة في جنبه، وإكليل الشوك).\n* **الكتابة القبطية الدائرية:** منقوش حولها باليونانية والقبطية: «قدوس الله، قدوس القوي، قدوس الحي الذي لا يموت» (Ⲁⲅⲓⲟⲥ ⲟ̅ Ⲑⲉⲟⲥ).`,
+  },
+  {
+    keywords: ['communion', 'eucharist', 'تناول', 'التناول', 'الافخارستيا', 'الإفخارستيا'],
+    en: `### The Sacrament of Holy Communion (The Eucharist / ϯⲉⲩⲭⲁⲣⲓⲥⲧⲓⲁ)\n\n* **The Crown of Sacraments:** Holy Communion is the summit of Christian life, wherein bread and wine are transformed by the Holy Spirit into the true Body and true Blood of our Lord Jesus Christ.\n* **Preparation:** Fasting from midnight (or 9 hours prior for adults), spiritual repentance, receiving the absolution from the priest, and reconciliation with all.\n* **Blessing:** Chanting the joyful Psalm 150 (*Esmou Epchois*) during Distribution, thanking God for the gift of eternal life.`,
+    ar: `### سر الإفخارستيا المقدس (التناول / ϯⲉⲩⲭⲁⲣⲓⲥⲧⲓⲁ)\n\n* **تاج الأسرار الكنسية:** هو سر الشركة الحقيقية مع الله، وفيه يتحول الخبز والخمر بفعل الروح القدس إلى جسد حقيقي ودم حقيقي لربنا يسوع المسيح.\n* **الاستعداد للتناول:** الصوم الانقطاعي (٩ ساعات للكبار أو من منتصف الليل)، التوبة الصادقة والاعتراف، نوال الحل من الكاهن، ومصالحة الجميع.\n* **البركة والتسبيح:** يُرتل الشعب خلال توزيع الأسرار المقدسة مزمور التوزيع ١٥٠ («سبحوا الله في جميع قديسيه / إسمو إبشويس») بفرح وشكر.`,
+  },
 ];
 
 function isGreeting(text: string): boolean {
@@ -779,36 +804,36 @@ export async function askAiQuestion(
     // Network or server error - fallback to unconfigured guidance
   }
 
-  // 11. If not found in offline knowledge, provide helpful setup guidance
+  // 11. Offline Fallback when network is unavailable
   if (language === 'ar') {
     return {
-      answer: `### لم يُعثر على إجابة في قاعدة البيانات المحلية
+      answer: `سلام ونعمة! أعتذر عن عدم التمكن من الاتصال بالخادم الآن (تأكد من اتصالك بالإنترنت للإجابة بالذكاء الاصطناعي الحي).
 
-للإجابة عن أي سؤال مخصص بالذكاء الاصطناعي المتقدم، يمكنك تفعيل **Google Gemini** مجاناً تماماً (بدون بطاقة ائتمان) من:
-**https://aistudio.google.com**
-
-ثم إضافة المفتاح إما:
-1. في إعدادات التطبيق تحت «مفتاح Gemini الذكي».
-2. أو في خادم الموقع بواسطة الأمر:
-\`npx wrangler secret put GEMINI_API_KEY\``,
+ومع ذلك، يمكنك استكشاف التراث القبطي من خلال الأقسام التالية:
+• 🔍 **ابحث عن أي لحن وافتحه مباشرة:** (مثل *«تاي شوري»*، *«إبؤرو»*، *«غولغوثا»*).
+• 📜 **سِيَر القديسين من السنكسار:** (مثل *«سيرة الأنبا أنطونيوس»*، *«مارجرجس»*، *«مارمينا»*).
+• 🎵 **طقوس التسبحة والألحان:** (مثل *«الفرق بين الآدام والواطس»*، *«صلوات الأجبية»*، *«صلاة القسمة»*).
+• ⛪ **دليل الشماس والنتيجة القبطية** عبر الروابط أدناه:`,
       actions: [
-        { type: 'route', route: '/settings', title: 'فتح الإعدادات', subtitle: 'إضافة مفتاح Gemini' },
+        { type: 'hymn', id: 'annual-liturgy-offering-golden-censer', title: 'لحن تاي شوري (المجمرة الذهب)', subtitle: 'القداس الإلهي' },
+        { type: 'route', route: '/calendar', title: 'النتيجة القبطية', subtitle: 'أعياد وأصوام اليوم' },
+        { type: 'route', route: '/guide', title: 'دليل الشماس', subtitle: 'خطوات الخدمة في الكنيسة' },
       ],
     };
   }
 
   return {
-    answer: `### Not Found in Local Knowledge Base
+    answer: `Peace be with you! I cannot reach the live AI server right now (please check your internet connection for full conversational AI answers).
 
-To answer custom questions about hymns, rites, and Coptic translations using live AI, you can activate **Google Gemini** 100% free (no credit card required) from:
-**https://aistudio.google.com**
-
-Then add your free key either:
-1. In the app Settings under **"Gemini AI API Key"**.
-2. Or on the website server using:
-\`npx wrangler secret put GEMINI_API_KEY\``,
+You can still explore all our built-in Coptic knowledge offline:
+• 🔍 **Find any hymn:** e.g., *"Find me Tai Shouri"*, *"Where is Golgotha?"*, *"Open Epouro"*
+• 📜 **Saints & Synaxarium:** e.g., *"Story of St. Anthony"*, *"Who is St. Mina?"*, *"St. George"*
+• 🎵 **Liturgical Rites:** e.g., *"Adam vs. Watos tunes"*, *"Hours of the Agpeya"*, *"Fraction prayers"*
+• ⛪ **Deacon's Guide & Calendar** via the shortcuts below:`,
     actions: [
-      { type: 'route', route: '/settings', title: 'Open Settings', subtitle: 'Add Gemini API Key' },
+      { type: 'hymn', id: 'annual-liturgy-offering-golden-censer', title: 'The Golden Censer (Tai Shouri)', subtitle: 'Liturgy' },
+      { type: 'route', route: '/calendar', title: 'Coptic Calendar', subtitle: "Feasts, fasts & today's date" },
+      { type: 'route', route: '/guide', title: "Deacon's Guide", subtitle: 'Serving in the church step by step' },
     ],
   };
 }

@@ -15,5 +15,8 @@
     // /settings serves settings.html, /learn/quiz serves learn/quiz.html
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "404-page"
+  },
+  "ai": {
+    "binding": "AI"
   }
 }
