@@ -539,22 +539,24 @@ const HYMN_SEARCH_ALIASES: { keywords: string[]; queries: string[] }[] = [
   },
 ];
 
-function findHymnMatches(cleanQ: string, lang: 'en' | 'ar'): AskResult | null {
+type HymnSearchResult = ReturnType<typeof searchHymns>[number];
+
+function searchHymnCandidates(cleanQ: string, limit: number): HymnSearchResult[] {
   const stripped = cleanQ
     .replace(/^(can you\s+)?(please\s+)?(find|search|show|where is|locate|open|get|take me to|look up)\s+(me\s+)?(the\s+)?(hymn\s+)?/i, '')
     .replace(/^(من فضلك\s+)?(ممكن\s+)?(ابحث عن|دور على|فين|أين|عايز|اريد|وريني|افتح|وديني لـ|وديني|هاتلي|طلعلي)\s+(لحن\s+)?/i, '')
     .replace(/[?.,!]/g, '')
     .trim();
 
-  if (!stripped || stripped.length < 2) return null;
+  if (!stripped || stripped.length < 2) return [];
 
-  let results = searchHymns(stripped, 6);
+  let results = searchHymns(stripped, limit * 2);
   if (!results || results.length === 0) {
     const sLower = stripped.toLowerCase();
     for (const alias of HYMN_SEARCH_ALIASES) {
       if (alias.keywords.some((kw) => sLower.includes(kw))) {
         for (const q of alias.queries) {
-          const aliasResults = searchHymns(q, 6);
+          const aliasResults = searchHymns(q, limit * 2);
           if (aliasResults && aliasResults.length > 0) {
             results = aliasResults;
             break;
@@ -565,19 +567,21 @@ function findHymnMatches(cleanQ: string, lang: 'en' | 'ar'): AskResult | null {
     }
   }
 
-  if (!results || results.length === 0) return null;
-
-  const uniqueResults: typeof results = [];
+  const uniqueResults: HymnSearchResult[] = [];
   const seenTitles = new Set<string>();
-  for (const r of results) {
+  for (const r of results ?? []) {
     const key = r.hymn.title.toLowerCase().replace(/@.+/, '');
     if (!seenTitles.has(key)) {
       seenTitles.add(key);
       uniqueResults.push(r);
-      if (uniqueResults.length >= 3) break;
+      if (uniqueResults.length >= limit) break;
     }
   }
+  return uniqueResults;
+}
 
+function findHymnMatches(cleanQ: string, lang: 'en' | 'ar'): AskResult | null {
+  const uniqueResults = searchHymnCandidates(cleanQ, 3);
   if (uniqueResults.length === 0) return null;
 
   const actions: ChatAction[] = uniqueResults.map((r) => {
@@ -679,7 +683,7 @@ Specialize in Coptic hymns, Midnight Praises (Tasbeha), the Coptic language, Chu
 Answer faithfully according to Coptic Orthodox tradition. Respond in ${language === 'ar' ? 'Arabic' : 'English'}.
 If recommending a specific hymn, you may include [HYMN:Hymn Name] at the end so the app can create an open button.`;
 
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
   const res = await fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -701,6 +705,89 @@ If recommending a specific hymn, you may include [HYMN:Hymn Name] at the end so 
   return { answer: cleanText, actions: actions.length > 0 ? actions : undefined };
 }
 
+// What the app itself knows about the question, sent along so the AI answers from the
+// app's real hymns, saints and today's date instead of guessing.
+function buildAppContext(cleanQ: string, lang: 'en' | 'ar'): string {
+  const today = new Date();
+  const coptic = jdnToCoptic(dateToJdn(today));
+  const lines: string[] = [
+    `Today: ${today.toDateString()} = ${coptic.day} ${copticMonths.en[coptic.month - 1]} ${coptic.year} A.M.`,
+    `The user's app language: ${lang === 'ar' ? 'Arabic' : 'English'}`,
+  ];
+
+  const hymns = searchHymnCandidates(cleanQ, 8);
+  if (hymns.length > 0) {
+    lines.push('', 'Hymns in the app that match the question (id | title | Arabic title | where):');
+    for (const r of hymns) {
+      const ar = displayTitle(r.hymn, 'ar');
+      lines.push(
+        `- ${r.hymn.id} | ${r.hymn.title} | ${ar && ar !== r.hymn.title ? ar : '-'} | ${r.location.group.title} · ${r.location.service.title}`
+      );
+    }
+  }
+
+  const saint = findSaintAnswer(cleanQ, 'en');
+  const saintAction = saint?.actions?.[0];
+  if (saint && saintAction?.id) {
+    lines.push('', `Synaxarium entry in the app (saint id ${saintAction.id}):`, saint.answer.slice(0, 2500));
+  }
+
+  const qLower = cleanQ.toLowerCase();
+  const notes = OFFLINE_KNOWLEDGE.filter((item) => item.keywords.some((k) => qLower.includes(k.toLowerCase())));
+  for (const item of notes.slice(0, 2)) {
+    lines.push('', "Note from the app's built-in guide:", item.en);
+  }
+
+  return lines.join('\n');
+}
+
+const OPEN_PREFIX = /^(can you\s+)?(please\s+)?(find|search|where is|locate|open|take me to|go to|look up|ابحث|دور|فين|أين|افتح|وديني|وريني)\s+/i;
+
+function answerOffline(cleanQ: string, language: 'en' | 'ar'): AskResult | null {
+  if (isDateQuestion(cleanQ)) return getDateResponse(language);
+
+  const saintMatch = findSaintAnswer(cleanQ, language);
+  if (saintMatch) return saintMatch;
+
+  const qLower = cleanQ.toLowerCase();
+  for (const item of OFFLINE_KNOWLEDGE) {
+    if (item.keywords.some((k) => qLower.includes(k.toLowerCase()))) {
+      return { answer: language === 'ar' ? item.ar : item.en };
+    }
+  }
+
+  return checkAppSectionNavigation(cleanQ, language) ?? findHymnMatches(cleanQ, language);
+}
+
+async function askServer(
+  cleanQ: string,
+  history: ChatMessage[],
+  language: 'en' | 'ar'
+): Promise<AskResult | null> {
+  const endpoint =
+    Platform.OS === 'web' && typeof window !== 'undefined'
+      ? '/api/ask'
+      : 'https://copticpsalmody.com/api/ask';
+
+  const response = await fetch(endpoint, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      question: cleanQ,
+      history: history.slice(-10).map((m) => ({ role: m.role, content: m.content })),
+      language,
+      context: buildAppContext(cleanQ, language),
+    }),
+  });
+  if (!response.ok) return null;
+
+  const data = (await response.json()) as AskResponse;
+  if (!data.configured || !data.answer) return null;
+
+  const { cleanText, actions } = parseActionsFromText(data.answer);
+  return { answer: cleanText, actions: actions.length > 0 ? actions : undefined };
+}
+
 export async function askAiQuestion(
   question: string,
   history: ChatMessage[] = [],
@@ -719,92 +806,35 @@ export async function askAiQuestion(
     }
   }
 
-  // 2. Greetings and conversational dialogue
+  // 2. Instant answers that need no thinking: greetings, "open it", and explicit
+  //    "open / take me to / find X" commands for a page or hymn
   if (isGreeting(cleanQ)) {
     return getGreetingResponse(language);
   }
 
-  // 3. Navigation command: "take me there", "open it", "افتحه", "وديني هناك"
   const navMatch = checkNavigationCommand(cleanQ, history, language);
   if (navMatch) {
     return navMatch;
   }
 
-  // 4. App section requests: "take me to calendar", "open deacon guide", etc.
-  const sectionMatch = checkAppSectionNavigation(cleanQ, language);
-  if (sectionMatch) {
-    return sectionMatch;
+  if (OPEN_PREFIX.test(cleanQ)) {
+    const direct = checkAppSectionNavigation(cleanQ, language) ?? findHymnMatches(cleanQ, language);
+    if (direct) return direct;
   }
 
-  // 5. Live Coptic Calendar date: "what is today's Coptic date?"
-  if (isDateQuestion(cleanQ)) {
-    return getDateResponse(language);
-  }
-
-  // 6. Direct Hymn Finder: "find me Tai Shouri", "where is Golgotha?", "open Epouro"
-  const isHymnSearch =
-    /(find|search|where is|locate|open|get|take me to|look up|hymn|ابحث|دور|فين|أين|عايز|اريد|وريني|افتح|وديني|لحن)/i.test(cleanQ);
-  if (isHymnSearch) {
-    const hymnMatch = findHymnMatches(cleanQ, language);
-    if (hymnMatch) {
-      return hymnMatch;
-    }
-  }
-
-  // 7. Search Coptic Synaxarium saints database (St. Antony, St. Mina, St. George, etc.)
-  const saintMatch = findSaintAnswer(cleanQ, language);
-  if (saintMatch) {
-    return saintMatch;
-  }
-
-  // 8. Search curated liturgical knowledge base (Adam vs. Watos, Agpeya, Tasbeha, Tenen, etc.)
-  const qLower = cleanQ.toLowerCase();
-  for (const item of OFFLINE_KNOWLEDGE) {
-    if (item.keywords.some((k) => qLower.includes(k.toLowerCase()))) {
-      return { answer: language === 'ar' ? item.ar : item.en };
-    }
-  }
-
-  // 9. Check if the question matches any hymn in the database
-  const fallbackHymnMatch = findHymnMatches(cleanQ, language);
-  if (fallbackHymnMatch) {
-    return fallbackHymnMatch;
-  }
-
-  // 10. Try online server endpoint (Cloudflare Worker with Gemini)
-  const endpoint =
-    Platform.OS === 'web' && typeof window !== 'undefined'
-      ? '/api/ask'
-      : 'https://copticpsalmody.com/api/ask';
-
+  // 3. Everything else goes to the AI, with what the app knows attached
   try {
-    const response = await fetch(endpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        question: cleanQ,
-        history: history.map((m) => ({ role: m.role, content: m.content })),
-        language,
-      }),
-    });
-
-    if (response.ok) {
-      const data = (await response.json()) as AskResponse;
-      if (data.configured && data.answer) {
-        const { cleanText, actions } = parseActionsFromText(data.answer);
-        return {
-          answer: cleanText,
-          actions: (data.actions && data.actions.length > 0) ? data.actions : (actions.length > 0 ? actions : undefined),
-        };
-      }
-    }
+    const online = await askServer(cleanQ, history, language);
+    if (online) return online;
   } catch {
-    // Network or server error - fallback to unconfigured guidance
+    // Network or server error - answer from the built-in knowledge instead
   }
 
-  // 11. Offline Fallback when network is unavailable
+  // 4. Offline: the built-in date, Synaxarium, guide notes and hymn search
+  const offline = answerOffline(cleanQ, language);
+  if (offline) return offline;
+
+  // 5. Nothing matched offline either
   if (language === 'ar') {
     return {
       answer: `سلام ونعمة! أعتذر عن عدم التمكن من الاتصال بالخادم الآن (تأكد من اتصالك بالإنترنت للإجابة بالذكاء الاصطناعي الحي).

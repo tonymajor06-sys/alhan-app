@@ -1,5 +1,14 @@
 import { askAiQuestion, findSaintAnswer } from '../ai-service';
 
+// Tests run offline unless a test says otherwise; never call the live server
+const fetchMock = jest.fn();
+global.fetch = fetchMock as unknown as typeof fetch;
+
+beforeEach(() => {
+  fetchMock.mockReset();
+  fetchMock.mockRejectedValue(new Error('offline'));
+});
+
 describe('ai-service Coptic knowledge and saint lookup', () => {
   it('finds St. Antony when asked for "story of st anthony"', () => {
     const res = findSaintAnswer('tell me the story of st anthony', 'en');
@@ -98,5 +107,36 @@ describe('ai-service Coptic knowledge and saint lookup', () => {
     expect(res.autoNavigate).toBeDefined();
     expect(res.autoNavigate!.route).toBe('/hymn/holyweek-bright-saturday-golgotha');
     expect(res.answer).toContain('Taking you to **Golgotha** now');
+  });
+
+  it('sends questions to the AI with the app context attached and uses its answer', async () => {
+    fetchMock.mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        answer: 'Tai Shouri is sung during the offering of incense.\n[ACTION:hymn:annual-liturgy-offering-golden-censer:The Golden Censer]',
+        configured: true,
+      }),
+    });
+
+    const res = await askAiQuestion('what is the meaning of tai shouri?', [], 'en');
+
+    const body = JSON.parse(fetchMock.mock.calls[0][1].body);
+    expect(body.question).toBe('what is the meaning of tai shouri?');
+    expect(body.context).toContain('Today:');
+    expect(body.context).toContain('golden-censer');
+
+    expect(res.answer).toBe('Tai Shouri is sung during the offering of incense.');
+    expect(res.actions![0]).toMatchObject({ type: 'hymn', id: 'annual-liturgy-offering-golden-censer' });
+  });
+
+  it('falls back to the built-in Synaxarium when the AI server is unreachable', async () => {
+    const res = await askAiQuestion('who is st mina', [], 'en');
+    expect(fetchMock).toHaveBeenCalled();
+    expect(res.answer).toContain('St. Mina');
+  });
+
+  it('answers "find me" commands instantly without calling the AI', async () => {
+    await askAiQuestion('find me Tai Shouri', [], 'en');
+    expect(fetchMock).not.toHaveBeenCalled();
   });
 });
