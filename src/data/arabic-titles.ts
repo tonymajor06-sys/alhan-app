@@ -351,7 +351,6 @@ const arabicTitles: Record<string, string> = {
   'annual-liturgy-praxis-response': 'السلام لك يا مريم (مرد الإبركسيس)',
   'annual-liturgy-agios': 'قدوس الله',
   'annual-liturgy-blessed-are-they': 'طوباهم بالحقيقة (مرد الإنجيل)',
-  'annual-liturgy-hiten-ni-presvia-eleos': 'بشفاعات والدة الإله (رحمة السلام)',
   'annual-liturgy-the-cherubim-worship-you': 'الشاروبيم يسجدون لك',
   'annual-liturgy-aspasmos-watos': 'أسبسمس واطس (يا رب إله القوات)',
   'annual-liturgy-aspasmos-adam': 'أسبسمس آدام (افرحي يا مريم)',

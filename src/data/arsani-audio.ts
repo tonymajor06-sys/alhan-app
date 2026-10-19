@@ -155,7 +155,7 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   // Good Friday 9th Hour Ti Shouri - YouTube (Secondary: score 54.94)
   { file: "arsani-yt-good-friday-9th-tishouri.m4a", hymns: ["holyweek-great-friday-9th-hour-teeshoory"], language: "coptic" },
   // Annual Aspasmos Watos (Epchois Efnoti)
-  { file: "arsani-078-annual-aspasmos-watos-epchois-efnoti-archi-seattle.m4a", hymns: ["annual-liturgy-aspasmos-watos"], language: "coptic" },
+  { file: "arsani-078-annual-aspasmos-watos-epchois-efnoti-archi-seattle.m4a", hymns: [], language: "coptic" },
   // Ti Epistoly (Good Friday 6th Hour) - Primary: score 86.27
   { file: "arsani-081-ti-epistoly-introduction-to-6th-hour-pauline-epist.m4a", hymns: ["holyweek-great-friday-6th-hour-pauline"], language: "coptic" },
   // Good Friday 6th Hour Pauline - YouTube (Secondary: score 58.48)
@@ -189,9 +189,9 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   // ⲧⲟⲩ ⲙⲁⲕⲁⲣⲓⲱ
   { file: "arsani-111-recording.m4a", hymns: ["kiahk-liturgy-hymn-8"], language: "coptic" },
   // Long Praxis Response (Shere Ne Maria) - Primary: score 63.02
-  { file: "arsani-240-long-praxis-response-shere-ne-maria.m4a", hymns: ["kiahk-liturgy-praxis-response", "annual-liturgy-praxis-response"], language: "coptic" },
+  { file: "arsani-240-long-praxis-response-shere-ne-maria.m4a", hymns: [], language: "coptic" },
   // Melismatic Shere Ne Maria - Secondary: score 57.56
-  { file: "arsani-115-melismatic-shere-ne-maria-praxis-response.m4a", hymns: ["kiahk-liturgy-praxis-response", "annual-liturgy-praxis-response"], language: "coptic" },
+  { file: "arsani-115-melismatic-shere-ne-maria-praxis-response.m4a", hymns: [], language: "coptic" },
   // Annual Psalm And Marouetchasf
   { file: "arsani-119-annual-psalm-marouetchasf.m4a", hymns: ["annual-liturgy-psalm-trailer"], language: "coptic" },
   // Nairouz Praxis Response

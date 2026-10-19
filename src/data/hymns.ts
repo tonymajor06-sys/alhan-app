@@ -3314,34 +3314,6 @@ annualLiturgy?.hymns.push({
   ],
 });
 
-// ---- Annual > Liturgy: after Ouoniatou Khen Oumethmee ----
-annualLiturgy?.hymns.push({
-  id: 'annual-liturgy-hiten-ni-presvia-eleos',
-  title: 'Ϩⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ ⲛ̀ⲧⲉ Ϯⲑⲉⲟ̀ⲧⲟⲕⲟⲥ',
-  versions: [
-    {
-      language: 'coptic',
-      text: 'Ϩⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ ⲛ̀ⲧⲉ Ϯⲑⲉⲟ̀ⲧⲟⲕⲟⲥ ⲉⲑⲟⲩⲁⲃ Ⲙⲁⲣⲓⲁ: Ⲡ̀ϭⲟⲓⲥ ⲁ̀ⲣⲓϩ̀ⲙⲟⲧ ⲛⲁⲛ ⲙ̀ⲡⲓⲭⲱ ⲉ̀ⲃⲟⲗ ⲛ̀ⲧⲉ ⲛⲉⲛⲛⲟⲃⲓ.\n\nⲦⲉⲛⲟⲩⲱϣⲧ ⲙ̀ⲙⲟⲕ ⲱ̀ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ: ⲛⲉⲙ Ⲡⲉⲕⲓⲱⲧ ⲛ̀ⲁ̀ⲅⲁⲑⲟⲥ: ⲛⲉⲙ Ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ ⲉⲑⲟⲩⲁⲃ: ϫⲉ ⲁⲕⲓ̀ ⲁⲕⲥⲱϯ ⲙ̀ⲙⲟⲛ.\n\nⲈⲗⲉⲟⲥ ⲓ̀ⲣⲏⲛⲏⲥ: ⲑⲩⲥⲓⲁ ⲉ̀ⲛⲉⲥⲉⲱⲥ.',
-    },
-    {
-      language: 'englishCoptic',
-      text: 'Hiten ni-epresvia ente Tithe-otokos ethouab Maria: Eptshois ari-ehmot nan empikhō evol ente nennovi.\n\nTenouōsht emmok ō Pi-ekhristos: nem Pekiōt enagathos: nem Pi-epneuma ethouab: je aki aksōti emmon.\n\nEleos irēnēs: thusia eneseōs.',
-    },
-    {
-      language: 'english',
-      text: 'Through the intercessions of the Theotokos, Saint Mary, O Lord, grant us the forgiveness of our sins.\n\nWe worship You, O Christ, with Your Good Father and the Holy Spirit, for You have come and saved us.\n\nA mercy of peace, a sacrifice of praise.',
-    },
-    {
-      language: 'englishArabic',
-      text: 'Bi-shafa\'at walidat el-ilah el-qiddisa Maryam, ya rabbu an\'im lana bi-maghfirat khatayana.\n\nNasgudu laka ayyuha el-Maseeh, ma\'a abeeka es-saleh war-Rooh el-Qudus, li-annaka ataita wa khallastana.\n\nRahmatu es-salam, dhabeehatu et-tasbeeh.',
-    },
-    {
-      language: 'arabic',
-      text: 'بشفاعات والدة الإله القديسة مريم، ياربُ انعم لنا بمغفرةِ خطايانا.\n\nنسجدُ لكَ أيها المسيح، مع أبيكَ الصالح، والروح القدس، لأنك أتيتَ وخلصتنا.\n\nرحمةُ السلامِ، ذبيحةُ التسبيحِ.',
-    },
-  ],
-});
-
 // ---- Annual > Liturgy: the people's responses after Hiten Ni-epresvia ----
 annualLiturgy?.hymns.push(
   {
@@ -3934,6 +3906,32 @@ const deaconAnnualLiturgyWord = deaconCategories
 
 if (deaconAnnualLiturgyWord) {
   deaconAnnualLiturgyWord.hymns = [
+    {
+      id: 'd-annual-liturgy-word-pauline-intro',
+      title: 'Ⲡⲁⲩⲗⲟⲥ (Introduction to the Pauline Epistle)',
+      versions: [
+        {
+          language: 'coptic',
+          text: 'Ⲡⲓⲁⲛⲁⲅⲛⲱⲥⲧⲏⲥ:\n\nⲠⲁⲩⲗⲟⲥ ⲫ̀ⲃⲱⲕ ⲙ̀Ⲡⲉⲛϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ ⲡⲓⲁⲡⲟⲥⲧⲟⲗⲟⲥ ⲉⲧⲑⲁϩⲉⲙ ⲫⲏⲉⲧⲁⲩⲑⲁϣϥ ⲉ̀ⲡⲓϩⲓϣⲉⲛⲛⲟⲩϥⲓ ⲛ̀ⲧⲉ Ⲫϯ.',
+        },
+        {
+          language: 'englishCoptic',
+          text: 'Pi-anagnōstēs:\n\nPaulos efvōk em-Pentshois Iēsous Pi-ekhristos pi-apostolos etthahem fē-etauthashf e-pihishennoufi ente Efnouti.',
+        },
+        {
+          language: 'english',
+          text: 'Reader:\n\nPaul, the servant of our Lord Jesus Christ, called to be an apostle, appointed to the Gospel of God.',
+        },
+        {
+          language: 'englishArabic',
+          text: "El-Qari':\n\nBoulus 'abd Yasou' el-Maseeh er-rasoul, el-mad'ou el-mufraz li-bushra Allah.",
+        },
+        {
+          language: 'arabic',
+          text: 'القارئ:\n\nبولس عبد يسوع المسيح الرسول، المدعو المفرز لبشرى الله.',
+        },
+      ],
+    },
     ...fromMatins('d-annual-matins-stand-up-for-prayer', 'd-annual-liturgy-word-stand-up-for-prayer'),
     ...fromMatins('d-annual-matins-pray-for-the-gospel', 'd-annual-liturgy-word-pray-for-the-gospel'),
     ...fromMatins('d-annual-matins-stand-in-the-fear-of-god', 'd-annual-liturgy-word-stand-in-the-fear-of-god'),
@@ -6363,11 +6361,10 @@ for (const [id, audio] of [
   ['annual-liturgy-offering-alleluia-thought-of-man', 'liturgy-je-fmevi.m4a'],
   ['annual-liturgy-agios', 'liturgy-agios.m4a'],
   ['annual-liturgy-blessed-are-they', 'liturgy-gospel-response.m4a'],
-  ['annual-liturgy-offering-blessed-are-you', 'liturgy-ksmarout.m4a'],
+  ['annual-liturgy-offering-blessed-are-you', 'Blessed are you.m4a'],
   ['annual-liturgy-offering-all-the-wise-men', 'liturgy-nisavev.m4a'],
   ['annual-liturgy-pihmot-gar', 'liturgy-pihmot-gar.m4a'],
   ['annual-liturgy-praxis-response', 'liturgy-praxis-response.m4a'],
-  ['annual-liturgy-hiten-ni-presvia-eleos', 'liturgy-faithful-hitens.m4a'],
   ['annual-liturgy-aspasmos-watos', 'liturgy-aspasmos-watos.m4a'],
 ]) {
   for (const version of annualLiturgy?.hymns.find((h) => h.id === id)?.versions ?? []) {
@@ -6981,6 +6978,7 @@ if (greatLent) {
           ...fromAnnual(annualLiturgy?.hymns, 'annual-liturgy-offering-golden-censer-virgin', 'hymn-of-the-censer', 'Ϯϣⲟⲩⲣⲏ (Hymn of the Censer)'),
           lentHymnOfIntercessions(`${id}-hymn-of-intercessions`),
           // From here on, the same words as Annual or Kiahk where the hymn is the same in Lent
+          ...fromAnnual(annualLiturgy?.hymns, 'annual-liturgy-pauline-intro', 'pauline-intro'),
           ...fromAnnual(annualLiturgy?.hymns, 'annual-liturgy-pihmot-gar', 'pihmot-gar', 'Ⲡⲓϩ̀ⲙⲟⲧ ⲅⲁⲣ'),
           ...fromKiahk('Ⲏ̀ ⲁ̀ⲅⲁⲡⲏ (Alternate Response to the Pauline Epistle)', 'pauline-alternate-response'),
           ...fromKiahk('Ϯⲙⲏⲧ ⲥ̀ⲛⲟⲩϯ (Hymn of the Virtues)', 'hymn-of-the-virtues'),
@@ -7136,6 +7134,7 @@ if (greatLent) {
             ],
           },
           lentHymnOfIntercessions(`${id}-hymn-of-intercessions`),
+          ...fromAnnual(annualLiturgy?.hymns, 'annual-liturgy-pauline-intro', 'pauline-intro'),
           ...fromAnnual(annualLiturgy?.hymns, 'annual-liturgy-pihmot-gar', 'pihmot-gar'),
           ...fromKiahk('Ϯⲙⲏⲧ ⲥ̀ⲛⲟⲩϯ (Hymn of the Virtues)', 'hymn-of-the-virtues'),
           ...fromKiahk('Ⲧⲟⲩ ⲙⲁⲕⲁⲣⲓⲱ (The Blessed)', 'the-blessed'),

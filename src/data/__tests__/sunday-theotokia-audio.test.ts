@@ -252,5 +252,48 @@ describe('Divine Liturgy Audio and Bishop Updates', () => {
     const fraction = allHymns.find((h) => h.id === 'annual-liturgy-introduction-to-the-fraction');
     expect(fraction).toBeUndefined();
   });
+
+  test('Praxis Response Shere Maria has only single recording (2nd and 3rd removed)', () => {
+    const praxisResponse = annualLiturgy?.hymns.find((h) => h.id === 'annual-liturgy-praxis-response');
+    expect(praxisResponse).toBeDefined();
+    const coptic = praxisResponse?.versions.find((v) => v.language === 'coptic');
+    expect(coptic?.audio).toBe('liturgy-praxis-response.m4a');
+    expect(coptic?.otherAudio ?? []).not.toContain('arsani-240-long-praxis-response-shere-ne-maria.m4a');
+    expect(coptic?.otherAudio ?? []).not.toContain('arsani-115-melismatic-shere-ne-maria-praxis-response.m4a');
+    expect(coptic?.otherAudio ?? []).toHaveLength(0);
+  });
+
+  test('Through the Intercessions of the Theotokos (53s) is completely removed', () => {
+    const allHymns = [...seasons, ...deaconCategories].flatMap((g) => g.services.flatMap((s) => flattenHymns(s.hymns)));
+    const hiten = allHymns.find((h) => h.id === 'annual-liturgy-hiten-ni-presvia-eleos');
+    expect(hiten).toBeUndefined();
+
+    // Check no version references the 53-second audio file
+    const audioVersions = allHymns.flatMap((h) => h.versions).filter((v) => v.audio === 'liturgy-faithful-hitens.m4a' || v.otherAudio?.includes('liturgy-faithful-hitens.m4a'));
+    expect(audioVersions).toHaveLength(0);
+  });
+
+  test('Standard Watos Aspasmos (O Lord God) has only first audio (2nd duplicate removed)', () => {
+    const aspasmos = annualLiturgy?.hymns.find((h) => h.id === 'annual-liturgy-aspasmos-watos');
+    expect(aspasmos).toBeDefined();
+    const coptic = aspasmos?.versions.find((v) => v.language === 'coptic');
+    expect(coptic?.audio).toBe('liturgy-aspasmos-watos.m4a');
+    expect(coptic?.otherAudio ?? []).not.toContain('arsani-078-annual-aspasmos-watos-epchois-efnoti-archi-seattle.m4a');
+    expect(coptic?.otherAudio ?? []).toHaveLength(0);
+  });
+
+  test('Lent weekend and weekday liturgies have Pauline intro', () => {
+    const lent = seasons.find((s) => s.id === 'great-lent');
+    const weekendHymns = flattenHymns(lent?.services.find((s) => s.id === 'lent-weekend')?.hymns ?? []);
+    const weekdayHymns = flattenHymns(lent?.services.find((s) => s.id === 'lent-weekday')?.hymns ?? []);
+
+    const weekendPauline = weekendHymns.find((h) => h.id === 'lent-weekend-liturgy-pauline-intro');
+    const weekdayPauline = weekdayHymns.find((h) => h.id === 'lent-weekday-liturgy-pauline-intro');
+
+    expect(weekendPauline).toBeDefined();
+    expect(weekdayPauline).toBeDefined();
+    expect(displayTitle(weekendPauline!, 'ar')).toBe('البولس');
+    expect(displayTitle(weekdayPauline!, 'ar')).toBe('البولس');
+  });
 });
 
