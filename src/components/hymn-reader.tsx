@@ -657,7 +657,8 @@ export function HymnReader({
                 <View style={[styles.audioControls, rowDirection]}>
                   {recordings.map(({ file }, i) =>
                     actionChip(
-                      `${t.recording} ${isRTL ? String(i + 1).replace(/\d/g, (d) => '٠١٢٣٤٥٦٧٨٩'[Number(d)]) : i + 1}`,
+                      // A recording whose file name says "melismatic" is labeled so
+                      `${t.recording} ${isRTL ? String(i + 1).replace(/\d/g, (d) => '٠١٢٣٤٥٦٧٨٩'[Number(d)]) : i + 1}${/melismatic/i.test(file) ? ` · ${t.melismatic}` : ''}`,
                       () => selectRecording(i),
                       file === currentAudio
                     )
