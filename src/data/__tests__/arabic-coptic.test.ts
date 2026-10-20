@@ -792,7 +792,7 @@ describe('Kiahk Praises & Season > Matins', () => {
     // the shortened words in the Sixth Doxology (ⲡⲟ︦ⲥ︦, ⲛ̀ⲛⲏⲉⲑ︦ⲩ︦, Ⲡⲡ︦ⲛ︦ⲁ) are written out in English and Arabic letters
     expect(doxText(sixthDoxology, 'englishCoptic')).toContain('Epshois fee-etshop khen tfe');
     expect(doxText(sixthDoxology, 'englishCoptic')).toMatch(/ennee-?ethowab/);
-    expect(doxText(sixthDoxology, 'arabicCoptic')).toContain('خين رو أو إنني إثؤواب');
+    expect(doxText(sixthDoxology, 'arabicCoptic')).toContain('خين روؤو إن نى إثؤاب');
     // the Kiahk recordings play on Coptic only; the Conclusion copied from Annual Matins has none
     for (const hymn of flattenHymns(service.hymns)) {
       for (const version of hymn.versions) {
