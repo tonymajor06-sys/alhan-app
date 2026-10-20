@@ -1,7 +1,10 @@
 import { Bilingual, GuideQuestion, GuideSection, buildQuiz } from './deacon-guide';
 import { QuizQuestion } from './quiz';
 
-// Our Faith: Coptic Church history, the councils and what the Church believes, in both app languages
+// Our Faith: Coptic Church history, the councils and what the Church believes, in both app languages.
+// Checked against Coptic Orthodox sources (2026-10-20), listed in the last section, "Sources": the Patriarchate's
+// copticorthodox.church, the Metropolis of the Southern US (suscopts.org), the Synaxarium, Pope Shenouda III's
+// "The Nature of Christ" and Metropolitan Bishoy's record of the dialogue. Base any change on them too.
 
 export const faithStrings = {
   en: {
@@ -53,15 +56,15 @@ export const faithSections: GuideSection[] = [
       {
         title: { en: 'St Mark the Apostle', ar: 'القديس مرقس الرسول' },
         text: {
-          en: 'St Mark, the writer of the second Gospel, preached in Alexandria in the first century and founded the Church of Egypt. His first convert was Anianus, a shoemaker, who became the second Pope. St Mark was martyred in Alexandria in AD 68. Every Coptic Pope sits on "the Chair of St Mark".',
-          ar: 'بشّر القديس مرقس، كاتب الإنجيل الثاني، في الإسكندرية في القرن الأول وأسس كنيسة مصر. وكان أول من آمن على يديه إنيانوس الإسكافي الذي صار البابا الثاني. واستشهد القديس مرقس في الإسكندرية سنة ٦٨م. وكل بابا قبطي يجلس على "كرسي مارمرقس".',
+          en: 'St Mark, the writer of the second Gospel, came to Alexandria in AD 61 and founded the Church of Egypt. His first convert was Anianus, a shoemaker, whom he ordained bishop and who succeeded him as the second Pope. St Mark was martyred in Alexandria in AD 68. Every Coptic Pope sits on "the Chair of St Mark".',
+          ar: 'جاء القديس مرقس، كاتب الإنجيل الثاني، إلى الإسكندرية سنة ٦١م وأسس كنيسة مصر. وكان أول من آمن على يديه إنيانوس الإسكافي، فرسمه أسقفاً، وخلفه بعد استشهاده فصار البابا الثاني. واستشهد القديس مرقس في الإسكندرية سنة ٦٨م. وكل بابا قبطي يجلس على "كرسي مارمرقس".',
         },
       },
       {
         title: { en: 'The School of Alexandria', ar: 'مدرسة الإسكندرية' },
         text: {
-          en: 'The Catechetical School of Alexandria was the first great school of Christian teaching. Its teachers included Pantaenus, St Clement and Didymus the Blind. It taught the faith to the whole world and prepared many of the Church\'s leaders.',
-          ar: 'كانت مدرسة الإسكندرية اللاهوتية أول مدرسة مسيحية كبرى للتعليم. ومن معلميها بنتينوس والقديس إكليمنضس وديديموس الضرير. علّمت الإيمان للعالم كله وأعدّت كثيرين من قادة الكنيسة.',
+          en: 'The Catechetical School of Alexandria was the first great school of Christian teaching; St Jerome says St Mark himself founded it. Its deans included Athenagoras, Pantaenus and Clement of Alexandria, and later Pope Heraclas and Pope Dionysius. It taught the faith to the whole world and prepared many of the Church\'s leaders.',
+          ar: 'كانت مدرسة الإسكندرية اللاهوتية أول مدرسة مسيحية كبرى للتعليم، ويذكر القديس جيروم أن القديس مرقس نفسه أسسها. ومن عمدائها أثيناغوراس وبنتينوس وإكليمنضس السكندري، ثم البابا ياروكلاس والبابا ديونيسيوس. علّمت الإيمان للعالم كله وأعدّت كثيرين من قادة الكنيسة.',
         },
       },
       {
@@ -81,15 +84,15 @@ export const faithSections: GuideSection[] = [
       {
         title: { en: 'The Great Ecumenical Councils', ar: 'المجامع المسكونية الكبرى' },
         text: {
-          en: 'During the golden age of the Church, the Patriarchate of Alexandria led all of Christendom in defending the Orthodox faith. At Nicaea (AD 325), St Athanasius defended the divinity of Christ against Arius. At Constantinople (AD 381), Pope Timothy stood with the fathers in affirming the divinity of the Holy Spirit. At Ephesus (AD 431), St Cyril the Great defended the oneness of Christ and St Mary as the Theotokos. At Chalcedon (AD 451), St Dioscorus championed the Cyrillian faith, suffering exile rather than compromising the true confession of Christ\'s one incarnate nature.',
-          ar: 'خلال العصر الذهبي للكنيسة قادت بطريركية الإسكندرية العالم المسيحي كله في الدفاع عن الإيمان المستقيم. ففي مجمع نيقية (٣٢٥م) دافع القديس أثناسيوس عن لاهوت المسيح ضد آريوس. وفي القسطنطينية (٣٨١م) وقف البابا تيموثاوس مع الآباء مؤكدين لاهوت الروح القدس. وفي أفسس (٤٣١م) دافع القديس كيرلس الكبير عن وحدانية طبيعة المسيح ولقب والدة الإله (الثيئوطوكوس). وفي خلقيدونية (٤٥١م) ثبت القديس ديسقوروس على الإيمان الكيرلسي محتملاً النفي دفاعاً عن الاعتراف بطبيعة واحدة متجسدة لله الكلمة.',
+          en: 'During the golden age of the Church, the Patriarchate of Alexandria led all of Christendom in defending the Orthodox faith. At Nicaea (AD 325), St Athanasius defended the divinity of Christ against Arius. At Constantinople (AD 381), Pope Timothy presided over the fathers who affirmed the divinity of the Holy Spirit. At Ephesus (AD 431), St Cyril the Great defended the oneness of Christ and St Mary as the Theotokos. At Chalcedon (AD 451), St Dioscorus championed the Cyrillian faith, suffering exile rather than compromising the true confession of Christ\'s one incarnate nature.',
+          ar: 'خلال العصر الذهبي للكنيسة قادت بطريركية الإسكندرية العالم المسيحي كله في الدفاع عن الإيمان المستقيم. ففي مجمع نيقية (٣٢٥م) دافع القديس أثناسيوس عن لاهوت المسيح ضد آريوس. وفي القسطنطينية (٣٨١م) رأس البابا تيموثاوس الآباء الذين أكدوا لاهوت الروح القدس. وفي أفسس (٤٣١م) دافع القديس كيرلس الكبير عن وحدانية طبيعة المسيح ولقب والدة الإله (الثيئوطوكوس). وفي خلقيدونية (٤٥١م) ثبت القديس ديسقوروس على الإيمان الكيرلسي محتملاً النفي دفاعاً عن الاعتراف بطبيعة واحدة متجسدة لله الكلمة.',
         },
       },
       {
         title: { en: 'Through the Centuries', ar: 'عبر القرون' },
         text: {
-          en: 'After the Arab conquest of Egypt in the 7th century, the Copts kept their faith through long periods of hardship. Arabic slowly became the everyday language, but the Coptic language is still used in the Church\'s prayers and hymns to this day.',
-          ar: 'بعد دخول العرب مصر في القرن السابع حفظ الأقباط إيمانهم خلال فترات طويلة من الضيق. وصارت العربية تدريجياً لغة الحياة اليومية، لكن اللغة القبطية ما زالت تُستخدم في صلوات الكنيسة وألحانها حتى اليوم.',
+          en: 'After the Arabs entered Egypt in AD 641, the Copts kept their faith through long periods of hardship. Arabic slowly became the everyday language, but the Coptic language is still used in the Church\'s prayers and hymns to this day.',
+          ar: 'بعد دخول العرب مصر سنة ٦٤١م حفظ الأقباط إيمانهم خلال فترات طويلة من الضيق. وصارت العربية تدريجياً لغة الحياة اليومية، لكن اللغة القبطية ما زالت تُستخدم في صلوات الكنيسة وألحانها حتى اليوم.',
         },
       },
       {
@@ -117,36 +120,36 @@ export const faithSections: GuideSection[] = [
       {
         title: { en: '1. The Council of Nicaea · AD 325', ar: '١. مجمع نيقية المسكوني الأول · ٣٢٥م' },
         text: {
-          en: '• Convened: In AD 325 in Nicaea by Emperor Constantine the Great, attended by 318 bishops from across the world, many bearing the scars of Roman persecution.\n\n• The Heresy: Arius, an Alexandrian priest, claimed that the Son was a created being and not truly God, teaching: "There was a time when He was not."\n\n• The Defense: Pope Alexander of Alexandria and his young archdeacon, St Athanasius the Apostolic, led the defense of orthodoxy, showing from Scripture that the Son is co-eternal and of the same divine nature as the Father.\n\n• Decisions & Legacy: The council formulated the first part of the Nicene Creed, proclaiming Christ as "Light of Light, true God of true God, begotten not created, of one essence with the Father" (Homoousios). Arius was excommunicated, 20 ecclesiastical canons were enacted, and the Church of Alexandria was entrusted with calculating the annual date of Pascha (Easter) for all Christendom.',
-          ar: '• الانعقاد: انعقد سنة ٣٢٥م في نيقية بدعوة من الإمبراطور قسطنطين الكبير، وحضره ٣١٨ أباً أسقفاً من أنحاء المسكونة كان كثير منهم يحملون في أجسادهم جراحات الاضطهاد الروماني.\n\n• البدعة: ادّعى آريوس، وهو كاهن من الإسكندرية، أن الابن مخلوق وليس إلهاً حقيقياً، وزعم أنه "كان وقت لم يكن فيه الابن موجوداً".\n\n• الدفاع: قاد البابا ألكسندروس السكندري وشمّاسه القديس أثناسيوس الرسولي الدفاع عن الإيمان المستقيم، مبيّنين من الكتب المقدسة أن الابن أزلي ومساوٍ للآب في اللاهوت.\n\n• القرارات والنتائج: صاغ المجمع الجزء الأول من قانون الإيمان النيقاوي مؤكداً أن المسيح "نور من نور، إله حق من إله حق، مولود غير مخلوق، مساوٍ للآب في الجوهر" (هوموؤوسيوس). وحُرم آريوس، ووُضعت ٢٠ قاعدة كانونية، وكُلِّفت كنيسة الإسكندرية بحساب موعد عيد القيامة المجيد سنوياً وإبلاغ سائر كنائس العالم.',
+          en: '• Convened: In AD 325 in Nicaea by Emperor Constantine the Great, attended by 318 bishops, among them Pope Alexander of Alexandria with twenty bishops and his deacon Athanasius.\n\n• The Heresy: Arius, an Alexandrian priest, claimed that the Son was a created being and not truly God, teaching: "There was a time when He was not."\n\n• The Defense: Pope Alexander of Alexandria and his young archdeacon, St Athanasius the Apostolic, led the defense of orthodoxy, showing from Scripture that the Son is co-eternal and of the same divine nature as the Father.\n\n• Decisions & Legacy: The council formulated the first part of the Nicene Creed, proclaiming Christ as "Light of Light, true God of true God, begotten not created, of one essence with the Father" (Homoousios). Arius was excommunicated, and the council issued canons on pastoral, liturgical and church order. The Church remembers the council on 9 Hathor.',
+          ar: '• الانعقاد: انعقد سنة ٣٢٥م في نيقية بدعوة من الإمبراطور قسطنطين الكبير، وحضره ٣١٨ أسقفاً، منهم البابا ألكسندروس السكندري ومعه عشرون أسقفاً وشماسه أثناسيوس.\n\n• البدعة: ادّعى آريوس، وهو كاهن من الإسكندرية، أن الابن مخلوق وليس إلهاً حقيقياً، وزعم أنه "كان وقت لم يكن فيه الابن موجوداً".\n\n• الدفاع: قاد البابا ألكسندروس السكندري وشمّاسه القديس أثناسيوس الرسولي الدفاع عن الإيمان المستقيم، مبيّنين من الكتب المقدسة أن الابن أزلي ومساوٍ للآب في اللاهوت.\n\n• القرارات والنتائج: صاغ المجمع الجزء الأول من قانون الإيمان النيقاوي مؤكداً أن المسيح "نور من نور، إله حق من إله حق، مولود غير مخلوق، مساوٍ للآب في الجوهر" (هوموؤوسيوس). وحُرم آريوس، ووضع المجمع قوانين في الرعاية والطقس وترتيب الكنيسة. وتذكر الكنيسة المجمع في ٩ هاتور.',
         },
       },
       {
         title: { en: '2. The Council of Constantinople · AD 381', ar: '٢. مجمع القسطنطينية المسكوني الثاني · ٣٨١م' },
         text: {
-          en: '• Convened: In AD 381 in Constantinople by Emperor Theodosius the Great, gathering 150 orthodox bishops, with Pope Timothy I of Alexandria heading the Egyptian delegation alongside St Gregory the Theologian and St Gregory of Nyssa.\n\n• The Heresies: Macedonius, former bishop of Constantinople, denied the divinity of the Holy Spirit, claiming the Spirit was a creature or servant. The council also refuted Apollinarius (who denied that Christ possessed a complete human soul and mind) and Sabellius (who confused the distinct Persons of the Trinity as temporary roles).\n\n• The Defense & The Creed: The fathers affirmed that the Holy Spirit is God, of one essence with the Father and the Son. They completed the Nicene-Constantinopolitan Creed: "Yes, we believe in the Holy Spirit, the Lord, the Giver of Life, who proceeds from the Father, who with the Father and the Son is worshipped and glorified, who spoke by the prophets. And in one, holy, catholic and apostolic Church. We confess one baptism for the remission of sins. We look for the resurrection of the dead and the life of the coming age. Amen."\n\n• Canons: Issued 7 ecclesiastical canons establishing church order and condemning all Macedonian and Apollinarian errors.',
-          ar: '• الانعقاد: انعقد سنة ٣٨١م في القسطنطينية بدعوة من الإمبراطور ثيئودوسيوس الكبير، بمشاركة ١٥٠ أسقفاً أرثوذكسياً، وترأس وفد الإسكندرية البابا تيموثاوس الأول بمشاركة القديسين غريغوريوس اللاهوتي وغريغوريوس النيصي.\n\n• البدع: أنكر مقدونيوس (بطريرك القسطنطينية المعزول) لاهوت الروح القدس زاعماً أنه مخلوق أو خادم، كما تصدى المجمع لبدعة أبوليناريوس (الذي أنكر وجود عقل بشري كامل في المسيح) وسابليوس (الذي طمس تمايز الأقانيم الثلاثة واعتبرها مجرد أدوار مؤقتة).\n\n• قانون الإيمان: أكد الآباء لاهوت الروح القدس ومساواته للآب والابن في الجوهر، وأكملوا قانون الإيمان: "نعم نؤمن بالروح القدس، الرب المحيي، المنبثق من الآب، نسجد له ونمجده مع الآب والابن، الناطق في الأنبياء. وبكنيسة واحدة مقدسة جامعة رسولية. ونعترف بمعمودية واحدة لمغفرة الخطايا. وننتظر قيامة الأموات وحياة الدهر الآتي. آمين."\n\n• القوانين: أصدر المجمع ٧ قوانين كنسية نظمت الترتيب الكنسي وأدانت كل بدع مقدونيوس وأبوليناريوس.',
+          en: '• Convened: In AD 381 in Constantinople by Emperor Theodosius the Great, gathering 150 bishops. As the Synaxarium tells, Pope Timothy I, the 22nd Pope of Alexandria, presided over it.\n\n• The Heresies: Macedonius, former bishop of Constantinople, denied the divinity of the Holy Spirit, claiming the Spirit was a creature or servant. The council also refuted Apollinarius (who denied that Christ possessed a complete human soul and mind) and Sabellius (who confused the distinct Persons of the Trinity as temporary roles).\n\n• The Defense & The Creed: The fathers affirmed that the Holy Spirit is God, of one essence with the Father and the Son. They completed the Nicene-Constantinopolitan Creed: "Yes, we believe in the Holy Spirit, the Lord, the Giver of Life, who proceeds from the Father, who with the Father and the Son is worshipped and glorified, who spoke by the prophets. And in one, holy, catholic and apostolic Church. We confess one baptism for the remission of sins. We look for the resurrection of the dead and the life of the coming age. Amen."\n\n• Canons: The council issued canons on church order and condemned Macedonius, Apollinarius and Sabellius. The Church remembers it on 1 Meshir.',
+          ar: '• الانعقاد: انعقد سنة ٣٨١م في القسطنطينية بدعوة من الإمبراطور ثيئودوسيوس الكبير، بحضور ١٥٠ أسقفاً، وكما يذكر السنكسار رأسه الأنبا تيموثاوس الأول، البابا الثاني والعشرون للإسكندرية.\n\n• البدع: أنكر مقدونيوس (بطريرك القسطنطينية المعزول) لاهوت الروح القدس زاعماً أنه مخلوق أو خادم، كما تصدى المجمع لبدعة أبوليناريوس (الذي أنكر وجود عقل بشري كامل في المسيح) وسابليوس (الذي طمس تمايز الأقانيم الثلاثة واعتبرها مجرد أدوار مؤقتة).\n\n• قانون الإيمان: أكد الآباء لاهوت الروح القدس ومساواته للآب والابن في الجوهر، وأكملوا قانون الإيمان: "نعم نؤمن بالروح القدس، الرب المحيي، المنبثق من الآب، نسجد له ونمجده مع الآب والابن، الناطق في الأنبياء. وبكنيسة واحدة مقدسة جامعة رسولية. ونعترف بمعمودية واحدة لمغفرة الخطايا. وننتظر قيامة الأموات وحياة الدهر الآتي. آمين."\n\n• القوانين: أصدر المجمع قوانين نظمت الترتيب الكنسي، وأدان مقدونيوس وأبوليناريوس وسابليوس. وتذكره الكنيسة في ١ أمشير.',
         },
       },
       {
         title: { en: '3. The Council of Ephesus · AD 431', ar: '٣. مجمع أفسس المسكوني الثالث · ٤٣١م' },
         text: {
-          en: '• Convened: In AD 431 in Ephesus by Emperor Theodosius II, bringing together 200 bishops and presided over by St Cyril the Great (Pillar of Faith, 24th Pope of Alexandria), accompanied by St Shenouda the Archimandrite.\n\n• The Heresy: Nestorius, Patriarch of Constantinople, divided Christ into two separate persons (a divine Son and a human Jesus) and refused to call the Virgin Mary "Theotokos" (Mother of God / God-bearer), claiming she gave birth only to the human man.\n\n• The Defense: St Cyril defended the biblical truth of the Incarnation: God the Word truly became man without separating or dividing His humanity and divinity. In Christ there is a true hypostatic union: "One Nature of God the Word Incarnate" (Mia Physis tou Theou Logou Sesarkomene). Because the One born of St Mary is God the Word made flesh, she is truly the Theotokos.\n\n• Decisions & Liturgy: The council condemned and deposed Nestorius, ratified St Cyril\'s Twelve Anathemas, and formulated the beloved Introduction to the Creed recited in all Coptic services: "We magnify you, O Mother of the True Light, and we glorify you, O holy Virgin and Mother of God..."',
-          ar: '• الانعقاد: انعقد سنة ٤٣١م في أفسس بأمر الإمبراطور ثيئودوسيوس الثاني، بحضور ٢٠٠ أسقف وبرئاسة القديس كيرلس الكبير (عمود الدين والبابا الـ٢٤ للإسكندرية)، ومعه القديس الأنبا شنوده رئيس المتوحدين.\n\n• البدعة: قسّم نسطور، بطريرك القسطنطينية، السيد المسيح إلى شخصين منفصلين (ابن الله الإلهي والإنسان يسوع)، ورفض إطلاق لقب "ثيئوطوكوس" (والدة الإله) على العذراء مريم زاعماً أنها ولدت إنساناً فقط.\n\n• الدفاع: دافع القديس كيرلس عن حقيقة التجسد الإلهي: فالكلمة اتخذ جسداً حقيقياً وتحد بناسوته اتحاداً أقنومياً حقيقياً بغير اختلاط ولا امتزاج ولا تغيير ("طبيعة واحدة لله الكلمة المتجسد"). ولأن المولود من العذراء هو الله الكلمة متجسداً فإن القديسة مريم هي بالحقيقة والدة الإله.\n\n• القرارات والليتورجيا: عزل المجمع نسطور وحرم تعاليمه، وثبّت حرومات القديس كيرلس الاثني عشر، ووضع مقدمة قانون الإيمان التي تتلوها الكنيسة في كل صلواتها: "نعظمك يا أم النور الحقيقي، ونمجدك أيتها العذراء القديسة والدة الإله...".',
+          en: '• Convened: In AD 431 in Ephesus by Emperor Theodosius II, bringing together 200 bishops and presided over by St Cyril the Great (Pillar of Faith, 24th Pope of Alexandria), accompanied by St Shenouda the Archimandrite.\n\n• The Heresy: Nestorius, Patriarch of Constantinople, divided Christ into two separate persons (a divine Son and a human Jesus) and refused to call the Virgin Mary "Theotokos" (Mother of God / God-bearer), claiming she gave birth only to the human man.\n\n• The Defense: St Cyril defended the biblical truth of the Incarnation: God the Word truly became man without separating or dividing His humanity and divinity. In Christ there is a true hypostatic union: "One Nature of God the Word Incarnate" (Mia Physis tou Theou Logou Sesarkomene). Because the One born of St Mary is God the Word made flesh, she is truly the Theotokos.\n\n• Decisions & Liturgy: The council condemned and deposed Nestorius, ratified St Cyril\'s Twelve Anathemas, issued eight canons, and formulated the beloved Introduction to the Creed recited in all Coptic services: "We magnify you, O Mother of the True Light, and we glorify you, O holy Virgin and Mother of God..."',
+          ar: '• الانعقاد: انعقد سنة ٤٣١م في أفسس بأمر الإمبراطور ثيئودوسيوس الثاني، بحضور ٢٠٠ أسقف وبرئاسة القديس كيرلس الكبير (عمود الدين والبابا الـ٢٤ للإسكندرية)، ومعه القديس الأنبا شنوده رئيس المتوحدين.\n\n• البدعة: قسّم نسطور، بطريرك القسطنطينية، السيد المسيح إلى شخصين منفصلين (ابن الله الإلهي والإنسان يسوع)، ورفض إطلاق لقب "ثيئوطوكوس" (والدة الإله) على العذراء مريم زاعماً أنها ولدت إنساناً فقط.\n\n• الدفاع: دافع القديس كيرلس عن حقيقة التجسد الإلهي: فالكلمة اتخذ جسداً حقيقياً وتحد بناسوته اتحاداً أقنومياً حقيقياً بغير اختلاط ولا امتزاج ولا تغيير ("طبيعة واحدة لله الكلمة المتجسد"). ولأن المولود من العذراء هو الله الكلمة متجسداً فإن القديسة مريم هي بالحقيقة والدة الإله.\n\n• القرارات والليتورجيا: عزل المجمع نسطور وحرم تعاليمه، وثبّت حرومات القديس كيرلس الاثني عشر، وأصدر ثمانية قوانين، ووضع مقدمة قانون الإيمان التي تتلوها الكنيسة في كل صلواتها: "نعظمك يا أم النور الحقيقي، ونمجدك أيتها العذراء القديسة والدة الإله...".',
         },
       },
       {
         title: { en: '4. The Council of Chalcedon · AD 451 & The Coptic Stand', ar: '٤. مجمع خلقيدونية · ٤٥١م وموقف الكنيسة القبطية' },
         text: {
-          en: '• Convened: In AD 451 in Chalcedon under Emperor Marcian and Empress Pulcheria, attended by over 500 bishops.\n\n• The Crisis: The council was called after Eutyches taught that Christ\'s human nature was dissolved into His divinity like a drop of vinegar in the sea (Monophysitism). Pope St Dioscorus (25th Pope of Alexandria) firmly condemned Eutyches, confessing that Christ is fully human and fully divine.\n\n• The Defense of Cyrillian Faith: St Dioscorus defended St Cyril\'s Orthodox confession: "One incarnate nature of God the Word, out of two natures," united without mingling, confusion, or alteration. However, the council adopted the "Tome of Leo" and introduced the phrase "in two natures" after the union, which attributed separate actions to each nature. St Dioscorus rejected this language because it compromised the indivisible oneness of Christ.\n\n• The Unjust Exile: When St Dioscorus refused to compromise the Cyrillian formula or sign Leo\'s Tome, imperial authorities unjustly deposed him in absentia on disciplinary pretexts (never for heresy). He suffered physical abuse, had his beard plucked and teeth knocked out, and was exiled to the island of Gangra, where he remained steadfast until his departure in AD 454.\n\n• The Schism & Reconciliation: Chalcedon fractured the Church into the Oriental Orthodox family (Coptic, Syriac, Armenian, Ethiopian, Eritrean, and Malankara) and the Chalcedonian Churches. While historically misrepresented as "Monophysites," the Coptic Church confesses Mia-physitism (one united divine-human nature). In modern official dialogues (such as 1989 at St Bishoy Monastery), theologians of both families agreed that both sides share the same apostolic Christological faith.',
-          ar: '• الانعقاد: انعقد سنة ٤٥١م في خلقيدونية في عهد الإمبراطور مرقيان والإمبراطورة بلخيريا، بحضور ما يزيد على ٥٠٠ أسقف.\n\n• الأزمة: عُقد المجمع بعد بدعة أوطاخي الذي زعم أن ناسوت المسيح ابتلع في لاهوته كقطرة خل في المحيط (المونوفيزيتية). وكان البابا القديس ديسقوروس (البابا الـ٢٥ للإسكندرية) قد أدان أوطاخي مسبقاً، مؤكداً كمال ناسوت المسيح وكمال لاهوته.\n\n• الدفاع عن الإيمان الكيرلسي: تمسك القديس ديسقوروس بعبارة القديس كيرلس: "طبيعة واحدة لله الكلمة المتجسد من طبيعتين"، متحدة بغير اختلاط ولا امتزاج ولا تغيير. لكن المجمع تبنى "طومس لاون" وأقر صيغة "في طبيعتين بعد الاتحاد"، ناسباً أفعالاً خاصة لكل طبيعة على حدة، وهو ما رآه القديس ديسقوروس مساساً بوحدانية المسيح التي لا تنفصم.\n\n• النفي الظالم: لرفضه التخلي عن صيغة القديس كيرلس أو توقيع طومس لاون، حُرم ديسقوروس غيابياً لأسباب إجرائية وسياسية دون أي تهمة بدعة. وتعرّض للضرب ونُتفت لحيته وكُسرت أسنانه (فأرسلها إلى الإسكندرية قائلاً: "هذه ثمرة إيماني")، ونُفي إلى جزيرة غانغرا فبقي ثابتاً في إيمانه حتى نياحته سنة ٤٥٤م.\n\n• الانقسام والمصالحات: أدى مجمع خلقيدونية إلى الانقسام بين عائلة الكنائس الأرثوذكسية الشرقية (القبطية والسريانية والأرمنية والإثيوبية والإريترية والهندية) والكنائس الخلقيدونية. ورغم اتهام الأقباط ظلماً بـ"المونوفيزيتية"، تؤمن الكنيسة بـ"الميافيزيتية" (طبيعة واحدة متحدة). وفي الحوارات اللاهوتية الرسمية الحديثة (كدير الأنبا بيشوي سنة ١٩٨٩م)، أقر الجانبان رسمياً باتحادهما في جوهر الإيمان الرسولي بالمسيح.',
+          en: '• Convened: In AD 451 in Chalcedon under Emperor Marcian and Empress Pulcheria, with 630 bishops, as the Synaxarium says.\n\n• The Crisis: The council was called after Eutyches taught that Christ\'s human nature was dissolved into His divinity like a drop of vinegar in the sea (Monophysitism). Pope St Dioscorus (25th Pope of Alexandria) firmly condemned Eutyches, confessing that Christ is fully human and fully divine.\n\n• The Defense of Cyrillian Faith: St Dioscorus defended St Cyril\'s Orthodox confession: "One incarnate nature of God the Word, out of two natures," united without mingling, confusion, or alteration. However, the council adopted the "Tome of Leo" and introduced the phrase "in two natures" after the union, which attributed separate actions to each nature. St Dioscorus rejected this language because it compromised the indivisible oneness of Christ.\n\n• The Unjust Exile: When St Dioscorus refused to compromise the Cyrillian formula or sign Leo\'s Tome, the council deposed him and the emperor exiled him. By the empress\'s order he was struck on the mouth, knocking out his teeth, and his beard was plucked; he sent them to Alexandria, saying, "This is the fruit of faith." He was exiled to the island of Gangra, where he remained steadfast for five years until his departure in AD 454 (7 Thout).\n\n• The Schism & Reconciliation: Chalcedon fractured the Church into the Oriental Orthodox family (Coptic, Syriac, Armenian, Ethiopian, Eritrean, and Malankara) and the Chalcedonian Churches. While historically misrepresented as "Monophysites," the Coptic Church confesses Mia-physitism (one united divine-human nature). In modern official dialogues (such as 1989 at St Bishoy Monastery), theologians of both families agreed that both sides share the same apostolic Christological faith.',
+          ar: '• الانعقاد: انعقد سنة ٤٥١م في خلقيدونية في عهد الإمبراطور مرقيان والإمبراطورة بلخيريا، بحضور ٦٣٠ أسقفاً كما يذكر السنكسار.\n\n• الأزمة: عُقد المجمع بعد بدعة أوطاخي الذي زعم أن ناسوت المسيح ابتلع في لاهوته كقطرة خل في المحيط (المونوفيزيتية). وكان البابا القديس ديسقوروس (البابا الـ٢٥ للإسكندرية) قد أدان أوطاخي مسبقاً، مؤكداً كمال ناسوت المسيح وكمال لاهوته.\n\n• الدفاع عن الإيمان الكيرلسي: تمسك القديس ديسقوروس بعبارة القديس كيرلس: "طبيعة واحدة لله الكلمة المتجسد من طبيعتين"، متحدة بغير اختلاط ولا امتزاج ولا تغيير. لكن المجمع تبنى "طومس لاون" وأقر صيغة "في طبيعتين بعد الاتحاد"، ناسباً أفعالاً خاصة لكل طبيعة على حدة، وهو ما رآه القديس ديسقوروس مساساً بوحدانية المسيح التي لا تنفصم.\n\n• النفي الظالم: لرفضه التخلي عن صيغة القديس كيرلس أو توقيع طومس لاون، عزله المجمع ونفاه الإمبراطور. وبأمر الإمبراطورة ضُرب على فمه فسقطت أسنانه ونُتفت لحيته، فأرسلها إلى الإسكندرية قائلاً: "هذه ثمرة الإيمان"، ونُفي إلى جزيرة غانغرا فبقي ثابتاً في إيمانه خمس سنوات حتى نياحته سنة ٤٥٤م (٧ توت).\n\n• الانقسام والمصالحات: أدى مجمع خلقيدونية إلى الانقسام بين عائلة الكنائس الأرثوذكسية الشرقية (القبطية والسريانية والأرمنية والإثيوبية والإريترية والهندية) والكنائس الخلقيدونية. ورغم اتهام الأقباط ظلماً بـ"المونوفيزيتية"، تؤمن الكنيسة بـ"الميافيزيتية" (طبيعة واحدة متحدة). وفي الحوارات اللاهوتية الرسمية الحديثة (كدير الأنبا بيشوي سنة ١٩٨٩م)، أقر الجانبان رسمياً باتحادهما في جوهر الإيمان الرسولي بالمسيح.',
         },
       },
       {
         title: { en: 'Toward Unity and Dialogue', ar: 'نحو الوحدة والحوار المسكوني' },
         text: {
-          en: 'In recent decades, through official theological consultations between the Oriental Orthodox and Eastern Orthodox Churches (held at Chambésy and the Monastery of St Bishoy in 1989 and 1990), agreed Christological statements recognized that both traditions confess the same faith in our Lord Jesus Christ, perfect in His divinity and perfect in His humanity, united without confusion, change, division, or separation.',
-          ar: 'في العقود الأخيرة، ومن خلال الحوارات اللاهوتية الرسمية بين الكنائس الأرثوذكسية الشرقية والبيزنطية (في شامبيزي ودير الأنبا بيشوي عامي ١٩٨٩ و١٩٩٠م)، وقّع الطرفان بيانات كريستولوجية مشتركة تعترف بأن العائلتين تعترفان بنفس الإيمان الرسولي بربنا يسوع المسيح، إلهاً كاملاً في لاهوته وإنساناً كاملاً في ناسوته، متحداً بلا اختلاط ولا تغيير ولا انقسام ولا انفصال.',
+          en: 'In recent decades, through official theological consultations between the Oriental Orthodox and Eastern Orthodox Churches (at the Monastery of St Bishoy in Egypt in 1989 and at Chambésy, Switzerland, in 1990), agreed Christological statements recognized that both traditions confess the same faith in our Lord Jesus Christ, perfect in His divinity and perfect in His humanity, united without confusion, change, division, or separation.',
+          ar: 'في العقود الأخيرة، ومن خلال الحوارات اللاهوتية الرسمية بين الكنائس الأرثوذكسية الشرقية والبيزنطية (في دير الأنبا بيشوي بمصر سنة ١٩٨٩م وفي شامبيزي بسويسرا سنة ١٩٩٠م)، وقّع الطرفان بيانات كريستولوجية مشتركة تعترف بأن العائلتين تعترفان بنفس الإيمان الرسولي بربنا يسوع المسيح، إلهاً كاملاً في لاهوته وإنساناً كاملاً في ناسوته، متحداً بلا اختلاط ولا تغيير ولا انقسام ولا انفصال.',
         },
       },
     ],
@@ -252,8 +255,8 @@ export const faithSections: GuideSection[] = [
       {
         title: { en: '5. Unction of the Sick', ar: '٥. مسحة المرضى' },
         text: {
-          en: 'Seven priests (or fewer) pray over the sick and anoint them with oil for healing of body and soul (James 5:14–15).',
-          ar: 'يصلي سبعة كهنة (أو أقل) على المريض ويدهنونه بالزيت لشفاء النفس والجسد (يعقوب ٥: ١٤–١٥).',
+          en: 'The priests pray over the sick and anoint them with oil for healing of body and soul (James 5:14–15). On the last Friday of Lent the whole congregation is anointed.',
+          ar: 'يصلي الكهنة على المريض ويدهنونه بالزيت لشفاء النفس والجسد (يعقوب ٥: ١٤–١٥). وفي الجمعة الأخيرة من الصوم الكبير يُدهن الشعب كله.',
         },
       },
       {
@@ -307,8 +310,8 @@ export const faithSections: GuideSection[] = [
       {
         title: { en: 'St Athanasius the Apostolic', ar: 'القديس أثناسيوس الرسولي' },
         text: {
-          en: 'The 20th Pope of Alexandria. As a deacon he defended the divinity of Christ at Nicaea, and as Pope he was exiled five times for the faith. He is called "the Apostolic" and "the defender of the faith". He wrote "On the Incarnation" and the Life of St Antony.',
-          ar: 'البابا العشرون للإسكندرية. دافع وهو شماس عن لاهوت المسيح في مجمع نيقية، ونُفي خمس مرات وهو بابا من أجل الإيمان. يُلقّب بـ"الرسولي" و"حامي الإيمان". كتب "تجسد الكلمة" وسيرة القديس أنطونيوس.',
+          en: 'The 20th Pope of Alexandria. As a deacon he defended the divinity of Christ at Nicaea, and as Pope he was exiled four times for the faith (a fifth exile failed), seventeen and a half years in all. He is called "the Apostolic" and "Athanasius against the world". He wrote "On the Incarnation of the Word".',
+          ar: 'البابا العشرون للإسكندرية. دافع وهو شماس عن لاهوت المسيح في مجمع نيقية، ونُفي وهو بابا أربع مرات من أجل الإيمان (وفشلت محاولة نفيه الخامسة)، فبلغت سنوات نفيه سبع عشرة سنة ونصفاً. يُلقّب بـ"الرسولي" و"أثناسيوس ضد العالم". كتب "تجسد الكلمة".',
         },
       },
       {
@@ -321,22 +324,65 @@ export const faithSections: GuideSection[] = [
       {
         title: { en: 'St Dioscorus, Hero of Orthodoxy', ar: 'القديس ديسقوروس بطل الأرثوذكسية' },
         text: {
-          en: 'The 25th Pope of Alexandria. He refused the Council of Chalcedon to stay faithful to St Cyril\'s teaching, and died in exile.',
-          ar: 'البابا الخامس والعشرون للإسكندرية. رفض مجمع خلقيدونية ليبقى أميناً لتعليم القديس كيرلس، ومات في المنفى.',
+          en: 'The 25th Pope of Alexandria. He refused the Council of Chalcedon to stay faithful to St Cyril\'s teaching, and departed in exile on the island of Gangra in AD 454.',
+          ar: 'البابا الخامس والعشرون للإسكندرية. رفض مجمع خلقيدونية ليبقى أميناً لتعليم القديس كيرلس، وتنيّح في منفاه بجزيرة غانغرا سنة ٤٥٤م.',
         },
       },
       {
         title: { en: 'St Antony the Great', ar: 'القديس الأنبا أنطونيوس الكبير' },
         text: {
-          en: 'The father of all monks. As a young man he heard the Gospel "Go, sell what you have and give to the poor", obeyed it, and went into the desert. His monastery near the Red Sea still stands.',
-          ar: 'أب جميع الرهبان. سمع في شبابه الإنجيل: "اذهب بع أملاكك وأعط الفقراء" فأطاع وخرج إلى البرية. وما زال ديره قرب البحر الأحمر قائماً.',
+          en: 'The father of all monks. As a young man he heard the Gospel "If you want to be perfect, go, sell what you have and give to the poor" (Matthew 19:21), obeyed it, and went into the desert. His monastery in the Eastern Desert still stands.',
+          ar: 'أب جميع الرهبان. سمع في شبابه الإنجيل: "إن أردت أن تكون كاملاً فاذهب وبع أملاكك وأعط الفقراء" (متى ١٩: ٢١) فأطاع وخرج إلى البرية. وما زال ديره في الصحراء الشرقية قائماً.',
         },
       },
       {
         title: { en: 'St Shenouda the Archimandrite', ar: 'القديس الأنبا شنوده رئيس المتوحدين' },
         text: {
-          en: 'Head of the White Monastery near Sohag and a great teacher of the Coptic language. He went with St Cyril to the Council of Ephesus.',
-          ar: 'رئيس الدير الأبيض بجوار سوهاج ومعلم عظيم للغة القبطية. رافق القديس كيرلس إلى مجمع أفسس.',
+          en: 'Head of the White Monastery near Sohag, whose monasteries held four or five thousand monks and nuns. His writings and sermons are the richest of Coptic literature. He went with St Cyril to the Council of Ephesus.',
+          ar: 'رئيس الدير الأبيض بجوار سوهاج، وبلغ عدد رهبان أديرته وراهباتها أربعة أو خمسة آلاف. وكتاباته وعظاته بالقبطية أغنى الأدب القبطي. رافق القديس كيرلس إلى مجمع أفسس.',
+        },
+      },
+    ],
+  },
+  {
+    id: 'sources',
+    icon: '❖',
+    title: { en: 'Sources', ar: 'المصادر' },
+    desc: { en: 'Where these pages come from', ar: 'من أين أُخذت هذه الصفحات' },
+    items: [
+      {
+        title: { en: 'The Coptic Orthodox Patriarchate', ar: 'البطريركية القبطية الأرثوذكسية' },
+        text: {
+          en: 'The official website of the Coptic Orthodox Church: Coptic History, Coptic Monasticism and The Ecumenical Councils.\ncopticorthodox.church',
+          ar: 'الموقع الرسمي للكنيسة القبطية الأرثوذكسية: تاريخ الكنيسة القبطية، والرهبنة القبطية، والمجامع المسكونية.\ncopticorthodox.church',
+        },
+      },
+      {
+        title: { en: 'Coptic Orthodox Metropolis of the Southern United States', ar: 'مطرانية جنوب الولايات المتحدة للأقباط الأرثوذكس' },
+        text: {
+          en: 'Under H.E. Metropolitan Youssef: The Coptic Church, St Mark, and the lectures on the Church Sacraments (from Archdeacon Habib Guirguis\'s "The Church Sacraments").\nsuscopts.org',
+          ar: 'بإشراف نيافة المطران يوسف: الكنيسة القبطية، والقديس مرقس، ومحاضرات أسرار الكنيسة (عن كتاب "أسرار الكنيسة السبعة" للأرشيدياكون حبيب جرجس).\nsuscopts.org',
+        },
+      },
+      {
+        title: { en: 'The Coptic Synaxarium', ar: 'السنكسار القبطي' },
+        text: {
+          en: 'The Church\'s book of saints and feasts: the Entry of the Lord into Egypt (24 Pashons), the Council of Constantinople (1 Meshir), St Antony (22 Tobi), St Dioscorus (7 Thout) and St Shenouda (7 Epep).\nst-takla.org · copticchurch.net',
+          ar: 'كتاب الكنيسة لسير القديسين والأعياد: دخول السيد المسيح أرض مصر (٢٤ بشنس)، ومجمع القسطنطينية (١ أمشير)، والقديس الأنبا أنطونيوس (٢٢ طوبة)، والقديس ديسقوروس (٧ توت)، والقديس الأنبا شنوده (٧ أبيب).\nst-takla.org · copticchurch.net',
+        },
+      },
+      {
+        title: { en: 'H.H. Pope Shenouda III, "The Nature of Christ"', ar: 'قداسة البابا شنوده الثالث، "طبيعة المسيح"' },
+        text: {
+          en: 'The Church\'s teaching on the one nature of God the Word incarnate, Eutyches and the Council of Chalcedon.',
+          ar: 'تعليم الكنيسة عن الطبيعة الواحدة لله الكلمة المتجسد، وأوطاخي، ومجمع خلقيدونية.',
+        },
+      },
+      {
+        title: { en: 'Metropolitan Bishoy of Damiette', ar: 'نيافة المتنيح الأنبا بيشوي مطران دمياط' },
+        text: {
+          en: 'Co-chairman of the official dialogue with the Eastern Orthodox Churches: the agreed statements of St Bishoy Monastery (1989) and Chambésy (1990).\nmetropolitan-bishoy.org',
+          ar: 'الرئيس المشارك للحوار الرسمي مع الكنائس الأرثوذكسية البيزنطية: البيانات المشتركة في دير الأنبا بيشوي (١٩٨٩م) وشامبيزي (١٩٩٠م).\nmetropolitan-bishoy.org',
         },
       },
     ],
@@ -417,7 +463,7 @@ const faithQuestions: GuideQuestion[] = [
   { q: b('Which sacrament is for healing of body and soul?', 'أي سر هو لشفاء النفس والجسد؟'), right: sacraments[4], wrong: sacraments.filter((s) => s !== sacraments[4]) },
   // Creed and fathers
   { q: b('The introduction to the Creed comes from which council?', 'من أي مجمع جاءت مقدمة قانون الإيمان؟'), right: councils.ephesus, wrong: [councils.nicaea, councils.constantinople, councils.chalcedon] },
-  { q: b('Who was exiled five times for the faith?', 'من نُفي خمس مرات من أجل الإيمان؟'), right: people.athanasius, wrong: [people.cyril, people.dioscorus, people.antony] },
+  { q: b('Who was exiled four times for the faith?', 'من نُفي أربع مرات من أجل الإيمان؟'), right: people.athanasius, wrong: [people.cyril, people.dioscorus, people.antony] },
   { q: b('Who wrote "On the Incarnation"?', 'من كتب "تجسد الكلمة"؟'), right: people.athanasius, wrong: [people.cyril, people.dioscorus, people.mark] },
 ];
 
