@@ -235,9 +235,14 @@ function eventsForYear(year: number): ChurchEvent[] {
     e('great-friday', 'holy-week', 'fast', 'Great Friday', 'الجمعة العظيمة', pascha - 2, pascha - 2, 105),
     e('bright-saturday', 'holy-week', 'fast', 'Bright Saturday', 'سبت النور', pascha - 1, pascha - 1, 105),
     e('resurrection', 'pentecost', 'feast', 'Feast of Resurrection', 'عيد القيامة المجيد', pascha, pascha, 100),
-    e('fifty-days', 'pentecost', 'season', 'Holy Fifty Days', 'الخماسين المقدسة', pascha + 1, pascha + 48, 60, true),
+    // Spirit & Truth's two periods of the Holy Fifty Days: the Resurrection's forty days up to the Ascension, then the
+    // Ascension's ten days, from the feast (the fortieth day) until Pentecost
+    e('resurrection-period', 'pentecost', 'season', 'Holy 50 Days (Resurrection Period)', 'الخماسين المقدسة (فترة القيامة)', pascha + 1, pascha + 38, 60, true),
+    e('ascension-period', 'ascension', 'season', 'Holy 50 Days (Ascension Period)', 'الخماسين المقدسة (فترة الصعود)', pascha + 40, pascha + 48, 60, true),
     e('thomas-sunday', 'minor-feasts', 'feast', 'Thomas Sunday', 'أحد توما', pascha + 7, pascha + 7, 70),
-    ...sundays('pentecost-sunday', 'pentecost', 'season', 'Pentecost', 'الخماسين', pascha + 14, [2, 3, 4, 5, 6]),
+    ...sundays('pentecost-sunday', 'pentecost', 'season', 'Pentecost', 'الخماسين', pascha + 14, [2, 3, 4, 5, 6]).map((ev) =>
+      ev.start >= pascha + 39 ? { ...ev, seasonId: 'ascension' } : ev
+    ),
     e('ascension', 'ascension', 'feast', 'Feast of the Ascension', 'عيد الصعود', pascha + 39, pascha + 39, 90),
     e('pentecost', 'pentecost', 'feast', 'Feast of Pentecost', 'عيد العنصرة', pascha + 49, pascha + 49, 90),
     e('apostles-fast-start', 'apostles-fast', 'fast', "1st Day of Apostles' Fast", 'أول أيام صوم الرسل', pascha + 50, pascha + 50, 55),
@@ -264,7 +269,7 @@ function weekName(jdn: number, current: ChurchEvent | null): Record<AppLanguage,
 
   const key = current?.key.replace(/-\d+$/, '');
   if (key === 'great-lent') return week('Great Lent', 'الصوم الكبير', Math.floor((jdn - (pascha - 55)) / 7) + 1);
-  if (key === 'fifty-days') return week('Pentecost', 'الخماسين', Math.floor((jdn - pascha) / 7) + 1);
+  if (key === 'resurrection-period' || key === 'ascension-period') return week('Pentecost', 'الخماسين', Math.floor((jdn - pascha) / 7) + 1);
 
   const c = jdnToCoptic(jdn);
   if (key === 'kiahk' && c.month === 4) {

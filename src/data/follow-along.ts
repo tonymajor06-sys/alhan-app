@@ -202,7 +202,7 @@ interface SeasonPsalis {
 }
 const seasonPsalis: Record<string, SeasonPsalis> = {
   pentecost: { adam: /-psali-adam-for-the-holy-fifty-days$/, watos: /-psali-watos-for-the-holy-fifty-days$/, replaces: true, thomas: /-adam-psali-for-thomas-sunday$/ },
-  // The Ascension is a day of the Holy Fifty Days
+  // The Ascension's ten days are the end of the Holy Fifty Days
   ascension: { adam: /-psali-adam-for-the-holy-fifty-days$/, watos: /-psali-watos-for-the-holy-fifty-days$/, replaces: true },
   'apostles-fast': { adam: /-adam-psali-for-the-apostles-fast$/, watos: /-watos-psali-for-the-apostles-fast$/, replaces: false },
 };
@@ -273,12 +273,9 @@ export function followAlong(kind: PraiseKind, jdn: number): FollowAlong {
   if (kind === 'vesper') {
     // The season's own Vesper Praises when it has that day of the week (a minor feast's on its day), else Annual's
     const current = getSeasonInfo(jdn, 0).current;
-    // A feast day without Vesper Praises of its own (the Ascension) keeps the season around it
-    const feastSeason = seasons.find((s) => s.id === current?.seasonId);
-    const inSeason =
-      feastSeason && feastSeason.id !== 'minor-feasts' && !serviceOf(feastSeason, '-vesper-praises')
-        ? seasons.find((s) => s.id === getSeasonInfo(jdn + 1, 0).current?.seasonId) ?? feastSeason
-        : feastSeason;
+    // The Ascension has no Vesper Praises of its own: its ten days keep the Fifty Days' (the Resurrection's)
+    const daySeason = seasons.find((s) => s.id === current?.seasonId);
+    const inSeason = daySeason?.id === 'ascension' ? seasons.find((s) => s.id === 'pentecost') : daySeason;
     const own =
       inSeason?.id === 'minor-feasts'
         ? inSeason.services.find((s) => s.title.startsWith(`${current!.name.en}:`) && s.id.endsWith('-vesper-praises'))

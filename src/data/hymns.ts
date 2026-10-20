@@ -263,7 +263,7 @@ export const seasons: Season[] = [
   { id: 'great-lent', title: '9. Great Lent', services: createServices('lent') },
   { id: 'palm-sunday', title: '10. Palm Sunday', services: createServices('palmsunday') },
   { id: 'holy-week', title: '11. Holy Week (Pascha)', services: createServices('holyweek') },
-  { id: 'pentecost', title: '12. Holy Resurrection & Holy Fifty Days', services: createServices('pentecost') },
+  { id: 'pentecost', title: '12. Resurrection', services: createServices('pentecost') },
   { id: 'apostles-fast', title: '13. Apostles Fast & Feast', services: createServices('apostles') },
   { id: 'st-mary', title: '14. St. Mary Fast & Assumption Feast', services: createServices('stmary') },
   { id: 'minor-feasts', title: '15. Minor Feasts of the Lord', services: createServices('minorfeasts') },
@@ -8124,7 +8124,8 @@ for (const service of seasons.find((s) => s.id === 'pentecost')?.services ?? [])
   }
 }
 
-// The Feast of the Ascension is its own season after the Resurrection: each Fifty Days service that has Ascension
+// The Ascension is its own season after the Resurrection, as Spirit & Truth divides the Holy Fifty Days (the Resurrection
+// Period, then the Ascension Period of ten days from the feast to Pentecost): each Fifty Days service that has Ascension
 // hymns becomes the Ascension's, with those hymns in their places (they move there, keeping their ids) and the rest
 // copied in ("<id>@ascension-<service>"); the Distribution comes along too. The seasons after it move down one number.
 {
@@ -8150,7 +8151,7 @@ for (const service of seasons.find((s) => s.id === 'pentecost')?.services ?? [])
     }
     const at = seasons.indexOf(resurrection) + 1;
     for (const later of seasons.slice(at)) later.title = later.title.replace(/^(\d+)\./, (_, n) => `${Number(n) + 1}.`);
-    seasons.splice(at, 0, { id: 'ascension', title: `${at + 1}. Feast of the Ascension`, services });
+    seasons.splice(at, 0, { id: 'ascension', title: `${at + 1}. Ascension`, services });
   }
 }
 
