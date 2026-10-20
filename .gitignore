@@ -50,3 +50,6 @@ example
 # Intermediate art generator svgs
 svg/
 .wrangler/
+
+# Orsozoxi screen captures (scripts/orsozoxi)
+captures/
