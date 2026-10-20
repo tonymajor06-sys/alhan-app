@@ -391,7 +391,7 @@ describe('Kiahk Praises & Season > Midnight Praises', () => {
     expect(text(psalmodyConclusion, 'coptic').startsWith('Ⲁ̀ⲙⲏⲛ.')).toBe(true);
     expect(text(psalmodyConclusion, 'english').startsWith('Amen.')).toBe(true);
     expect(text(psalmodyConclusion, 'coptic')).toContain('Ⲕⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ (ⲅ︦)');
-    expect(text(psalmodyConclusion, 'englishCoptic')).toContain('Kurie ele-ēson (3)');
+    expect(text(psalmodyConclusion, 'englishCoptic')).toContain('Kirie ele-eeson (3)');
     // the number under the line (ⲅ︦) is written as a number in Arabic letters too, not as the letter gamma
     expect(text(psalmodyConclusion, 'arabicCoptic')).toContain('(٣)');
     expect(text(psalmodyConclusion, 'arabicCoptic')).not.toContain('(ج)');
@@ -402,7 +402,7 @@ describe('Kiahk Praises & Season > Midnight Praises', () => {
       expect(text(laborersConclusion, language).split(/\n\s*\n/)).toHaveLength(1);
     }
     expect(text(laborersConclusion, 'coptic').startsWith('Ⲡⲭ︦ⲥ︦ ⲡⲉⲛⲥ︦ⲱ︦ⲣ︦')).toBe(true);
-    expect(text(laborersConclusion, 'englishCoptic').startsWith('Pi-ekhristos pensōtēr')).toBe(true);
+    expect(text(laborersConclusion, 'englishCoptic')).toMatch(/^Pi-ekhristos pensoteer/i);
     expect(text(laborersConclusion, 'english').startsWith('O Christ our Savior')).toBe(true);
     // Your Mercies O My God: its own 16 verses
     const yourMercies = service.hymns.find((h) => h.title === 'Your Mercies O My God')!;
@@ -669,7 +669,7 @@ describe('Kiahk Praises & Season > Matins', () => {
       expect(stanzasOf(fatherSon, language).slice(-16)).toEqual(stanzasOf(come, language).slice(-16));
     }
     // the shortened "my Lord" (ⲡⲁⲟ︦ⲥ︦) is written out in English and Arabic letters
-    expect(text(fatherSon, 'englishCoptic')).toContain('patshois epouro Ge-ōrgios');
+    expect(text(fatherSon, 'englishCoptic')).toMatch(/pashois epouro Ge-?orgios/);
     expect(text(fatherSon, 'arabicCoptic')).toContain('پاتشُيس إپورُ');
     expect(new Set(service.hymns.map((h) => h.id)).size).toBe(service.hymns.length);
     // the Introduction and the Conclusion of the Doxologies are copied from Annual Matins, the first two Kiahk doxologies have their own lyrics
@@ -764,13 +764,13 @@ describe('Kiahk Praises & Season > Matins', () => {
     // the Concluding Hymn: Amen Alleluia / We proclaim and say / Lord have mercy, with "our Lord Jesus Christ" written out
     expect(doxText(concludingHymn, 'english').startsWith('Amen. Allelluia. Glory to the Father')).toBe(true);
     expect(doxText(concludingHymn, 'coptic').startsWith('Ⲁⲙⲏⲛ: ⲁⲗⲗⲏⲗⲟⲩⲓⲁ ⲇⲟⲝⲁ')).toBe(true);
-    expect(doxText(concludingHymn, 'englishCoptic')).toContain('ō Pentshois Iēsous Pi-ekhristos');
+    expect(doxText(concludingHymn, 'englishCoptic')).toMatch(/o Penshois Ieesous Pi-ekhristos/i);
     expect(doxText(concludingHymn, 'english').split(/\n\s*\n/)[2]).toBe(
       'Lord have mercy. Lord have mercy. Lord bless us. Amen. Bless me, bless me. Behold, my repentance. Forgive me. Say the blessing.'
     );
     // the shortened words in the Sixth Doxology (ⲡⲟ︦ⲥ︦, ⲛ̀ⲛⲏⲉⲑ︦ⲩ︦, Ⲡⲡ︦ⲛ︦ⲁ) are written out in English and Arabic letters
-    expect(doxText(sixthDoxology, 'englishCoptic')).toContain('Eptshois fēetshop khen tfe');
-    expect(doxText(sixthDoxology, 'englishCoptic')).toContain('ennēethouab');
+    expect(doxText(sixthDoxology, 'englishCoptic')).toContain('Epshois fee-etshop khen tfe');
+    expect(doxText(sixthDoxology, 'englishCoptic')).toMatch(/ennee-?ethowab/);
     expect(doxText(sixthDoxology, 'arabicCoptic')).toContain('خِن روو إنّيإثواب');
     // the Kiahk recordings play on Coptic only; the Conclusion copied from Annual Matins has none
     for (const hymn of flattenHymns(service.hymns)) {
@@ -894,7 +894,7 @@ describe('Kiahk Praises & Season > Liturgy', () => {
       expect(chantText(sunday, 'english').startsWith(sundayStarts[i])).toBe(true);
       expect(chantText(sunday, 'english').endsWith('Alleluia')).toBe(true);
       expect(chantText(sunday, 'coptic').endsWith('ⲁ︦ⲗ︦.')).toBe(true);
-      expect(chantText(sunday, 'englishCoptic').endsWith('allēlouia.')).toBe(true);
+      expect(chantText(sunday, 'englishCoptic').endsWith('alleelouia.')).toBe(true);
       expect(chantText(sunday, 'coptic')).not.toContain('⳪');
       // Sunday chants have their own recordings; Bishop chant has Arsani audio
       if (i < 4) {
@@ -977,10 +977,10 @@ describe('Kiahk Praises & Season > Liturgy', () => {
     expect(stanzas(response, 'english')[0]).toBe(
       'The grace of our Lord Jesus Christ, be with your saintly spirit, my lord the honored father the high priest Pope Abba (...).'
     );
-    expect(stanzas(response, 'englishCoptic')[0].startsWith('Pi-ehmot gar empentshois Iēsous Pi-ekhristos')).toBe(true);
+    expect(stanzas(response, 'englishCoptic')[0].startsWith('Pi-ehmot ghar empenshois Ieesous Pi-ekhristos')).toBe(true);
     expect(stanzas(greatResponse, 'english')[0]).toBe('The grace of God, the Father, the Pantocrator,');
     expect(stanzas(greatResponse, 'coptic')[0]).toBe('Ⲡⲓϩ̀ⲙⲟⲧ ⲅⲁⲣ ⲙ̀Ⲫ̀ⲛⲟⲩϯ Ⲫ̀ⲓⲱⲧ Ⲡⲓⲡⲁⲛⲧⲟⲕⲣⲁⲧⲱⲣ.');
-    expect(stanzas(greatResponse, 'englishCoptic')[7].startsWith('Tōbh e-Pi-ekhristos')).toBe(true);
+    expect(stanzas(greatResponse, 'englishCoptic')[7].startsWith('Tovh epi-ekhristos')).toBe(true);
     // the Alternate Response: three stanzas, without the line 'If a Bishop is present:' in English and Arabic
     const alternate = service.hymns.find((h) => h.title === withLyricsTitles[4])!;
     for (const language of ['coptic', 'englishCoptic', 'english', 'arabic', 'arabicCoptic', 'arabicEnglish']) {
@@ -1005,7 +1005,7 @@ describe('Kiahk Praises & Season > Liturgy', () => {
     expect(stanzas(virtues, 'english')[20]).toBe('Amen (3), so it shall be (2) for you all the days of your life(s).');
     expect(stanzas(virtues, 'coptic')[0].startsWith('Ϯⲙⲏⲧ ⲥ̀ⲛⲟⲩϯ ⲛ̀ⲁ̀ⲣⲉⲧⲏ')).toBe(true);
     // the numbers under a line are written as numbers in English and Arabic letters
-    expect(stanzas(virtues, 'englishCoptic')[1]).toContain('Eu-eshōpi (2)');
+    expect(stanzas(virtues, 'englishCoptic')[1]).toContain('Eveshopi (2)');
     expect(stanzas(virtues, 'arabicCoptic')[15]).toContain('(٣)');
     expect(stanzas(virtues, 'arabicCoptic')[15]).toContain('(٢)');
     expect(virtues.versions.every((v) => !v.text.includes('\\n') && v.audio === undefined)).toBe(true);
@@ -1018,7 +1018,7 @@ describe('Kiahk Praises & Season > Liturgy', () => {
     expect(stanzas(blessed, 'english')[3]).toBe('May his years be countless, may God preserve our master and Archbishop (for many years O master) (3x)');
     expect(stanzas(blessed, 'coptic')[0].startsWith('Ⲧⲟⲩ ⲙⲁⲕⲁⲣⲓⲱ ⲧⲁⲧⲟⲩ ⲁ̀ⲅⲓⲱ ⲧⲁⲧⲟⲩ')).toBe(true);
     expect(stanzas(blessed, 'arabic')[0]).toBe('الطوباوي الأقدس الكلي الإكرام، أبونا ومولانا وسيدنا');
-    expect(stanzas(blessed, 'englishCoptic')[3]).toContain('(is polla etē Despota) 3.');
+    expect(stanzas(blessed, 'englishCoptic')[3]).toContain('(is polla etee Thespota) 3.');
     expect(stanzas(blessed, 'arabicCoptic')[3]).toContain('٣');
     expect(text(blessed, 'english')).not.toBe(text(virtues, 'english'));
     expect(blessed.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
@@ -1034,8 +1034,8 @@ describe('Kiahk Praises & Season > Liturgy', () => {
     expect(stanzas(perfect, 'english')[0]).toBe('Perfect is the blessing, of the Word of the Father, who came and was incarnate as a perfect man.');
     expect(stanzas(perfect, 'english')[11]).toBe('The catholic epistle, the catholic epistle.');
     expect(stanzas(perfect, 'coptic')[0].startsWith('Ⲁ̀ ⲡⲉⲧϫⲏⲕ ⲉ̀ⲃⲟⲗ ⲛ̀ϫⲉ ⲡⲓⲥ̀ⲙⲟⲩ')).toBe(true);
-    expect(stanzas(perfect, 'englishCoptic')[5]).toContain('Ere pi-esmou en-Ti-etrias ethouab (2)');
-    expect(stanzas(perfect, 'englishCoptic')[6]).toContain('en-Iēsous Pi-ekhristos');
+    expect(stanzas(perfect, 'englishCoptic')[5]).toContain('Ere pi-esmou enti-etrias ethowab (2)');
+    expect(stanzas(perfect, 'englishCoptic')[6]).toMatch(/en-?ieesous Pi-ekhristos/i);
     expect(stanzas(perfect, 'arabicCoptic')[5]).toContain('(٢)');
     expect(text(catholic, 'english')).toBe('The Catholic Epistle of our father ___, my beloved.');
     expect(text(catholic, 'coptic').startsWith('Ⲕⲁⲑⲟⲗⲓⲕⲟⲛ (ⲉ̀ⲃⲟⲗϧⲉⲛ ϯⲉ̀ⲡⲓⲥⲧⲟⲗⲏ ⲛ̀ⲧⲉ)')).toBe(true);
@@ -1052,7 +1052,7 @@ describe('Kiahk Praises & Season > Liturgy', () => {
     expect(stanzas(praxis, 'english')[0]).toBe('Hail to you O Mary, the beautiful dove, who has borne to us, God the Logos.');
     expect(stanzas(praxis, 'english')[10]).toBe('Blessed are You indeed, with Your good Father, and the Holy Spirit, for You have come and saved us. Have mercy on us.');
     expect(stanzas(praxis, 'coptic')[0].startsWith('Ⲭⲉⲣⲉ ⲛⲉ Ⲙⲁⲣⲓⲁ: ϯϭⲣⲟⲙⲡⲓ')).toBe(true);
-    expect(stanzas(praxis, 'englishCoptic')[4]).toContain('patshois epouro Ge-ōrgios');
+    expect(stanzas(praxis, 'englishCoptic')[4]).toMatch(/pashois epouro Ge-?orgios/);
     expect(stanzas(paralex, 'english')[0]).toBe('O My Lord Jesus Christ, the begotten of the Father, before all ages, have mercy on us according to Your great mercy.');
     expect(stanzas(paralex, 'coptic')[0].startsWith('Ⲡⲁϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ')).toBe(true);
     expect(stanzas(paralex, 'arabic')[2]).toBe('قدوس رب الألوف، مكرم بالربوات، أنت بخور يا مخلصي، لأنك أتيت وخلصتنا."');

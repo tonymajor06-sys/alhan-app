@@ -206,7 +206,7 @@ describe('Divine Liturgy Audio and Bishop Updates', () => {
     expect(coptic?.text).toContain('Ⲡⲓⲁⲛⲁⲅⲛⲱⲥⲧⲏⲥ:\n\nⲠⲁⲩⲗⲟⲥ ⲫ̀ⲃⲱⲕ');
 
     const engCoptic = paulineIntro?.versions.find((v) => v.language === 'englishCoptic');
-    expect(engCoptic?.text).toContain('Pi-anagnōstēs:\n\nPaulos efvōk');
+    expect(engCoptic?.text).toContain('Pi-anaghnostees:\n\nPavlos efvok');
 
     const english = paulineIntro?.versions.find((v) => v.language === 'english');
     expect(english?.text).toContain('Reader:\n\nPaul, the servant of our Lord Jesus Christ');

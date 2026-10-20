@@ -1,5 +1,6 @@
 import { displayTitle } from './arabic-titles';
 import { copticToEnglish } from './english-coptic';
+import { copticToTasbeha } from './tasbeha-coptic';
 import { splitTitle } from './hymn-titles';
 import { deaconCategories, flattenHymns, Hymn, LanguageType, Season, seasons, Service } from './hymns';
 
@@ -152,7 +153,8 @@ const openingOf = (text: string) => normalizeForSearch(text.replace(SPEAKER_LINE
 
 function titleVariants(coptic: string): string[] {
   const base = copticToEnglish(coptic);
-  const variants = [base];
+  // the hymns' own spelling (Tasbeha's) and the alphabet chart's, so either one finds it
+  const variants = [base, copticToTasbeha(coptic)];
 
   // Split after common Coptic demonstratives / articles (Ⲧⲁⲓ, Ϯ, Ⲡⲓ, Ⲧⲓ, Ⲛⲓ, Ⲫⲁⲓ)
   const prefixMatch = coptic.match(/^(Ⲧⲁⲓ|Ϯ|Ⲡⲓ|Ⲧⲓ|Ⲛⲓ|Ⲫⲁⲓ|ⲧⲁⲓ|ϯ|ⲡⲓ|ⲧⲓ|ⲛⲓ|ⲫⲁⲓ)(.+)$/);

@@ -1,7 +1,8 @@
 import type { Hymn } from './hymns';
+import { copticToTasbeha } from './tasbeha-coptic';
 
-// Coptic written in English letters, for hymns that came without it. The letter values are the user's Coptic alphabet
-// chart (the same one Learn Coptic teaches): ⲃ is v before a vowel and b otherwise, ϭ is tsh, ⲟⲩ is ou, and Ⲭⲉⲣⲉ is
+// Coptic written in English letters by the user's Coptic alphabet chart, as Learn Coptic teaches it (hymns use
+// Tasbeha's spelling instead: see tasbeha-coptic.ts and addEnglishCoptic below). The letter values are the chart's: ⲃ is v before a vowel and b otherwise, ϭ is tsh, ⲟⲩ is ou, and Ⲭⲉⲣⲉ is
 // always "Shere". A jinkim on a consonant adds an "e" before it; a hyphen goes before a capital inside a word
 // (em-Eptshois) and before a jinkim that comes after a vowel (e-ehrēi).
 
@@ -167,16 +168,17 @@ const isPlaceholder = (text: string) => /Coptic Text\)/.test(text);
 
 type HymnGroup = { services: { hymns: Hymn[] }[] };
 
-// Gives every hymn that has Coptic text but no Coptic in English letters that version, with the Coptic's recording
+// Every hymn with Coptic text gets its Coptic in English letters as tasbeha.org writes it (2026-10-20: the user asked
+// for Tasbeha's in place of the app's own), line for line with the Coptic, with the Coptic's recording
 export function addEnglishCoptic(groups: HymnGroup[]) {
   const visit = (hymn: Hymn) => {
     hymn.children?.forEach(visit);
-    if (hymn.versions.some((v) => v.language === 'englishCoptic' && v.text.trim())) return;
     const coptic = hymn.versions.find((v) => v.language === 'coptic');
     if (!coptic || isPlaceholder(coptic.text) || !hasCoptic(coptic.text)) return;
-    const converted: Hymn['versions'][number] = { language: 'englishCoptic', text: copticToEnglish(coptic.text) };
-    if (coptic.audio) converted.audio = coptic.audio;
-    if (coptic.otherAudio) converted.otherAudio = coptic.otherAudio;
+    const old = hymn.versions.find((v) => v.language === 'englishCoptic');
+    const converted: Hymn['versions'][number] = { ...old, language: 'englishCoptic', text: copticToTasbeha(coptic.text) };
+    if (!converted.audio && coptic.audio) converted.audio = coptic.audio;
+    if (!converted.otherAudio && coptic.otherAudio) converted.otherAudio = coptic.otherAudio;
     // right after the Coptic, where the other hymns have it
     const at = hymn.versions.findIndex((v) => v.language === 'englishCoptic');
     if (at >= 0) hymn.versions[at] = converted;
