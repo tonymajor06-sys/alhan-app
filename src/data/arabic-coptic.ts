@@ -1,13 +1,15 @@
 import type { Hymn } from './hymns';
+import { ORSOZOXI_LOOSE, ORSOZOXI_WORDS } from './orsozoxi-words';
 
-// Coptic written in Arabic letters, for readers who know Arabic but not the Coptic alphabet.
-// The letter values are the Arabic ones from the Learn Coptic chart (coptic-lessons.ts); the vowels follow the
-// same reading rules: ⲉ and ⲟ are short vowels (shown with a kasra and a damma), ⲏ ⲓ ⲩ ⲱ are long, ⲟⲩ is one sound,
-// a jinkim on a consonant adds a short "إ" before it, and a jinkim on a vowel starts a new syllable.
+// Coptic written in Arabic letters as the Orsozoxi app writes it, for readers who know Arabic but not the Coptic
+// alphabet. A word Orsozoxi has is spelled its way (orsozoxi-words.ts, the words its spelling differs from the rules
+// below); any other word is written by those rules, which follow Orsozoxi's style: no short-vowel marks (ⲉ ي, ⲟ و),
+// ⲡ ب, ⲃ ف before a vowel (else ب), ⲅ غ (ج before ⲉ ⲓ ⲏ ⲩ, ن before ⲅ ⲕ ⲝ ⲭ), ⲇ ذ (د before ⲁ ⲱ and at the end),
+// ⲧ ط before ⲁ ⲱ, ⲭ ش before ⲉ ⲓ ⲏ ⲩ (ك before ⲁ ⲱ, else خ), ϭ تش, ϯ تي, ⲓ ⲏ at the end of a word ى, a word that
+// starts with ⲉ إي; a jinkim, or two consonants at the start, adds "إ" before a consonant; ⲟ ⲟⲩ ⲱ after a vowel
+// are ؤ ؤو أو; and every أ إ آ inside a word starts a new word, as Orsozoxi divides them (إم إبتشويس, إي إفيوم).
 
 const CONSONANTS: Record<string, string> = {
-  'ⲅ': 'ج',
-  'ⲇ': 'د',
   'ⲍ': 'ز',
   'ⲑ': 'ث',
   'ⲕ': 'ك',
@@ -15,13 +17,11 @@ const CONSONANTS: Record<string, string> = {
   'ⲙ': 'م',
   'ⲛ': 'ن',
   'ⲝ': 'كس',
-  'ⲡ': 'پ',
+  'ⲡ': 'ب',
   'ⲣ': 'ر',
   'ⲥ': 'س',
-  'ⲧ': 'ت',
   'ⲫ': 'ف',
-  'ⲭ': 'خ',
-  'ⲯ': 'پس',
+  'ⲯ': 'بس',
   'ϣ': 'ش',
   'ϥ': 'ف',
   'ϧ': 'خ',
@@ -30,34 +30,19 @@ const CONSONANTS: Record<string, string> = {
   'ϭ': 'تش',
 };
 const VOWELS = new Set(['ⲁ', 'ⲉ', 'ⲏ', 'ⲓ', 'ⲟ', 'ⲩ', 'ⲱ']);
+const E_VOWELS = new Set(['ⲉ', 'ⲓ', 'ⲏ', 'ⲩ']);
 
 const JINKIM = '̀';
-const KASRA = 'ِ';
-const DAMMA = 'ُ';
-const SHADDA = 'ّ';
-const OVERLINES = /[̅︦]/;
+// a ي at the end of a word is written ى; this stands for that ي until the words are divided
+const FINAL_YA = '\u0001';
 
-// Holy names written short under a line, written out in full (as in the English letters)
+// Holy names written short under a line, written out in full
 const ABBREVIATIONS: Record<string, string> = {
-  'ⲉⲑⲩ': 'ⲉⲑⲟⲩⲁⲃ',
-  'ⲡⲛⲁ': 'ⲡ̀ⲛⲉⲩⲙⲁ',
-  'ⲡⲓⲡⲛⲁ': 'ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ',
-  'ⲡⲛⲁⲧⲓ': 'ⲡ̀ⲛⲉⲩⲙⲁⲧⲓ',
-  'ⲡⲓⲉⲑⲩ': 'ⲡⲓⲉⲑⲟⲩⲁⲃ',
-  'ⲡⲉⲛⲟⲥ': 'ⲡⲉⲛϭⲟⲓⲥ',
-  'ⲡⲟⲥ': 'ⲡ̀ϭⲟⲓⲥ',
-  'ⲡⲉⲛⲥⲱⲣ': 'ⲡⲉⲛⲥⲱⲧⲏⲣ',
-  'ⲡⲁⲟⲥ': 'ⲡⲁϭⲟⲓⲥ',
-  'ⲙⲡⲉⲛⲟⲥ': 'ⲙ̀ⲡⲉⲛϭⲟⲓⲥ',
-  'ⲉⲡⲭⲥ': 'ⲉ̀Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ',
-  'ⲛⲓⲏⲥ': 'ⲛ̀Ⲓⲏⲥⲟⲩⲥ',
-  'ⲁⲗ': 'ⲁⲗⲗⲏⲗⲟⲩⲓⲁ',
-  'ⲛⲛⲏⲉⲑⲩ': 'ⲛ̀ⲛⲏⲉⲑⲟⲩⲁⲃ',
-  'ⲙⲫⲉⲑⲩ': 'ⲙ̀ⲫⲏⲉⲑⲟⲩⲁⲃ',
-  'ⲡⲡⲛⲁ': 'ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ',
-  'ⲓⲏⲥ': 'ⲓⲏⲥⲟⲩⲥ',
-  'ⲡⲭⲥ': 'ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ',
-  'ⲭⲉ': 'ⲭⲉⲣⲉ ⲛⲉ ⲱ ϯⲡⲁⲣⲑⲉⲛⲟⲥ',
+  'ⲟⲥ': 'ϭⲟⲓⲥ', 'ⲡⲟⲥ': 'ⲡ̀ϭⲟⲓⲥ', 'ⲡⲉⲛⲟⲥ': 'ⲡⲉⲛϭⲟⲓⲥ', 'ⲧⲉⲛⲟⲥ': 'ⲧⲉⲛϭⲟⲓⲥ', 'ⲡⲁⲟⲥ': 'ⲡⲁϭⲟⲓⲥ', 'ⲧⲁⲟⲥ': 'ⲧⲁϭⲟⲓⲥ',
+  'ⲡⲛⲁ': 'ⲡ̀ⲛⲉⲩⲙⲁ', 'ⲡⲛⲁⲧⲓ': 'ⲡ̀ⲛⲉⲩⲙⲁⲧⲓ', 'ⲭⲥ': 'ⲭ̀ⲣⲓⲥⲧⲟⲥ', 'ⲡⲭⲥ': 'ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ', 'ⲓⲏⲥ': 'ⲓⲏⲥⲟⲩⲥ', 'ⲛⲓⲏⲥ': 'ⲛ̀ⲓⲏⲥⲟⲩⲥ',
+  'ⲥⲱⲣ': 'ⲥⲱⲧⲏⲣ', 'ⲡⲉⲛⲥⲱⲣ': 'ⲡⲉⲛⲥⲱⲧⲏⲣ', 'ⲉⲑⲩ': 'ⲉⲑⲟⲩⲁⲃ', 'ⲫⲏⲉⲑⲩ': 'ⲫⲏⲉⲑⲟⲩⲁⲃ', 'ⲡⲓⲉⲑⲩ': 'ⲡⲓⲉⲑⲟⲩⲁⲃ',
+  'ⲛⲛⲏⲉⲑⲩ': 'ⲛ̀ⲛⲏⲉⲑⲟⲩⲁⲃ', 'ⲙⲫⲉⲑⲩ': 'ⲙ̀ⲫⲏⲉⲑⲟⲩⲁⲃ', 'ⲁⲗ': 'ⲁⲗⲗⲏⲗⲟⲩⲓⲁ', 'ⲓⲗⲏⲙ': 'ⲓⲉⲣⲟⲩⲥⲁⲗⲏⲙ', 'ⲡⲓⲡⲛⲁ': 'ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ',
+  'ⲡⲡⲛⲁ': 'ⲡⲓⲡ̀ⲛⲉⲩⲙⲁ', 'ⲉⲡⲭⲥ': 'ⲉ̀ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ', 'ⲙⲡⲉⲛⲟⲥ': 'ⲙ̀ⲡⲉⲛϭⲟⲓⲥ', 'ⲭⲉ': 'ⲭⲉⲣⲉ ⲛⲉ ⲱ ϯⲡⲁⲣⲑⲉⲛⲟⲥ',
 };
 
 const NUMERALS: Record<string, string> = {
@@ -73,97 +58,172 @@ const NUMERALS: Record<string, string> = {
   'ⲓ': '١٠',
 };
 
-interface Letter {
-  base: string; // lower case, for looking up
-  raw: string; // as written, for anything that is not a Coptic letter
-  jinkim: boolean;
-}
+// The marks as Orsozoxi's words are keyed: one jinkim (U+0300) and one overline (U+0305)
+export const orsozoxiKey = (word: string) =>
+  word
+    .normalize('NFC')
+    .replace(/[́`]/g, JINKIM)
+    .replace(/[︦̄]/g, '̅')
+    .toLowerCase();
 
 const hasCoptic = (text: string) => /[Ⲁ-⳿Ϣ-ϯ]/.test(text);
 
-function convertWord(core: string): string {
-  if (core.includes('-')) return core.split('-').map(convertWord).join('-');
+interface Letter {
+  base: string;
+  jinkim: boolean;
+}
 
-  const plain = core.replace(/[̀̅︦]/g, '').toLowerCase();
-  if (OVERLINES.test(core)) {
-    const full = ABBREVIATIONS[plain];
-    if (full) return full.split(' ').map(convertWord).join(' ');
-    // a single letter with a line over it is a number: ⲁ̅ = 1, ⲃ̅ = 2, ⲅ̅ = 3 ...
-    if (NUMERALS[plain]) return NUMERALS[plain];
-  }
-  // The Lord's symbol is not in the Coptic font; it stands for ⲡ̀ϭⲟⲓⲥ
-  if (core.includes('⳪')) return convertWord(core.replace('⳪', 'ϭⲟⲓⲥ'));
-
-  // Letters with their jinkim
+function byRules(word: string): string {
   const letters: Letter[] = [];
-  for (const ch of core) {
+  for (const ch of word) {
     if (ch === JINKIM && letters.length) letters[letters.length - 1].jinkim = true;
-    else if (/[̅︦]/.test(ch)) continue;
-    else letters.push({ base: ch.toLowerCase(), raw: ch, jinkim: false });
+    else if (ch !== '̅' && ch !== JINKIM) letters.push({ base: ch, jinkim: false });
   }
-
+  const isVowel = (l?: Letter) => !!l && VOWELS.has(l.base);
   let out = '';
-  // 'start' = beginning of a syllable group, 'consonant' = last sound was a consonant, 'vowel' = last was a vowel
-  let state: 'start' | 'consonant' | 'vowel' = 'start';
+  // a new word starts at every أ إ آ inside the word
+  const emit = (s: string) => {
+    if (out && !out.endsWith(' ') && /^[أإآ]/.test(s)) out += ' ';
+    out += s;
+  };
+  let prevVowel = false;
+  let prevJinkim = false; // the last letter was a consonant with a jinkim, so a vowel after it starts a new syllable
   for (let i = 0; i < letters.length; i++) {
-    const { base, raw, jinkim } = letters[i];
-    const next = letters[i + 1]?.base;
+    const { base, jinkim } = letters[i];
+    const prev = letters[i - 1];
+    const next = letters[i + 1];
+    const start = i === 0;
+    const last = i === letters.length - 1;
+    // after ⲟⲩ, ⲟ is و and ⲱ is ؤ (ⲟⲩⲟϩ أووه, ⲟⲩⲱⲛϩ أوؤنه)
+    const afterOu = !!prev && prev.base === 'ⲩ' && letters[i - 2]?.base === 'ⲟ' && !prev.jinkim;
+    // ⲓ before a vowel is the consonant y (ⲓⲱⲧ يوت), so the vowel after it is written as after a consonant
+    const consonantY = (k: number) => letters[k]?.base === 'ⲓ' && !letters[k].jinkim && isVowel(letters[k + 1]) && letters[k + 1].base !== 'ⲓ' && !(letters[k + 1].base === 'ⲟ' && letters[k + 2]?.base === 'ⲩ' && k + 3 === letters.length);
+    const vowelBefore = prevVowel && !(prev && consonantY(i - 1));
 
-    // the same consonant twice is one consonant with a shadda (ⲗⲗ in Allēluia, ⲕⲕ in ekklēsia)
-    if (!jinkim && i > 0 && letters[i - 1].base === base && (CONSONANTS[base] || base === 'ⲃ')) {
-      out += SHADDA;
+    if (base === 'ⲟ' && next?.base === 'ⲩ' && !next.jinkim) {
+      const after = letters[i + 2];
+      if (start || jinkim || prevJinkim) emit('أو');
+      else if (vowelBefore) emit(isVowel(after) ? 'أو' : 'ؤو');
+      else if (after?.base === 'ⲁ') emit('ؤو');
+      else if (after?.base === 'ⲱ') emit('أوو');
+      else emit('و');
+      i++;
+      prevVowel = true;
+      prevJinkim = false;
       continue;
     }
-    if (base === 'ϯ') {
-      out += (jinkim ? 'إ' : '') + 'تي';
-      state = 'vowel';
-      continue;
-    }
-    if (base === 'ⲃ') {
-      out += (jinkim ? 'إ' : '') + (next && VOWELS.has(next) ? 'ڤ' : 'ب');
-      state = 'consonant';
-      continue;
-    }
-    if (CONSONANTS[base]) {
-      // a jinkim on a consonant: a short "e" before it
-      out += (jinkim ? 'إ' : '') + CONSONANTS[base];
-      state = 'consonant';
+    if (base === 'ⲩ' && !start && ['ⲁ', 'ⲉ', 'ⲏ'].includes(prev.base)) {
+      // ⲁⲩ ⲉⲩ ⲏⲩ: the ⲩ is said v, written ف
+      emit(jinkim ? 'إف' : 'ف');
+      prevVowel = false;
+      prevJinkim = jinkim;
       continue;
     }
     if (VOWELS.has(base)) {
-      // a jinkim on a vowel starts a new syllable, so it is read like a vowel at the start of a word
-      const at = jinkim ? 'start' : state;
-      if (base === 'ⲟ' && next === 'ⲩ' && !letters[i + 1].jinkim) {
-        out += at === 'start' ? 'أو' : 'و';
-        i++;
-      } else if (base === 'ⲁ') out += at === 'start' ? 'أ' : 'ا';
-      else if (base === 'ⲉ') out += at === 'consonant' ? KASRA : 'إ';
-      else if (base === 'ⲏ') out += at === 'start' ? 'إي' : 'ي';
-      else if (base === 'ⲓ') out += at === 'start' && !jinkim && !(next && VOWELS.has(next)) ? 'إي' : 'ي';
-      else if (base === 'ⲟ') out += at === 'consonant' ? DAMMA : at === 'start' ? 'أُ' : 'و';
-      else out += at === 'start' ? 'أو' : 'و'; // ⲩ and ⲱ
-      state = 'vowel';
-      // a short vowel written as a mark does not end the consonant, so a following vowel still follows a consonant
-      if ((base === 'ⲉ' || base === 'ⲟ') && at === 'consonant') state = 'consonant';
+      const fresh = start || jinkim || prevJinkim; // a new syllable
+      if (base === 'ⲓ' && consonantY(i)) {
+        emit('ي');
+        prevVowel = true;
+      } else if (base === 'ⲁ') {
+        if (start || prevJinkim) emit(jinkim || prevJinkim || next?.base === 'ⲣ' || next?.base === 'ⲡ' ? 'آ' : 'أ');
+        else if (vowelBefore) emit(prev.base === 'ⲁ' ? 'آ' : prev.base === 'ⲓ' || prev.base === 'ⲩ' ? 'ا' : 'أ');
+        else emit(jinkim ? 'آ' : 'ا');
+      } else if (base === 'ⲉ') {
+        if (fresh || vowelBefore) emit(isVowel(next) || (next && !next.jinkim && 'ϩⲑⲩϥⲥⲧⲡ'.includes(next.base)) ? 'إ' : 'إي');
+        else emit(last ? FINAL_YA : 'ي');
+      } else if (base === 'ⲏ' && vowelBefore && prev.base === 'ⲁ') {
+        // ⲁⲏ as in Arabic names: ائي (ⲙⲓⲭⲁⲏⲗ ميخائيل)
+        emit(last ? 'ئى' : 'ئي');
+      } else if (base === 'ⲏ' || base === 'ⲓ' || base === 'ⲩ') {
+        // ⲏⲓ at the end of a word is one ى
+        if (base === 'ⲏ' && next?.base === 'ⲓ' && i + 2 === letters.length) i++;
+        const end = i === letters.length - 1;
+        if (fresh) emit(end ? 'إى' : 'إي');
+        else emit(end ? FINAL_YA : 'ي');
+      } else if (base === 'ⲟ') {
+        emit(fresh ? 'أو' : afterOu ? (last ? 'ؤ' : 'و') : vowelBefore ? 'ؤ' : 'و');
+      } else {
+        // ⲱ
+        emit(fresh ? 'أو' : afterOu ? 'ؤ' : vowelBefore ? 'أو' : 'و');
+      }
+      prevVowel = true;
+      prevJinkim = false;
+      continue;
+    }
+    prevJinkim = jinkim;
+    if (base === 'ϯ') {
+      emit((jinkim ? 'إ' : '') + 'ت' + (start && isVowel(next) ? '' : last ? FINAL_YA : 'ي'));
+      prevVowel = true;
+      prevJinkim = false;
       continue;
     }
     // So (ⲋ ϛ) is only the number 6
     if (base === 'ⲋ' || base === 'ϛ') {
-      out += '٦';
-      state = 'start';
+      emit('٦');
+      prevVowel = false;
       continue;
     }
-    // anything else (digits, Latin letters, symbols) is left as it is
-    out += raw;
-    state = 'start';
+    // ⲃⲃ is written once (ⲁⲃⲃⲁ أفا)
+    if (base === 'ⲃ' && next?.base === 'ⲃ' && !next.jinkim) continue;
+    let sound: string;
+    if (base === 'ⲃ') sound = isVowel(next) ? 'ف' : 'ب';
+    else if (base === 'ⲅ') sound = next && ['ⲅ', 'ⲕ', 'ⲝ', 'ⲭ'].includes(next.base) ? 'ن' : next && E_VOWELS.has(next.base) ? 'ج' : 'غ';
+    else if (base === 'ⲇ') sound = !next || ['ⲁ', 'ⲱ'].includes(next.base) || !isVowel(next) ? 'د' : 'ذ';
+    else if (base === 'ⲧ') sound = next && ['ⲁ', 'ⲱ'].includes(next.base) ? 'ط' : 'ت';
+    else if (base === 'ⲭ') sound = next && E_VOWELS.has(next.base) ? 'ش' : next && ['ⲁ', 'ⲱ'].includes(next.base) ? 'ك' : 'خ';
+    else if (base === 'ⲝ') sound = next?.base === 'ⲁ' ? 'كص' : 'كس';
+    else if (CONSONANTS[base]) sound = CONSONANTS[base];
+    else {
+      // anything else (digits, Latin letters, symbols) is left as it is
+      emit(base);
+      prevVowel = false;
+      prevJinkim = false;
+      continue;
+    }
+    // a jinkim, two consonants at the start of a word, or ⲡ ⲫ ⲯ before a consonant: a short "إ" before it
+    const cluster = !!next && !isVowel(next) && next.base !== 'ϯ';
+    if (jinkim || (start && cluster) || (cluster && (base === 'ⲡ' || base === 'ⲫ' || base === 'ⲯ'))) sound = 'إ' + sound;
+    else if (base === 'ⲯ' && prevVowel) sound = 'إ' + sound;
+    emit(sound);
+    prevVowel = false;
   }
   return out;
 }
 
+const finish = (s: string) => s.replace(new RegExp(`${FINAL_YA}(?=\\s|$)`, 'g'), 'ى').replace(new RegExp(FINAL_YA, 'g'), 'ي');
+
+// The rules alone, for building orsozoxi-words.ts (the words where Orsozoxi spells differently)
+export function orsozoxiByRules(word: string): string {
+  const key = orsozoxiKey(word);
+  const plain = key.replace(/[̀̅]/g, '');
+  if (key.includes('̅')) {
+    // an abbreviation, perhaps after ⲙ̀ ⲛ̀ ⲉ̀ (ⲙ̀ⲡⲟ̅ⲥ̅); anything ending in ⲉⲑ︦ⲩ︦ is "holy"
+    if (/ⲉⲑⲩ$/.test(plain) && !ABBREVIATIONS[plain]) return orsozoxiByRules(key.replace(/̅/g, '').replace(/ⲉⲑⲩ$/, 'ⲉⲑⲟⲩⲁⲃ'));
+    for (const cut of [0, 1, 2]) {
+      const full = ABBREVIATIONS[plain.slice(cut)];
+      if (!full) continue;
+      // the full words are spelled as Orsozoxi spells them, when it has them
+      const rest = full.split(' ').map(orsozoxiWord).join(' ');
+      if (!cut) return rest;
+      const prefix = plain.slice(0, cut);
+      return orsozoxiWord((prefix === 'ⲙ' || prefix === 'ⲛ' ? prefix + JINKIM : prefix) + full.replace(/^(.)̀/, '$1'));
+    }
+    // a single letter with a line over it is a number: ⲁ̅ = 1, ⲃ̅ = 2, ⲅ̅ = 3 ...
+    if (NUMERALS[plain]) return NUMERALS[plain];
+  }
+  // The Lord's symbol is not in the Coptic font; it stands for ⲡ̀ϭⲟⲓⲥ. Ⲫϯ is short for Ⲫ̀ⲛⲟⲩϯ (God)
+  const full = key.replace(/^̀+/, '').replace('⳪', 'ⲡ̀ϭⲟⲓⲥ').replace(/ⲫ̀?ϯ$/, 'ⲫ̀ⲛⲟⲩϯ');
+  return finish(byRules(full));
+}
+
+// One Coptic word (no spaces or punctuation around it) in Orsozoxi's Arabic letters
+export function orsozoxiWord(word: string): string {
+  const key = orsozoxiKey(word);
+  return ORSOZOXI_WORDS[key] ?? ORSOZOXI_LOOSE[key.replace(/̀/g, '')] ?? orsozoxiByRules(word);
+}
+
 export function copticToArabic(text: string): string {
   return text
-    // Ⲭⲉⲣⲉ (hail) is said "shere", so it is written with ش like ϣ
-    .replace(/([Ⲭⲭ])(ⲉⲣⲉ)(?![Ⲁ-⳿Ϣ-ϯ])/g, (_m, x: string, rest: string) => (x === 'Ⲭ' ? 'Ϣ' : 'ϣ') + rest)
     .split('\n')
     .map((line) =>
       line
@@ -173,7 +233,7 @@ export function copticToArabic(text: string): string {
           const m = token.match(/^([^\p{L}̀̅︦⳪]*)(.*?)([^\p{L}̀̅︦⳪]*)$/su);
           if (!m || !m[2]) return token;
           const [, pre, core, post] = m;
-          return hasCoptic(core) ? pre + convertWord(core) + post : token;
+          return hasCoptic(core) ? pre + core.split('-').map(orsozoxiWord).join('-') + post : token;
         })
         .join(' ')
     )

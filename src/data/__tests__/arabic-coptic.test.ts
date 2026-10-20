@@ -1,4 +1,5 @@
-import { copticToArabic } from '../arabic-coptic';
+import { copticToArabic, orsozoxiByRules, orsozoxiWord } from '../arabic-coptic';
+import { ORSOZOXI_WORDS } from '../orsozoxi-words';
 import { deaconCategories, flattenHymns, Hymn, Service, seasons } from '../hymns';
 import { stSeasonExtras } from '../st-season-extras';
 import { stMore } from '../st-more';
@@ -16,11 +17,31 @@ const allHymns = (): Hymn[] =>
   [...seasons, ...deaconCategories].flatMap((group) => group.services.flatMap((service) => flattenHymns(service.hymns)));
 
 describe('copticToArabic', () => {
-  it('writes Coptic words in Arabic letters', () => {
-    expect(copticToArabic('Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ')).toBe('ألّيلويا');
-    expect(copticToArabic('ⲛ̀ⲧⲉ')).toBe('إنتِ');
-    expect(copticToArabic('ⲙ̀Ⲫ̀ⲓⲱⲧ')).toBe('إمإفيوت');
-    expect(copticToArabic('ⲉ̀ⲃⲟⲗ')).toBe('إڤُل');
+  it('writes Coptic words in Arabic letters as Orsozoxi does', () => {
+    expect(copticToArabic('Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ')).toBe('الليلويا');
+    expect(copticToArabic('ⲛ̀ⲧⲉ')).toBe('إنتى');
+    expect(copticToArabic('ⲙ̀Ⲫ̀ⲓⲱⲧ')).toBe('إم إفيوت');
+    expect(copticToArabic('ⲉ̀ⲃⲟⲗ')).toBe('إيفول');
+    expect(copticToArabic('ϫⲉ ⲙⲁⲣⲉⲛϩⲱⲥ ⲉⲠϭⲟⲓⲥ')).toBe('جى مارين هوس إى إبتشويس');
+    expect(copticToArabic('Ⲫϯ')).toBe('إفنوتى');
+  });
+
+  it('spells the words Orsozoxi has its way', () => {
+    for (const [key, spelled] of Object.entries(ORSOZOXI_WORDS).slice(0, 200)) expect(orsozoxiWord(key)).toBe(spelled);
+  });
+
+  it('writes other words by rules in Orsozoxi style', () => {
+    // ⲡ ب, ⲃ ف before a vowel, ⲏ ⲓ ى at the end, ⲉ at the start إي, two consonants at the start add إ
+    expect(orsozoxiByRules('ⲉⲃⲟⲗ')).toBe('إيفول');
+    expect(orsozoxiByRules('ⲥⲙⲟⲩ')).toBe('إسمو');
+    expect(orsozoxiByRules('ⲙ̀ⲡⲉⲛⲥⲱⲧⲏⲣ')).toBe('إمبينسوتير');
+    // ⲭ ش before ⲉ, ⲅⲅ نج, ⲁⲏ ائي, ⲇ د before ⲁ
+    expect(orsozoxiByRules('ⲭⲉⲣⲉ')).toBe('شيرى');
+    expect(orsozoxiByRules('ⲁⲅⲅⲉⲗⲟⲥ')).toBe('أنجيلوس');
+    expect(orsozoxiByRules('ⲙⲓⲭⲁⲏⲗ')).toBe('ميكائيل');
+    expect(orsozoxiByRules('ⲇⲁⲩⲓⲇ')).toBe('دافيد');
+    // a new word starts at an alef inside the word (ⲛ̀ before ϣ̀)
+    expect(orsozoxiByRules('ⲛ̀ϣ̀ⲫⲏⲣⲓ')).toBe('إن إشفيرى');
   });
 
   it('writes shortened holy names out in full', () => {
@@ -29,7 +50,7 @@ describe('copticToArabic', () => {
   });
 
   it('keeps punctuation, line breaks and non-Coptic text where they are', () => {
-    expect(copticToArabic('ⲁⲙⲏⲛ: (ⲛⲓⲙ) ___\n\nⲁⲙⲏⲛ.')).toBe('أمين: (نيم) ___\n\nأمين.');
+    expect(copticToArabic('ⲁⲙⲏⲛ: (ⲛⲓⲙ) ___\n\nⲁⲙⲏⲛ.')).toBe('آمين: (نيم) ___\n\nآمين.');
   });
 });
 
@@ -670,7 +691,7 @@ describe('Kiahk Praises & Season > Matins', () => {
     }
     // the shortened "my Lord" (ⲡⲁⲟ︦ⲥ︦) is written out in English and Arabic letters
     expect(text(fatherSon, 'englishCoptic')).toMatch(/pashois epouro Ge-?orgios/);
-    expect(text(fatherSon, 'arabicCoptic')).toContain('پاتشُيس إپورُ');
+    expect(text(fatherSon, 'arabicCoptic')).toContain('باتشويس إبؤورو');
     expect(new Set(service.hymns.map((h) => h.id)).size).toBe(service.hymns.length);
     // the Introduction and the Conclusion of the Doxologies are copied from Annual Matins, the first two Kiahk doxologies have their own lyrics
     const writtenHere = [
@@ -771,7 +792,7 @@ describe('Kiahk Praises & Season > Matins', () => {
     // the shortened words in the Sixth Doxology (ⲡⲟ︦ⲥ︦, ⲛ̀ⲛⲏⲉⲑ︦ⲩ︦, Ⲡⲡ︦ⲛ︦ⲁ) are written out in English and Arabic letters
     expect(doxText(sixthDoxology, 'englishCoptic')).toContain('Epshois fee-etshop khen tfe');
     expect(doxText(sixthDoxology, 'englishCoptic')).toMatch(/ennee-?ethowab/);
-    expect(doxText(sixthDoxology, 'arabicCoptic')).toContain('خِن روو إنّيإثواب');
+    expect(doxText(sixthDoxology, 'arabicCoptic')).toContain('خين رو أو إنني إثؤواب');
     // the Kiahk recordings play on Coptic only; the Conclusion copied from Annual Matins has none
     for (const hymn of flattenHymns(service.hymns)) {
       for (const version of hymn.versions) {
