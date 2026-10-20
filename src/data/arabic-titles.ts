@@ -268,6 +268,7 @@ const arabicTitles: Record<string, string> = {
   'palm-sunday': 'أحد الشعانين',
   'holy-week': 'أسبوع الآلام (البصخة المقدسة)',
   pentecost: 'القيامة والخماسين المقدسة',
+  ascension: 'عيد الصعود',
   'apostles-fast': 'صوم وعيد الرسل',
   'st-mary': 'صوم السيدة العذراء وعيد صعود جسدها',
   'minor-feasts': 'الأعياد السيدية الصغرى',

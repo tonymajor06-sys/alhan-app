@@ -202,12 +202,14 @@ interface SeasonPsalis {
 }
 const seasonPsalis: Record<string, SeasonPsalis> = {
   pentecost: { adam: /-psali-adam-for-the-holy-fifty-days$/, watos: /-psali-watos-for-the-holy-fifty-days$/, replaces: true, thomas: /-adam-psali-for-thomas-sunday$/ },
+  // The Ascension is a day of the Holy Fifty Days
+  ascension: { adam: /-psali-adam-for-the-holy-fifty-days$/, watos: /-psali-watos-for-the-holy-fifty-days$/, replaces: true },
   'apostles-fast': { adam: /-adam-psali-for-the-apostles-fast$/, watos: /-watos-psali-for-the-apostles-fast$/, replaces: false },
 };
 const dayPsali = /-(sunday|monday|tuesday|wednesday|thursday|friday|saturday)-(watos-)?psali$/;
 function withSeasonPsalis(sections: FollowSection[], own: Service, weekday: number, rule: SeasonPsalis, jdn: number): FollowSection[] {
   const list = flattenHymns(own.hymns);
-  const byTitle = (re: RegExp) => list.find((h) => re.test(h.id));
+  const byTitle = (re: RegExp) => list.find((h) => re.test(h.id.split('@')[0]));
   const psali = byTitle(weekday <= 2 ? rule.adam : rule.watos);
   const year = jdnToGregorian(jdn).year;
   const thomas = rule.thomas && weekday === 0 && jdn === paschaJdn(year) + 7 ? byTitle(rule.thomas) : undefined;
@@ -271,7 +273,12 @@ export function followAlong(kind: PraiseKind, jdn: number): FollowAlong {
   if (kind === 'vesper') {
     // The season's own Vesper Praises when it has that day of the week (a minor feast's on its day), else Annual's
     const current = getSeasonInfo(jdn, 0).current;
-    const inSeason = seasons.find((s) => s.id === current?.seasonId);
+    // A feast day without Vesper Praises of its own (the Ascension) keeps the season around it
+    const feastSeason = seasons.find((s) => s.id === current?.seasonId);
+    const inSeason =
+      feastSeason && feastSeason.id !== 'minor-feasts' && !serviceOf(feastSeason, '-vesper-praises')
+        ? seasons.find((s) => s.id === getSeasonInfo(jdn + 1, 0).current?.seasonId) ?? feastSeason
+        : feastSeason;
     const own =
       inSeason?.id === 'minor-feasts'
         ? inSeason.services.find((s) => s.title.startsWith(`${current!.name.en}:`) && s.id.endsWith('-vesper-praises'))
@@ -317,7 +324,7 @@ export function followAlong(kind: PraiseKind, jdn: number): FollowAlong {
   const before = general.slice(0, fourth + 1).filter((h) => weekday !== 0 || !weekdaySundayParts.test(h.id));
   // A Sunday outside the fasts begins with the Hymn of the Resurrection, after "Arise, O children of the light"
   // (and every night of the Holy Fifty Days)
-  if ((weekday === 0 || season.id === 'pentecost') && !['great-lent', 'kiahk'].includes(season.id) && !before.some((h) => /the-hymn-of-the-resurrection$/.test(h.id.split('@')[0]))) {
+  if ((weekday === 0 || ['pentecost', 'ascension'].includes(season.id)) && !['great-lent', 'kiahk'].includes(season.id) && !before.some((h) => /the-hymn-of-the-resurrection$/.test(h.id.split('@')[0]))) {
     const arise = before.findIndex((h) => /-arise-o-children$/.test(h.id));
     before.splice(arise + 1, 0, ...shared('annual-midnight-the-hymn-of-the-resurrection'));
   }

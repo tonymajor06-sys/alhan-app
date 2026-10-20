@@ -238,7 +238,7 @@ function eventsForYear(year: number): ChurchEvent[] {
     e('fifty-days', 'pentecost', 'season', 'Holy Fifty Days', 'الخماسين المقدسة', pascha + 1, pascha + 48, 60, true),
     e('thomas-sunday', 'minor-feasts', 'feast', 'Thomas Sunday', 'أحد توما', pascha + 7, pascha + 7, 70),
     ...sundays('pentecost-sunday', 'pentecost', 'season', 'Pentecost', 'الخماسين', pascha + 14, [2, 3, 4, 5, 6]),
-    e('ascension', 'pentecost', 'feast', 'Feast of the Ascension', 'عيد الصعود', pascha + 39, pascha + 39, 90),
+    e('ascension', 'ascension', 'feast', 'Feast of the Ascension', 'عيد الصعود', pascha + 39, pascha + 39, 90),
     e('pentecost', 'pentecost', 'feast', 'Feast of Pentecost', 'عيد العنصرة', pascha + 49, pascha + 49, 90),
     e('apostles-fast-start', 'apostles-fast', 'fast', "1st Day of Apostles' Fast", 'أول أيام صوم الرسل', pascha + 50, pascha + 50, 55),
     e('apostles-fast', 'apostles-fast', 'fast', "Apostles' Fast", 'صوم الرسل', pascha + 50, cop(11, 4), 50, true),

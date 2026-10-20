@@ -8124,6 +8124,36 @@ for (const service of seasons.find((s) => s.id === 'pentecost')?.services ?? [])
   }
 }
 
+// The Feast of the Ascension is its own season after the Resurrection: each Fifty Days service that has Ascension
+// hymns becomes the Ascension's, with those hymns in their places (they move there, keeping their ids) and the rest
+// copied in ("<id>@ascension-<service>"); the Distribution comes along too. The seasons after it move down one number.
+{
+  const resurrection = seasons.find((s) => s.id === 'pentecost');
+  if (resurrection) {
+    const copyAll = (h: Hymn, serviceId: string): Hymn => ({
+      ...copyInto(h, serviceId, true),
+      ...(h.children ? { children: h.children.map((c) => copyAll(c, serviceId)) } : {}),
+    });
+    const services: Service[] = [];
+    for (const service of resurrection.services) {
+      const tile = service.hymns.find((h) => h.id === `${service.id}-ascension`);
+      if (!tile && !service.id.endsWith('-distribution')) continue;
+      const id = service.id.replace(/^pentecost-/, 'ascension-');
+      services.push({
+        id,
+        title: service.title,
+        hymns: service.hymns.flatMap((h) =>
+          h === tile ? tile.children ?? [] : h.id === `${service.id}-pentecost-feast` ? [] : [copyAll(h, id)]
+        ),
+      });
+      service.hymns = service.hymns.filter((h) => h !== tile);
+    }
+    const at = seasons.indexOf(resurrection) + 1;
+    for (const later of seasons.slice(at)) later.title = later.title.replace(/^(\d+)\./, (_, n) => `${Number(n) + 1}.`);
+    seasons.splice(at, 0, { id: 'ascension', title: `${at + 1}. Feast of the Ascension`, services });
+  }
+}
+
 // Midnight's second doxology for St George gets its words (Spirit & Truth), and Kiahk Midnight's "Doxologies" is a heading
 // Great Lent's Veneration tiles open the whole Veneration (from Annual > Veneration)
 const venerationHymns = seasons.find((s) => s.id === 'annual')?.services.find((s) => s.id === 'annual-veneration')?.hymns ?? [];

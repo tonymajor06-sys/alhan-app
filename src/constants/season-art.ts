@@ -53,8 +53,14 @@ export const seasonArt: Record<string, { image: ImageSourcePropType; about: Reco
   },
   pentecost: {
     image: require('../../assets/images/seasons/pentecost.png'),
-    about: { en: 'Resurrection · Ascension · Pentecost', ar: 'القيامة · الصعود · العنصرة' },
+    about: { en: 'Resurrection · Pentecost', ar: 'القيامة · العنصرة' },
     card: { en: "Resurrection & 50 Days", ar: 'القيامة والخماسين' },
+  },
+  // No Ascension icon yet: it shows the Fifty Days' picture until it has its own
+  ascension: {
+    image: require('../../assets/images/seasons/pentecost.png'),
+    about: { en: 'The fortieth day of the Fifty Days', ar: 'اليوم الأربعون من الخماسين' },
+    card: { en: 'Ascension', ar: 'عيد الصعود' },
   },
   'apostles-fast': {
     image: require('../../assets/images/seasons/apostles-fast.png'),
