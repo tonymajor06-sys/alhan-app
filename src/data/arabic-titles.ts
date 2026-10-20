@@ -538,6 +538,8 @@ const arabicTitles: Record<string, string> = {
   'd-annual-liturgy-faithful-worship-the-lamb-st-gregory-2': 'اسجدوا للحمل - غريغوري',
   'd-annual-liturgy-faithful-saved-amen': 'خلصت حقاً (ننصت بخوف الله)',
   'd-annual-liturgy-faithful-peace-and-love': 'سلام ومحبة يسوع المسيح',
+  'd-annual-liturgy-faithful-worship-god-the-father': 'اسجدوا لله الآب ضابط الكل',
+  'd-annual-liturgy-faithful-the-confession': 'الإعتراف',
   'd-annual-liturgy-faithful-pray-for-peace-st-cyril': 'أوشية السلام (القداس الكيرلسي)',
   'd-annual-liturgy-faithful-pray-for-the-leaders-st-cyril': 'أوشية الرؤساء (القداس الكيرلسي)',
   'd-annual-liturgy-faithful-pray-for-the-patriarch-st-cyril': 'أوشية البطريرك (القداس الكيرلسي)',

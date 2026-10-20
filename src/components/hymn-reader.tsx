@@ -96,17 +96,26 @@ export function HymnReader({
     ? activeLanguage
     : (availableLanguages[0]?.key ?? activeLanguage);
 
-  // The recording for the language being read; when it has none (e.g. a Theotokia sung in English and Arabic),
-  // the hymn's recording in another language, preferring the app's language, so it can still be played
-  const appLanguageFirst: LanguageType[] = lang === 'ar' ? ['arabic', 'englishArabic', 'english'] : ['english', 'arabic', 'coptic'];
-  const audioVersion =
-    [effectiveLanguage, ...appLanguageFirst]
-      .map((l) => hymn.versions.find((v) => v.language === l && v.audio))
-      .find(Boolean) ?? hymn.versions.find((v) => v.audio);
-  const audioLanguage = audioVersion?.language ?? effectiveLanguage;
-  const recordings = [audioVersion?.audio, ...(audioVersion?.otherAudio ?? [])].filter((f): f is string => !!f);
-  const [recordingIndex, setRecordingIndex] = useState(0);
-  const currentAudio = recordings[recordingIndex] ?? recordings[0] ?? null;
+  // Every recording of the hymn, whatever language it is sung in, offered as Recording 1, 2, 3: Coptic first, then
+  // the app's language (English, then Arabic; in Arabic the other way round). Each is played as the language it is
+  // sung in, preferring the language being read when that version has the same recording.
+  const recordingGroup = (l: LanguageType) =>
+    ['coptic', 'englishCoptic', 'arabicCoptic'].includes(l) ? 0 : ['english', 'arabicEnglish'].includes(l) === (lang !== 'ar') ? 1 : 2;
+  const recordings: { file: string; language: LanguageType }[] = [];
+  for (const v of [...hymn.versions].sort(
+    (a, b) => recordingGroup(a.language) - recordingGroup(b.language) || Number(b.language === effectiveLanguage) - Number(a.language === effectiveLanguage)
+  ))
+    for (const file of [v.audio, ...(v.otherAudio ?? [])])
+      if (file && !recordings.some((r) => r.file === file)) recordings.push({ file, language: v.language });
+  // Chosen at first: the recording of the language being read, else one sung in its group, else Recording 1
+  const startRecording =
+    recordings.find((r) => r.language === effectiveLanguage) ??
+    recordings.find((r) => recordingGroup(r.language) === recordingGroup(effectiveLanguage)) ??
+    recordings[0];
+  const [chosenFile, setChosenFile] = useState<string | null>(null);
+  const currentRecording = recordings.find((r) => r.file === chosenFile) ?? startRecording;
+  const currentAudio = currentRecording?.file ?? null;
+  const audioLanguage = currentRecording?.language ?? effectiveLanguage;
   // Audio lives in a shared queue so it keeps playing after leaving the hymn or the app
   const queue = useAudioQueue();
   const nowPlaying = currentTrack(queue);
@@ -182,11 +191,11 @@ export function HymnReader({
   const [sheet, setSheet] = useState<'language' | 'season' | 'compare' | 'more' | null>(null);
 
   // Play next: the hymns after this one in the service that have a recording in the same language
-  const followingTracks = (): QueueTrack[] => {
+  const followingTracks = (language: LanguageType = audioLanguage): QueueTrack[] => {
     // Tonight's praises go on in tonight's order, in whichever language each hymn is recorded
     if (tonight && tonightIndex >= 0)
       return tonight.slice(tonightIndex + 1).flatMap((h) => {
-        const version = h.versions.find((v) => v.language === audioLanguage && v.audio) ?? h.versions.find((v) => v.audio);
+        const version = h.versions.find((v) => v.language === language && v.audio) ?? h.versions.find((v) => v.audio);
         const source = version?.audio ? audioSourceFor(version.audio) : null;
         return version && source ? [{ hymnId: h.id, language: version.language, title: titleLines(h, lang).main, source }] : [];
       });
@@ -194,9 +203,9 @@ export function HymnReader({
     if (!service) return [];
     const order = flattenHymns(service.hymns);
     return order.slice(order.findIndex((h) => h.id === hymn.id) + 1).flatMap((h) => {
-      const file = h.versions.find((v) => v.language === audioLanguage)?.audio;
+      const file = h.versions.find((v) => v.language === language)?.audio;
       const source = file ? audioSourceFor(file) : null;
-      return source ? [{ hymnId: h.id, language: audioLanguage, title: titleLines(h, lang).main, source }] : [];
+      return source ? [{ hymnId: h.id, language: language, title: titleLines(h, lang).main, source }] : [];
     });
   };
 
@@ -208,12 +217,15 @@ export function HymnReader({
   };
 
   const selectRecording = (index: number) => {
-    setRecordingIndex(index);
-    const chosenFile = recordings[index];
-    if (!chosenFile) return;
-    const source = audioSourceFor(chosenFile);
+    const chosen = recordings[index];
+    if (!chosen) return;
+    setChosenFile(chosen.file);
+    const source = audioSourceFor(chosen.file);
     if (!source) return;
-    playQueue([{ ...readerItem, title, source, file: chosenFile }, ...(settings.playNext ? followingTracks() : [])]);
+    playQueue([
+      { hymnId: hymn.id, language: chosen.language, title, source, file: chosen.file },
+      ...(settings.playNext ? followingTracks(chosen.language) : []),
+    ]);
   };
 
 
@@ -643,7 +655,7 @@ export function HymnReader({
               </View>
               {recordings.length > 1 ? (
                 <View style={[styles.audioControls, rowDirection]}>
-                  {recordings.map((file, i) =>
+                  {recordings.map(({ file }, i) =>
                     actionChip(
                       `${t.recording} ${isRTL ? String(i + 1).replace(/\d/g, (d) => '٠١٢٣٤٥٦٧٨٩'[Number(d)]) : i + 1}`,
                       () => selectRecording(i),

@@ -15,6 +15,31 @@ export const liturgies: { id: LiturgyId; title: string }[] = [
 // Deacon responses from Spirit & Truth's three liturgies that the Deacon Responses lacked
 // (Coptic in English letters from the alphabet chart; Arabic in English letters written for the app)
 export const stLiturgyDeacon: Hymn[] = [
+  // St Basil's, in place of "Amen. Amen. Pray." (the priest's words between are left out, as in every deacon response)
+  {
+    id: 'd-annual-liturgy-faithful-worship-god-the-father',
+    title: 'Ⲟⲩⲱϣⲧ ⲙ̀Ⲫϯ Ⲫⲓⲱⲧ (Worship God the Father)',
+    versions: [
+      { language: 'coptic', text: 'Ⲡⲓⲇⲓⲁⲕⲱⲛ:\n\nⲞⲩⲱϣⲧ ⲙ̀Ⲫϯ Ⲫⲓⲱⲧ ⲡⲓⲡⲁⲛⲧⲟⲕⲣⲁⲧⲱⲣ.\n\nⲠⲣⲟⲥⲭⲱⲙⲉⲛ: ⲁ̀ⲙⲏⲛ.' },
+      { language: 'englishCoptic', text: 'Pi-diakon:\n\nOuōsht em-Efnouti Fiōt pipantokratōr.\n\nProskhōmen: amēn.' },
+      { language: 'english', text: 'Deacon:\n\nWorship God, the Father, the Pantocrator.\n\nLet us attend. Amen.' },
+      { language: 'englishArabic', text: 'Esh-shammas:\n\nUsgudu lillah el-Ab dabit el-kull.\n\nNunsit. Ameen.' },
+      { language: 'arabic', text: 'الشماس:\n\nأسجدوا لله الآبِ ضابطِ الكلِّ.\n\nننصتُ. آمين.' },
+    ],
+  },
+  // St Basil's Confession, with what the deacon says after it, in place of the Confession, the Great Confession and
+  // The Peace and Love of Jesus Christ
+  {
+    id: 'd-annual-liturgy-faithful-the-confession',
+    title: 'Ⲁ̀ⲙⲏⲛ ⲁ̀ⲙⲏⲛ ⲁ̀ⲙⲏⲛ ϯⲛⲁϩϯ (Confession)',
+    versions: [
+      { language: 'coptic', text: 'Ⲡⲓⲇⲓⲁⲕⲱⲛ:\n\nⲀⲙⲏⲛ ⲁ̀ⲙⲏⲛ ⲁ̀ⲙⲏⲛ: ϯⲛⲁϩϯ ϯⲛⲁϩϯ ϯⲛⲁϩϯ: ϫⲉ ⲑⲁⲓ ⲧⲉ ϧⲉⲛ ⲟⲩⲙⲉⲑⲙⲏⲓ ⲁ̀ⲙⲏⲛ.\n\nⲦⲱⲃϩ ⲉ̀ϩ̀ⲣⲏⲓ ⲉ̀ϫⲱⲛ ⲛⲉⲙ ⲉ̀ϫⲉⲛ ⲭ̀ⲣⲓⲥⲧⲓⲁⲛⲟⲥ ⲛⲓⲃⲉⲛ ⲉ̀ⲧⲁⲩϫⲟⲥ ⲛⲁⲛ ⲉⲑⲃⲏⲧⲟⲩ: ϫⲉ ⲁ̀ⲣⲓⲡⲉⲛⲙⲉⲩⲓ̀ ϧⲉⲛ ⲡ̀ⲏⲓ ⲙ̀Ⲡϭⲟⲓⲥ.\n\nⲎ ⲓ̀ⲣⲏⲛⲏ ⲕⲉ ⲁ̀ⲅⲁⲡⲏ Ⲓⲏⲥⲟⲩ Ⲭⲣⲓⲥⲧⲟⲩ ⲙⲉⲑ ⲩ̀ⲙⲱⲛ: ⲯⲁⲗⲗⲁⲧⲉ: ϫⲱ ⲁ̀ⲗⲗⲏⲗⲟⲩⲓⲁ.\n\nⲠⲣⲟⲥⲉⲩⲝⲁⲥⲑⲉ ⲩ̀ⲡⲉⲣ ⲧⲏⲥ ⲁⲝⲓⲁⲥ ⲙⲉⲧⲁⲗⲏⲯⲉⲱⲥ ⲁⲭⲣⲁⲛⲧⲱⲛ ⲕⲉ ⲉ̀ⲡⲟⲩⲣⲁⲛⲓⲱⲛ ⲧⲱⲛ ⲁ̀ⲅⲓⲱⲛ ⲙⲩⲥⲧⲏⲣⲓⲱⲛ.\n\nⲔⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ.' },
+      { language: 'englishCoptic', text: 'Pi-diakon:\n\nAmēn amēn amēn: tinahti tinahti tinahti: je thai te khen oumethmēi amēn.\n\nTōbh e-ehrēi egōn nem ejen ekhristianos niven etaugos nan ethvētou: je aripenmeu-i khen epēi em-Eptshois.\n\nĒ irēnē ke agapē Iēsou Khristou meth umōn: psallate: gō allēlouia.\n\nProseuksasthe uper tēs aksias metalēpseōs akhrantōn ke epouraniōn tōn agiōn mustēriōn.\n\nKurie ele-ēson.' },
+      { language: 'english', text: 'Deacon:\n\nAmen. Amen. Amen. I believe, I believe, I believe that this is true. Amen.\n\nPray for us and for all Christians who said to us concerning them, “Remember us in the house of the Lord.”\n\nThe peace and love of Jesus Christ be with you. Sing, “Alleluia.”\n\nPray for the worthy partaking of the immaculate, heavenly, and Holy Mysteries.\n\nLord have mercy.' },
+      { language: 'englishArabic', text: "Esh-shammas:\n\nAmeen. Ameen. Ameen. U'min. U'min. U'min anna hadha huwa bil-haqeeqa. Ameen.\n\nUtlubu 'anna wa 'an kull el-maseehiyyeen elladheena qalu lana min aglihim, udhkuruna fi bayt er-Rabb.\n\nSalam wa mahabbat Yasou' el-Maseeh takoun ma'akum, rattilu bi-nasheed: Allelouia.\n\nSallu min agl et-tanawul bi-istihqaq min hadhihi el-asrar el-muqaddasa et-tahira was-samawiyya.\n\nYa Rabb irham." },
+      { language: 'arabic', text: 'الشماس:\n\nآمين. آمين. آمين. أؤمنُ. أؤمنُ. أؤمنُ أن هذا هو بالحقيقةِ. آمين.\n\nاطلبوا عنا وعن كلِّ المسيحيين الذين قالوا لنا من أجلِّهم، اذكرونا في بيتِ الربِ.\n\nسلامُ ومحبةُ يسوعَ المسيحِ تكون معكم، رتلوا بنشيدٍ: الليلويا.\n\nصلوا من أجلِ التناولِ باستحقاقٍ من هذه الأسرارِ المقدسةِ الطاهرةِ والسمائيةِ.\n\nياربُ إرحَم.' },
+    ],
+  },
   {
     id: "d-annual-liturgy-faithful-saved-amen",
     title: "Ⲥⲱⲑⲓⲥ ⲁ̀ⲙⲏⲛ (Saved. Amen. In the Fear of God)",
@@ -218,7 +243,12 @@ export const deaconOrder: Record<LiturgyId, Entry[]> = {
     ...threeSeasons,
     'pray-for-the-oblations',
     ...commemoration,
-    ...fractionAndConfession,
+    { header: 'Fraction and Confession' },
+    'worship-god-the-father',
+    'in-christ-jesus-our-lord',
+    'bow-your-heads',
+    'saved-amen',
+    'the-confession',
   ],
   gregory: [
     ...threeGreatLitanies,

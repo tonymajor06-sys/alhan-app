@@ -330,8 +330,13 @@ describe('The three Divine Liturgies', () => {
     expect(cyril.some((id) => id.includes('pinishti'))).toBe(false);
     for (const list of [basil, gregory, cyril]) {
       expect(list.indexOf('d-annual-liturgy-faithful-greet-one-another')).toBeLessThan(list.indexOf('d-annual-liturgy-faithful-anaphora'));
-      expect(list[list.length - 1]).toBe('d-annual-liturgy-faithful-peace-and-love');
     }
+    expect(gregory[gregory.length - 1]).toBe('d-annual-liturgy-faithful-peace-and-love');
+    // St Basil: Worship God the Father in place of Amen. Amen. Pray., and one Confession with what follows it
+    expect(basil).toContain('d-annual-liturgy-faithful-worship-god-the-father');
+    expect(basil).not.toContain('d-annual-liturgy-faithful-amen-let-us-pray');
+    expect(basil[basil.length - 1]).toBe('d-annual-liturgy-faithful-the-confession');
+    for (const gone of ['confession', 'confession-great', 'peace-and-love']) expect(basil).not.toContain(`d-annual-liturgy-faithful-${gone}`);
     // Every response has its words in every language the reader offers
     for (const service of deaconAnnual.services.filter((s) => /-liturgy-(basil|gregory|cyril)$/.test(s.id))) {
       for (const hymn of service.hymns.filter((h) => !h.isSectionHeader)) {
@@ -361,5 +366,14 @@ describe('The three Divine Liturgies', () => {
     expect(displayTitle(liturgy.hymns.find((h) => h.id === 'annual-liturgy-basil')!, 'ar')).toBe('قداس القديس باسيليوس الكبير');
     const header = deaconAnnual.services.find((s) => s.id === 'd-annual-liturgy-basil')!.hymns[0];
     expect(displayTitle(header, 'ar')).toBe('الثلاث أواشي الكبار');
+  });
+});
+
+describe('Recordings', () => {
+  test('Pinishti is cut in two: Let Those Who Read, then Pinishti', () => {
+    const basil = deaconCategories.find((c) => c.id === 'deacon-annual')!.services.find((s) => s.id === 'd-annual-liturgy-basil')!.hymns;
+    const audio = (id: string) => basil.find((h) => h.id === id)!.versions.find((v) => v.language === 'coptic')?.audio;
+    expect(audio('d-annual-liturgy-faithful-let-those-who-read')).toBe('arsani-035-let-those-who-read.m4a');
+    expect(audio('d-annual-liturgy-faithful-the-great-abba-antony-pinishti')).toBe('arsani-035-pinishti.m4a');
   });
 });

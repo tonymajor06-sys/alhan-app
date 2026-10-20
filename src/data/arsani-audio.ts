@@ -73,7 +73,9 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   // Annual Psalm 150 - Arsani Sidarous
   { file: "arsani-034-annual-psalm-150.m4a", hymns: ["annual-distribution-psalm-150"], language: "coptic" },
   // Pinishti (Short) | Archdeacon Arsani Sidarous
-  { file: "arsani-035-pinishti-short.m4a", hymns: ["d-annual-liturgy-faithful-the-great-abba-antony-pinishti"], language: "coptic" },
+  // One recording cut in two: its first 31 seconds are Let Those Who Read (Ⲛⲏⲉⲧⲱϣ), the rest is Pinishti
+  { file: "arsani-035-let-those-who-read.m4a", hymns: ["d-annual-liturgy-faithful-let-those-who-read"], language: "coptic" },
+  { file: "arsani-035-pinishti.m4a", hymns: ["d-annual-liturgy-faithful-the-great-abba-antony-pinishti"], language: "coptic" },
   // Feast of Apostles Tamgeed / Watos Aspasmos (Hail to the True)
   { file: "arsani-036-feast-of-apostles-tamgeed.m4a", hymns: ["apostles-liturgy-watos-aspasmos-for-feast-of-apostles-hail-to-the-t"], language: "coptic" },
   // Saturday Psali - Coptic Monastery of St. Shenouda, Rochester, NY
