@@ -108,6 +108,8 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   { file: "arsani-237-agios-holy-week.m4a", hymns: ["holyweek-pascha-agios", "annual-liturgy-agios@holyweek-bright-saturday"], language: "coptic" },
   // Teoi Enhikanos (Melismatic) - Arsani Sidarous and the Deacons of the LA Diocese
   { file: "arsani-050-teoi-enhikanos-melismatic-s-of-la-diocese.m4a", hymns: ["annual-midnight-sunday-theotokia-part-10", "annual-vesper-praises-sunday-theotokia-part-10"], language: "coptic" },
+  // 20- Teoi | JoeSeif (SoundCloud)
+  { file: "sc-joeseif-sunday-theotokia-part-10-teoi.m4a", hymns: ["annual-midnight-sunday-theotokia-part-10", "annual-vesper-praises-sunday-theotokia-part-10"], language: "coptic" },
   // Nim Ghar
   { file: "arsani-051-nim-ghar-i-i.m4a", hymns: ["annual-midnight-sunday-theotokia-part-16", "annual-vesper-praises-sunday-theotokia-part-16"], language: "coptic" },
   // Shere Maria
@@ -158,6 +160,8 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   { file: "arsani-yt-good-friday-9th-tishouri.m4a", hymns: ["holyweek-great-friday-9th-hour-teeshoory"], language: "coptic" },
   // Annual Aspasmos Watos (Epchois Efnoti)
   { file: "arsani-078-annual-aspasmos-watos-epchois-efnoti-archi-seattle.m4a", hymns: [], language: "coptic" },
+  // Pauline Epistle in Coptic - Arsani Sidarous (Introduction to the Pauline Epistle)
+  { file: "arsani-sc-pauline-epistle-introduction-coptic.m4a", hymns: ["annual-liturgy-pauline-intro", "d-annual-liturgy-word-pauline-intro", "lent-weekend-liturgy-pauline-intro", "lent-weekday-liturgy-pauline-intro"], language: "coptic" },
   // Ti Epistoly (Good Friday 6th Hour) - Primary: score 86.27
   { file: "arsani-081-ti-epistoly-introduction-to-6th-hour-pauline-epist.m4a", hymns: ["holyweek-great-friday-6th-hour-pauline"], language: "coptic" },
   // Good Friday 6th Hour Pauline - YouTube (Secondary: score 58.48)
