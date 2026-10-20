@@ -8294,3 +8294,16 @@ if (annualLiturgyNow) {
     annualLiturgyNow.hymns = [...annualLiturgyNow.hymns.slice(0, header + 1), ...groups, ...faithful.filter((h) => !placed.has(h.id))];
   }
 }
+// ---- A melismatic recording always comes after the regular one (the file name says "melismatic") ----
+// Last, so it holds for every hymn and copy whatever order the recordings were added in.
+const isMelismatic = (file: string) => /melismatic/i.test(file);
+for (const group of [...seasons, ...deaconCategories])
+  for (const service of group.services)
+    for (const hymn of flattenHymns(service.hymns))
+      for (const version of hymn.versions) {
+        const files = [version.audio, ...(version.otherAudio ?? [])].filter((f): f is string => !!f);
+        if (!files.some(isMelismatic) || files.every(isMelismatic)) continue;
+        const [first, ...rest] = [...files.filter((f) => !isMelismatic(f)), ...files.filter(isMelismatic)];
+        version.audio = first;
+        version.otherAudio = rest;
+      }

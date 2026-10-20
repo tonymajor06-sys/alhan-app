@@ -106,8 +106,8 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   { file: "arsani-270-agios-mournful-tune.m4a", hymns: ["holyweek-pascha-agios", "annual-liturgy-agios@holyweek-bright-saturday"], language: "coptic" },
   // Holy Week Agios - Quaternary: score 38.08
   { file: "arsani-237-agios-holy-week.m4a", hymns: ["holyweek-pascha-agios", "annual-liturgy-agios@holyweek-bright-saturday"], language: "coptic" },
-  // Sunday Theotokia Part 10: JoeSeif's "20- Teoi" first, then the melismatic tune second. If these are split into
-  // shorter files, keep the same order and keep "melismatic" in the melismatic files' names (it labels the recording).
+  // Sunday Theotokia Part 10: JoeSeif's "20- Teoi", then the melismatic tune. If these are split into shorter files,
+  // keep "melismatic" in the melismatic files' names: it labels them and puts them after the regular tune (hymns.ts).
   // 20- Teoi | JoeSeif (SoundCloud)
   { file: "sc-joeseif-sunday-theotokia-part-10-teoi.m4a", hymns: ["annual-midnight-sunday-theotokia-part-10", "annual-vesper-praises-sunday-theotokia-part-10"], language: "coptic" },
   // Teoi Enhikanos (Melismatic) - Arsani Sidarous and the Deacons of the LA Diocese
