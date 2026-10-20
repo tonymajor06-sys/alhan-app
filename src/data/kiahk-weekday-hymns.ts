@@ -14,7 +14,7 @@ export const kiahkWeekdayHymns: { season: string; service: string; serviceTitle:
   "item": {
    "hymn": {
     "id": "kiahk-midnight-second-adam-lobsh-on-monday-theotokion",
-    "title": "Second Adam Lobsh on Monday Theotokion",
+    "title": "Second Adam Lobsh on Monday Theotokia",
     "versions": [
      {
       "language": "english",
@@ -42,7 +42,7 @@ export const kiahkWeekdayHymns: { season: string; service: string; serviceTitle:
   "item": {
    "hymn": {
     "id": "kiahk-midnight-exposition-on-monday-theotokion",
-    "title": "Exposition on the Monday Theotokion",
+    "title": "Exposition on the Monday Theotokia",
     "versions": [
      {
       "language": "english",
@@ -70,7 +70,7 @@ export const kiahkWeekdayHymns: { season: string; service: string; serviceTitle:
   "item": {
    "hymn": {
     "id": "kiahk-midnight-watos-psali-after-wednesday-theotokion",
-    "title": "Watos Psali After The Wednesday Theotokion",
+    "title": "Watos Psali After The Wednesday Theotokia",
     "versions": [
      {
       "language": "english",
@@ -98,7 +98,7 @@ export const kiahkWeekdayHymns: { season: string; service: string; serviceTitle:
   "item": {
    "hymn": {
     "id": "kiahk-midnight-second-watos-lobsh-on-wednesday-theotokion",
-    "title": "Second Watos Lobsh On the Wednesday Theotokion",
+    "title": "Second Watos Lobsh On the Wednesday Theotokia",
     "versions": [
      {
       "language": "english",
@@ -126,7 +126,7 @@ export const kiahkWeekdayHymns: { season: string; service: string; serviceTitle:
   "item": {
    "hymn": {
     "id": "kiahk-midnight-exposition-on-wednesday-theotokion",
-    "title": "Exposition on Wednesday Theotokion",
+    "title": "Exposition on Wednesday Theotokia",
     "versions": [
      {
       "language": "english",
@@ -266,7 +266,7 @@ export const kiahkWeekdayHymns: { season: string; service: string; serviceTitle:
   "item": {
    "hymn": {
     "id": "kiahk-midnight-watos-psali-after-friday-theotokion",
-    "title": "Watos Psali After the Friday Theotokion",
+    "title": "Watos Psali After the Friday Theotokia",
     "versions": [
      {
       "language": "english",
@@ -286,7 +286,7 @@ export const kiahkWeekdayHymns: { season: string; service: string; serviceTitle:
   "item": {
    "hymn": {
     "id": "kiahk-midnight-exposition-on-friday-theotokion",
-    "title": "Exposition on Friday Theotokion",
+    "title": "Exposition on Friday Theotokia",
     "versions": [
      {
       "language": "english",
@@ -478,7 +478,7 @@ export const kiahkWeekdayHymns: { season: string; service: string; serviceTitle:
   "item": {
    "hymn": {
     "id": "kiahk-midnight-watos-psali-before-the-conclusion-of-watos-theotokia",
-    "title": "Watos Psali before the Conclusion of Watos Theotokion",
+    "title": "Watos Psali before the Conclusion of Watos Theotokia",
     "versions": [
      {
       "language": "english",

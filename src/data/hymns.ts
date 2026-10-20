@@ -743,39 +743,39 @@ if (kiahkMidnight) {
     'I Open my Mouth with Praise',
     'Adam Psali on "You are Called" (Come, O you people)/',
     'Conclusion of the Adam Psali',
-    'The Sunday Theotokion (1)',
+    'The Sunday Theotokia (1)',
     'The First Explanation',
-    'The Sunday Theotokion (2)',
+    'The Sunday Theotokia (2)',
     'The Second Explanation',
-    'The Sunday Theotokion (3)',
+    'The Sunday Theotokia (3)',
     'The Third Explanation',
-    'The Sunday Theotokion (4)',
+    'The Sunday Theotokia (4)',
     'The Fourth Explanation',
-    'The Sunday Theotokion (5)',
+    'The Sunday Theotokia (5)',
     'The Fifth Explanation',
-    'The Sunday Theotokion (6)',
+    'The Sunday Theotokia (6)',
     'The Sixth Explanation',
-    'The Sunday Theotokion (7)',
+    'The Sunday Theotokia (7)',
     'Exposition on First "You are Called"',
-    'The Sunday Theotokion (7)',
+    'The Sunday Theotokia (7)',
     'Exposition on the Second "You are Called"',
     'The Seventh Explanation',
     'Kiahk Melody on Eighth Part of Sunday Theotokia',
-    'The Sunday Theotokion (8)',
+    'The Sunday Theotokia (8)',
     'Exposition on Seven Times Every Day',
     'Rejoice O Mary',
     'O Mary',
     'O Daughter of David',
-    'The Sunday Theotokion (9)',
+    'The Sunday Theotokia (9)',
     'Exposition on You are Called',
     'You are Worthy',
     'I Praise the Virgin',
-    'The Sunday Theotokion (10)',
-    'The Sunday Theotokion (11)',
-    'The Sunday Theotokion (12)',
-    'The Sunday Theotokion (13)',
-    'The Sunday Theotokion (14)',
-    'The Sunday Theotokion (15)',
+    'The Sunday Theotokia (10)',
+    'The Sunday Theotokia (11)',
+    'The Sunday Theotokia (12)',
+    'The Sunday Theotokia (13)',
+    'The Sunday Theotokia (14)',
+    'The Sunday Theotokia (15)',
     'Exposition of the Laborers',
     'Conclusion to the Exposition of the Laborers',
     'Your Mercies O My God',
@@ -1370,7 +1370,7 @@ if (kiahkMidnight) {
       },
     ];
   }
-  const kiahkTheotokion10 = kiahkMidnight.hymns.find((h) => h.title === 'The Sunday Theotokion (10)');
+  const kiahkTheotokion10 = kiahkMidnight.hymns.find((h) => h.title === 'The Sunday Theotokia (10)');
   if (kiahkTheotokion10) {
     kiahkTheotokion10.versions = [
       {
@@ -1391,7 +1391,7 @@ if (kiahkMidnight) {
       },
     ];
   }
-  const kiahkTheotokion11 = kiahkMidnight.hymns.find((h) => h.title === 'The Sunday Theotokion (11)');
+  const kiahkTheotokion11 = kiahkMidnight.hymns.find((h) => h.title === 'The Sunday Theotokia (11)');
   if (kiahkTheotokion11) {
     kiahkTheotokion11.versions = [
       {
@@ -1412,7 +1412,7 @@ if (kiahkMidnight) {
       },
     ];
   }
-  const kiahkTheotokion12 = kiahkMidnight.hymns.find((h) => h.title === 'The Sunday Theotokion (12)');
+  const kiahkTheotokion12 = kiahkMidnight.hymns.find((h) => h.title === 'The Sunday Theotokia (12)');
   if (kiahkTheotokion12) {
     kiahkTheotokion12.versions = [
       {
@@ -1433,7 +1433,7 @@ if (kiahkMidnight) {
       },
     ];
   }
-  const kiahkTheotokion13 = kiahkMidnight.hymns.find((h) => h.title === 'The Sunday Theotokion (13)');
+  const kiahkTheotokion13 = kiahkMidnight.hymns.find((h) => h.title === 'The Sunday Theotokia (13)');
   if (kiahkTheotokion13) {
     kiahkTheotokion13.versions = [
       {
@@ -1454,7 +1454,7 @@ if (kiahkMidnight) {
       },
     ];
   }
-  const kiahkTheotokion14 = kiahkMidnight.hymns.find((h) => h.title === 'The Sunday Theotokion (14)');
+  const kiahkTheotokion14 = kiahkMidnight.hymns.find((h) => h.title === 'The Sunday Theotokia (14)');
   if (kiahkTheotokion14) {
     kiahkTheotokion14.versions = [
       {
@@ -4883,9 +4883,9 @@ const adamTheotokiasConclusion = (day: string): Hymn => ({
 // A hymn whose text has not come in yet
 const titleOnly = (id: string, title: string): Hymn => ({ id, title, versions: [] });
 
-// Names for a Theotokia's parts: each part's first words, e.g. "Ϯⲁⲧⲑⲱⲗⲉⲃ ⲛ̀ⲥⲉⲙⲛⲉ (Saturday Theotokion 1)"
+// Names for a Theotokia's parts: each part's first words, e.g. "Ϯⲁⲧⲑⲱⲗⲉⲃ ⲛ̀ⲥⲉⲙⲛⲉ (Saturday Theotokia 1)"
 function theotokionTitles(day: string, firstWords: string[]): string[] {
-  return firstWords.map((words, i) => (words ? `${words} (${day} Theotokion ${i + 1})` : `${day} Theotokion ${i + 1}`));
+  return firstWords.map((words, i) => (words ? `${words} (${day} Theotokia ${i + 1})` : `${day} Theotokia ${i + 1}`));
 }
 
 const saturdayTheotokiaTitles = theotokionTitles('Saturday', [
@@ -5014,7 +5014,7 @@ if (annualMidnight) {
         },
         {
           id: 'annual-midnight-sunday-theotokion-7',
-          title: 'Ⲭⲉⲣⲉ ⲛⲉ Ⲙⲁⲣⲓⲁ (Sunday Theotokion 7)',
+          title: 'Ⲭⲉⲣⲉ ⲛⲉ Ⲙⲁⲣⲓⲁ (Sunday Theotokia 7)',
           versions: [
             {
               language: 'coptic',
@@ -5051,7 +5051,7 @@ if (annualMidnight) {
         },
         {
           id: 'annual-midnight-sunday-theotokion-8',
-          title: 'Ϣⲁϣϥ ⲛ̀ⲥⲟⲡ ⲙ̀ⲙⲏⲛⲓ (Sunday Theotokion 8)',
+          title: 'Ϣⲁϣϥ ⲛ̀ⲥⲟⲡ ⲙ̀ⲙⲏⲛⲓ (Sunday Theotokia 8)',
           versions: [
             {
               language: 'coptic',
@@ -5077,7 +5077,7 @@ if (annualMidnight) {
         },
         {
           id: 'annual-midnight-sunday-theotokion-9',
-          title: 'Ⲁⲩⲙⲟⲩϯ ⲉ̀ⲣⲟ (Sunday Theotokion 9)',
+          title: 'Ⲁⲩⲙⲟⲩϯ ⲉ̀ⲣⲟ (Sunday Theotokia 9)',
           versions: [
             {
               language: 'coptic',
@@ -6250,7 +6250,7 @@ const venerationTexts: Record<string, LanguageVersion[]> = {
   ],
 };
 
-// ---- Annual > Veneration: hymns get their words from venerationTexts; Seven Times Every Day which is the Sunday Theotokion 8 of Midnight Praises (same words and recording) ----
+// ---- Annual > Veneration: hymns get their words from venerationTexts; Seven Times Every Day which is the Sunday Theotokia 8 of Midnight Praises (same words and recording) ----
 const annualVeneration = seasons
   .find((s) => s.id === 'annual')
   ?.services.find((s) => s.id === 'annual-veneration');
@@ -6510,17 +6510,17 @@ const kiahkMidnightCopies: Record<string, string[]> = {
   'The Fourth Canticle': ['annual-midnight-fourth-canticle'],
   'The Adam Psali for the Lord Jesus before the Sunday Theotokia': ['annual-midnight-sunday-psali-lord-jesus'],
   'Conclusion of the Adam Psali': ['annual-midnight-sunday-adam-psali-conclusion'],
-  'The Sunday Theotokion (1)': ['annual-midnight-sunday-theotokia-part-1'],
-  'The Sunday Theotokion (2)': ['annual-midnight-sunday-theotokia-part-2'],
-  'The Sunday Theotokion (3)': ['annual-midnight-sunday-theotokia-part-3'],
-  'The Sunday Theotokion (4)': ['annual-midnight-sunday-theotokia-part-4'],
-  'The Sunday Theotokion (5)': ['annual-midnight-sunday-theotokia-part-5'],
-  'The Sunday Theotokion (6)': ['annual-midnight-sunday-theotokia-part-6'],
+  'The Sunday Theotokia (1)': ['annual-midnight-sunday-theotokia-part-1'],
+  'The Sunday Theotokia (2)': ['annual-midnight-sunday-theotokia-part-2'],
+  'The Sunday Theotokia (3)': ['annual-midnight-sunday-theotokia-part-3'],
+  'The Sunday Theotokia (4)': ['annual-midnight-sunday-theotokia-part-4'],
+  'The Sunday Theotokia (5)': ['annual-midnight-sunday-theotokia-part-5'],
+  'The Sunday Theotokia (6)': ['annual-midnight-sunday-theotokia-part-6'],
   // listed twice: Ⲭⲉⲣⲉ ⲛⲉ Ⲙⲁⲣⲓⲁ, then Ⲥⲉⲙⲟⲩϯ ⲉ̀ⲣⲟ ⲇⲓⲕⲉⲟⲥ
-  'The Sunday Theotokion (7)': ['annual-midnight-sunday-theotokia-part-7', 'annual-midnight-semouti-ero-dikeos'],
-  'The Sunday Theotokion (8)': ['annual-midnight-sunday-theotokia-part-8'],
-  'The Sunday Theotokion (9)': ['annual-midnight-sunday-theotokia-part-9'],
-  'The Sunday Theotokion (15)': ['annual-midnight-sunday-theotokia-part-15'],
+  'The Sunday Theotokia (7)': ['annual-midnight-sunday-theotokia-part-7', 'annual-midnight-semouti-ero-dikeos'],
+  'The Sunday Theotokia (8)': ['annual-midnight-sunday-theotokia-part-8'],
+  'The Sunday Theotokia (9)': ['annual-midnight-sunday-theotokia-part-9'],
+  'The Sunday Theotokia (15)': ['annual-midnight-sunday-theotokia-part-15'],
   'The Conclusion of the Adam Theotokia': ['annual-midnight-sunday-adam-theotokias-conclusion'],
   'Concluding Hymn': ['annual-midnight-concluding-hymn'],
   'Conclusion in the presence of the Pope or a Bishop': ['annual-midnight-conclusion-pope-bishop'],
@@ -7662,7 +7662,7 @@ const englishNames: Record<string, string> = {
   'Ⲁ̀ ⲡⲉⲧϫⲏⲕ ⲉ̀ⲃⲟⲗ': 'Perfect is the Blessing',
   'Ⲁⲅⲓⲟⲥ ⲟ̀ Ⲑⲉⲟⲥ': 'Holy God',
   'Ϩⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ ⲛ̀ⲧⲉ Ϯⲑⲉⲟ̀ⲧⲟⲕⲟⲥ': 'Through the Intercessions of the Theotokos',
-  'Ⲥⲉⲙⲟⲩϯ ⲉ̀ⲣⲟ ⲇⲓⲕⲉⲟⲥ': 'They Rightly Call You (Sunday Theotokion)',
+  'Ⲥⲉⲙⲟⲩϯ ⲉ̀ⲣⲟ ⲇⲓⲕⲉⲟⲥ': 'They Rightly Call You (Sunday Theotokia)',
   'Ⲧⲉⲛⲟⲩⲱϣⲧ ⲙ̀Ⲫⲓⲱⲧ ⲛⲉⲙ Ⲡϣⲏⲣⲓ': 'We Worship the Father and the Son',
   'Ⲁⲙⲱⲓⲛⲓ ⲙⲁⲣⲉⲛⲟⲩⲱϣⲧ': 'Come Let Us Worship',
   'Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ': 'Alleluia',

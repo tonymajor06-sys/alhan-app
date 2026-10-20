@@ -161,8 +161,8 @@ describe('Kiahk Praises & Season > Midnight Praises', () => {
     const text = (h: Hymn, language: string) => h.versions.find((v) => v.language === language)?.text;
     const pairs: [string, string][] = [
       ['The Second Canticle', 'annual-midnight-second-canticle'],
-      ['The Sunday Theotokion (3)', 'annual-midnight-sunday-theotokia-part-3'],
-      ['The Sunday Theotokion (4)', 'annual-midnight-sunday-theotokia-part-4'],
+      ['The Sunday Theotokia (3)', 'annual-midnight-sunday-theotokia-part-3'],
+      ['The Sunday Theotokia (4)', 'annual-midnight-sunday-theotokia-part-4'],
       ['Concluding Hymn', 'annual-midnight-concluding-hymn'],
     ];
     for (const [title, annualId] of pairs) {
@@ -173,8 +173,8 @@ describe('Kiahk Praises & Season > Midnight Praises', () => {
       expect(text(kiahk, 'english')).toBe(text(original, 'english'));
       expect(text(kiahk, 'arabic')).toBe(text(original, 'arabic'));
     }
-    // the two Theotokion (7)s are different hymns
-    const sevens = service.hymns.filter((h) => h.title === 'The Sunday Theotokion (7)');
+    // the two Theotokia (7)s are different hymns
+    const sevens = service.hymns.filter((h) => h.title === 'The Sunday Theotokia (7)');
     expect(sevens).toHaveLength(2);
     expect(text(sevens[0], 'coptic')).not.toBe(text(sevens[1], 'coptic'));
     // a hymn that has no lyrics yet is left for later
@@ -378,7 +378,7 @@ describe('Kiahk Praises & Season > Midnight Praises', () => {
     // number 40 is now The First Explanation (number 39, The Sunday Theotokia, was removed): 16 verses in English and in Arabic
     const firstExplanation = service.hymns[41];
     expect(firstExplanation.title).toBe('The First Explanation');
-    expect(service.hymns[40].title).toBe('The Sunday Theotokion (1)');
+    expect(service.hymns[40].title).toBe('The Sunday Theotokia (1)');
     expect(text(firstExplanation, 'english').split(/\n\s*\n/)).toHaveLength(16);
     expect(text(firstExplanation, 'arabic').split(/\n\s*\n/)).toHaveLength(16);
     expect(text(firstExplanation, 'english').startsWith('(1/16) In the Name of God')).toBe(true);
@@ -422,32 +422,32 @@ describe('Kiahk Praises & Season > Midnight Praises', () => {
     expect(text(laborers, 'arabic').split(/\n\s*\n/)).toHaveLength(22);
     expect(text(laborers, 'english').startsWith('(1/22) The Master of the vineyard')).toBe(true);
     expect(laborers.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
-    // The Sunday Theotokion (14): the pasted text (14 stanzas in Coptic, English and Arabic), not the Annual Midnight copy
-    const theotokion14 = service.hymns.find((h) => h.title === 'The Sunday Theotokion (14)')!;
+    // The Sunday Theotokia (14): the pasted text (14 stanzas in Coptic, English and Arabic), not the Annual Midnight copy
+    const theotokion14 = service.hymns.find((h) => h.title === 'The Sunday Theotokia (14)')!;
     for (const language of ['coptic', 'english', 'arabic']) {
       expect(text(theotokion14, language).split(/\n\s*\n/)).toHaveLength(14);
     }
     expect(text(theotokion14, 'coptic').startsWith('Ⲁⲕⲥⲟⲗⲥⲉⲗ')).toBe(true);
     expect(text(theotokion14, 'english').startsWith('You decorated our souls')).toBe(true);
     expect(theotokion14.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
-    // The Sunday Theotokion (13): the pasted text (7 stanzas in Coptic, English and Arabic), not the Annual Midnight copy
-    const theotokion13 = service.hymns.find((h) => h.title === 'The Sunday Theotokion (13)')!;
+    // The Sunday Theotokia (13): the pasted text (7 stanzas in Coptic, English and Arabic), not the Annual Midnight copy
+    const theotokion13 = service.hymns.find((h) => h.title === 'The Sunday Theotokia (13)')!;
     for (const language of ['coptic', 'english', 'arabic']) {
       expect(text(theotokion13, language).split(/\n\s*\n/)).toHaveLength(7);
     }
     expect(text(theotokion13, 'coptic').startsWith('Ⲟⲩⲥ̀ⲕⲏⲛⲏ ⲙ̀ⲙⲏⲓ')).toBe(true);
     expect(text(theotokion13, 'english').startsWith('A true tabernacle')).toBe(true);
     expect(theotokion13.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
-    // The Sunday Theotokion (12): the pasted text (5 stanzas in Coptic, English and Arabic), not the Annual Midnight copy
-    const theotokion12 = service.hymns.find((h) => h.title === 'The Sunday Theotokion (12)')!;
+    // The Sunday Theotokia (12): the pasted text (5 stanzas in Coptic, English and Arabic), not the Annual Midnight copy
+    const theotokion12 = service.hymns.find((h) => h.title === 'The Sunday Theotokia (12)')!;
     for (const language of ['coptic', 'english', 'arabic']) {
       expect(text(theotokion12, language).split(/\n\s*\n/)).toHaveLength(5);
     }
     expect(text(theotokion12, 'coptic').startsWith('Ⲡⲉⲱ̀ⲟⲩ Ⲙⲁⲣⲓⲁ')).toBe(true);
     expect(text(theotokion12, 'english').startsWith('Your glory O Mary')).toBe(true);
     expect(theotokion12.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
-    // The Sunday Theotokion (11): the pasted text (4 stanzas in Coptic, English and Arabic), not the Annual Midnight copy
-    const theotokion11 = service.hymns.find((h) => h.title === 'The Sunday Theotokion (11)')!;
+    // The Sunday Theotokia (11): the pasted text (4 stanzas in Coptic, English and Arabic), not the Annual Midnight copy
+    const theotokion11 = service.hymns.find((h) => h.title === 'The Sunday Theotokia (11)')!;
     for (const language of ['coptic', 'english', 'arabic']) {
       expect(text(theotokion11, language).split(/\n\s*\n/)).toHaveLength(4);
     }
@@ -455,8 +455,8 @@ describe('Kiahk Praises & Season > Midnight Praises', () => {
     expect(text(theotokion11, 'english').startsWith('All the high names')).toBe(true);
     expect(text(theotokion11, 'arabic')).not.toContain('+');
     expect(theotokion11.versions.every((v) => !v.text.includes('\\n'))).toBe(true);
-    // The Sunday Theotokion (10): 6 stanzas in Coptic, English and Arabic
-    const theotokion10 = service.hymns.find((h) => h.title === 'The Sunday Theotokion (10)')!;
+    // The Sunday Theotokia (10): 6 stanzas in Coptic, English and Arabic
+    const theotokion10 = service.hymns.find((h) => h.title === 'The Sunday Theotokia (10)')!;
     for (const language of ['coptic', 'english', 'arabic']) {
       expect(text(theotokion10, language).split(/\n\s*\n/)).toHaveLength(6);
     }
