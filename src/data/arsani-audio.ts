@@ -404,8 +404,8 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   // St Basil's Liturgy of the Faithful: deacon responses recorded in one language
   { file: "deacon-reconciliation-arabic.m4a", hymns: ["d-annual-liturgy-faithful-reconciliation"], language: "arabic" },
   { file: "deacon-greet-one-another-arabic.m4a", hymns: ["d-annual-liturgy-faithful-greet-one-another"], language: "arabic" },
-  // "You who are seated, stand" and "Look towards the East", joined
-  { file: "deacon-anaphora-arabic.m4a", hymns: ["d-annual-liturgy-faithful-anaphora"], language: "arabic" },
+  { file: "deacon-you-who-are-seated-arabic.m4a", hymns: ["d-annual-liturgy-faithful-anaphora"], language: "arabic" },
+  { file: "deacon-look-towards-the-east-arabic.m4a", hymns: ["d-annual-liturgy-faithful-look-towards-the-east"], language: "arabic" },
   { file: "deacon-epiclesis-coptic.m4a", hymns: ["d-annual-liturgy-faithful-epiclesis"], language: "coptic" },
   { file: "deacon-let-those-who-read-coptic.m4a", hymns: ["d-annual-liturgy-faithful-let-those-who-read"], language: "coptic" },
   { file: "deacon-pray-for-the-departed-coptic.m4a", hymns: ["d-annual-liturgy-faithful-pray-for-the-departed"], language: "coptic" },

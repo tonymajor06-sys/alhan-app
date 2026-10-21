@@ -380,6 +380,7 @@ const arabicTitles: Record<string, string> = {
   'd-annual-liturgy-faithful-reconciliation-st-gregory': 'صلاة الصلح - غريغوري',
   'd-annual-liturgy-faithful-greet-one-another': 'قبلوا بعضكم بعضاً',
   'd-annual-liturgy-faithful-anaphora': 'الانافورا',
+  'd-annual-liturgy-faithful-look-towards-the-east': 'وإلى الشرق انظروا',
   'd-annual-liturgy-faithful-epiclesis': 'حلول الروح القدس',
   'd-annual-liturgy-faithful-pray-for-priests-and-deacons': 'أوشية القسوس والشمامسة',
   'd-annual-liturgy-faithful-pray-for-the-oblations': 'أوشية القرابين',

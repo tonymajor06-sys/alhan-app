@@ -4008,11 +4008,22 @@ if (deaconAnnualLiturgyFaithful) {
       id: 'd-annual-liturgy-faithful-anaphora',
       title: "Ⲟⲓ ⲕⲁⲑⲏⲙⲉⲛⲟⲓ ⲁ̀ⲛⲁⲥⲧⲏⲧⲉ (Anaphora)",
       versions: [
-        { language: 'coptic', text: "Ⲟⲓ ⲕⲁⲑⲏⲙⲉⲛⲟⲓ ⲁ̀ⲛⲁⲥⲧⲏⲧⲉ.\n\nⲒⲥ ⲁ̀ⲛⲁⲧⲟⲗⲁⲥ ⲃ̀ⲗⲉⲯⲁⲧⲉ.\n\nⲠ̀ⲣⲟⲥⲭⲱⲙⲉⲛ." },
-        { language: 'englishCoptic', text: "Oi kathēmenoi anastēte.\n\nIs anatolas eblepsate.\n\nEproskhōmen." },
-        { language: 'english', text: "You who are seated, stand.\n\nLook towards the East.\n\nLet us attend." },
-        { language: 'englishArabic', text: "Ayyuha el-guloos qifu.\n\nWa ila esh-sharq unzuru.\n\nNunsit." },
-        { language: 'arabic', text: "أيها الجلوس قفوا.\n\nوإلى الشرق انظروا.\n\nننصت." },
+        { language: 'coptic', text: "Ⲟⲓ ⲕⲁⲑⲏⲙⲉⲛⲟⲓ ⲁ̀ⲛⲁⲥⲧⲏⲧⲉ." },
+        { language: 'englishCoptic', text: "Oi kathēmenoi anastēte." },
+        { language: 'english', text: "You who are seated, stand." },
+        { language: 'englishArabic', text: "Ayyuha el-guloos qifu." },
+        { language: 'arabic', text: "أيها الجلوس قفوا." },
+      ],
+    },
+    {
+      id: 'd-annual-liturgy-faithful-look-towards-the-east',
+      title: "Ⲓⲥ ⲁ̀ⲛⲁⲧⲟⲗⲁⲥ ⲃ̀ⲗⲉⲯⲁⲧⲉ (Look Towards the East)",
+      versions: [
+        { language: 'coptic', text: "Ⲓⲥ ⲁ̀ⲛⲁⲧⲟⲗⲁⲥ ⲃ̀ⲗⲉⲯⲁⲧⲉ.\n\nⲠ̀ⲣⲟⲥⲭⲱⲙⲉⲛ." },
+        { language: 'englishCoptic', text: "Is anatolas eblepsate.\n\nEproskhōmen." },
+        { language: 'english', text: "Look towards the East.\n\nLet us attend." },
+        { language: 'englishArabic', text: "Wa ila esh-sharq unzuru.\n\nNunsit." },
+        { language: 'arabic', text: "وإلى الشرق انظروا.\n\nننصت." },
       ],
     },
     {
