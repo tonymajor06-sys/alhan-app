@@ -4167,11 +4167,11 @@ if (deaconAnnualLiturgyFaithful) {
       id: 'd-annual-liturgy-faithful-amen-let-us-pray',
       title: "Ⲁ̀ⲙⲏⲛ ⲁ̀ⲙⲏⲛ ⲡ̀ⲣⲟⲥⲉⲩⲝⲁⲥⲑⲉ (Amen. Let Us Pray)",
       versions: [
-        { language: 'coptic', text: "Ⲁ̀ⲙⲏⲛ ⲁ̀ⲙⲏⲛ ⲡ̀ⲣⲟⲥⲉⲩⲝⲁⲥⲑⲉ." },
-        { language: 'englishCoptic', text: "Amēn amēn eproseuksasthe." },
-        { language: 'english', text: "Amen. Amen. Pray." },
-        { language: 'englishArabic', text: "Ameen. Ameen. Sallu." },
-        { language: 'arabic', text: "آمين آمين صلوا." },
+        { language: 'coptic', text: "Ⲡⲓⲇⲓⲁⲕⲱⲛ:\n\nⲀⲙⲏⲛ: ⲁⲙⲏⲛ ⲡ̀ⲣⲟⲥⲉⲩⲝⲁⲥⲑⲉ." },
+        { language: 'englishCoptic', text: "Pi-diakon:\n\nAmēn: amēn eproseuksasthe." },
+        { language: 'english', text: "Deacon:\n\nAmen. Amen. Pray." },
+        { language: 'englishArabic', text: "Esh-shammas:\n\nAmeen. Ameen. Sallu." },
+        { language: 'arabic', text: "الشماس:\n\nآمين. آمين. صلوا." },
       ],
     },
     {

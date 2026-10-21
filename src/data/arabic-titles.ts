@@ -525,6 +525,7 @@ const arabicTitles: Record<string, string> = {
   // Deacon Responses > Annual > Offering of the Lamb
   'd-annual-liturgy-faithful-pray-for-the-assemblies': 'أوشية الاجتماعات',
   'd-annual-liturgy-faithful-bow-your-heads': 'أحنوا رؤوسكم للرب',
+  'd-annual-liturgy-faithful-let-us-attend-in-fear': 'أنصتوا بخوف الله',
   'd-annual-liturgy-faithful-pray-for-the-priesthood-st-cyril': 'أوشية الكهنوت (القداس الكيرلسي)',
   'd-annual-liturgy-faithful-pray-for-the-assemblies-st-cyril': 'أوشية الاجتماعات (القداس الكيرلسي)',
   'd-annual-liturgy-faithful-worship-god-the-father-st-cyril': 'اسجدوا لله الآب (القداس الكيرلسي)',

@@ -15,7 +15,7 @@ export const liturgies: { id: LiturgyId; title: string }[] = [
 // Deacon responses from Spirit & Truth's three liturgies that the Deacon Responses lacked
 // (Coptic in English letters from the alphabet chart; Arabic in English letters written for the app)
 export const stLiturgyDeacon: Hymn[] = [
-  // St Basil's, in place of "Amen. Amen. Pray." (the priest's words between are left out, as in every deacon response)
+  // St Basil's (the priest's words between are left out, as in every deacon response)
   {
     id: 'd-annual-liturgy-faithful-worship-god-the-father',
     title: 'Ⲟⲩⲱϣⲧ ⲙ̀Ⲫϯ Ⲫⲓⲱⲧ (Worship God the Father)',
@@ -218,6 +218,7 @@ const fractionAndConfession: Entry[] = [
   'amen-let-us-pray',
   'in-christ-jesus-our-lord',
   'bow-your-heads',
+  'let-us-attend-in-fear',
   'saved-amen',
   'confession',
   'confession-great',
@@ -247,7 +248,9 @@ export const deaconOrder: Record<LiturgyId, Entry[]> = {
     'worship-god-the-father',
     'in-christ-jesus-our-lord',
     'bow-your-heads',
+    'let-us-attend-in-fear',
     'saved-amen',
+    'amen-let-us-pray',
     'the-confession',
   ],
   gregory: [
