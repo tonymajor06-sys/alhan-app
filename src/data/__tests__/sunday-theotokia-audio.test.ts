@@ -226,7 +226,8 @@ describe('Divine Liturgy Audio and Bishop Updates', () => {
 
     // Arabic title
     expect(displayTitle(paulineIntro!, 'ar')).toBe('البولس');
-    expect(displayTitle(deaconPauline!, 'ar')).toBe('البولس');
+    // the Deacon Responses are named by their first words
+    expect(displayTitle(deaconPauline!, 'ar')).toMatch(/^بولس عبد يسوع المسيح/);
   });
 
   test('Verse of the Cymbals has single recording (no second recording)', () => {

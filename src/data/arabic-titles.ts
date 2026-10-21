@@ -1192,8 +1192,12 @@ const serviceTitles: Record<string, string> = {
 
 const toArabicDigits = (n: string) => n.replace(/\d/g, (d) => '٠١٢٣٤٥٦٧٨٩'[Number(d)]);
 
+// The Deacon Responses' Arabic names, their first words in Arabic (filled in by hymns.ts)
+export const openingArabicTitles: Record<string, string> = {};
+
 export function displayTitle(item: { id: string; title: string }, lang: AppLanguage): string {
   if (lang !== 'ar') return item.title;
+  if (openingArabicTitles[item.id]) return openingArabicTitles[item.id];
   if (arabicTitles[item.id]) return arabicTitles[item.id];
   if (vpArabicTitles[item.id]) return vpArabicTitles[item.id];
   // Each season's Vesper Praises (a minor feast's is named after its feast) and its days

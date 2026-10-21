@@ -1,10 +1,12 @@
 import { alhanSeasonServices } from './alhan-seasons';
 import { addArabicCoptic } from './arabic-coptic';
 import { addArabicEnglish } from './arabic-english';
+import { openingArabicTitles } from './arabic-titles';
 import { arabicInEnglishLetters } from './arabic-in-english-letters';
 import { arsaniAudio } from './arsani-audio';
 import { crossWatosPsali } from './cross-watos-psali';
 import { distributionConclusionVerses } from './distribution-conclusions';
+import { splitTitle } from './hymn-titles';
 import { addEnglishCoptic } from './english-coptic';
 import { kiahkWeekdayHymns } from './kiahk-weekday-hymns';
 import { lentMelodies } from './lent-melodies';
@@ -8383,3 +8385,60 @@ for (const group of [...seasons, ...deaconCategories])
         version.audio = first;
         version.otherAudio = rest;
       }
+
+// ---- Deacon Responses are named by how they start: their first words in English, with the Coptic below ----
+// (and the Arabic's first words in Arabic). A name is cut to a few words; responses in the same service whose names
+// would match take more words until they differ, and if their first lines are the same they keep their old name.
+const SPEAKER_LINE = /^\(?[^\s:()]+(?: [^\s:()]+){0,3}\)?:$/;
+const SMALL_WORDS = new Set(['the', 'of', 'and', 'a', 'an', 'to', 'for', 'in', 'our', 'with', 'on', 'at', 'by', 'that', 'who', 'which', 'is', 'be', 'from', 'as', 'your', 'his', 'her', 'their', 'we', 'you', 'o', 'let', 'us']);
+// The words a response says (not who says them), each marked if it ends a line
+const spokenWords = (hymn: Hymn, language: LanguageType) =>
+  (hymn.versions.find((v) => v.language === language)?.text ?? '')
+    .replace(/(?:\\n)+/g, '\n')
+    .split('\n')
+    .map((l) => l.trim().replace(/^\([^)]*\)\s*/, ''))
+    .filter((l) => l && !SPEAKER_LINE.test(l))
+    .flatMap((l) => l.split(/\s+/).map((word, i, all) => ({ word, lineEnd: i === all.length - 1 })));
+const firstLineLength = (words: { lineEnd: boolean }[]) => words.findIndex((w) => w.lineEnd) + 1;
+// The first `count` words, with "…" when that stops partway through a line
+const firstWords = (words: { word: string; lineEnd: boolean }[], count: number, english = false) => {
+  if (!words.length) return null;
+  const kept = words.slice(0, count);
+  const whole = kept[kept.length - 1].lineEnd;
+  if (english && !whole) while (kept.length > 3 && SMALL_WORDS.has(kept[kept.length - 1].word.replace(/,$/, '').toLowerCase())) kept.pop();
+  const text = kept.map((w) => w.word).join(' ');
+  return whole ? text.replace(/[.:;؛]$/, '') : `${text.replace(/[,،:.;]$/, '')}…`;
+};
+for (const group of deaconCategories)
+  for (const service of group.services) {
+    const items = flattenHymns(service.hymns).filter((h) => !h.isSectionHeader);
+    const words = items.map((h) => spokenWords(h, 'english'));
+    const texts = words.map((w) => w.map((x) => x.word).join(' '));
+    const count = words.map((w) => Math.min(8, firstLineLength(w)));
+    const name = (i: number) => firstWords(words[i], count[i], true);
+    // the same response said twice in a service keeps one name
+    const clashes = (i: number) => items.some((_, j) => j !== i && name(j) === name(i) && texts[j] !== texts[i]);
+    for (let grew = true; grew; ) {
+      grew = false;
+      const growing = items.map((_, i) => clashes(i) && count[i] < words[i].length);
+      growing.forEach((g, i) => g && (count[i]++, (grew = true)));
+    }
+    const renamed = new Map<Hymn, Hymn>();
+    items.forEach((hymn, i) => {
+      let english = name(i);
+      if (!english) return;
+      const old = splitTitle(hymn.title).english;
+      if (clashes(i) && old && old.toLowerCase() !== english.toLowerCase()) english = `${english} (${old})`;
+      const copticWords = spokenWords(hymn, 'coptic');
+      // (only real Coptic: a few responses have English in their Coptic)
+      const coptic = /[A-Za-z]/.test(copticWords.map((w) => w.word).join(' ')) ? null : firstWords(copticWords, Math.min(4, firstLineLength(copticWords)));
+      const arabicWords = spokenWords(hymn, 'arabic');
+      const arabic = firstWords(arabicWords, Math.min(6, firstLineLength(arabicWords)));
+      if (arabic) openingArabicTitles[hymn.id] = arabic;
+      renamed.set(hymn, { ...hymn, title: coptic ? `${coptic} (${english})` : english });
+    });
+    // new objects, so a hymn shared with a season keeps its name there
+    const rename = (list: Hymn[]): Hymn[] =>
+      list.map((h) => (h.children ? { ...h, children: rename(h.children) } : (renamed.get(h) ?? h)));
+    service.hymns = rename(service.hymns);
+  }
