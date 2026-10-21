@@ -8301,6 +8301,51 @@ const foldBishop = (list: Hymn[]): Hymn[] =>
 for (const group of [...seasons, ...deaconCategories])
   for (const service of group.services) if (!/-bishop$/.test(service.id)) service.hymns = foldBishop(service.hymns);
 
+// ---- Annual > Liturgy: In the Presence of a Bishop holds Taishori and Hitens, the Pauline Epistle's introduction
+// and responses, the Alternate Praxis Response and Marouetchasf; the rest of the Liturgy of the Word goes back above it.
+// Marouetchasf is its own hymn here, with Arsani's recording from 1:15 (the Psalm Trailer is before it). ----
+const annualLiturgyWord = seasons.find((s) => s.id === 'annual')?.services.find((s) => s.id === 'annual-liturgy');
+if (annualLiturgyWord) {
+  const hymns = annualLiturgyWord.hymns;
+  const psalmTrailer = hymns.find((h) => h.id === 'annual-liturgy-psalm-trailer');
+  const bishopVersions = psalmTrailer?.bishop;
+  if (psalmTrailer && bishopVersions) {
+    delete psalmTrailer.bishop;
+    for (const version of psalmTrailer.versions) {
+      version.otherAudio = version.otherAudio?.filter((file) => file !== 'arsani-119-annual-psalm-marouetchasf.m4a');
+      if (!version.otherAudio?.length) delete version.otherAudio;
+    }
+    const marouetchasf: Hymn = {
+      id: 'annual-liturgy-psalm-trailer-pope-bishop',
+      title: 'Ⲙⲁⲣⲟⲩϭⲁⲥϥ (Psalm Trailer for the Pope or a Bishop)',
+      versions: bishopVersions.map(({ otherAudio: _, ...v }) => ({
+        ...v,
+        audio: v.audio ? 'arsani-119-annual-psalm-marouetchasf-bishop.m4a' : undefined,
+      })),
+    };
+    const header = hymns.findIndex((h) => h.id === 'annual-liturgy-bishop-header');
+    const faithful = hymns.findIndex((h) => h.id === 'annual-liturgy-faithful-header');
+    if (header >= 0 && faithful > header) {
+      const bishopIds = new Set([
+        'annual-liturgy-taishori-hitens-bishop',
+        'annual-liturgy-pauline-intro',
+        'annual-liturgy-pihmot-gar',
+        'kiahk-liturgy-hymn-6@annual-liturgy',
+        'annual-liturgy-alternate-praxis-response',
+      ]);
+      const section = hymns.slice(header + 1, faithful);
+      annualLiturgyWord.hymns = [
+        ...hymns.slice(0, header),
+        ...section.filter((h) => !bishopIds.has(h.id)),
+        hymns[header],
+        ...section.filter((h) => bishopIds.has(h.id)),
+        marouetchasf,
+        ...hymns.slice(faithful),
+      ];
+    }
+  }
+}
+
 // ---- Annual > Liturgy: the Liturgy of the Faithful as a group for each Divine Liturgy (St Basil, St Gregory, St Cyril) ----
 // with the hymns each sings, in Spirit & Truth's order (see st-liturgies.ts). Last, so the hymns are complete; St Basil
 // keeps their ids and the other two get copies ("<id>@<group>") with the same words and recordings.

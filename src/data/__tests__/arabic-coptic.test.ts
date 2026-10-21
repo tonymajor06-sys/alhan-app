@@ -1083,11 +1083,7 @@ describe('Kiahk Praises & Season > Liturgy', () => {
       ['Ⲙⲁⲣⲟⲩϭⲁⲥϥ (Psalm Trailer for the Pope or a Bishop)', 'annual-liturgy-psalm-trailer-pope-bishop'],
     ]) {
       const kiahk = service.hymns.find((h) => h.title === title)!;
-      // Annual's Psalm Trailer for the Pope or a Bishop is folded into its Psalm Trailer
-      const original =
-        annualId === 'annual-liturgy-psalm-trailer-pope-bishop'
-          ? ({ versions: annualLiturgy.hymns.find((h) => h.id === 'annual-liturgy-psalm-trailer')!.bishop! } as Hymn)
-          : annualLiturgy.hymns.find((h) => h.id === annualId)!;
+      const original = annualLiturgy.hymns.find((h) => h.id === annualId)!;
       for (const language of ['coptic', 'englishCoptic', 'english', 'arabic']) {
         expect([title, language, text(kiahk, language)]).toEqual([title, language, text(original, language)]);
         expect(text(kiahk, language)).toBeTruthy();
