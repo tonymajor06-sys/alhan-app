@@ -401,4 +401,16 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   { file: "arsani-aspasmos-adam-onof-emmo.m4a", hymns: ["annual-liturgy-aspasmos-adam"], language: "coptic" },
   // Before Confession (English)
   { file: "liturgy-before-confession-english.m4a", hymns: ["d-annual-liturgy-faithful-in-christ-jesus-our-lord"], language: "english" },
+  // St Basil's Liturgy of the Faithful: deacon responses recorded in one language
+  { file: "deacon-reconciliation-arabic.m4a", hymns: ["d-annual-liturgy-faithful-reconciliation"], language: "arabic" },
+  { file: "deacon-greet-one-another-arabic.m4a", hymns: ["d-annual-liturgy-faithful-greet-one-another"], language: "arabic" },
+  // "You who are seated, stand" and "Look towards the East", joined
+  { file: "deacon-anaphora-arabic.m4a", hymns: ["d-annual-liturgy-faithful-anaphora"], language: "arabic" },
+  { file: "deacon-epiclesis-coptic.m4a", hymns: ["d-annual-liturgy-faithful-epiclesis"], language: "coptic" },
+  { file: "deacon-let-those-who-read-coptic.m4a", hymns: ["d-annual-liturgy-faithful-let-those-who-read"], language: "coptic" },
+  { file: "deacon-bow-your-heads-coptic.m4a", hymns: ["d-annual-liturgy-faithful-bow-your-heads"], language: "coptic" },
+  { file: "deacon-saved-amen-arabic.m4a", hymns: ["d-annual-liturgy-faithful-saved-amen"], language: "arabic" },
+  { file: "deacon-confession-arabic.m4a", hymns: ["d-annual-liturgy-faithful-the-confession"], language: "arabic" },
+  { file: "deacon-confession-english.m4a", hymns: ["d-annual-liturgy-faithful-the-confession"], language: "english" },
+  { file: "liturgy-one-is-the-holy-father-arabic.m4a", hymns: ["kiahk-liturgy-one-is-the-holy-father@annual-liturgy"], language: "arabic" },
 ];
