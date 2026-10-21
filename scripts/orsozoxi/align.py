@@ -8,6 +8,8 @@ C = {
  'ϣ':'ش إش', 'ϥ':'ف إف', 'ϧ':'خ إخ', 'ϩ':'ه إه ح إح', 'ϫ':'ج إج', 'ϭ':'تش إتش ش تـش', 'ϯ':'تي تى إتي ت',
 }
 C = {k: set(v.split()) for k, v in C.items()}
+# the Liturgy book often types the short e as أ or ا (أم أبتشويس)
+C = {k: v | {a + c[1:] for c in v if c.startswith('إ') for a in 'أا'} for k, v in C.items()}
 C['ⲟⲩ'] = {'و', 'وو', 'أو', 'أوو', 'ؤو', 'ؤ', 'ئو', 'إو', 'وؤ'}
 FREE = set('ّـًٌٍَُِْ')
 MARKS = {chr(0x300), chr(0x301), chr(0x60), chr(0x27), chr(0x305), chr(0xfe26)}

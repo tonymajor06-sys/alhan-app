@@ -1,5 +1,7 @@
-// node build_words.mjs pairs.json... — writes src/data/orsozoxi-words.ts: Orsozoxi's spelling of each word where it
-// differs from the rules in arabic-coptic.ts (pairs.json from align.py: [Coptic word, Orsozoxi's Arabic letters])
+// node build_words.mjs pairs.json... [--then pairs.json...] — writes src/data/orsozoxi-words.ts: Orsozoxi's spelling of
+// each word where it differs from the rules in arabic-coptic.ts (pairs.json from align.py: [Coptic word, Orsozoxi's
+// Arabic letters]). The files after --then only add the words the ones before lack: Orsozoxi's Psalmody is typed most
+// consistently, so its spellings come first and its Liturgy and feast books fill in the rest.
 import { readFileSync, writeFileSync, mkdirSync, readdirSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -24,14 +26,18 @@ const likeness = (a, b) => {
 };
 
 const seen = new Map(); // key -> Map(spelling -> count)
-for (const file of process.argv.slice(2)) {
-  for (const [coptic, arabic] of JSON.parse(readFileSync(file, 'utf8'))) {
+const groups = [[]];
+for (const arg of process.argv.slice(2)) arg === '--then' ? groups.push([]) : groups.at(-1).push(arg);
+for (const files of groups) {
+  const before = new Set(seen.keys());
+  for (const file of files) for (const [coptic, arabic] of JSON.parse(readFileSync(file, 'utf8'))) {
     const word = strip(coptic);
     const spelled = arabic.replace(/\s+/g, ' ').trim();
     if (!word || !spelled || /^\S\s|\s\S$/.test(spelled) && !/^(إ|ى|أ)\s/.test(spelled)) continue;
     if (/^\S\s|\s[اإأ]$/.test(spelled)) continue; // a letter of the next word caught at the edge
     if (likeness(spelled, orsozoxiByRules(word)) < 0.55) continue; // not this word (the texts differ there)
     const key = orsozoxiKey(word);
+    if (before.has(key)) continue;
     if (!seen.has(key)) seen.set(key, new Map());
     seen.get(key).set(spelled, (seen.get(key).get(spelled) || 0) + 1);
   }
