@@ -98,6 +98,8 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   { file: "arsani-yt-kiahk-tenen-2016.m4a", hymns: ["kiahk-midnight-hymn-20", "annual-midnight-three-holy-children@kiahk-midnight"], language: "coptic" },
   // Tenen and Tenoweh Kiahk (Tertiary: score 40.21)
   { file: "arsani-048-tenen-tenoweh-kiahk.m4a", hymns: ["kiahk-midnight-hymn-20"], language: "coptic" },
+  // Melismatic Joyful Agios | Arsani Sidarous and Clergy Chorus (after the regular Agios)
+  { file: "arsani-melismatic-joyful-agios.m4a", hymns: ["annual-liturgy-agios"], language: "coptic" },
   // Holy Week Mournful Agios - Primary: score 77.33
   { file: "arsani-049-agios-mournful-tune.m4a", hymns: ["holyweek-pascha-agios", "annual-liturgy-agios@holyweek-bright-saturday"], language: "coptic" },
   // Covenant Thursday Agios - YouTube (Secondary: score 51.66)
