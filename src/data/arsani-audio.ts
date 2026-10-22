@@ -16,8 +16,8 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   { file: "arsani-097-verses-of-cymbals-feast-of-cross.m4a", hymns: ["cross-matins-verses-of-the-cymbal", "cross-vespers-verses-of-the-cymbal"], language: "coptic" },
   // Lipon (Conclusion of Adam Psalis)| Arsani Sidarous and Chorus
   { file: "arsani-004-lipon-conclusion-of-adam-psalis.m4a", hymns: ["annual-midnight-sunday-adam-psali-conclusion", "annual-midnight-monday-adam-psali-conclusion", "annual-midnight-tuesday-adam-psali-conclusion", "annual-vesper-praises-sunday-adam-psali-conclusion", "annual-vesper-praises-monday-adam-psali-conclusion", "annual-vesper-praises-tuesday-adam-psali-conclusion"], language: "coptic" },
-  // Asomen (Let Us Praise) - Fifty Days Distribution / Liturgy Adam Aspasmos
-  { file: "arsani-005-asomen-arsani-sidarous-chorus.m4a", hymns: ["pentecost-distribution-let-us-praise", "pentecost-liturgy-adam-aspasmos-let-us-praise"], language: "coptic" },
+  // Asomen (Let Us Praise) - Pentecost Distribution (not the Resurrection's Adam Aspasmos "Marenhos", which has other words)
+  { file: "arsani-005-asomen-arsani-sidarous-chorus.m4a", hymns: ["pentecost-distribution-let-us-praise"], language: "coptic" },
   // Atai Parthenos (You are Called / Ten Strings) - Primary: score 67.07
   { file: "arsani-008-atai-parthenos.m4a", hymns: ["annual-veneration-ten-strings", "kiahk-midnight-hymn-13", "kiahk-midnight-hymn-38"], language: "coptic" },
   // Atai Parthenos - Secondary: score 54.22
@@ -348,8 +348,6 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   { file: "arsani-267-kiahk-marou-chasf.m4a", hymns: ["kiahk-liturgy-hymn-15"], language: "coptic" },
   { file: "bright-saturday-my-god-my-god.m4a", hymns: ["holyweek-bright-saturday-my-god-my-god"], language: "coptic" },
   { file: "bright-saturday-my-god-my-god.m4a", hymns: ["holyweek-bright-saturday-my-god-my-god"], language: "arabic" },
-  { file: "arsani-yt-doxology-anba-abraam.m4a", hymns: ["annual-vespers-doxology-anba-abraam", "annual-matins-doxology-anba-abraam", "annual-midnight-doxology-anba-abraam"], language: "coptic" },
-  { file: "arsani-yt-madih-anba-abraam.m4a", hymns: ["annual-vespers-doxology-anba-abraam", "annual-matins-doxology-anba-abraam", "annual-midnight-doxology-anba-abraam"], language: "arabic" },
   // Kiahk 1st Explanation
   { file: "arsani-yt-kiahk-first-explanation.m4a", hymns: ["kiahk-midnight-hymn-41"], language: "arabic" },
   // Kiahk 2nd Explanation
@@ -389,10 +387,6 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   // Apostles Glorification
   { file: "arsani-yt-apostles-tamgeed.m4a", hymns: ["annual-matins-doxology-apostles", "annual-vespers-doxology-apostles"], language: "arabic" },
 
-  // St Mina Glorification
-  { file: "arsani-yt-st-mina-tamgeed.m4a", hymns: ["annual-matins-doxology-st-mena", "annual-vespers-doxology-st-mena", "annual-midnight-doxology-st-mena"], language: "arabic" },
-  // St George Glorification
-  { file: "arsani-yt-st-george-tamgeed.m4a", hymns: ["annual-matins-doxology-st-george", "annual-vespers-doxology-st-george", "annual-midnight-doxology-st-george"], language: "arabic" },
   // St Mercurius Glorification
   { file: "arsani-yt-st-mercurius-tamgeed.m4a", hymns: ["annual-matins-doxology-philopater-mercurius", "annual-vespers-doxology-philopater-mercurius", "annual-midnight-doxology-philopater-mercurius"], language: "arabic" },
   // A Third Standard Adam Aspasmos (O Christ Our Savior)
