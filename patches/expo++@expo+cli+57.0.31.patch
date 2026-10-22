@@ -1,0 +1,30 @@
+diff --git a/node_modules/expo/node_modules/@expo/cli/build/src/export/saveAssets.js b/node_modules/expo/node_modules/@expo/cli/build/src/export/saveAssets.js
+index 7063987..468c7d5 100644
+--- a/node_modules/expo/node_modules/@expo/cli/build/src/export/saveAssets.js
++++ b/node_modules/expo/node_modules/@expo/cli/build/src/export/saveAssets.js
+@@ -233,9 +233,15 @@ async function persistMetroFilesAsync(files, outputDir) {
+         }
+     }
+     // Decouple logging from writing for better performance.
+-    await Promise.all([
++    const writeQueue = [
+         ...files.entries()
+-    ].sort(([a], [b])=>a.localeCompare(b)).map(async ([file, { contents, targetDomain }])=>{
++    ].sort(([a], [b])=>a.localeCompare(b));
++    // Write at most 64 files at once: thousands of parallel writes run out of file handles on Windows (EMFILE)
++    await Promise.all(Array.from({
++        length: 64
++    }, async ()=>{
++        while(writeQueue.length){
++            const [file, { contents, targetDomain }] = writeQueue.shift();
+         // NOTE: Only use `targetDomain` if we have at least one server asset
+         const domain = hasServerOutput && targetDomain || '';
+         const outputPath = _path().default.join(outputDir, domain, file);
+@@ -243,6 +249,7 @@ async function persistMetroFilesAsync(files, outputDir) {
+             recursive: true
+         });
+         await _fs().default.promises.writeFile(outputPath, contents);
++        }
+     }));
+     _log.Log.log('');
+ }
