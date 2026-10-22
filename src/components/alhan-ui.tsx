@@ -40,6 +40,7 @@ export const strings = {
     playNext: 'Play next',
     recording: 'Recording',
     melismatic: 'Melismatic',
+    sungInEnglish: 'English',
     textSize: 'Text size',
     notAvailable: 'Text not available in this language.',
     hasAudio: 'Audio',
@@ -153,6 +154,7 @@ export const strings = {
     playNext: 'تشغيل التالي',
     recording: 'تسجيل',
     melismatic: 'ملحن',
+    sungInEnglish: 'إنجليزي',
     textSize: 'حجم الخط',
     notAvailable: 'النص غير متوفر بهذه اللغة.',
     hasAudio: 'صوت',
@@ -454,6 +456,19 @@ export const formatTime = (seconds: number) => {
   const s = Math.floor(seconds % 60);
   return `${m}:${s.toString().padStart(2, '0')}`;
 };
+
+// What a recording's name says about it: "Melismatic" when its file name says so, "English" when it is sung in English
+export const recordingTags = (file: string | null | undefined, language: LanguageType, lang: AppLanguage): string[] => {
+  const t = strings[lang];
+  return [
+    ...(file && /melismatic/i.test(file) ? [t.melismatic] : []),
+    ...(language === 'english' || language === 'arabicEnglish' || (file && /english/i.test(file)) ? [t.sungInEnglish] : []),
+  ];
+};
+
+// A hymn's title as the player shows it, with the recording's tags after it (unless the title already says them)
+export const recordingTitle = (title: string, file: string | null | undefined, language: LanguageType, lang: AppLanguage) =>
+  [title, ...recordingTags(file, language, lang).filter((tag) => !title.toLowerCase().includes(tag.toLowerCase()))].join(' · ');
 
 // Opens a hymn on its own page (also its web address, so it can be shared)
 // `follow` keeps Previous and Next on tonight's Midnight or Vesper Praises (see follow-along.ts)

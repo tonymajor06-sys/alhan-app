@@ -1,3 +1,4 @@
+import { recordingTitle } from './alhan-ui';
 import { titleLines } from '../data/hymn-titles';
 import { audioSourceFor } from '../hooks/use-audio-downloads';
 import { QueueTrack } from '../hooks/use-audio-queue';
@@ -9,7 +10,7 @@ export const playlistTrack = (item: PlaylistItem, lang: AppLanguage): QueueTrack
   const hymn = findHymn(item.hymnId);
   const file = audioFor(item);
   const source = file ? audioSourceFor(file) : null;
-  return hymn && source ? { ...item, title: titleLines(hymn, lang).main, source } : null;
+  return hymn && file && source ? { ...item, title: recordingTitle(titleLines(hymn, lang).main, file, item.language, lang), source, file } : null;
 };
 
 export const playlistTracks = (list: Playlist, lang: AppLanguage): QueueTrack[] =>

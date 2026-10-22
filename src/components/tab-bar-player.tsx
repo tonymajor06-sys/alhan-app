@@ -8,6 +8,7 @@ import { pressFeedback } from './haptics';
 import { useAlhanColors } from '../hooks/use-alhan-colors';
 import { currentTrack, skip, togglePlay, useAudioQueue } from '../hooks/use-audio-queue';
 import { useSettings } from '../hooks/use-settings';
+import { useSmoothTime } from '../hooks/use-smooth-time';
 
 // The mini player in the iOS 26 tab bar's own slot, above the tabs or (when the bar shrinks) inline with them.
 // The bar draws two of these at once, one per placement, so everything comes from the shared audio queue.
@@ -20,12 +21,19 @@ export function TabBarPlayer() {
   const t = strings[lang];
   const isRTL = lang === 'ar';
   const swipe = useSwipeToSkip(isRTL);
+  const { playing, isBuffering, currentTime, duration } = queue.status;
+  const time = useSmoothTime(currentTime, duration, playing && !isBuffering, queue.rate);
   if (!nowPlaying) return null;
-  const { playing, isBuffering } = queue.status;
   const hasQueue = queue.tracks.length > 1;
 
   return (
     <View style={[styles.row, isRTL && styles.rowReverse]} {...swipe.panHandlers}>
+      {/* How far the recording has played, a thin line along the bottom */}
+      {duration > 0 ? (
+        <View pointerEvents="none" style={styles.progressTrack}>
+          <View style={[styles.progressFill, { backgroundColor: colors.gold, width: `${Math.min(1, time / duration) * 100}%` }, isRTL && styles.alignEnd]} />
+        </View>
+      ) : null}
       <Pressable
         onPress={() => openHymnPage(nowPlaying.hymnId, nowPlaying.language)}
         onLongPress={() => router.push('/now-playing')}
@@ -74,6 +82,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 16,
     gap: 6,
+  },
+  progressTrack: {
+    position: 'absolute',
+    left: 16,
+    right: 16,
+    bottom: 2,
+    height: 2,
+    borderRadius: 1,
+    overflow: 'hidden',
+  },
+  progressFill: {
+    height: '100%',
+  },
+  alignEnd: {
+    alignSelf: 'flex-end',
   },
   rowReverse: {
     flexDirection: 'row-reverse',

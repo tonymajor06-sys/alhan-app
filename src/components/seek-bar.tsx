@@ -1,9 +1,26 @@
-import { useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { GestureResponderEvent, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import { formatTime } from '@/components/alhan-ui';
 import { AlhanPalette } from '@/constants/alhan-colors';
 import { useAlhanColors, useThemedStyles } from '@/hooks/use-alhan-colors';
+import { useSmoothTime } from '@/hooks/use-smooth-time';
+
+const WAVE_HEIGHT = 44;
+
+// A recording's waveform as bars (see src/data/audio-waveforms.ts), drawn in one color
+function WaveBars({ wave, color }: { wave: string; color: string }) {
+  return (
+    <View style={{ flexDirection: 'row', alignItems: 'center', height: WAVE_HEIGHT }}>
+      {[...wave].map((level, i) => (
+        <View
+          key={i}
+          style={{ flex: 1, marginHorizontal: 1, borderRadius: 1.5, backgroundColor: color, height: 4 + (parseInt(level, 36) / 35) * (WAVE_HEIGHT - 4) }}
+        />
+      ))}
+    </View>
+  );
+}
 
 // "1:23", "83" or "1:02:03" in seconds, or null if it is not a time
 const parseTime = (text: string): number | null => {
@@ -15,18 +32,26 @@ const parseTime = (text: string): number | null => {
 // The recording's progress bar. Tap it to jump there, or drag the handle: while dragging, the time shows above the
 // finger, and moving the finger up or down away from the bar slows the drag (half, then a quarter) to find an exact
 // spot. The recording jumps when the finger is let go. Tap the current time to type a time to jump to.
+// With a `waveform` it is drawn like SoundCloud's: the recording's loudness as bars, gold up to where it is playing.
+// While `playing`, it glides between the player's updates (at `rate`, the playback speed).
 export function SeekBar({
   currentTime,
   duration,
   onSeek,
   label,
   goToLabel = 'Go to',
+  waveform,
+  playing = false,
+  rate = 1,
 }: {
   currentTime: number;
   duration: number;
   onSeek: (seconds: number) => void;
   label: string;
   goToLabel?: string;
+  waveform?: string;
+  playing?: boolean;
+  rate?: number;
 }) {
   const styles = useThemedStyles(createStyles);
   const colors = useAlhanColors();
@@ -37,9 +62,13 @@ export function SeekBar({
   const barRef = useRef<View>(null);
   const anchor = useRef({ startX: 0, startRatio: 0 });
   const enabled = duration > 0 && width > 0;
+  const smoothTime = useSmoothTime(currentTime, duration, playing, rate);
+  // Drawn once per recording and color; only the gold part's width changes as it plays
+  const waveBase = useMemo(() => (waveform ? <WaveBars wave={waveform} color={colors.border} /> : null), [waveform, colors.border]);
+  const wavePlayed = useMemo(() => (waveform ? <WaveBars wave={waveform} color={colors.gold} /> : null), [waveform, colors.gold]);
 
   const clamp = (r: number) => Math.min(1, Math.max(0, r));
-  const shown = drag ?? (duration > 0 ? Math.min(1, currentTime / duration) : 0);
+  const shown = drag ?? (duration > 0 ? Math.min(1, smoothTime / duration) : 0);
 
   const grant = (e: GestureResponderEvent) => {
     const { pageX, locationX } = e.nativeEvent;
@@ -70,7 +99,7 @@ export function SeekBar({
     <View>
       <View
         ref={barRef}
-        style={styles.touchArea}
+        style={[styles.touchArea, waveform ? styles.touchAreaWave : null]}
         hitSlop={{ top: 12, bottom: 12, left: 0, right: 0 }}
         onLayout={(e) => setWidth(e.nativeEvent.layout.width)}
         onStartShouldSetResponder={() => enabled}
@@ -89,11 +118,22 @@ export function SeekBar({
         onAccessibilityAction={(e) =>
           onSeek(Math.min(duration, Math.max(0, currentTime + (e.nativeEvent.actionName === 'increment' ? 10 : -10))))
         }>
-        {/* Track and fill */}
-        <View style={[styles.track, drag !== null && styles.trackActive]} pointerEvents="none">
-          <View style={[styles.fill, { width: `${shown * 100}%` }]} />
-        </View>
-        {enabled ? (
+        {waveform ? (
+          <View pointerEvents="none">
+            {waveBase}
+            {/* The played part: the same bars in gold, cut off where the recording is */}
+            <View style={[styles.wavePlayed, { width: `${shown * 100}%` }]}>
+              <View style={{ width }}>{wavePlayed}</View>
+            </View>
+            {enabled ? <View style={[styles.playhead, drag !== null && styles.playheadActive, { left: Math.max(0, Math.min(width - 2, shown * width - 1)) }]} /> : null}
+          </View>
+        ) : (
+          /* Track and fill */
+          <View style={[styles.track, drag !== null && styles.trackActive]} pointerEvents="none">
+            <View style={[styles.fill, { width: `${shown * 100}%` }]} />
+          </View>
+        )}
+        {enabled && !waveform ? (
           <View
             pointerEvents="none"
             style={[styles.thumb, drag !== null && styles.thumbActive, { left: thumbLeft }]}
@@ -140,6 +180,10 @@ const createStyles = (colors: AlhanPalette) =>
   StyleSheet.create({
     // Much taller than the bar so it is easy to grab with a thumb
     touchArea: { height: 52, justifyContent: 'center' },
+    touchAreaWave: { height: WAVE_HEIGHT + 16 },
+    wavePlayed: { position: 'absolute', top: 0, left: 0, bottom: 0, overflow: 'hidden' },
+    playhead: { position: 'absolute', top: -2, width: 2, height: WAVE_HEIGHT + 4, borderRadius: 1, backgroundColor: colors.gold },
+    playheadActive: { width: 3, top: -6, height: WAVE_HEIGHT + 12 },
     track: { height: 8, borderRadius: 4, backgroundColor: colors.border, overflow: 'hidden' },
     trackActive: { height: 10, borderRadius: 5 },
     fill: { height: '100%', backgroundColor: colors.gold },
