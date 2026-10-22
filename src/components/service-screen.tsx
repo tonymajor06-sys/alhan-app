@@ -1,7 +1,10 @@
 import { Href, router } from 'expo-router';
-import { Platform, Pressable, Text } from 'react-native';
+import { useRef } from 'react';
+import { Platform, Pressable, ScrollView, Text } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { createAlhanStyles, goBackOrHome, openHymnPage, ScreenShell, strings } from './alhan-ui';
+import { ChipScroller, createAlhanStyles, goBackOrHome, openHymnPage, ScreenShell, strings, withCopticFont } from './alhan-ui';
+import { tapFeedback } from './haptics';
 import { HymnList } from './lists';
 import { openGroupsFrom } from './open-groups';
 import { displayTitle } from '../data/arabic-titles';
@@ -12,6 +15,7 @@ import { useSettings } from '../hooks/use-settings';
 
 // A service's list of hymns, or the list of the innermost group opened inside it.
 // Opening a group pushes the same page again with one more group, so Back and the swipe step out of it.
+// A long list with several sections (a Liturgy's responses) shows its sections at the top; tap one to jump to it.
 export function ServiceScreen({
   service,
   groups,
@@ -32,6 +36,17 @@ export function ServiceScreen({
   const openGroups = openGroupsFrom(service, groups);
   const group = openGroups[openGroups.length - 1];
   const items = group ? (group.children ?? []) : service.hymns;
+  const sections = items.filter((h) => h.isSectionHeader);
+  const showSections = sections.length >= 3;
+  const scrollRef = useRef<ScrollView>(null);
+  const sectionY = useRef<Record<string, number>>({});
+  const insets = useSafeAreaInsets();
+  const jumpTo = (id: string) => {
+    const y = sectionY.current[id];
+    if (y === undefined) return;
+    tapFeedback();
+    scrollRef.current?.scrollTo({ y: Math.max(0, y - insets.top - 12), animated: true });
+  };
   const path = [service, ...openGroups.slice(0, -1)].map((g) => displayTitle(g, lang)).join(isRTL ? ' ‹ ' : ' › ');
 
   const isMidnight = /-midnight$/.test(service.id);
@@ -50,7 +65,22 @@ export function ServiceScreen({
       lang={lang}
       title={displayTitle(group ?? service, lang)}
       subtitle={group ? path : chooseLabel}
-      onBack={goBackOrHome}>
+      onBack={goBackOrHome}
+      scrollRef={scrollRef}>
+      {showSections ? (
+        <ChipScroller rtl={isRTL}>
+          {sections.map((h) => (
+            <Pressable
+              key={h.id}
+              onPress={() => jumpTo(h.id)}
+              accessibilityRole="button"
+              accessibilityHint={t.sections}
+              style={({ pressed }) => [styles.chip, styles.chipSmall, pressed && styles.pressed]}>
+              <Text style={styles.chipText}>{withCopticFont(displayTitle(h, lang))}</Text>
+            </Pressable>
+          ))}
+        </ChipScroller>
+      ) : null}
       {praiseKind && group ? (
         <Pressable
           onPress={() => handleFollow(group)}
@@ -81,6 +111,7 @@ export function ServiceScreen({
           onOpenGroup={(next) => router.push(hrefWithGroups([...openGroups, next].map((g) => g.id).join(',')))}
           onLongPressGroup={praiseKind ? (g) => handleFollow(g) : undefined}
           onLongPressHymn={praiseKind ? (h) => handleFollow(h) : undefined}
+          onSectionLayout={showSections ? (id, y) => (sectionY.current[id] = y) : undefined}
         />
       )}
     </ScreenShell>

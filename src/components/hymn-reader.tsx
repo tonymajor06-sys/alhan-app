@@ -5,6 +5,7 @@ import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 
 import { hymnWebUrl } from '../constants/site';
 import { displayTitle } from '../data/arabic-titles';
+import { audioWaveforms } from '../data/audio-waveforms';
 import { titleLines } from '../data/hymn-titles';
 import { flattenHymns, Hymn, LanguageType } from '../data/hymns';
 import { hymnAcrossSeasons, hymnSlug, locateHymn, neighborHymns } from '../data/search';
@@ -45,6 +46,8 @@ import {
   hymnHref,
   KeepScreenAwake,
   languageLabels,
+  recordingTags,
+  recordingTitle,
   ScreenShell,
   Sheet,
   SheetRow,
@@ -197,7 +200,9 @@ export function HymnReader({
       return tonight.slice(tonightIndex + 1).flatMap((h) => {
         const version = h.versions.find((v) => v.language === language && v.audio) ?? h.versions.find((v) => v.audio);
         const source = version?.audio ? audioSourceFor(version.audio) : null;
-        return version && source ? [{ hymnId: h.id, language: version.language, title: titleLines(h, lang).main, source }] : [];
+        return version?.audio && source
+          ? [{ hymnId: h.id, language: version.language, title: recordingTitle(titleLines(h, lang).main, version.audio, version.language, lang), source, file: version.audio }]
+          : [];
       });
     const service = location?.service;
     if (!service) return [];
@@ -205,7 +210,7 @@ export function HymnReader({
     return order.slice(order.findIndex((h) => h.id === hymn.id) + 1).flatMap((h) => {
       const file = h.versions.find((v) => v.language === language)?.audio;
       const source = file ? audioSourceFor(file) : null;
-      return source ? [{ hymnId: h.id, language: language, title: titleLines(h, lang).main, source }] : [];
+      return file && source ? [{ hymnId: h.id, language, title: recordingTitle(titleLines(h, lang).main, file, language, lang), source, file }] : [];
     });
   };
 
@@ -213,7 +218,10 @@ export function HymnReader({
     if (readerIsCurrent) return togglePlay();
     const source = currentAudio ? audioSourceFor(currentAudio) : null;
     if (source && currentAudio)
-      playQueue([{ ...readerItem, title, source, file: currentAudio }, ...(settings.playNext ? followingTracks() : [])]);
+      playQueue([
+        { ...readerItem, title: recordingTitle(title, currentAudio, audioLanguage, lang), source, file: currentAudio },
+        ...(settings.playNext ? followingTracks() : []),
+      ]);
   };
 
   const selectRecording = (index: number) => {
@@ -223,7 +231,7 @@ export function HymnReader({
     const source = audioSourceFor(chosen.file);
     if (!source) return;
     playQueue([
-      { hymnId: hymn.id, language: chosen.language, title, source, file: chosen.file },
+      { hymnId: hymn.id, language: chosen.language, title: recordingTitle(title, chosen.file, chosen.language, lang), source, file: chosen.file },
       ...(settings.playNext ? followingTracks(chosen.language) : []),
     ]);
   };
@@ -650,15 +658,24 @@ export function HymnReader({
                   </BusyPulse>
                 </Pressable>
                 <View style={styles.rowTextWrap}>
-                  <SeekBar currentTime={status.currentTime} duration={status.duration} onSeek={seekTo} label={t.position} goToLabel={t.goToTime} />
+                  <SeekBar
+                    currentTime={status.currentTime}
+                    duration={status.duration}
+                    onSeek={seekTo}
+                    label={t.position}
+                    goToLabel={t.goToTime}
+                    waveform={audioWaveforms[currentAudio]}
+                    playing={readerIsCurrent && queue.status.playing && !queue.status.isBuffering}
+                    rate={queue.rate}
+                  />
                 </View>
               </View>
               {recordings.length > 1 ? (
                 <View style={[styles.audioControls, rowDirection]}>
-                  {recordings.map(({ file }, i) =>
+                  {recordings.map(({ file, language }, i) =>
                     actionChip(
-                      // A recording whose file name says "melismatic" is labeled so
-                      `${t.recording} ${isRTL ? String(i + 1).replace(/\d/g, (d) => '٠١٢٣٤٥٦٧٨٩'[Number(d)]) : i + 1}${/melismatic/i.test(file) ? ` · ${t.melismatic}` : ''}`,
+                      // Labeled "Melismatic" and "English" when it is (see recordingTags)
+                      [`${t.recording} ${isRTL ? String(i + 1).replace(/\d/g, (d) => '٠١٢٣٤٥٦٧٨٩'[Number(d)]) : i + 1}`, ...recordingTags(file, language, lang)].join(' · '),
                       () => selectRecording(i),
                       file === currentAudio
                     )

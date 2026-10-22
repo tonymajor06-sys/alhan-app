@@ -2,7 +2,7 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { ReactNode, useMemo, useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
-import { createAlhanStyles, goBackOrHome, hymnHref, ScreenShell, strings, withCopticFont } from '@/components/alhan-ui';
+import { createAlhanStyles, goBackOrHome, hymnHref, recordingTitle, ScreenShell, strings, withCopticFont } from '@/components/alhan-ui';
 import { followStrings } from '@/components/follow-strings';
 import { displayTitle } from '@/data/arabic-titles';
 import { formatCopticDate, toArabicDigits } from '@/data/coptic-calendar';
@@ -53,7 +53,9 @@ export default function FollowScreen() {
   const tracks = plan.hymns.flatMap((hymn): QueueTrack[] => {
     const version = preferred.map((l) => hymn.versions.find((v) => v.language === l && v.audio)).find(Boolean) ?? hymn.versions.find((v) => v.audio);
     const source = version?.audio ? audioSourceFor(version.audio) : null;
-    return version && source ? [{ hymnId: hymn.id, language: version.language, title: titleLines(hymn, lang).main, source }] : [];
+    return version?.audio && source
+      ? [{ hymnId: hymn.id, language: version.language, title: recordingTitle(titleLines(hymn, lang).main, version.audio, version.language, lang), source, file: version.audio }]
+      : [];
   });
 
   const sectionTitle = (section: FollowSection) =>

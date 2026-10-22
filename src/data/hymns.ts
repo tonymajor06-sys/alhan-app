@@ -8141,6 +8141,8 @@ for (const service of seasons.find((s) => s.id === 'pentecost')?.services ?? [])
 // Period, then the Ascension Period of ten days from the feast to Pentecost): each Fifty Days service that has Ascension
 // hymns becomes the Ascension's, with those hymns in their places (they move there, keeping their ids) and the rest
 // copied in ("<id>@ascension-<service>"); the Distribution comes along too. The seasons after it move down one number.
+// Kata Nikhoros is the Resurrection's alone, and the Ascension's Distribution sings He Bowed Heaven (Afrek Etfe) in its place.
+// Asomen (Let Us Praise) is Pentecost's: it leaves the Resurrection's Distribution (Apostles Fast & Feast keeps it).
 {
   const resurrection = seasons.find((s) => s.id === 'pentecost');
   if (resurrection) {
@@ -8148,6 +8150,10 @@ for (const service of seasons.find((s) => s.id === 'pentecost')?.services ?? [])
       ...copyInto(h, serviceId, true),
       ...(h.children ? { children: h.children.map((c) => copyAll(c, serviceId)) } : {}),
     });
+    const resurrectionOnly = /^pentecost-(liturgy|distribution)-(kata-nichorous|all-the-choirs)$/;
+    const heBowedHeaven = resurrection.services
+      .flatMap((s) => flattenHymns(s.hymns))
+      .find((h) => h.id === 'pentecost-liturgy-he-bowed-heaven');
     const services: Service[] = [];
     for (const service of resurrection.services) {
       const tile = service.hymns.find((h) => h.id === `${service.id}-ascension`);
@@ -8157,11 +8163,19 @@ for (const service of seasons.find((s) => s.id === 'pentecost')?.services ?? [])
         id,
         title: service.title,
         hymns: service.hymns.flatMap((h) =>
-          h === tile ? tile.children ?? [] : h.id === `${service.id}-pentecost-feast` ? [] : [copyAll(h, id)]
+          h === tile
+            ? tile.children ?? []
+            : h.id === `${service.id}-pentecost-feast`
+              ? []
+              : resurrectionOnly.test(h.id)
+                ? id.endsWith('-distribution') && heBowedHeaven ? [copyAll(heBowedHeaven, id)] : []
+                : [copyAll(h, id)]
         ),
       });
       service.hymns = service.hymns.filter((h) => h !== tile);
     }
+    const distribution = resurrection.services.find((s) => s.id === 'pentecost-distribution');
+    if (distribution) distribution.hymns = distribution.hymns.filter((h) => h.id !== 'pentecost-distribution-pentecost-feast');
     const at = seasons.indexOf(resurrection) + 1;
     for (const later of seasons.slice(at)) later.title = later.title.replace(/^(\d+)\./, (_, n) => `${Number(n) + 1}.`);
     seasons.splice(at, 0, { id: 'ascension', title: `${at + 1}. Ascension`, services });

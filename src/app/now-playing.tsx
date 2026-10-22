@@ -9,6 +9,7 @@ import { pressFeedback, tapFeedback } from '@/components/haptics';
 import { SeekBar } from '@/components/seek-bar';
 import { AlhanPalette } from '@/constants/alhan-colors';
 import { homeArt } from '@/constants/home-art';
+import { audioWaveforms } from '@/data/audio-waveforms';
 import { useAlhanColors, useThemedStyles } from '@/hooks/use-alhan-colors';
 import {
   currentTrack,
@@ -92,7 +93,15 @@ export default function NowPlayingScreen() {
         </Text>
         {languageLabel ? <Text style={[styles.subtitle, textAlign]}>{languageLabel}</Text> : null}
 
-        <SeekBar currentTime={currentTime} duration={duration} onSeek={seekTo} label={t.nowPlaying} />
+        <SeekBar
+          currentTime={currentTime}
+          duration={duration}
+          onSeek={seekTo}
+          label={t.nowPlaying}
+          waveform={track.file ? audioWaveforms[track.file] : undefined}
+          playing={playing && !isBuffering}
+          rate={queue.rate}
+        />
 
         <View style={[styles.controls, rowDirection]}>
           {button(t.shuffle, '⤨', () => setShuffle(!queue.shuffle), { active: queue.shuffle, disabled: queue.tracks.length < 2 })}
