@@ -83,10 +83,11 @@ export function TileGrid({ children }: { children: ReactNode }) {
   );
 }
 
-export function SectionHeader({ title }: { title: string }) {
+// `onLayout` tells where it is on the page, so a screen can jump to it
+export function SectionHeader({ title, onLayout }: { title: string; onLayout?: (y: number) => void }) {
   const { styles, rowDirection } = useDirection();
   return (
-    <View style={[styles.sectionHeader, rowDirection]}>
+    <View style={[styles.sectionHeader, rowDirection]} onLayout={onLayout ? (e) => onLayout(e.nativeEvent.layout.y) : undefined}>
       <Text style={styles.sectionHeaderText}>{withCopticFont(title)}</Text>
       <View style={styles.sectionLine} />
     </View>
@@ -175,18 +176,21 @@ export function ListGroup({ rows }: { rows: ReactNode[] }) {
 
 // A service's hymns, numbered in order and starting again from 1 after each section header.
 // A hymn with children is a group, opened with `onOpenGroup`; any other hymn with `onOpenHymn`.
+// `onSectionLayout` hears where each section header is on the page.
 export function HymnList({
   hymns,
   onOpenHymn,
   onOpenGroup,
   onLongPressHymn,
   onLongPressGroup,
+  onSectionLayout,
 }: {
   hymns: Hymn[];
   onOpenHymn: (hymn: Hymn) => void;
   onOpenGroup: (group: Hymn) => void;
   onLongPressHymn?: (hymn: Hymn) => void;
   onLongPressGroup?: (group: Hymn) => void;
+  onSectionLayout?: (id: string, y: number) => void;
 }) {
   const settings = useSettings();
   const { lang, isRTL, t } = useDirection();
@@ -201,7 +205,13 @@ export function HymnList({
     if (hymn.isSectionHeader) {
       flush(hymn.id);
       number = 0;
-      out.push(<SectionHeader key={hymn.id} title={displayTitle(hymn, lang)} />);
+      out.push(
+        <SectionHeader
+          key={hymn.id}
+          title={displayTitle(hymn, lang)}
+          onLayout={onSectionLayout ? (y) => onSectionLayout(hymn.id, y) : undefined}
+        />
+      );
       continue;
     }
     number += 1;
