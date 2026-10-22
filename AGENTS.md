@@ -49,7 +49,7 @@ Several assistants (Claude Code, Antigravity) work in this repo. Commit finished
 - **Arabic Coptic** in hymns is the Orsozoxi app's (since 2026-10-20): every hymn's Coptic in Arabic letters uses Orsozoxi's spelling of each word (`src/data/orsozoxi-words.ts`, from its Annual and Kiahk Psalmody) and, for words it lacks, rules in its style (no short-vowel marks, ⲡ ب, ⲃ ف, final ⲓ/ⲏ ى, Ⲡϭⲟⲓⲥ إبتشويس, a new word at each inner أ/إ/آ: إم إبتشويس); see `src/data/arabic-coptic.ts` and `scripts/orsozoxi/`. Orsozoxi's files are encrypted: read its texts from its window, never decrypt them.
 - **Arabic in English letters:** write ج as "g" (Egyptian Coptic pronunciation), never "j".
 - **Permissions already granted** (don't raise them again): Archdeacon Arsani Sidarous's recordings (KlickAud, alhan.org, his YouTube playlist), every track in the SoundCloud playlist "Archie Arsani Sidarous", and the texts of the Spirit & Truth app (its creator approved). Keep Spirit & Truth source captures out of git.
-- **Audio** lives in `assets/audio` and is mirrored to Cloudflare R2 with `node scripts/upload-audio-r2.mjs`; upload new files after adding them.
+- **Audio** lives in `assets/audio` and is mirrored to Cloudflare R2 with `node scripts/upload-audio-r2.mjs`; upload new files after adding them, and run `node scripts/audio-waveforms.mjs` so the player can draw their waveforms.
 - **No ads** for now (removed 2026-10-13; the old setup is in commit aae287c). Donations go through the box in `src/components/donation-box.tsx` (links in `src/constants/donate.ts`). Never call donations tax-deductible.
 - **Website:** https://copticpsalmody.com is a Cloudflare Worker. Publish with `rm -rf dist && npx expo export -p web && npx wrangler deploy`.
 
