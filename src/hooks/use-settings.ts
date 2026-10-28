@@ -22,10 +22,6 @@ export interface Settings {
   theme: ThemeChoice;
   // The language a hymn opens in; null follows the app language (Coptic in English, Arabic in Arabic)
   hymnLanguage: LanguageType | null;
-  // Floating AI Assistant bubble shown on screen
-  showAiBubble: boolean;
-  // Optional custom Google Gemini API Key for direct AI queries
-  geminiApiKey: string;
 }
 
 const STORAGE_KEY = 'alhan-settings';
@@ -43,8 +39,6 @@ const loadSettings = (): Settings => {
     titleStyle: 'both',
     theme: 'system',
     hymnLanguage: null,
-    showAiBubble: true,
-    geminiApiKey: '',
   };
   try {
     const raw = readSetting(STORAGE_KEY);

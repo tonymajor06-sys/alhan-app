@@ -3,7 +3,6 @@ import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { AiBubble } from '@/components/ai-bubble';
 import { copticFont } from '@/components/alhan-ui';
 import { useHomeScreenQuickActions } from '@/components/quick-actions';
 import { alhanLightColors } from '@/constants/alhan-colors';
@@ -80,7 +79,6 @@ export default function RootLayout() {
           <Stack.Screen name="playlist/[id]" />
           {/* The full player slides up over everything, like a music app's */}
           <Stack.Screen name="now-playing" options={{ presentation: 'modal', animation: 'slide_from_bottom' }} />
-          <Stack.Screen name="ask" options={{ presentation: 'modal', animation: 'slide_from_bottom' }} />
           <Stack.Screen name="saints" />
           <Stack.Screen name="saints/[id]" />
           <Stack.Screen name="learn" />
@@ -98,7 +96,6 @@ export default function RootLayout() {
             options={{ orientation: 'all', animation: 'fade', contentStyle: { backgroundColor: '#000' } }}
           />
         </Stack>
-        <AiBubble />
       </ThemeProvider>
     </GestureHandlerRootView>
   );
