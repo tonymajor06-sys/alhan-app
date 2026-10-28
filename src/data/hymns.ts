@@ -8520,6 +8520,28 @@ for (const group of deaconCategories)
     if (baseOf(hymn.id) === 'annual-distribution-psalm-150') noAudio(hymn);
   });
 
+  // Nativity Fast: no recording for the Verse of the Cymbals and the Gospel Response in Vespers and Matins
+  eachHymn('nativity-fast', ['nativity-fast-vespers', 'nativity-fast-matins'], (hymn) => {
+    if (['annual-vespers-verse-of-cymbals', 'annual-vespers-gospel-response'].includes(baseOf(hymn.id))) noAudio(hymn);
+  });
+  // Theophany: A Proud Name is out
+  dropHymns('theophany', null, (h) => h.id === 'theophany-liturgy-a-proud-name');
+  // Outside Annual the Aspasmos is sung to other words than the recording
+  eachHymn(null, null, (hymn, season) => {
+    if (season.id !== 'annual' && /^annual-liturgy-(aspasmos|a-third-standard-adam-aspasmos)/.test(baseOf(hymn.id))) noAudio(hymn);
+  });
+  // Covenant Thursday, Liturgy of the Water: Blessed is He and Monday Theotokia 5 are out
+  dropHymns('holy-week', ['holyweek-covenant-thursday'], (h) =>
+    ['annual-vespers-blessed-is-he', 'annual-vesper-praises-monday-theotokia-part-5'].includes(baseOf(h.id))
+  );
+  // A season that has Hitens of its own does not also get Annual's Hitens (Annual keeps them)
+  for (const season of seasons.filter((s) => s.id !== 'annual')) {
+    for (const service of season.services.filter((s) => s.id.endsWith('-liturgy'))) {
+      const own = flattenHymns(service.hymns).some((h) => baseOf(h.id) !== 'annual-liturgy-hitens' && /\bhitens?\b|ϩⲓⲧⲉⲛ/i.test(h.title) && !/Taishori|Tishori/i.test(h.title));
+      if (own) service.hymns = removeWhere(service.hymns, (h) => baseOf(h.id) === 'annual-liturgy-hitens');
+    }
+  }
+
   // Concluding hymns change with the season (words and tune), so only Annual's has a recording
   eachHymn(null, null, (hymn, season) => {
     if (season.id !== 'annual' && /concluding-hymn$/.test(baseOf(hymn.id))) noAudio(hymn);
