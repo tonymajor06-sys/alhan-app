@@ -472,6 +472,18 @@ export const recordingTags = (file: string | null | undefined, language: Languag
   ];
 };
 
+// The name of a recording's button: the language it is sung in (Coptic, English or Arabic), then "Melismatic" when it is
+export const recordingName = (file: string | null | undefined, language: LanguageType, lang: AppLanguage): string => {
+  const sung: LanguageType =
+    language === 'english' || language === 'arabicEnglish' || (file && /english/i.test(file))
+      ? 'english'
+      : language === 'arabic' || language === 'englishArabic'
+        ? 'arabic'
+        : 'coptic';
+  const name = languageLabels[lang].find((l) => l.key === sung)?.label ?? '';
+  return [name, ...(file && /melismatic/i.test(file) ? [strings[lang].melismatic] : [])].join(' · ');
+};
+
 // A hymn's title as the player shows it, with the recording's tags after it (unless the title already says them)
 export const recordingTitle = (title: string, file: string | null | undefined, language: LanguageType, lang: AppLanguage) =>
   [title, ...recordingTags(file, language, lang).filter((tag) => !title.toLowerCase().includes(tag.toLowerCase()))].join(' · ');

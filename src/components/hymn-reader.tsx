@@ -46,7 +46,7 @@ import {
   hymnHref,
   KeepScreenAwake,
   languageLabels,
-  recordingTags,
+  recordingName,
   recordingTitle,
   ScreenShell,
   Sheet,
@@ -672,14 +672,18 @@ export function HymnReader({
               </View>
               {recordings.length > 1 ? (
                 <View style={[styles.audioControls, rowDirection]}>
-                  {recordings.map(({ file, language }, i) =>
-                    actionChip(
-                      // Labeled "Melismatic" and "English" when it is (see recordingTags)
-                      [`${t.recording} ${isRTL ? String(i + 1).replace(/\d/g, (d) => '٠١٢٣٤٥٦٧٨٩'[Number(d)]) : i + 1}`, ...recordingTags(file, language, lang)].join(' · '),
+                  {recordings.map(({ file, language }, i) => {
+                    // Named by the language it is sung in; two of the same kind get a number after the name
+                    const name = recordingName(file, language, lang);
+                    const same = recordings.filter((r) => recordingName(r.file, r.language, lang) === name);
+                    const nth = same.findIndex((r) => r.file === file) + 1;
+                    const number = isRTL ? String(nth).replace(/d/g, (d) => '٠١٢٣٤٥٦٧٨٩'[Number(d)]) : nth;
+                    return actionChip(
+                      same.length > 1 ? `${name} ${number}` : name,
                       () => selectRecording(i),
                       file === currentAudio
-                    )
-                  )}
+                    );
+                  })}
                 </View>
               ) : null}
               <View style={[styles.audioControls, rowDirection]}>
