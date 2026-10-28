@@ -8467,3 +8467,61 @@ for (const group of deaconCategories)
       list.map((h) => (h.children ? { ...h, children: rename(h.children) } : (renamed.get(h) ?? h)));
     service.hymns = rename(service.hymns);
   }
+
+// ---- Fixes the user asked for (2026-10-28): recordings and hymns taken out ----
+{
+  const removeWhere = (list: Hymn[], gone: (h: Hymn) => boolean): Hymn[] =>
+    list.filter((h) => !gone(h)).map((h) => (h.children ? { ...h, children: removeWhere(h.children, gone) } : h));
+  const noAudio = (hymn: Hymn) => editRecordings(hymn, ALL_LANGUAGES, () => []);
+  const eachHymn = (seasonId: string | null, serviceIds: string[] | null, fn: (hymn: Hymn, season: Season, service: Service) => void) => {
+    for (const season of seasons) {
+      if (seasonId && season.id !== seasonId) continue;
+      for (const service of season.services) {
+        if (serviceIds && !serviceIds.includes(service.id)) continue;
+        for (const hymn of flattenHymns(service.hymns)) fn(hymn, season, service);
+      }
+    }
+  };
+  const dropHymns = (seasonId: string | null, serviceIds: string[] | null, gone: (h: Hymn) => boolean) => {
+    for (const season of seasons) {
+      if (seasonId && season.id !== seasonId) continue;
+      for (const service of season.services) {
+        if (serviceIds && !serviceIds.includes(service.id)) continue;
+        service.hymns = removeWhere(service.hymns, gone);
+      }
+    }
+  };
+
+  // Ⲁⲓⲕⲱϯ ⲛ̀ⲥⲱⲕ (the Adam Psali for the Lord Jesus): its third recording, the Coptic sung with Arabic
+  eachHymn(null, null, (hymn) => {
+    if (baseOf(hymn.id) === 'annual-midnight-sunday-psali-lord-jesus') editRecordings(hymn, ALL_LANGUAGES, without('midnight-sunday-psali-lord-jesus-coptic-arabic.m4a'));
+  });
+
+  // The Cross: no recording for the Exposition Introduction and the Gospel Response in Vespers and Matins; Fai Etav Enf
+  // keeps two recordings; one Praxis Response and one Hymn of Constantine in the Liturgy
+  eachHymn('cross', ['cross-vespers', 'cross-matins'], (hymn) => {
+    if (['cross-matins-exposition-introduction', 'cross-liturgy-gospel-response'].includes(baseOf(hymn.id))) noAudio(hymn);
+  });
+  eachHymn('cross', null, (hymn) => {
+    if (baseOf(hymn.id) === 'holyweek-covenant-thursday-fai-etav-enf') editRecordings(hymn, ALL_LANGUAGES, without('arsani-yt-covenant-thursday-fai-etafenf.m4a'));
+  });
+  dropHymns('cross', ['cross-liturgy'], (h) => h.id === 'cross-liturgy-praxis-response-feast-of-the-cross' || h.id === 'cross-matins-the-hymn-of-constantine@cross-liturgy');
+
+  // Palm Sunday: Graciously Accord, O Lord and the Introduction to the Creed are out of every season
+  dropHymns(null, null, (h) => h.title === 'Graciously Accord, O Lord' || h.title === 'Introduction To The Creed');
+  eachHymn('palm-sunday', ['palmsunday-vespers'], (hymn) => {
+    const base = baseOf(hymn.id);
+    if (['palmsunday-vespers-adam-exposition', 'palmsunday-vespers-concluding-canon', 'palmsunday-vespers-gospel-response-lazarus-saturday'].includes(base)) noAudio(hymn);
+    // the Gospel Response keeps only its first recording
+    if (base === 'palmsunday-vespers-gospel-response') editRecordings(hymn, ALL_LANGUAGES, (files) => files.slice(0, 1));
+  });
+  dropHymns('palm-sunday', ['palmsunday-matins'], (h) => baseOf(h.id) === 'annual-matins-concluding-hymn');
+  eachHymn('palm-sunday', ['palmsunday-distribution'], (hymn) => {
+    if (baseOf(hymn.id) === 'annual-distribution-psalm-150') noAudio(hymn);
+  });
+
+  // Concluding hymns change with the season (words and tune), so only Annual's has a recording
+  eachHymn(null, null, (hymn, season) => {
+    if (season.id !== 'annual' && /concluding-hymn$/.test(baseOf(hymn.id))) noAudio(hymn);
+  });
+}
