@@ -8931,6 +8931,31 @@ for (const group of deaconCategories)
     if (baseOf(hymn.id) === 'palmsunday-vespers-adam-exposition') editRecordings(hymn, ALL_LANGUAGES, without('arsani-yt-palm-sunday-vesper-praises.m4a'));
   });
 
+  // Deacon Responses > Annual, the Liturgy of the Faithful: the altar responses recording the owner gave (Coptic), cut into
+  // one for each response (each a moment early and late, so no word is cut off)
+  const altarResponses: Record<string, string> = {
+    'in-the-wisdom-of-god': 'in-the-wisdom-of-god',
+    'reconciliation': 'reconciliation',
+    'greet-one-another': 'greet-one-another',
+    'anaphora': 'you-who-are-seated',
+    'look-towards-the-east': 'look-towards-the-east',
+    'epiclesis': 'epiclesis',
+    'pray-for-peace-2': 'pray-for-peace',
+    'pray-for-the-fathers-2': 'pray-for-the-fathers',
+    'pray-for-priests-and-deacons': 'pray-for-priests-and-deacons',
+    'pray-for-the-place': 'pray-for-the-place',
+    'pray-for-the-oblations': 'pray-for-the-oblations',
+    'let-those-who-read': 'let-those-who-read',
+    'amen-let-us-pray': 'amen-let-us-pray',
+    'bow-your-heads': 'bow-your-heads',
+    'saved-amen': 'saved-amen',
+    'the-confession': 'the-confession',
+  };
+  everyHymn((hymn, groupId) => {
+    const file = groupId === 'deacon-annual' && altarResponses[baseOf(hymn.id).replace(/^d-annual-liturgy-faithful-/, '')];
+    if (file && baseOf(hymn.id).startsWith('d-annual-liturgy-faithful-')) editRecordings(hymn, COPTIC_AUDIO, (files) => [...files, `altar-responses-${file}.m4a`]);
+  });
+
   // Recordings cut again (2026-10-28):
   // the Cross's Ⲁⲛⲟⲛ ϩⲱⲛ from 1:44 to 9:32 of Arsani's recording, and the Conclusion of the Doxologies from 9:32 (the
   // last cut started it too late); the whole recording leaves Ⲁⲛⲟⲛ ϩⲱⲛ
