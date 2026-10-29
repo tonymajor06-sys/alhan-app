@@ -353,6 +353,7 @@ export const audioWaveforms: Record<string, string> = {
   "arsani-aspasmos-adam-o-christ-our-savior.m4a": 'vwyyrsuxvuvvvvtisszuxvpqssruqe8sonmrumqnrprvrrqabduprtssurorqvro',
   "arsani-aspasmos-adam-onof-emmo.m4a": 'xyxxsxzwnnchsqotgppvutuwtwuxjrsrnpdqrruqptsutvvfctpqtuqtqytpywup',
   "arsani-melismatic-joyful-agios.m4a": '88cihedcbihfdbbhfgasnusvsqtrpqnqzrjvxphpgomjikljnqoowlqhqftslwon',
+  "arsani-sc-7-tunes.m4a": 'lmj88ihnbhhmlbdgkjajhljg9bhhmmdjhgfgefhgfeffefebehpmpeeguvtmegzv',
   "arsani-sc-pauline-epistle-introduction-coptic.m4a": '3xuuwwxxutsqxywzxswxwuywwvxwsrvuvsusuuwvuthihihhgihfhijihiiihig0',
   "arsani-yt-anba-abraam-tamgeed.m4a": 'ngbfjfaadf74767lekdej8antl9owus8nwabvowmozxuvwyxugnjarjnctlqqtqm',
   "arsani-yt-apostles-distribution.m4a": 'lgimjgnaobmjkrgtjmtkcdcccdggeiwtaazyh9vwd9vsphrjldljcckn9eia0a8a',

@@ -51,6 +51,7 @@ const arabicTitles: Record<string, string> = {
   'cross-liturgy-praxis-response': 'مرد الإبركسيس',
   'cross-liturgy-hymn-of-king-constantine': 'لحن الملك قسطنطين',
   'nativity-matins-verses-of-the-cymbals': 'أرباع الناقوس',
+  'nativity-matins-7-tunes': 'السبع طرائق (كاملة)',
   'nativity-matins-7-tunes-1': 'السبع طرائق (١)',
   'nativity-matins-7-tunes-2': 'السبع طرائق (٢)',
   'nativity-matins-7-tunes-3': 'السبع طرائق (٣)',

@@ -8869,6 +8869,32 @@ for (const group of deaconCategories)
   // Ⲁⲓⲕⲱϯ ⲛ̀ⲥⲱⲕ's third recording (the Coptic sung with Arabic) leaves Kiahk's copies too
   everyHymn((hymn) => editRecordings(hymn, ALL_LANGUAGES, without('midnight-sunday-psali-lord-jesus-coptic-arabic.m4a')));
 
+  // Ⲁⲙⲱⲓⲛⲓ ⲙⲁⲣⲉⲛⲟⲩⲱϣⲧ (the Adam Verses of the Cymbals) in its joyful tune: Arsani's recording, the one the Cross also
+  // has (Great Lent sings it in its own tune)
+  everyHymn((hymn, groupId) => {
+    if (groupId !== 'great-lent' && hymn.title.startsWith('Ⲁⲙⲱⲓⲛⲓ ⲙⲁⲣⲉⲛⲟⲩⲱϣⲧ'))
+      editRecordings(hymn, COPTIC_AUDIO, (files) => [...files, 'arsani-003-joyful-verses-of-cymbals-adam-feast-of-cross.m4a']);
+  });
+
+  // Nativity's 7 Tunes all in one, with Arsani's recording of the whole, before the seven on their own
+  const nativityMatins = seasons.find((s) => s.id === 'nativity')?.services.find((s) => s.id === 'nativity-matins');
+  const tunes = Array.from({ length: 7 }, (_, i) =>
+    flattenHymns(seasons.find((s) => s.id === 'nativity')?.services.flatMap((s) => s.hymns) ?? []).find((h) => h.id === `nativity-matins-7-tunes-${i + 1}`)
+  );
+  if (nativityMatins && tunes.every(Boolean)) {
+    const all = tunes as Hymn[];
+    const sevenTunes: Hymn = {
+      id: 'nativity-matins-7-tunes',
+      title: 'ⲠⲓⲞ̀ⲩⲱ̀ⲓⲛⲓ (7 Tunes (Complete))',
+      versions: all[0].versions.map(({ language }) => ({
+        language,
+        text: all.map((tune, i) => `(${i + 1})\n\n${tune.versions.find((v) => v.language === language)?.text ?? ''}`).join('\n\n'),
+        ...(COPTIC_AUDIO.includes(language) ? { audio: 'arsani-sc-7-tunes.m4a' } : {}),
+      })),
+    };
+    nativityMatins.hymns.splice(Math.max(0, nativityMatins.hymns.indexOf(all[0])), 0, sevenTunes);
+  }
+
   // Recordings cut again (2026-10-28):
   // the Cross's Ⲁⲛⲟⲛ ϩⲱⲛ from 1:44 to 9:32 of Arsani's recording, and the Conclusion of the Doxologies from 9:32 (the
   // last cut started it too late); the whole recording leaves Ⲁⲛⲟⲛ ϩⲱⲛ
