@@ -8884,6 +8884,14 @@ for (const group of deaconCategories)
   // Ⲁⲓⲕⲱϯ ⲛ̀ⲥⲱⲕ's third recording (the Coptic sung with Arabic) leaves Kiahk's copies too
   everyHymn((hymn) => editRecordings(hymn, ALL_LANGUAGES, without('midnight-sunday-psali-lord-jesus-coptic-arabic.m4a')));
 
+  // Annual's Vespers and Matins also have Ⲁⲙⲱⲓⲛⲓ ⲙⲁⲣⲉⲛⲟⲩⲱϣⲧ, after Ⲧⲉⲛⲟⲩⲱϣⲧ (the words are Kiahk's)
+  const amoini = flattenHymns(seasons.find((s) => s.id === 'kiahk')?.services.flatMap((s) => s.hymns) ?? []).find((h) => h.id === 'kiahk-matins-verses-of-cymbals-2');
+  for (const service of seasons.find((s) => s.id === 'annual')?.services.filter((s) => s.id === 'annual-vespers' || s.id === 'annual-matins') ?? []) {
+    if (!amoini) break;
+    const at = service.hymns.findIndex((h) => h.id === `${service.id}-verse-of-cymbals`);
+    service.hymns.splice(at + 1, 0, { ...amoini, id: `${amoini.id}@${service.id}`, versions: amoini.versions.map((v) => ({ ...v })) });
+  }
+
   // Ⲁⲙⲱⲓⲛⲓ ⲙⲁⲣⲉⲛⲟⲩⲱϣⲧ (the Adam Verses of the Cymbals) in its joyful tune: Arsani's recording, the one the Cross also
   // has (Great Lent sings it in its own tune)
   everyHymn((hymn, groupId) => {
