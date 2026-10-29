@@ -859,6 +859,7 @@ describe('Kiahk Praises & Season > Liturgy', () => {
 
   it('lists only the Liturgy of the Word and the Liturgy of the Faithful, titles only', () => {
     expect(service.hymns.map((h) => h.title)).toEqual([
+      'Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ Ⲫⲁⲓ ⲡⲉ ⲡⲓⲉ̀ϩⲟⲟⲩ (Alleluia, This Is the Day (Not on Wednesdays and Fridays))',
       'Liturgy of the Word',
       'Ϩⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ (Hymn of the Intercessions)',
       'Ⲡⲁⲩⲗⲟⲥ (Pauline Coptic Reading)',
@@ -890,7 +891,7 @@ describe('Kiahk Praises & Season > Liturgy', () => {
       'Ⲙⲁⲣⲓⲁ ϯϭⲣⲟⲙⲡⲓ (A Third Standard Watos Aspasmos (Mary the Beautiful Dove))',
     ]);
     expect(service.hymns.filter((h) => h.isSectionHeader).map((h) => h.title)).toEqual(['Liturgy of the Word', 'Liturgy of the Faithful']);
-    expect(service.hymns.map((h, i) => (h.isSectionHeader ? i : -1)).filter((i) => i >= 0)).toEqual([0, 19]);
+    expect(service.hymns.map((h, i) => (h.isSectionHeader ? i : -1)).filter((i) => i >= 0)).toEqual([1, 20]);
     // the Psalm Chant is a group: it opens a list of four Sundays of Kiahk, titles only for now
     const psalmChant = service.hymns.find((h) => h.title === 'Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ (Psalm Chant)')!;
     expect(psalmChant.versions).toEqual([]);
@@ -940,6 +941,7 @@ describe('Kiahk Praises & Season > Liturgy', () => {
       'Ⲏ̀ ⲁ̀ⲅⲁⲡⲏ (Alternate Response to the Pauline Epistle)',
       'Ⲡⲁⲩⲗⲟⲥ (Pauline Coptic Reading)',
       'Ⲡⲣⲁⲝⲓⲥ (Praxis Coptic Reading)',
+      'Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ Ⲫⲁⲓ ⲡⲉ ⲡⲓⲉ̀ϩⲟⲟⲩ (Alleluia, This Is the Day (Not on Wednesdays and Fridays))',
       'Ϯⲙⲏⲧ ⲥ̀ⲛⲟⲩϯ (Hymn of the Virtues (In the Presence of the Pope or a Bishop))',
       'Ⲧⲟⲩ ⲙⲁⲕⲁⲣⲓⲱ (The Blessed)',
       'Ⲁ̀ ⲡⲉⲧϫⲏⲕ (Perfect is the Blessing)',

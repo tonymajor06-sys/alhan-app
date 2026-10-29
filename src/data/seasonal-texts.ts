@@ -197,3 +197,23 @@ export const praxisReading: LanguageVersion[] = [
     text: "القارئ:\n\nأعمال آبائنا الرسل، بركتهم المقدسة تكون معنا.",
   },
 ];
+
+// Sung in the Offering of the Lamb every day but Wednesday and Friday, when "Alleluia, the Thought of Man" is sung
+export const alleluiaFaiPePiehoou: LanguageVersion[] = [
+  {
+    language: "coptic",
+    text: "Ⲡⲓⲗⲁⲟⲥ:\n\nⲀⲗⲗⲏⲗⲟⲩⲓⲁ.\n\nⲪⲁⲓ ⲡⲉ ⲡⲓⲉ̀ϩⲟⲟⲩ ⲉ̀ⲧⲁ Ⲡ̀ⲟ̅ⲥ̅ ⲑⲁⲙⲓⲟϥ: ⲙⲁⲣⲉⲛⲑⲉⲗⲏⲗ ⲛ̀ⲧⲉⲛⲟ̀ⲩⲛⲟϥ ⲙ̀ⲙⲟⲛ ⲛ̀ϧⲏⲧϥ.\n\nⲰ̀ Ⲡ̀ⲟ̅ⲥ̅ ⲉⲕⲉ̀ⲛⲁϩⲙⲉⲛ: ⲱ̀ Ⲡ̀ⲟ̅ⲥ̅ ⲉⲕⲉ̀ⲥⲟⲩⲧⲉⲛ ⲛⲉⲛⲙⲱⲓⲧ.\n\nϤ̀ⲥ̀ⲙⲁⲣⲱⲟⲩⲧ ⲛ̀ϫⲉ ⲫⲏⲉ̀ⲑⲛⲏⲟⲩ ϧⲉⲛ ⲫ̀ⲣⲁⲛ ⲙ̀Ⲡ̀ⲟ̅ⲥ̅: ⲁ̅ⲗ̅.",
+  },
+  {
+    language: "english",
+    text: "People:\n\nAlleluia.\n\nThis is the day that the Lord has made, let us rejoice and be glad in it.\n\nO Lord save us, O Lord straighten our ways.\n\nBlessed is He who comes in the name of the Lord. Alleluia.",
+  },
+  {
+    language: "englishArabic",
+    text: "Esh-Sha'b:\n\nHalleluya.\n\nHadha howa el-yawm alladhi sana'ahu er-Rab, falnafrah wa nabtahig fihi.\n\nYa Rab khallisna, ya Rab sahhil sabeelana.\n\nMubarak el-aati bismi er-Rab. Halleluya.",
+  },
+  {
+    language: "arabic",
+    text: "الشعب:\n\nهلليلويا.\n\nهذا هو اليوم الذي صنعه الرب، فلنفرح ونبتهج فيه.\n\nيا رب خلصنا، يا رب سهل سبيلنا.\n\nمبارك الآتي باسم الرب. هلليلويا.",
+  },
+];

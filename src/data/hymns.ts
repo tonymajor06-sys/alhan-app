@@ -22,7 +22,7 @@ import { stMore } from './st-more';
 import { stMysteries } from './st-mysteries';
 import { stSeasonExtras } from './st-season-extras';
 import { stVesperPraises, vpNewHymns } from './st-vesper-praises';
-import { concludingLines, praxisReading, psalm150Refrains, seasonDoxologies, SeasonLine } from './seasonal-texts';
+import { alleluiaFaiPePiehoou, concludingLines, praxisReading, psalm150Refrains, seasonDoxologies, SeasonLine } from './seasonal-texts';
 
 export type LanguageType = 'coptic' | 'englishCoptic' | 'arabicCoptic' | 'english' | 'arabicEnglish' | 'englishArabic' | 'arabic';
 
@@ -8364,6 +8364,21 @@ for (const group of [...seasons, ...deaconCategories]) {
     }
   }
 
+  // Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ Ⲫⲁⲓ ⲡⲉ ⲡⲓⲉ̀ϩⲟⲟⲩ in the Offering of the Lamb, before "Alleluia, the Thought of Man" (sung instead of it on
+  // Wednesdays and Fridays); not on the fasts' weekdays (Great Lent's and Jonah's), which sing only the Thought of Man
+  for (const service of seasons.flatMap((s) => s.services)) {
+    if (service.id === 'lent-weekday' || service.id.startsWith('jonah')) continue;
+    for (const list of [service.hymns, ...flattenGroupsOf(service.hymns)]) {
+      const at = list.findIndex((h) => /\(Alleluia, the Thought of Man\)$/.test(h.title));
+      if (at < 0) continue;
+      const id = service.id === 'annual-liturgy' ? 'annual-liturgy-offering-alleluia-fai-pe-piehoou' : `annual-liturgy-offering-alleluia-fai-pe-piehoou@${service.id}`;
+      list.splice(at, 0, { id, title: 'Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ Ⲫⲁⲓ ⲡⲉ ⲡⲓⲉ̀ϩⲟⲟⲩ (Alleluia, This Is the Day (Not on Wednesdays and Fridays))', versions: alleluiaFaiPePiehoou.map((v) => ({ ...v })) });
+    }
+  }
+  function flattenGroupsOf(hymns: Hymn[]): Hymn[][] {
+    return hymns.filter((h) => h.children).flatMap((h) => [h.children!, ...flattenGroupsOf(h.children!)]);
+  }
+
   // The Praxis's Coptic introduction, read in every Liturgy of the Word (placed in order with the rest further down)
   // (Great Lent's Liturgy is a group inside its Weekdays and Weekends)
   const liturgyLists = seasons
@@ -8894,6 +8909,21 @@ for (const group of deaconCategories)
     };
     nativityMatins.hymns.splice(Math.max(0, nativityMatins.hymns.indexOf(all[0])), 0, sevenTunes);
   }
+
+  // The Sunday Theotokia, parts 10 to 15: Joe Seif's recording of the six (it was all on part 10), cut into one for
+  // each part (each starts a moment early and ends a moment late, so no word is cut off)
+  everyHymn((hymn) => {
+    const part = baseOf(hymn.id).match(/^annual-(?:midnight|vesper-praises)-sunday-theotokia-part-(1[0-5])$/)?.[1];
+    if (part)
+      editRecordings(hymn, COPTIC_AUDIO, (files) => [
+        `sc-joeseif-sunday-theotokia-p${part}.m4a`,
+        ...files.filter((f) => f !== 'sc-joeseif-sunday-theotokia-part-10-teoi.m4a'),
+      ]);
+  });
+  // Palm Sunday Matins' Adam Exposition: the whole Vesper Praises recording leaves it (Arsani's own stays)
+  everyHymn((hymn) => {
+    if (baseOf(hymn.id) === 'palmsunday-vespers-adam-exposition') editRecordings(hymn, ALL_LANGUAGES, without('arsani-yt-palm-sunday-vesper-praises.m4a'));
+  });
 
   // Recordings cut again (2026-10-28):
   // the Cross's Ⲁⲛⲟⲛ ϩⲱⲛ from 1:44 to 9:32 of Arsani's recording, and the Conclusion of the Doxologies from 9:32 (the

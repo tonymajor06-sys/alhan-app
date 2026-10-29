@@ -352,6 +352,7 @@ const arabicTitles: Record<string, string> = {
   'annual-liturgy-taishori-hitens-bishop': 'طاي شوري وهيتين (في حضور الأب الأسقف)',
   'annual-liturgy-pauline-intro': 'قراءة البولس بالقبطي',
   'annual-liturgy-praxis-reading': 'قراءة الإبركسيس بالقبطي',
+  'annual-liturgy-offering-alleluia-fai-pe-piehoou': 'هلليلويا هذا هو اليوم (ما عدا الأربعاء والجمعة)',
   'annual-liturgy-pihmot-gar': 'نعمة ربنا',
   'annual-liturgy-perfect-is-the-blessing': 'الكامل بركة أبيه',
   'annual-liturgy-praxis-response': 'السلام لك يا مريم (مرد الإبركسيس)',
