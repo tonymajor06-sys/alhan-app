@@ -8861,10 +8861,13 @@ for (const group of deaconCategories)
     service.hymns = removeWhere(service.hymns, isResurrectionHymn);
   }
 
-  // Outside Annual the Watos Aspasmos recordings are of other words (another hymn, or another season's), so they leave
+  // The seasons' Watos Aspasmos recordings are of other words (Great Aspazesthe, a doxology, the Resurrection's
+  // Ⲛ̀ⲑⲟⲕ ⲅⲁⲣ ⲗⲟⲓⲡⲟⲛ on the Ascension's Ⲁϥϣⲉⲛⲁϥ), so they leave; recordings made for a season's own Aspasmos stay
   everyHymn((hymn, groupId) => {
     if (groupId !== 'annual' && !groupId.startsWith('deacon-') && /Watos Aspasmos/.test(hymn.title)) editRecordings(hymn, ALL_LANGUAGES, () => []);
   });
+  // Ⲁⲓⲕⲱϯ ⲛ̀ⲥⲱⲕ's third recording (the Coptic sung with Arabic) leaves Kiahk's copies too
+  everyHymn((hymn) => editRecordings(hymn, ALL_LANGUAGES, without('midnight-sunday-psali-lord-jesus-coptic-arabic.m4a')));
 
   // Recordings cut again (2026-10-28):
   // the Cross's Ⲁⲛⲟⲛ ϩⲱⲛ from 1:44 to 9:32 of Arsani's recording, and the Conclusion of the Doxologies from 9:32 (the
