@@ -861,22 +861,24 @@ describe('Kiahk Praises & Season > Liturgy', () => {
     expect(service.hymns.map((h) => h.title)).toEqual([
       'Liturgy of the Word',
       'Ϩⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ (Hymn of the Intercessions)',
+      'Ⲡⲁⲩⲗⲟⲥ (Pauline Coptic Reading)',
       'Ⲡⲓϩ̀ⲙⲟⲧ ⲅⲁⲣ (Conclusion to the Coptic Pauline Epistle)',
       'Ⲡⲓϩ̀ⲙⲟⲧ ⲅⲁⲣ ⲙ̀ⲡⲉⲛⲟ︦ⲥ︦ Ⲓⲏ︦ⲥ︦ Ⲡⲭ︦ⲥ︦ (Response to the Pauline Epistle)',
       'Ⲡⲓϩ̀ⲙⲟⲧ ⲅⲁⲣ ⲙ̀Ⲫ̀ⲛⲟⲩϯ (Great Response to the Pauline Epistle)',
       'Ⲏ̀ ⲁ̀ⲅⲁⲡⲏ (Alternate Response to the Pauline Epistle)',
-      'Ϯⲙⲏⲧ ⲥ̀ⲛⲟⲩϯ (Hymn of the Virtues)',
-      'Ⲧⲟⲩ ⲙⲁⲕⲁⲣⲓⲱ (The Blessed)',
-      'Ⲁ̀ ⲡⲉⲧϫⲏⲕ (Perfect is the Blessing)',
       'Ⲕⲁⲑⲟⲗⲓⲕⲟⲛ (Introduction to the Coptic Catholic Epistle)',
       'Ⲭⲉⲣⲉ ⲛⲉ Ⲙⲁⲣⲓⲁ (Praxis Response)',
+      'Ⲡⲣⲁⲝⲓⲥ (Praxis Coptic Reading)',
+      'Ϯⲙⲏⲧ ⲥ̀ⲛⲟⲩϯ (Hymn of the Virtues (In the Presence of the Pope or a Bishop))',
+      'Ⲧⲟⲩ ⲙⲁⲕⲁⲣⲓⲱ (The Blessed)',
+      'Ⲁ̀ ⲡⲉⲧϫⲏⲕ (Perfect is the Blessing)',
       'Ⲡⲁϭⲟⲓⲥ (Paralex)',
       'Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ (Psalm Chant)',
       'Ⲙⲁⲣⲟⲩϭⲁⲥϥ (Psalm Trailer for the Pope or a Bishop)',
-      'Liturgy of the Faithful',
       'Ⲧⲉⲛϯ ⲛⲉ ⲙ̀ⲡⲓⲭⲉⲣⲉⲧⲓⲥⲙⲟⲥ (Gospel Response)',
       'Ⲧⲉⲛϭⲓⲥⲓ ⲙ̀ⲙⲟ ϧⲉⲛ ⲟⲩⲉⲙⲡ̀ϣⲁ (Gospel Response)',
       'Gospel Response (4th Sunday of Kiahk)',
+      'Liturgy of the Faithful',
       'Ⲍⲁⲭⲁⲣⲓⲁⲥ (Adam Aspasmos (Zechariah))',
       'Ⲛ̀ⲑⲟⲕ ⲟⲛ (Adam Aspasmos (You Also Flew))',
       'Ⲟⲩⲛⲟϥ ⲙ̀ⲙⲟ (Standard Adam Aspasmos (Rejoice))',
@@ -888,7 +890,7 @@ describe('Kiahk Praises & Season > Liturgy', () => {
       'Ⲙⲁⲣⲓⲁ ϯϭⲣⲟⲙⲡⲓ (A Third Standard Watos Aspasmos (Mary the Beautiful Dove))',
     ]);
     expect(service.hymns.filter((h) => h.isSectionHeader).map((h) => h.title)).toEqual(['Liturgy of the Word', 'Liturgy of the Faithful']);
-    expect(service.hymns.map((h, i) => (h.isSectionHeader ? i : -1)).filter((i) => i >= 0)).toEqual([0, 14]);
+    expect(service.hymns.map((h, i) => (h.isSectionHeader ? i : -1)).filter((i) => i >= 0)).toEqual([0, 19]);
     // the Psalm Chant is a group: it opens a list of four Sundays of Kiahk, titles only for now
     const psalmChant = service.hymns.find((h) => h.title === 'Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ (Psalm Chant)')!;
     expect(psalmChant.versions).toEqual([]);
@@ -936,7 +938,9 @@ describe('Kiahk Praises & Season > Liturgy', () => {
       'Ⲡⲓϩ̀ⲙⲟⲧ ⲅⲁⲣ ⲙ̀ⲡⲉⲛⲟ︦ⲥ︦ Ⲓⲏ︦ⲥ︦ Ⲡⲭ︦ⲥ︦ (Response to the Pauline Epistle)',
       'Ⲡⲓϩ̀ⲙⲟⲧ ⲅⲁⲣ ⲙ̀Ⲫ̀ⲛⲟⲩϯ (Great Response to the Pauline Epistle)',
       'Ⲏ̀ ⲁ̀ⲅⲁⲡⲏ (Alternate Response to the Pauline Epistle)',
-      'Ϯⲙⲏⲧ ⲥ̀ⲛⲟⲩϯ (Hymn of the Virtues)',
+      'Ⲡⲁⲩⲗⲟⲥ (Pauline Coptic Reading)',
+      'Ⲡⲣⲁⲝⲓⲥ (Praxis Coptic Reading)',
+      'Ϯⲙⲏⲧ ⲥ̀ⲛⲟⲩϯ (Hymn of the Virtues (In the Presence of the Pope or a Bishop))',
       'Ⲧⲟⲩ ⲙⲁⲕⲁⲣⲓⲱ (The Blessed)',
       'Ⲁ̀ ⲡⲉⲧϫⲏⲕ (Perfect is the Blessing)',
       'Ⲕⲁⲑⲟⲗⲓⲕⲟⲛ (Introduction to the Coptic Catholic Epistle)',
@@ -971,7 +975,7 @@ describe('Kiahk Praises & Season > Liturgy', () => {
       'Ⲡⲓϩ̀ⲙⲟⲧ ⲅⲁⲣ ⲙ̀ⲡⲉⲛⲟ︦ⲥ︦ Ⲓⲏ︦ⲥ︦ Ⲡⲭ︦ⲥ︦ (Response to the Pauline Epistle)',
       'Ⲡⲓϩ̀ⲙⲟⲧ ⲅⲁⲣ ⲙ̀Ⲫ̀ⲛⲟⲩϯ (Great Response to the Pauline Epistle)',
       'Ⲏ̀ ⲁ̀ⲅⲁⲡⲏ (Alternate Response to the Pauline Epistle)',
-      'Ϯⲙⲏⲧ ⲥ̀ⲛⲟⲩϯ (Hymn of the Virtues)',
+      'Ϯⲙⲏⲧ ⲥ̀ⲛⲟⲩϯ (Hymn of the Virtues (In the Presence of the Pope or a Bishop))',
       'Ⲧⲟⲩ ⲙⲁⲕⲁⲣⲓⲱ (The Blessed)',
       'Ⲁ̀ ⲡⲉⲧϫⲏⲕ (Perfect is the Blessing)',
       'Ⲕⲁⲑⲟⲗⲓⲕⲟⲛ (Introduction to the Coptic Catholic Epistle)',

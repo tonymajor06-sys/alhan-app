@@ -107,13 +107,14 @@ describe('Sunday Theotokia Audio Recordings', () => {
     expect(sefoofArabic?.audio).toBe('arsani-044-ya-kol-al-sefoof.m4a');
     expect(sefoofArabic?.otherAudio).toContain('arsani-248-ya-kol-a-sefoof.m4a');
 
-    // 4. Lent The Great High Priest: arsani-300 (clearer) is primary, arsani-208 is secondary
-    const lentWeekday = seasons.find((s) => s.id === 'great-lent')?.services.find((s) => s.id === 'lent-weekday');
-    const highPriest = findHymn(lentWeekday?.hymns, 'lent-weekday-the-great-high-priest');
+    // 4. Lent The Great High Priest (Megalo, sung on weekends only): arsani-300 (clearer) comes before arsani-208
+    const lent = seasons.find((s) => s.id === 'great-lent');
+    expect(findHymn(lent?.services.find((s) => s.id === 'lent-weekday')?.hymns, 'lent-weekday-the-great-high-priest')).toBeUndefined();
+    const highPriest = findHymn(lent?.services.find((s) => s.id === 'lent-weekend')?.hymns, 'lent-weekend-liturgy-the-great-high-priest');
     expect(highPriest).toBeDefined();
-    const highPriestCoptic = highPriest?.versions.find((v) => v.language === 'coptic');
-    expect(highPriestCoptic?.audio).toBe('arsani-300-the-great-high-priest-meeghalo.m4a');
-    expect(highPriestCoptic?.otherAudio).toContain('arsani-208-meghalo-apenchoice.m4a');
+    const highPriestFiles = highPriest?.versions.find((v) => v.language === 'coptic')?.otherAudio ?? [];
+    expect(highPriestFiles.indexOf('arsani-300-the-great-high-priest-meeghalo.m4a')).toBeLessThan(highPriestFiles.indexOf('arsani-208-meghalo-apenchoice.m4a'));
+    expect(highPriestFiles.indexOf('arsani-300-the-great-high-priest-meeghalo.m4a')).toBeGreaterThanOrEqual(0);
 
     // 5. Palm Sunday Evlogimenos: arsani-236 (clearer) is primary, duplicate arsani-114 is removed
     const palmDist = seasons.find((s) => s.id === 'palm-sunday')?.services.find((s) => s.id === 'palmsunday-distribution');
@@ -195,11 +196,13 @@ describe('Divine Liturgy Audio and Bishop Updates', () => {
     const paulineIntro = annualLiturgy?.hymns.find((h) => h.id === 'annual-liturgy-pauline-intro');
     expect(paulineIntro).toBeDefined();
 
-    // Ordered immediately before annual-liturgy-pihmot-gar
-    const paulineIndex = annualLiturgy?.hymns.findIndex((h) => h.id === 'annual-liturgy-pauline-intro') ?? -1;
-    const pihmotIndex = annualLiturgy?.hymns.findIndex((h) => h.id === 'annual-liturgy-pihmot-gar') ?? -1;
-    expect(paulineIndex).toBeGreaterThan(-1);
-    expect(pihmotIndex).toBe(paulineIndex + 1);
+    // Read in every Liturgy of the Word (after Hitens), not only before a bishop; Ⲡⲓϩ̀ⲙⲟⲧ ⲅⲁⲣ stays in the bishop's section
+    const ids = annualLiturgy?.hymns.map((h) => h.id) ?? [];
+    const paulineIndex = ids.indexOf('annual-liturgy-pauline-intro');
+    expect(paulineIndex).toBe(ids.indexOf('annual-liturgy-hitens') + 1);
+    expect(paulineIndex).toBeLessThan(ids.indexOf('annual-liturgy-bishop-header'));
+    expect(ids.indexOf('annual-liturgy-pihmot-gar')).toBeGreaterThan(ids.indexOf('annual-liturgy-bishop-header'));
+    expect(paulineIntro?.title).toBe('Ⲡⲁⲩⲗⲟⲥ (Pauline Coptic Reading)');
 
     // Verify all 5 versions
     const coptic = paulineIntro?.versions.find((v) => v.language === 'coptic');
@@ -225,7 +228,7 @@ describe('Divine Liturgy Audio and Bishop Updates', () => {
     expect(deaconPauline).toBeDefined();
 
     // Arabic title
-    expect(displayTitle(paulineIntro!, 'ar')).toBe('البولس');
+    expect(displayTitle(paulineIntro!, 'ar')).toBe('قراءة البولس بالقبطي');
     // the Deacon Responses are named by their first words
     expect(displayTitle(deaconPauline!, 'ar')).toMatch(/^بولس عبد يسوع المسيح/);
   });
@@ -292,8 +295,8 @@ describe('Divine Liturgy Audio and Bishop Updates', () => {
 
     expect(weekendPauline).toBeDefined();
     expect(weekdayPauline).toBeDefined();
-    expect(displayTitle(weekendPauline!, 'ar')).toBe('البولس');
-    expect(displayTitle(weekdayPauline!, 'ar')).toBe('البولس');
+    expect(displayTitle(weekendPauline!, 'ar')).toBe('قراءة البولس بالقبطي');
+    expect(displayTitle(weekdayPauline!, 'ar')).toBe('قراءة البولس بالقبطي');
   });
 });
 

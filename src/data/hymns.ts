@@ -22,6 +22,7 @@ import { stMore } from './st-more';
 import { stMysteries } from './st-mysteries';
 import { stSeasonExtras } from './st-season-extras';
 import { stVesperPraises, vpNewHymns } from './st-vesper-praises';
+import { concludingLines, praxisReading, psalm150Refrains, seasonDoxologies, SeasonLine } from './seasonal-texts';
 
 export type LanguageType = 'coptic' | 'englishCoptic' | 'arabicCoptic' | 'english' | 'arabicEnglish' | 'englishArabic' | 'arabic';
 
@@ -7926,8 +7927,8 @@ for (const season of seasons) {
           )
         );
       }
-      if (season.id !== 'lent') editRecordings(hymn, ALL_LANGUAGES, without('arsani-333-great-lent-psalm-150.m4a'));
-      if (season.id !== 'palmsunday') editRecordings(hymn, ALL_LANGUAGES, without('arsani-060-palm-sunday-psalm-150.m4a'));
+      if (season.id !== 'great-lent') editRecordings(hymn, ALL_LANGUAGES, without('arsani-333-great-lent-psalm-150.m4a'));
+      if (season.id !== 'palm-sunday') editRecordings(hymn, ALL_LANGUAGES, without('arsani-060-palm-sunday-psalm-150.m4a'));
       if (season.id === 'kiahk' && (base.includes('psalm-150') || base === 'kiahk-distribution-hymn-1')) {
         editRecordings(hymn, ALL_LANGUAGES, (files) => {
           const kiahkOrder = ['arsani-194-kiahk-psalm-150-live-la.m4a', 'arsani-190-kiahk-psalm-150-2022.m4a', 'arsani-155-kiahk-psalm-150-alleluia.m4a'];
@@ -8257,6 +8258,126 @@ for (const group of [...seasons, ...deaconCategories]) {
   }
 }
 
+// ---- Words each season sings its own way (2026-10-28, see seasonal-texts.ts) ----
+// Before the transliterations below, so the new words get their Coptic and English in Arabic letters
+{
+  const TEXT_LANGUAGES = ['coptic', 'english', 'arabic', 'englishArabic'] as const;
+  // New words: the versions made from them are dropped, to be made again from the new words
+  const rewrite = (hymn: Hymn, edit: (text: string, language: (typeof TEXT_LANGUAGES)[number]) => string) => {
+    hymn.versions = hymn.versions
+      .filter((v) => !['englishCoptic', 'arabicCoptic', 'arabicEnglish'].includes(v.language))
+      .map((v) => ((TEXT_LANGUAGES as readonly string[]).includes(v.language) ? { ...v, text: edit(v.text, v.language as (typeof TEXT_LANGUAGES)[number]) } : v));
+  };
+  const fromLine = (line: SeasonLine): LanguageVersion[] => TEXT_LANGUAGES.map((language) => ({ language, text: line[language] }));
+  const serviceById = (id: string) => seasons.flatMap((s) => s.services).find((s) => s.id === id);
+  const insertAfter = (list: Hymn[], after: (h: Hymn) => boolean, hymn: Hymn) => {
+    const at = list.findIndex(after);
+    list.splice(at >= 0 ? at + 1 : list.length, 0, hymn);
+  };
+
+  // Psalm 150: the season's refrain before each verse, up to "Alleluia, Alleluia, glory be to our God" (as Great Lent's
+  // weekends sing it). Annual's recordings sing Annual's Alleluia, so they leave these.
+  const ANNUAL_PSALM_150_AUDIO = ['psalm-150-coptic.m4a', 'arsani-034-annual-psalm-150.m4a', 'psalm-150-english.m4a', 'psalm-150-arabic.m4a'];
+  const withRefrain = (text: string, refrain: string) => {
+    const lines = text.split('\n').filter((l) => l.trim());
+    return [...lines.slice(0, 14).flatMap((line) => [refrain, line]), ...lines.slice(14)].join('\n\n');
+  };
+  for (const [serviceId, refrain] of Object.entries(psalm150Refrains)) {
+    const service = serviceById(serviceId) ?? seasons.flatMap((s) => s.services).find((s) => s.id === serviceId.replace(/-distribution$/, ''));
+    for (const hymn of flattenHymns(service?.hymns ?? []).filter((h) => /\(Psalm 150\)$/.test(h.title))) {
+      rewrite(hymn, (text, language) => withRefrain(text, refrain[language]));
+      editRecordings(hymn, ALL_LANGUAGES, (files) => files.filter((f) => !ANNUAL_PSALM_150_AUDIO.includes(f)));
+    }
+  }
+
+  // The Concluding Hymn's prayer as each feast sings it (Annual's asks for the waters of the rivers)
+  const ANNUAL_PRAYER: SeasonLine = {
+    coptic: 'Ⲥⲙⲟⲩ ⲉ̀ⲛⲓⲙⲱⲟⲩ ⲙ̀ⲫ̀ⲓⲁⲣⲟⲩ: ⲙⲁⲣⲉ ⲡⲉⲕⲛⲁⲓ ⲛⲉⲙ ⲧⲉⲕϩⲓⲣⲏⲛⲏ ⲟⲓ ⲛ̀ⲥⲟⲃⲧ ⲙ̀ⲡⲉⲕⲗⲁⲟⲥ:',
+    english: 'bless the waters of the rivers. May Your mercy and Your peace be a fortress unto Your people.',
+    arabic: 'بارك مياه النهر، ولتكن رحمتُكَ وسلامُكَ حصناً لشعبِك،',
+    englishArabic: "barik miyaah en-nahr, wal-takun rahmatuka wa salamuka hisnan li-sha'bik,",
+  };
+  const ANNUAL_CONCLUDING = /^annual-(vespers|matins|distribution|midnight)-concluding-hymn$/;
+  for (const season of seasons) {
+    for (const service of season.services) {
+      const line = concludingLines[season.id] ?? concludingLines[service.id.replace(/-(vesper-praises|vespers|matins|morning-praises|liturgy|distribution|midnight)$/, '')];
+      if (!line) continue;
+      for (const hymn of flattenHymns(service.hymns).filter((h) => ANNUAL_CONCLUDING.test(baseOf(h.id)))) {
+        rewrite(hymn, (text, language) => text.replace(ANNUAL_PRAYER[language], line[language]));
+      }
+    }
+  }
+  // The Ascension sings its own Concluding Hymn (Vespers and Matins have it); the Resurrection's leaves it, and its
+  // Distribution sings Annual's with the Ascension's prayer
+  const annualConclusion = flattenHymns(serviceById('annual-distribution')?.hymns ?? []).find((h) => h.id === 'annual-distribution-concluding-hymn');
+  const ascensionConclusion = flattenHymns(serviceById('ascension-vespers')?.hymns ?? []).find((h) => h.id === 'pentecost-matins-concluding-hymn-feast-of-the-ascension');
+  for (const service of seasons.find((s) => s.id === 'ascension')?.services ?? []) {
+    const resurrection = service.hymns.findIndex((h) => baseOf(h.id) === 'pentecost-matins-concluding-hymn');
+    if (resurrection < 0) continue;
+    if (service.hymns.some((h) => baseOf(h.id) === 'pentecost-matins-concluding-hymn-feast-of-the-ascension')) {
+      service.hymns.splice(resurrection, 1);
+      continue;
+    }
+    if (service.id !== 'ascension-distribution' && ascensionConclusion) {
+      service.hymns[resurrection] = { ...ascensionConclusion, id: `${ascensionConclusion.id}@${service.id}`, versions: ascensionConclusion.versions.map((v) => ({ ...v })) };
+      continue;
+    }
+    if (!annualConclusion) continue;
+    const conclusion: Hymn = {
+      ...annualConclusion,
+      id: `annual-distribution-concluding-hymn@${service.id}`,
+      title: 'Concluding Hymn (Feast of the Ascension)',
+      versions: annualConclusion.versions.map(({ audio: _a, otherAudio: _o, ...v }) => ({ ...v })),
+    };
+    rewrite(conclusion, (text, language) => text.replace(ANNUAL_PRAYER[language], concludingLines.ascension[language]));
+    service.hymns[resurrection] = conclusion;
+  }
+  // Jonah's Fast ends its Matins with the fast's canon (Ⲥⲱⲙⲁⲧⲟⲥ), as Great Lent's weekdays do, and its Distribution has it already
+  const somatos = flattenHymns(seasons.find((s) => s.id === 'great-lent')?.services.flatMap((s) => s.hymns) ?? []).find((h) => h.id === 'lent-weekday-matins-concluding-hymn');
+  for (const service of seasons.find((s) => s.id === 'jonah')?.services ?? []) {
+    const at = service.hymns.findIndex((h) => ANNUAL_CONCLUDING.test(baseOf(h.id)));
+    if (at < 0) continue;
+    if (service.id === 'jonah-matins' && somatos)
+      service.hymns[at] = { ...somatos, id: `${somatos.id}@${service.id}`, versions: somatos.versions.map((v) => ({ ...v })) };
+    else if (service.hymns.some((h) => baseOf(h.id) === 'lent-weekday-matins-concluding-hymn')) service.hymns.splice(at, 1);
+  }
+
+  // The Theophany's two doxologies and Jonah's, after the Introduction to the Doxologies in Vespers and Matins
+  const newDoxologies: [string, Hymn[]][] = [
+    ['theophany', [
+      { id: 'theophany-matins-first-doxology', title: 'Ⲧⲟⲧⲉ ⲣⲱⲛ (First Doxology for the Theophany)', versions: fromLine(seasonDoxologies.theophanyFirst) },
+      { id: 'theophany-matins-second-doxology', title: 'Ⲫϯ ⲡⲓⲙⲟⲛⲟⲅⲉⲛⲏⲥ (Second Doxology for the Theophany)', versions: fromLine(seasonDoxologies.theophanySecond) },
+    ]],
+    ['jonah', [{ id: 'jonah-matins-doxology', title: "Ⲓⲱⲛⲁ ⲡⲓⲡ̀ⲣⲟⲫⲏⲧⲏⲥ (Doxology for Jonah's Fast)", versions: fromLine(seasonDoxologies.jonah) }]],
+  ];
+  for (const [seasonId, doxologies] of newDoxologies) {
+    for (const serviceId of [`${seasonId}-matins`, `${seasonId}-vespers`]) {
+      const service = serviceById(serviceId);
+      if (!service) continue;
+      [...doxologies].reverse().forEach((doxology) =>
+        insertAfter(service.hymns, (h) => /^annual-(vespers|matins)-intro-doxologies$/.test(baseOf(h.id)), {
+          ...doxology,
+          id: serviceId.endsWith('-matins') ? doxology.id : `${doxology.id}@${serviceId}`,
+          versions: doxology.versions.map((v) => ({ ...v })),
+        })
+      );
+    }
+  }
+
+  // The Praxis's Coptic introduction, read in every Liturgy of the Word (placed in order with the rest further down)
+  // (Great Lent's Liturgy is a group inside its Weekdays and Weekends)
+  const liturgyLists = seasons
+    .flatMap((s) => s.services)
+    .filter((s) => !s.id.startsWith('holyweek'))
+    .flatMap((s) => [{ id: s.id, hymns: s.hymns }, ...s.hymns.filter((h) => h.children).map((h) => ({ id: h.id, hymns: h.children! }))]);
+  for (const list of liturgyLists) {
+    const word = list.hymns.findIndex((h) => h.isSectionHeader && /Liturgy of the Word/.test(h.title));
+    if (word < 0) continue;
+    const id = list.id === 'annual-liturgy' ? 'annual-liturgy-praxis-reading' : `annual-liturgy-praxis-reading@${list.id}`;
+    list.hymns.splice(word + 1, 0, { id, title: 'Ⲡⲣⲁⲝⲓⲥ (Praxis Coptic Reading)', versions: praxisReading.map((v) => ({ ...v })) });
+  }
+}
+
 // Keep these last: give every hymn a "Coptic in Arabic letters" and an "English in Arabic letters" version
 // (see arabic-coptic.ts and arabic-english.ts),
 // so it must run after all the changes above. Hymns that came without Coptic in English letters get it first,
@@ -8329,8 +8450,7 @@ const foldBishop = (list: Hymn[]): Hymn[] =>
 for (const group of [...seasons, ...deaconCategories])
   for (const service of group.services) if (!/-bishop$/.test(service.id)) service.hymns = foldBishop(service.hymns);
 
-// ---- Annual > Liturgy: In the Presence of a Bishop holds Taishori and Hitens, the Pauline Epistle's introduction
-// and responses, the Alternate Praxis Response and Marouetchasf; the rest of the Liturgy of the Word goes back above it.
+// ---- Annual > Liturgy: In the Presence of a Bishop holds Taishori and Hitens, the Pauline Epistle's responses, the Alternate Praxis Response and Marouetchasf; the rest of the Liturgy of the Word goes back above it.
 // Marouetchasf is its own hymn here, with Arsani's recording from 1:15 (the Psalm Trailer is before it). ----
 const annualLiturgyWord = seasons.find((s) => s.id === 'annual')?.services.find((s) => s.id === 'annual-liturgy');
 if (annualLiturgyWord) {
@@ -8356,7 +8476,6 @@ if (annualLiturgyWord) {
     if (header >= 0 && faithful > header) {
       const bishopIds = new Set([
         'annual-liturgy-taishori-hitens-bishop',
-        'annual-liturgy-pauline-intro',
         'annual-liturgy-pihmot-gar',
         'kiahk-liturgy-hymn-6@annual-liturgy',
         'annual-liturgy-alternate-praxis-response',
@@ -8591,5 +8710,176 @@ for (const group of deaconCategories)
   // Concluding hymns change with the season (words and tune), so only Annual's has a recording
   eachHymn(null, null, (hymn, season) => {
     if (season.id !== 'annual' && /concluding-hymn$/.test(baseOf(hymn.id))) noAudio(hymn);
+  });
+}
+
+// ---- Fixes the user asked for (2026-10-28, part 2): the Liturgy of the Word in order, Jonah and Great Lent, and recordings ----
+{
+  const allLists = (hymns: Hymn[]): Hymn[][] => [hymns, ...hymns.flatMap((h) => (h.children ? allLists(h.children) : []))];
+  const removeWhere = (list: Hymn[], gone: (h: Hymn) => boolean): Hymn[] =>
+    list.filter((h) => !gone(h)).map((h) => (h.children ? { ...h, children: removeWhere(h.children, gone) } : h));
+  const dropFrom = (serviceIds: string[] | null, gone: (h: Hymn) => boolean) => {
+    for (const service of seasons.flatMap((s) => s.services))
+      if (!serviceIds || serviceIds.includes(service.id)) service.hymns = removeWhere(service.hymns, gone);
+  };
+  const everyHymn = (fn: (hymn: Hymn, groupId: string) => void) => {
+    for (const group of [...seasons, ...deaconCategories])
+      for (const service of group.services) for (const hymn of flattenHymns(service.hymns)) fn(hymn, group.id);
+  };
+  const BISHOP = 'In the Presence of the Pope or a Bishop';
+
+  // "Introduction to the Creed" and "Graciously Accord, O Lord" are out of every season, however the title is written
+  dropFrom(null, (h) => /^(Introduction to the Creed|Graciously Accord, O Lord)$/i.test(h.title.trim()));
+
+  // The Morning Doxology is in the Morning Praises, not also in Matins
+  dropFrom(['nativity-matins', 'theophany-matins'], (h) => baseOf(h.id) === 'annual-morning praises-morning-doxology');
+
+  // Jonah's Fast: no Taishori, Tishori, Hitens or Annual's Praxis Responses (it sings its own Ϣⲁⲣⲉ Ⲫ̀ϯ)
+  dropFrom(['jonah-liturgy'], (h) =>
+    [
+      'annual-liturgy-offering-golden-censer',
+      'annual-liturgy-offering-golden-censer-virgin',
+      'annual-liturgy-hitens',
+      'annual-liturgy-praxis-response',
+      'stmary-liturgy-alternate-praxis-response',
+    ].includes(baseOf(h.id))
+  );
+
+  // Great Lent weekdays: no Alleluia the Thought of Man, Hitens or Megalo; the Gospel Response is Ϯϩⲓⲣⲏⲛⲏ ⲛ̀ⲧⲉ Ⲫ̀ϯ
+  // (the peace of God), not the weekends' Ϫⲉ ⲡⲉⲛⲓⲱⲧ (Our Father)
+  dropFrom(['lent-weekday'], (h) =>
+    ['annual-liturgy-offering-alleluia-thought-of-man', 'lent-weekday-liturgy-hymn-of-intercessions', 'lent-weekday-the-great-high-priest'].includes(baseOf(h.id))
+  );
+  const weekdays = seasons.flatMap((s) => s.services).find((s) => s.id === 'lent-weekday');
+  const tihirini = flattenHymns(weekdays?.hymns ?? []).find((h) => h.id === 'lent-weekday-gospel-response');
+  if (weekdays && tihirini) {
+    weekdays.hymns = removeWhere(weekdays.hymns, (h) => h === tihirini);
+    const title = 'Ϯϩⲓⲣⲏⲛⲏ ⲛ̀ⲧⲉ Ⲫ̀ϯ (Gospel Response)';
+    for (const list of allLists(weekdays.hymns)) {
+      const at = list.findIndex((h) => h.id === 'lent-weekday-matins-gospel-response' || h.id === 'lent-weekday-liturgy-gospel-response');
+      if (at < 0) continue;
+      const matins = list[at].id === 'lent-weekday-matins-gospel-response';
+      list[at] = { ...tihirini, id: matins ? tihirini.id : `${tihirini.id}@lent-weekday-liturgy`, title, versions: tihirini.versions.map((v) => ({ ...v })) };
+    }
+  }
+
+  // Great Lent weekends: one Praxis Response (its own Ⲁ̀ⲣⲓⲡⲁⲙⲉⲩⲓ̀), no Ⲙⲁⲣⲉⲛⲟⲩⲱϣⲧ Gospel Response in Vespers, and one
+  // Psalm 150 (the one with its refrain)
+  dropFrom(['lent-weekend'], (h) =>
+    ['annual-liturgy-praxis-response@lent-weekend', 'annual-vespers-gospel-response@lent-weekend', 'lent-weekend-distribution-psalm-150'].includes(h.id)
+  );
+
+  // Ⲉⲩⲗⲟⲅⲓⲙⲉⲛⲟⲥ (Blessed is He) is always sung to the same tune, so it has the same recordings everywhere
+  // (Palm Sunday keeps its own procession hymns)
+  const EVLOGIMENOS = ['annual-vespers-blessed-is-he.mp3', 'arsani-236-evlogimenos.m4a'];
+  everyHymn((hymn, groupId) => {
+    if (groupId === 'palm-sunday' || !hymn.title.startsWith('Ⲉⲩⲗⲟⲅⲓⲙⲉⲛⲟⲥ')) return;
+    editRecordings(hymn, COPTIC_AUDIO, () => EVLOGIMENOS);
+    if (hymn.title === 'Ⲉⲩⲗⲟⲅⲓⲙⲉⲛⲟⲥ (The Hymn of Palm Sunday)') hymn.title = 'Ⲉⲩⲗⲟⲅⲓⲙⲉⲛⲟⲥ (Blessed is He)';
+  });
+
+  // The Hymn of the Virtues is sung in the presence of the Pope or a bishop: Annual's goes in that section, after Taishori
+  // and Hitens, and the other seasons' say so in the title
+  const annualLiturgy = seasons.find((s) => s.id === 'annual')?.services.find((s) => s.id === 'annual-liturgy');
+  const virtues = annualLiturgy?.hymns.find((h) => h.id === 'kiahk-liturgy-hymn-7@annual-liturgy');
+  if (annualLiturgy && virtues) {
+    annualLiturgy.hymns = annualLiturgy.hymns.filter((h) => h !== virtues);
+    annualLiturgy.hymns.splice(annualLiturgy.hymns.findIndex((h) => h.id === 'annual-liturgy-taishori-hitens-bishop') + 1, 0, virtues);
+  }
+  everyHymn((hymn) => {
+    if (hymn === virtues || hymn.title.includes(BISHOP)) return;
+    if (baseOf(hymn.id) === 'kiahk-liturgy-hymn-7' || /-liturgy-hymn-of-the-virtues$/.test(baseOf(hymn.id)))
+      hymn.title = hymn.title.replace(/\((Hymn of the Virtues)\)$/, `($1 (${BISHOP}))`);
+  });
+
+  // The Pauline Epistle's Coptic introduction is read in every Liturgy, not only before a bishop
+  const pauline = annualLiturgy?.hymns.find((h) => h.id === 'annual-liturgy-pauline-intro');
+  const liturgyLists = seasons
+    .flatMap((s) => s.services)
+    .filter((s) => !s.id.startsWith('holyweek'))
+    .flatMap((s) => [{ id: s.id, hymns: s.hymns }, ...flattenGroups(s.hymns)]);
+  function flattenGroups(hymns: Hymn[]): { id: string; hymns: Hymn[] }[] {
+    return hymns.filter((h) => h.children).flatMap((h) => [{ id: h.id, hymns: h.children! }, ...flattenGroups(h.children!)]);
+  }
+  for (const list of liturgyLists) {
+    const word = list.hymns.findIndex((h) => h.isSectionHeader && /Liturgy of the Word/.test(h.title));
+    if (word < 0 || !pauline) continue;
+    if (!list.hymns.some((h) => /-pauline-intro$/.test(baseOf(h.id))))
+      list.hymns.splice(word + 1, 0, { ...pauline, id: `${pauline.id}@${list.id}`, versions: pauline.versions.map((v) => ({ ...v })) });
+  }
+  // (Deacon Responses keep their names, which are their first words)
+  everyHymn((hymn, groupId) => {
+    if (!groupId.startsWith('deacon-') && /-pauline-intro$/.test(baseOf(hymn.id))) hymn.title = 'Ⲡⲁⲩⲗⲟⲥ (Pauline Coptic Reading)';
+  });
+
+  // The Liturgy of the Word in order: Taishori and Tishori, Hitens, the Pauline Coptic Reading (and the Catholic
+  // Epistle's), the Praxis Response and the Praxis Coptic Reading, the Agios, then the rest, with the Psalm and the
+  // Gospel Response last (those that sat under the Liturgy of the Faithful's heading come up into the Liturgy of the
+  // Word, where they are said)
+  const PSALM_OR_GOSPEL = /Psalm(?! 150)|Gospel Response|Ⲯⲁⲗⲙⲟⲥ/;
+  const rank = (h: Hymn) => {
+    const t = h.title;
+    if (/Golden Censer|Hymn of the Censer|Taishori|Tishori/.test(t)) return t.startsWith('Ⲧⲁⲓϣⲟⲩⲣⲏ') ? 0 : 0.5;
+    if (/Hiten|Intercessions/.test(t) && !/Long/.test(t)) return 1;
+    if (/Pauline Coptic Reading/.test(t)) return 2;
+    if (/Pauline/.test(t)) return 3;
+    if (/Catholic/.test(t)) return 3.5;
+    if (/Praxis Response/.test(t)) return 4;
+    if (/Praxis Coptic Reading/.test(t)) return 5;
+    if (/Agios|Trisagion|Holy God/.test(t)) return 6;
+    if (PSALM_OR_GOSPEL.test(t)) return 8;
+    return 7;
+  };
+  const inOrder = (list: Hymn[]): Hymn[] => {
+    const word = list.findIndex((h) => h.isSectionHeader && /Liturgy of the Word/.test(h.title));
+    if (word < 0) return list;
+    let next = list.findIndex((h, i) => i > word && h.isSectionHeader);
+    if (next < 0) next = list.length;
+    let last = next;
+    if (next < list.length && !/Bishop/.test(list[next].title))
+      while (last + 1 < list.length && !list[last + 1].isSectionHeader && !list[last + 1].children && PSALM_OR_GOSPEL.test(list[last + 1].title)) last++;
+    const section = [...list.slice(word + 1, next), ...list.slice(next + 1, last + 1)]
+      .map((h, i) => ({ h, i, r: rank(h) }))
+      .sort((a, b) => a.r - b.r || a.i - b.i)
+      .map(({ h }) => h);
+    return [...list.slice(0, word + 1), ...section, ...list.slice(next, next + 1), ...list.slice(last + 1)];
+  };
+  const reorder = (hymns: Hymn[]): Hymn[] => inOrder(hymns).map((h) => (h.children ? { ...h, children: reorder(h.children) } : h));
+  for (const service of seasons.flatMap((s) => s.services)) if (!service.id.startsWith('holyweek')) service.hymns = reorder(service.hymns);
+
+  // The Ascension sings only its own hymn, Ⲭ̀ⲣⲓⲥⲧⲟⲥ ⲁ̀ⲛⲁⲗⲩⲙⲯⲓⲥ (Christ has ascended into the heaven), not the
+  // Resurrection's Ⲭ̀ⲣⲓⲥⲧⲟⲥ ⲁ̀ⲛⲉⲥⲧⲏ and Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ ⲁϥⲧⲱⲛϥ (trampling down death by death): the Liturgy's Offering of the Lamb
+  // gets it in their place (Vespers and Matins have it already)
+  const ascension = seasons.find((s) => s.id === 'ascension');
+  const analypsis = flattenHymns(ascension?.services.flatMap((s) => s.hymns) ?? []).find((h) => h.id === 'pentecost-matins-hymn-of-the-ascension');
+  const isResurrectionHymn = (h: Hymn) => /^pentecost-liturgy-(xrictoc-anesti|pekhristos-aftonf)/.test(baseOf(h.id));
+  for (const service of ascension?.services ?? []) {
+    const first = service.hymns.findIndex(isResurrectionHymn);
+    if (first < 0) continue;
+    if (analypsis && !flattenHymns(service.hymns).some((h) => baseOf(h.id) === analypsis.id))
+      service.hymns.splice(first, 0, { ...analypsis, id: `${analypsis.id}@${service.id}`, versions: analypsis.versions.map((v) => ({ ...v })) });
+    service.hymns = removeWhere(service.hymns, isResurrectionHymn);
+  }
+
+  // Outside Annual the Watos Aspasmos recordings are of other words (another hymn, or another season's), so they leave
+  everyHymn((hymn, groupId) => {
+    if (groupId !== 'annual' && !groupId.startsWith('deacon-') && /Watos Aspasmos/.test(hymn.title)) editRecordings(hymn, ALL_LANGUAGES, () => []);
+  });
+
+  // Recordings cut again (2026-10-28):
+  // the Cross's Ⲁⲛⲟⲛ ϩⲱⲛ from 1:44 to 9:32 of Arsani's recording, and the Conclusion of the Doxologies from 9:32 (the
+  // last cut started it too late); the whole recording leaves Ⲁⲛⲟⲛ ϩⲱⲛ
+  // Great Lent's weekend doxology (Ⲛⲉⲕⲛⲁⲓ ⲱ̀ ⲡⲁϬⲟⲓⲥ) from 1:54, and Kiahk's Your Mercies O My God (2025) from 0:54
+  everyHymn((hymn, groupId) => {
+    if (groupId === 'cross') {
+      editRecordings(hymn, ALL_LANGUAGES, (files) =>
+        files
+          .filter((f) => f !== 'arsani-yt-cross-doxologies.m4a')
+          .map((f) => (f === 'cross-doxology-anon-hon-arsani.m4a' ? 'arsani-yt-cross-doxologies-1-44-to-9-32.m4a' : f))
+          .map((f) => (f === 'cross-doxology-conclusion-arsani.m4a' ? 'arsani-yt-cross-doxologies-from-9-32.m4a' : f))
+      );
+    }
+    editRecordings(hymn, ALL_LANGUAGES, swap('lent-weekend-doxology-sat-sun.mp3', 'lent-weekend-doxology-sat-sun-from-1-54.m4a'));
+    editRecordings(hymn, ALL_LANGUAGES, swap('arsani-189-marahmak-ya-elahi-kiahk-2025.m4a', 'arsani-189-marahmak-ya-elahi-kiahk-2025-from-0-54.m4a'));
   });
 }
