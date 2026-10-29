@@ -85,8 +85,8 @@ export const faithSections: GuideSection[] = [
       {
         title: { en: 'The Great Ecumenical Councils', ar: 'المجامع المسكونية الكبرى' },
         text: {
-          en: 'During the golden age of the Church, the Patriarchate of Alexandria led all of Christendom in defending the Orthodox faith. At Nicaea (AD 325), St Athanasius defended the divinity of Christ against Arius. At Constantinople (AD 381), Pope Timothy presided over the fathers who affirmed the divinity of the Holy Spirit. At Ephesus (AD 431), St Cyril the Great defended the oneness of Christ and St Mary as the Theotokos. At Chalcedon (AD 451), St Dioscorus championed the Cyrillian faith, suffering exile rather than compromising the true confession of Christ\'s one incarnate nature.',
-          ar: 'خلال العصر الذهبي للكنيسة قادت بطريركية الإسكندرية العالم المسيحي كله في الدفاع عن الإيمان المستقيم. ففي مجمع نيقية (٣٢٥م) دافع القديس أثناسيوس عن لاهوت المسيح ضد آريوس. وفي القسطنطينية (٣٨١م) رأس البابا تيموثاوس الآباء الذين أكدوا لاهوت الروح القدس. وفي أفسس (٤٣١م) دافع القديس كيرلس الكبير عن وحدانية طبيعة المسيح ولقب والدة الإله (الثيئوطوكوس). وفي خلقيدونية (٤٥١م) ثبت القديس ديسقوروس على الإيمان الكيرلسي محتملاً النفي دفاعاً عن الاعتراف بطبيعة واحدة متجسدة لله الكلمة.',
+          en: 'During the golden age of the Church, the Patriarchate of Alexandria led all of Christendom in defending the Orthodox faith. At Nicaea (AD 325), St Athanasius defended the divinity of Christ against Arius. At Constantinople (AD 381), Pope Timothy presided over the fathers who affirmed the divinity of the Holy Spirit. At Ephesus (AD 431), St Cyril the Great defended the oneness of Christ and St Mary as the Theotokos. The Coptic Church accepts these three councils only. At the fourth, Chalcedon (AD 451), which the Coptic Church does not accept, St Dioscorus championed the Cyrillian faith, suffering exile rather than compromising the true confession of Christ\'s one incarnate nature.',
+          ar: 'خلال العصر الذهبي للكنيسة قادت بطريركية الإسكندرية العالم المسيحي كله في الدفاع عن الإيمان المستقيم. ففي مجمع نيقية (٣٢٥م) دافع القديس أثناسيوس عن لاهوت المسيح ضد آريوس. وفي القسطنطينية (٣٨١م) رأس البابا تيموثاوس الآباء الذين أكدوا لاهوت الروح القدس. وفي أفسس (٤٣١م) دافع القديس كيرلس الكبير عن وحدانية طبيعة المسيح ولقب والدة الإله (الثيئوطوكوس). والكنيسة القبطية تقبل هذه المجامع الثلاثة فقط. وفي المجمع الرابع بخلقيدونية (٤٥١م)، الذي لا تقبله الكنيسة القبطية، ثبت القديس ديسقوروس على الإيمان الكيرلسي محتملاً النفي دفاعاً عن الاعتراف بطبيعة واحدة متجسدة لله الكلمة.',
         },
       },
       {
@@ -109,13 +109,13 @@ export const faithSections: GuideSection[] = [
     id: 'councils',
     icon: '⚖',
     title: { en: 'The Councils', ar: 'المجامع المسكونية' },
-    desc: { en: 'Nicaea, Constantinople, Ephesus and Chalcedon', ar: 'نيقية والقسطنطينية وأفسس وخلقيدونية' },
+    desc: { en: 'Nicaea, Constantinople and Ephesus; Chalcedon is not accepted', ar: 'نيقية والقسطنطينية وأفسس؛ ولا تقبل الكنيسة خلقيدونية' },
     items: [
       {
         title: { en: 'What is an Ecumenical Council?', ar: 'ما هو المجمع المسكوني؟' },
         text: {
-          en: 'An Ecumenical Council is a universal gathering of bishops from across the Christian world to define dogma, resolve theological crises, and safeguard apostolic faith against heresies. The Coptic Orthodox Church fully recognizes and adheres to the three universal Ecumenical Councils: Nicaea (AD 325), Constantinople (AD 381), and Ephesus (AD 431). At the fourth council, Chalcedon (AD 451), political pressures and theological misunderstandings caused a tragic division; the Coptic Church steadfastly upheld the Orthodox faith of St Cyril, standing alongside the sister Oriental Orthodox Churches.',
-          ar: 'المجمع المسكوني هو اجتماع عام لأساقفة العالم المسيحي كله لصياغة العقيدة وحل الأزمات اللاهوتية وحماية الإيمان الرسولي من البدع. وتعترف الكنيسة القبطية الأرثوذكسية بثلاثة مجامع مسكونية جامعة: نيقية (٣٢٥م)، والقسطنطينية (٣٨١م)، وأفسس (٤٣١م). أما في المجمع الرابع بخلقيدونية (٤٥١م) فقد أدت الضغوط السياسية وسوء الفهم اللاهوتي إلى حدوث انقسام مؤسف، فتمسكت الكنيسة القبطية بالإيمان المستقيم للقديس كيرلس بجانب شقيقاتها الكنائس الأرثوذكسية الشرقية.',
+          en: 'An Ecumenical Council is a universal gathering of bishops from across the Christian world to define dogma, resolve theological crises, and safeguard apostolic faith against heresies. The Coptic Orthodox Church accepts only the first three Ecumenical Councils: Nicaea (AD 325), Constantinople (AD 381), and Ephesus (AD 431). It does not accept the fourth, the Council of Chalcedon (AD 451), which is told below only as history: there, political pressures and theological misunderstandings caused a tragic division, and the Coptic Church steadfastly upheld the Orthodox faith of St Cyril, standing alongside the sister Oriental Orthodox Churches.',
+          ar: 'المجمع المسكوني هو اجتماع عام لأساقفة العالم المسيحي كله لصياغة العقيدة وحل الأزمات اللاهوتية وحماية الإيمان الرسولي من البدع. والكنيسة القبطية الأرثوذكسية تقبل المجامع المسكونية الثلاثة الأولى فقط: نيقية (٣٢٥م)، والقسطنطينية (٣٨١م)، وأفسس (٤٣١م). ولا تقبل المجمع الرابع بخلقيدونية (٤٥١م)، المذكور أدناه للتاريخ فقط: ففيه أدت الضغوط السياسية وسوء الفهم اللاهوتي إلى حدوث انقسام مؤسف، فتمسكت الكنيسة القبطية بالإيمان المستقيم للقديس كيرلس بجانب شقيقاتها الكنائس الأرثوذكسية الشرقية.',
         },
       },
       {
@@ -140,10 +140,10 @@ export const faithSections: GuideSection[] = [
         },
       },
       {
-        title: { en: '4. The Council of Chalcedon · AD 451 & The Coptic Stand', ar: '٤. مجمع خلقيدونية · ٤٥١م وموقف الكنيسة القبطية' },
+        title: { en: '4. The Council of Chalcedon · AD 451 (Not Accepted)', ar: '٤. مجمع خلقيدونية · ٤٥١م (لا تقبله الكنيسة)' },
         text: {
-          en: '• Convened: In AD 451 in Chalcedon under Emperor Marcian and Empress Pulcheria, with 630 bishops, as the Synaxarium says.\n\n• The Crisis: The council was called after Eutyches taught that Christ\'s human nature was dissolved into His divinity like a drop of vinegar in the sea (Monophysitism). Pope St Dioscorus (25th Pope of Alexandria) firmly condemned Eutyches, confessing that Christ is fully human and fully divine.\n\n• The Defense of Cyrillian Faith: St Dioscorus defended St Cyril\'s Orthodox confession: "One incarnate nature of God the Word, out of two natures," united without mingling, confusion, or alteration. However, the council adopted the "Tome of Leo" and introduced the phrase "in two natures" after the union, which attributed separate actions to each nature. St Dioscorus rejected this language because it compromised the indivisible oneness of Christ.\n\n• The Unjust Exile: When St Dioscorus refused to compromise the Cyrillian formula or sign Leo\'s Tome, the council deposed him and the emperor exiled him. By the empress\'s order he was struck on the mouth, knocking out his teeth, and his beard was plucked; he sent them to Alexandria, saying, "This is the fruit of faith." He was exiled to the island of Gangra, where he remained steadfast for five years until his departure in AD 454 (7 Thout).\n\n• The Schism & Reconciliation: Chalcedon fractured the Church into the Oriental Orthodox family (Coptic, Syriac, Armenian, Ethiopian, Eritrean, and Malankara) and the Chalcedonian Churches. While historically misrepresented as "Monophysites," the Coptic Church confesses Mia-physitism (one united divine-human nature). In modern official dialogues (such as 1989 at St Bishoy Monastery), theologians of both families agreed that both sides share the same apostolic Christological faith.',
-          ar: '• الانعقاد: انعقد سنة ٤٥١م في خلقيدونية في عهد الإمبراطور مرقيان والإمبراطورة بلخيريا، بحضور ٦٣٠ أسقفاً كما يذكر السنكسار.\n\n• الأزمة: عُقد المجمع بعد بدعة أوطاخي الذي زعم أن ناسوت المسيح ابتلع في لاهوته كقطرة خل في المحيط (المونوفيزيتية). وكان البابا القديس ديسقوروس (البابا الـ٢٥ للإسكندرية) قد أدان أوطاخي مسبقاً، مؤكداً كمال ناسوت المسيح وكمال لاهوته.\n\n• الدفاع عن الإيمان الكيرلسي: تمسك القديس ديسقوروس بعبارة القديس كيرلس: "طبيعة واحدة لله الكلمة المتجسد من طبيعتين"، متحدة بغير اختلاط ولا امتزاج ولا تغيير. لكن المجمع تبنى "طومس لاون" وأقر صيغة "في طبيعتين بعد الاتحاد"، ناسباً أفعالاً خاصة لكل طبيعة على حدة، وهو ما رآه القديس ديسقوروس مساساً بوحدانية المسيح التي لا تنفصم.\n\n• النفي الظالم: لرفضه التخلي عن صيغة القديس كيرلس أو توقيع طومس لاون، عزله المجمع ونفاه الإمبراطور. وبأمر الإمبراطورة ضُرب على فمه فسقطت أسنانه ونُتفت لحيته، فأرسلها إلى الإسكندرية قائلاً: "هذه ثمرة الإيمان"، ونُفي إلى جزيرة غانغرا فبقي ثابتاً في إيمانه خمس سنوات حتى نياحته سنة ٤٥٤م (٧ توت).\n\n• الانقسام والمصالحات: أدى مجمع خلقيدونية إلى الانقسام بين عائلة الكنائس الأرثوذكسية الشرقية (القبطية والسريانية والأرمنية والإثيوبية والإريترية والهندية) والكنائس الخلقيدونية. ورغم اتهام الأقباط ظلماً بـ"المونوفيزيتية"، تؤمن الكنيسة بـ"الميافيزيتية" (طبيعة واحدة متحدة). وفي الحوارات اللاهوتية الرسمية الحديثة (كدير الأنبا بيشوي سنة ١٩٨٩م)، أقر الجانبان رسمياً باتحادهما في جوهر الإيمان الرسولي بالمسيح.',
+          en: '• Not accepted: The Coptic Orthodox Church does not accept the Council of Chalcedon or its definition of faith. It is kept here only to tell what happened there and why the Church rejected it.\n\n• Convened: In AD 451 in Chalcedon under Emperor Marcian and Empress Pulcheria, with 630 bishops, as the Synaxarium says.\n\n• The Crisis: The council was called after Eutyches taught that Christ\'s human nature was dissolved into His divinity like a drop of vinegar in the sea (Monophysitism). Pope St Dioscorus (25th Pope of Alexandria) firmly condemned Eutyches, confessing that Christ is fully human and fully divine.\n\n• The Defense of Cyrillian Faith: St Dioscorus defended St Cyril\'s Orthodox confession: "One incarnate nature of God the Word, out of two natures," united without mingling, confusion, or alteration. However, the council adopted the "Tome of Leo" and introduced the phrase "in two natures" after the union, which attributed separate actions to each nature. St Dioscorus rejected this language because it compromised the indivisible oneness of Christ.\n\n• The Unjust Exile: When St Dioscorus refused to compromise the Cyrillian formula or sign Leo\'s Tome, the council deposed him and the emperor exiled him. By the empress\'s order he was struck on the mouth, knocking out his teeth, and his beard was plucked; he sent them to Alexandria, saying, "This is the fruit of faith." He was exiled to the island of Gangra, where he remained steadfast for five years until his departure in AD 454 (7 Thout).\n\n• The Schism & Reconciliation: Chalcedon fractured the Church into the Oriental Orthodox family (Coptic, Syriac, Armenian, Ethiopian, Eritrean, and Malankara) and the Chalcedonian Churches. While historically misrepresented as "Monophysites," the Coptic Church confesses Mia-physitism (one united divine-human nature). In modern official dialogues (such as 1989 at St Bishoy Monastery), theologians of both families agreed that both sides share the same apostolic Christological faith.',
+          ar: '• لا تقبله الكنيسة: الكنيسة القبطية الأرثوذكسية لا تقبل مجمع خلقيدونية ولا تحديده للإيمان، وهو مذكور هنا فقط لرواية ما حدث فيه ولماذا رفضته الكنيسة.\n\n• الانعقاد: انعقد سنة ٤٥١م في خلقيدونية في عهد الإمبراطور مرقيان والإمبراطورة بلخيريا، بحضور ٦٣٠ أسقفاً كما يذكر السنكسار.\n\n• الأزمة: عُقد المجمع بعد بدعة أوطاخي الذي زعم أن ناسوت المسيح ابتلع في لاهوته كقطرة خل في المحيط (المونوفيزيتية). وكان البابا القديس ديسقوروس (البابا الـ٢٥ للإسكندرية) قد أدان أوطاخي مسبقاً، مؤكداً كمال ناسوت المسيح وكمال لاهوته.\n\n• الدفاع عن الإيمان الكيرلسي: تمسك القديس ديسقوروس بعبارة القديس كيرلس: "طبيعة واحدة لله الكلمة المتجسد من طبيعتين"، متحدة بغير اختلاط ولا امتزاج ولا تغيير. لكن المجمع تبنى "طومس لاون" وأقر صيغة "في طبيعتين بعد الاتحاد"، ناسباً أفعالاً خاصة لكل طبيعة على حدة، وهو ما رآه القديس ديسقوروس مساساً بوحدانية المسيح التي لا تنفصم.\n\n• النفي الظالم: لرفضه التخلي عن صيغة القديس كيرلس أو توقيع طومس لاون، عزله المجمع ونفاه الإمبراطور. وبأمر الإمبراطورة ضُرب على فمه فسقطت أسنانه ونُتفت لحيته، فأرسلها إلى الإسكندرية قائلاً: "هذه ثمرة الإيمان"، ونُفي إلى جزيرة غانغرا فبقي ثابتاً في إيمانه خمس سنوات حتى نياحته سنة ٤٥٤م (٧ توت).\n\n• الانقسام والمصالحات: أدى مجمع خلقيدونية إلى الانقسام بين عائلة الكنائس الأرثوذكسية الشرقية (القبطية والسريانية والأرمنية والإثيوبية والإريترية والهندية) والكنائس الخلقيدونية. ورغم اتهام الأقباط ظلماً بـ"المونوفيزيتية"، تؤمن الكنيسة بـ"الميافيزيتية" (طبيعة واحدة متحدة). وفي الحوارات اللاهوتية الرسمية الحديثة (كدير الأنبا بيشوي سنة ١٩٨٩م)، أقر الجانبان رسمياً باتحادهما في جوهر الإيمان الرسولي بالمسيح.',
         },
       },
       {
@@ -341,56 +341,6 @@ export const faithSections: GuideSection[] = [
         text: {
           en: 'Head of the White Monastery near Sohag, whose monasteries held four or five thousand monks and nuns. His writings and sermons are the richest of Coptic literature. He went with St Cyril to the Council of Ephesus.',
           ar: 'رئيس الدير الأبيض بجوار سوهاج، وبلغ عدد رهبان أديرته وراهباتها أربعة أو خمسة آلاف. وكتاباته وعظاته بالقبطية أغنى الأدب القبطي. رافق القديس كيرلس إلى مجمع أفسس.',
-        },
-      },
-    ],
-  },
-  {
-    id: 'sources',
-    icon: '❖',
-    title: { en: 'Sources', ar: 'المصادر' },
-    desc: { en: 'Where these pages come from', ar: 'من أين أُخذت هذه الصفحات' },
-    items: [
-      {
-        title: { en: 'Spirit & Truth', ar: 'بالروح والحق' },
-        text: {
-          en: 'The Diocese of Los Angeles\'s app (used with permission): the words of the Creed and its Introduction, and the Church calendar. Where it says something, these pages follow it.',
-          ar: 'تطبيق إيبارشية لوس أنجلوس (بإذن): نص قانون الإيمان ومقدمته، والتقويم الكنسي. وحيث يذكر شيئاً تتبعه هذه الصفحات.',
-        },
-      },
-      {
-        title: { en: 'The Coptic Orthodox Patriarchate', ar: 'البطريركية القبطية الأرثوذكسية' },
-        text: {
-          en: 'The official website of the Coptic Orthodox Church: its Arabic history of the Church, followed where it differs from the English translation, with Coptic Monasticism and The Ecumenical Councils.\ncopticorthodox.church',
-          ar: 'الموقع الرسمي للكنيسة القبطية الأرثوذكسية: المقدمة التاريخية بالعربية (والتي نتبعها حيث تختلف عنها الترجمة الإنجليزية)، والرهبنة القبطية، والمجامع المسكونية.\ncopticorthodox.church',
-        },
-      },
-      {
-        title: { en: 'Coptic Orthodox Metropolis of the Southern United States', ar: 'مطرانية جنوب الولايات المتحدة للأقباط الأرثوذكس' },
-        text: {
-          en: 'Under H.E. Metropolitan Youssef: The Coptic Church, St Mark, and the lectures on the Church Sacraments (from Archdeacon Habib Guirguis\'s "The Church Sacraments").\nsuscopts.org',
-          ar: 'بإشراف نيافة المطران يوسف: الكنيسة القبطية، والقديس مرقس، ومحاضرات أسرار الكنيسة (عن كتاب "أسرار الكنيسة السبعة" للأرشيدياكون حبيب جرجس).\nsuscopts.org',
-        },
-      },
-      {
-        title: { en: 'The Coptic Synaxarium', ar: 'السنكسار القبطي' },
-        text: {
-          en: 'The Church\'s book of saints and feasts: the Entry of the Lord into Egypt (24 Pashons), the Council of Constantinople (1 Meshir), St Antony (22 Tobi), St Dioscorus (7 Thout) and St Shenouda (7 Epep).\nst-takla.org · copticchurch.net',
-          ar: 'كتاب الكنيسة لسير القديسين والأعياد: دخول السيد المسيح أرض مصر (٢٤ بشنس)، ومجمع القسطنطينية (١ أمشير)، والقديس الأنبا أنطونيوس (٢٢ طوبة)، والقديس ديسقوروس (٧ توت)، والقديس الأنبا شنوده (٧ أبيب).\nst-takla.org · copticchurch.net',
-        },
-      },
-      {
-        title: { en: 'H.H. Pope Shenouda III, "The Nature of Christ"', ar: 'قداسة البابا شنوده الثالث، "طبيعة المسيح"' },
-        text: {
-          en: 'The Church\'s teaching on the one nature of God the Word incarnate, Eutyches and the Council of Chalcedon.',
-          ar: 'تعليم الكنيسة عن الطبيعة الواحدة لله الكلمة المتجسد، وأوطاخي، ومجمع خلقيدونية.',
-        },
-      },
-      {
-        title: { en: 'Metropolitan Bishoy of Damiette', ar: 'نيافة المتنيح الأنبا بيشوي مطران دمياط' },
-        text: {
-          en: 'Co-chairman of the official dialogue with the Eastern Orthodox Churches: the agreed statements of St Bishoy Monastery (1989) and Chambésy (1990).\nmetropolitan-bishoy.org',
-          ar: 'الرئيس المشارك للحوار الرسمي مع الكنائس الأرثوذكسية البيزنطية: البيانات المشتركة في دير الأنبا بيشوي (١٩٨٩م) وشامبيزي (١٩٩٠م).\nmetropolitan-bishoy.org',
         },
       },
     ],
