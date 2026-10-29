@@ -1,12 +1,12 @@
 import { router } from 'expo-router';
 import { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
-import { Alert, Pressable, ScrollView, Share, Text, View } from 'react-native';
+import { Alert, Platform, Pressable, ScrollView, Share, Text, View } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 
 import { hymnWebUrl } from '../constants/site';
 import { displayTitle } from '../data/arabic-titles';
 import { audioWaveforms } from '../data/audio-waveforms';
-import { titleLines } from '../data/hymn-titles';
+import { splitTitle, titleLines } from '../data/hymn-titles';
 import { flattenHymns, Hymn, LanguageType } from '../data/hymns';
 import { hymnAcrossSeasons, hymnSlug, locateHymn, neighborHymns } from '../data/search';
 import { followAlong, PraiseKind } from '../data/follow-along';
@@ -272,6 +272,27 @@ export function HymnReader({
     Share.share(url ? { message, url, title } : { message, title }).catch(() => {
       // share sheet dismissed or unavailable
     });
+  };
+
+  // The words to paste elsewhere: straight to the clipboard on the website, through the share sheet's Copy on phones
+  const [copied, setCopied] = useState(false);
+  const copyWords = () => {
+    const words = `${title}\n\n${hymnPlainText(hymn, effectiveLanguage)}`;
+    if (Platform.OS === 'web' && typeof navigator !== 'undefined' && navigator.clipboard) {
+      navigator.clipboard.writeText(words).then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      });
+      return;
+    }
+    Share.share({ message: words }).catch(() => {
+      // share sheet dismissed or unavailable
+    });
+  };
+  // On the website the recording is saved as a file (the site sends it as a download, see worker/index.ts)
+  const downloadFile = (file: string) => {
+    const ext = file.match(/\.\w+$/)?.[0] ?? '';
+    window.location.href = `/download/${encodeURIComponent(file)}?name=${encodeURIComponent(`${splitTitle(hymn.title).english ?? hymn.title}${ext}`)}`;
   };
 
   const textFor = (language: LanguageType) => hymnPlainText(hymn, language) || t.notAvailable;
@@ -613,6 +634,14 @@ export function HymnReader({
             />
             <SheetRow
               rtl={isRTL}
+              label={copied ? t.copied : t.copyWords}
+              onPress={() => {
+                if (Platform.OS !== 'web') setSheet(null);
+                copyWords();
+              }}
+            />
+            <SheetRow
+              rtl={isRTL}
               label={t.textSizeLabel}
               end={
                 <View style={[styles.textSizeButtons, rowDirection]}>
@@ -790,6 +819,15 @@ export function HymnReader({
                       {isDownloading ? t.downloading : isDownloaded ? t.downloaded : t.download}
                     </Text>
                   </Pressable>
+                ) : Platform.OS === 'web' ? (
+                  <Pressable
+                    onPress={() => downloadFile(currentAudio)}
+                    accessibilityRole="button"
+                    style={({ pressed }) => [styles.playlistButton, styles.audioAction, pressed && styles.pressed]}>
+                    <Text style={styles.controlText} numberOfLines={1} adjustsFontSizeToFit>
+                      {t.downloadFile}
+                    </Text>
+                  </Pressable>
                 ) : null}
               </View>
               {choosingPlaylist ? <PlaylistPicker lang={lang} item={readerItem} onDone={() => setChoosingPlaylist(false)} /> : null}
@@ -825,11 +863,11 @@ export function HymnReader({
                   onPress={() => tapVerse(i)}
                   onLayout={(e) => (verseY.current[i] = e.nativeEvent.layout.y)}
                   style={[styles.verseRow, rowDirection, i > 0 && styles.verseRowDivider, versesTappable && learnVerseStyle(i)]}>
-                  <Text style={[styles.hymnText, styles.verseColumn, columnText, columnStyle(effectiveLanguage)]}>
+                  <Text selectable={!versesTappable} style={[styles.hymnText, styles.verseColumn, columnText, columnStyle(effectiveLanguage)]}>
                     {verseContent(verses[i])}
                   </Text>
                   <View style={styles.verseGutter} />
-                  <Text style={[styles.hymnText, styles.verseColumn, columnText, columnStyle(compareLanguage)]}>
+                  <Text selectable={!versesTappable} style={[styles.hymnText, styles.verseColumn, columnText, columnStyle(compareLanguage)]}>
                     {verseContent(compareVerses[i])}
                   </Text>
                 </Pressable>
@@ -855,6 +893,7 @@ export function HymnReader({
               ))
             ) : (
               <Text
+                selectable
                 style={[
                   styles.hymnText,
                   { fontSize, lineHeight: fontSize * 1.65 },
@@ -887,17 +926,18 @@ export function HymnReader({
                   {showSideBySide && compareLanguage ? (
                     Array.from({ length: Math.max(bishopVerses.length, bishopCompareVerses.length) }, (_, i) => (
                       <View key={i} style={[styles.verseRow, rowDirection, i > 0 && styles.verseRowDivider]}>
-                        <Text style={[styles.hymnText, styles.verseColumn, columnText, columnStyle(effectiveLanguage)]}>
+                        <Text selectable={!versesTappable} style={[styles.hymnText, styles.verseColumn, columnText, columnStyle(effectiveLanguage)]}>
                           {verseContent(bishopVerses[i])}
                         </Text>
                         <View style={styles.verseGutter} />
-                        <Text style={[styles.hymnText, styles.verseColumn, columnText, columnStyle(compareLanguage)]}>
+                        <Text selectable={!versesTappable} style={[styles.hymnText, styles.verseColumn, columnText, columnStyle(compareLanguage)]}>
                           {verseContent(bishopCompareVerses[i])}
                         </Text>
                       </View>
                     ))
                   ) : (
                     <Text
+                      selectable
                       style={[
                         styles.hymnText,
                         { fontSize, lineHeight: fontSize * 1.65 },
