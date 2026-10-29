@@ -11,7 +11,7 @@ export async function generateStaticParams(): Promise<Record<string, string>[]> 
 }
 
 // Annual's and Festival's services under headings, in the order they are prayed: the Raising of Incense (Vespers,
-// then Matins), the Divine Liturgy (the Offering of the Lamb to each Liturgy), then the rest (with a bishop).
+// then Matins), the Divine Liturgy (the Offering of the Lamb to each Liturgy), then the rest.
 // Kinds with neither (the Special Holy Orders) stay one list.
 const deaconGroups: { key: 'raisingOfIncense' | 'divineLiturgy' | null; test: RegExp }[] = [
   { key: 'raisingOfIncense', test: /-vespers$/ },

@@ -556,6 +556,7 @@ export const audioWaveforms: Record<string, string> = {
   "psalm-150-coptic.m4a": 'ol9ssqmrpmoqoqpppmntowuuqsrm9lsmjourrm5zhdutvuodyd9zovsiepplsupv',
   "psalm-150-english.m4a": 'p6tqo9trostqf45qugksnpxurqqk444667zslurs745796ttpowr933858xwqsyv',
   "psalm-trailer-annual.m4a": 'da9bb9abeedeebdfdedbbbdddccbeb5gzeebcdea2dfgdedcbdccecd2beccddb7',
+  "psalm-trailer-pope-bishop-liturgy-from-1-11.m4a": 'osyrtyrtutkzputsvpuuvwrfvzqyrwnsxsovuutjoyupltltwvi75985a7a6btwn',
   "psalm-trailer-pope-bishop-liturgy.m4a": 'zypsxmwtvpvtxsqusmrssquortsstqqrsspvrsjwrssptrrtistlnrvg686988rq',
   "sc-joeseif-sunday-theotokia-part-10-teoi.m4a": 'umeniosekndvnlrmqrduhlqcuitvblretglpcwmgsfrqdmpqpjqvhqnmqwqutznd',
   "veneration-hail-to-you-o-mary.m4a": 'xxztrmplqtvtronlhuwwvrnrntwwturrqovtxxrnrnrxzwwpprpswvxrqsnpsstz',

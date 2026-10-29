@@ -317,7 +317,8 @@ describe('The three Divine Liturgies', () => {
   });
 
   test("each liturgy has its own responses, in Spirit & Truth's order", () => {
-    const of = (id: string) => ids(deaconAnnual.services.find((s) => s.id === id)!.hymns);
+    // (without what is said in the presence of the Pope or a bishop, which ends each liturgy)
+    const of = (id: string) => ids(deaconAnnual.services.find((s) => s.id === id)!.hymns).filter((h) => !h.startsWith('d-annual-bishop-'));
     const basil = of('d-annual-liturgy-basil');
     const gregory = of('d-annual-liturgy-gregory');
     const cyril = of('d-annual-liturgy-cyril');

@@ -1172,8 +1172,6 @@ const serviceTitles: Record<string, string> = {
   'Institution Narrative': 'الصلوات التأسيسية',
   'Commemoration of the Saints': 'مجمع القديسين',
   'Fraction and Confession': 'القسمة والاعتراف',
-  'In Presence of Bishop / Patriarch': 'في حضور الأسقف / البطريرك',
-  'Vespers in Presence of Bishop / Patriarch': 'عشية في حضور الأسقف / البطريرك',
   Unction: 'سر مسحة المرضى (القنديل)',
   Baptism: 'سر المعمودية',
   Prostration: 'صلاة السجدة',

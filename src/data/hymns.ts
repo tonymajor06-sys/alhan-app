@@ -8309,7 +8309,8 @@ addArabicEnglish([...seasons, ...deaconCategories]);
 
 // ---- What is said in the presence of the Pope or a bishop folds into the hymn it extends ----
 // (the Concluding Hymn, the Psalm Trailer, Pray That God May Have Mercy), as Spirit & Truth shows it,
-// instead of being a hymn of its own. The In Presence of Bishop / Patriarch lists keep theirs as they are.
+// instead of being a hymn of its own. The In Presence of Bishop / Patriarch lists keep theirs (they are spread
+// over the services further down).
 // Runs after the Arabic letters are added, so the folded text has them too.
 const isBishopAddition = (hymn: Hymn) =>
   !hymn.isSectionHeader &&
@@ -8467,6 +8468,51 @@ for (const group of deaconCategories)
       list.map((h) => (h.children ? { ...h, children: rename(h.children) } : (renamed.get(h) ?? h)));
     service.hymns = rename(service.hymns);
   }
+
+// ---- What is said in the presence of the Pope or a bishop goes in the services where it is said ----
+// (Annual's and Festival's "In Presence of Bishop / Patriarch" lists are taken out), named for the Pope or a bishop.
+// Annual's first place keeps the response's id (its recordings are matched by it); the rest are "<id>@<service>".
+// The Psalm Trailer's recording starts at 1:11, where the words for the Pope or a bishop begin.
+{
+  const BISHOP_EN = 'In the Presence of the Pope or a Bishop';
+  const BISHOP_AR = 'في حضور البابا أو الأسقف';
+  // Each response: where it goes, as [service, the response it follows ('start' or 'end' for the ends of the list)]
+  const places: Record<string, [string, string][]> = {
+    'blessed-is-he': [['vespers', 'start'], ['matins', 'start'], ['offering-lamb', 'start']],
+    'thanksgiving-prayer-response-in-the-presence-of-th': [['vespers', 'pray-for-mercy'], ['matins', 'pray-for-mercy'], ['offering-lamb', 'pray-for-mercy']],
+    'psalm-trailer-for-the-pope-or-a-bishop': [['liturgy-word', 'pray-for-the-gospel']],
+    'introduction-to-the-coptic-gospel-when-read-by-the': [['liturgy-word', 'stand-in-the-fear-of-god']],
+    'conclusion-in-the-presence-of-the-pope-or-a-bishop': [['vespers', 'end'], ['matins', 'end'], ...liturgies.map((l): [string, string] => [`liturgy-${l.id}`, 'end'])],
+  };
+  for (const [kind, category] of [['d-annual', 'deacon-annual'], ['d-fest', 'deacon-festival']] as const) {
+    const services = deaconCategories.find((c) => c.id === category)?.services;
+    const bishopService = services?.find((s) => s.id === `${kind}-bishop`);
+    if (!services || !bishopService) continue;
+    services.splice(services.indexOf(bishopService), 1);
+    for (const hymn of bishopService.hymns) {
+      const base = baseOf(hymn.id);
+      const { english, coptic } = splitTitle(hymn.title);
+      const title = coptic ? `${coptic} (${english} (${BISHOP_EN}))` : `${hymn.title} (${BISHOP_EN})`;
+      const arabic = openingArabicTitles[hymn.id];
+      let first = kind === 'd-annual';
+      for (const [where, after] of places[base.replace('d-annual-bishop-', '')] ?? []) {
+        const service = services.find((s) => s.id === `${kind}-${where}`);
+        if (!service) continue;
+        const id = first ? base : `${base}@${service.id}`;
+        first = false;
+        const placed: Hymn = { ...hymn, id, title, versions: hymn.versions.map((v) => ({ ...v })) };
+        if (arabic) openingArabicTitles[id] = `${arabic} (${BISHOP_AR})`;
+        if (/psalm-trailer/.test(base))
+          for (const v of placed.versions) if (v.audio === 'psalm-trailer-pope-bishop-liturgy.m4a') v.audio = 'psalm-trailer-pope-bishop-liturgy-from-1-11.m4a';
+        const at =
+          after === 'start' ? 0
+          : after === 'end' ? service.hymns.length
+          : service.hymns.findIndex((h) => baseOf(h.id).endsWith(`-${after}`)) + 1;
+        service.hymns.splice(at > 0 || after === 'start' ? at : service.hymns.length, 0, placed);
+      }
+    }
+  }
+}
 
 // ---- Fixes the user asked for (2026-10-28): recordings and hymns taken out ----
 {
