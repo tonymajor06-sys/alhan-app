@@ -22,7 +22,7 @@ import { stMore } from './st-more';
 import { stMysteries } from './st-mysteries';
 import { stSeasonExtras } from './st-season-extras';
 import { stVesperPraises, vpNewHymns } from './st-vesper-praises';
-import { alleluiaFaiPePiehoou, concludingLines, praxisReading, psalm150Refrains, seasonDoxologies, SeasonLine } from './seasonal-texts';
+import { alleluiaFaiPePiehoou, annualAmoini, concludingLines, praxisReading, psalm150Refrains, seasonDoxologies, SeasonLine } from './seasonal-texts';
 
 export type LanguageType = 'coptic' | 'englishCoptic' | 'arabicCoptic' | 'english' | 'arabicEnglish' | 'englishArabic' | 'arabic';
 
@@ -8379,6 +8379,19 @@ for (const group of [...seasons, ...deaconCategories]) {
     return hymns.filter((h) => h.children).flatMap((h) => [h.children!, ...flattenGroupsOf(h.children!)]);
   }
 
+  // Annual's Vespers and Matins: the Adam Verses of the Cymbals, Ⲁⲙⲱⲓⲛⲓ ⲙⲁⲣⲉⲛⲟⲩⲱϣⲧ, after Ⲧⲉⲛⲟⲩⲱϣⲧ (no recording yet:
+  // Arsani's joyful one is the Feast of the Cross's)
+  for (const serviceId of ['annual-vespers', 'annual-matins']) {
+    const service = serviceById(serviceId);
+    if (!service) continue;
+    const id = serviceId === 'annual-matins' ? 'annual-matins-verses-of-cymbals-adam' : 'annual-matins-verses-of-cymbals-adam@annual-vespers';
+    insertAfter(service.hymns, (h) => h.id === `${serviceId}-verse-of-cymbals`, {
+      id,
+      title: 'Ⲁⲙⲱⲓⲛⲓ ⲙⲁⲣⲉⲛⲟⲩⲱϣⲧ (Adam Verses of the Cymbals)',
+      versions: annualAmoini.map((v) => ({ ...v })),
+    });
+  }
+
   // The Praxis's Coptic introduction, read in every Liturgy of the Word (placed in order with the rest further down)
   // (Great Lent's Liturgy is a group inside its Weekdays and Weekends)
   const liturgyLists = seasons
@@ -8883,21 +8896,6 @@ for (const group of deaconCategories)
   });
   // Ⲁⲓⲕⲱϯ ⲛ̀ⲥⲱⲕ's third recording (the Coptic sung with Arabic) leaves Kiahk's copies too
   everyHymn((hymn) => editRecordings(hymn, ALL_LANGUAGES, without('midnight-sunday-psali-lord-jesus-coptic-arabic.m4a')));
-
-  // Annual's Vespers and Matins also have Ⲁⲙⲱⲓⲛⲓ ⲙⲁⲣⲉⲛⲟⲩⲱϣⲧ, after Ⲧⲉⲛⲟⲩⲱϣⲧ (the words are Kiahk's)
-  const amoini = flattenHymns(seasons.find((s) => s.id === 'kiahk')?.services.flatMap((s) => s.hymns) ?? []).find((h) => h.id === 'kiahk-matins-verses-of-cymbals-2');
-  for (const service of seasons.find((s) => s.id === 'annual')?.services.filter((s) => s.id === 'annual-vespers' || s.id === 'annual-matins') ?? []) {
-    if (!amoini) break;
-    const at = service.hymns.findIndex((h) => h.id === `${service.id}-verse-of-cymbals`);
-    service.hymns.splice(at + 1, 0, { ...amoini, id: `${amoini.id}@${service.id}`, versions: amoini.versions.map((v) => ({ ...v })) });
-  }
-
-  // Ⲁⲙⲱⲓⲛⲓ ⲙⲁⲣⲉⲛⲟⲩⲱϣⲧ (the Adam Verses of the Cymbals) in its joyful tune: Arsani's recording, the one the Cross also
-  // has (Great Lent sings it in its own tune)
-  everyHymn((hymn, groupId) => {
-    if (groupId !== 'great-lent' && hymn.title.startsWith('Ⲁⲙⲱⲓⲛⲓ ⲙⲁⲣⲉⲛⲟⲩⲱϣⲧ'))
-      editRecordings(hymn, COPTIC_AUDIO, (files) => [...files, 'arsani-003-joyful-verses-of-cymbals-adam-feast-of-cross.m4a']);
-  });
 
   // Nativity's 7 Tunes all in one, with Arsani's recording of the whole, before the seven on their own
   const nativityMatins = seasons.find((s) => s.id === 'nativity')?.services.find((s) => s.id === 'nativity-matins');
