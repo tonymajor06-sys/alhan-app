@@ -8932,23 +8932,23 @@ for (const group of deaconCategories)
   });
 
   // Deacon Responses > Annual, the Liturgy of the Faithful: the altar responses recording the owner gave (Coptic), cut into
-  // one for each response (each a moment early and late, so no word is cut off)
+  // one for each response, each ending in the silence after it (the "-2" files replaced cuts that ended too soon)
   const altarResponses: Record<string, string> = {
     'in-the-wisdom-of-god': 'in-the-wisdom-of-god',
-    'reconciliation': 'reconciliation',
-    'greet-one-another': 'greet-one-another',
-    'anaphora': 'you-who-are-seated',
-    'look-towards-the-east': 'look-towards-the-east',
-    'epiclesis': 'epiclesis',
-    'pray-for-peace-2': 'pray-for-peace',
-    'pray-for-the-fathers-2': 'pray-for-the-fathers',
-    'pray-for-priests-and-deacons': 'pray-for-priests-and-deacons',
-    'pray-for-the-place': 'pray-for-the-place',
-    'pray-for-the-oblations': 'pray-for-the-oblations',
-    'let-those-who-read': 'let-those-who-read',
-    'amen-let-us-pray': 'amen-let-us-pray',
-    'bow-your-heads': 'bow-your-heads',
-    'saved-amen': 'saved-amen',
+    'reconciliation': 'reconciliation-2',
+    'greet-one-another': 'greet-one-another-2',
+    'anaphora': 'you-who-are-seated-2',
+    'look-towards-the-east': 'look-towards-the-east-2',
+    'epiclesis': 'epiclesis-2',
+    'pray-for-peace-2': 'pray-for-peace-2',
+    'pray-for-the-fathers-2': 'pray-for-the-fathers-2',
+    'pray-for-priests-and-deacons': 'pray-for-priests-and-deacons-2',
+    'pray-for-the-place': 'pray-for-the-place-2',
+    'pray-for-the-oblations': 'pray-for-the-oblations-2',
+    'let-those-who-read': 'let-those-who-read-2',
+    'amen-let-us-pray': 'amen-let-us-pray-2',
+    'bow-your-heads': 'bow-your-heads-2',
+    'saved-amen': 'saved-amen-2',
     'the-confession': 'the-confession',
   };
   everyHymn((hymn, groupId) => {
