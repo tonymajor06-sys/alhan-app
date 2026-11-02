@@ -13,7 +13,13 @@ describe('saint tabs', () => {
   it('name a known saint for each hymn, and have words', () => {
     for (const tab of stSaintTabs) {
       for (const saint of Object.values(tab.saintOf)) expect(stSaints[saint]).toBeDefined();
-      for (const hymn of flattenHymns(tab.hymns)) expect(hymn.versions.find((v) => v.language === 'english')?.text).toBeTruthy();
+      for (const hymn of flattenHymns(tab.hymns)) {
+        expect(hymn.versions.find((v) => v.language === 'english')?.text).toBeTruthy();
+        const arabic = hymn.versions.find((v) => v.language === 'arabic')?.text;
+        const letters = hymn.versions.find((v) => v.language === 'englishArabic')?.text;
+        expect(letters?.split('\n\n').length).toBe(arabic?.split('\n\n').length);
+        expect(letters ?? '').not.toMatch(/j/i);
+      }
     }
   });
 

@@ -5,6 +5,8 @@ import json, re
 
 C = 'captures/st-saints/'
 load = lambda n: json.load(open(C + n + '.json', encoding='utf8'))
+# Arabic in English letters, verse by verse (Arabic: English letters), written for the app
+ARABIC_ENGLISH = json.load(open('scripts/st-saints/arabic-english.json', encoding='utf8'))
 
 # id, name, Arabic name, feast days (Coptic month, day), what finds the saint in a title or verse (first match wins)
 SAINTS = [
@@ -101,6 +103,9 @@ def hymn(id_, title, lines):
         text = '\n\n'.join(l[key] for l in lines if l[key])
         if text:
             versions.append({'language': language, 'text': text})
+    arabic = '\n\n'.join(l['ar'] for l in lines if l['ar'])
+    if arabic:
+        versions.append({'language': 'englishArabic', 'text': '\n\n'.join(ARABIC_ENGLISH[p] for p in arabic.split('\n\n') if p.strip())})
     return {'id': id_, 'title': title, 'versions': versions}
 
 def page_hymns(sections, prefix):
