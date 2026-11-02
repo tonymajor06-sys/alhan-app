@@ -4,10 +4,12 @@ import { Alert, Image, Pressable, Text, View } from 'react-native';
 import { createAlhanStyles, goBackOrHome, ScreenShell, strings, withoutNumber } from '@/components/alhan-ui';
 import { successFeedback } from '@/components/haptics';
 import { ListGroup, ListRow, localDigits, SectionHeader } from '@/components/lists';
+import { SaintTab } from '@/components/saint-tab';
 import { seasonArt } from '@/constants/season-art';
 import { displayTitle } from '@/data/arabic-titles';
 import { toArabicDigits } from '@/data/coptic-calendar';
 import { flattenHymns, seasons, Service } from '@/data/hymns';
+import { stSaintTabs } from '@/data/st-saints';
 import { useThemedStyles } from '@/hooks/use-alhan-colors';
 import { canDownload, downloadAll, useAudioDownloads } from '@/hooks/use-audio-downloads';
 import { useSettings } from '@/hooks/use-settings';
@@ -46,6 +48,9 @@ export default function SeasonScreen() {
       </ScreenShell>
     );
   }
+
+  const saintTab = stSaintTabs.find((tab) => tab.id === season.id);
+  if (saintTab) return <SaintTab season={season} tab={saintTab} />;
 
   const art = seasonArt[season.id];
   // Every recording in the season that streams from the internet, so it can be saved for church without signal

@@ -16,6 +16,7 @@ import { stDeacon } from './st-deacon';
 import { stFills } from './st-fills';
 import { stFullSeasons } from './st-full-seasons';
 import { stGeorgeDoxology2 } from './st-george-doxology';
+import { stSaintTabs } from './st-saints';
 import { stAdditions } from './st-hymns';
 import { deaconOrder, hymnOrder, liturgies, liturgyFromMatins, stLiturgyDeacon } from './st-liturgies';
 import { stMore } from './st-more';
@@ -8404,6 +8405,35 @@ for (const group of [...seasons, ...deaconCategories]) {
     const id = list.id === 'annual-liturgy' ? 'annual-liturgy-praxis-reading' : `annual-liturgy-praxis-reading@${list.id}`;
     list.hymns.splice(word + 1, 0, { id, title: 'Ⲡⲣⲁⲝⲓⲥ (Praxis Coptic Reading)', versions: praxisReading.map((v) => ({ ...v })) });
   }
+}
+
+// The Hymns tabs from Spirit & Truth's Saint Selection (see st-saints.ts): Veneration after the Minor Feasts of the Lord,
+// then the saints' other hymns, with the Verses of the Cymbals last. A doxology the app already sings keeps its recordings.
+// A hymn's first words, without the marks over its letters
+const openingOf = (coptic: string) => coptic.normalize('NFD').replace(/[\u0300-\u036f\ufe20-\ufe2f]/g, '').replace(/\s+/g, ' ').trim().slice(0, 48).toLowerCase();
+const annualByOpening = new Map(
+  seasons[0].services
+    .flatMap((service) => flattenHymns(service.hymns))
+    .flatMap((hymn) => {
+      const coptic = hymn.versions.find((v) => v.language === 'coptic')?.text;
+      return coptic ? [[openingOf(coptic), hymn] as const] : [];
+    })
+);
+for (const tab of stSaintTabs) {
+  for (const hymn of tab.hymns) {
+    const coptic = hymn.versions.find((v) => v.language === 'coptic')?.text;
+    const same = coptic ? annualByOpening.get(openingOf(coptic)) : undefined;
+    if (!same) continue;
+    for (const version of hymn.versions) {
+      const recorded = same.versions.find((v) => v.language === version.language && v.audio);
+      if (recorded) Object.assign(version, { audio: recorded.audio, otherAudio: recorded.otherAudio });
+    }
+  }
+  seasons.push({
+    id: tab.id,
+    title: `${seasons.length + 1}. ${tab.title}`,
+    services: [{ id: `${tab.id}-all`, title: tab.title, hymns: tab.hymns }],
+  });
 }
 
 // Keep these last: give every hymn a "Coptic in Arabic letters" and an "English in Arabic letters" version

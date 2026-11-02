@@ -32,6 +32,16 @@ export const copticDayName = (month: number, day: number, lang: AppLanguage) =>
 // That Coptic day in the church year around `today`
 export const saintJdn = (month: number, day: number, today: number) => copticToJdn(jdnToCoptic(today).year, month, day);
 
+// The soonest of a saint's feast days, on or after today
+export function nextFeast(days: [number, number][], today: number) {
+  const year = jdnToCoptic(today).year;
+  const dates = days.map(([month, day]) => {
+    const jdn = copticToJdn(year, month, day);
+    return { month, day, jdn: jdn >= today ? jdn : copticToJdn(year + 1, month, day) };
+  });
+  return dates.sort((a, b) => a.jdn - b.jdn)[0] ?? null;
+}
+
 // Names first, then stories; every word of the search has to be there
 export function searchSaints(query: string): Saint[] {
   const words = normalizeForSearch(query.trim().toLowerCase()).split(/\s+/).filter(Boolean);

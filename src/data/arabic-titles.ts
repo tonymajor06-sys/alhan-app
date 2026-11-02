@@ -1,5 +1,6 @@
 import type { AppLanguage } from '@/hooks/use-settings';
 
+import { stSaintTabs } from './st-saints';
 import { vpArabicTitles } from './st-vesper-praises-titles';
 
 // Arabic display names, keyed by the id used in hymns.ts
@@ -273,6 +274,8 @@ const arabicTitles: Record<string, string> = {
   'apostles-fast': 'صوم وعيد الرسل',
   'st-mary': 'صوم السيدة العذراء وعيد صعود جسدها',
   'minor-feasts': 'الأعياد السيدية الصغرى',
+  ...Object.fromEntries(stSaintTabs.flatMap((tab) => [[tab.id, tab.titleAr], [`${tab.id}-all`, tab.titleAr]])),
+  ...Object.assign({}, ...stSaintTabs.map((tab) => tab.titlesAr)),
 
   // Groups and hymns added on 2026-10-13
   ...Object.fromEntries(
