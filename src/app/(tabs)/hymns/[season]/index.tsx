@@ -3,6 +3,7 @@ import { Alert, Image, Pressable, Text, View } from 'react-native';
 
 import { createAlhanStyles, goBackOrHome, ScreenShell, strings, withoutNumber } from '@/components/alhan-ui';
 import { successFeedback } from '@/components/haptics';
+import { SeasonSearch } from '@/components/hymn-search';
 import { ListGroup, ListRow, localDigits, SectionHeader } from '@/components/lists';
 import { seasonArt } from '@/constants/season-art';
 import { displayTitle } from '@/data/arabic-titles';
@@ -76,6 +77,24 @@ export default function SeasonScreen() {
     return name.includes(': ') ? name.split(': ').slice(1).join(': ') : name;
   };
 
+  const list = sections.map(({ feast, services }, s) => (
+    <View key={feast ?? `section-${s}`}>
+      {feast ? <SectionHeader title={lang === 'ar' ? displayTitle(services[0], lang).split(': ')[0] : feast} /> : null}
+      <ListGroup
+        rows={services.map((service, index) => (
+          <ListRow
+            key={service.id}
+            title={serviceName(service)}
+            lead={localDigits(index + 1, isRTL)}
+            onPress={() =>
+              router.push({ pathname: '/hymns/[season]/[service]', params: { season: season.id, service: service.id } })
+            }
+          />
+        ))}
+      />
+    </View>
+  ));
+
   return (
     <ScreenShell lang={lang} title={withoutNumber(displayTitle(season, lang))} onBack={goBackOrHome}>
       {art ? (
@@ -99,23 +118,7 @@ export default function SeasonScreen() {
           </Text>
         </Pressable>
       ) : null}
-      {sections.map(({ feast, services }, s) => (
-        <View key={feast ?? `section-${s}`}>
-          {feast ? <SectionHeader title={lang === 'ar' ? displayTitle(services[0], lang).split(': ')[0] : feast} /> : null}
-          <ListGroup
-            rows={services.map((service, index) => (
-              <ListRow
-                key={service.id}
-                title={serviceName(service)}
-                lead={localDigits(index + 1, isRTL)}
-                onPress={() =>
-                  router.push({ pathname: '/hymns/[season]/[service]', params: { season: season.id, service: service.id } })
-                }
-              />
-            ))}
-          />
-        </View>
-      ))}
+      {season.id === 'other' ? <SeasonSearch seasonId={season.id}>{list}</SeasonSearch> : list}
     </ScreenShell>
   );
 }

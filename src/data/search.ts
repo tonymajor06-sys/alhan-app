@@ -214,8 +214,8 @@ const escapeRegExp = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 // Every word of the query must appear (in any order) in the title or in one language's text.
 // The hymn whose name is what was typed comes first: titles that start with it, then titles that contain it,
 // then hymns that open with those words, then texts containing them as a phrase, then the rest.
-// Within each, the hymn in its own place comes before its copies in other services.
-export function searchHymns(query: string, limit = 50): SearchResult[] {
+// Within each, the hymn in its own place comes before its copies in other services. `groupId` keeps to one season.
+export function searchHymns(query: string, limit = 50, groupId?: string): SearchResult[] {
   const words = normalizeForSearch(query).split(/\s+/).filter(Boolean);
   if (words.length === 0 || words.join('').length < 2) return [];
   index ??= buildIndex();
@@ -226,6 +226,7 @@ export function searchHymns(query: string, limit = 50): SearchResult[] {
 
   const tiers: SearchResult[][] = [[], [], [], [], []];
   for (const entry of index) {
+    if (groupId && entry.location.group.id !== groupId) continue;
     const add = (tier: number, language: LanguageType | null, snippet: string) =>
       tiers[tier].push({ hymn: entry.hymn, location: entry.location, language, snippet });
     const titleStarts = entry.titles.some((t) => atStart.test(t));

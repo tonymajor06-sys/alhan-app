@@ -1,10 +1,8 @@
 import { useState } from 'react';
-import { Pressable, Text, TextInput, View } from 'react-native';
+import { Text, TextInput, View } from 'react-native';
 
-import { createAlhanStyles, goBackOrHome, languageLabels, openHymnPage, ScreenShell, strings, withCopticFont, withoutNumber } from '@/components/alhan-ui';
-import { tapFeedback } from '@/components/haptics';
-import { displayTitle } from '@/data/arabic-titles';
-import { titleLines } from '@/data/hymn-titles';
+import { createAlhanStyles, goBackOrHome, ScreenShell, strings } from '@/components/alhan-ui';
+import { SearchResults } from '@/components/hymn-search';
 import { searchHymns } from '@/data/search';
 import { useAlhanColors, useThemedStyles } from '@/hooks/use-alhan-colors';
 import { useSettings } from '@/hooks/use-settings';
@@ -46,36 +44,7 @@ export default function SearchScreen() {
       ) : results.length === 0 ? (
         <Text style={[styles.emptyText, textAlign]}>{t.noResults}</Text>
       ) : (
-        results.map((result) => {
-          const { hymn, location, language } = result;
-          const where = `${withoutNumber(displayTitle(location.group, lang))} › ${displayTitle(location.service, lang)}`;
-          const name = titleLines(hymn, lang, settings.titleStyle);
-          const matchedIn = language ? languageLabels[lang].find((l) => l.key === language)?.label : t.titleMatch;
-          return (
-            <Pressable
-              key={hymn.id}
-              onPress={() => {
-                tapFeedback();
-                openHymnPage(hymn.id, language ?? undefined);
-              }}
-              accessibilityRole="button"
-              style={({ pressed }) => [styles.rowCard, rowDirection, pressed && styles.rowCardPressed]}>
-              <View style={styles.rowTextWrap}>
-                <Text style={[styles.rowTitle, textAlign]}>{withCopticFont(name.main)}</Text>
-                {name.coptic ? <Text style={[styles.tileCoptic, textAlign]}>{name.coptic}</Text> : null}
-                <Text style={[styles.playlistMeta, textAlign]} numberOfLines={1}>
-                  {where} · {matchedIn}
-                </Text>
-                {result.snippet ? (
-                  <Text style={[styles.searchSnippet, language === 'arabic' ? styles.arabicText : textAlign]} numberOfLines={2}>
-                    {result.snippet}
-                  </Text>
-                ) : null}
-              </View>
-              <Text style={styles.chevron}>{isRTL ? '‹' : '›'}</Text>
-            </Pressable>
-          );
-        })
+        <SearchResults results={results} />
       )}
     </ScreenShell>
   );

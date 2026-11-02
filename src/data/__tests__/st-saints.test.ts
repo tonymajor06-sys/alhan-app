@@ -1,6 +1,7 @@
 import { copticToJdn, gregorianToJdn } from '../coptic-calendar';
 import { flattenHymns, seasons } from '../hymns';
 import { nextFeast } from '../saints';
+import { searchHymns } from '../search';
 import { stSaints, stSaintTabs } from '../st-saints';
 
 describe('saint tabs', () => {
@@ -28,6 +29,12 @@ describe('saint tabs', () => {
         expect(letters ?? '').not.toMatch(/j/i);
       }
     }
+  });
+
+  it('can be searched on their own', () => {
+    const found = searchHymns('marina', 50, 'other');
+    expect(found.length).toBeGreaterThan(3);
+    expect(found.every((r) => r.location.group.id === 'other')).toBe(true);
   });
 
   it('find the next feast, rolling into next year once it has passed', () => {
