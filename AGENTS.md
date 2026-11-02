@@ -52,7 +52,7 @@ Several assistants (Claude Code, Antigravity) work in this repo. Commit finished
 - **Permissions already granted** (don't raise them again): Archdeacon Arsani Sidarous's recordings (KlickAud, alhan.org, his YouTube playlist), every track in the SoundCloud playlist "Archie Arsani Sidarous", and the texts of the Spirit & Truth app (its creator approved). Keep Spirit & Truth source captures out of git.
 - **Audio** lives in `assets/audio` and is mirrored to Cloudflare R2 with `node scripts/upload-audio-r2.mjs`; upload new files after adding them, and run `node scripts/audio-waveforms.mjs` so the player can draw their waveforms.
 - **No ads** for now (removed 2026-10-13; the old setup is in commit aae287c). Donations go through the box in `src/components/donation-box.tsx` (links in `src/constants/donate.ts`). Never call donations tax-deductible.
-- **Website:** https://copticpsalmody.com is a Cloudflare Worker. Publish with `rm -rf dist && npx expo export -p web && npx wrangler deploy`.
+- **Website:** https://copticpsalmody.com is a Cloudflare Worker. Publish with `rm -rf dist && NODE_OPTIONS='--require ./scripts/limit-open-files.cjs' npx expo export -p web && npx wrangler deploy` (the `&&` matters: without the script the export fails with EMFILE, leaving a partial dist).
 
 ## Open work (left by Claude Code, 2026-10-18)
 
