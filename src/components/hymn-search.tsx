@@ -54,15 +54,15 @@ export function SearchResults({ results }: { results: SearchResult[] }) {
   );
 }
 
-// A search of one season's hymns, above that season's list (`children`), which it replaces while something is typed
-export function SeasonSearch({ seasonId, children }: { seasonId: string; children: ReactNode }) {
+// A search of one season or service, above its list (`children`), which it replaces while something is typed
+export function ListSearch({ within, children }: { within: string; children: ReactNode }) {
   const lang = useSettings().language;
   const t = strings[lang];
   const isRTL = lang === 'ar';
   const colors = useAlhanColors();
   const styles = useThemedStyles(createAlhanStyles);
   const [query, setQuery] = useState('');
-  const results = searchHymns(query, 50, seasonId);
+  const results = searchHymns(query, 50, within);
   const hasQuery = query.trim().length >= 2;
   const textAlign = isRTL ? styles.alignRight : styles.alignLeft;
 

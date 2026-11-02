@@ -35,6 +35,9 @@ describe('saint tabs', () => {
     const found = searchHymns('marina', 50, 'other');
     expect(found.length).toBeGreaterThan(3);
     expect(found.every((r) => r.location.group.id === 'other')).toBe(true);
+    const doxologies = searchHymns('marina', 50, 'other-doxologies');
+    expect(doxologies.length).toBeGreaterThan(0);
+    expect(doxologies.every((r) => r.location.service.id === 'other-doxologies')).toBe(true);
   });
 
   it('find the next feast, rolling into next year once it has passed', () => {

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
 import { createAlhanStyles, goBackOrHome, openHymnPage, ScreenShell } from './alhan-ui';
+import { ListSearch } from './hymn-search';
 import { ListGroup, ListRow, SectionHeader } from './lists';
 import { displayTitle } from '../data/arabic-titles';
 import { formatGregorianDate } from '../data/coptic-calendar';
@@ -59,8 +60,8 @@ export function SaintTab({ tab }: { tab: StSaintTab }) {
   // Saints with no day known go last, by name
   const upcoming = [...alphabetical].sort((a, b) => (feast(a)?.jdn ?? Infinity) - (feast(b)?.jdn ?? Infinity));
 
-  return (
-    <ScreenShell lang={lang} title={displayTitle(tab, lang)} onBack={goBackOrHome}>
+  const list = (
+    <>
       <View style={[styles.segmented, isRTL ? styles.rowReverse : styles.row]}>
         {(['traditional', 'alphabetical', 'upcoming'] as const).map((value) => (
           <Pressable
@@ -89,6 +90,12 @@ export function SaintTab({ tab }: { tab: StSaintTab }) {
           <ListGroup rows={(order === 'alphabetical' ? alphabetical : upcoming).map((hymn) => row(hymn, order === 'upcoming' ? feastDate(hymn) : undefined))} />
         </>
       )}
+    </>
+  );
+
+  return (
+    <ScreenShell lang={lang} title={displayTitle(tab, lang)} onBack={goBackOrHome}>
+      {tab.id === 'veneration' || tab.id === 'other-doxologies' ? <ListSearch within={tab.id}>{list}</ListSearch> : list}
     </ScreenShell>
   );
 }

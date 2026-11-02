@@ -3,7 +3,7 @@ import { Alert, Image, Pressable, Text, View } from 'react-native';
 
 import { createAlhanStyles, goBackOrHome, ScreenShell, strings, withoutNumber } from '@/components/alhan-ui';
 import { successFeedback } from '@/components/haptics';
-import { SeasonSearch } from '@/components/hymn-search';
+import { ListSearch } from '@/components/hymn-search';
 import { ListGroup, ListRow, localDigits, SectionHeader } from '@/components/lists';
 import { seasonArt } from '@/constants/season-art';
 import { displayTitle } from '@/data/arabic-titles';
@@ -118,7 +118,7 @@ export default function SeasonScreen() {
           </Text>
         </Pressable>
       ) : null}
-      {season.id === 'other' ? <SeasonSearch seasonId={season.id}>{list}</SeasonSearch> : list}
+      {season.id === 'other' ? <ListSearch within={season.id}>{list}</ListSearch> : list}
     </ScreenShell>
   );
 }
