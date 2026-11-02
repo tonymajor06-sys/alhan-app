@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
-import { createAlhanStyles, goBackOrHome, openHymnPage, ScreenShell, withoutNumber } from './alhan-ui';
+import { createAlhanStyles, goBackOrHome, openHymnPage, ScreenShell } from './alhan-ui';
 import { ListGroup, ListRow, SectionHeader } from './lists';
 import { displayTitle } from '../data/arabic-titles';
 import { formatGregorianDate } from '../data/coptic-calendar';
 import { titleLines } from '../data/hymn-titles';
-import { Hymn, Season } from '../data/hymns';
+import { Hymn } from '../data/hymns';
 import { copticDayName, nextFeast, saintSortKey } from '../data/saints';
 import { StSaintTab, stSaints } from '../data/st-saints';
 import { useThemedStyles } from '../hooks/use-alhan-colors';
@@ -20,9 +20,9 @@ const words = {
   ar: { traditional: 'تقليدي', alphabetical: 'أبجدي', upcoming: 'القادمة', general: 'لكل القديسين', saints: 'القديسون' },
 };
 
-// A tab of the Hymns list made from Spirit & Truth's Saint Selection: Traditional and Alphabetical as Spirit & Truth
+// A list inside the Other tab of Hymns, made from Spirit & Truth's Saint Selection: Traditional and Alphabetical as Spirit & Truth
 // switches them, and Upcoming by each saint's next feast day. Hymns sung for every saint come first in the last two.
-export function SaintTab({ season, tab }: { season: Season; tab: StSaintTab }) {
+export function SaintTab({ tab }: { tab: StSaintTab }) {
   const settings = useSettings();
   const lang = settings.language;
   const isRTL = lang === 'ar';
@@ -60,7 +60,7 @@ export function SaintTab({ season, tab }: { season: Season; tab: StSaintTab }) {
   const upcoming = [...alphabetical].sort((a, b) => (feast(a)?.jdn ?? Infinity) - (feast(b)?.jdn ?? Infinity));
 
   return (
-    <ScreenShell lang={lang} title={withoutNumber(displayTitle(season, lang))} onBack={goBackOrHome}>
+    <ScreenShell lang={lang} title={displayTitle(tab, lang)} onBack={goBackOrHome}>
       <View style={[styles.segmented, isRTL ? styles.rowReverse : styles.row]}>
         {(['traditional', 'alphabetical', 'upcoming'] as const).map((value) => (
           <Pressable

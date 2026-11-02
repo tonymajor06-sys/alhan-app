@@ -1,8 +1,10 @@
 import { useLocalSearchParams } from 'expo-router';
 
 import { goBackOrHome, ScreenShell, strings } from '@/components/alhan-ui';
+import { SaintTab } from '@/components/saint-tab';
 import { ServiceScreen } from '@/components/service-screen';
 import { seasons } from '@/data/hymns';
+import { stSaintTabs } from '@/data/st-saints';
 import { useSettings } from '@/hooks/use-settings';
 
 export async function generateStaticParams(): Promise<Record<string, string>[]> {
@@ -22,6 +24,9 @@ export default function SeasonServiceScreen() {
       </ScreenShell>
     );
   }
+
+  const saintTab = stSaintTabs.find((tab) => tab.id === service.id);
+  if (saintTab) return <SaintTab tab={saintTab} />;
 
   return (
     <ServiceScreen

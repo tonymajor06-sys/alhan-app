@@ -79,4 +79,11 @@ export const seasonArt: Record<string, { image: ImageSourcePropType; about: Reco
       ar: 'الختان · عرس قانا · دخول المسيح الهيكل · البشارة · التجلي',
     },
   },
+  other: {
+    image: require('../../assets/images/seasons/other.png'),
+    about: {
+      en: "Veneration and the saints' doxologies, responses and verses",
+      ar: 'التمجيد وذكصولوجيات القديسين ومرداتهم وأرباعهم',
+    },
+  },
 };

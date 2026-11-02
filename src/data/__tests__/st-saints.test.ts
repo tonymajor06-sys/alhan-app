@@ -4,10 +4,17 @@ import { nextFeast } from '../saints';
 import { stSaints, stSaintTabs } from '../st-saints';
 
 describe('saint tabs', () => {
-  it('come after the Minor Feasts of the Lord, with the Verses of the Cymbals last', () => {
-    const ids = seasons.map((s) => s.id);
-    expect(ids[ids.indexOf('minor-feasts') + 1]).toBe('veneration');
-    expect(ids[ids.length - 1]).toBe('other-cymbals');
+  it('sit in one Other tab after the Minor Feasts of the Lord, Veneration first and the Verses of the Cymbals last', () => {
+    expect(seasons.map((s) => s.id).slice(-2)).toEqual(['minor-feasts', 'other']);
+    const lists = seasons[seasons.length - 1].services.map((s) => s.id);
+    expect(lists[0]).toBe('veneration');
+    expect(lists[lists.length - 1]).toBe('other-cymbals');
+  });
+
+  it("keep only the saints' melodies in Veneration", () => {
+    const veneration = stSaintTabs[0];
+    expect(veneration.hymns.every((hymn) => veneration.saintOf[hymn.id])).toBe(true);
+    expect(veneration.hymns.map((h) => h.title)).not.toContain('Conclusion');
   });
 
   it('name a known saint for each hymn, and have words', () => {

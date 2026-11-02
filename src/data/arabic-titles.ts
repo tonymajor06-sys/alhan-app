@@ -274,7 +274,8 @@ const arabicTitles: Record<string, string> = {
   'apostles-fast': 'صوم وعيد الرسل',
   'st-mary': 'صوم السيدة العذراء وعيد صعود جسدها',
   'minor-feasts': 'الأعياد السيدية الصغرى',
-  ...Object.fromEntries(stSaintTabs.flatMap((tab) => [[tab.id, tab.titleAr], [`${tab.id}-all`, tab.titleAr]])),
+  other: 'أخرى',
+  ...Object.fromEntries(stSaintTabs.map((tab) => [tab.id, tab.titleAr])),
   ...Object.assign({}, ...stSaintTabs.map((tab) => tab.titlesAr)),
 
   // Groups and hymns added on 2026-10-13

@@ -145,7 +145,7 @@ def verse_hymns(lines, prefix, label, label_ar):
 section = lambda page, title: next(s for s in page if s['title'] == title)['lines']
 ev, wo = load('ev'), load('wo')
 TABS = [
-    ('veneration', 'Veneration', 'التمجيد', page_hymns(load('m'), 'veneration')),
+    ('veneration', 'Veneration', 'التمجيد', [item for item in page_hymns(load('m'), 'veneration') if 'Melody' in item[1]['title']]),
     ('other-doxologies', 'Other Doxologies', 'ذكصولوجيات أخرى', page_hymns(load('dx'), 'other-doxology')),
     ('other-intercessions', 'Other Hymns of the Intercessions', 'هيتنيات أخرى', verse_hymns(section(wo, 'Hymn of the Intercessions'), 'other-intercession', 'Intercession', 'هيتينية')),
     ('other-praxis-responses', 'Other Praxis Responses', 'مردات إبركسيس أخرى', verse_hymns(section(wo, 'Praxis Response') + section(wo, 'Alternate Praxis Response'), 'other-praxis-response', 'Praxis Response', 'مرد الإبركسيس')),

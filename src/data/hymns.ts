@@ -8407,7 +8407,7 @@ for (const group of [...seasons, ...deaconCategories]) {
   }
 }
 
-// The Hymns tabs from Spirit & Truth's Saint Selection (see st-saints.ts): Veneration after the Minor Feasts of the Lord,
+// The Other tab after the Minor Feasts of the Lord, from Spirit & Truth's Saint Selection (see st-saints.ts): Veneration,
 // then the saints' other hymns, with the Verses of the Cymbals last. A doxology the app already sings keeps its recordings.
 // A hymn's first words, without the marks over its letters
 const openingOf = (coptic: string) => coptic.normalize('NFD').replace(/[\u0300-\u036f\ufe20-\ufe2f]/g, '').replace(/\s+/g, ' ').trim().slice(0, 48).toLowerCase();
@@ -8429,12 +8429,12 @@ for (const tab of stSaintTabs) {
       if (recorded) Object.assign(version, { audio: recorded.audio, otherAudio: recorded.otherAudio });
     }
   }
-  seasons.push({
-    id: tab.id,
-    title: `${seasons.length + 1}. ${tab.title}`,
-    services: [{ id: `${tab.id}-all`, title: tab.title, hymns: tab.hymns }],
-  });
 }
+seasons.push({
+  id: 'other',
+  title: `${seasons.length + 1}. Other`,
+  services: stSaintTabs.map((tab) => ({ id: tab.id, title: tab.title, hymns: tab.hymns })),
+});
 
 // Keep these last: give every hymn a "Coptic in Arabic letters" and an "English in Arabic letters" version
 // (see arabic-coptic.ts and arabic-english.ts),

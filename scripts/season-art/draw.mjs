@@ -464,5 +464,25 @@ svg('home-ask', [
   circle(390, 260, 48, 'none', `stroke="${C.goldLight}" stroke-width="2" stroke-dasharray="4,4"`),
 ].join(''), '#eedbb7');
 
+// Other: three saints together under the cross (a martyr with his spear, a monk, a virgin with her cross)
+svg('other', [
+  rays(240, 190, 24, '#fff3c8', 520, 0.35),
+  copticCross(240, 66, 42, C.gold),
+  // the monk behind, in the middle
+  robe(240, 220, 150, 270, '#2a2a2e', '#3a3a40'),
+  head(240, 176, 36, { beard: true, longBeard: true, hair: C.hairGrey }),
+  // the martyr on the left
+  `<path d="M58,470 L104,120" stroke="${C.brown}" stroke-width="7" stroke-linecap="round"/>`,
+  P('M104,120 L96,146 L112,148 Z', C.cream),
+  robe(128, 278, 130, 210, C.red, C.gold),
+  head(128, 236, 34, {}),
+  hand(84, 340),
+  // the virgin on the right, holding a cross
+  robe(352, 278, 130, 210, C.blue, C.blueDark),
+  head(352, 236, 34, { veil: true }),
+  copticCross(352, 372, 22, C.goldLight),
+  hand(330, 392), hand(374, 392),
+].join(''), '#e9cf98');
+
 writeFileSync('svg/list.txt', out.join('\n'));
 console.log(out.join(' '));
