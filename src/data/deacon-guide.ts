@@ -148,31 +148,81 @@ export const guideSections: GuideSection[] = [
       },
     ],
   },
+  // From Archdeacon Arsani Sidarous's instructions to deacons (sent 2026-11-03): follow his words, and add his later ones here
   {
     id: 'candles',
     icon: '✦',
-    title: { en: 'When to Take the Candles', ar: 'متى تمسك الشموع' },
-    desc: { en: 'The Gospel, the Lamb and feast processions', ar: 'الإنجيل والحمل ودورات الأعياد' },
+    title: { en: 'Lighting the Candles', ar: 'إيقاد الشموع' },
+    desc: { en: 'When to light them, put them out and how to hold them', ar: 'متى توقدها ومتى تطفئها وكيف تمسكها' },
     items: [
       {
+        title: { en: 'Never while kneeling', ar: 'لا توقد الشموع وأنت ساجد' },
         text: {
-          en: 'At the reading of the Gospel: two deacons hold candles on either side of the Gospel.',
-          ar: 'عند قراءة الإنجيل: يمسك شماسان الشموع على جانبي الإنجيل.',
+          en: 'Candles should not be lit while kneeling, because the light should be held up high as an announcement to the people. Put the candles out before kneeling. Instead, light them at the six times below.',
+          ar: 'لا تُوقد الشموع أثناء السجود، لأن النور يجب أن يُرفع عالياً كإعلان للشعب. أطفئ الشموع قبل أن تسجد. وتُوقد الشموع في المواضع الستة التالية.',
         },
       },
       {
+        title: { en: '1. The Selection and the Offering of the Lamb', ar: '١. اختيار الحمل وتقديمه' },
         text: {
-          en: 'In the Procession of the Lamb: a deacon with a candle walks in front.',
-          ar: 'في دورة الحمل: يتقدم شماس يحمل شمعة.',
+          en: 'From the selection of the Lamb until the priest pours the water into the chalice during the Offering of the Lamb. During the Offering, only the deacons who carry the wine and water cruets light candles, and only the deacon with the wine crosses his hands.',
+          ar: 'من اختيار الحمل حتى يصب الكاهن الماء في الكأس أثناء تقديم الحمل. وأثناء التقديم لا يوقد الشموع إلا الشماسان اللذان يحملان قارورتي الخمر والماء، ولا يُخالف يديه إلا الشماس الذي يحمل الخمر.',
         },
       },
       {
+        title: { en: '2. The Holy Gospel', ar: '٢. الإنجيل المقدس' },
         text: {
-          en: 'In feast processions: the Resurrection, Palm Sunday and the Cross.',
-          ar: 'في دورات الأعياد: القيامة وأحد الشعانين والصليب.',
+          en: 'During the reading of the Holy Gospel, one candle on each side.',
+          ar: 'أثناء قراءة الإنجيل المقدس، شمعة على كل جانب.',
+        },
+      },
+      {
+        title: { en: '3. The Institution Narrative', ar: '٣. صلوات التأسيس' },
+        text: {
+          en: 'From the beginning of the Institution Narrative prayers until the congregation starts to respond, "Amen, Amen, Amen. Your death, O Lord…"',
+          ar: 'من بداية صلوات التأسيس حتى يبدأ الشعب في الرد: "آمين آمين آمين. بموتك يا رب…"',
+        },
+      },
+      {
+        title: { en: '4. The Fraction Prayer', ar: '٤. صلاة القسمة' },
+        text: {
+          en: 'From the beginning of the Fraction Prayer until its end. Do not light candles before the Fraction, when the priest says "The Holy Body", because the deacons should be kneeling then.',
+          ar: 'من بداية صلاة القسمة حتى نهايتها. ولا تُوقد الشموع قبل القسمة عندما يقول الكاهن "الجسد المقدس"، لأن الشمامسة يكونون ساجدين حينئذ.',
+        },
+      },
+      {
+        title: { en: '5. "The Holy to the holies" until the Confession', ar: '٥. من "القدسات للقديسين" حتى الاعتراف' },
+        text: {
+          en: 'From "The Holy to the holies" until the beginning of the Confession ("Amen, Amen, Amen. I believe, I believe, I believe…"). During the Confession every deacon kneels, except the deacon who says the Confession. He stands across the altar facing the priest, holding the cross in his right hand and a candle in his left, with a corporal (lefafa) in between.',
+          ar: 'من "القدسات للقديسين" حتى بداية الاعتراف ("آمين آمين آمين. أؤمن أؤمن أؤمن…"). وأثناء الاعتراف يسجد جميع الشمامسة ما عدا الشماس الذي يقول الاعتراف، فيقف أمام المذبح مواجهاً الكاهن، ممسكاً الصليب بيده اليمنى والشمعة بيده اليسرى، وبينهما لفافة.',
+        },
+      },
+      {
+        title: { en: '6. After the Confession', ar: '٦. بعد الاعتراف' },
+        text: {
+          en: "After the deacon's Confession, a second deacon, once he has taken communion, lights a candle to guard the Holy Blood. If the priest goes out of the altar to give communion to someone who cannot enter it, a deacon carries a candle and goes with the priest.",
+          ar: 'بعد اعتراف الشماس، يوقد شماس ثانٍ شمعة لحراسة الدم الكريم بعد أن يتناول. وإذا خرج الكاهن من الهيكل ليناول من لا يستطيع دخوله، يحمل شماس شمعة ويرافق الكاهن.',
+        },
+      },
+      {
+        title: { en: 'Putting candles out', ar: 'إطفاء الشموع' },
+        text: {
+          en: 'Do not blow candles out, especially after receiving communion. Put them out any other way.',
+          ar: 'لا تطفئ الشموع بالنفخ، خاصة بعد التناول، بل أطفئها بأي طريقة أخرى.',
+        },
+      },
+      {
+        title: { en: 'Holding candles still', ar: 'لا تحرك الشمعة' },
+        text: {
+          en: 'When the priest points to the bread and the chalice, do not move or point your candle toward them. Candles are for veneration, not for pointing.',
+          ar: 'عندما يشير الكاهن إلى الخبز والكأس، لا تحرك شمعتك ولا تشر بها نحوهما. فالشموع للتكريم وليست للإشارة.',
         },
       },
     ],
+    note: {
+      en: 'From the teaching of Archdeacon Arsani Sidarous.',
+      ar: 'من تعليم الأرشيدياكون أرساني سيداروس.',
+    },
   },
   {
     id: 'incense',
@@ -496,13 +546,67 @@ const guideQuestions: GuideQuestion[] = [
     ],
   },
   {
-    q: b('Who walks in front in the Procession of the Lamb?', 'من يتقدم في دورة الحمل؟'),
-    right: b('A deacon with a candle', 'شماس يحمل شمعة'),
+    q: b('Why are candles never lit while kneeling?', 'لماذا لا تُوقد الشموع أثناء السجود؟'),
+    right: b('The light is held up high as an announcement to the people', 'لأن النور يُرفع عالياً كإعلان للشعب'),
     wrong: [
-      b('The Epsaltos with the Psalmody', 'الأبصالتس ومعه الإبصلمودية'),
-      b('The whole choir', 'الخورس كله'),
-      b('Nobody', 'لا أحد'),
+      b('The wax would drip on the floor', 'لأن الشمع يسقط على الأرض'),
+      b('Only the priest may kneel with a candle', 'لأن الكاهن وحده يسجد بالشمعة'),
+      b('Candles are only for feasts', 'لأن الشموع للأعياد فقط'),
     ],
+  },
+  {
+    q: b('During the Offering of the Lamb, who lights candles?', 'أثناء تقديم الحمل، من يوقد الشموع؟'),
+    right: b('Only the deacons carrying the wine and water cruets', 'الشماسان اللذان يحملان قارورتي الخمر والماء فقط'),
+    wrong: [b('Every deacon in the altar', 'كل الشمامسة في الهيكل'), b('Only the archdeacon', 'رئيس الشمامسة فقط'), b('Nobody', 'لا أحد')],
+  },
+  {
+    q: b('During the Offering, which deacon crosses his hands?', 'أثناء التقديم، أي شماس يُخالف يديه؟'),
+    right: b('Only the deacon with the wine', 'الشماس الذي يحمل الخمر فقط'),
+    wrong: [b('Only the deacon with the water', 'الشماس الذي يحمل الماء فقط'), b('Both deacons', 'الشماسان معاً'), b('Every deacon', 'كل الشمامسة')],
+  },
+  {
+    q: b('Candles lit at the selection of the Lamb are kept lit until…', 'الشموع التي توقد عند اختيار الحمل تبقى حتى…'),
+    right: b('The priest pours the water into the chalice', 'يصب الكاهن الماء في الكأس'),
+    wrong: [b('The end of the Liturgy', 'نهاية القداس'), b('The reading of the Gospel', 'قراءة الإنجيل'), b('The Fraction Prayer', 'صلاة القسمة')],
+  },
+  {
+    q: b('Candles lit at the Institution Narrative stay lit until…', 'الشموع التي توقد في صلوات التأسيس تبقى حتى…'),
+    right: b('The people respond "Amen, Amen, Amen. Your death, O Lord…"', 'يرد الشعب "آمين آمين آمين. بموتك يا رب…"'),
+    wrong: [b('The Confession', 'الاعتراف'), b('The end of the Fraction', 'نهاية القسمة'), b('Communion', 'التناول')],
+  },
+  {
+    q: b('Why are candles not lit when the priest says "The Holy Body" before the Fraction?', 'لماذا لا توقد الشموع عندما يقول الكاهن "الجسد المقدس" قبل القسمة؟'),
+    right: b('The deacons should be kneeling', 'لأن الشمامسة يكونون ساجدين'),
+    wrong: [b('The Gospel is being read', 'لأن الإنجيل يُقرأ'), b('Only the priest holds a light then', 'لأن الكاهن وحده يمسك النور'), b('The candles are still lit from before', 'لأن الشموع ما زالت موقدة')],
+  },
+  {
+    q: b('During the Confession, who stands?', 'أثناء الاعتراف، من يقف؟'),
+    right: b('Only the deacon who says the Confession', 'الشماس الذي يقول الاعتراف فقط'),
+    wrong: [b('Every deacon', 'كل الشمامسة'), b('The deacons holding candles', 'الشمامسة الذين يمسكون الشموع'), b('The two choirs', 'الخورسان')],
+  },
+  {
+    q: b('What does the deacon who says the Confession hold?', 'ماذا يمسك الشماس الذي يقول الاعتراف؟'),
+    right: b('The cross in his right hand, a candle in his left, a corporal in between', 'الصليب باليمنى والشمعة باليسرى وبينهما لفافة'),
+    wrong: [
+      b('The censer', 'الشورية'),
+      b('A candle in each hand', 'شمعة في كل يد'),
+      b('The cross in his left hand and the Gospel in his right', 'الصليب باليسرى والإنجيل باليمنى'),
+    ],
+  },
+  {
+    q: b('After the Confession, why does a second deacon light a candle?', 'بعد الاعتراف، لماذا يوقد شماس ثانٍ شمعة؟'),
+    right: b('To guard the Holy Blood', 'لحراسة الدم الكريم'),
+    wrong: [b('To read the Synaxarium', 'لقراءة السنكسار'), b('To lead a procession', 'ليتقدم دورة'), b('To light the coal', 'ليشعل الفحم')],
+  },
+  {
+    q: b('How should a deacon put out a candle?', 'كيف يطفئ الشماس الشمعة؟'),
+    right: b('Any way except blowing it out', 'بأي طريقة إلا النفخ'),
+    wrong: [b('Blow it out gently', 'ينفخها برفق'), b('Leave it to burn out', 'يتركها حتى تنطفئ وحدها'), b('Blow it out after communion', 'ينفخها بعد التناول')],
+  },
+  {
+    q: b('When the priest points to the bread and the chalice, what does the deacon do with his candle?', 'عندما يشير الكاهن إلى الخبز والكأس، ماذا يفعل الشماس بشمعته؟'),
+    right: b('Holds it still: candles are for veneration, not pointing', 'يثبتها: فالشموع للتكريم وليست للإشارة'),
+    wrong: [b('Points it toward them', 'يشير بها نحوهما'), b('Raises it higher', 'يرفعها أعلى'), b('Puts it out', 'يطفئها')],
   },
   // Incense
   {
