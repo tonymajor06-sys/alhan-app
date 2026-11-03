@@ -1,8 +1,8 @@
 // Text for the Learn Coptic screens, in both app languages
 
-export type LessonId = 'alphabet' | 'reading' | 'words' | 'vocabulary' | 'grammar' | 'speaking' | 'conversation' | 'quiz' | 'practice';
+export type LessonId = 'alphabet' | 'reading' | 'words' | 'vocabulary' | 'grammar' | 'speaking' | 'conversation' | 'quiz' | 'practice' | 'translator';
 
-export const lessonIds: LessonId[] = ['alphabet', 'reading', 'words', 'vocabulary', 'grammar', 'speaking', 'conversation', 'quiz', 'practice'];
+export const lessonIds: LessonId[] = ['alphabet', 'reading', 'words', 'vocabulary', 'grammar', 'speaking', 'conversation', 'quiz', 'practice', 'translator'];
 
 export const learnStrings = {
   en: {
@@ -18,7 +18,29 @@ export const learnStrings = {
       conversation: { title: 'Conversations', desc: 'Short dialogues to read aloud with a friend' },
       quiz: { title: 'Quiz', desc: 'Over 20 quizzes, from letters and grammar to every topic of vocabulary' },
       practice: { title: 'Read a Verse', desc: 'Real verses from the hymns in this app' },
+      translator: { title: 'Coptic Translator', desc: 'What a Coptic word means, or how to say a word in Coptic' },
     } as Record<LessonId, { title: string; desc: string }>,
+    translator: {
+      placeholder: 'A Coptic word, or an English one',
+      keyboard: 'Coptic keyboard',
+      hideKeyboard: 'Hide keyboard',
+      space: 'space',
+      clear: 'Clear',
+      phrase: 'The whole phrase',
+      wordByWord: 'Word by word',
+      madeOf: 'Made of',
+      unknown: 'Not in the dictionary yet',
+      inCoptic: 'In Coptic',
+      soundsLike: 'Sounds like this word',
+      eachWord: 'Each word',
+      nothing: 'Nothing found. Try one word, or a simpler one.',
+      inHymns: 'In the hymns',
+      openHymn: 'Open the hymn',
+      examples: ['ⲁϥϭⲓⲥⲁⲣⲝ', 'Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ ⲁϥⲧⲱⲛϥ', 'peace', 'thank you', 'efnouti'],
+      tryThese: 'Try:',
+      about: (n: string) =>
+        `A dictionary of ${n} Coptic words and phrases from the hymns and lessons. It doesn't translate whole sentences: it gives each word, and breaks longer ones into their parts (ⲁϥ + ⲧⲱⲛ + ϥ: he rose).`,
+    },
     tapLetter: 'Tap a letter to see how it sounds',
     sounds: 'Sounds like',
     example: 'Example',
@@ -80,7 +102,29 @@ export const learnStrings = {
       conversation: { title: 'محادثات', desc: 'حوارات قصيرة تقرأها بصوت عالٍ مع صديق' },
       quiz: { title: 'اختبار', desc: 'أكثر من ٢٠ اختباراً، من الحروف والقواعد إلى كل موضوع من المفردات' },
       practice: { title: 'اقرأ ربعاً', desc: 'أرباع حقيقية من ألحان التطبيق' },
+      translator: { title: 'المترجم القبطي', desc: 'معنى الكلمة القبطية، أو كيف تقول كلمة بالقبطي' },
     } as Record<LessonId, { title: string; desc: string }>,
+    translator: {
+      placeholder: 'كلمة قبطية أو عربية',
+      keyboard: 'لوحة المفاتيح القبطية',
+      hideKeyboard: 'إخفاء لوحة المفاتيح',
+      space: 'مسافة',
+      clear: 'مسح',
+      phrase: 'العبارة كلها',
+      wordByWord: 'كلمة كلمة',
+      madeOf: 'مكوّنة من',
+      unknown: 'ليست في القاموس بعد',
+      inCoptic: 'بالقبطي',
+      soundsLike: 'تُنطق هكذا',
+      eachWord: 'كل كلمة',
+      nothing: 'لم نجد شيئاً. جرّب كلمة واحدة، أو كلمة أبسط.',
+      inHymns: 'في الألحان',
+      openHymn: 'افتح اللحن',
+      examples: ['ⲁϥϭⲓⲥⲁⲣⲝ', 'Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ ⲁϥⲧⲱⲛϥ', 'سلام', 'شكراً', 'الرب'],
+      tryThese: 'جرّب:',
+      about: (n: string) =>
+        `قاموس فيه ${n} كلمة وعبارة قبطية من الألحان والدروس. لا يترجم جملاً كاملة: يعطي معنى كل كلمة، ويقسّم الكلمات الطويلة إلى أجزائها (ⲁϥ + ⲧⲱⲛ + ϥ: قام).`,
+    },
     tapLetter: 'اضغط على حرف لترى نطقه',
     sounds: 'يُنطق',
     example: 'مثال',

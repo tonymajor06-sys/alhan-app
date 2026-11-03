@@ -3,6 +3,7 @@ import { ReactNode, useMemo, useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
 import { copticFont, goBackOrHome, openHymnPage, ScreenShell, withCopticFont } from '@/components/alhan-ui';
+import { CopticTranslator } from '@/components/coptic-translator';
 import { learnStrings, LessonId, lessonIds } from '@/components/learn-strings';
 import { useLessonStyles } from '@/components/lesson-styles';
 import { MenuList } from '@/components/menu-list';
@@ -50,6 +51,7 @@ export default function LessonScreen() {
       {id === 'conversation' ? <Conversations lang={lang} /> : null}
       {id === 'quiz' ? <Quiz lang={lang} /> : null}
       {id === 'practice' ? <Practice lang={lang} /> : null}
+      {id === 'translator' ? <CopticTranslator lang={lang} /> : null}
     </ScreenShell>
   );
 }
