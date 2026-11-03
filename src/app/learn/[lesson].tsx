@@ -33,7 +33,7 @@ export async function generateStaticParams(): Promise<Record<string, string>[]> 
 type LessonProps = { lang: AppLanguage };
 
 export default function LessonScreen() {
-  const { lesson } = useLocalSearchParams<{ lesson: string }>();
+  const { lesson, q } = useLocalSearchParams<{ lesson: string; q?: string }>();
   const { language: lang } = useSettings();
   const t = learnStrings[lang];
 
@@ -51,7 +51,7 @@ export default function LessonScreen() {
       {id === 'conversation' ? <Conversations lang={lang} /> : null}
       {id === 'quiz' ? <Quiz lang={lang} /> : null}
       {id === 'practice' ? <Practice lang={lang} /> : null}
-      {id === 'translator' ? <CopticTranslator lang={lang} /> : null}
+      {id === 'translator' ? <CopticTranslator lang={lang} initial={typeof q === 'string' ? q : ''} /> : null}
     </ScreenShell>
   );
 }

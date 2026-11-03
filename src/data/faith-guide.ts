@@ -311,8 +311,8 @@ export const faithSections: GuideSection[] = [
       {
         title: { en: 'St Athanasius the Apostolic', ar: 'القديس أثناسيوس الرسولي' },
         text: {
-          en: 'The 20th Pope of Alexandria. As a deacon he defended the divinity of Christ at Nicaea, and as Pope he was exiled four times for the faith (a fifth exile failed), seventeen and a half years in all. He is called "the Apostolic" and "Athanasius against the world". He wrote "On the Incarnation of the Word".',
-          ar: 'البابا العشرون للإسكندرية. دافع وهو شماس عن لاهوت المسيح في مجمع نيقية، ونُفي وهو بابا أربع مرات من أجل الإيمان (وفشلت محاولة نفيه الخامسة)، فبلغت سنوات نفيه سبع عشرة سنة ونصفاً. يُلقّب بـ"الرسولي" و"أثناسيوس ضد العالم". كتب "تجسد الكلمة".',
+          en: 'The 20th Pope of Alexandria. As a deacon he defended the divinity of Christ at Nicaea, and as Pope he was exiled five times for the faith, as the Synaxarium tells. He is called "the Apostolic" and "Athanasius against the world". He wrote "On the Incarnation of the Word".',
+          ar: 'البابا العشرون للإسكندرية. دافع وهو شماس عن لاهوت المسيح في مجمع نيقية، ونُفي وهو بابا خمس مرات من أجل الإيمان كما يذكر السنكسار. يُلقّب بـ"الرسولي" و"أثناسيوس ضد العالم". كتب "تجسد الكلمة".',
         },
       },
       {
@@ -421,7 +421,7 @@ const faithQuestions: GuideQuestion[] = [
   { q: b('Which sacrament is for healing of body and soul?', 'أي سر هو لشفاء النفس والجسد؟'), right: sacraments[4], wrong: sacraments.filter((s) => s !== sacraments[4]) },
   // Creed and fathers
   { q: b('The introduction to the Creed comes from which council?', 'من أي مجمع جاءت مقدمة قانون الإيمان؟'), right: councils.ephesus, wrong: [councils.nicaea, councils.constantinople, councils.chalcedon] },
-  { q: b('Who was exiled four times for the faith?', 'من نُفي أربع مرات من أجل الإيمان؟'), right: people.athanasius, wrong: [people.cyril, people.dioscorus, people.antony] },
+  { q: b('Who was exiled five times for the faith?', 'من نُفي خمس مرات من أجل الإيمان؟'), right: people.athanasius, wrong: [people.cyril, people.dioscorus, people.antony] },
   { q: b('Who wrote "On the Incarnation"?', 'من كتب "تجسد الكلمة"؟'), right: people.athanasius, wrong: [people.cyril, people.dioscorus, people.mark] },
 ];
 

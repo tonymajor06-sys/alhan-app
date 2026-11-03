@@ -1,7 +1,7 @@
 import { useDeferredValue, useMemo, useState } from 'react';
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
-import { copticFont, openHymnPage } from '@/components/alhan-ui';
+import { copticFont, openHymnPage, withCopticFont } from '@/components/alhan-ui';
 import { learnStrings } from '@/components/learn-strings';
 import { useLessonStyles } from '@/components/lesson-styles';
 import { AlhanPalette } from '@/constants/alhan-colors';
@@ -16,12 +16,13 @@ import { AppLanguage } from '@/hooks/use-settings';
 const keys = copticAlphabet.filter((l) => l.lower !== 'ϛ').map((l) => l.lower);
 const JINKIM = '̀';
 
-export function CopticTranslator({ lang }: { lang: AppLanguage }) {
+// `initial` fills in the box, e.g. from a link to /learn/translator?q=ⲁϥϭⲓⲥⲁⲣⲝ
+export function CopticTranslator({ lang, initial = '' }: { lang: AppLanguage; initial?: string }) {
   const t = learnStrings[lang].translator;
   const colors = useAlhanColors();
   const { styles, shared, textAlign, rowDirection, isRTL } = useLessonStyles(lang);
   const local = useThemedStyles(createStyles);
-  const [text, setText] = useState('');
+  const [text, setText] = useState(initial);
   const [keyboard, setKeyboard] = useState(false);
   const query = useDeferredValue(text.trim());
   const isCoptic = hasCopticLetters(query);
@@ -128,7 +129,7 @@ export function CopticTranslator({ lang }: { lang: AppLanguage }) {
 
       {!query ? (
         <>
-          <Text style={[styles.note, textAlign, local.about]}>{t.about(count)}</Text>
+          <Text style={[styles.note, textAlign, local.about]}>{withCopticFont(t.about(count))}</Text>
           <View style={[local.chips, rowDirection]}>
             <Text style={[styles.note, local.tryLabel]}>{t.tryThese}</Text>
             {t.examples.map((example) => (
@@ -219,7 +220,7 @@ export function CopticTranslator({ lang }: { lang: AppLanguage }) {
 const createStyles = (colors: AlhanPalette) =>
   StyleSheet.create({
     field: { marginTop: 4, marginBottom: 12 },
-    copticInput: { fontFamily: copticFont },
+    copticInput: { fontFamily: copticFont, fontSize: 22 },
     clear: { fontSize: 18, color: colors.muted, paddingHorizontal: 4 },
     about: { marginTop: 0, marginBottom: 12 },
     chips: { flexWrap: 'wrap', alignItems: 'center', gap: 8, marginBottom: 24 },
