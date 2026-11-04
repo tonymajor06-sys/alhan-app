@@ -22,6 +22,8 @@ export interface Settings {
   theme: ThemeChoice;
   // The language a hymn opens in; null follows the app language (Coptic in English, Arabic in Arabic)
   hymnLanguage: LanguageType | null;
+  // A service's words one after another on one page, tapped to play (Follow along), instead of a list of names
+  followAlong: boolean;
 }
 
 const STORAGE_KEY = 'alhan-settings';
@@ -39,6 +41,7 @@ const loadSettings = (): Settings => {
     titleStyle: 'both',
     theme: 'system',
     hymnLanguage: null,
+    followAlong: false,
   };
   try {
     const raw = readSetting(STORAGE_KEY);

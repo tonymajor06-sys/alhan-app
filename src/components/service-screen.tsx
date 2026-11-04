@@ -4,6 +4,7 @@ import { Platform, Pressable, ScrollView, Text } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { ChipScroller, createAlhanStyles, goBackOrHome, openHymnPage, ScreenShell, strings, withCopticFont } from './alhan-ui';
+import { FollowAlongList, FollowAlongSwitch } from './follow-along-list';
 import { tapFeedback } from './haptics';
 import { HymnList } from './lists';
 import { openGroupsFrom } from './open-groups';
@@ -16,6 +17,7 @@ import { useSettings } from '../hooks/use-settings';
 // A service's list of hymns, or the list of the innermost group opened inside it.
 // Opening a group pushes the same page again with one more group, so Back and the swipe step out of it.
 // A long list with several sections (a Liturgy's responses) shows its sections at the top; tap one to jump to it.
+// The Follow along switch shows every part's words one after another instead (see follow-along-list.tsx).
 export function ServiceScreen({
   service,
   groups,
@@ -27,7 +29,7 @@ export function ServiceScreen({
   chooseLabel: string;
   hrefWithGroups: (groups: string) => Href;
 }) {
-  const { language: lang } = useSettings();
+  const { language: lang, followAlong } = useSettings();
   const t = strings[lang];
   const isRTL = lang === 'ar';
   const styles = useThemedStyles(createAlhanStyles);
@@ -38,6 +40,9 @@ export function ServiceScreen({
   const items = group ? (group.children ?? []) : service.hymns;
   const sections = items.filter((h) => h.isSectionHeader);
   const showSections = sections.length >= 3;
+  // Follow along (all the words on one page) is offered when the list has parts to read, not only groups
+  const canFollow = items.some((h) => !h.isSectionHeader && !h.children);
+  const following = canFollow && followAlong;
   const scrollRef = useRef<ScrollView>(null);
   const sectionY = useRef<Record<string, number>>({});
   const insets = useSafeAreaInsets();
@@ -102,8 +107,18 @@ export function ServiceScreen({
               : 'Hold any day to follow along in order'}
         </Text>
       ) : null}
+      {canFollow ? <FollowAlongSwitch lang={lang} /> : null}
       {items.length === 0 ? (
         <Text style={[styles.emptyText, textAlign]}>{t.nothingYet}</Text>
+      ) : following ? (
+        <FollowAlongList
+          items={items}
+          lang={lang}
+          scrollRef={scrollRef}
+          onOpenHymn={(hymn, language) => openHymnPage(hymn.id, language)}
+          onOpenGroup={(next) => router.push(hrefWithGroups([...openGroups, next].map((g) => g.id).join(',')))}
+          onSectionLayout={showSections ? (id, y) => (sectionY.current[id] = y) : undefined}
+        />
       ) : (
         <HymnList
           hymns={items}
