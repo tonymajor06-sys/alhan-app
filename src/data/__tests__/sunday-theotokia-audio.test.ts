@@ -326,6 +326,24 @@ describe('The three Divine Liturgies', () => {
     const gregory = of('d-annual-liturgy-gregory');
     const cyril = of('d-annual-liturgy-cyril');
     expect(basil).toContain('d-annual-liturgy-faithful-epiclesis');
+    // Look Towards the East, then Let Us Attend; the Epiclesis's three parts one after another
+    const after = (list: string[], id: string) => list[list.indexOf(`d-annual-liturgy-faithful-${id}`) + 1];
+    for (const list of [basil, gregory, cyril]) expect(after(list, 'look-towards-the-east')).toMatch(/^d-annual-liturgy-faithful-let-us-attend(@|$)/);
+    expect(after(basil, 'epiclesis')).toBe('d-annual-liturgy-faithful-we-praise-you');
+    expect(after(basil, 'we-praise-you')).toBe('d-annual-liturgy-faithful-let-us-attend-amen');
+    // ...each with its own cut of the recordings
+    const basilHymns = flattenHymns(deaconAnnual.services.find((s) => s.id === 'd-annual-liturgy-basil')!.hymns);
+    const audio = (id: string, language: string) => {
+      const v = basilHymns.find((h) => h.id === `d-annual-liturgy-faithful-${id}`)!.versions.find((x) => x.language === language)!;
+      return [v.audio, ...(v.otherAudio ?? [])];
+    };
+    expect(audio('anaphora', 'coptic')).toContain('altar-responses-you-who-are-seated-3.m4a');
+    expect(audio('let-us-attend', 'coptic')).toEqual(['altar-responses-let-us-attend.m4a']);
+    expect(audio('let-us-attend', 'arabic')).toEqual(['deacon-let-us-attend-arabic.m4a']);
+    expect(audio('look-towards-the-east', 'arabic')).toEqual(['deacon-look-towards-the-east-arabic-2.m4a']);
+    expect(audio('epiclesis', 'coptic')[0]).toBe('altar-responses-worship-god-in-fear.m4a');
+    expect(audio('we-praise-you', 'coptic')).toEqual(['altar-responses-we-praise-you.m4a']);
+    expect(audio('let-us-attend-amen', 'coptic')).toEqual(['altar-responses-let-us-attend-amen.m4a']);
     expect(basil.some((id) => /st-(gregory|cyril)/.test(id))).toBe(false);
     expect(gregory).toContain('d-annual-liturgy-faithful-pray-for-the-captives-st-gregory');
     expect(gregory.some((id) => /st-cyril/.test(id))).toBe(false);

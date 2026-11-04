@@ -4021,22 +4021,56 @@ if (deaconAnnualLiturgyFaithful) {
       id: 'd-annual-liturgy-faithful-look-towards-the-east',
       title: "Ⲓⲥ ⲁ̀ⲛⲁⲧⲟⲗⲁⲥ ⲃ̀ⲗⲉⲯⲁⲧⲉ (Look Towards the East)",
       versions: [
-        { language: 'coptic', text: "Ⲓⲥ ⲁ̀ⲛⲁⲧⲟⲗⲁⲥ ⲃ̀ⲗⲉⲯⲁⲧⲉ.\n\nⲠ̀ⲣⲟⲥⲭⲱⲙⲉⲛ." },
-        { language: 'englishCoptic', text: "Is anatolas eblepsate.\n\nEproskhōmen." },
-        { language: 'english', text: "Look towards the East.\n\nLet us attend." },
-        { language: 'englishArabic', text: "Wa ila esh-sharq unzuru.\n\nNunsit." },
-        { language: 'arabic', text: "وإلى الشرق انظروا.\n\nننصت." },
+        { language: 'coptic', text: "Ⲓⲥ ⲁ̀ⲛⲁⲧⲟⲗⲁⲥ ⲃ̀ⲗⲉⲯⲁⲧⲉ." },
+        { language: 'englishCoptic', text: "Is anatolas eblepsate." },
+        { language: 'english', text: "Look towards the East." },
+        { language: 'englishArabic', text: "Wa ila esh-sharq unzuru." },
+        { language: 'arabic', text: "وإلى الشرق انظروا." },
       ],
     },
     {
-      id: 'd-annual-liturgy-faithful-epiclesis',
-      title: "Ⲟⲩⲱϣⲧ ⲙ̀Ⲫϯ (Epiclesis)",
+      id: 'd-annual-liturgy-faithful-let-us-attend',
+      title: "Ⲡ̀ⲣⲟⲥⲭⲱⲙⲉⲛ (Let Us Attend)",
       versions: [
-        { language: 'coptic', text: "Ⲡⲓⲇⲓⲁⲕⲱⲛ:\n\nⲞⲩⲱϣⲧ ⲙ̀Ⲫϯ ϧⲉⲛ ⲟⲩϩⲟϯ ⲛⲉⲙ ⲟⲩⲥⲑⲉⲣⲧⲉⲣ.\n\nⲠⲓⲗⲁⲟⲥ:\n\nⲦⲉⲛϩⲱⲥ ⲉ̀ⲣⲟⲕ ⲧⲉⲛⲥ̀ⲙⲟⲩ ⲉ̀ⲣⲟⲕ ⲧⲉⲛϣⲉⲙϣⲓ ⲙ̀ⲙⲟⲕ ⲧⲉⲛⲟⲩⲱϣⲧ ⲙ̀ⲙⲟⲕ.\n\nⲠⲓⲇⲓⲁⲕⲱⲛ:\n\nⲠ̀ⲣⲟⲥⲭⲱⲙⲉⲛ: ⲁ̀ⲙⲏⲛ." },
-        { language: 'englishCoptic', text: "Pi-diakon:\n\nOuōsht em-Efnouti khen ouhoti nem oustherter.\n\nPi-laos:\n\nTenhōs erok tenesmou erok tenshemshi emmok tenouōsht emmok.\n\nPi-diakon:\n\nEproskhōmen: amēn." },
-        { language: 'english', text: "Deacon:\n\nWorship God in fear and trembling.\n\nPeople:\n\nWe praise You, we bless You, we serve You, we worship You.\n\nDeacon:\n\nLet us attend. Amen." },
-        { language: 'englishArabic', text: "Esh-shammas:\n\nUsgudu lillah bi-khawf wa ra'da.\n\nEsh-sha'b:\n\nNusabbihuka, nubarikuka, nakhdimuka, nasgudu lak.\n\nEsh-shammas:\n\nNunsit. Ameen." },
-        { language: 'arabic', text: "الشماس:\n\nاسجدوا لله بخوف ورعدة.\n\nالشعب:\n\nنسبحُكَ. نباركُكَ. نخدمُكَ نسجدُ لكَ.\n\nالشماس:\n\nننصت. آمين." },
+        { language: 'coptic', text: "Ⲡ̀ⲣⲟⲥⲭⲱⲙⲉⲛ." },
+        { language: 'englishCoptic', text: "Eproskhōmen." },
+        { language: 'english', text: "Let us attend." },
+        { language: 'englishArabic', text: "Nunsit." },
+        { language: 'arabic', text: "ننصت." },
+      ],
+    },
+    // The Epiclesis in three: the deacon, the people, then the deacon again
+    {
+      id: 'd-annual-liturgy-faithful-epiclesis',
+      title: "Ⲟⲩⲱϣⲧ ⲙ̀Ⲫϯ (Worship God in Fear and Trembling)",
+      versions: [
+        { language: 'coptic', text: "Ⲡⲓⲇⲓⲁⲕⲱⲛ:\n\nⲞⲩⲱϣⲧ ⲙ̀Ⲫϯ ϧⲉⲛ ⲟⲩϩⲟϯ ⲛⲉⲙ ⲟⲩⲥⲑⲉⲣⲧⲉⲣ." },
+        { language: 'englishCoptic', text: "Pi-diakon:\n\nOuōsht em-Efnouti khen ouhoti nem oustherter." },
+        { language: 'english', text: "Deacon:\n\nWorship God in fear and trembling." },
+        { language: 'englishArabic', text: "Esh-shammas:\n\nUsgudu lillah bi-khawf wa ra'da." },
+        { language: 'arabic', text: "الشماس:\n\nاسجدوا لله بخوف ورعدة." },
+      ],
+    },
+    {
+      id: 'd-annual-liturgy-faithful-we-praise-you',
+      title: "Ⲧⲉⲛϩⲱⲥ ⲉ̀ⲣⲟⲕ (We Praise You)",
+      versions: [
+        { language: 'coptic', text: "Ⲡⲓⲗⲁⲟⲥ:\n\nⲦⲉⲛϩⲱⲥ ⲉ̀ⲣⲟⲕ ⲧⲉⲛⲥ̀ⲙⲟⲩ ⲉ̀ⲣⲟⲕ ⲧⲉⲛϣⲉⲙϣⲓ ⲙ̀ⲙⲟⲕ ⲧⲉⲛⲟⲩⲱϣⲧ ⲙ̀ⲙⲟⲕ." },
+        { language: 'englishCoptic', text: "Pi-laos:\n\nTenhōs erok tenesmou erok tenshemshi emmok tenouōsht emmok." },
+        { language: 'english', text: "People:\n\nWe praise You, we bless You, we serve You, we worship You." },
+        { language: 'englishArabic', text: "Esh-sha'b:\n\nNusabbihuka, nubarikuka, nakhdimuka, nasgudu lak." },
+        { language: 'arabic', text: "الشعب:\n\nنسبحُكَ. نباركُكَ. نخدمُكَ نسجدُ لكَ." },
+      ],
+    },
+    {
+      id: 'd-annual-liturgy-faithful-let-us-attend-amen',
+      title: "Ⲡ̀ⲣⲟⲥⲭⲱⲙⲉⲛ: ⲁ̀ⲙⲏⲛ (Let Us Attend. Amen)",
+      versions: [
+        { language: 'coptic', text: "Ⲡⲓⲇⲓⲁⲕⲱⲛ:\n\nⲠ̀ⲣⲟⲥⲭⲱⲙⲉⲛ: ⲁ̀ⲙⲏⲛ." },
+        { language: 'englishCoptic', text: "Pi-diakon:\n\nEproskhōmen: amēn." },
+        { language: 'english', text: "Deacon:\n\nLet us attend. Amen." },
+        { language: 'englishArabic', text: "Esh-shammas:\n\nNunsit. Ameen." },
+        { language: 'arabic', text: "الشماس:\n\nننصت. آمين." },
       ],
     },
     ...fromMatins('d-annual-matins-pray-for-peace', 'd-annual-liturgy-faithful-pray-for-peace'),
@@ -8962,14 +8996,19 @@ for (const group of deaconCategories)
   });
 
   // Deacon Responses > Annual, the Liturgy of the Faithful: the altar responses recording the owner gave (Coptic), cut into
-  // one for each response, each ending in the silence after it (the "-2" files replaced cuts that ended too soon)
+  // one for each response, each ending in the silence after it (the "-2" files replaced cuts that ended too soon).
+  // 2026-11-04: You Who Are Seated starts 2 seconds later ("-3"), and Look Towards the East and the Epiclesis are cut
+  // into their parts (Let Us Attend; We Praise You and Let Us Attend. Amen) like their words
   const altarResponses: Record<string, string> = {
     'in-the-wisdom-of-god': 'in-the-wisdom-of-god',
     'reconciliation': 'reconciliation-2',
     'greet-one-another': 'greet-one-another-2',
-    'anaphora': 'you-who-are-seated-2',
-    'look-towards-the-east': 'look-towards-the-east-2',
-    'epiclesis': 'epiclesis-2',
+    'anaphora': 'you-who-are-seated-3',
+    'look-towards-the-east': 'look-towards-the-east-3',
+    'let-us-attend': 'let-us-attend',
+    'epiclesis': 'worship-god-in-fear',
+    'we-praise-you': 'we-praise-you',
+    'let-us-attend-amen': 'let-us-attend-amen',
     'pray-for-peace-2': 'pray-for-peace-2',
     'pray-for-the-fathers-2': 'pray-for-the-fathers-2',
     'pray-for-priests-and-deacons': 'pray-for-priests-and-deacons-2',
@@ -8984,6 +9023,9 @@ for (const group of deaconCategories)
   everyHymn((hymn, groupId) => {
     const file = groupId === 'deacon-annual' && altarResponses[baseOf(hymn.id).replace(/^d-annual-liturgy-faithful-/, '')];
     if (file && baseOf(hymn.id).startsWith('d-annual-liturgy-faithful-')) editRecordings(hymn, COPTIC_AUDIO, (files) => [...files, `altar-responses-${file}.m4a`]);
+    // The other Coptic Epiclesis recording runs through all three parts, so the cut of the deacon's part plays first
+    if (groupId === 'deacon-annual' && baseOf(hymn.id) === 'd-annual-liturgy-faithful-epiclesis')
+      editRecordings(hymn, COPTIC_AUDIO, (files) => ['altar-responses-worship-god-in-fear.m4a', ...files]);
   });
 
   // Recordings cut again (2026-10-28):
