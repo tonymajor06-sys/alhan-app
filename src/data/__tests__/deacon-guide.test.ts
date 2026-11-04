@@ -32,6 +32,8 @@ describe('Psalms for Serving', () => {
         const psalm = servingPsalms[number];
         expect(psalm.en.split('\n').length).toBeGreaterThan(3);
         expect(psalm.ar.split('\n').length).toBeGreaterThan(3);
+        // Only the psalm: no notes or page code from where it was copied
+        expect(`${psalm.en}${psalm.ar}`).not.toMatch(/dataLayer|function|Qr\.|LXX|\[[a-z]\]/);
       }
     }
     // Agpeya Psalm 115 is verses 10-19 of Bible Psalm 116
