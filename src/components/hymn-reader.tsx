@@ -519,6 +519,8 @@ export function HymnReader({
               </Pressable>
             ) : null}
 
+            {book.length > 1 ? <FollowAlongSwitch lang={lang} /> : null}
+
             {currentAudio ? (
               <Pressable
                 onPress={() => setLearning(!learning)}
@@ -581,8 +583,6 @@ export function HymnReader({
               <Text style={styles.moreCircleText}>⋯</Text>
             </Pressable>
           </ChipScroller>
-
-          {book.length > 1 ? <FollowAlongSwitch lang={lang} /> : null}
 
           <Sheet visible={sheet === 'language'} title={t.language} rtl={isRTL} onClose={() => setSheet(null)}>
             {availableLanguages.map((l) => (

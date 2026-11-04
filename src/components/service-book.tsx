@@ -1,5 +1,5 @@
 import { RefObject, useEffect, useRef } from 'react';
-import { Pressable, ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { createAlhanStyles, Sheet, Speaker, toVerses, Verse, withCopticFont } from './alhan-ui';
@@ -25,32 +25,29 @@ const ARABIC_SCRIPT: LanguageType[] = ['arabic', 'arabicCoptic', 'arabicEnglish'
 const plainText = (hymn: Hymn, language: LanguageType) =>
   (hymn.versions.find((v) => v.language === language)?.text ?? '').replace(/(?:\\n)+/g, '\n\n');
 
-// The on/off switch, remembered for every hymn
+// The small on/off switch in the reader's row of buttons, remembered for every hymn
 export function FollowAlongSwitch({ lang }: { lang: AppLanguage }) {
   const settings = useSettings();
-  const colors = useAlhanColors();
   const shared = useThemedStyles(createAlhanStyles);
   const styles = useThemedStyles(createStyles);
   const t = bookStrings[lang];
-  const isRTL = lang === 'ar';
+  const on = settings.followAlong;
   return (
-    <View style={[styles.switchRow, isRTL ? shared.rowReverse : shared.row]}>
-      <View style={styles.switchTextWrap}>
-        <Text style={[styles.switchLabel, isRTL ? shared.alignRight : shared.alignLeft]}>{t.toggle}</Text>
-        <Text style={[styles.switchHint, isRTL ? shared.alignRight : shared.alignLeft]}>{t.hint}</Text>
+    <Pressable
+      onPress={() => {
+        tapFeedback();
+        updateSettings({ followAlong: !on });
+      }}
+      accessibilityRole="switch"
+      accessibilityState={{ checked: on }}
+      accessibilityLabel={t.toggle}
+      accessibilityHint={t.hint}
+      style={({ pressed }) => [shared.actionToolbarButton, on && shared.actionToolbarButtonActive, pressed && shared.pressed]}>
+      <Text style={[shared.actionToolbarButtonText, on && shared.actionToolbarButtonTextActive]}>{t.toggle}</Text>
+      <View style={[styles.miniTrack, on && styles.miniTrackOn]}>
+        <View style={[styles.miniKnob, on && styles.miniKnobOn]} />
       </View>
-      <Switch
-        value={settings.followAlong}
-        onValueChange={(on) => {
-          tapFeedback();
-          updateSettings({ followAlong: on });
-        }}
-        accessibilityLabel={t.toggle}
-        trackColor={{ true: colors.gold, false: colors.border }}
-        thumbColor={colors.surface}
-        ios_backgroundColor={colors.border}
-      />
-    </View>
+    </Pressable>
   );
 }
 
@@ -260,21 +257,10 @@ export function ServiceBookContents({
 
 const createStyles = (colors: AlhanPalette) =>
   StyleSheet.create({
-    switchRow: {
-      alignItems: 'center',
-      gap: 12,
-      minHeight: 56,
-      paddingHorizontal: 16,
-      paddingVertical: 8,
-      marginBottom: 14,
-      borderRadius: 16,
-      borderWidth: 1,
-      borderColor: colors.border,
-      backgroundColor: colors.surface,
-    },
-    switchTextWrap: { flex: 1 },
-    switchLabel: { fontSize: 17, fontWeight: '700', color: colors.text },
-    switchHint: { fontSize: 13, color: colors.muted, marginTop: 2 },
+    miniTrack: { width: 30, height: 18, borderRadius: 9, backgroundColor: colors.border, padding: 2, justifyContent: 'center' },
+    miniTrackOn: { backgroundColor: colors.gold },
+    miniKnob: { width: 14, height: 14, borderRadius: 7, backgroundColor: colors.surface },
+    miniKnobOn: { alignSelf: 'flex-end' },
     part: {
       marginHorizontal: -12,
       borderRadius: 14,
