@@ -10,7 +10,11 @@ export interface Bilingual {
 
 export interface GuideItem {
   title?: Bilingual;
+  // When it is done, shown under the title
+  when?: Bilingual;
   text: Bilingual;
+  // Psalms prayed at this point, each shown whole when tapped
+  psalms?: { number: number; part?: Bilingual }[];
 }
 
 export interface GuideSection {
@@ -106,12 +110,6 @@ export const guideSections: GuideSection[] = [
     items: [
       {
         text: {
-          en: "Come early, wear a clean white tonia, and get the bishop's or priest's blessing before putting on the badrashin.",
-          ar: 'احضر مبكراً، والبس تونية بيضاء نظيفة، وخذ بركة الأب الأسقف أو الكاهن قبل لبس البدرشين.',
-        },
-      },
-      {
-        text: {
           en: 'Take off your shoes, make the sign of the cross, and bow toward the altar as you enter.',
           ar: 'اخلع حذاءك، وارشم علامة الصليب، وانحنِ أمام المذبح عند دخولك.',
         },
@@ -124,8 +122,8 @@ export const guideSections: GuideSection[] = [
       },
       {
         text: {
-          en: 'Only the priest touches the altar board and the holy vessels, unless he asks you to.',
-          ar: 'الكاهن وحده يلمس لوح المذبح والأواني المقدسة، إلا إذا طلب منك.',
+          en: 'Only the priest touches the altar board and the holy vessels. A deacon never touches the chalice or any of them.',
+          ar: 'الكاهن وحده يلمس لوح المذبح والأواني المقدسة. لا يلمس الشماس الكأس ولا أياً منها أبداً.',
         },
       },
       {
@@ -225,39 +223,6 @@ export const guideSections: GuideSection[] = [
     },
   },
   {
-    id: 'incense',
-    icon: '☁',
-    title: { en: 'When to Take the Incense', ar: 'متى تمسك البخور' },
-    desc: { en: 'Preparing the censer and handing it to the priest', ar: 'تجهيز الشورية ومناولتها للكاهن' },
-    items: [
-      {
-        title: { en: 'Before Vespers or Matins Raising of Incense', ar: 'قبل رفع بخور عشية أو باكر' },
-        text: {
-          en: 'Light the coal early so the censer is ready when the service starts.',
-          ar: 'أشعل الفحم مبكراً لتكون الشورية جاهزة عند بدء الصلاة.',
-        },
-      },
-      {
-        title: { en: 'Hand the censer to the priest', ar: 'ناول الشورية للكاهن' },
-        text: {
-          en: 'At the beginning of Raising of Incense, at the Pauline Epistle, and at the Prayer of the Gospel before the Gospel is read.',
-          ar: 'في بداية رفع البخور، وعند البولس، وفي أوشية الإنجيل قبل قراءته.',
-        },
-      },
-      {
-        title: { en: 'In the Liturgy', ar: 'في القداس' },
-        text: {
-          en: 'The priest adds incense during the "Agios" in the Anaphora.',
-          ar: 'يضع الكاهن البخور أثناء "آجيوس" في الأنافورا.',
-        },
-      },
-    ],
-    note: {
-      en: 'Some churches add other moments, like the Prayer of Reconciliation or the Commemoration of the Saints.',
-      ar: 'بعض الكنائس تضيف أوقاتاً أخرى، مثل صلاة الصلح أو المجمع.',
-    },
-  },
-  {
     id: 'joyful',
     icon: '♫',
     title: { en: 'When We Use the Joyful Tune', ar: 'متى نقول اللحن الفرايحي' },
@@ -294,124 +259,110 @@ export const guideSections: GuideSection[] = [
     ],
   },
   {
-    id: 'bring',
-    icon: '☰',
-    title: { en: 'What to Bring', ar: 'ماذا تحضر معك' },
-    desc: { en: 'Be ready before the service starts', ar: 'كن مستعداً قبل بدء الصلاة' },
-    items: [
-      { text: { en: 'Your tonia and badrashin, clean and folded.', ar: 'تونيتك وبدرشينك، نظيفين ومطويين.' } },
-      {
-        text: {
-          en: 'The Psalmody or this app, and know the hymns ahead of time.',
-          ar: 'الإبصلمودية أو هذا التطبيق، واعرف الألحان المطلوبة مسبقاً.',
-        },
-      },
-      { text: { en: 'A handkerchief for holding the hot censer.', ar: 'منديل لمسك الشورية الساخنة.' } },
-    ],
-  },
-  {
     id: 'psalms',
     icon: '✧',
     title: { en: 'Psalms for Serving', ar: 'مزامير الخدمة' },
     desc: {
-      en: 'What to pray from the morning of the Liturgy until you leave',
-      ar: 'ما تصليه من صباح القداس حتى تخرج من الكنيسة',
+      en: 'What to pray, and when, from the morning of the Liturgy until you leave',
+      ar: 'ما تصليه ومتى، من صباح القداس حتى تخرج من الكنيسة',
     },
     items: [
       {
-        title: { en: 'When you wake up', ar: 'عند الاستيقاظ' },
+        title: { en: '1. When you wake up', ar: '١. عند الاستيقاظ' },
+        when: { en: 'At home on the morning of the Liturgy, before you leave', ar: 'في البيت صباح القداس، قبل أن تخرج' },
         text: {
-          en: "Pray the Lord's Prayer and your own prayers, as your father of confession taught you. Then read Psalms 26, 46 and 121.",
-          ar: 'صلِّ الصلاة الربانية وصلواتك الخاصة حسب قانونك الروحي من أب اعترافك. ثم اقرأ المزامير ٢٦ و٤٦ و١٢١.',
+          en: "Pray the Lord's Prayer and your own prayers, as your father of confession taught you. Then pray Psalms 26, 46 and 121.",
+          ar: 'صلِّ الصلاة الربانية وصلواتك الخاصة حسب قانونك الروحي من أب اعترافك. ثم صلِّ المزامير ٢٦ و٤٦ و١٢١.',
         },
+        psalms: [{ number: 26 }, { number: 46 }, { number: 121 }],
       },
       {
-        title: { en: 'On the way to church · Psalm 121, 26:4–5, 64:4', ar: 'في الطريق إلى الكنيسة · مزمور ١٢١، ٢٦: ٤–٥، ٦٤: ٤' },
+        title: { en: '2. On the way to church', ar: '٢. في الطريق إلى الكنيسة' },
+        when: { en: 'While you walk or ride to church', ar: 'وأنت في الطريق إلى الكنيسة' },
         text: {
-          en: 'I was glad when they said to me, "Let us go into the house of the Lord." (pray the whole psalm)\n\nOne thing I have desired of the Lord, that will I seek: that I may dwell in the house of the Lord all the days of my life, to behold the beauty of the Lord, and to inquire in His temple. For in the time of trouble He shall hide me in His pavilion; in the secret place of His tabernacle He shall hide me; He shall set me high upon a rock.\n\nBlessed is the man You choose, and cause to approach You, that he may dwell in Your courts. We shall be satisfied with the goodness of Your house, of Your holy temple.',
-          ar: 'فَرِحْتُ بِالْقَائِلِينَ لِي: «إِلَى بَيْتِ الرَّبِّ نَذْهَبُ». (صلِّ المزمور كله)\n\nوَاحِدَةً سَأَلْتُ مِنَ الرَّبِّ وَإِيَّاهَا أَلْتَمِسُ: أَنْ أَسْكُنَ فِي بَيْتِ الرَّبِّ كُلَّ أَيَّامِ حَيَاتِي، لِكَيْ أَنْظُرَ إِلَى جَمَالِ الرَّبِّ، وَأَتَفَرَّسَ فِي هَيْكَلِهِ. لأَنَّهُ يُخَبِّئُنِي فِي مَظَلَّتِهِ فِي يَوْمِ الشَّرِّ. يَسْتُرُنِي بِسِتْرِ خَيْمَتِهِ. عَلَى صَخْرَةٍ يَرْفَعُنِي.\n\nطُوبَى لِلَّذِي تَخْتَارُهُ وَتُقَرِّبُهُ لِيَسْكُنَ فِي دِيَارِكَ. لَنَشْبَعَنَّ مِنْ خَيْرِ بَيْتِكَ، قُدْسِ هَيْكَلِكَ.',
+          en: 'Pray all of Psalm 121: I was glad when they said to me, "Let us go into the house of the Lord."\n\nThen from Psalm 26: One thing I have desired of the Lord, that will I seek: that I may dwell in the house of the Lord all the days of my life, to behold the beauty of the Lord, and to inquire in His temple. For in the time of trouble He shall hide me in His pavilion; in the secret place of His tabernacle He shall hide me; He shall set me high upon a rock.\n\nAnd from Psalm 64: Blessed is the man You choose, and cause to approach You, that he may dwell in Your courts. We shall be satisfied with the goodness of Your house, of Your holy temple.',
+          ar: 'صلِّ المزمور ١٢١ كله: فَرِحْتُ بِالْقَائِلِينَ لِي: «إِلَى بَيْتِ الرَّبِّ نَذْهَبُ».\n\nثم من المزمور ٢٦: وَاحِدَةً سَأَلْتُ مِنَ الرَّبِّ وَإِيَّاهَا أَلْتَمِسُ: أَنْ أَسْكُنَ فِي بَيْتِ الرَّبِّ كُلَّ أَيَّامِ حَيَاتِي، لِكَيْ أَنْظُرَ إِلَى جَمَالِ الرَّبِّ، وَأَتَفَرَّسَ فِي هَيْكَلِهِ. لأَنَّهُ يُخَبِّئُنِي فِي مَظَلَّتِهِ فِي يَوْمِ الشَّرِّ. يَسْتُرُنِي بِسِتْرِ خَيْمَتِهِ. عَلَى صَخْرَةٍ يَرْفَعُنِي.\n\nومن المزمور ٦٤: طُوبَى لِلَّذِي تَخْتَارُهُ وَتُقَرِّبُهُ لِيَسْكُنَ فِي دِيَارِكَ. لَنَشْبَعَنَّ مِنْ خَيْرِ بَيْتِكَ، قُدْسِ هَيْكَلِكَ.',
         },
+        psalms: [
+          { number: 121 },
+          { number: 26, part: { en: 'Verses 4 and 5 are said here', ar: 'تُقال هنا الآيتان ٤ و٥' } },
+          { number: 64, part: { en: 'Verse 4 is said here', ar: 'تُقال هنا الآية ٤' } },
+        ],
       },
       {
-        title: { en: 'Entering the church · Psalm 5:7', ar: 'عند دخول الكنيسة · مزمور ٥: ٧' },
+        title: { en: '3. Entering the church', ar: '٣. عند دخول الكنيسة' },
+        when: { en: 'At the church door, before you bow toward the altar', ar: 'عند باب الكنيسة، قبل أن تسجد نحو الهيكل' },
         text: {
-          en: 'But as for me, I will come into Your house in the multitude of Your mercy; in fear of You I will worship toward Your holy temple.\n\nThen bow toward the altar and say: We worship You, O Christ, with Your Good Father and the Holy Spirit, for You have come and saved us. (In the Holy Fifty Days: for You have risen and saved us.)',
-          ar: 'أَمَّا أَنَا فَبِكَثْرَةِ رَحْمَتِكَ أَدْخُلُ بَيْتَكَ. أَسْجُدُ فِي هَيْكَلِ قُدْسِكَ بِخَوْفِكَ.\n\nثم اسجد نحو الهيكل وقل: نسجد لك أيها المسيح مع أبيك الصالح والروح القدس، لأنك أتيت وخلصتنا. (وفي الخماسين: لأنك قمت وخلصتنا.)',
+          en: 'From Psalm 5: But as for me, I will come into Your house in the multitude of Your mercy; in fear of You I will worship toward Your holy temple.\n\nThen bow toward the altar and say: We worship You, O Christ, with Your Good Father and the Holy Spirit, for You have come and saved us. (In the Holy Fifty Days: for You have risen and saved us.)',
+          ar: 'من المزمور ٥: أَمَّا أَنَا فَبِكَثْرَةِ رَحْمَتِكَ أَدْخُلُ بَيْتَكَ. أَسْجُدُ فِي هَيْكَلِ قُدْسِكَ بِخَوْفِكَ.\n\nثم اسجد نحو الهيكل وقل: نسجد لك أيها المسيح مع أبيك الصالح والروح القدس، لأنك أتيت وخلصتنا. (وفي الخماسين: لأنك قمت وخلصتنا.)',
         },
+        psalms: [{ number: 5, part: { en: 'Verse 7 is said here', ar: 'تُقال هنا الآية ٧' } }],
       },
       {
-        title: { en: 'Putting on the tonia · Psalm 29 and 92', ar: 'عند لبس التونية · مزمور ٢٩ و٩٢' },
+        title: { en: '4. Putting on the tonia', ar: '٤. عند لبس التونية' },
+        when: { en: 'After the priest blesses your tonia, while you put it on', ar: 'بعد أن يرشم الكاهن تونيتك، وأنت تلبسها' },
         text: {
-          en: 'Take the tonia to the priest to bless it. Say "I have sinned, absolve me," then kiss the cross and the priest\'s hand.\n\nWhile you put it on, stay quiet and pray Psalm 29: I will extol You, O Lord, for You have lifted me up, and have not let my foes rejoice over me…\n\nand Psalm 92: The Lord reigns, He is clothed with majesty; the Lord is clothed, He has girded Himself with strength…',
-          ar: 'قدّم التونية للكاهن ليرشمها. قل «أخطأت، حاللني»، ثم قبّل الصليب ويد الكاهن.\n\nوأنت تلبسها، اصمت وصلِّ المزمور ٢٩: أُعَظِّمُكَ يَا رَبُّ لأَنَّكَ نَشَلْتَنِي وَلَمْ تُشْمِتْ بِي أَعْدَائِي…\n\nوالمزمور ٩٢: اَلرَّبُّ قَدْ مَلَكَ. لَبِسَ الْجَلاَلَ. لَبِسَ الرَّبُّ الْقُدْرَةَ، ائْتَزَرَ بِهَا…',
+          en: 'Take the tonia to the priest to bless it. Say "I have sinned, absolve me," then kiss the cross and the priest\'s hand.\n\nWhile you put it on, stay quiet and pray all of Psalm 29 and Psalm 92.',
+          ar: 'قدّم التونية للكاهن ليرشمها. قل «أخطأت، حاللني»، ثم قبّل الصليب ويد الكاهن.\n\nوأنت تلبسها، اصمت وصلِّ المزمورين ٢٩ و٩٢ كاملين.',
         },
+        psalms: [{ number: 29 }, { number: 92 }],
       },
       {
-        title: { en: 'Going up to the altar · Psalm 42:4 and 25:6', ar: 'عند الصعود إلى الهيكل · مزمور ٤٢: ٤ و٢٥: ٦' },
+        title: { en: '5. Going up to the altar', ar: '٥. عند الصعود إلى الهيكل' },
+        when: { en: 'At the altar step, as you go in to serve', ar: 'عند درجة الهيكل، وأنت داخل لتخدم' },
         text: {
-          en: 'Then I will go to the altar of God, to God my exceeding joy; and on the harp I will praise You, O God, my God.\n\nI will wash my hands in innocence; so I will go about Your altar, O Lord.\n\nTake off your shoes and bow before you go in.',
-          ar: 'فَآتِي إِلَى مَذْبَحِ اللهِ، إِلَى اللهِ بَهْجَةِ فَرَحِي، وَأَحْمَدُكَ بِالْعُودِ يَا اللهُ إِلهِي.\n\nأَغْسِلُ يَدَيَّ فِي النَّقَاوَةِ، فَأَطُوفُ بِمَذْبَحِكَ يَا رَبُّ.\n\nاخلع حذاءك واسجد قبل أن تدخل.',
+          en: 'From Psalm 42: Then I will go to the altar of God, to God my exceeding joy; and on the harp I will praise You, O God, my God.\n\nFrom Psalm 25: I will wash my hands in innocence; so I will go about Your altar, O Lord.\n\nTake off your shoes and bow before you go in.',
+          ar: 'من المزمور ٤٢: فَآتِي إِلَى مَذْبَحِ اللهِ، إِلَى اللهِ بَهْجَةِ فَرَحِي، وَأَحْمَدُكَ بِالْعُودِ يَا اللهُ إِلهِي.\n\nمن المزمور ٢٥: أَغْسِلُ يَدَيَّ فِي النَّقَاوَةِ، فَأَطُوفُ بِمَذْبَحِكَ يَا رَبُّ.\n\nاخلع حذاءك واسجد قبل أن تدخل.',
         },
+        psalms: [
+          { number: 42, part: { en: 'Verse 4 is said here', ar: 'تُقال هنا الآية ٤' } },
+          { number: 25, part: { en: 'Verse 6 is said here', ar: 'تُقال هنا الآية ٦' } },
+        ],
       },
       {
-        title: { en: 'Before communion · Psalm 50', ar: 'قبل التناول · مزمور ٥٠' },
+        title: { en: '6. Before communion', ar: '٦. قبل التناول' },
+        when: { en: 'While you wait to receive the Holy Mysteries', ar: 'وأنت تنتظر التناول من الأسرار المقدسة' },
         text: {
-          en: 'Create in me a clean heart, O God, and renew a steadfast spirit within me.\n\nPray all of Psalm 50 quietly if you can, asking forgiveness for your sins.',
-          ar: 'قَلْبًا نَقِيًّا اخْلُقْ فِيَّ يَا اَللهُ، وَرُوحًا مُسْتَقِيمًا جَدِّدْ فِي دَاخِلِي.\n\nصلِّ المزمور الخمسين كله بهدوء إن استطعت، طالباً غفران خطاياك.',
+          en: 'Pray all of Psalm 50 quietly, asking forgiveness for your sins: Have mercy upon me, O God… Create in me a clean heart, O God, and renew a steadfast spirit within me.',
+          ar: 'صلِّ المزمور الخمسين كله بهدوء، طالباً غفران خطاياك: اِرْحَمْنِي يَا اَللهُ… قَلْبًا نَقِيًّا اخْلُقْ فِيَّ يَا اَللهُ، وَرُوحًا مُسْتَقِيمًا جَدِّدْ فِي دَاخِلِي.',
         },
+        psalms: [{ number: 50 }],
       },
       {
-        title: { en: 'After communion · Psalm 115:3–4 and 33:8', ar: 'بعد التناول · مزمور ١١٥: ٣–٤ و٣٣: ٨' },
+        title: { en: '7. After communion', ar: '٧. بعد التناول' },
+        when: { en: 'Right after you receive the Body and the Blood', ar: 'بعد أن تتناول الجسد والدم مباشرة' },
         text: {
-          en: 'What shall I render to the Lord for all His benefits toward me? I will take up the cup of salvation, and call upon the name of the Lord.\n\nOh, taste and see that the Lord is good; blessed is the man who trusts in Him!',
-          ar: 'مَاذَا أَرُدُّ لِلرَّبِّ مِنْ أَجْلِ كُلِّ حَسَنَاتِهِ لِي؟ كَأْسَ الْخَلاَصِ أَتَنَاوَلُ، وَبِاسْمِ الرَّبِّ أَدْعُو.\n\nذُوقُوا وَانْظُرُوا مَا أَطْيَبَ الرَّبَّ! طُوبَى لِلرَّجُلِ الْمُتَوَكِّلِ عَلَيْهِ.',
+          en: 'From Psalm 115: What shall I render to the Lord for all His benefits toward me? I will take up the cup of salvation, and call upon the name of the Lord.\n\nFrom Psalm 33: Oh, taste and see that the Lord is good; blessed is the man who trusts in Him!',
+          ar: 'من المزمور ١١٥: مَاذَا أَرُدُّ لِلرَّبِّ مِنْ أَجْلِ كُلِّ حَسَنَاتِهِ لِي؟ كَأْسَ الْخَلاَصِ أَتَنَاوَلُ، وَبِاسْمِ الرَّبِّ أَدْعُو.\n\nمن المزمور ٣٣: ذُوقُوا وَانْظُرُوا مَا أَطْيَبَ الرَّبَّ! طُوبَى لِلرَّجُلِ الْمُتَوَكِّلِ عَلَيْهِ.',
         },
+        psalms: [
+          { number: 115, part: { en: 'Verses 3 and 4 are said here', ar: 'تُقال هنا الآيتان ٣ و٤' } },
+          { number: 33, part: { en: 'Verse 8 is said here', ar: 'تُقال هنا الآية ٨' } },
+        ],
       },
       {
-        title: { en: 'Taking off the tonia · Psalm 46', ar: 'عند خلع التونية · مزمور ٤٦' },
+        title: { en: '8. Taking off the tonia', ar: '٨. عند خلع التونية' },
+        when: { en: 'At the end of the Liturgy, after the final blessing', ar: 'في نهاية القداس، بعد البركة الختامية' },
         text: {
-          en: 'Take it off only at the end of the Liturgy, after the final blessing, unless the priest allows you earlier.\n\nWhile you take it off, pray Psalm 46: Oh, clap your hands, all you peoples! Shout to God with the voice of triumph!…\n\nFold the tonia neatly and kiss the cross on it.',
-          ar: 'لا تخلعها إلا في نهاية القداس بعد البركة الختامية، إلا إذا سمح لك الكاهن قبل ذلك.\n\nوأنت تخلعها، صلِّ المزمور ٤٦: يَا جَمِيعَ الأُمَمِ صَفِّقُوا بِالأَيَادِي. اهْتِفُوا للهِ بِصَوْتِ الابْتِهَاجِ…\n\nاطوِ التونية بعناية وقبّل الصليب الذي عليها.',
+          en: 'Take it off only after the final blessing, unless the priest allows you earlier. While you take it off, pray all of Psalm 46: Oh, clap your hands, all you peoples!…\n\nFold the tonia neatly and kiss the cross on it.',
+          ar: 'لا تخلعها إلا بعد البركة الختامية، إلا إذا سمح لك الكاهن قبل ذلك. وأنت تخلعها، صلِّ المزمور ٤٦ كله: يَا جَمِيعَ الأُمَمِ صَفِّقُوا بِالأَيَادِي…\n\nاطوِ التونية بعناية وقبّل الصليب الذي عليها.',
         },
+        psalms: [{ number: 46 }],
       },
       {
-        title: { en: 'Leaving the church · Psalm 120:8', ar: 'عند الخروج من الكنيسة · مزمور ١٢٠: ٨' },
+        title: { en: '9. Leaving the church', ar: '٩. عند الخروج من الكنيسة' },
+        when: { en: 'As you go out of the church door', ar: 'وأنت خارج من باب الكنيسة' },
         text: {
-          en: 'The Lord shall preserve your going out and your coming in from this time forth, and even forevermore.',
-          ar: 'الرَّبُّ يَحْفَظُ خُرُوجَكَ وَدُخُولَكَ مِنَ الآنَ وَإِلَى الدَّهْرِ.',
+          en: 'From Psalm 120: The Lord shall preserve your going out and your coming in from this time forth, and even forevermore.',
+          ar: 'من المزمور ١٢٠: الرَّبُّ يَحْفَظُ خُرُوجَكَ وَدُخُولَكَ مِنَ الآنَ وَإِلَى الدَّهْرِ.',
         },
+        psalms: [{ number: 120, part: { en: 'Verse 8 is said here', ar: 'تُقال هنا الآية ٨' } }],
       },
     ],
     note: {
-      en: 'Psalm numbers follow the Agpeya, as deacons pray them. In most Bibles the number is one higher (Agpeya Psalm 29 is Psalm 30). Churches differ a little, so follow what your priest teaches.',
-      ar: 'أرقام المزامير حسب الأجبية كما يصليها الشمامسة. وتختلف الكنائس قليلاً، فاتبع ما يعلّمه كاهنك.',
+      en: 'Tap a psalm to read it whole. Psalm numbers follow the Agpeya, as deacons pray them; the number in brackets is the one in most Bibles (Agpeya Psalm 29 is Psalm 30). Churches differ a little, so follow what your priest teaches.\n\nEnglish psalms: Scripture taken from the New King James Version®. Copyright © 1982 by Thomas Nelson. Used by permission. All rights reserved. Arabic psalms: the Van Dyck translation.',
+      ar: 'اضغط على المزمور لتقرأه كاملاً. أرقام المزامير حسب الأجبية كما يصليها الشمامسة، والرقم بين القوسين هو رقمه في أغلب نسخ الكتاب المقدس. وتختلف الكنائس قليلاً، فاتبع ما يعلّمه كاهنك.\n\nالمزامير بالعربية من ترجمة فان دايك.',
     },
-  },
-  {
-    id: 'stand',
-    icon: '⇄',
-    title: { en: 'Where to Stand', ar: 'أين تقف' },
-    desc: { en: 'The two choirs and who sings what', ar: 'الخورسان ومن يرتل ماذا' },
-    items: [
-      {
-        text: {
-          en: 'The deacons stand in two choirs, north (Bahary) and south (Qebly), and take turns singing the verses.',
-          ar: 'يقف الشمامسة في خورسين، البحري (الشمال) والقبلي (الجنوب)، ويتبادلان ترتيل الأرباع.',
-        },
-      },
-      {
-        text: {
-          en: 'In this app, verses marked + are sung by the other choir.',
-          ar: 'في هذا التطبيق، الأرباع التي عليها علامة + يرتلها الخورس الآخر.',
-        },
-      },
-      {
-        text: {
-          en: 'Which choir starts changes, so follow whoever is leading the choir.',
-          ar: 'الخورس الذي يبدأ يتغير، فاتبع من يقود الخورس.',
-        },
-      },
-    ],
   },
   {
     id: 'glossary',
@@ -523,17 +474,8 @@ const guideQuestions: GuideQuestion[] = [
   },
   {
     q: b('Who touches the altar board and the holy vessels?', 'من يلمس لوح المذبح والأواني المقدسة؟'),
-    right: b('Only the priest, unless he asks you to', 'الكاهن وحده، إلا إذا طلب منك'),
-    wrong: [b('Any deacon', 'أي شماس'), b('Only the archdeacon', 'رئيس الشمامسة فقط'), b('The Epsaltos', 'الأبصالتس')],
-  },
-  {
-    q: b('What do you do before putting on your badrashin?', 'ماذا تفعل قبل لبس البدرشين؟'),
-    right: b("Get the bishop's or priest's blessing", 'تأخذ بركة الأب الأسقف أو الكاهن'),
-    wrong: [
-      b('Light the coal', 'تشعل الفحم'),
-      b('Read the Synaxarium', 'تقرأ السنكسار'),
-      b('Nothing, just put it on', 'لا شيء، تلبسه مباشرة'),
-    ],
+    right: b('Only the priest. A deacon never touches them', 'الكاهن وحده. الشماس لا يلمسها أبداً'),
+    wrong: [b('Any deacon', 'أي شماس'), b('Only the archdeacon', 'رئيس الشمامسة فقط'), b('A deacon, when the priest asks him', 'الشماس، إذا طلب منه الكاهن')],
   },
   // Candles
   {
@@ -608,37 +550,6 @@ const guideQuestions: GuideQuestion[] = [
     right: b('Holds it still: candles are for veneration, not pointing', 'يثبتها: فالشموع للتكريم وليست للإشارة'),
     wrong: [b('Points it toward them', 'يشير بها نحوهما'), b('Raises it higher', 'يرفعها أعلى'), b('Puts it out', 'يطفئها')],
   },
-  // Incense
-  {
-    q: b('When should you light the coal?', 'متى تشعل الفحم؟'),
-    right: b('Early, before Raising of Incense starts', 'مبكراً، قبل بدء رفع البخور'),
-    wrong: [
-      b('During the Gospel', 'أثناء الإنجيل'),
-      b('After the Pauline Epistle', 'بعد البولس'),
-      b('At the end of the Liturgy', 'في نهاية القداس'),
-    ],
-  },
-  {
-    q: b('When do you hand the censer to the priest?', 'متى تناول الشورية للكاهن؟'),
-    right: b(
-      'At the start of Raising of Incense, the Pauline Epistle and the Prayer of the Gospel',
-      'في بداية رفع البخور، وعند البولس، وفي أوشية الإنجيل'
-    ),
-    wrong: [
-      b('Only at the end of the Liturgy', 'في نهاية القداس فقط'),
-      b('During the Synaxarium only', 'أثناء السنكسار فقط'),
-      b('Only when the choir finishes a hymn', 'فقط عندما ينتهي الخورس من لحن'),
-    ],
-  },
-  {
-    q: b('When does the priest add incense in the Anaphora?', 'متى يضع الكاهن البخور في الأنافورا؟'),
-    right: b('During the "Agios"', 'أثناء "آجيوس"'),
-    wrong: [
-      b('During the Synaxarium', 'أثناء السنكسار'),
-      b('At the dismissal', 'عند التسريح'),
-      b('Before Raising of Incense', 'قبل رفع البخور'),
-    ],
-  },
   // Joyful tune
   {
     q: b('Which of these uses the joyful tune?', 'أي من هذه نقول فيه اللحن الفرايحي؟'),
@@ -669,21 +580,41 @@ const guideQuestions: GuideQuestion[] = [
       b('The Martyrs', 'الشهداء'),
     ],
   },
-  // What to bring, where to stand
+  // Psalms for Serving: when each is said
   {
-    q: b('What do you bring for holding the hot censer?', 'ماذا تحضر لتمسك الشورية الساخنة؟'),
-    right: b('A handkerchief', 'منديل'),
-    wrong: [b('The Katameros', 'القطمارس'), b('A candle', 'شمعة'), b('Your phone', 'هاتفك')],
+    q: b('Which psalms do you pray while putting on the tonia?', 'أي مزامير تصليها وأنت تلبس التونية؟'),
+    right: b('Psalms 29 and 92', 'المزموران ٢٩ و٩٢'),
+    wrong: [b('Psalm 50', 'المزمور ٥٠'), b('Psalm 120', 'المزمور ١٢٠'), b('Psalms 115 and 33', 'المزموران ١١٥ و٣٣')],
   },
   {
-    q: b('In this app, what does + before a verse mean?', 'في هذا التطبيق، ماذا تعني علامة + قبل الربع؟'),
-    right: b('The other choir sings it', 'يرتله الخورس الآخر'),
-    wrong: [b('The priest says it', 'يقوله الكاهن'), b('It is sung slower', 'يُرتل ببطء'), b('It is skipped on Sundays', 'يُترك يوم الأحد')],
+    q: b('When do you pray Psalm 50?', 'متى تصلي المزمور الخمسين؟'),
+    right: b('Before communion', 'قبل التناول'),
+    wrong: [b('While taking off the tonia', 'وأنت تخلع التونية'), b('Leaving the church', 'عند الخروج من الكنيسة'), b('On the way to church', 'في الطريق إلى الكنيسة')],
   },
   {
-    q: b('How do you know which choir starts?', 'كيف تعرف أي خورس يبدأ؟'),
-    right: b('Follow whoever is leading the choir', 'تتبع من يقود الخورس'),
-    wrong: [b('The north choir always starts', 'البحري يبدأ دائماً'), b('The south choir always starts', 'القبلي يبدأ دائماً'), b('Whoever is loudest', 'الأعلى صوتاً')],
+    q: b('When do you say "What shall I render to the Lord for all His benefits toward me?"', 'متى تقول "ماذا أرد للرب من أجل كل حسناته لي؟"'),
+    right: b('Right after communion', 'بعد التناول مباشرة'),
+    wrong: [b('When you wake up', 'عند الاستيقاظ'), b('Entering the church', 'عند دخول الكنيسة'), b('Putting on the tonia', 'عند لبس التونية')],
+  },
+  {
+    q: b('When do you say "Then I will go to the altar of God, to God my exceeding joy"?', 'متى تقول "فآتي إلى مذبح الله، إلى الله بهجة فرحي"؟'),
+    right: b('Going up to the altar', 'عند الصعود إلى الهيكل'),
+    wrong: [b('Leaving the church', 'عند الخروج من الكنيسة'), b('After communion', 'بعد التناول'), b('When you wake up', 'عند الاستيقاظ')],
+  },
+  {
+    q: b('When do you say "The Lord shall preserve your going out and your coming in"?', 'متى تقول "الرب يحفظ خروجك ودخولك"؟'),
+    right: b('Leaving the church', 'عند الخروج من الكنيسة'),
+    wrong: [b('Before communion', 'قبل التناول'), b('Putting on the tonia', 'عند لبس التونية'), b('Going up to the altar', 'عند الصعود إلى الهيكل')],
+  },
+  {
+    q: b('Which psalm do you pray while taking off the tonia?', 'أي مزمور تصليه وأنت تخلع التونية؟'),
+    right: b('Psalm 46: "Oh, clap your hands, all you peoples!"', 'المزمور ٤٦: "يا جميع الأمم صفقوا بالأيادي"'),
+    wrong: [b('Psalm 50: "Have mercy upon me, O God"', 'المزمور ٥٠: "ارحمني يا الله"'), b('Psalm 92: "The Lord reigns"', 'المزمور ٩٢: "الرب قد ملك"'), b('Psalm 121: "I was glad"', 'المزمور ١٢١: "فرحت بالقائلين لي"')],
+  },
+  {
+    q: b('When do you say "I will come into Your house in the multitude of Your mercy"?', 'متى تقول "بكثرة رحمتك أدخل بيتك"؟'),
+    right: b('Entering the church', 'عند دخول الكنيسة'),
+    wrong: [b('Leaving the church', 'عند الخروج من الكنيسة'), b('After communion', 'بعد التناول'), b('Taking off the tonia', 'عند خلع التونية')],
   },
   // Glossary
   ...(

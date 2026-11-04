@@ -1,4 +1,5 @@
-import { buildGuideQuiz } from '../deacon-guide';
+import { buildGuideQuiz, guideSections } from '../deacon-guide';
+import { servingPsalms } from '../serving-psalms';
 
 describe('buildGuideQuiz', () => {
   it('gives every question four different options with one right answer', () => {
@@ -18,5 +19,29 @@ describe('buildGuideQuiz', () => {
 
   it('asks ten questions per round', () => {
     expect(buildGuideQuiz('en')).toHaveLength(10);
+  });
+});
+
+describe('Psalms for Serving', () => {
+  it('says when each is prayed, and has every psalm it names whole, in both languages', () => {
+    const psalms = guideSections.find((s) => s.id === 'psalms')!;
+    for (const item of psalms.items) {
+      expect(item.when?.en && item.when.ar).toBeTruthy();
+      expect(item.psalms?.length).toBeGreaterThan(0);
+      for (const { number } of item.psalms!) {
+        const psalm = servingPsalms[number];
+        expect(psalm.en.split('\n').length).toBeGreaterThan(3);
+        expect(psalm.ar.split('\n').length).toBeGreaterThan(3);
+      }
+    }
+    // Agpeya Psalm 115 is verses 10-19 of Bible Psalm 116
+    expect(servingPsalms[115].en.startsWith('I believed, therefore I spoke')).toBe(true);
+    expect(servingPsalms[50].en.startsWith('Have mercy upon me, O God')).toBe(true);
+  });
+
+  it('no longer has the parts the owner took out', () => {
+    for (const id of ['incense', 'bring', 'stand']) expect(guideSections.some((s) => s.id === id)).toBe(false);
+    const altar = guideSections.find((s) => s.id === 'altar')!.items.map((i) => i.text.en).join(' ');
+    expect(altar).not.toMatch(/Come early|unless he asks/);
   });
 });
