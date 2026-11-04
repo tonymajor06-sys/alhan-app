@@ -22,7 +22,7 @@ export interface Settings {
   theme: ThemeChoice;
   // The language a hymn opens in; null follows the app language (Coptic in English, Arabic in Arabic)
   hymnLanguage: LanguageType | null;
-  // A service's words one after another on one page, tapped to play (Follow along), instead of a list of names
+  // Follow along: the hymn reader shows the whole service on one page, as in Spirit & Truth (see service-book.tsx)
   followAlong: boolean;
 }
 

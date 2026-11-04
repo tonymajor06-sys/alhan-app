@@ -1,6 +1,6 @@
 import { router } from 'expo-router';
 import { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
-import { Alert, Platform, Pressable, ScrollView, Share, Text, View } from 'react-native';
+import { Alert, Platform, Pressable, ScrollView, Share, Text, useWindowDimensions, View } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 
 import { hymnWebUrl } from '../constants/site';
@@ -10,6 +10,8 @@ import { splitTitle, titleLines } from '../data/hymn-titles';
 import { flattenHymns, Hymn, LanguageType } from '../data/hymns';
 import { hymnAcrossSeasons, hymnSlug, locateHymn, neighborHymns } from '../data/search';
 import { followAlong, PraiseKind } from '../data/follow-along';
+import { bookParts, serviceBook } from '../data/service-book';
+import { FollowAlongSwitch, ServiceBook, ServiceBookContents } from './service-book';
 import { BusyPulse } from './busy-pulse';
 import { followStrings } from './follow-strings';
 import { pressFeedback, tapFeedback } from './haptics';
@@ -212,6 +214,32 @@ export function HymnReader({
       const source = file ? audioSourceFor(file) : null;
       return file && source ? [{ hymnId: h.id, language, title: recordingTitle(titleLines(h, lang).main, file, language, lang), source, file }] : [];
     });
+  };
+
+  // ---------- Follow along ----------
+  // The switch opens the hymn out into its whole service on one page, the languages side by side (a third on a wide
+  // screen), with Contents to jump to any part; tapping a part makes it the hymn on this page, ▶ plays from it
+  const book = useMemo(() => serviceBook(hymn.id, tonight), [hymn.id, tonight]);
+  const following = settings.followAlong && book.length > 1;
+  const [contentsOpen, setContentsOpen] = useState(false);
+  const bookPositions = useRef<Record<string, number>>({});
+  const { width } = useWindowDimensions();
+  const bookPlay = (part: Hymn) => {
+    const parts = bookParts(book);
+    const trackFor = (h: Hymn): QueueTrack | null => {
+      const order: LanguageType[] = [effectiveLanguage, 'coptic', lang === 'ar' ? 'arabic' : 'english', 'arabic', 'english'];
+      const version = order.map((l) => h.versions.find((v) => v.language === l && v.audio)).find(Boolean) ?? h.versions.find((v) => v.audio);
+      const source = version?.audio ? audioSourceFor(version.audio) : null;
+      return version?.audio && source
+        ? { hymnId: h.id, language: version.language, title: recordingTitle(titleLines(h, lang).main, version.audio, version.language, lang), source, file: version.audio }
+        : null;
+    };
+    const from = parts.indexOf(part);
+    const queued = (settings.playNext ? parts.slice(from) : [part]).map(trackFor).filter((tr): tr is QueueTrack => !!tr);
+    if (!queued.length) return;
+    pressFeedback();
+    playQueue(queued);
+    if (part.id !== hymn.id) openNeighbor(part);
   };
 
   const toggleReaderAudio = () => {
@@ -554,6 +582,8 @@ export function HymnReader({
             </Pressable>
           </ChipScroller>
 
+          {book.length > 1 ? <FollowAlongSwitch lang={lang} /> : null}
+
           <Sheet visible={sheet === 'language'} title={t.language} rtl={isRTL} onClose={() => setSheet(null)}>
             {availableLanguages.map((l) => (
               <SheetRow
@@ -834,6 +864,32 @@ export function HymnReader({
             </View>
           ) : null}
 
+          {following ? (
+            <ServiceBook
+              book={book}
+              currentId={hymn.id}
+              playingId={nowPlaying?.hymnId}
+              languages={
+                showSideBySide && compareLanguage
+                  ? [
+                      effectiveLanguage,
+                      compareLanguage,
+                      ...(width >= 700
+                        ? (['english', 'arabic', 'coptic', 'englishCoptic'] as LanguageType[])
+                            .filter((l) => l !== effectiveLanguage && l !== compareLanguage)
+                            .slice(0, 1)
+                        : []),
+                    ]
+                  : [effectiveLanguage]
+              }
+              lang={lang}
+              scrollRef={scrollRef}
+              onPlace={(id, y) => (bookPositions.current[id] = y)}
+              onSelect={openNeighbor}
+              onPlay={bookPlay}
+            />
+          ) : (
+          <>
           <View style={styles.textCard} onLayout={(e) => (textCardY.current = e.nativeEvent.layout.y)}>
             <View style={[styles.textCardHeader, rowDirection]}>
               <Pressable
@@ -956,14 +1012,31 @@ export function HymnReader({
               ) : null}
             </View>
           ) : null}
+          </>
+          )}
 
-          {previous || next ? (
+          {!following && (previous || next) ? (
             <View style={[styles.hymnNav, rowDirection]}>
               {navButton(previous, t.previousHymn, isRTL ? '›' : '‹', isRTL)}
               {navButton(next, t.nextHymn, isRTL ? '‹' : '›', !isRTL)}
             </View>
           ) : null}
         </ScreenShell>
+        {following ? (
+          <ServiceBookContents
+            book={book}
+            currentId={hymn.id}
+            lang={lang}
+            open={contentsOpen}
+            onOpen={() => setContentsOpen(true)}
+            onClose={() => setContentsOpen(false)}
+            onJump={(id) => {
+              setContentsOpen(false);
+              const y = bookPositions.current[id];
+              if (y !== undefined) scrollRef.current?.scrollTo({ y: Math.max(0, y - 12), animated: true });
+            }}
+          />
+        ) : null}
       </View>
     </GestureDetector>
   );
