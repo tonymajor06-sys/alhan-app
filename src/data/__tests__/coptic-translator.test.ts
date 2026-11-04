@@ -1,5 +1,5 @@
 import { dictionaryWords, prefixes } from '../coptic-dictionary';
-import { dictionary, lookUpCoptic, lookUpMeaning, normCoptic, versesWith } from '../coptic-translator';
+import { copticFromSound, dictionary, hymnVersesFor, lookUpCoptic, lookUpMeaning, normCoptic, versesSaying, versesWith } from '../coptic-translator';
 
 const pieces = (word: string) => lookUpCoptic(word, 'en').words[0].pieces?.map((p) => normCoptic(p.text));
 
@@ -53,5 +53,44 @@ describe('Coptic translator', () => {
     const verses = versesWith('ⲁϥϭⲓⲥⲁⲣⲝ');
     expect(verses.length).toBeGreaterThan(0);
     expect(verses.every((v) => normCoptic(v.coptic).includes('ⲁϥϭⲓⲥⲁⲣⲝ') && v.meaning.en)).toBe(true);
+  });
+
+  it('finds a word spelled another way, and only offers one a letter off', () => {
+    const written = (word: string) => lookUpCoptic(word, 'en').words[0];
+    expect(written('ⲫⲛⲟⲩⲧⲓ').entries[0].meaning.en).toBe('God');
+    expect(normCoptic(written('ⲫⲛⲟⲩⲧⲓ').spelled!)).toBe('ⲫⲛⲟⲩϯ');
+    expect(written('ⲁⲅⲁⲡⲓ').entries[0].meaning.en).toBe('love');
+    // ⲡⲁⲧⲣⲟⲥ is not Peter: Ⲡⲉⲧⲣⲟⲥ is only suggested
+    expect(written('ⲡⲁⲧⲣⲟⲥ').entries).toHaveLength(0);
+    expect(normCoptic(written('ⲡⲁⲧⲣⲟⲥ').nearest!.coptic)).toBe('ⲡⲉⲧⲣⲟⲥ');
+  });
+
+  it('gives a sentence word for word, and the closest verse in the hymns', () => {
+    const sentence = lookUpCoptic('ⲁϥⲧⲱⲛϥ ⲛ̀ϫⲉ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ ϧⲉⲛ ⲡⲓⲙ̀ϩⲁⲩ', 'en');
+    expect(sentence.gloss).toBe('He rose · Christ · in · the tomb');
+    expect(lookUpCoptic('ⲁϥⲧⲱⲛϥ ⲛ̀ϫⲉ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ ϧⲉⲛ ⲡⲓⲙ̀ϩⲁⲩ', 'ar').gloss).toBe('قام · المسيح · في · القبر');
+    // A phrase in the dictionary needs no word-for-word line
+    expect(lookUpCoptic('Ⲭⲉⲣⲉ ⲛⲉ Ⲙⲁⲣⲓⲁ', 'en').gloss).toBeNull();
+    const close = hymnVersesFor('ⲁϥⲧⲱⲛϥ ⲛ̀ϫⲉ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ ϧⲉⲛ ⲡⲓⲙ̀ϩⲁⲩ');
+    expect(close.verses.length).toBeGreaterThan(0);
+  });
+
+  it('reads Coptic typed in English letters, however it is spelled', () => {
+    for (const typed of ['pchois', 'epchois', 'Epshois']) expect(normCoptic(copticFromSound(typed)!)).toBe('ⲡϭⲟⲓⲥ');
+    expect(normCoptic(lookUpMeaning('pikhristos aftonf', 'en').asCoptic!)).toBe('ⲡⲓⲭⲣⲓⲥⲧⲟⲥⲁϥⲧⲱⲛϥ');
+    // English stays English
+    expect(lookUpMeaning('peace', 'en').asCoptic).toBeUndefined();
+  });
+
+  it('finds English through its endings and typing slips', () => {
+    expect(lookUpMeaning('praises', 'en').searchedFor).toBe('praise');
+    expect(lookUpMeaning('churches', 'en').searchedFor).toBe('church');
+    expect(lookUpMeaning('resurection', 'en').searchedFor).toBe('resurrection');
+    expect(normCoptic(lookUpMeaning('resurection', 'en').matches[0].coptic)).toBe('ⲁⲛⲁⲥⲧⲁⲥⲓⲥ');
+  });
+
+  it('finds the verses that say an English or Arabic sentence', () => {
+    expect(versesSaying('Christ is risen from the dead').some((v) => normCoptic(v.coptic).includes('ⲁϥⲧⲱⲛϥ'))).toBe(true);
+    expect(versesSaying('المسيح قام من الأموات').length).toBeGreaterThan(0);
   });
 });

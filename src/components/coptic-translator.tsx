@@ -7,12 +7,13 @@ import { useLessonStyles } from '@/components/lesson-styles';
 import { AlhanPalette } from '@/constants/alhan-colors';
 import { toArabicDigits } from '@/data/coptic-calendar';
 import { copticAlphabet } from '@/data/coptic-lessons';
-import { dictionary, DictEntry, hasCopticLetters, lookUpCoptic, lookUpMeaning, versesWith, WordResult } from '@/data/coptic-translator';
+import { dictionary, DictEntry, hasCopticLetters, HymnVerse, hymnVersesFor, lookUpCoptic, lookUpMeaning, versesSaying, WordResult } from '@/data/coptic-translator';
 import { useAlhanColors, useThemedStyles } from '@/hooks/use-alhan-colors';
 import { AppLanguage } from '@/hooks/use-settings';
 
 // Learn Coptic > Coptic Translator: type Coptic to see what it means (word by word, with the pieces of longer words),
-// or English/Arabic to find the Coptic. Coptic can be typed on the keyboard here, since few phones have one
+// or English/Arabic to find the Coptic. Coptic can be typed on the keyboard here, since few phones have one, or in
+// English letters, which are read as Coptic when they aren't English
 const keys = copticAlphabet.filter((l) => l.lower !== 'ϛ').map((l) => l.lower);
 const JINKIM = '̀';
 
@@ -27,8 +28,10 @@ export function CopticTranslator({ lang, initial = '' }: { lang: AppLanguage; in
   const query = useDeferredValue(text.trim());
   const isCoptic = hasCopticLetters(query);
 
-  const coptic = useMemo(() => (query && isCoptic ? { ...lookUpCoptic(query, lang), verses: versesWith(query) } : null), [query, isCoptic, lang]);
-  const meaning = useMemo(() => (query && !isCoptic ? lookUpMeaning(query, lang) : null), [query, isCoptic, lang]);
+  const meaning = useMemo(() => (query && !isCoptic ? { ...lookUpMeaning(query, lang), verses: versesSaying(query) } : null), [query, isCoptic, lang]);
+  // Coptic typed in Coptic letters, or in English letters that turned out to be Coptic
+  const copticText = isCoptic ? query : meaning?.asCoptic;
+  const coptic = useMemo(() => (copticText ? { ...lookUpCoptic(copticText, lang), ...hymnVersesFor(copticText) } : null), [copticText, lang]);
 
   // ⌫ takes off the last letter together with its jinkim
   const backspace = () => setText((s) => s.replace(/.\p{M}*$/u, ''));
@@ -66,11 +69,41 @@ export function CopticTranslator({ lang, initial = '' }: { lang: AppLanguage; in
           ))}
         </>
       ) : (
-        <Text style={[styles.note, textAlign]}>{t.unknown}</Text>
+        <>
+          <Text style={[styles.note, textAlign]}>{t.unknown}</Text>
+          {word.nearest ? (
+            <Pressable
+              onPress={() => setText((s) => s.replace(word.word, word.nearest!.coptic))}
+              accessibilityRole="button"
+              style={({ pressed }) => [local.suggestion, rowDirection, pressed && shared.pressed]}>
+              <Text style={[styles.note, local.suggestionLabel]}>{t.didYouMean}</Text>
+              <Text style={local.suggestionCoptic}>{word.nearest.coptic}</Text>
+              <Text style={[styles.note, local.suggestionLabel]}>({word.nearest.meaning[lang]})?</Text>
+            </Pressable>
+          ) : null}
+        </>
       )}
+      {word.spelled ? <Text style={[local.small, textAlign]}>{withCopticFont(t.spelledAs(word.spelled))}</Text> : null}
       {word.entries[0]?.note ? <Text style={[local.small, textAlign]}>{word.entries[0].note[lang]}</Text> : null}
     </View>
   );
+
+  const verseCard = (verse: HymnVerse) => {
+    const meaningText = lang === 'ar' ? (verse.meaning.ar ?? verse.meaning.en) : verse.meaning.en;
+    const arabic = lang === 'ar' && verse.meaning.ar;
+    return (
+      <View key={verse.coptic} style={styles.card}>
+        <Text style={[styles.verse, textAlign]}>{verse.coptic}</Text>
+        <Text style={[styles.body, local.verseMeaning, arabic ? shared.alignRight : shared.alignLeft]}>{meaningText}</Text>
+        <Pressable
+          onPress={() => openHymnPage(verse.hymnId, 'coptic')}
+          accessibilityRole="button"
+          style={({ pressed }) => [shared.controlButton, styles.secondary, pressed && shared.pressed]}>
+          <Text style={shared.controlText}>{t.openHymn}</Text>
+        </Pressable>
+      </View>
+    );
+  };
 
   return (
     <>
@@ -145,6 +178,15 @@ export function CopticTranslator({ lang, initial = '' }: { lang: AppLanguage; in
         </>
       ) : null}
 
+      {meaning?.asCoptic ? (
+        <>
+          <Text style={[shared.subtitle, textAlign]}>{t.readAsCoptic}</Text>
+          <View style={styles.card}>
+            <Text style={[styles.verse, textAlign]}>{meaning.asCoptic}</Text>
+          </View>
+        </>
+      ) : null}
+
       {coptic ? (
         <>
           {coptic.phrase.length ? (
@@ -155,36 +197,30 @@ export function CopticTranslator({ lang, initial = '' }: { lang: AppLanguage; in
           ) : null}
           {coptic.words.length > 1 || !coptic.phrase.length ? (
             <>
+              {coptic.gloss ? (
+                <>
+                  <Text style={[shared.subtitle, textAlign]}>{t.wordForWord}</Text>
+                  <View style={styles.card}>
+                    <Text style={[styles.body, local.gloss, textAlign]}>{coptic.gloss}</Text>
+                  </View>
+                </>
+              ) : null}
               {coptic.words.length > 1 ? <Text style={[shared.subtitle, textAlign]}>{t.wordByWord}</Text> : null}
               {coptic.words.map(wordCard)}
             </>
           ) : null}
           {coptic.verses.length ? (
             <>
-              <Text style={[shared.subtitle, textAlign]}>{t.inHymns}</Text>
-              {coptic.verses.map((verse) => {
-                const meaningText = lang === 'ar' ? (verse.meaning.ar ?? verse.meaning.en) : verse.meaning.en;
-                const arabic = lang === 'ar' && verse.meaning.ar;
-                return (
-                  <View key={verse.coptic} style={styles.card}>
-                    <Text style={[styles.verse, textAlign]}>{verse.coptic}</Text>
-                    <Text style={[styles.body, local.verseMeaning, arabic ? shared.alignRight : shared.alignLeft]}>{meaningText}</Text>
-                    <Pressable
-                      onPress={() => openHymnPage(verse.hymnId, 'coptic')}
-                      accessibilityRole="button"
-                      style={({ pressed }) => [shared.controlButton, styles.secondary, pressed && shared.pressed]}>
-                      <Text style={shared.controlText}>{t.openHymn}</Text>
-                    </Pressable>
-                  </View>
-                );
-              })}
+              <Text style={[shared.subtitle, textAlign]}>{coptic.close ? t.closestInHymns : t.inHymns}</Text>
+              {coptic.verses.map(verseCard)}
             </>
           ) : null}
         </>
       ) : null}
 
-      {meaning ? (
+      {meaning && !meaning.asCoptic ? (
         <>
+          {meaning.searchedFor ? <Text style={[styles.note, textAlign, local.showingFor]}>{t.showingFor(meaning.searchedFor)}</Text> : null}
           {meaning.matches.length ? (
             <>
               <Text style={[shared.subtitle, textAlign]}>{t.inCoptic}</Text>
@@ -208,7 +244,13 @@ export function CopticTranslator({ lang, initial = '' }: { lang: AppLanguage; in
               ))}
             </>
           ) : null}
-          {!meaning.matches.length && !meaning.bySound.length && !meaning.words.length ? (
+          {meaning.verses.length ? (
+            <>
+              <Text style={[shared.subtitle, textAlign]}>{t.inHymns}</Text>
+              {meaning.verses.map(verseCard)}
+            </>
+          ) : null}
+          {!meaning.matches.length && !meaning.bySound.length && !meaning.words.length && !meaning.verses.length ? (
             <Text style={[styles.note, textAlign]}>{t.nothing}</Text>
           ) : null}
         </>
@@ -256,4 +298,9 @@ const createStyles = (colors: AlhanPalette) =>
     pieceAffix: { color: colors.gold },
     pieceMeaning: { flex: 1, marginBottom: 0 },
     verseMeaning: { marginTop: 10 },
+    gloss: { marginBottom: 0, fontWeight: '600' },
+    showingFor: { marginTop: 0, marginBottom: 4 },
+    suggestion: { flexWrap: 'wrap', alignItems: 'baseline', gap: 6, marginTop: 4, minHeight: 36 },
+    suggestionLabel: { marginTop: 0, marginBottom: 0 },
+    suggestionCoptic: { fontSize: 22, lineHeight: 30, fontFamily: copticFont, color: colors.gold },
   });
