@@ -4010,27 +4010,17 @@ if (deaconAnnualLiturgyFaithful) {
         { language: 'arabic', text: "ننصت." },
       ],
     },
-    // The Epiclesis in three: the deacon, the people, then the deacon again
+    // The Epiclesis in two: the deacon with the people's answer (one recording, as the owner asked, 2026-11-05), then
+    // the deacon again
     {
       id: 'd-annual-liturgy-faithful-epiclesis',
       title: "Ⲟⲩⲱϣⲧ ⲙ̀Ⲫϯ (Worship God in Fear and Trembling)",
       versions: [
-        { language: 'coptic', text: "Ⲡⲓⲇⲓⲁⲕⲱⲛ:\n\nⲞⲩⲱϣⲧ ⲙ̀Ⲫϯ ϧⲉⲛ ⲟⲩϩⲟϯ ⲛⲉⲙ ⲟⲩⲥⲑⲉⲣⲧⲉⲣ." },
-        { language: 'englishCoptic', text: "Pi-diakon:\n\nOuōsht em-Efnouti khen ouhoti nem oustherter." },
-        { language: 'english', text: "Deacon:\n\nWorship God in fear and trembling." },
-        { language: 'englishArabic', text: "Esh-shammas:\n\nUsgudu lillah bi-khawf wa ra'da." },
-        { language: 'arabic', text: "الشماس:\n\nاسجدوا لله بخوف ورعدة." },
-      ],
-    },
-    {
-      id: 'd-annual-liturgy-faithful-we-praise-you',
-      title: "Ⲧⲉⲛϩⲱⲥ ⲉ̀ⲣⲟⲕ (We Praise You)",
-      versions: [
-        { language: 'coptic', text: "Ⲡⲓⲗⲁⲟⲥ:\n\nⲦⲉⲛϩⲱⲥ ⲉ̀ⲣⲟⲕ ⲧⲉⲛⲥ̀ⲙⲟⲩ ⲉ̀ⲣⲟⲕ ⲧⲉⲛϣⲉⲙϣⲓ ⲙ̀ⲙⲟⲕ ⲧⲉⲛⲟⲩⲱϣⲧ ⲙ̀ⲙⲟⲕ." },
-        { language: 'englishCoptic', text: "Pi-laos:\n\nTenhōs erok tenesmou erok tenshemshi emmok tenouōsht emmok." },
-        { language: 'english', text: "People:\n\nWe praise You, we bless You, we serve You, we worship You." },
-        { language: 'englishArabic', text: "Esh-sha'b:\n\nNusabbihuka, nubarikuka, nakhdimuka, nasgudu lak." },
-        { language: 'arabic', text: "الشعب:\n\nنسبحُكَ. نباركُكَ. نخدمُكَ نسجدُ لكَ." },
+        { language: 'coptic', text: "Ⲡⲓⲇⲓⲁⲕⲱⲛ:\n\nⲞⲩⲱϣⲧ ⲙ̀Ⲫϯ ϧⲉⲛ ⲟⲩϩⲟϯ ⲛⲉⲙ ⲟⲩⲥⲑⲉⲣⲧⲉⲣ.\n\nⲠⲓⲗⲁⲟⲥ:\n\nⲦⲉⲛϩⲱⲥ ⲉ̀ⲣⲟⲕ ⲧⲉⲛⲥ̀ⲙⲟⲩ ⲉ̀ⲣⲟⲕ ⲧⲉⲛϣⲉⲙϣⲓ ⲙ̀ⲙⲟⲕ ⲧⲉⲛⲟⲩⲱϣⲧ ⲙ̀ⲙⲟⲕ." },
+        { language: 'englishCoptic', text: "Pi-diakon:\n\nOuōsht em-Efnouti khen ouhoti nem oustherter.\n\nPi-laos:\n\nTenhōs erok tenesmou erok tenshemshi emmok tenouōsht emmok." },
+        { language: 'english', text: "Deacon:\n\nWorship God in fear and trembling.\n\nPeople:\n\nWe praise You, we bless You, we serve You, we worship You." },
+        { language: 'englishArabic', text: "Esh-shammas:\n\nUsgudu lillah bi-khawf wa ra'da.\n\nEsh-sha'b:\n\nNusabbihuka, nubarikuka, nakhdimuka, nasgudu lak." },
+        { language: 'arabic', text: "الشماس:\n\nاسجدوا لله بخوف ورعدة.\n\nالشعب:\n\nنسبحُكَ. نباركُكَ. نخدمُكَ نسجدُ لكَ." },
       ],
     },
     {
@@ -8972,7 +8962,10 @@ for (const group of deaconCategories)
   // 2026-11-05, as the owner asked: Pray for Perfect Peace keeps its first 17 seconds; Bow Your Heads starts 6 seconds
   // later and ends at 26 seconds, where Let Us Attend in the Fear of God begins (it runs into the first 3 seconds of the
   // old Saved Amen cut, which now starts at its 6th second); Amen Amen Pray starts 5 seconds later and the Confession
-  // 7 seconds later, and both run on to where he finishes (they were cut off)
+  // 7 seconds later, and both run on to where he finishes (they were cut off).
+  // Later that day: Worship God in Fear and Trembling and We Praise You are one cut again (one response); each of the
+  // Seven Short Litanies and Let Those Who Read starts later (the start of each cut was the end of the one before),
+  // and each runs on to where he finishes
   const altarResponses: Record<string, string> = {
     'in-the-wisdom-of-god': 'in-the-wisdom-of-god',
     'reconciliation': 'reconciliation-3',
@@ -8980,15 +8973,14 @@ for (const group of deaconCategories)
     'anaphora': 'you-who-are-seated-3',
     'look-towards-the-east': 'look-towards-the-east-3',
     'let-us-attend': 'let-us-attend',
-    'epiclesis': 'worship-god-in-fear',
-    'we-praise-you': 'we-praise-you',
+    'epiclesis': 'worship-god-in-fear-and-we-praise-you',
     'let-us-attend-amen': 'let-us-attend-amen',
-    'pray-for-peace-2': 'pray-for-peace-2',
-    'pray-for-the-fathers-2': 'pray-for-the-fathers-2',
-    'pray-for-priests-and-deacons': 'pray-for-priests-and-deacons-2',
-    'pray-for-the-place': 'pray-for-the-place-2',
-    'pray-for-the-oblations': 'pray-for-the-oblations-2',
-    'let-those-who-read': 'let-those-who-read-2',
+    'pray-for-peace-2': 'pray-for-peace-3',
+    'pray-for-the-fathers-2': 'pray-for-the-fathers-3',
+    'pray-for-priests-and-deacons': 'pray-for-priests-and-deacons-3',
+    'pray-for-the-place': 'pray-for-the-place-3',
+    'pray-for-the-oblations': 'pray-for-the-oblations-3',
+    'let-those-who-read': 'let-those-who-read-3',
     'amen-let-us-pray': 'amen-let-us-pray-3',
     'bow-your-heads': 'bow-your-heads-3',
     'let-us-attend-in-fear': 'let-us-attend-in-fear',
@@ -8998,9 +8990,9 @@ for (const group of deaconCategories)
   everyHymn((hymn, groupId) => {
     const file = groupId === 'deacon-annual' && altarResponses[baseOf(hymn.id).replace(/^d-annual-liturgy-faithful-/, '')];
     if (file && baseOf(hymn.id).startsWith('d-annual-liturgy-faithful-')) editRecordings(hymn, COPTIC_AUDIO, (files) => [...files, `altar-responses-${file}.m4a`]);
-    // The other Coptic Epiclesis recording runs through all three parts, so the cut of the deacon's part plays first
+    // The other Coptic Epiclesis recording runs through both parts, so the altar cut plays first
     if (groupId === 'deacon-annual' && baseOf(hymn.id) === 'd-annual-liturgy-faithful-epiclesis')
-      editRecordings(hymn, COPTIC_AUDIO, (files) => ['altar-responses-worship-god-in-fear.m4a', ...files]);
+      editRecordings(hymn, COPTIC_AUDIO, (files) => ['altar-responses-worship-god-in-fear-and-we-praise-you.m4a', ...files]);
   });
 
   // Recordings cut again (2026-10-28):

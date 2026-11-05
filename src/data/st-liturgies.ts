@@ -15,18 +15,6 @@ export const liturgies: { id: LiturgyId; title: string }[] = [
 // Deacon responses from Spirit & Truth's three liturgies that the Deacon Responses lacked
 // (Coptic in English letters from the alphabet chart; Arabic in English letters written for the app)
 export const stLiturgyDeacon: Hymn[] = [
-  // St Basil's (the priest's words between are left out, as in every deacon response)
-  {
-    id: 'd-annual-liturgy-faithful-worship-god-the-father',
-    title: 'Ⲟⲩⲱϣⲧ ⲙ̀Ⲫϯ Ⲫⲓⲱⲧ (Worship God the Father)',
-    versions: [
-      { language: 'coptic', text: 'Ⲡⲓⲇⲓⲁⲕⲱⲛ:\n\nⲞⲩⲱϣⲧ ⲙ̀Ⲫϯ Ⲫⲓⲱⲧ ⲡⲓⲡⲁⲛⲧⲟⲕⲣⲁⲧⲱⲣ.\n\nⲠⲣⲟⲥⲭⲱⲙⲉⲛ: ⲁ̀ⲙⲏⲛ.' },
-      { language: 'englishCoptic', text: 'Pi-diakon:\n\nOuōsht em-Efnouti Fiōt pipantokratōr.\n\nProskhōmen: amēn.' },
-      { language: 'english', text: 'Deacon:\n\nWorship God, the Father, the Pantocrator.\n\nLet us attend. Amen.' },
-      { language: 'englishArabic', text: 'Esh-shammas:\n\nUsgudu lillah el-Ab dabit el-kull.\n\nNunsit. Ameen.' },
-      { language: 'arabic', text: 'الشماس:\n\nأسجدوا لله الآبِ ضابطِ الكلِّ.\n\nننصتُ. آمين.' },
-    ],
-  },
   // St Basil's Confession, with what the deacon says after it, in place of the Confession, the Great Confession and
   // The Peace and Love of Jesus Christ
   {
@@ -239,7 +227,6 @@ export const deaconOrder: Record<LiturgyId, Entry[]> = {
     'look-towards-the-east',
     'let-us-attend',
     'epiclesis',
-    'we-praise-you',
     'let-us-attend-amen',
     { header: 'Seven Short Litanies' },
     'pray-for-peace-2',
@@ -250,7 +237,6 @@ export const deaconOrder: Record<LiturgyId, Entry[]> = {
     'pray-for-the-oblations',
     ...commemoration,
     { header: 'Fraction and Confession' },
-    'worship-god-the-father',
     'in-christ-jesus-our-lord',
     'bow-your-heads',
     'let-us-attend-in-fear',

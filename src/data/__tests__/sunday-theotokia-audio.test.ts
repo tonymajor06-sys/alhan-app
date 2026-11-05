@@ -323,11 +323,11 @@ describe('The three Divine Liturgies', () => {
     const gregory = of('d-annual-liturgy-gregory');
     const cyril = of('d-annual-liturgy-cyril');
     expect(basil).toContain('d-annual-liturgy-faithful-epiclesis');
-    // Look Towards the East, then Let Us Attend; the Epiclesis's three parts one after another
+    // Look Towards the East, then Let Us Attend; the Epiclesis's two parts one after another
     const after = (list: string[], id: string) => list[list.indexOf(`d-annual-liturgy-faithful-${id}`) + 1];
     for (const list of [basil, gregory, cyril]) expect(after(list, 'look-towards-the-east')).toMatch(/^d-annual-liturgy-faithful-let-us-attend(@|$)/);
-    expect(after(basil, 'epiclesis')).toBe('d-annual-liturgy-faithful-we-praise-you');
-    expect(after(basil, 'we-praise-you')).toBe('d-annual-liturgy-faithful-let-us-attend-amen');
+    expect(after(basil, 'epiclesis')).toBe('d-annual-liturgy-faithful-let-us-attend-amen');
+    expect(basil).not.toContain('d-annual-liturgy-faithful-we-praise-you');
     // ...each with its own cut of the recordings
     const basilHymns = flattenHymns(deaconAnnual.services.find((s) => s.id === 'd-annual-liturgy-basil')!.hymns);
     const audio = (id: string, language: string) => {
@@ -338,8 +338,7 @@ describe('The three Divine Liturgies', () => {
     expect(audio('let-us-attend', 'coptic')).toEqual(['altar-responses-let-us-attend.m4a']);
     expect(audio('let-us-attend', 'arabic')).toEqual(['deacon-let-us-attend-arabic.m4a']);
     expect(audio('look-towards-the-east', 'arabic')).toEqual(['deacon-look-towards-the-east-arabic-2.m4a']);
-    expect(audio('epiclesis', 'coptic')[0]).toBe('altar-responses-worship-god-in-fear.m4a');
-    expect(audio('we-praise-you', 'coptic')).toEqual(['altar-responses-we-praise-you.m4a']);
+    expect(audio('epiclesis', 'coptic')).toEqual(['altar-responses-worship-god-in-fear-and-we-praise-you.m4a', 'deacon-epiclesis-coptic-2.m4a']);
     expect(audio('let-us-attend-amen', 'coptic')).toEqual(['altar-responses-let-us-attend-amen.m4a']);
     expect(basil.some((id) => /st-(gregory|cyril)/.test(id))).toBe(false);
     expect(gregory).toContain('d-annual-liturgy-faithful-pray-for-the-captives-st-gregory');
@@ -352,8 +351,9 @@ describe('The three Divine Liturgies', () => {
       expect(list.indexOf('d-annual-liturgy-faithful-greet-one-another')).toBeLessThan(list.indexOf('d-annual-liturgy-faithful-anaphora'));
     }
     expect(gregory[gregory.length - 1]).toBe('d-annual-liturgy-faithful-peace-and-love');
-    // St Basil: Worship God the Father, Amen. Amen. Pray. right before the Confession, and one Confession with what follows it
-    expect(basil).toContain('d-annual-liturgy-faithful-worship-god-the-father');
+    // St Basil: Amen. Amen. Pray. right before the Confession, and one Confession with what follows it (no Worship God
+    // the Father: the owner's request, 2026-11-05)
+    expect(basil).not.toContain('d-annual-liturgy-faithful-worship-god-the-father');
     expect(basil[basil.length - 2]).toBe('d-annual-liturgy-faithful-amen-let-us-pray');
     expect(basil[basil.length - 1]).toBe('d-annual-liturgy-faithful-the-confession');
     for (const gone of ['confession', 'confession-great', 'peace-and-love']) expect(basil).not.toContain(`d-annual-liturgy-faithful-${gone}`);
