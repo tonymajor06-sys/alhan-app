@@ -298,7 +298,6 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   // Evlogimenos - Tertiary: score 43.42
   { file: "arsani-114-evlogimenos.m4a", hymns: [], language: "coptic" },
   // The Great Azpazesthe (Quick Tune)
-  { file: "arsani-241-great-azpazes-quick-tune-anton-ibrahim-ayad.m4a", hymns: ["d-annual-liturgy-faithful-greet-one-another-great"], language: "arabic" },
   // Avechenon
   { file: "arsani-243-avechenon.m4a", hymns: ["holyweek-covenant-thursday-avchnon"], language: "coptic" },
   // The Burning Bush - Primary: score 60.40
@@ -410,6 +409,5 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   { file: "deacon-amen-let-us-pray-coptic.m4a", hymns: ["d-annual-liturgy-faithful-amen-let-us-pray"], language: "coptic" },
   { file: "liturgy-amen-ton-thanaton-coptic-2.m4a", hymns: ["annual-liturgy-amen-ton-thanaton"], language: "coptic" },
   { file: "deacon-confession-arabic.m4a", hymns: ["d-annual-liturgy-faithful-the-confession"], language: "arabic" },
-  { file: "deacon-confession-english.m4a", hymns: ["d-annual-liturgy-faithful-the-confession"], language: "english" },
   { file: "liturgy-one-is-the-holy-father-arabic.m4a", hymns: ["kiahk-liturgy-one-is-the-holy-father@annual-liturgy"], language: "arabic" },
 ];

@@ -8693,7 +8693,8 @@ for (const group of deaconCategories)
     'thanksgiving-prayer-response-in-the-presence-of-th': [['vespers', 'pray-for-mercy'], ['matins', 'pray-for-mercy'], ['offering-lamb', 'pray-for-mercy']],
     'psalm-trailer-for-the-pope-or-a-bishop': [['liturgy-word', 'pray-for-the-gospel']],
     'introduction-to-the-coptic-gospel-when-read-by-the': [['liturgy-word', 'stand-in-the-fear-of-god']],
-    'conclusion-in-the-presence-of-the-pope-or-a-bishop': [['vespers', 'end'], ['matins', 'end'], ...liturgies.map((l): [string, string] => [`liturgy-${l.id}`, 'end'])],
+    // (not at the end of the liturgies, at the owner's request, 2026-11-05)
+    'conclusion-in-the-presence-of-the-pope-or-a-bishop': [['vespers', 'end'], ['matins', 'end']],
   };
   for (const [kind, category] of [['d-annual', 'deacon-annual'], ['d-fest', 'deacon-festival']] as const) {
     const services = deaconCategories.find((c) => c.id === category)?.services;
@@ -8998,10 +8999,14 @@ for (const group of deaconCategories)
   // Deacon Responses > Annual, the Liturgy of the Faithful: the altar responses recording the owner gave (Coptic), cut into
   // one for each response, each ending in the silence after it (the "-2" files replaced cuts that ended too soon).
   // 2026-11-04: You Who Are Seated starts 2 seconds later ("-3"), and Look Towards the East and the Epiclesis are cut
-  // into their parts (Let Us Attend; We Praise You and Let Us Attend. Amen) like their words
+  // into their parts (Let Us Attend; We Praise You and Let Us Attend. Amen) like their words.
+  // 2026-11-05, as the owner asked: Pray for Perfect Peace keeps its first 17 seconds; Bow Your Heads starts 6 seconds
+  // later and ends at 26 seconds, where Let Us Attend in the Fear of God begins (it runs into the first 3 seconds of the
+  // old Saved Amen cut, which now starts at its 6th second); Amen Amen Pray starts 5 seconds later and the Confession
+  // 7 seconds later, and both run on to where he finishes (they were cut off)
   const altarResponses: Record<string, string> = {
     'in-the-wisdom-of-god': 'in-the-wisdom-of-god',
-    'reconciliation': 'reconciliation-2',
+    'reconciliation': 'reconciliation-3',
     'greet-one-another': 'greet-one-another-2',
     'anaphora': 'you-who-are-seated-3',
     'look-towards-the-east': 'look-towards-the-east-3',
@@ -9015,10 +9020,11 @@ for (const group of deaconCategories)
     'pray-for-the-place': 'pray-for-the-place-2',
     'pray-for-the-oblations': 'pray-for-the-oblations-2',
     'let-those-who-read': 'let-those-who-read-2',
-    'amen-let-us-pray': 'amen-let-us-pray-2',
-    'bow-your-heads': 'bow-your-heads-2',
-    'saved-amen': 'saved-amen-2',
-    'the-confession': 'the-confession',
+    'amen-let-us-pray': 'amen-let-us-pray-3',
+    'bow-your-heads': 'bow-your-heads-3',
+    'let-us-attend-in-fear': 'let-us-attend-in-fear',
+    'saved-amen': 'saved-amen-3',
+    'the-confession': 'the-confession-2',
   };
   everyHymn((hymn, groupId) => {
     const file = groupId === 'deacon-annual' && altarResponses[baseOf(hymn.id).replace(/^d-annual-liturgy-faithful-/, '')];

@@ -44,11 +44,11 @@ export const stLiturgyDeacon: Hymn[] = [
     id: "d-annual-liturgy-faithful-saved-amen",
     title: "Ⲥⲱⲑⲓⲥ ⲁ̀ⲙⲏⲛ (Saved. Amen. In the Fear of God)",
     versions: [
-      { language: 'coptic', text: "Ⲡⲓⲇⲓⲁⲕⲱⲛ:\n\nⲤⲱⲑⲓⲥ ⲁ̀ⲙⲏⲛ: ⲕⲉ ⲧⲱ ⲡ̀ⲛⲉⲩⲙⲁⲧⲓ ⲥⲟⲩ: ⲙⲉⲧⲁ ⲫⲟⲃⲟⲩ Ⲑⲉⲟⲩ ⲡ̀ⲣⲟⲥⲭⲱⲙⲉⲛ.\n\nⲠⲓⲗⲁⲟⲥ:\n\nⲀⲙⲏⲛ: Ⲕⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ: Ⲕⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ: Ⲕⲩⲣⲓⲉ ⲉ̀ⲗⲉⲏ̀ⲥⲟⲛ." },
-      { language: 'englishCoptic', text: "Pi-diakon:\n\nSōthis amēn: ke tō epneumati sou: meta fovou Theou eproskhōmen.\n\nPi-laos:\n\nAmēn: Kurie ele-ēson: Kurie ele-ēson: Kurie ele-ēson." },
-      { language: 'english', text: "Deacon:\n\nSaved. Amen. And with your spirit. In the fear of God, let us attend.\n\nPeople:\n\nAmen. Lord have mercy. Lord have mercy. Lord have mercy." },
-      { language: 'englishArabic', text: "Esh-shammas:\n\nKhalust haqqan, wa ma' rouhik, nunsit bi-khawf Allah.\n\nEsh-sha'b:\n\nAmeen. Ya Rabb irham. Ya Rabb irham. Ya Rabb irham." },
-      { language: 'arabic', text: "الشماس:\n\nخَلُصْتَ حقاً، ومع روحِكَ، ننصتُ بخوفِ الله.\n\nالشعب:\n\nآمين. ياربُ إرحَم. ياربُ إرحَم. ياربُ إرحَم." },
+      { language: 'coptic', text: "Ⲡⲓⲇⲓⲁⲕⲱⲛ:\n\nⲤⲱⲑⲓⲥ ⲁ̀ⲙⲏⲛ: ⲕⲉ ⲧⲱ ⲡ̀ⲛⲉⲩⲙⲁⲧⲓ ⲥⲟⲩ: ⲙⲉⲧⲁ ⲫⲟⲃⲟⲩ Ⲑⲉⲟⲩ ⲡ̀ⲣⲟⲥⲭⲱⲙⲉⲛ." },
+      { language: 'englishCoptic', text: "Pi-diakon:\n\nSōthis amēn: ke tō epneumati sou: meta fovou Theou eproskhōmen." },
+      { language: 'english', text: "Deacon:\n\nSaved. Amen. And with your spirit. In the fear of God, let us attend." },
+      { language: 'englishArabic', text: "Esh-shammas:\n\nKhalust haqqan, wa ma' rouhik, nunsit bi-khawf Allah." },
+      { language: 'arabic', text: "الشماس:\n\nخَلُصْتَ حقاً، ومع روحِكَ، ننصتُ بخوفِ الله." },
     ],
   },
   {
