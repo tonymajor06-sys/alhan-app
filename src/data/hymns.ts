@@ -3964,18 +3964,18 @@ if (deaconAnnualLiturgyFaithful) {
     },
     {
       id: 'd-annual-liturgy-faithful-reconciliation',
-      title: "Ⲡⲣⲟⲥⲉⲩⲝⲁⲥⲑⲉ ⲩ̀ⲡⲉⲣ ⲧⲏⲥ ⲧⲉⲗⲓⲁⲥ (Reconciliation Prayer)",
+      title: "Ⲡⲣⲟⲥⲉⲩⲝⲁⲥⲑⲉ ⲩ̀ⲡⲉⲣ ⲧⲏⲥ ⲧⲉⲗⲓⲁⲥ (Pray for Perfect Peace)",
       versions: [
-        { language: 'coptic', text: "Ⲉⲡⲓ ⲡ̀ⲣⲟⲥⲉⲩⲭⲏ ⲥ̀ⲧⲁⲑⲏⲧⲉ.\n\nⲠⲣⲟⲥⲉⲩⲝⲁⲥⲑⲉ ⲩ̀ⲡⲉⲣ ⲧⲏⲥ ⲧⲉⲗⲓⲁⲥ ⲓ̀ⲣⲏⲛⲏⲥ ⲕⲉ ⲁ̀ⲅⲁⲡⲏⲥ ⲕⲉ ⲧⲱⲛ ⲁ̀ⲅⲓⲱⲛ ⲁⲥⲡⲁⲥⲙⲱⲛ ⲧⲱⲛ ⲁ̀ⲡⲟⲥⲧⲟⲗⲱⲛ." },
-        { language: 'englishCoptic', text: "Epi eproseukhē estathēte.\n\nProseuksasthe uper tēs telias irēnēs ke agapēs ke tōn agiōn aspasmōn tōn apostolōn." },
-        { language: 'english', text: "Stand up for prayer.\n\nPray for perfect peace, love, and the holy apostolic kisses." },
-        { language: 'englishArabic', text: "Lis-salah qifu.\n\nSallu min agl es-salam el-kamil, wal-mahabba, wal-qubla et-tahira er-rasouliya." },
-        { language: 'arabic', text: "للصلاة قفوا.\n\nصلوا من أجل السلام الكامل، والمحبة، والقبلة الطاهرة الرسولية." },
+        { language: 'coptic', text: "Ⲡⲣⲟⲥⲉⲩⲝⲁⲥⲑⲉ ⲩ̀ⲡⲉⲣ ⲧⲏⲥ ⲧⲉⲗⲓⲁⲥ ⲓ̀ⲣⲏⲛⲏⲥ ⲕⲉ ⲁ̀ⲅⲁⲡⲏⲥ ⲕⲉ ⲧⲱⲛ ⲁ̀ⲅⲓⲱⲛ ⲁⲥⲡⲁⲥⲙⲱⲛ ⲧⲱⲛ ⲁ̀ⲡⲟⲥⲧⲟⲗⲱⲛ." },
+        { language: 'englishCoptic', text: "Proseuksasthe uper tēs telias irēnēs ke agapēs ke tōn agiōn aspasmōn tōn apostolōn." },
+        { language: 'english', text: "Pray for perfect peace, love, and the holy apostolic kisses." },
+        { language: 'englishArabic', text: "Sallu min agl es-salam el-kamil, wal-mahabba, wal-qubla et-tahira er-rasouliya." },
+        { language: 'arabic', text: "صلوا من أجل السلام الكامل، والمحبة، والقبلة الطاهرة الرسولية." },
       ],
     },
     {
       id: 'd-annual-liturgy-faithful-reconciliation-st-gregory',
-      title: "Ⲡⲣⲟⲥⲉⲩⲝⲁⲥⲑⲉ ⲩ̀ⲡⲉⲣ ⲧⲏⲥ ⲧⲉⲗⲓⲁⲥ (Reconciliation Prayer, St Gregory)",
+      title: "Ⲡⲣⲟⲥⲉⲩⲝⲁⲥⲑⲉ ⲩ̀ⲡⲉⲣ ⲧⲏⲥ ⲧⲉⲗⲓⲁⲥ (Pray for Perfect Peace, St Gregory)",
       versions: [
         { language: 'coptic', text: "Ⲡⲣⲟⲥⲉⲩⲝⲁⲥⲑⲉ ⲩ̀ⲡⲉⲣ ⲧⲏⲥ ⲧⲉⲗⲓⲁⲥ ⲓ̀ⲣⲏⲛⲏⲥ ⲕⲉ ⲁ̀ⲅⲁⲡⲏⲥ ⲕⲉ ⲧⲱⲛ ⲁ̀ⲅⲓⲱⲛ ⲁⲥⲡⲁⲥⲙⲱⲛ ⲧⲱⲛ ⲁ̀ⲡⲟⲥⲧⲟⲗⲱⲛ." },
         { language: 'englishCoptic', text: "Proseuksasthe uper tēs telias irēnēs ke agapēs ke tōn agiōn aspasmōn tōn apostolōn." },

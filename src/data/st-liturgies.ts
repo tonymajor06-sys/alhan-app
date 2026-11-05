@@ -230,6 +230,7 @@ export const deaconOrder: Record<LiturgyId, Entry[]> = {
   basil: [
     ...threeGreatLitanies,
     { header: 'Prayer of Reconciliation' },
+    'stand-up-for-prayer-2',
     'reconciliation',
     'greet-one-another',
     'greet-one-another-great',
@@ -286,6 +287,7 @@ export const deaconOrder: Record<LiturgyId, Entry[]> = {
   cyril: [
     'in-the-wisdom-of-god',
     { header: 'Prayer of Reconciliation' },
+    'stand-up-for-prayer',
     'reconciliation',
     'greet-one-another',
     'greet-one-another-great',
