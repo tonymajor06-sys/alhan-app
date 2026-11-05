@@ -87,7 +87,7 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   // Feast of the Cross Praxis Response (Fai Etafenf) - Arsani Sidarous 2023
   { file: "arsani-084-fai-etafenf-feast-of-cross-2023.m4a", hymns: ["cross-liturgy-praxis-response-feast-of-the-cross"], language: "coptic" },
   // Tov hina (Coptic) | Archdeacon Arsani Sidarous
-  { file: "arsani-043-tov-hina-coptic.m4a", hymns: ["d-annual-matins-pray-for-mercy", "d-annual-vespers-pray-for-mercy", "d-annual-offering-lamb-pray-for-mercy"], language: "coptic" },
+  { file: "arsani-043-tov-hina-coptic.m4a", hymns: ["d-annual-matins-pray-for-mercy", "d-annual-vespers-pray-for-mercy"], language: "coptic" },
   // Ya Kol Al Sefoof (All You Heavenly Orders) - Primary: score 88.80
   { file: "arsani-044-ya-kol-al-sefoof.m4a", hymns: ["pentecost-liturgy-ya-kol-alsefoof"], language: "arabic" },
   // Ya Kol A Sefoof - Secondary: score 54.62
@@ -165,7 +165,7 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   // Annual Aspasmos Watos (Epchois Efnoti)
   { file: "arsani-078-annual-aspasmos-watos-epchois-efnoti-archi-seattle.m4a", hymns: [], language: "coptic" },
   // Pauline Epistle in Coptic - Arsani Sidarous (Introduction to the Pauline Epistle)
-  { file: "arsani-sc-pauline-epistle-introduction-coptic.m4a", hymns: ["annual-liturgy-pauline-intro", "d-annual-liturgy-word-pauline-intro", "lent-weekend-liturgy-pauline-intro", "lent-weekday-liturgy-pauline-intro"], language: "coptic" },
+  { file: "arsani-sc-pauline-epistle-introduction-coptic.m4a", hymns: ["annual-liturgy-pauline-intro", "lent-weekend-liturgy-pauline-intro", "lent-weekday-liturgy-pauline-intro"], language: "coptic" },
   // Ti Epistoly (Good Friday 6th Hour) - Primary: score 86.27
   { file: "arsani-081-ti-epistoly-introduction-to-6th-hour-pauline-epist.m4a", hymns: ["holyweek-great-friday-6th-hour-pauline"], language: "coptic" },
   // Good Friday 6th Hour Pauline - YouTube (Secondary: score 58.48)
@@ -275,7 +275,7 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   // Great Lent Esmou Epchois (Melismatic) - Arsani Sidarous & Seattle Deacons (Score 92.53)
   { file: "arsani-191-esmou-epchois-seattle-deacons.m4a", hymns: ["lent-midnight-esmou-epchois-melismatic"], language: "coptic" },
   // Tov hina (English)
-  { file: "arsani-192-tov-hina-english.m4a", hymns: ["d-annual-matins-pray-for-mercy", "d-annual-vespers-pray-for-mercy", "d-annual-offering-lamb-pray-for-mercy"], language: "english" },
+  { file: "arsani-192-tov-hina-english.m4a", hymns: ["d-annual-matins-pray-for-mercy", "d-annual-vespers-pray-for-mercy"], language: "english" },
   // Introduction to the Exposition for Holy Week
   { file: "arsani-210-introduction-to-exposition-for-holy-week.m4a", hymns: ["holyweek-pascha-general-exposition-introduction"], language: "coptic" },
   // Ommonogenees

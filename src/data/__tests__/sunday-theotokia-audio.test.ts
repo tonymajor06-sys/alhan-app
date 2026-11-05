@@ -220,17 +220,14 @@ describe('Divine Liturgy Audio and Bishop Updates', () => {
     const arabic = paulineIntro?.versions.find((v) => v.language === 'arabic');
     expect(arabic?.text).toContain('القارئ:\n\nبولس عبد');
 
-    // Deacon Liturgy of the Word has it too
+    // ...and only there: it is a hymn, not a Deacon Response (the owner's request, 2026-11-05)
     const deaconWord = deaconCategories
       .find((c) => c.id === 'deacon-annual')
       ?.services.find((s) => s.id === 'd-annual-liturgy-word');
-    const deaconPauline = deaconWord?.hymns.find((h) => h.id === 'd-annual-liturgy-word-pauline-intro');
-    expect(deaconPauline).toBeDefined();
+    expect(deaconWord?.hymns.some((h) => h.id.includes('pauline-intro'))).toBe(false);
 
     // Arabic title
     expect(displayTitle(paulineIntro!, 'ar')).toBe('قراءة البولس بالقبطي');
-    // the Deacon Responses are named by their first words
-    expect(displayTitle(deaconPauline!, 'ar')).toMatch(/^بولس عبد يسوع المسيح/);
   });
 
   test('Verse of the Cymbals has single recording (no second recording)', () => {

@@ -3891,17 +3891,13 @@ if (deaconAnnualOffering) {
     ...fromMatins('d-annual-matins-pray-for-the-fathers', 'd-annual-offering-lamb-pray-for-the-fathers'),
     ...fromMatins('d-annual-matins-pray-for-the-assemblies', 'd-annual-offering-lamb-pray-for-the-assemblies'),
   ];
-  // The same words sung to the long ("Great") tune, right after the regular one
-  for (const key of ['one-is-the-holy-father', 'pray-for-mercy']) {
-    const i = deaconAnnualOffering.hymns.findIndex((h) => h.id === `d-annual-offering-lamb-${key}`);
-    if (i < 0) continue;
-    const hymn = deaconAnnualOffering.hymns[i];
-    deaconAnnualOffering.hymns.splice(i + 1, 0, {
-      ...hymn,
-      id: `${hymn.id}-great`,
-      title: hymn.title.replace(/\)$/, ', Great)'),
-      versions: hymn.versions.map((v) => ({ ...v })),
-    });
+  // Pray That God May Have Mercy is here only in the long ("Great") tune, with what is added in the presence of the Pope
+  // or a bishop folded under it (the regular one and its recordings are Vespers' and Matins'), at the owner's request
+  // (2026-11-05), who also asked for one Amen. One Is the Holy Father (there had been a second, "Great", copy)
+  const mercy = deaconAnnualOffering.hymns.findIndex((h) => h.id === 'd-annual-offering-lamb-pray-for-mercy');
+  if (mercy >= 0) {
+    const hymn = deaconAnnualOffering.hymns[mercy];
+    deaconAnnualOffering.hymns[mercy] = { ...hymn, id: `${hymn.id}-great`, title: hymn.title.replace(/\)$/, ', Great)') };
   }
 }
 
@@ -3911,33 +3907,8 @@ const deaconAnnualLiturgyWord = deaconCategories
   ?.services.find((s) => s.id === 'd-annual-liturgy-word');
 
 if (deaconAnnualLiturgyWord) {
+  // (Paul, the Servant of Our Lord is in Hymns > Annual > Liturgy, not here, at the owner's request, 2026-11-05)
   deaconAnnualLiturgyWord.hymns = [
-    {
-      id: 'd-annual-liturgy-word-pauline-intro',
-      title: 'Ⲡⲁⲩⲗⲟⲥ (Introduction to the Pauline Epistle)',
-      versions: [
-        {
-          language: 'coptic',
-          text: 'Ⲡⲓⲁⲛⲁⲅⲛⲱⲥⲧⲏⲥ:\n\nⲠⲁⲩⲗⲟⲥ ⲫ̀ⲃⲱⲕ ⲙ̀Ⲡⲉⲛϭⲟⲓⲥ Ⲓⲏⲥⲟⲩⲥ Ⲡⲓⲭ̀ⲣⲓⲥⲧⲟⲥ ⲡⲓⲁⲡⲟⲥⲧⲟⲗⲟⲥ ⲉⲧⲑⲁϩⲉⲙ ⲫⲏⲉⲧⲁⲩⲑⲁϣϥ ⲉ̀ⲡⲓϩⲓϣⲉⲛⲛⲟⲩϥⲓ ⲛ̀ⲧⲉ Ⲫϯ.',
-        },
-        {
-          language: 'englishCoptic',
-          text: 'Pi-anagnōstēs:\n\nPaulos efvōk em-Pentshois Iēsous Pi-ekhristos pi-apostolos etthahem fē-etauthashf e-pihishennoufi ente Efnouti.',
-        },
-        {
-          language: 'english',
-          text: 'Reader:\n\nPaul, the servant of our Lord Jesus Christ, called to be an apostle, appointed to the Gospel of God.',
-        },
-        {
-          language: 'englishArabic',
-          text: "El-Qari':\n\nBoulus 'abd Yasou' el-Maseeh er-rasoul, el-mad'ou el-mufraz li-bushra Allah.",
-        },
-        {
-          language: 'arabic',
-          text: 'القارئ:\n\nبولس عبد يسوع المسيح الرسول، المدعو المفرز لبشرى الله.',
-        },
-      ],
-    },
     ...fromMatins('d-annual-matins-stand-up-for-prayer', 'd-annual-liturgy-word-stand-up-for-prayer'),
     ...fromMatins('d-annual-matins-pray-for-the-gospel', 'd-annual-liturgy-word-pray-for-the-gospel'),
     ...fromMatins('d-annual-matins-stand-in-the-fear-of-god', 'd-annual-liturgy-word-stand-in-the-fear-of-god'),
@@ -8561,6 +8532,8 @@ if (annualLiturgyWord) {
       versions: bishopVersions.map(({ otherAudio: _, ...v }) => ({
         ...v,
         audio: v.audio ? 'arsani-119-annual-psalm-marouetchasf-bishop.m4a' : undefined,
+        // and the recording Deacon Responses had, from 1:11 where the words for the Pope or a bishop begin (2026-11-05)
+        otherAudio: v.audio ? ['psalm-trailer-pope-bishop-liturgy-from-1-11.m4a'] : undefined,
       })),
     };
     const header = hymns.findIndex((h) => h.id === 'annual-liturgy-bishop-header');
@@ -8683,18 +8656,16 @@ for (const group of deaconCategories)
 // ---- What is said in the presence of the Pope or a bishop goes in the services where it is said ----
 // (Annual's and Festival's "In Presence of Bishop / Patriarch" lists are taken out), named for the Pope or a bishop.
 // Annual's first place keeps the response's id (its recordings are matched by it); the rest are "<id>@<service>".
-// The Psalm Trailer's recording starts at 1:11, where the words for the Pope or a bishop begin.
 {
   const BISHOP_EN = 'In the Presence of the Pope or a Bishop';
   const BISHOP_AR = 'في حضور البابا أو الأسقف';
   // Each response: where it goes, as [service, the response it follows ('start' or 'end' for the ends of the list)]
   const places: Record<string, [string, string][]> = {
-    'blessed-is-he': [['vespers', 'start'], ['matins', 'start'], ['offering-lamb', 'start']],
-    'thanksgiving-prayer-response-in-the-presence-of-th': [['vespers', 'pray-for-mercy'], ['matins', 'pray-for-mercy'], ['offering-lamb', 'pray-for-mercy']],
-    'psalm-trailer-for-the-pope-or-a-bishop': [['liturgy-word', 'pray-for-the-gospel']],
+    // Blessed Is He, the Psalm Trailer and the Conclusion are not here: they are hymns (Blessed Is He and Marouetchasf
+    // are in Hymns > Annual), and the Offering of the Lamb has the long Pray That God May Have Mercy with its own
+    // addition folded under it, as the owner asked (2026-11-05)
+    'thanksgiving-prayer-response-in-the-presence-of-th': [['vespers', 'pray-for-mercy'], ['matins', 'pray-for-mercy']],
     'introduction-to-the-coptic-gospel-when-read-by-the': [['liturgy-word', 'stand-in-the-fear-of-god']],
-    // (not at the end of the liturgies, at the owner's request, 2026-11-05)
-    'conclusion-in-the-presence-of-the-pope-or-a-bishop': [['vespers', 'end'], ['matins', 'end']],
   };
   for (const [kind, category] of [['d-annual', 'deacon-annual'], ['d-fest', 'deacon-festival']] as const) {
     const services = deaconCategories.find((c) => c.id === category)?.services;
@@ -8714,8 +8685,6 @@ for (const group of deaconCategories)
         first = false;
         const placed: Hymn = { ...hymn, id, title, versions: hymn.versions.map((v) => ({ ...v })) };
         if (arabic) openingArabicTitles[id] = `${arabic} (${BISHOP_AR})`;
-        if (/psalm-trailer/.test(base))
-          for (const v of placed.versions) if (v.audio === 'psalm-trailer-pope-bishop-liturgy.m4a') v.audio = 'psalm-trailer-pope-bishop-liturgy-from-1-11.m4a';
         const at =
           after === 'start' ? 0
           : after === 'end' ? service.hymns.length

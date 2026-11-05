@@ -417,7 +417,6 @@ const arabicTitles: Record<string, string> = {
   'd-annual-offering-lamb-pray-for-peace': 'أوشية السلام (صلوا من أجل سلام الكنيسة)',
   'd-annual-offering-lamb-pray-for-the-fathers': 'أوشية الآباء (صلوا من أجل رئيس كهنتنا)',
   'd-annual-offering-lamb-pray-for-the-assemblies': 'أوشية الاجتماعات (صلوا من أجل هذه الكنيسة المقدسة)',
-  'd-annual-offering-lamb-one-is-the-holy-father-great': 'آمين. واحد هو الآب القدوس - كبيرة',
   'd-annual-offering-lamb-pray-for-mercy-great': 'اطلبوا لكي يرحمنا الله - كبيرة',
 
 
@@ -576,7 +575,6 @@ const arabicTitles: Record<string, string> = {
   'd-annual-offering-lamb-pray-for-mercy-pope-bishop': 'اطلبوا لكي يرحمنا الله (في حضور البابا أو الأسقف)',
 
   // Deacon Responses > Annual > Liturgy of the Word
-  'd-annual-liturgy-word-pauline-intro': 'البولس',
   'd-annual-liturgy-word-stand-up-for-prayer': 'للصلاة قفوا',
   'd-annual-liturgy-word-pray-for-the-gospel': 'صلوا من أجل الإنجيل المقدس',
   'd-annual-liturgy-word-stand-in-the-fear-of-god': 'قفوا بخوف الله',
