@@ -1,5 +1,5 @@
 import { router } from 'expo-router';
-import { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
+import { ReactNode, useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
 import { Alert, Platform, Pressable, ScrollView, Share, Text, View } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 
@@ -12,6 +12,7 @@ import { hymnAcrossSeasons, hymnSlug, locateHymn, neighborHymns } from '../data/
 import { followAlong, PraiseKind } from '../data/follow-along';
 import { bookParts, serviceBook } from '../data/service-book';
 import { BookColumns, FollowAlongSwitch, ServiceBook, ServiceBookContents } from './service-book';
+import { sendRecording } from '../hooks/send-recording';
 import { BusyPulse } from './busy-pulse';
 import { followStrings } from './follow-strings';
 import { pressFeedback, tapFeedback } from './haptics';
@@ -66,6 +67,24 @@ const SPEEDS = [0.5, 0.75, 1];
 
 export const hymnPlainText = (hymn: Hymn, language: LanguageType) =>
   (hymn.versions.find((v) => v.language === language)?.text ?? '').replace(/(?:\\n)+/g, '\n\n');
+
+
+// Whether this browser can send a file through the share sheet (asked once)
+let sharesFiles: boolean | undefined;
+const browserSharesFiles = () => {
+  if (sharesFiles === undefined) {
+    try {
+      sharesFiles =
+        typeof navigator !== 'undefined' &&
+        typeof navigator.canShare === 'function' &&
+        navigator.canShare({ files: [new File([], 'recording.mp3', { type: 'audio/mpeg' })] });
+    } catch {
+      sharesFiles = false;
+    }
+  }
+  return sharesFiles;
+};
+const noSubscription = () => () => {};
 
 export function HymnReader({
   hymn,
@@ -350,6 +369,19 @@ export function HymnReader({
     Share.share({ message: words }).catch(() => {
       // share sheet dismissed or unavailable
     });
+  };
+  // The recording sent as an audio file through the share sheet (WhatsApp, Messages, Save to Files...), named after the
+  // hymn; on the website, where the browser cannot share files (most computers), Download is there instead
+  const [sending, setSending] = useState(false);
+  // (on the website, known once the page is in the browser: the pages are made ahead of time, with no browser)
+  const canSend = useSyncExternalStore(noSubscription, () => Platform.OS !== 'web' || browserSharesFiles(), () => Platform.OS !== 'web');
+  const send = async (file: string) => {
+    if (sending) return;
+    pressFeedback();
+    setSending(true);
+    const sent = await sendRecording(file, titleLines(hymn, lang).main);
+    setSending(false);
+    if (!sent) Alert.alert(t.sendFailed);
   };
   // On the website the recording is saved as a file (the site sends it as a download, see worker/index.ts)
   const downloadFile = (file: string) => {
@@ -859,6 +891,8 @@ export function HymnReader({
                     {inPlaylist ? t.inPlaylist : t.addToPlaylist}
                   </Text>
                 </Pressable>
+              </View>
+              <View style={[styles.audioActions, rowDirection]}>
                 {canDownload(currentAudio) ? (
                   <Pressable
                     onPress={() => toggleDownload(currentAudio)}
@@ -883,6 +917,18 @@ export function HymnReader({
                     style={({ pressed }) => [styles.playlistButton, styles.audioAction, pressed && styles.pressed]}>
                     <Text style={styles.controlText} numberOfLines={1} adjustsFontSizeToFit>
                       {t.downloadFile}
+                    </Text>
+                  </Pressable>
+                ) : null}
+                {canSend ? (
+                  <Pressable
+                    onPress={() => send(currentAudio)}
+                    disabled={sending}
+                    accessibilityRole="button"
+                    accessibilityState={{ busy: sending }}
+                    style={({ pressed }) => [styles.playlistButton, styles.audioAction, pressed && styles.pressed, sending && styles.disabled]}>
+                    <Text style={styles.controlText} numberOfLines={1} adjustsFontSizeToFit>
+                      {sending ? t.sending : t.send}
                     </Text>
                   </Pressable>
                 ) : null}
