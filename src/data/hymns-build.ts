@@ -5337,7 +5337,6 @@ if (annualMidnight) {
                 { language: 'arabic', text: "غبريال الملاك: رآه دانيال: واقفاً على قدميه: على شاطئ النهر.\n\n+ ومد يده اليمنى: إلى السماء: وحلف بالعلي: الدائم إلى الأبد.\n\nقائلاً: من زمان إلى زمان: وإلى نصف زمان: إلى تمام الرؤيا أنا أخبرك بها.\n\n+ إشفع فينا: يا رئيس الملائكة الطاهر: غبريال المبشر: ليغفر لنا خطايانا." },
               ],
             },
-            { id: 'annual-midnight-doxology-michael-gabriel', title: 'Doxology for Archangels Michael and Gabriel', versions: [] },
             {
               id: 'annual-midnight-doxology-heavenly-beings',
               title: 'Ϣⲁϣϥ ⲛ̀ⲁ̀ⲣⲭⲏⲁ̀ⲅⲅⲉⲗⲟⲥ (Doxology for All the Heavenly Beings)',
@@ -5360,7 +5359,6 @@ if (annualMidnight) {
                 { language: 'arabic', text: 'الرب يسوع المسيح، اختار رسله، وهم بطرس واندراوس، ويوحنا ويعقوب.\n\n+ وفيلبس ومتي، وبرثلماوس وتوما، ويعقوب بن حلفي، وسمعان القانوي.\n\nوتداوس ومتياس، وبولس ومرقس ولوقا، وبقية التلاميذ، الذين تبعوا مخلصنا.\n\n+ متياس الذي صار، عِوضاً عن يهوذا، وكامل وبقية التلاميذ، الذين تبعوا السيد.\n\nخرجت أصواتهم، إلي وجه الأرض كلها، وبلغ كلامهم، إلي أقطار المسكونة.\n\n+ أطلبوا من الرب عنا، يا سادتي الآباء الرسل، والاثنان والسبعون تلميذاً، ليغفر لنا خطايانا.' },
               ],
             },
-            { id: 'annual-midnight-doxology-apostles-2', title: 'Another Doxology for All the Apostles', versions: [] },
             {
               id: 'annual-midnight-doxology-st-mark',
               title: 'Ⲙⲁⲣⲕⲟⲥ ⲡⲓⲁ̀ⲡⲟⲥⲧⲟⲗⲟⲥ (Doxology for St Mark the Evangelist)',
@@ -8191,15 +8189,22 @@ for (const season of seasons) {
 // ---- Remove priest parts from deacon and congregation hymns ----
 const PRIEST_BLOCK =
   /(?:^|\n\n)(?:Priest|Ⲡⲓⲟⲩⲏⲃ|Piouēb|الكاهن|El-[Kk]ahin)\s*:\s*\n+[\s\S]*?(?=(?:\n\n(?:People|Ⲡⲓⲗⲁⲟⲥ|Pilaos|الشعب|Esh-[Ss]ha'b|Deacon|Ⲡⲓⲇⲓⲁⲕⲱⲛ|Pi-diakon|الشماس|Esh-shammas|Reader|القارئ)|\s*$))/gi;
+// A hymn that was all the priest's (e.g. a Pascha hour's Exposition) leaves its list, instead of opening empty
+const allPriest = new Set<Hymn>();
 for (const group of [...seasons, ...deaconCategories]) {
   for (const service of group.services) {
     for (const hymn of flattenHymns(service.hymns)) {
+      const hadWords = hymn.versions.some((v) => v.text.trim());
       hymn.versions = hymn.versions
         .map((v) => ({ ...v, text: v.text.replace(PRIEST_BLOCK, '').trim() }))
         .filter((v) => v.text.length > 0);
+      if (hadWords && hymn.versions.length === 0) allPriest.add(hymn);
     }
   }
 }
+const withoutAllPriest = (list: Hymn[]): Hymn[] =>
+  list.filter((h) => !allPriest.has(h)).map((h) => (h.children ? { ...h, children: withoutAllPriest(h.children) } : h));
+for (const group of [...seasons, ...deaconCategories]) for (const service of group.services) service.hymns = withoutAllPriest(service.hymns);
 
 // ---- Words each season sings its own way (2026-10-28, see seasonal-texts.ts) ----
 // Before the transliterations below, so the new words get their Coptic and English in Arabic letters
