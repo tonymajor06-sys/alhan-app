@@ -339,8 +339,7 @@ describe('The three Divine Liturgies', () => {
     expect(audio('let-us-attend', 'arabic')).toEqual(['deacon-let-us-attend-arabic.m4a']);
     expect(audio('look-towards-the-east', 'arabic')).toEqual(['deacon-look-towards-the-east-arabic-2.m4a']);
     expect(audio('epiclesis', 'coptic')).toEqual(['altar-responses-worship-god-in-fear-and-we-praise-you.m4a', 'deacon-epiclesis-coptic-worship-god.m4a']);
-    expect(audio('let-us-attend-amen', 'coptic')).toContain('deacon-epiclesis-coptic-let-us-attend-amen.m4a');
-    expect(audio('let-us-attend-amen', 'coptic')).toEqual(['altar-responses-let-us-attend-amen.m4a']);
+    expect(audio('let-us-attend-amen', 'coptic')).toEqual(['deacon-epiclesis-coptic-let-us-attend-amen.m4a', 'altar-responses-let-us-attend-amen.m4a']);
     expect(basil.some((id) => /st-(gregory|cyril)/.test(id))).toBe(false);
     expect(gregory).toContain('d-annual-liturgy-faithful-pray-for-the-captives-st-gregory');
     expect(gregory.some((id) => /st-cyril/.test(id))).toBe(false);
