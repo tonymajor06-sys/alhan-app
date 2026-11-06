@@ -8967,6 +8967,8 @@ for (const group of deaconCategories)
   // Coptic recording's first 15 seconds are Worship God, and from 0:39 Let Us Attend. Amen); each of the
   // Seven Short Litanies and Let Those Who Read starts later (the start of each cut was the end of the one before),
   // and each runs on to where he finishes
+  // These cuts are Abouna Rewis's (the altar responses recording); they always come after Archdeacon Arsani's recordings
+  // of the same response (the owner's request, 2026-11-05)
   const altarResponses: Record<string, string> = {
     'in-the-wisdom-of-god': 'in-the-wisdom-of-god',
     'reconciliation': 'reconciliation-3',
@@ -8991,9 +8993,6 @@ for (const group of deaconCategories)
   everyHymn((hymn, groupId) => {
     const file = groupId === 'deacon-annual' && altarResponses[baseOf(hymn.id).replace(/^d-annual-liturgy-faithful-/, '')];
     if (file && baseOf(hymn.id).startsWith('d-annual-liturgy-faithful-')) editRecordings(hymn, COPTIC_AUDIO, (files) => [...files, `altar-responses-${file}.m4a`]);
-    // The other Coptic Epiclesis recording runs through both parts, so the altar cut plays first
-    if (groupId === 'deacon-annual' && baseOf(hymn.id) === 'd-annual-liturgy-faithful-epiclesis')
-      editRecordings(hymn, COPTIC_AUDIO, (files) => ['altar-responses-worship-god-in-fear-and-we-praise-you.m4a', ...files]);
   });
 
   // Recordings cut again (2026-10-28):
