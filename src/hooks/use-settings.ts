@@ -24,6 +24,8 @@ export interface Settings {
   hymnLanguage: LanguageType | null;
   // Follow along: the hymn reader shows the whole service on one page, as in Spirit & Truth (see service-book.tsx)
   followAlong: boolean;
+  // Follow along's third column (with Side by Side's two), or null for two
+  thirdLanguage: LanguageType | null;
 }
 
 const STORAGE_KEY = 'alhan-settings';
@@ -42,6 +44,7 @@ const loadSettings = (): Settings => {
     theme: 'system',
     hymnLanguage: null,
     followAlong: false,
+    thirdLanguage: null,
   };
   try {
     const raw = readSetting(STORAGE_KEY);

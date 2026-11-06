@@ -1,8 +1,8 @@
-import { RefObject, useEffect, useRef } from 'react';
+import { ReactNode, RefObject, useEffect, useRef, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { createAlhanStyles, Sheet, Speaker, toVerses, Verse, withCopticFont } from './alhan-ui';
+import { createAlhanStyles, languageLabels, Sheet, SheetRow, Speaker, toVerses, Verse, withCopticFont } from './alhan-ui';
 import { tapFeedback } from './haptics';
 import { useTabChrome } from './tab-chrome';
 import { AlhanPalette } from '../constants/alhan-colors';
@@ -17,8 +17,28 @@ import { AppLanguage, updateSettings, useSettings } from '../hooks/use-settings'
 // one page, the languages side by side verse by verse, with Contents to jump to any part (see service-book.ts)
 
 export const bookStrings = {
-  en: { toggle: 'Follow along', hint: 'The whole service on one page', contents: 'Contents', play: 'Play from here', noText: 'No words yet' },
-  ar: { toggle: 'تتبع الصلاة', hint: 'الصلاة كلها في صفحة واحدة', contents: 'المحتويات', play: 'شغّل من هنا', noText: 'لا توجد كلمات بعد' },
+  en: {
+    toggle: 'Follow along',
+    hint: 'The whole service on one page',
+    contents: 'Contents',
+    play: 'Play from here',
+    noText: 'No words yet',
+    languages: 'Languages',
+    column: (n: number) => `Column ${n}`,
+    addColumn: 'Add a column',
+    remove: 'Remove',
+  },
+  ar: {
+    toggle: 'تتبع الصلاة',
+    hint: 'الصلاة كلها في صفحة واحدة',
+    contents: 'المحتويات',
+    play: 'شغّل من هنا',
+    noText: 'لا توجد كلمات بعد',
+    languages: 'اللغات',
+    column: (n: number) => `العمود ${String(n).replace(/\d/g, (d) => '٠١٢٣٤٥٦٧٨٩'[Number(d)])}`,
+    addColumn: 'أضف عمودًا',
+    remove: 'احذف',
+  },
 };
 
 const ARABIC_SCRIPT: LanguageType[] = ['arabic', 'arabicCoptic', 'arabicEnglish'];
@@ -51,8 +71,20 @@ export function FollowAlongSwitch({ lang }: { lang: AppLanguage }) {
   );
 }
 
+// The columns shown side by side, and what each can be changed to (chosen in the Languages sheet)
+export type BookColumns = {
+  columns: LanguageType[];
+  // The languages each column could show instead
+  options: LanguageType[][];
+  onSet: (column: number, language: LanguageType) => void;
+  // Undefined when no more columns can be added (three at most, or no other language)
+  onAdd?: () => void;
+  onRemove: (column: number) => void;
+};
+
 // Every part of the book, one after another, straight on the page (so their places are places on the page).
-// The current part is outlined and scrolled to; tapping a part makes it the current one, ▶ plays from it.
+// Laid out like a service book: each part's name centred over its words, the languages in columns with a fine rule
+// between them, the current part marked by a gold bar at its side; tap a part to make it current, ▶ plays from it.
 export function ServiceBook({
   book,
   currentId,
@@ -84,7 +116,6 @@ export function ServiceBook({
   const t = bookStrings[lang];
   const isRTL = lang === 'ar';
   const rowDirection = isRTL ? shared.rowReverse : shared.row;
-  const textAlign = isRTL ? shared.alignRight : shared.alignLeft;
 
   // Scrolled to the current part once it has its place on the page, and again whenever another part becomes current
   const scrolledTo = useRef<string | null>(null);
@@ -105,11 +136,11 @@ export function ServiceBook({
   }, [currentId, scrollRef, insets.top]);
 
   const columns = languages.length;
-  const size = 20 * settings.textScale * (columns > 1 ? 0.8 : 0.9);
+  const size = 20 * settings.textScale * (columns > 2 ? 0.72 : columns > 1 ? 0.8 : 0.9);
   const speakerColor: Record<Speaker, string> = { deacon: colors.gold, people: colors.people, priest: colors.priest };
   const columnStyle = (language: LanguageType) => [
     shared.hymnText,
-    { fontSize: size, lineHeight: size * 1.6 },
+    { fontSize: size, lineHeight: size * 1.55 },
     ARABIC_SCRIPT.includes(language) ? shared.arabicText : shared.alignLeft,
     language === 'coptic' && shared.copticText,
   ];
@@ -125,18 +156,40 @@ export function ServiceBook({
         {verse.text}
       </>
     ) : null;
+  // The columns in reading order (in Arabic the first column is on the right)
+  const ordered = (cells: ReactNode[]) => {
+    const out: ReactNode[] = [];
+    cells.forEach((cell, c) => {
+      if (c > 0) out.push(<View key={`rule-${c}`} style={styles.columnRule} />);
+      out.push(cell);
+    });
+    return <View style={[rowDirection, styles.verseRow]}>{out}</View>;
+  };
+  const label = (language: LanguageType) => languageLabels[lang].find((l) => l.key === language)?.label ?? language;
 
   return (
     <>
+      {columns > 1 ? (
+        <View style={styles.columnHeads}>
+          {ordered(
+            languages.map((l) => (
+              <Text key={l} style={[styles.columnHead, ARABIC_SCRIPT.includes(l) ? shared.alignRight : shared.alignLeft]} numberOfLines={1}>
+                {label(l)}
+              </Text>
+            ))
+          )}
+        </View>
+      ) : null}
       {book.map((entry) => {
         if (entry.kind === 'header')
           return (
             <View
               key={`h-${entry.id}`}
               onLayout={(e) => placed(entry.id, e.nativeEvent.layout.y)}
-              style={[shared.sectionHeader, rowDirection]}>
-              <Text style={shared.sectionHeaderText}>{withCopticFont(displayTitle(entry.title, lang))}</Text>
-              <View style={shared.sectionLine} />
+              style={[shared.row, styles.bookHeader]}>
+              <View style={styles.bookHeaderLine} />
+              <Text style={styles.bookHeaderText}>{withCopticFont(displayTitle(entry.title, lang))}</Text>
+              <View style={styles.bookHeaderLine} />
             </View>
           );
         const hymn = entry.hymn;
@@ -144,30 +197,34 @@ export function ServiceBook({
         const verses = languages.map((l) => toVerses(plainText(hymn, l)));
         const rows = Math.max(0, ...verses.map((v) => v.length));
         const isCurrent = hymn.id === currentId;
+        const isPlaying = hymn.id === playingId;
         const hasAudio = !!onPlay && hymn.versions.some((v) => v.audio);
         return (
           <View
             key={hymn.id}
             onLayout={(e) => placed(hymn.id, e.nativeEvent.layout.y)}
-            style={[styles.part, isCurrent && styles.partCurrent, hymn.id === playingId && styles.partPlaying]}>
+            style={[styles.part, (isCurrent || isPlaying) && styles.partCurrent, (isCurrent || isPlaying) && (isRTL ? styles.barRight : styles.barLeft)]}>
             <Pressable
               onPress={() => !isCurrent && onSelect(hymn)}
               accessibilityRole="button"
               accessibilityState={{ selected: isCurrent }}
               accessibilityLabel={main}
               style={({ pressed }) => [styles.partInner, pressed && !isCurrent && styles.partPressed]}>
-              <View style={[styles.partHead, hasAudio && (isRTL ? styles.roomLeft : styles.roomRight)]}>
-                <Text style={[styles.partTitle, textAlign]}>{withCopticFont(main)}</Text>
-                {coptic ? <Text style={[shared.tileCoptic, textAlign]}>{coptic}</Text> : null}
+              <View style={[styles.partHead, hasAudio && styles.partHeadRoom]}>
+                <Text style={styles.partTitle}>{withCopticFont(main)}</Text>
+                {coptic ? <Text style={[shared.tileCoptic, styles.partCoptic]}>{coptic}</Text> : null}
+                <View style={styles.titleRule} />
               </View>
-              {rows === 0 ? <Text style={[styles.noText, textAlign]}>{t.noText}</Text> : null}
+              {rows === 0 ? <Text style={styles.noText}>{t.noText}</Text> : null}
               {Array.from({ length: rows }, (_, i) => (
-                <View key={i} style={[rowDirection, styles.verseRow, i > 0 && styles.verseDivider]}>
-                  {languages.map((l, c) => (
-                    <Text key={l} style={[columnStyle(l), styles.column]}>
-                      {verseContent(verses[c][i])}
-                    </Text>
-                  ))}
+                <View key={i}>
+                  {ordered(
+                    languages.map((l, c) => (
+                      <Text key={l} style={[columnStyle(l), styles.column, i > 0 && styles.verseGap]}>
+                        {verseContent(verses[c][i])}
+                      </Text>
+                    ))
+                  )}
                 </View>
               ))}
             </Pressable>
@@ -176,9 +233,9 @@ export function ServiceBook({
                 onPress={() => onPlay!(hymn)}
                 accessibilityRole="button"
                 accessibilityLabel={`${t.play}: ${main}`}
-                hitSlop={8}
-                style={({ pressed }) => [styles.play, isRTL ? styles.playLeft : styles.playRight, pressed && shared.pressed]}>
-                <Text style={styles.playText}>{hymn.id === playingId ? '♪' : '▶'}</Text>
+                hitSlop={10}
+                style={({ pressed }) => [styles.play, isPlaying && styles.playOn, isRTL ? styles.playLeft : styles.playRight, pressed && shared.pressed]}>
+                <Text style={[styles.playText, isPlaying && styles.playTextOn]}>{isPlaying ? '♪' : '▶'}</Text>
               </Pressable>
             ) : null}
           </View>
@@ -188,7 +245,8 @@ export function ServiceBook({
   );
 }
 
-// The floating Contents button and its list: tap a name to jump to it
+// The floating Contents and Languages buttons and their sheets: tap a name to jump to it; choose each column's language,
+// add a column (three at most) or take one away
 export function ServiceBookContents({
   book,
   currentId,
@@ -197,6 +255,7 @@ export function ServiceBookContents({
   onOpen,
   onClose,
   onJump,
+  columns,
 }: {
   book: BookEntry[];
   currentId: string;
@@ -205,6 +264,7 @@ export function ServiceBookContents({
   onOpen: () => void;
   onClose: () => void;
   onJump: (id: string) => void;
+  columns: BookColumns;
 }) {
   const settings = useSettings();
   const shared = useThemedStyles(createAlhanStyles);
@@ -213,23 +273,33 @@ export function ServiceBookContents({
   const t = bookStrings[lang];
   const isRTL = lang === 'ar';
   const textAlign = isRTL ? shared.alignRight : shared.alignLeft;
+  const rowDirection = isRTL ? shared.rowReverse : shared.row;
+  const [languagesOpen, setLanguagesOpen] = useState(false);
+  // The column whose language is being chosen, or null for the list of columns
+  const [editing, setEditing] = useState<number | null>(null);
+  const label = (language: LanguageType) => languageLabels[lang].find((l) => l.key === language)?.label ?? language;
+  const closeLanguages = () => {
+    setLanguagesOpen(false);
+    setEditing(null);
+  };
+  const floating = (text: string, onPress: () => void) => (
+    <Pressable
+      onPress={() => {
+        tapFeedback();
+        onPress();
+      }}
+      accessibilityRole="button"
+      accessibilityLabel={text}
+      style={({ pressed }) => [styles.floatingButton, pressed && shared.pressed]}>
+      <Text style={styles.floatingButtonText}>{text}</Text>
+    </Pressable>
+  );
   return (
     <>
-      <Pressable
-        onPress={() => {
-          tapFeedback();
-          onOpen();
-        }}
-        accessibilityRole="button"
-        accessibilityLabel={t.contents}
-        style={({ pressed }) => [
-          styles.contentsButton,
-          isRTL ? { left: 20 } : { right: 20 },
-          { bottom: chrome.playerBottom + 84 },
-          pressed && shared.pressed,
-        ]}>
-        <Text style={styles.contentsButtonText}>☰ {t.contents}</Text>
-      </Pressable>
+      <View style={[styles.floatingRow, rowDirection, isRTL ? { left: 20 } : { right: 20 }, { bottom: chrome.playerBottom + 84 }]}>
+        {floating(`Aa ${t.languages}`, () => setLanguagesOpen(true))}
+        {floating(`☰ ${t.contents}`, onOpen)}
+      </View>
       <Sheet visible={open} title={t.contents} rtl={isRTL} onClose={onClose}>
         {book.map((entry) =>
           entry.kind === 'header' ? (
@@ -242,13 +312,65 @@ export function ServiceBookContents({
               onPress={() => onJump(entry.hymn.id)}
               accessibilityRole="button"
               accessibilityState={{ selected: entry.hymn.id === currentId }}
-              style={({ pressed }) => [shared.sheetRow, isRTL ? shared.rowReverse : shared.row, pressed && shared.sheetRowPressed]}>
+              style={({ pressed }) => [shared.sheetRow, rowDirection, pressed && shared.sheetRowPressed]}>
               <Text style={[shared.sheetRowText, entry.hymn.id === currentId && shared.sheetRowTextSelected, textAlign]}>
                 {withCopticFont(titleLines(entry.hymn, lang, settings.titleStyle).main)}
               </Text>
               {entry.hymn.id === currentId ? <Text style={shared.sheetCheck}>✓</Text> : null}
             </Pressable>
           )
+        )}
+      </Sheet>
+      <Sheet
+        visible={languagesOpen}
+        title={editing === null ? t.languages : t.column(editing + 1)}
+        rtl={isRTL}
+        onClose={closeLanguages}>
+        {editing === null ? (
+          <>
+            {columns.columns.map((language, c) => (
+              <View key={language} style={[rowDirection, styles.columnRow]}>
+                <Pressable
+                  onPress={() => setEditing(c)}
+                  accessibilityRole="button"
+                  accessibilityLabel={`${t.column(c + 1)}: ${label(language)}`}
+                  style={({ pressed }) => [styles.columnPick, rowDirection, pressed && shared.sheetRowPressed]}>
+                  <Text style={[styles.columnNumber]}>{isRTL ? String(c + 1).replace(/\d/g, (d) => '٠١٢٣٤٥٦٧٨٩'[Number(d)]) : c + 1}</Text>
+                  <Text style={[shared.sheetRowText, textAlign]}>{label(language)}</Text>
+                  <Text style={styles.caret}>▾</Text>
+                </Pressable>
+                {columns.columns.length > 1 ? (
+                  <Pressable
+                    onPress={() => columns.onRemove(c)}
+                    accessibilityRole="button"
+                    accessibilityLabel={`${t.remove}: ${label(language)}`}
+                    hitSlop={8}
+                    style={({ pressed }) => [styles.removeButton, pressed && shared.pressed]}>
+                    <Text style={styles.removeText}>✕</Text>
+                  </Pressable>
+                ) : null}
+              </View>
+            ))}
+            {columns.onAdd ? (
+              <SheetRow rtl={isRTL} label={`＋ ${t.addColumn}`} onPress={columns.onAdd} />
+            ) : null}
+          </>
+        ) : (
+          <>
+            <SheetRow rtl={isRTL} label={`${isRTL ? '›' : '‹'} ${t.languages}`} onPress={() => setEditing(null)} />
+            {[columns.columns[editing], ...(columns.options[editing] ?? [])].map((language) => (
+              <SheetRow
+                key={language}
+                rtl={isRTL}
+                label={label(language)}
+                selected={language === columns.columns[editing]}
+                onPress={() => {
+                  if (language !== columns.columns[editing]) columns.onSet(editing, language);
+                  setEditing(null);
+                }}
+              />
+            ))}
+          </>
         )}
       </Sheet>
     </>
@@ -261,44 +383,49 @@ const createStyles = (colors: AlhanPalette) =>
     miniTrackOn: { backgroundColor: colors.gold },
     miniKnob: { width: 14, height: 14, borderRadius: 7, backgroundColor: colors.surface },
     miniKnobOn: { alignSelf: 'flex-end' },
-    part: {
-      marginHorizontal: -12,
-      borderRadius: 14,
-      borderWidth: 1,
-      borderColor: 'transparent',
-      borderBottomColor: colors.border,
-    },
-    partCurrent: { borderColor: colors.gold, backgroundColor: colors.surface },
-    partPlaying: { borderColor: colors.gold },
-    partInner: { paddingVertical: 14, paddingHorizontal: 12, borderRadius: 14 },
+    // A service book's page: no boxes, the current part marked by a gold bar at its side
+    part: { marginHorizontal: -12, marginBottom: 6 },
+    partCurrent: { backgroundColor: colors.surface, borderRadius: 4 },
+    barLeft: { borderLeftWidth: 3, borderLeftColor: colors.gold },
+    barRight: { borderRightWidth: 3, borderRightColor: colors.gold },
+    partInner: { paddingTop: 18, paddingBottom: 20, paddingHorizontal: 12 },
     partPressed: { backgroundColor: colors.surface },
-    partHead: { marginBottom: 8 },
-    partTitle: { fontSize: 16, fontWeight: '800', color: colors.gold },
-    roomRight: { paddingRight: 48 },
-    roomLeft: { paddingLeft: 48 },
-    verseRow: { alignItems: 'flex-start', gap: 14 },
-    verseDivider: { borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: colors.border, marginTop: 10, paddingTop: 10 },
+    partHead: { alignItems: 'center', marginBottom: 14 },
+    partHeadRoom: { paddingHorizontal: 40 },
+    partTitle: { fontSize: 17, fontWeight: '800', color: colors.gold, textAlign: 'center' },
+    partCoptic: { textAlign: 'center', marginTop: 2 },
+    titleRule: { width: 36, height: 2, borderRadius: 1, backgroundColor: colors.gold, opacity: 0.5, marginTop: 10 },
+    verseRow: { alignItems: 'stretch' },
+    verseGap: { paddingTop: 14 },
     column: { flex: 1 },
-    noText: { fontSize: 15, color: colors.muted },
+    columnRule: { width: StyleSheet.hairlineWidth, backgroundColor: colors.border, marginHorizontal: 10 },
+    columnHeads: { paddingBottom: 8, marginBottom: 4, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: colors.border },
+    columnHead: { flex: 1, fontSize: 12, fontWeight: '800', color: colors.muted, letterSpacing: 0.8, textTransform: 'uppercase' },
+    bookHeader: { alignItems: 'center', gap: 12, marginTop: 26, marginBottom: 10 },
+    bookHeaderLine: { flex: 1, height: StyleSheet.hairlineWidth, backgroundColor: colors.gold, opacity: 0.6 },
+    bookHeaderText: { fontSize: 14, fontWeight: '800', color: colors.gold, letterSpacing: 1.2, textTransform: 'uppercase', textAlign: 'center', flexShrink: 1 },
+    noText: { fontSize: 15, color: colors.muted, textAlign: 'center' },
     play: {
       position: 'absolute',
-      top: 10,
-      width: 40,
-      height: 40,
-      borderRadius: 20,
+      top: 14,
+      width: 34,
+      height: 34,
+      borderRadius: 17,
       borderWidth: 1,
       borderColor: colors.gold,
       alignItems: 'center',
       justifyContent: 'center',
     },
+    playOn: { backgroundColor: colors.gold },
     playRight: { right: 10 },
     playLeft: { left: 10 },
-    playText: { fontSize: 15, color: colors.gold },
-    contentsButton: {
-      position: 'absolute',
-      minHeight: 46,
-      paddingHorizontal: 18,
-      borderRadius: 23,
+    playText: { fontSize: 13, color: colors.gold },
+    playTextOn: { color: colors.onGold },
+    floatingRow: { position: 'absolute', gap: 8, opacity: 0.96 },
+    floatingButton: {
+      minHeight: 38,
+      paddingHorizontal: 13,
+      borderRadius: 19,
       backgroundColor: colors.gold,
       alignItems: 'center',
       justifyContent: 'center',
@@ -308,6 +435,23 @@ const createStyles = (colors: AlhanPalette) =>
       shadowOffset: { width: 0, height: 3 },
       elevation: 4,
     },
-    contentsButtonText: { fontSize: 16, fontWeight: '800', color: colors.onGold },
+    floatingButtonText: { fontSize: 13, fontWeight: '800', color: colors.onGold },
+    columnRow: { alignItems: 'center', gap: 8 },
+    columnPick: { flex: 1, alignItems: 'center', gap: 12, paddingVertical: 14, paddingHorizontal: 8, borderRadius: 12 },
+    columnNumber: {
+      width: 26,
+      height: 26,
+      borderRadius: 13,
+      overflow: 'hidden',
+      textAlign: 'center',
+      lineHeight: 26,
+      fontSize: 13,
+      fontWeight: '800',
+      color: colors.onGold,
+      backgroundColor: colors.gold,
+    },
+    caret: { fontSize: 14, color: colors.muted, marginStart: 'auto' },
+    removeButton: { width: 36, height: 36, borderRadius: 18, alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: colors.border },
+    removeText: { fontSize: 14, color: colors.muted },
     contentsHeader: { marginTop: 16, marginBottom: 4, paddingHorizontal: 4 },
   });

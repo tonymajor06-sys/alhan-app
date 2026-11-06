@@ -1,6 +1,6 @@
 import { router } from 'expo-router';
 import { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
-import { Alert, Platform, Pressable, ScrollView, Share, Text, useWindowDimensions, View } from 'react-native';
+import { Alert, Platform, Pressable, ScrollView, Share, Text, View } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 
 import { hymnWebUrl } from '../constants/site';
@@ -11,7 +11,7 @@ import { flattenHymns, Hymn, LanguageType } from '../data/hymns';
 import { hymnAcrossSeasons, hymnSlug, locateHymn, neighborHymns } from '../data/search';
 import { followAlong, PraiseKind } from '../data/follow-along';
 import { bookParts, serviceBook } from '../data/service-book';
-import { FollowAlongSwitch, ServiceBook, ServiceBookContents } from './service-book';
+import { BookColumns, FollowAlongSwitch, ServiceBook, ServiceBookContents } from './service-book';
 import { BusyPulse } from './busy-pulse';
 import { followStrings } from './follow-strings';
 import { pressFeedback, tapFeedback } from './haptics';
@@ -100,6 +100,14 @@ export function HymnReader({
   const effectiveLanguage = availableLanguages.some((l) => l.key === activeLanguage)
     ? activeLanguage
     : (availableLanguages[0]?.key ?? activeLanguage);
+
+  // Second column: the language last chosen for it, else English, else whatever else this hymn has
+  const compareOptions = availableLanguages.filter((l) => l.key !== effectiveLanguage);
+  const compareLanguage =
+    compareOptions.find((l) => l.key === settings.compareLanguage)?.key ??
+    (compareOptions.find((l) => l.key === 'english') ?? compareOptions[0])?.key ??
+    null;
+  const showSideBySide = settings.sideBySide && compareLanguage !== null;
 
   // Every recording of the hymn, whatever language it is sung in, offered as Recording 1, 2, 3: Coptic first, then
   // the app's language (English, then Arabic; in Arabic the other way round). Each is played as the language it is
@@ -223,7 +231,33 @@ export function HymnReader({
   const following = settings.followAlong && book.length > 1;
   const [contentsOpen, setContentsOpen] = useState(false);
   const bookPositions = useRef<Record<string, number>>({});
-  const { width } = useWindowDimensions();
+  // Its columns: the hymn's language, Side by Side's second, and a third if one was added; each can be changed, added
+  // or taken away from the Languages button (the first is the reader's own language, the second Side by Side's)
+  const thirdLanguage =
+    showSideBySide && settings.thirdLanguage && settings.thirdLanguage !== compareLanguage && compareOptions.some((l) => l.key === settings.thirdLanguage)
+      ? settings.thirdLanguage
+      : null;
+  const bookColumns: BookColumns = (() => {
+    const columns = [effectiveLanguage, ...(showSideBySide && compareLanguage ? [compareLanguage] : []), ...(thirdLanguage ? [thirdLanguage] : [])];
+    const unused = availableLanguages.map((l) => l.key).filter((l) => !columns.includes(l));
+    return {
+      columns,
+      options: columns.map(() => unused),
+      onSet: (column, language) => {
+        if (column === 0) setActiveLanguage(language);
+        else updateSettings(column === 1 ? { compareLanguage: language } : { thirdLanguage: language });
+      },
+      onAdd:
+        columns.length < 3 && unused.length
+          ? () => updateSettings(columns.length === 1 ? { sideBySide: true, compareLanguage: unused.includes('english') ? 'english' : unused[0] } : { thirdLanguage: unused[0] })
+          : undefined,
+      onRemove: (column) => {
+        const rest = columns.filter((_, c) => c !== column);
+        if (column === 0) setActiveLanguage(rest[0]);
+        updateSettings({ sideBySide: rest.length > 1, compareLanguage: rest[1] ?? settings.compareLanguage, thirdLanguage: rest[2] ?? null });
+      },
+    };
+  })();
   const bookPlay = (part: Hymn) => {
     const parts = bookParts(book);
     const trackFor = (h: Hymn): QueueTrack | null => {
@@ -333,13 +367,6 @@ export function HymnReader({
   const isDownloading = !!currentAudio && downloads.downloading.has(currentAudio);
   const isDownloaded = !!currentAudio && downloads.downloaded.has(currentAudio);
 
-  // Second column: the language last chosen for it, else English, else whatever else this hymn has
-  const compareOptions = availableLanguages.filter((l) => l.key !== effectiveLanguage);
-  const compareLanguage =
-    compareOptions.find((l) => l.key === settings.compareLanguage)?.key ??
-    (compareOptions.find((l) => l.key === 'english') ?? compareOptions[0])?.key ??
-    null;
-  const showSideBySide = settings.sideBySide && compareLanguage !== null;
   const currentLanguageLabel = languageLabels[lang].find((l) => l.key === effectiveLanguage)?.label ?? '';
   const compareLanguageLabel = languageLabels[lang].find((l) => l.key === compareLanguage)?.label ?? '';
   const columnStyle = (language: LanguageType) =>
@@ -869,19 +896,7 @@ export function HymnReader({
               book={book}
               currentId={hymn.id}
               playingId={nowPlaying?.hymnId}
-              languages={
-                showSideBySide && compareLanguage
-                  ? [
-                      effectiveLanguage,
-                      compareLanguage,
-                      ...(width >= 700
-                        ? (['english', 'arabic', 'coptic', 'englishCoptic'] as LanguageType[])
-                            .filter((l) => l !== effectiveLanguage && l !== compareLanguage)
-                            .slice(0, 1)
-                        : []),
-                    ]
-                  : [effectiveLanguage]
-              }
+              languages={bookColumns.columns}
               lang={lang}
               scrollRef={scrollRef}
               onPlace={(id, y) => (bookPositions.current[id] = y)}
@@ -1035,6 +1050,7 @@ export function HymnReader({
               const y = bookPositions.current[id];
               if (y !== undefined) scrollRef.current?.scrollTo({ y: Math.max(0, y - 12), animated: true });
             }}
+            columns={bookColumns}
           />
         ) : null}
       </View>
