@@ -53,3 +53,6 @@ svg/
 
 # Orsozoxi screen captures (scripts/orsozoxi)
 captures/
+
+# hymns saved for release (scripts/hymns-snapshot.mjs)
+src/data/hymns-snapshot.generated.js

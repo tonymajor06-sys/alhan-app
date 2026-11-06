@@ -1,6 +1,6 @@
 import { englishWordsInArabic } from './arabic-english-words';
 import type { Hymn } from './hymns';
-import { withLazyText, writtenOnce } from './lazy-text';
+import { withLazyText } from './lazy-text';
 
 // English written in Arabic letters, for readers who know Arabic but not the English alphabet.
 // Each word is written by how it sounds (from englishWordsInArabic); names and other words that list
@@ -126,7 +126,7 @@ export function addArabicEnglish(groups: HymnGroup[]) {
     const english = hymn.versions.find((v) => v.language === 'english');
     if (!english?.text) return;
     const source = english.text;
-    const converted = withLazyText<Hymn['versions'][number]>({ language: 'arabicEnglish' }, () => writtenOnce('arabicEnglish', source, englishToArabic));
+    const converted = withLazyText<Hymn['versions'][number]>({ language: 'arabicEnglish' }, 'arabicEnglish', source, englishToArabic);
     if (english.audio) converted.audio = english.audio;
     hymn.versions.push(converted);
   };

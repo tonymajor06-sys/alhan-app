@@ -1,6 +1,6 @@
 import type { Hymn } from './hymns';
 import { ORSOZOXI_LOOSE, ORSOZOXI_WORDS } from './orsozoxi-words';
-import { withLazyText, writtenOnce } from './lazy-text';
+import { withLazyText } from './lazy-text';
 
 // Coptic written in Arabic letters as the Orsozoxi app writes it, for readers who know Arabic but not the Coptic
 // alphabet. A word Orsozoxi has is spelled its way (orsozoxi-words.ts, the words its spelling differs from the rules
@@ -261,7 +261,7 @@ export function addArabicCoptic(groups: HymnGroup[]) {
     const coptic = hymn.versions.find((v) => v.language === 'coptic');
     if (!coptic || isPlaceholder(coptic.text) || !hasCoptic(coptic.text)) return;
     const source = coptic.text;
-    const converted = withLazyText<Hymn['versions'][number]>({ language: 'arabicCoptic' }, () => writtenOnce('arabicCoptic', source, copticToArabic));
+    const converted = withLazyText<Hymn['versions'][number]>({ language: 'arabicCoptic' }, 'arabicCoptic', source, copticToArabic);
     if (coptic.audio) converted.audio = coptic.audio;
     if (coptic.otherAudio) converted.otherAudio = coptic.otherAudio;
     hymn.versions.push(converted);
