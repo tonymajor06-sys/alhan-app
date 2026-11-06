@@ -26,6 +26,9 @@ export interface Settings {
   followAlong: boolean;
   // Follow along's third column (with Side by Side's two), or null for two
   thirdLanguage: LanguageType | null;
+  // What Follow along leaves out of Midnight and Vesper Praises: whole kinds ('doxologies', 'psalis', 'lobsh',
+  // 'expositions') and single doxologies by id (see service-book.ts)
+  followHidden: string[];
 }
 
 const STORAGE_KEY = 'alhan-settings';
@@ -45,6 +48,7 @@ const loadSettings = (): Settings => {
     hymnLanguage: null,
     followAlong: false,
     thirdLanguage: null,
+    followHidden: [],
   };
   try {
     const raw = readSetting(STORAGE_KEY);

@@ -9,8 +9,8 @@ import { splitTitle, titleLines } from '../data/hymn-titles';
 import { flattenHymns, Hymn, LanguageType } from '../data/hymns';
 import { hymnAcrossSeasons, hymnSlug, locateHymn, neighborHymns } from '../data/search';
 import { followAlong, PraiseKind } from '../data/follow-along';
-import { bookParts, serviceBook } from '../data/service-book';
-import { BookColumns, FollowAlongSwitch, ServiceBook, ServiceBookContents } from './service-book';
+import { bookParts, isDoxologyConclusion, isPraisesBook, partKind, partKinds, serviceBook, withoutHidden } from '../data/service-book';
+import { BookColumns, BookHiding, FollowAlongSwitch, ServiceBook, ServiceBookContents } from './service-book';
 import { sendRecording } from '../hooks/send-recording';
 import { BusyPulse } from './busy-pulse';
 import { followStrings } from './follow-strings';
@@ -230,7 +230,23 @@ export function HymnReader({
   // ---------- Follow along ----------
   // The switch opens the hymn out into its whole service on one page, the languages side by side (a third on a wide
   // screen), with Contents to jump to any part; tapping a part makes it the hymn on this page, ▶ plays from it
-  const book = useMemo(() => serviceBook(hymn.id, tonight), [hymn.id, tonight]);
+  const fullBook = useMemo(() => serviceBook(hymn.id, tonight), [hymn.id, tonight]);
+  // Midnight and Vesper Praises can leave out their Doxologies, Psalis, Lobsh and Expositions (chosen in Contents)
+  const praisesBook = isPraisesBook(hymn.id, tonight);
+  const followHidden = settings.followHidden;
+  const book = useMemo(
+    () => (praisesBook ? withoutHidden(fullBook, followHidden, hymn.id) : fullBook),
+    [praisesBook, fullBook, followHidden, hymn.id]
+  );
+  const bookHiding: BookHiding | undefined = praisesBook
+    ? {
+        kinds: partKinds.filter((k) => bookParts(fullBook).some((h) => partKind(h) === k)),
+        doxologies: bookParts(fullBook).filter((h) => partKind(h) === 'doxologies' && !isDoxologyConclusion(h)),
+        hidden: followHidden,
+        onToggle: (key) =>
+          updateSettings({ followHidden: followHidden.includes(key) ? followHidden.filter((k) => k !== key) : [...followHidden, key] }),
+      }
+    : undefined;
   const following = settings.followAlong && book.length > 1;
   const [contentsOpen, setContentsOpen] = useState(false);
   const bookPositions = useRef<Record<string, number>>({});
@@ -1080,6 +1096,7 @@ export function HymnReader({
             if (y !== undefined) scrollRef.current?.scrollTo({ y: Math.max(0, y - 12), animated: true });
           }}
           columns={bookColumns}
+          hiding={bookHiding}
         />
       ) : null}
     </View>

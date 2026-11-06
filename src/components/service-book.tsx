@@ -9,7 +9,7 @@ import { AlhanPalette } from '../constants/alhan-colors';
 import { displayTitle } from '../data/arabic-titles';
 import { titleLines } from '../data/hymn-titles';
 import { Hymn, LanguageType } from '../data/hymns';
-import { BookEntry } from '../data/service-book';
+import { BookEntry, doxologyId, PartKind } from '../data/service-book';
 import { useAlhanColors, useThemedStyles } from '../hooks/use-alhan-colors';
 import { AppLanguage, updateSettings, useSettings } from '../hooks/use-settings';
 
@@ -27,6 +27,8 @@ export const bookStrings = {
     column: (n: number) => `Column ${n}`,
     addColumn: 'Add a column',
     remove: 'Remove',
+    show: 'Show',
+    kinds: { doxologies: 'Doxologies', psalis: 'Psalis', lobsh: 'Lobsh', expositions: 'Expositions' } as Record<PartKind, string>,
   },
   ar: {
     toggle: 'تتبع الصلاة',
@@ -38,6 +40,8 @@ export const bookStrings = {
     column: (n: number) => `العمود ${String(n).replace(/\d/g, (d) => '٠١٢٣٤٥٦٧٨٩'[Number(d)])}`,
     addColumn: 'أضف عمودًا',
     remove: 'احذف',
+    show: 'إظهار',
+    kinds: { doxologies: 'الذكصولوجيات', psalis: 'الإبصاليات', lobsh: 'اللبش', expositions: 'التفاسير' } as Record<PartKind, string>,
   },
 };
 
@@ -80,6 +84,14 @@ export type BookColumns = {
   // Undefined when no more columns can be added (three at most, or no other language)
   onAdd?: () => void;
   onRemove: (column: number) => void;
+};
+
+// What Midnight and Vesper Praises can leave out: whole kinds, and single doxologies (keys as in service-book.ts)
+export type BookHiding = {
+  kinds: PartKind[];
+  doxologies: Hymn[];
+  hidden: readonly string[];
+  onToggle: (key: string) => void;
 };
 
 // Every part of the book, one after another, straight on the page (so their places are places on the page).
@@ -256,6 +268,7 @@ export function ServiceBookContents({
   onClose,
   onJump,
   columns,
+  hiding,
 }: {
   book: BookEntry[];
   currentId: string;
@@ -265,6 +278,7 @@ export function ServiceBookContents({
   onClose: () => void;
   onJump: (id: string) => void;
   columns: BookColumns;
+  hiding?: BookHiding;
 }) {
   const settings = useSettings();
   const shared = useThemedStyles(createAlhanStyles);
@@ -282,6 +296,26 @@ export function ServiceBookContents({
     setLanguagesOpen(false);
     setEditing(null);
   };
+  // One thing to show or hide, with a small switch; a single doxology sits indented under Doxologies
+  const switchRow = (text: string, on: boolean, onPress: () => void, indented: boolean, key?: string) => (
+    <Pressable
+      key={key}
+      onPress={() => {
+        tapFeedback();
+        onPress();
+      }}
+      accessibilityRole="switch"
+      accessibilityState={{ checked: on }}
+      accessibilityLabel={text}
+      style={({ pressed }) => [shared.sheetRow, rowDirection, indented && (isRTL ? styles.indentRight : styles.indentLeft), pressed && shared.sheetRowPressed]}>
+      <Text style={[indented ? styles.switchLabelSmall : shared.sheetRowText, !on && styles.switchLabelOff, textAlign, { flex: 1 }]}>
+        {withCopticFont(text)}
+      </Text>
+      <View style={[styles.miniTrack, on && styles.miniTrackOn]}>
+        <View style={[styles.miniKnob, on && styles.miniKnobOn]} />
+      </View>
+    </Pressable>
+  );
   const floating = (text: string, onPress: () => void) => (
     <Pressable
       onPress={() => {
@@ -301,6 +335,30 @@ export function ServiceBookContents({
         {floating(`☰ ${t.contents}`, onOpen)}
       </View>
       <Sheet visible={open} title={t.contents} rtl={isRTL} onClose={onClose}>
+        {hiding && hiding.kinds.length ? (
+          <View style={styles.hidePanel}>
+            <Text style={[shared.sectionHeaderText, styles.contentsHeader, textAlign]}>{t.show}</Text>
+            {hiding.kinds.map((kind) => {
+              const shown = !hiding.hidden.includes(kind);
+              return (
+                <View key={kind}>
+                  {switchRow(t.kinds[kind], shown, () => hiding.onToggle(kind), false)}
+                  {kind === 'doxologies' && shown
+                    ? hiding.doxologies.map((h) =>
+                        switchRow(
+                          titleLines(h, lang, 'english').main,
+                          !hiding.hidden.includes(doxologyId(h)),
+                          () => hiding.onToggle(doxologyId(h)),
+                          true,
+                          h.id
+                        )
+                      )
+                    : null}
+                </View>
+              );
+            })}
+          </View>
+        ) : null}
         {book.map((entry) =>
           entry.kind === 'header' ? (
             <Text key={`h-${entry.id}`} style={[shared.sectionHeaderText, styles.contentsHeader, textAlign]}>
@@ -453,5 +511,10 @@ const createStyles = (colors: AlhanPalette) =>
     caret: { fontSize: 14, color: colors.muted, marginStart: 'auto' },
     removeButton: { width: 36, height: 36, borderRadius: 18, alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: colors.border },
     removeText: { fontSize: 14, color: colors.muted },
+    hidePanel: { marginBottom: 12, paddingBottom: 8, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: colors.border },
+    indentLeft: { paddingLeft: 28 },
+    indentRight: { paddingRight: 28 },
+    switchLabelSmall: { fontSize: 15, color: colors.text },
+    switchLabelOff: { color: colors.muted },
     contentsHeader: { marginTop: 16, marginBottom: 4, paddingHorizontal: 4 },
   });

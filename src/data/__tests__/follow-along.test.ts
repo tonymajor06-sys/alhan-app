@@ -1,5 +1,6 @@
 import { followAlong, doxologyGroupId, praiseJdnFor, weekdayOf } from '../follow-along';
 import { gregorianToJdn } from '../coptic-calendar';
+import { bookParts, isPraisesBook, partKind, serviceBook, withoutHidden } from '../service-book';
 
 describe('follow-along praise service builder', () => {
   it('builds Midnight Praises for a weekday', () => {
@@ -52,5 +53,38 @@ describe('follow-along praise service builder', () => {
     const tuesdayGroup = { id: 'annual-midnight-tuesday', title: 'Tuesday', versions: [] };
     const tuesdayTarget = praiseJdnFor(item, tuesdayGroup, wednesdayJdn);
     expect(weekdayOf(tuesdayTarget)).toBe(2); // 2 = Tuesday
+  });
+});
+
+describe("Follow along: hiding parts of Midnight and Vesper Praises", () => {
+  const jdn = gregorianToJdn(2026, 11, 6);
+  const tonight = followAlong('midnight', jdn).hymns;
+  const book = serviceBook(tonight[0].id, tonight);
+  const ids = (b: typeof book) => bookParts(b).map((h) => h.id);
+
+  it('is offered only for Midnight and Vesper Praises', () => {
+    expect(isPraisesBook(tonight[0].id, tonight)).toBe(true);
+    expect(isPraisesBook('d-annual-liturgy-faithful-reconciliation')).toBe(false);
+  });
+
+  it('hides every doxology and their conclusion, but keeps the rest', () => {
+    const hidden = withoutHidden(book, ['doxologies'], tonight[0].id);
+    expect(ids(hidden).some((id) => /doxology/.test(id))).toBe(false);
+    expect(ids(hidden)).toContain('annual-midnight-fourth-canticle');
+  });
+
+  it('hides single doxologies, and the conclusion only when all are hidden', () => {
+    const one = withoutHidden(book, ['annual-midnight-doxology-st-mark'], tonight[0].id);
+    expect(ids(one)).not.toContain('annual-midnight-doxology-st-mark');
+    expect(ids(one)).toContain('annual-midnight-doxology-virgin-mary');
+    expect(ids(one)).toContain('annual-midnight-doxology-conclusion');
+    const all = bookParts(book)
+      .filter((h) => partKind(h) === 'doxologies' && !/conclusion/.test(h.id))
+      .map((h) => h.id);
+    expect(ids(withoutHidden(book, all, tonight[0].id))).not.toContain('annual-midnight-doxology-conclusion');
+  });
+
+  it('always keeps the hymn that was opened', () => {
+    expect(ids(withoutHidden(book, ['doxologies'], 'annual-midnight-doxology-st-mark'))).toContain('annual-midnight-doxology-st-mark');
   });
 });
