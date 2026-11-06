@@ -6,16 +6,17 @@ import { locateHymn } from './search';
 // A service that is only a collection of groups (Midnight Praises: General, Sunday, Monday...) is not read straight
 // through, so there the book is the group the hymn is in. Tonight's Midnight or Vesper Praises are read in tonight's order.
 
-export type BookEntry = { kind: 'header'; id: string; title: Hymn } | { kind: 'part'; hymn: Hymn };
+// A header's depth: 0 for a section or group in the service, 1 for a group inside it, and so on
+export type BookEntry = { kind: 'header'; id: string; title: Hymn; depth: number } | { kind: 'part'; hymn: Hymn };
 
 const contains = (item: Hymn, id: string): boolean => item.id === id || !!item.children?.some((c) => contains(c, id));
 
-function expand(list: Hymn[]): BookEntry[] {
+function expand(list: Hymn[], depth = 0): BookEntry[] {
   return list.flatMap((h): BookEntry[] =>
     h.isSectionHeader
-      ? [{ kind: 'header', id: h.id, title: h }]
+      ? [{ kind: 'header', id: h.id, title: h, depth }]
       : h.children
-        ? [{ kind: 'header', id: h.id, title: h }, ...expand(h.children)]
+        ? [{ kind: 'header', id: h.id, title: h, depth }, ...expand(h.children, depth + 1)]
         : [{ kind: 'part', hymn: h }]
   );
 }
@@ -71,8 +72,16 @@ export function hiddenInBook(hymn: Hymn, hidden: readonly string[], book: BookEn
 export function withoutHidden(book: BookEntry[], hidden: readonly string[], keepId: string): BookEntry[] {
   if (!hidden.length) return book;
   const kept = book.filter((e) => e.kind === 'header' || e.hymn.id === keepId || !hiddenInBook(e.hymn, hidden, book));
-  // A heading with nothing left under it goes too
-  return kept.filter((e, i) => e.kind === 'part' || (kept[i + 1] !== undefined && kept[i + 1].kind === 'part'));
+  // A heading with nothing left under it goes too (what is under it runs to the next heading as deep or less deep)
+  const hasParts = (at: number, depth: number) => {
+    for (let i = at + 1; i < kept.length; i++) {
+      const entry = kept[i];
+      if (entry.kind === 'part') return true;
+      if (entry.depth <= depth) return false;
+    }
+    return false;
+  };
+  return kept.filter((e, i) => e.kind === 'part' || hasParts(i, e.depth));
 }
 
 export const doxologyId = (hymn: Hymn) => baseId(hymn.id);

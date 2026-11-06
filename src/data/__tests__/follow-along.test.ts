@@ -88,3 +88,22 @@ describe("Follow along: hiding parts of Midnight and Vesper Praises", () => {
     expect(ids(withoutHidden(book, ['doxologies'], 'annual-midnight-doxology-st-mark'))).toContain('annual-midnight-doxology-st-mark');
   });
 });
+
+describe('Follow along: headings when parts are hidden', () => {
+  const part = (id: string) => ({ kind: 'part' as const, hymn: { id, title: id, versions: [] } });
+  const header = (id: string, depth: number) => ({ kind: 'header' as const, id, title: { id, title: id, versions: [] }, depth });
+  it('keeps a group whose parts are in a group inside it, and drops one left empty', () => {
+    const book = [
+      header('outer', 0),
+      header('inner', 1),
+      part('annual-midnight-doxology-st-mark'),
+      part('annual-midnight-first-canticle'),
+      header('empty', 0),
+      part('annual-midnight-doxology-st-george'),
+      header('last', 0),
+      part('annual-midnight-fourth-canticle'),
+    ];
+    const kept = withoutHidden(book, ['doxologies'], 'annual-midnight-fourth-canticle').map((e) => (e.kind === 'part' ? e.hymn.id : e.id));
+    expect(kept).toEqual(['outer', 'inner', 'annual-midnight-first-canticle', 'last', 'annual-midnight-fourth-canticle']);
+  });
+});
