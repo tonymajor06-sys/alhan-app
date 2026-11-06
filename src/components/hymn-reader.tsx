@@ -11,7 +11,7 @@ import { hymnAcrossSeasons, hymnSlug, locateHymn, neighborHymns } from '../data/
 import { followAlong, PraiseKind } from '../data/follow-along';
 import { bookParts, isDoxologyConclusion, isPraisesBook, partKind, partKinds, serviceBook, withoutHidden } from '../data/service-book';
 import { BookColumns, BookHiding, FollowAlongSwitch, ServiceBook, ServiceBookContents } from './service-book';
-import { sendRecording } from '../hooks/send-recording';
+import { needsPreparing, prepareRecording, sendRecording } from '../hooks/send-recording';
 import { BusyPulse } from './busy-pulse';
 import { followStrings } from './follow-strings';
 import { pressFeedback } from './haptics';
@@ -84,6 +84,11 @@ const browserSharesFiles = () => {
   return sharesFiles;
 };
 const noSubscription = () => () => {};
+// A short message: an alert on a phone, the browser's own on the website (React Native's Alert shows nothing there)
+const showMessage = (text: string) => {
+  if (Platform.OS === 'web') globalThis.alert?.(text);
+  else Alert.alert(text);
+};
 
 export function HymnReader({
   hymn,
@@ -350,6 +355,14 @@ export function HymnReader({
   const share = () => {
     const url = hymnWebUrl(hymn.id, effectiveLanguage);
     const message = url ? `${title}\n${url}` : `${title}\n\n${hymnPlainText(hymn, effectiveLanguage)}`;
+    // A browser without a share sheet (most computers) gets the link copied instead
+    if (Platform.OS === 'web' && (typeof navigator === 'undefined' || typeof navigator.share !== 'function')) {
+      navigator?.clipboard?.writeText(url ?? message).then(
+        () => showMessage(t.linkCopied),
+        () => showMessage(url ?? message)
+      );
+      return;
+    }
     Share.share(url ? { message, url, title } : { message, title }).catch(() => {
       // share sheet dismissed or unavailable
     });
@@ -375,13 +388,27 @@ export function HymnReader({
   const [sending, setSending] = useState(false);
   // (on the website, known once the page is in the browser: the pages are made ahead of time, with no browser)
   const canSend = useSyncExternalStore(noSubscription, () => Platform.OS !== 'web' || browserSharesFiles(), () => Platform.OS !== 'web');
+  // On the website the first tap gets the recording ready and the second (Send now) shares it (see send-recording.web.ts)
+  const [readyToSend, setReadyToSend] = useState<string | null>(null);
   const send = async (file: string) => {
     if (sending) return;
     pressFeedback();
-    setSending(true);
-    const sent = await sendRecording(file, titleLines(hymn, lang).main);
+    const name = titleLines(hymn, lang).main;
+    if (needsPreparing(file)) {
+      setSending(true);
+      const prepared = await prepareRecording(file, name);
+      setSending(false);
+      if (prepared) setReadyToSend(file);
+      else showMessage(t.sendFailed);
+      return;
+    }
+    // started straight from the tap (a browser shares only then), before anything else is waited for
+    const result = sendRecording(file, name);
+    if (Platform.OS !== 'web') setSending(true);
+    const sent = await result;
     setSending(false);
-    if (!sent) Alert.alert(t.sendFailed);
+    setReadyToSend(null);
+    if (!sent) showMessage(t.sendFailed);
   };
   // On the website the recording is saved as a file (the site sends it as a download, see worker/index.ts)
   const downloadFile = (file: string) => {
@@ -927,7 +954,7 @@ export function HymnReader({
                   accessibilityState={{ busy: sending }}
                   style={({ pressed }) => [styles.playlistButton, styles.audioAction, pressed && styles.pressed, sending && styles.disabled]}>
                   <Text style={styles.controlText} numberOfLines={1} adjustsFontSizeToFit>
-                    {sending ? t.sending : t.send}
+                    {sending ? t.sending : readyToSend === currentAudio ? t.sendNow : t.send}
                   </Text>
                 </Pressable>
               ) : null}

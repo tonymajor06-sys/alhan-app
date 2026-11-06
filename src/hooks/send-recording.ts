@@ -1,6 +1,6 @@
 import { Asset } from 'expo-asset';
 import { Directory, File, Paths } from 'expo-file-system';
-import * as Sharing from 'expo-sharing';
+import { Platform, Share } from 'react-native';
 
 import { bundledAudio, remoteAudioUrl } from '../data/audio';
 import { localAudioUri } from './audio-file-store';
@@ -21,10 +21,21 @@ export const fileNameFor = (title: string, file: string) => {
   return `${name}${ext}`;
 };
 
+// On a phone the share sheet opens straight away, so nothing needs getting ready first (see send-recording.web.ts)
+export const needsPreparing = (_file: string) => false;
+export const prepareRecording = async (_file: string, _title: string) => true;
+
 // False when it could not be sent (no internet, or the phone cannot share files)
 export async function sendRecording(file: string, title: string): Promise<boolean> {
   try {
-    if (!(await Sharing.isAvailableAsync())) return false;
+    // Loaded only now: an app built before Send has no file sharing, and would fail to open if it were loaded at the start
+    let Sharing: typeof import('expo-sharing') | null = null;
+    try {
+      Sharing = await import('expo-sharing');
+      if (!(await Sharing.isAvailableAsync())) Sharing = null;
+    } catch {
+      Sharing = null;
+    }
     sendDir.create({ idempotent: true, intermediates: true });
     const target = new File(sendDir, fileNameFor(title, file));
     if (target.exists) target.delete();
@@ -42,7 +53,13 @@ export async function sendRecording(file: string, title: string): Promise<boolea
       await File.downloadFileAsync(url, target, { idempotent: true });
     }
     const ext = file.match(/\.\w+$/)?.[0]?.toLowerCase() ?? '';
-    await Sharing.shareAsync(target.uri, { ...(kinds[ext] ?? {}), dialogTitle: title });
+    if (Sharing) {
+      await Sharing.shareAsync(target.uri, { ...(kinds[ext] ?? {}), dialogTitle: title });
+      return true;
+    }
+    // Without file sharing, an iPhone's own share sheet can still send the file
+    if (Platform.OS !== 'ios') return false;
+    await Share.share({ url: target.uri, title });
     return true;
   } catch {
     return false;
