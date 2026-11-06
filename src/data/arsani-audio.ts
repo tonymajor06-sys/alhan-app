@@ -84,8 +84,9 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   { file: "arsani-039-fai-etafenf.m4a", hymns: ["holyweek-covenant-thursday-fai-etav-enf"], language: "coptic" },
   // Covenant Thursday Fai Etafenf - YouTube (Secondary: score 57.50)
   { file: "arsani-yt-covenant-thursday-fai-etafenf.m4a", hymns: ["holyweek-covenant-thursday-fai-etav-enf"], language: "coptic" },
-  // Feast of the Cross Praxis Response (Fai Etafenf) - Arsani Sidarous 2023
-  { file: "arsani-084-fai-etafenf-feast-of-cross-2023.m4a", hymns: ["cross-liturgy-praxis-response-feast-of-the-cross"], language: "coptic" },
+  // Fai Etafenf - Arsani Sidarous, Feast of the Cross 2023: said on the Feast of the Cross and on Good Friday (the
+  // owner, 2026-11-06), first there
+  { file: "arsani-084-fai-etafenf-feast-of-cross-2023.m4a", hymns: ["holyweek-covenant-thursday-fai-etav-enf@cross-liturgy", "holyweek-covenant-thursday-fai-etav-enf@holyweek-great-friday"], language: "coptic" },
   // Tov hina (Coptic) | Archdeacon Arsani Sidarous
   { file: "arsani-043-tov-hina-coptic.m4a", hymns: ["d-annual-matins-pray-for-mercy", "d-annual-vespers-pray-for-mercy"], language: "coptic" },
   // Ya Kol Al Sefoof (All You Heavenly Orders) - Primary: score 88.80
