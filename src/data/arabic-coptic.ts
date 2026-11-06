@@ -1,5 +1,6 @@
 import type { Hymn } from './hymns';
 import { ORSOZOXI_LOOSE, ORSOZOXI_WORDS } from './orsozoxi-words';
+import { withLazyText, writtenOnce } from './lazy-text';
 
 // Coptic written in Arabic letters as the Orsozoxi app writes it, for readers who know Arabic but not the Coptic
 // alphabet. A word Orsozoxi has is spelled its way (orsozoxi-words.ts, the words its spelling differs from the rules
@@ -217,9 +218,16 @@ export function orsozoxiByRules(word: string): string {
 }
 
 // One Coptic word (no spaces or punctuation around it) in Orsozoxi's Arabic letters
+// Each word is worked out once (the same words come back in hymn after hymn)
+const orsozoxiCache = new Map<string, string>();
 export function orsozoxiWord(word: string): string {
-  const key = orsozoxiKey(word);
-  return ORSOZOXI_WORDS[key] ?? ORSOZOXI_LOOSE[key.replace(/̀/g, '')] ?? orsozoxiByRules(word);
+  let spelled = orsozoxiCache.get(word);
+  if (spelled === undefined) {
+    const key = orsozoxiKey(word);
+    spelled = ORSOZOXI_WORDS[key] ?? ORSOZOXI_LOOSE[key.replace(/̀/g, '')] ?? orsozoxiByRules(word);
+    orsozoxiCache.set(word, spelled);
+  }
+  return spelled;
 }
 
 export function copticToArabic(text: string): string {
@@ -252,7 +260,8 @@ export function addArabicCoptic(groups: HymnGroup[]) {
     if (hymn.versions.some((v) => v.language === 'arabicCoptic')) return;
     const coptic = hymn.versions.find((v) => v.language === 'coptic');
     if (!coptic || isPlaceholder(coptic.text) || !hasCoptic(coptic.text)) return;
-    const converted: Hymn['versions'][number] = { language: 'arabicCoptic', text: copticToArabic(coptic.text) };
+    const source = coptic.text;
+    const converted = withLazyText<Hymn['versions'][number]>({ language: 'arabicCoptic' }, () => writtenOnce('arabicCoptic', source, copticToArabic));
     if (coptic.audio) converted.audio = coptic.audio;
     if (coptic.otherAudio) converted.otherAudio = coptic.otherAudio;
     hymn.versions.push(converted);

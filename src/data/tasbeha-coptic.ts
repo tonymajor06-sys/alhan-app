@@ -117,7 +117,14 @@ function byRules(word: string): string {
 const joinParts = (a: string, b: string) => (a && /[aeiou]$/.test(a) && /^[aeiou]/.test(b) ? `${a}-${b}` : a + b);
 
 // One Coptic word (no spaces or punctuation around it) in Tasbeha's English letters
+// Each word is worked out once (the same words come back in hymn after hymn)
+const tasbehaCache = new Map<string, string>();
 export function tasbehaWord(word: string): string {
+  let spelled = tasbehaCache.get(word);
+  if (spelled === undefined) tasbehaCache.set(word, (spelled = tasbehaWordUncached(word)));
+  return spelled;
+}
+function tasbehaWordUncached(word: string): string {
   const key = tasbehaKey(word);
   const spelled =
     TASBEHA_WORDS[key] ?? TASBEHA_LOOSE[key.replace(/̀/g, '')] ?? byRules(key.replace(/^\u0300+/, '').replace(/ⲫ\u0300?ϯ$/, 'ⲫ̀ⲛⲟⲩϯ').replace('⳪', 'ⲡ̀ϭⲟⲓⲥ'));

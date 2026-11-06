@@ -1,5 +1,6 @@
 import type { Hymn } from './hymns';
 import { copticToTasbeha } from './tasbeha-coptic';
+import { withLazyText, writtenOnce } from './lazy-text';
 
 // Coptic written in English letters by the user's Coptic alphabet chart, as Learn Coptic teaches it (hymns use
 // Tasbeha's spelling instead: see tasbeha-coptic.ts and addEnglishCoptic below). The letter values are the chart's: ⲃ is v before a vowel and b otherwise, ϭ is tsh, ⲟⲩ is ou, and Ⲭⲉⲣⲉ is
@@ -176,7 +177,9 @@ export function addEnglishCoptic(groups: HymnGroup[]) {
     const coptic = hymn.versions.find((v) => v.language === 'coptic');
     if (!coptic || isPlaceholder(coptic.text) || !hasCoptic(coptic.text)) return;
     const old = hymn.versions.find((v) => v.language === 'englishCoptic');
-    const converted: Hymn['versions'][number] = { ...old, language: 'englishCoptic', text: copticToTasbeha(coptic.text) };
+    const source = coptic.text;
+    const { text: _old, ...rest } = old ?? {};
+    const converted = withLazyText<Hymn['versions'][number]>({ ...rest, language: 'englishCoptic' }, () => writtenOnce('englishCoptic', source, copticToTasbeha));
     if (!converted.audio && coptic.audio) converted.audio = coptic.audio;
     if (!converted.otherAudio && coptic.otherAudio) converted.otherAudio = coptic.otherAudio;
     // right after the Coptic, where the other hymns have it

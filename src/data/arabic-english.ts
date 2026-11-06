@@ -1,5 +1,6 @@
 import { englishWordsInArabic } from './arabic-english-words';
 import type { Hymn } from './hymns';
+import { withLazyText, writtenOnce } from './lazy-text';
 
 // English written in Arabic letters, for readers who know Arabic but not the English alphabet.
 // Each word is written by how it sounds (from englishWordsInArabic); names and other words that list
@@ -74,7 +75,14 @@ function spell(word: string): string {
 }
 
 // A known word, or a known word with a plural or possessive ending
+// Each word is worked out once (the same words come back in hymn after hymn)
+const arabicCache = new Map<string, string>();
 function wordInArabic(word: string): string {
+  let spelled = arabicCache.get(word);
+  if (spelled === undefined) arabicCache.set(word, (spelled = wordInArabicUncached(word)));
+  return spelled;
+}
+function wordInArabicUncached(word: string): string {
   const w = word.toLowerCase();
   if (englishWordsInArabic[w]) return englishWordsInArabic[w];
   const possessive = w.match(/^(.*)'s$/);
@@ -117,7 +125,8 @@ export function addArabicEnglish(groups: HymnGroup[]) {
     if (hymn.versions.some((v) => v.language === 'arabicEnglish')) return;
     const english = hymn.versions.find((v) => v.language === 'english');
     if (!english?.text) return;
-    const converted: Hymn['versions'][number] = { language: 'arabicEnglish', text: englishToArabic(english.text) };
+    const source = english.text;
+    const converted = withLazyText<Hymn['versions'][number]>({ language: 'arabicEnglish' }, () => writtenOnce('arabicEnglish', source, englishToArabic));
     if (english.audio) converted.audio = english.audio;
     hymn.versions.push(converted);
   };

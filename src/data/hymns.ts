@@ -24,6 +24,7 @@ import { stMysteries } from './st-mysteries';
 import { stSeasonExtras } from './st-season-extras';
 import { stVesperPraises, vpNewHymns } from './st-vesper-praises';
 import { alleluiaFaiPePiehoou, annualAmoini, concludingLines, praxisReading, psalm150Refrains, seasonDoxologies, SeasonLine } from './seasonal-texts';
+import { copyVersion } from './lazy-text';
 
 export type LanguageType = 'coptic' | 'englishCoptic' | 'arabicCoptic' | 'english' | 'arabicEnglish' | 'englishArabic' | 'arabic';
 
@@ -7867,9 +7868,17 @@ const ALL_LANGUAGES: LanguageType[] = ['coptic', 'englishCoptic', 'arabicCoptic'
 const editRecordings = (hymn: Hymn, languages: LanguageType[], edit: (files: string[]) => string[]) => {
   hymn.versions = hymn.versions.map((version) => {
     if (!languages.includes(version.language)) return version;
-    const files = [...new Set(edit([...(version.audio ? [version.audio] : []), ...(version.otherAudio ?? [])]))];
-    const { audio: _a, otherAudio: _o, ...rest } = version;
-    return { ...rest, ...(files[0] ? { audio: files[0] } : {}), ...(files.length > 1 ? { otherAudio: files.slice(1) } : {}) };
+    const before = [...(version.audio ? [version.audio] : []), ...(version.otherAudio ?? [])];
+    const files = [...new Set(edit(before))];
+    // Nothing to change (most of the time: these edits run over every hymn)
+    if (files.length === before.length && files.every((f, i) => f === before[i]) && (files.length > 1) === !!version.otherAudio) return version;
+    // copied without reading its words, which may not be written out yet (see lazy-text.ts)
+    const edited = copyVersion(version);
+    delete edited.audio;
+    delete edited.otherAudio;
+    if (files[0]) edited.audio = files[0];
+    if (files.length > 1) edited.otherAudio = files.slice(1);
+    return edited;
   });
 };
 const without = (file: string) => (files: string[]) => files.filter((f) => f !== file);
