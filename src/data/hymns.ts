@@ -4010,17 +4010,17 @@ if (deaconAnnualLiturgyFaithful) {
         { language: 'arabic', text: "ننصت." },
       ],
     },
-    // The Epiclesis in two: the deacon with the people's answer (one recording, as the owner asked, 2026-11-05), then
-    // the deacon again
+    // The Epiclesis in two: Worship God in Fear and Trembling, then Let Us Attend. Amen (the people's We Praise You
+    // is not shown, as the owner asked, 2026-11-05)
     {
       id: 'd-annual-liturgy-faithful-epiclesis',
       title: "Ⲟⲩⲱϣⲧ ⲙ̀Ⲫϯ (Worship God in Fear and Trembling)",
       versions: [
-        { language: 'coptic', text: "Ⲡⲓⲇⲓⲁⲕⲱⲛ:\n\nⲞⲩⲱϣⲧ ⲙ̀Ⲫϯ ϧⲉⲛ ⲟⲩϩⲟϯ ⲛⲉⲙ ⲟⲩⲥⲑⲉⲣⲧⲉⲣ.\n\nⲠⲓⲗⲁⲟⲥ:\n\nⲦⲉⲛϩⲱⲥ ⲉ̀ⲣⲟⲕ ⲧⲉⲛⲥ̀ⲙⲟⲩ ⲉ̀ⲣⲟⲕ ⲧⲉⲛϣⲉⲙϣⲓ ⲙ̀ⲙⲟⲕ ⲧⲉⲛⲟⲩⲱϣⲧ ⲙ̀ⲙⲟⲕ." },
-        { language: 'englishCoptic', text: "Pi-diakon:\n\nOuōsht em-Efnouti khen ouhoti nem oustherter.\n\nPi-laos:\n\nTenhōs erok tenesmou erok tenshemshi emmok tenouōsht emmok." },
-        { language: 'english', text: "Deacon:\n\nWorship God in fear and trembling.\n\nPeople:\n\nWe praise You, we bless You, we serve You, we worship You." },
-        { language: 'englishArabic', text: "Esh-shammas:\n\nUsgudu lillah bi-khawf wa ra'da.\n\nEsh-sha'b:\n\nNusabbihuka, nubarikuka, nakhdimuka, nasgudu lak." },
-        { language: 'arabic', text: "الشماس:\n\nاسجدوا لله بخوف ورعدة.\n\nالشعب:\n\nنسبحُكَ. نباركُكَ. نخدمُكَ نسجدُ لكَ." },
+        { language: 'coptic', text: "Ⲡⲓⲇⲓⲁⲕⲱⲛ:\n\nⲞⲩⲱϣⲧ ⲙ̀Ⲫϯ ϧⲉⲛ ⲟⲩϩⲟϯ ⲛⲉⲙ ⲟⲩⲥⲑⲉⲣⲧⲉⲣ." },
+        { language: 'englishCoptic', text: "Pi-diakon:\n\nOuōsht em-Efnouti khen ouhoti nem oustherter." },
+        { language: 'english', text: "Deacon:\n\nWorship God in fear and trembling." },
+        { language: 'englishArabic', text: "Esh-shammas:\n\nUsgudu lillah bi-khawf wa ra'da." },
+        { language: 'arabic', text: "الشماس:\n\nاسجدوا لله بخوف ورعدة." },
       ],
     },
     {
@@ -8963,7 +8963,8 @@ for (const group of deaconCategories)
   // later and ends at 26 seconds, where Let Us Attend in the Fear of God begins (it runs into the first 3 seconds of the
   // old Saved Amen cut, which now starts at its 6th second); Amen Amen Pray starts 5 seconds later and the Confession
   // 7 seconds later, and both run on to where he finishes (they were cut off).
-  // Later that day: Worship God in Fear and Trembling and We Praise You are one cut again (one response); each of the
+  // Later that day: Worship God in Fear and Trembling and We Praise You are one cut again (one response; the other
+  // Coptic recording's first 15 seconds are Worship God, and from 0:39 Let Us Attend. Amen); each of the
   // Seven Short Litanies and Let Those Who Read starts later (the start of each cut was the end of the one before),
   // and each runs on to where he finishes
   const altarResponses: Record<string, string> = {
