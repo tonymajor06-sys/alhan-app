@@ -647,7 +647,7 @@ describe('Kiahk Praises & Season > Matins', () => {
     expect(fromAnnual.every((h) => h.versions.every((v) => !v.audio))).toBe(true);
     expect(service.hymns.filter((h) => !fromAnnual.includes(h)).map((h) => h.title)).toEqual([
       'Verses of the Cymbals',
-      'Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ (Alleluia)',
+      // (the day's Psalm is chanted here: no words of its own, so no title; 2026-11-06)
       'Ⲥⲱⲧⲉⲙ ⲧⲁϣⲉⲣⲓ (Psalm Trailer)',
       'Ⲧⲉⲛϯ ⲛⲉ ⲙ̀ⲡⲓⲭⲉⲣⲉⲧⲓⲥⲙⲟⲥ (Gospel Response)',
       'Ⲧⲉⲛϭⲓⲥⲓ ⲙ̀ⲙⲟ ϧⲉⲛ ⲟⲩⲉⲙⲡ̀ϣⲁ (Gospel Response)',
@@ -667,7 +667,7 @@ describe('Kiahk Praises & Season > Matins', () => {
     // one divider, "Doxologies", after the hymns
     expect(service.hymns.filter((h) => h.isSectionHeader).map((h) => h.title)).toEqual(['Doxologies']);
     const dividers = service.hymns.map((h, i) => (h.isSectionHeader ? i : -1)).filter((i) => i >= 0);
-    expect(dividers).toEqual([6]);
+    expect(dividers).toEqual([5]);
     // the Verses of the Cymbals open a list of two titles
     expect(service.hymns[0].children?.map((h) => h.title)).toEqual(['Ⲧⲉⲛⲟⲩⲱϣⲧ ⲙ̀Ⲫⲓⲱⲧ ⲛⲉⲙ Ⲡϣⲏⲣⲓ (We Worship the Father and the Son)', 'Ⲁⲙⲱⲓⲛⲓ ⲙⲁⲣⲉⲛⲟⲩⲱϣⲧ (Come Let Us Worship)']);
     const [fatherSon, come] = service.hymns[0].children!;
@@ -812,11 +812,12 @@ describe('Kiahk Praises & Season > Vespers', () => {
 
   it('has every title of Matins in the same order, except the Psalm Trailer', () => {
     expect(matins.hymns.some(isPsalmTrailer)).toBe(true);
-    // Vespers has a Psalm Trailer of its own instead, right after the Alleluia
+    // Vespers has a Psalm Trailer of its own instead, right after the Verses of the Cymbals (the day's Psalm between them
+    // has no title of its own)
     const vespersOwn = vespers.hymns.filter(isPsalmTrailer);
     expect(vespersOwn.map((h) => h.title)).toEqual(['Ⲡϭⲟⲓⲥ ⲁⲓⲟϣ ⲟⲩⲃⲏⲕ ⲥⲱⲧⲉⲙ ⲉ̀ⲣⲟⲓ (Psalm Trailer)']);
     const vespersTitles = vespers.hymns.map((h) => h.title);
-    expect(vespersTitles.indexOf(vespersOwn[0].title)).toBe(vespersTitles.indexOf('Ⲁⲗⲗⲏⲗⲟⲩⲓⲁ (Alleluia)') + 1);
+    expect(vespersTitles.indexOf(vespersOwn[0].title)).toBe(vespersTitles.indexOf('Verses of the Cymbals') + 1);
     expect(vespersTitles.indexOf(vespersOwn[0].title) + 1).toBe(vespersTitles.indexOf('Ⲧⲉⲛϯ ⲛⲉ ⲙ̀ⲡⲓⲭⲉⲣⲉⲧⲓⲥⲙⲟⲥ (Gospel Response)'));
     const others = vespers.hymns.filter((h) => !isPsalmTrailer(h));
     expect(others.map((h) => h.title)).toEqual(matins.hymns.filter((h) => !isPsalmTrailer(h)).map((h) => h.title));
