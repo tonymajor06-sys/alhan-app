@@ -8205,6 +8205,14 @@ for (const group of [...seasons, ...deaconCategories]) {
 const withoutAllPriest = (list: Hymn[]): Hymn[] =>
   list.filter((h) => !allPriest.has(h)).map((h) => (h.children ? { ...h, children: withoutAllPriest(h.children) } : h));
 for (const group of [...seasons, ...deaconCategories]) for (const service of group.services) service.hymns = withoutAllPriest(service.hymns);
+// Where the day's Psalm is chanted: Spirit & Truth names the place but has no words for it (they are the day's reading,
+// which changes every day), so these titles, which opened empty, leave their lists (2026-11-06)
+const daysPsalm = new Set(['kiahk-vespers-hymn-13', 'kiahk-matins-hymn-13', 'lent-weekend-liturgy-psalm-chant', 'lent-weekend-vespers-psalm-chant']);
+const withoutDaysPsalm = (list: Hymn[]): Hymn[] =>
+  list
+    .filter((h) => !(daysPsalm.has(h.id.split('@')[0]) && !h.versions.some((v) => v.text.trim())))
+    .map((h) => (h.children ? { ...h, children: withoutDaysPsalm(h.children) } : h));
+for (const group of [...seasons, ...deaconCategories]) for (const service of group.services) service.hymns = withoutDaysPsalm(service.hymns);
 
 // ---- Words each season sings its own way (2026-10-28, see seasonal-texts.ts) ----
 // Before the transliterations below, so the new words get their Coptic and English in Arabic letters
