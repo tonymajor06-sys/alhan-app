@@ -140,13 +140,50 @@ export const guideSections: GuideSection[] = [
       },
       {
         text: {
-          en: "At the end, take off your tonia respectfully and kiss the priest's hand.",
-          ar: 'في النهاية اخلع التونية باحترام وقبّل يد الكاهن.',
+          en: "Take off your tonia only after the Benediction, then kiss the priest's hand.",
+          ar: 'لا تخلع التونية إلا بعد البركة الختامية، ثم قبّل يد الكاهن.',
         },
       },
     ],
   },
-  // From Archdeacon Arsani Sidarous's instructions to deacons (sent 2026-11-03): follow his words, and add his later ones here
+  // From Archdeacon Arsani Sidarous's instructions to deacons, as the owner forwards them (candles 2026-11-03, vestments
+  // 2026-11-07), each kept short to read quickly: follow his words, and add his later ones here
+  {
+    id: 'vestments',
+    icon: '✚',
+    title: { en: 'Blessing the Tonia', ar: 'رشم التونية' },
+    desc: { en: 'When to have it blessed and when to take it off', ar: 'متى تُرشم ومتى تُخلع' },
+    items: [
+      {
+        title: { en: 'When to have it blessed', ar: 'متى تُرشم التونية' },
+        text: {
+          en: '• Before the Third and Sixth Hours (and Ninth).\n• After those Hours, before the priest washes his hands to start the Offering.\n• Before the Absolution of the Ministers.',
+          ar: '• قبل صلاة الساعة الثالثة والسادسة (والتاسعة).\n• بعد هذه الساعات، قبل أن يغسل الكاهن يديه ليبدأ تقديم الحمل.\n• قبل تحليل الخدام.',
+        },
+      },
+      {
+        title: { en: 'Came in between those times?', ar: 'وصلت بين هذه الأوقات؟' },
+        text: {
+          en: 'Gather with the others who came in and wait for the next of those times.',
+          ar: 'اجتمع مع من وصلوا معك وانتظروا الوقت التالي منها.',
+        },
+      },
+      {
+        title: { en: 'After the Absolution of the Ministers', ar: 'بعد تحليل الخدام' },
+        text: {
+          en: 'No blessing after the Absolution of the Ministers, unless you were there for the Absolution Prayer.',
+          ar: 'لا تُرشم التونية بعد تحليل الخدام، إلا إذا كنت حاضراً صلاة التحليل.',
+        },
+      },
+      {
+        title: { en: 'Taking it off', ar: 'خلع التونية' },
+        text: {
+          en: 'Only at the end of the Liturgy, after the Benediction, unless the priest clearly allows you earlier.',
+          ar: 'في نهاية القداس فقط، بعد البركة الختامية، إلا إذا سمح لك الكاهن صراحةً قبل ذلك.',
+        },
+      },
+    ],
+  },
   {
     id: 'candles',
     icon: '✦',
@@ -156,71 +193,61 @@ export const guideSections: GuideSection[] = [
       {
         title: { en: 'Never while kneeling', ar: 'لا توقد الشموع وأنت ساجد' },
         text: {
-          en: 'Candles should not be lit while kneeling, because the light should be held up high as an announcement to the people. Put the candles out before kneeling. Instead, light them at the six times below.',
-          ar: 'لا تُوقد الشموع أثناء السجود، لأن النور يجب أن يُرفع عالياً كإعلان للشعب. أطفئ الشموع قبل أن تسجد. وتُوقد الشموع في المواضع الستة التالية.',
+          en: 'The light is held high to announce to the people, so put candles out before you kneel. Light them only at these six times.',
+          ar: 'النور يُرفع عالياً كإعلان للشعب، فأطفئ الشموع قبل أن تسجد. وتُوقد في هذه المواضع الستة فقط.',
         },
       },
       {
         title: { en: '1. The Selection and the Offering of the Lamb', ar: '١. اختيار الحمل وتقديمه' },
         text: {
-          en: 'From the selection of the Lamb until the priest pours the water into the chalice during the Offering of the Lamb. During the Offering, only the deacons who carry the wine and water cruets light candles, and only the deacon with the wine crosses his hands.',
-          ar: 'من اختيار الحمل حتى يصب الكاهن الماء في الكأس أثناء تقديم الحمل. وأثناء التقديم لا يوقد الشموع إلا الشماسان اللذان يحملان قارورتي الخمر والماء، ولا يُخالف يديه إلا الشماس الذي يحمل الخمر.',
+          en: 'Until the priest pours the water into the chalice. During the Offering, only the deacons with the wine and water cruets light candles, and only the one with the wine crosses his hands.',
+          ar: 'حتى يصب الكاهن الماء في الكأس. وأثناء التقديم لا يوقد الشموع إلا حاملا قارورتي الخمر والماء، ولا يُخالف يديه إلا حامل الخمر.',
         },
       },
       {
         title: { en: '2. The Holy Gospel', ar: '٢. الإنجيل المقدس' },
-        text: {
-          en: 'During the reading of the Holy Gospel, one candle on each side.',
-          ar: 'أثناء قراءة الإنجيل المقدس، شمعة على كل جانب.',
-        },
+        text: { en: 'One candle on each side while it is read.', ar: 'شمعة على كل جانب أثناء قراءته.' },
       },
       {
         title: { en: '3. The Institution Narrative', ar: '٣. صلوات التأسيس' },
         text: {
-          en: 'From the beginning of the Institution Narrative prayers until the congregation starts to respond, "Amen, Amen, Amen. Your death, O Lord…"',
-          ar: 'من بداية صلوات التأسيس حتى يبدأ الشعب في الرد: "آمين آمين آمين. بموتك يا رب…"',
+          en: 'From its start until the people begin "Amen, Amen, Amen. Your death, O Lord…"',
+          ar: 'من بدايتها حتى يبدأ الشعب: "آمين آمين آمين. بموتك يا رب…"',
         },
       },
       {
         title: { en: '4. The Fraction Prayer', ar: '٤. صلاة القسمة' },
         text: {
-          en: 'From the beginning of the Fraction Prayer until its end. Do not light candles before the Fraction, when the priest says "The Holy Body", because the deacons should be kneeling then.',
-          ar: 'من بداية صلاة القسمة حتى نهايتها. ولا تُوقد الشموع قبل القسمة عندما يقول الكاهن "الجسد المقدس"، لأن الشمامسة يكونون ساجدين حينئذ.',
+          en: 'From its start to its end. Not at "The Holy Body" before it: the deacons kneel then.',
+          ar: 'من بدايتها حتى نهايتها. وليس عند "الجسد المقدس" قبلها، لأن الشمامسة يسجدون حينئذ.',
         },
       },
       {
         title: { en: '5. "The Holy to the holies" until the Confession', ar: '٥. من "القدسات للقديسين" حتى الاعتراف' },
         text: {
-          en: 'From "The Holy to the holies" until the beginning of the Confession ("Amen, Amen, Amen. I believe, I believe, I believe…"). During the Confession every deacon kneels, except the deacon who says the Confession. He stands across the altar facing the priest, holding the cross in his right hand and a candle in his left, with a corporal (lefafa) in between.',
-          ar: 'من "القدسات للقديسين" حتى بداية الاعتراف ("آمين آمين آمين. أؤمن أؤمن أؤمن…"). وأثناء الاعتراف يسجد جميع الشمامسة ما عدا الشماس الذي يقول الاعتراف، فيقف أمام المذبح مواجهاً الكاهن، ممسكاً الصليب بيده اليمنى والشمعة بيده اليسرى، وبينهما لفافة.',
+          en: 'Until the Confession begins ("Amen, Amen, Amen. I believe…"). Everyone kneels for it except the deacon saying it: he stands across the altar facing the priest, the cross in his right hand, a candle in his left, a corporal (lefafa) between them.',
+          ar: 'حتى يبدأ الاعتراف ("آمين آمين آمين. أؤمن…"). ويسجد الجميع أثناءه ما عدا الشماس الذي يقوله: يقف أمام المذبح مواجهاً الكاهن، الصليب بيمينه والشمعة بيساره وبينهما لفافة.',
         },
       },
       {
         title: { en: '6. After the Confession', ar: '٦. بعد الاعتراف' },
         text: {
-          en: "After the deacon's Confession, a second deacon, once he has taken communion, lights a candle to guard the Holy Blood. If the priest goes out of the altar to give communion to someone who cannot enter it, a deacon carries a candle and goes with the priest.",
-          ar: 'بعد اعتراف الشماس، يوقد شماس ثانٍ شمعة لحراسة الدم الكريم بعد أن يتناول. وإذا خرج الكاهن من الهيكل ليناول من لا يستطيع دخوله، يحمل شماس شمعة ويرافق الكاهن.',
+          en: 'A second deacon, once he has taken communion, lights a candle to guard the Holy Blood. If the priest leaves the altar to give communion, a deacon goes with him carrying a candle.',
+          ar: 'يوقد شماس ثانٍ بعد أن يتناول شمعة لحراسة الدم الكريم. وإذا خرج الكاهن من الهيكل ليناول أحداً، يرافقه شماس يحمل شمعة.',
         },
       },
       {
         title: { en: 'Putting candles out', ar: 'إطفاء الشموع' },
-        text: {
-          en: 'Do not blow candles out, especially after receiving communion. Put them out any other way.',
-          ar: 'لا تطفئ الشموع بالنفخ، خاصة بعد التناول، بل أطفئها بأي طريقة أخرى.',
-        },
+        text: { en: 'Never blow them out, especially after communion.', ar: 'لا تطفئها بالنفخ أبداً، خاصة بعد التناول.' },
       },
       {
         title: { en: 'Holding candles still', ar: 'لا تحرك الشمعة' },
         text: {
-          en: 'When the priest points to the bread and the chalice, do not move or point your candle toward them. Candles are for veneration, not for pointing.',
-          ar: 'عندما يشير الكاهن إلى الخبز والكأس، لا تحرك شمعتك ولا تشر بها نحوهما. فالشموع للتكريم وليست للإشارة.',
+          en: 'When the priest points to the bread and the chalice, keep your candle still. Candles are for veneration, not for pointing.',
+          ar: 'عندما يشير الكاهن إلى الخبز والكأس، ثبّت شمعتك. فالشموع للتكريم وليست للإشارة.',
         },
       },
     ],
-    note: {
-      en: 'From the teaching of Archdeacon Arsani Sidarous.',
-      ar: 'من تعليم الأرشيدياكون أرساني سيداروس.',
-    },
   },
   {
     id: 'joyful',
@@ -300,7 +327,7 @@ export const guideSections: GuideSection[] = [
       },
       {
         title: { en: '4. Putting on the tonia', ar: '٤. عند لبس التونية' },
-        when: { en: 'After the priest blesses your tonia, while you put it on', ar: 'بعد أن يرشم الكاهن تونيتك، وأنت تلبسها' },
+        when: { en: 'After the priest blesses your tonia (see Blessing the Tonia for when), while you put it on', ar: 'بعد أن يرشم الكاهن تونيتك (انظر رشم التونية لمعرفة متى)، وأنت تلبسها' },
         text: {
           en: 'Take the tonia to the priest to bless it. Say "I have sinned, absolve me," then kiss the cross and the priest\'s hand.\n\nWhile you put it on, stay quiet and pray all of Psalm 29 and Psalm 92.',
           ar: 'قدّم التونية للكاهن ليرشمها. قل «أخطأت، حاللني»، ثم قبّل الصليب ويد الكاهن.\n\nوأنت تلبسها، اصمت وصلِّ المزمورين ٢٩ و٩٢ كاملين.',
@@ -342,10 +369,10 @@ export const guideSections: GuideSection[] = [
       },
       {
         title: { en: '8. Taking off the tonia', ar: '٨. عند خلع التونية' },
-        when: { en: 'At the end of the Liturgy, after the final blessing', ar: 'في نهاية القداس، بعد البركة الختامية' },
+        when: { en: 'At the end of the Liturgy, after the Benediction', ar: 'في نهاية القداس، بعد البركة الختامية' },
         text: {
-          en: 'Take it off only after the final blessing, unless the priest allows you earlier. While you take it off, pray all of Psalm 46: Oh, clap your hands, all you peoples!…\n\nFold the tonia neatly and kiss the cross on it.',
-          ar: 'لا تخلعها إلا بعد البركة الختامية، إلا إذا سمح لك الكاهن قبل ذلك. وأنت تخلعها، صلِّ المزمور ٤٦ كله: يَا جَمِيعَ الأُمَمِ صَفِّقُوا بِالأَيَادِي…\n\nاطوِ التونية بعناية وقبّل الصليب الذي عليها.',
+          en: 'Take it off only after the Benediction, unless the priest clearly allows you earlier. While you take it off, pray all of Psalm 46: Oh, clap your hands, all you peoples!…\n\nFold the tonia neatly and kiss the cross on it.',
+          ar: 'لا تخلعها إلا بعد البركة الختامية، إلا إذا سمح لك الكاهن صراحةً قبل ذلك. وأنت تخلعها، صلِّ المزمور ٤٦ كله: يَا جَمِيعَ الأُمَمِ صَفِّقُوا بِالأَيَادِي…\n\nاطوِ التونية بعناية وقبّل الصليب الذي عليها.',
         },
         psalms: [{ number: 46 }],
       },
@@ -476,6 +503,27 @@ const guideQuestions: GuideQuestion[] = [
     q: b('Who touches the altar board and the holy vessels?', 'من يلمس لوح المذبح والأواني المقدسة؟'),
     right: b('Only the priest. A deacon never touches them', 'الكاهن وحده. الشماس لا يلمسها أبداً'),
     wrong: [b('Any deacon', 'أي شماس'), b('Only the archdeacon', 'رئيس الشمامسة فقط'), b('A deacon, when the priest asks him', 'الشماس، إذا طلب منه الكاهن')],
+  },
+  // Blessing the tonia
+  {
+    q: b('Which is NOT a time to have your tonia blessed?', 'أي من هذه ليس وقتاً لرشم التونية؟'),
+    right: b('During the Liturgy of the Word', 'أثناء قداس الكلمة'),
+    wrong: [b('Before the Third and Sixth Hours', 'قبل صلاة الساعة الثالثة والسادسة'), b('Before the priest washes his hands for the Offering', 'قبل أن يغسل الكاهن يديه للتقديم'), b('Before the Absolution of the Ministers', 'قبل تحليل الخدام')],
+  },
+  {
+    q: b('You come in between the times for blessing the tonia. What do you do?', 'وصلت بين أوقات رشم التونية. ماذا تفعل؟'),
+    right: b('Gather with the others and wait for the next time', 'تجتمع مع الآخرين وتنتظر الوقت التالي'),
+    wrong: [b('Ask the priest to bless it right away', 'تطلب من الكاهن أن يرشمها فوراً'), b('Put it on without a blessing', 'تلبسها بدون رشم'), b('Go home', 'ترجع إلى البيت')],
+  },
+  {
+    q: b('Can a deacon be blessed after the Absolution of the Ministers?', 'هل يُرشم الشماس بعد تحليل الخدام؟'),
+    right: b('Only if he was there for the Absolution Prayer', 'فقط إذا كان حاضراً صلاة التحليل'),
+    wrong: [b('Yes, any time', 'نعم، في أي وقت'), b('Only on feasts', 'في الأعياد فقط'), b('Only if he is an archdeacon', 'فقط إذا كان رئيس شمامسة')],
+  },
+  {
+    q: b('When do deacons take off their tonias?', 'متى يخلع الشمامسة التونية؟'),
+    right: b('After the Benediction at the end of the Liturgy', 'بعد البركة الختامية في نهاية القداس'),
+    wrong: [b('Right after communion', 'بعد التناول مباشرة'), b('After the Fraction Prayer', 'بعد صلاة القسمة'), b('Whenever they are done serving', 'متى انتهوا من الخدمة')],
   },
   // Candles
   {
