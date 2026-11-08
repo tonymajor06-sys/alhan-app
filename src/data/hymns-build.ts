@@ -19,6 +19,7 @@ import { stArabic } from './st-arabic';
 import { stDeacon } from './st-deacon';
 import { stFills } from './st-fills';
 import { stFullSeasons } from './st-full-seasons';
+import { stThreeFeasts } from './st-three-feasts';
 import { stGeorgeDoxology2 } from './st-george-doxology';
 import { stSaintTabs } from './st-saints';
 import { stAdditions } from './st-hymns';
@@ -7469,9 +7470,11 @@ for (const season of seasons) for (const service of season.services) fillFromSt(
 // are copied in, with "@" and the service in their id
 const leavesById = new Map<string, Hymn>();
 for (const season of seasons) for (const service of season.services) for (const hymn of flattenHymns(service.hymns)) if (!leavesById.has(hymn.id)) leavesById.set(hymn.id, hymn);
+// (scripts/st-three-feasts/dump.mjs reads these: the hymns a feast's order can copy)
+if ((globalThis as { __feastLeaves?: unknown }).__feastLeaves) (globalThis as { __feastLeaves?: unknown }).__feastLeaves = new Map(leavesById);
 const serviceOrder = ['vespers', 'morning-praises', 'matins', 'liturgy', 'distribution', 'midnight'];
 const serviceRank = (id: string) => serviceOrder.findIndex((name) => id.endsWith(`-${name}`));
-for (const full of stFullSeasons) {
+for (const full of [...stFullSeasons, ...stThreeFeasts]) {
   const season = seasons.find((s) => s.id === full.season);
   if (!season) continue;
   let headers = 0;
@@ -7501,7 +7504,7 @@ for (const full of stFullSeasons) {
 const feastOf = (id: string) => id.replace(/-(vespers|morning-praises|matins|liturgy|distribution|midnight)$/, '');
 // (Holy Week is listed by day and keeps its own order)
 for (const season of seasons.filter((s) => s.id !== 'holy-week' && stFullSeasons.some((f) => f.season === s.id))) {
-  const feasts = [...new Set(stFullSeasons.filter((f) => f.season === season.id).map((f) => feastOf(f.id)))];
+  const feasts = [...new Set([...stFullSeasons, ...stThreeFeasts].filter((f) => f.season === season.id).map((f) => feastOf(f.id)))];
   let last = 0;
   const keyed = season.services.map((s, i) => {
     const merged = s.title === 'Vespers and Matins' ? 0 : serviceRank(s.id);

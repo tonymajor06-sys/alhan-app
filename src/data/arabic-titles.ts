@@ -1,6 +1,7 @@
 import type { AppLanguage } from '@/hooks/use-settings';
 
 import { stSaintTabs } from './st-saints';
+import { stThreeFeastsArabicTitles } from './st-three-feasts';
 import { vpArabicTitles } from './st-vesper-praises-titles';
 
 // Arabic display names, keyed by the id used in hymns.ts
@@ -275,6 +276,14 @@ const arabicTitles: Record<string, string> = {
   'st-mary': 'صوم السيدة العذراء وعيد صعود جسدها',
   'minor-feasts': 'الأعياد السيدية الصغرى',
   other: 'أخرى',
+  // The 3 Feasts Commemoration (the 29th of each Coptic month), one of the Minor Feasts of the Lord
+  'minorfeasts-3-feasts-commemoration-vespers': 'تذكار الأعياد الثلاثة: رفع بخور عشية',
+  'minorfeasts-3-feasts-commemoration-morning-praises': 'تذكار الأعياد الثلاثة: تسبحة باكر',
+  'minorfeasts-3-feasts-commemoration-matins': 'تذكار الأعياد الثلاثة: رفع بخور باكر',
+  'minorfeasts-3-feasts-commemoration-liturgy': 'تذكار الأعياد الثلاثة: القداس',
+  'minorfeasts-3-feasts-commemoration-distribution': 'تذكار الأعياد الثلاثة: التوزيع',
+  'minorfeasts-3-feasts-commemoration-midnight': 'تذكار الأعياد الثلاثة: تسبحة نصف الليل',
+  ...stThreeFeastsArabicTitles,
   ...Object.fromEntries(stSaintTabs.map((tab) => [tab.id, tab.titleAr])),
   ...Object.assign({}, ...stSaintTabs.map((tab) => tab.titlesAr)),
 

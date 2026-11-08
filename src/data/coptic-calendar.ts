@@ -255,6 +255,14 @@ function eventsForYear(year: number): ChurchEvent[] {
     e('st-mary-fast', 'st-mary', 'fast', 'Fast of St. Mary', 'صوم السيدة العذراء', cop(12, 1), cop(12, 15), 50, true),
     e('transfiguration', 'minor-feasts', 'feast', 'Feast of Transfiguration', 'عيد التجلي', cop(12, 13), cop(12, 13), 70),
     e('assumption', 'st-mary', 'feast', 'Assumption of St. Mary', 'عيد صعود جسد العذراء', cop(12, 16), cop(12, 16), 85),
+    // The 29th of each Coptic month remembers the Annunciation, the Nativity and the Resurrection (not in Tubah and
+    // Amshir, nor in Jonah's Fast, Great Lent or Holy Week; a greater feast that day, such as the Nativity or the
+    // Annunciation, comes first)
+    ...[1, 2, 3, 4, 7, 8, 9, 10, 11, 12]
+      .filter((month) => cop(month, 29) < pascha - 69 || cop(month, 29) > pascha - 1)
+      .map((month) =>
+        e(`three-feasts-${month}`, 'minor-feasts', 'feast', '3 Feasts Commemoration', 'تذكار الأعياد الثلاثة', cop(month, 29), cop(month, 29), 65)
+      ),
   ].filter((ev) => ev.end >= ev.start);
 }
 

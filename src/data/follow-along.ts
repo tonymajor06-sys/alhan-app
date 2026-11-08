@@ -162,10 +162,13 @@ function withSeason(sections: FollowSection[], season: Season, own: Service, wee
   const replaced = sections.map((section) => ({
     ...section,
     hymns: section.hymns.map((hymn) => {
-      const match = hymnAcrossSeasons(hymn.id).find((m) => m.season.id === season.id && inOwn.has(m.hymn.id) && !used.has(m.hymn.id));
+      // the service's own copy of tonight's hymn (<hymn id>@<service id>), or the season's version of it
+      const base = hymn.id.split('@')[0];
+      const copy = list.find((h) => h.id.split('@')[0] === base && !used.has(h.id));
+      const match = copy ?? hymnAcrossSeasons(hymn.id).find((m) => m.season.id === season.id && inOwn.has(m.hymn.id) && !used.has(m.hymn.id))?.hymn;
       if (!match) return hymn;
-      used.add(match.hymn.id);
-      return match.hymn;
+      used.add(match.id);
+      return match;
     }),
   }));
   // The season's own hymns, each after the last of the season's hymns before it that is already in tonight's order
@@ -173,11 +176,16 @@ function withSeason(sections: FollowSection[], season: Season, own: Service, wee
   const after = new Map<string | null, Hymn[]>();
   if (!addOwn) return replaced;
   let anchor: string | null = null;
+  // (a hymn tonight's order already has, by its id or its name, is not added twice)
+  const tonight = replaced.flatMap((section) => section.hymns);
+  const tonightIds = new Set(tonight.map((h) => h.id.split('@')[0]));
+  const tonightTitles = new Set(tonight.map((h) => h.title));
   for (const hymn of list) {
     if (used.has(hymn.id)) {
       anchor = hymn.id;
       continue;
     }
+    if (tonightIds.has(hymn.id.split('@')[0]) || tonightTitles.has(hymn.title)) continue;
     const day = hymn.title.match(anyWeekday)?.[1];
     if (day && day !== weekdayNames.en[weekday]) continue;
     const annualDay = annualDayOf(hymn.id);
@@ -320,8 +328,9 @@ export function followAlong(kind: PraiseKind, jdn: number): FollowAlong {
   // on Sunday they are in their place inside the whole Sunday Theotokia
   const before = general.slice(0, fourth + 1).filter((h) => weekday !== 0 || !weekdaySundayParts.test(h.id));
   // A Sunday outside the fasts begins with the Hymn of the Resurrection, after "Arise, O children of the light"
-  // (and every night of the Holy Fifty Days)
-  if ((weekday === 0 || ['pentecost', 'ascension'].includes(season.id)) && !['great-lent', 'kiahk'].includes(season.id) && !before.some((h) => /the-hymn-of-the-resurrection$/.test(h.id.split('@')[0]))) {
+  // (and every night of the Holy Fifty Days, and the 3 Feasts Commemoration on the 29th, which remembers it)
+  const threeFeasts = season.id === 'minor-feasts' && copticDay === 29;
+  if ((weekday === 0 || threeFeasts || ['pentecost', 'ascension'].includes(season.id)) && !['great-lent', 'kiahk'].includes(season.id) && !before.some((h) => /the-hymn-of-the-resurrection$/.test(h.id.split('@')[0]))) {
     const arise = before.findIndex((h) => /-arise-o-children$/.test(h.id));
     before.splice(arise + 1, 0, ...shared('annual-midnight-the-hymn-of-the-resurrection'));
   }
