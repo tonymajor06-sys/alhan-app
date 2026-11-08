@@ -43,7 +43,7 @@ describe('searchHymns', () => {
   it('finds words inside the text, ignoring tashkeel, and says which language matched', () => {
     const result = searchHymns('الحي الذي لا يموت').find((r) => r.hymn.id === 'annual-liturgy-agios');
     expect(result?.language).toBe('arabic');
-    expect(result?.snippet).toContain('الحي');
+    expect(result?.snippet?.replace(/[\u064B-\u0652]/g, '')).toMatch(/الح[يى]/);
   });
 
   it('matches Coptic text typed without overlines or in a different case', () => {

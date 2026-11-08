@@ -787,7 +787,7 @@ describe('Kiahk Praises & Season > Matins', () => {
     expect(doxText(concludingHymn, 'coptic').startsWith('Ⲁⲙⲏⲛ: ⲁⲗⲗⲏⲗⲟⲩⲓⲁ ⲇⲟⲝⲁ')).toBe(true);
     expect(doxText(concludingHymn, 'englishCoptic')).toMatch(/o Penshois Ieesous Pi-ekhristos/i);
     expect(doxText(concludingHymn, 'english').split(/\n\s*\n/)[2]).toBe(
-      'Lord have mercy. Lord have mercy. Lord bless us. Amen. Bless me, bless me. Behold, my repentance. Forgive me. Say the blessing.'
+      'Lord have mercy. Lord have mercy. Lord bless us. Amen. Bless me, bless me. Behold, my repentance (metanoia). Forgive me. Say the blessing.'
     );
     // the shortened words in the Sixth Doxology (ⲡⲟ︦ⲥ︦, ⲛ̀ⲛⲏⲉⲑ︦ⲩ︦, Ⲡⲡ︦ⲛ︦ⲁ) are written out in English and Arabic letters
     expect(doxText(sixthDoxology, 'englishCoptic')).toContain('Epshois fee-etshop khen tfe');
@@ -908,7 +908,7 @@ describe('Kiahk Praises & Season > Liturgy', () => {
     const sundayStarts = [
       'You will arise and have mercy on Zion',
       'Hear, O daughter, and see',
-      'Mercy and truth are met together',
+      'Mercy and truth have met together',
       'You Who sits upon the cherubim',
       'Sing to the Lord, bless His name',
     ];
@@ -917,7 +917,7 @@ describe('Kiahk Praises & Season > Liturgy', () => {
         expect([sunday.title, language, chantText(sunday, language).split(/\n\s*\n/).length]).toEqual([sunday.title, language, 1]);
       }
       expect(chantText(sunday, 'english').startsWith(sundayStarts[i])).toBe(true);
-      expect(chantText(sunday, 'english').endsWith('Alleluia')).toBe(true);
+      expect(chantText(sunday, 'english')).toMatch(/Alleluia\.?$/);
       expect(chantText(sunday, 'coptic').endsWith('ⲁ︦ⲗ︦.')).toBe(true);
       expect(chantText(sunday, 'englishCoptic').endsWith('alleelouia.')).toBe(true);
       expect(chantText(sunday, 'coptic')).not.toContain('⳪');

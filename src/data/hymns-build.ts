@@ -11,6 +11,7 @@ import { crossWatosPsali } from './cross-watos-psali';
 import { distributionConclusionVerses } from './distribution-conclusions';
 import { splitTitle } from './hymn-titles';
 import { addEnglishCoptic } from './english-coptic';
+import { stWording } from './st-wording';
 import { kiahkWeekdayHymns } from './kiahk-weekday-hymns';
 import { lentMelodies } from './lent-melodies';
 import { nativityMatinsMelody } from './nativity-matins-melody';
@@ -8390,6 +8391,28 @@ seasons.push({
   title: `${seasons.length + 1}. Other`,
   services: stSaintTabs.map((tab) => ({ id: tab.id, title: tab.title, hymns: tab.hymns })),
 });
+
+// ---- Spirit & Truth's wording (2026-11-07, see st-wording.ts) ----
+// Every verse the app shares with Spirit & Truth says what Spirit & Truth says for the same Coptic, in English and
+// Arabic. Before the transliterations below, so the new words get their English in Arabic letters.
+// (scripts/st-wording/dump.mjs turns this off, to compare the hymns as they were.)
+if (!(globalThis as { __skipStWording?: boolean }).__skipStWording) {
+  const reword = (list: Hymn[]) => {
+    for (const hymn of list) {
+      if (hymn.children) reword(hymn.children);
+      const fixes = stWording[baseOf(hymn.id)];
+      if (!fixes) continue;
+      for (const version of hymn.versions) {
+        const pairs = fixes[version.language as keyof typeof fixes];
+        if (!pairs) continue;
+        const map = new Map(pairs);
+        const verses = version.text.split('\n\n');
+        if (verses.some((v) => map.has(v))) version.text = verses.map((v) => map.get(v) ?? v).join('\n\n');
+      }
+    }
+  };
+  for (const group of [...seasons, ...deaconCategories]) for (const service of group.services) reword(service.hymns);
+}
 
 // Keep these last: give every hymn a "Coptic in Arabic letters" and an "English in Arabic letters" version
 // (see arabic-coptic.ts and arabic-english.ts),

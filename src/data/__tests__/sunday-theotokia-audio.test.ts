@@ -153,7 +153,7 @@ describe('Divine Liturgy Audio and Bishop Updates', () => {
     expect(coptic?.text).toContain('Ϩⲓⲧⲉⲛ ⲛⲓⲡ̀ⲣⲉⲥⲃⲓⲁ');
 
     const english = bishopHymn?.versions.find((v) => v.language === 'english');
-    expect(english?.text).toContain('This is the censer of pure gold');
+    expect(english?.text).toContain('This censer of pure gold');
     expect(english?.text).toContain('Through the intercessions');
   });
 
@@ -179,7 +179,7 @@ describe('Divine Liturgy Audio and Bishop Updates', () => {
     expect(coptic?.text).toMatch(/Ⲕⲉ ⲧⲱ ⲡ̀ⲛⲉⲩⲙⲁⲧⲓ ⲥⲟⲩ\.\s*$/);
 
     const arabic = beforeConfession?.versions.find((v) => v.language === 'arabic');
-    expect(arabic?.text).toMatch(/ولروحِكَ أيضاً\.\s*$/);
+    expect(arabic?.text).toMatch(/روحِكَ أيضاً ?\.\s*$/);
   });
 
   test('Duplicate alleluia ID does not exist in any service', () => {
