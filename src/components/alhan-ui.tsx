@@ -699,6 +699,10 @@ export const createAlhanStyles = (colors: AlhanPalette) => StyleSheet.create({
   },
   scrollContent: {
     paddingHorizontal: 20,
+    // On an iPad, a tablet or a computer the page stays a readable column in the middle (phones are narrower)
+    width: '100%',
+    maxWidth: 860,
+    alignSelf: 'center',
   },
   row: { flexDirection: 'row' },
   rowReverse: { flexDirection: 'row-reverse' },

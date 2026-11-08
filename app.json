@@ -9,6 +9,7 @@
     "userInterfaceStyle": "automatic",
     "ios": {
       "bundleIdentifier": "com.coptic.psalmody",
+      "supportsTablet": true,
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
@@ -23,10 +24,12 @@
       },
       "predictiveBackGestureEnabled": false,
       "permissions": [
-        "android.permission.RECORD_AUDIO",
         "android.permission.MODIFY_AUDIO_SETTINGS",
         "android.permission.FOREGROUND_SERVICE",
         "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"
+      ],
+      "blockedPermissions": [
+        "android.permission.RECORD_AUDIO"
       ]
     },
     "web": {
@@ -48,7 +51,12 @@
           "imageWidth": 76
         }
       ],
-      "expo-audio",
+      [
+        "expo-audio",
+        {
+          "recordAudioAndroid": false
+        }
+      ],
       "expo-sqlite",
       [
         "expo-notifications",
@@ -103,7 +111,8 @@
       ],
       "expo-asset",
       "expo-quick-actions",
-      "expo-sharing"
+      "expo-sharing",
+      "./plugins/with-every-device"
     ],
     "experiments": {
       "typedRoutes": true,
