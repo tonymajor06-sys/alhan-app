@@ -43,6 +43,9 @@ for path in sorted(glob.glob(os.path.join(CAPTURES, '*.txt'))):
     pages.append(rows)
 
 single = {}
+occ = defaultdict(list)  # Coptic -> every (page, row number, row) that has it
+for p, rows in enumerate(pages):
+    for k, r in enumerate(rows): occ[ncop(r['cop'])].append((p, k, r))
 seqs = []
 for rows in pages:
     s, bounds = '', []
@@ -54,16 +57,36 @@ for rows in pages:
     seqs.append((s, {b[0]: k for k, b in enumerate(bounds)}, {b[1]: k for k, b in enumerate(bounds)}, bounds))
 
 
-def find(n):
-    """Spirit & Truth's rows that hold exactly this Coptic (one row, or several in a row)"""
-    if n in single: return [single[n]]
-    if len(n) < 12: return None
-    for s, starts, ends, bounds in seqs:
+def context(norms):
+    """Where Spirit & Truth has this hymn: the page (service) with most of its verses, and the row its verses are
+    around there. A verse is looked up there first, so a verse sung in two hymns (Pi-oik's "You bore Him without
+    blemish" is in the Sunday Theotokia too, in other words) takes the words of the same hymn"""
+    count = Counter()
+    for n in set(norms):
+        for p in {o[0] for o in occ.get(n, ())}: count[p] += 1
+    if not count: return None
+    page = count.most_common(1)[0][0]
+    ks = sorted(o[1] for n in norms for o in occ.get(n, ()) if o[0] == page and sum(1 for q in occ[n] if q[0] == page) == 1)
+    if not ks: ks = sorted(o[1] for n in norms for o in occ.get(n, ()) if o[0] == page)
+    return page, ks[len(ks) // 2]
+
+
+def find(n, ctx=None):
+    """Spirit & Truth's rows that hold exactly this Coptic (one row, or several in a row), and whether they are in the
+    hymn's own place in Spirit & Truth"""
+    if ctx and n in occ:
+        here = [o for o in occ[n] if o[0] == ctx[0]]
+        if here: return [min(here, key=lambda o: abs(o[1] - ctx[1]))[2]], True
+    if n in single: return [single[n]], False
+    if len(n) < 12: return None, False
+    order = sorted(range(len(seqs)), key=lambda p: p != (ctx[0] if ctx else -1))
+    for p in order:
+        s, starts, ends, bounds = seqs[p]
         i = s.find(n)
         while i >= 0:
-            if i in starts and i + len(n) in ends: return [b[2] for b in bounds[starts[i]:ends[i + len(n)] + 1]]
+            if i in starts and i + len(n) in ends: return [b[2] for b in bounds[starts[i]:ends[i + len(n)] + 1]], bool(ctx) and p == ctx[0]
             i = s.find(n, i + 1)
-    return None
+    return None, False
 
 
 # ---- comparing ----
@@ -109,6 +132,9 @@ def key_ar(t):
     return w[0] if w else ''
 
 
+ENGLISH = {w.strip().lower() for w in open('/usr/share/dict/words', encoding='utf8')} if os.path.exists('/usr/share/dict/words') else set()
+
+
 def merge(old, new, lang):
     """Spirit & Truth's verse, except where it misspelt a word the app has right (its word is rare in Spirit & Truth,
     the app's common, and the two nearly the same: "Allelluia", "السلا") or dropped a number the app has"""
@@ -119,7 +145,7 @@ def merge(old, new, lang):
     for tag, i1, i2, j1, j2 in difflib.SequenceMatcher(None, ka, kb, autojunk=False).get_opcodes():
         if tag == 'replace' and i2 - i1 == j2 - j1:
             for o, n, ko, kn in zip(a[i1:i2], b[j1:j2], ka[i1:i2], kb[j1:j2]):
-                typo = ko and kn and difflib.SequenceMatcher(None, ko, kn).ratio() >= 0.6 and st_count[kn] <= 2 and app_count[ko] >= 3 and st_count[ko] >= 3
+                typo = ko and kn and not (lang == 'en' and kn in ENGLISH) and difflib.SequenceMatcher(None, ko, kn).ratio() >= 0.6 and st_count[kn] <= 2 and app_count[ko] >= 3 and st_count[ko] >= 3
                 if typo: kept += 1
                 out.append(o if typo else n)
         elif tag == 'delete' and (i2 == len(a) or all(re.fullmatch(r'[0-9\u0660-\u0669]+', k) for k in ka[i1:i2])):
@@ -136,7 +162,10 @@ SEASONAL = re.compile(r"\b(baptized|risen|rose|born|crucified|ascended|transfigu
 
 
 def seasonal_loss(old, new):
-    return any(w not in SEASONAL.findall(new) for w in SEASONAL.findall(old)) if SEASONAL.search(old) else False
+    """A feast's word in the app's verse that Spirit & Truth's lacks ("borne" for "born" is no loss)"""
+    if not SEASONAL.search(old): return False
+    words = [w.lower() for w in re.findall(r'\w+', new)]
+    return any(w not in SEASONAL.findall(new) and not any(x.startswith(w.lower()) for x in words) for w in SEASONAL.findall(old))
 
 
 INSTRUCTION = re.compile(r'^\([^()]{3,80}\):? ?')
@@ -234,6 +263,7 @@ def write_out(new_ar):
 
 
 WRITTEN = json.load(open('scripts/st-wording/arabic-english.json', encoding='utf8')) if os.path.exists('scripts/st-wording/arabic-english.json') else {}
+WRITTEN.update({re.sub(r'\s+([.,:;!?\u060c\u061b])', r'\1', k): v for k, v in list(WRITTEN.items())})
 TO_WRITE = {}
 
 
@@ -243,7 +273,7 @@ def patch_latin(latin, old_ar, new_ar):
     if new_ar in WRITTEN: return WRITTEN[new_ar]
     p = patch_latin_in_place(latin, old_ar, new_ar)
     if p is None: TO_WRITE[new_ar] = latin
-    return p
+    return p and re.sub(r'\s+([.,:;!?])', r'\1', p)
 
 
 def patch_latin_in_place(latin, old_ar, new_ar):
@@ -298,6 +328,8 @@ def patch_latin_in_place(latin, old_ar, new_ar):
 # ---- verses whose Coptic Spirit & Truth spells otherwise (a letter or two in a word) ----
 grams = defaultdict(set)
 all_rows = [r for rows in pages for r in rows]
+row_page = [p for p, rows in enumerate(pages) for _ in rows]
+row_at = [k for rows in pages for k in range(len(rows))]
 row_norm = [ncop(r['cop']) for r in all_rows]
 for k, n in enumerate(row_norm):
     for j in range(max(1, len(n) - 4)): grams[n[j:j + 5]].add(k)
@@ -318,31 +350,47 @@ def cwords(s):
 st_cop_words = Counter(w for r in uniq_rows for w in cwords(r['cop']) if not w.endswith('*'))
 
 
-def near(c):
-    """Spirit & Truth's row for a verse it spells otherwise: the same words, but for letters inside some of them"""
+def near(c, ctx=None):
+    """Spirit & Truth's row for a verse it spells otherwise: the same words, but for letters inside some of them (in
+    the hymn's own place in Spirit & Truth first), and whether it is there"""
     n = ncop(c)
-    if len(n) < 15 or '(...)' in c or '(…)' in c: return None
+    if len(n) < 15 or '(...)' in c or '(…)' in c: return None, False
     votes = Counter()
     for j in range(len(n) - 4):
         for k in grams.get(n[j:j + 5], ()): votes[k] += 1
+    ks = [k for k, _ in votes.most_common(5)]
+    if ctx: ks += [k for k in votes if row_page[k] == ctx[0] and abs(row_at[k] - ctx[1]) <= 80]
     best = None
-    for k, _ in votes.most_common(5):
+    for k in dict.fromkeys(ks):
         r = difflib.SequenceMatcher(None, n, row_norm[k], autojunk=False).ratio()
-        if not best or r > best[0]: best = (r, k)
-    return all_rows[best[1]] if best and best[0] >= 0.9 else None
+        home = bool(ctx) and row_page[k] == ctx[0] and abs(row_at[k] - ctx[1]) <= 80
+        if r >= (0.8 if home else 0.9) and (not best or (home, r) > (best[2], best[0])): best = (r, k, home)
+    return (all_rows[best[1]], best[2]) if best else (None, False)
+
+
+def joined(x, y):
+    """Words written apart in one and together in the other (ⲡⲉⲕ ⲥ̀ⲛⲟϥ, ⲡⲉⲕⲥ̀ⲛⲟϥ), or nearly"""
+    a, b = ''.join(x).replace('*', ''), ''.join(y).replace('*', '')
+    return bool(a) and bool(b) and difflib.SequenceMatcher(None, a, b).ratio() >= 0.85
 
 
 def same_words(a, b):
-    """The same words, but for abbreviations and spellings"""
+    """The same words, but for abbreviations and spellings (and words written apart or together)"""
     x, y = cwords(a), cwords(b)
     for tag, i1, i2, j1, j2 in difflib.SequenceMatcher(None, x, y, autojunk=False).get_opcodes():
         if tag == 'equal': continue
-        if tag != 'replace' or i2 - i1 != j2 - j1: return False
-        if any('*' not in p and '*' not in q and difflib.SequenceMatcher(None, p, q).ratio() < 0.6 for p, q in zip(x[i1:i2], y[j1:j2])): return False
+        if tag != 'replace': return False
+        if i2 - i1 != j2 - j1:
+            if not joined(x[i1:i2], y[j1:j2]): return False
+        elif any('*' not in p and '*' not in q and difflib.SequenceMatcher(None, p, q).ratio() < 0.6 for p, q in zip(x[i1:i2], y[j1:j2])): return False
     return True
 
 
-def respell(app, st):
+def word_of(t):
+    return re.sub(r'^[^\u2c80-\u2cff\u03e2-\u03ef]+|[^\u2c80-\u2cff\u03e2-\u03ef\u0300-\u036f\ufe20-\ufe2f]+$', '', t)
+
+
+def respell(app, st, home=False):
     """The app's verse with each word Spirit & Truth spells otherwise spelt its way (its other words, marks and line
     breaks kept); None if the two say different words, or Spirit & Truth spells none otherwise"""
     at, bt = re.split(r'([ \n]+)', app), re.split(r'([ \n]+)', st)
@@ -352,12 +400,22 @@ def respell(app, st):
     out, changed = list(at), False
     for tag, i1, i2, j1, j2 in difflib.SequenceMatcher(None, ka, kb, autojunk=False).get_opcodes():
         if tag == 'equal': continue
+        if tag == 'replace' and i2 - i1 != j2 - j1 and home and joined(ka[i1:i2], kb[j1:j2]) and not any('*' in w for w in ka[i1:i2] + kb[j1:j2]):
+            # written apart in one, together in the other: Spirit & Truth's words, in the app's first word's place
+            lead = re.match(r'^[^\u2c80-\u2cff\u03e2-\u03ef]*', at[ai[i1]]).group(0)
+            trail = re.search(r'[^\u2c80-\u2cff\u03e2-\u03ef\u0300-\u036f\ufe20-\ufe2f]*$', at[ai[i2 - 1]]).group(0)
+            out[ai[i1]] = lead + ' '.join(word_of(bt[k]) for k in bi[j1:j2]) + trail
+            for k in range(ai[i1] + 1, ai[i2 - 1] + 1): out[k] = ''
+            changed = True
+            continue
         if tag != 'replace' or i2 - i1 != j2 - j1: return None  # words added or left out: another text
         for x, y, ta, tb in zip(ka[i1:i2], kb[j1:j2], ai[i1:i2], bi[j1:j2]):
             if '*' in x or '*' in y: continue  # an abbreviation and the word written out
             if x.replace('ⲫⲛⲟⲩϯ', 'ⲫϯ') == y.replace('ⲫⲛⲟⲩϯ', 'ⲫϯ'): continue  # Ⲫϯ is how the app writes God
             if difflib.SequenceMatcher(None, x, y).ratio() < 0.6: return None  # another word
-            if st_cop_words[y] < 2 or st_cop_words[y] <= st_cop_words[x]: continue  # Spirit & Truth's slip, or as common
+            # elsewhere, Spirit & Truth's spelling only if it is the usual one (not a slip); in the hymn's own place in
+            # Spirit & Truth, its spelling (ⲙ̀ⲙⲏⲛⲓ "daily" where the app had ⲙ̀ⲙⲏⲓ "truly")
+            if not home and (st_cop_words[y] < 2 or st_cop_words[y] <= st_cop_words[x]): continue
             lead = re.match(r'^[^\u2c80-\u2cff\u03e2-\u03ef]*', at[ta]).group(0)
             trail = re.search(r'[^\u2c80-\u2cff\u03e2-\u03ef\u0300-\u036f\ufe20-\ufe2f]*$', at[ta]).group(0)
             word = re.sub(r'^[^\u2c80-\u2cff\u03e2-\u03ef]+|[^\u2c80-\u2cff\u03e2-\u03ef\u0300-\u036f\ufe20-\ufe2f]+$', '', bt[tb])
@@ -374,15 +432,16 @@ for h in hymns:
     base = h['id'].split('@')[0]
     cv = split(v['coptic'])
     langs = {k: split(v[k]) for k in ('english', 'arabic', 'englishArabic') if v.get(k)}
+    ctx = context([ncop(c) for c in cv])
     for i, c in enumerate(cv):
         n = ncop(c)
         if len(n) < 4: continue
         stats['verses'] += 1
-        rows = find(n)
+        rows, home = find(n, ctx)
         if not rows:
-            row = near(c)
+            row, home = near(c, ctx)
             if not row: continue
-            respelt = respell(c, row['cop'])
+            respelt = respell(c, row['cop'], home)
             if respelt:
                 fixes[base]['coptic'][c] = respelt
                 stats['coptic spelt as Spirit & Truth spells it'] += 1
@@ -396,6 +455,7 @@ for h in hymns:
         if en and len(en) == len(cv) and st_en and all(r.get('en') for r in rows):
             pre, old = body(en[i])
             _, new = body(st_en)
+            new = re.sub(r'\s+([.,:;!?])', r'\1', new)
             if words_en(old) != words_en(new):
                 new, kept = merge(old, new, 'en')
                 stats['en words kept (Spirit & Truth typo)'] += kept
@@ -408,6 +468,7 @@ for h in hymns:
         if ar and len(ar) == len(cv) and st_ar and all(r.get('ar') for r in rows):
             pre, old = body(ar[i])
             _, new = body(st_ar)
+            new = re.sub(r'\s+([.,:;!?\u060c\u061b])', r'\1', new)  # no space before a full stop or comma
             if nar(old) != nar(new):
                 new, kept = merge(old, new, 'ar')
                 stats['ar words kept (Spirit & Truth typo)'] += kept

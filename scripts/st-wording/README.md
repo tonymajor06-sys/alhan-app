@@ -11,6 +11,11 @@ Read so far (2026-11-08): the Psalmody and Divine Liturgy services of every feas
 ordinary Sundays and weekdays), and every rite in the Holy Mysteries. The Holy Pascha book would not open in the Mac
 app, so Holy Week hymns are compared only where the other books have them.
 
+Each hymn is compared with its own place in Spirit & Truth (the service that has most of its verses, around the
+same rows): a verse sung in two hymns takes the words it has in this one (Pi-oik's "You have brought Him forth without
+blemish", not the Sunday Theotokia's "You bore Him without blemish"), and there Spirit & Truth's Coptic spelling is
+taken even where the app's is a real word (ⲙ̀ⲙⲏⲛⲓ "daily" for ⲙ̀ⲙⲏⲓ "truly"), and words written together or apart.
+
 What is left alone:
 
 - punctuation and capitals only, and Arabic marks (tashkeel) only;
