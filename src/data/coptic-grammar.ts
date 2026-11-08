@@ -68,8 +68,8 @@ export const copticGrammar: GrammarUnit[] = [
     {
       title: { en: 'The short "the"', ar: '«الـ» القصيرة' },
       body: {
-        en: 'There is also a short form: ⲡ, ⲧ and ⲛ. Before a vowel or ⲃ, ⲗ, ⲙ, ⲛ, ⲣ, the ⲡ becomes ⲫ and the ⲧ becomes ⲑ. It is used for things that are one of a kind, like God, the heavens and the earth.',
-        ar: 'وهناك صيغة قصيرة: ⲡ وⲧ وⲛ. قبل الحرف المتحرك أو ⲃ وⲗ وⲙ وⲛ وⲣ تصير ⲡ إلى ⲫ وⲧ إلى ⲑ. وتُستخدم لما هو فريد مثل الله والسماء والأرض.',
+        en: 'There is also a short form: ⲡ, ⲧ and ⲛ (or ⲛⲉⲛ). Before a vowel or ⲃ, ⲗ, ⲙ, ⲛ, ⲣ, the ⲡ becomes ⲫ and the ⲧ becomes ⲑ. It is used for things that are one of a kind, like God, the heavens and the earth.',
+        ar: 'وهناك صيغة قصيرة: ⲡ وⲧ وⲛ (أو ⲛⲉⲛ). قبل الحرف المتحرك أو ⲃ وⲗ وⲙ وⲛ وⲣ تصير ⲡ إلى ⲫ وⲧ إلى ⲑ. وتُستخدم لما هو فريد مثل الله والسماء والأرض.',
       },
       examples: [
         { coptic: 'Ⲫ̀ⲛⲟⲩϯ', meaning: { en: 'God (ⲫ + ⲛⲟⲩϯ)', ar: 'الله (ⲫ + ⲛⲟⲩϯ)' } },
@@ -335,7 +335,7 @@ export const copticGrammar: GrammarUnit[] = [
       },
       examples: [
         { coptic: 'Ⲛⲓⲙ ⲡⲉ ⲫⲁⲓ', meaning: { en: 'Who is this?', ar: 'من هذا؟' } },
-        { coptic: 'Ⲟⲩ ⲡⲉ ⲡⲉⲕⲣⲁⲛ', meaning: { en: 'What is your name?', ar: 'ما اسمك؟' } },
+        { coptic: 'Ⲁϣ ⲡⲉ ⲡⲉⲕⲣⲁⲛ', meaning: { en: 'What is your name?', ar: 'ما اسمك؟' } },
         { coptic: 'Ⲁ̀ⲇⲁⲙ ⲁⲕⲑⲱⲛ', meaning: { en: 'Adam, where are you? (Genesis 3:9)', ar: 'يا آدم، أين أنت؟ (تكوين ٣: ٩)' } },
         { coptic: 'Ⲁϣ ⲡⲉ ⲡⲉⲕⲣⲏϯ', meaning: { en: 'How are you?', ar: 'كيف حالك؟' } },
         { coptic: 'Ⲉⲑⲃⲉ ⲟⲩ', meaning: { en: 'Why?', ar: 'لماذا؟' } },
@@ -433,11 +433,11 @@ export const copticConversations: Conversation[] = [
   {
     id: 'meeting',
     title: { en: 'Meeting someone', ar: 'التعارف' },
-    desc: { en: 'Hello, what is your name, how are you', ar: 'السلام، ما اسمك، كيف حالك' },
+    desc: { en: 'Hail to you, what is your name, how are you', ar: 'السلام، ما اسمك، كيف حالك' },
     lines: [
-      line('A', 'Ⲭⲉⲣⲉ ⲛⲁⲕ', 'Hello', 'السلام لك'),
-      line('B', 'Ⲭⲉⲣⲉ ⲛⲁⲕ ϩⲱⲕ', 'Hello to you too', 'السلام لك أنت أيضاً'),
-      line('A', 'Ⲟⲩ ⲡⲉ ⲡⲉⲕⲣⲁⲛ', 'What is your name?', 'ما اسمك؟'),
+      line('A', 'Ⲭⲉⲣⲉ ⲛⲁⲕ', 'Hail to you', 'السلام لك'),
+      line('B', 'Ⲭⲉⲣⲉ ⲛⲁⲕ ϩⲱⲕ', 'Hail to you too', 'السلام لك أنت أيضاً'),
+      line('A', 'Ⲁϣ ⲡⲉ ⲡⲉⲕⲣⲁⲛ', 'What is your name?', 'ما اسمك؟'),
       line('B', 'Ⲡⲁⲣⲁⲛ ⲡⲉ Ⲙⲏⲛⲁ. Ⲛ̀ⲑⲟⲕ ⲇⲉ', 'My name is Mina. And you?', 'اسمي مينا. وأنت؟'),
       line('A', 'Ⲁ̀ⲛⲟⲕ ⲡⲉ Ⲅⲉⲱⲣⲅⲓⲟⲥ', 'I am George', 'أنا جرجس'),
       line('B', 'Ⲁϣ ⲡⲉ ⲡⲉⲕⲣⲏϯ', 'How are you?', 'كيف حالك؟'),
