@@ -15,6 +15,7 @@ import {
   englishWords,
   getEnglishPracticeVerses,
 } from '@/data/english-lessons';
+import { useRandomStart } from '@/hooks/use-random-start';
 
 const quizLevels = englishQuizLevels(t.levelText);
 
@@ -151,7 +152,7 @@ function Words() {
 function Practice() {
   const { styles, shared } = useLessonStyles('ar');
   const verses = getEnglishPracticeVerses();
-  const [index, setIndex] = useState(() => Math.floor(Math.random() * verses.length));
+  const [index, setIndex] = useRandomStart(() => Math.floor(Math.random() * verses.length), 0);
   const [showSound, setShowSound] = useState(false);
   const [showMeaning, setShowMeaning] = useState(false);
   const verse = verses[index];

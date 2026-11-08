@@ -6,6 +6,7 @@ import { AlhanPalette } from '@/constants/alhan-colors';
 import { toArabicDigits } from '@/data/coptic-calendar';
 import { QuizQuestion } from '@/data/quiz';
 import { useThemedStyles } from '@/hooks/use-alhan-colors';
+import { useRandomStart } from '@/hooks/use-random-start';
 import { AppLanguage } from '@/hooks/use-settings';
 
 export interface QuizStrings {
@@ -59,7 +60,8 @@ export function QuizRound({
   const n = (v: number) => (isRTL ? toArabicDigits(v) : String(v));
   const foreignFont = promptFont ? { fontFamily: promptFont, fontWeight: 'normal' as const } : null;
 
-  const [questions, setQuestions] = useState(build);
+  // (none on the website until the page is up: see useRandomStart)
+  const [questions, setQuestions] = useRandomStart<QuizQuestion[] | null>(build, null);
   const [index, setIndex] = useState(0);
   const [picked, setPicked] = useState<number | null>(null);
   const [right, setRight] = useState(0);
@@ -67,9 +69,9 @@ export function QuizRound({
   const [placed, setPlaced] = useState<number[]>([]);
   const [checked, setChecked] = useState<boolean | null>(null);
 
-  const finished = index >= questions.length;
+  const finished = questions !== null && index >= questions.length;
   useEffect(() => {
-    if (finished) onFinish?.(right, questions.length);
+    if (finished && questions) onFinish?.(right, questions.length);
     // only when a round ends
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [finished]);
@@ -83,6 +85,7 @@ export function QuizRound({
     setChecked(null);
   };
 
+  if (!questions) return <View style={styles.card} />;
   if (finished) {
     const ratio = right / questions.length;
     return (

@@ -24,6 +24,7 @@ import { toArabicDigits } from '@/data/coptic-calendar';
 import { copticConversations, copticGrammar } from '@/data/coptic-grammar';
 import { copticVocabulary } from '@/data/coptic-vocabulary';
 import { AppLanguage, useSettings } from '@/hooks/use-settings';
+import { useRandomStart } from '@/hooks/use-random-start';
 
 // Build every page ahead of time, so a shared link or a refresh on the website works
 export async function generateStaticParams(): Promise<Record<string, string>[]> {
@@ -294,7 +295,7 @@ function Practice({ lang }: LessonProps) {
   const t = learnStrings[lang];
   const { styles, shared, textAlign, rowDirection } = useLessonStyles(lang);
   const verses = getPracticeVerses();
-  const [index, setIndex] = useState(() => Math.floor(Math.random() * verses.length));
+  const [index, setIndex] = useRandomStart(() => Math.floor(Math.random() * verses.length), 0);
   const [showSound, setShowSound] = useState(false);
   const [showMeaning, setShowMeaning] = useState(false);
   const verse = verses[index];
