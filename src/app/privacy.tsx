@@ -11,7 +11,7 @@ type Section = [heading: string, body: string, extra?: string, links?: [string, 
 const policy: Record<'en' | 'ar', { title: string; subtitle: string; sections: Section[] }> = {
   en: {
     title: 'Privacy Policy',
-    subtitle: 'Coptic Psalmody · Updated October 13, 2026',
+    subtitle: 'Coptic Psalmody · Updated November 9, 2026',
     sections: [
       ['No accounts', 'The app has no sign-up or login, and we do not collect your name, email or contacts.'],
       [
@@ -24,7 +24,11 @@ const policy: Record<'en' | 'ar', { title: string; subtitle: string; sections: S
       ],
       [
         'No ads',
-        'The app and the website show no ads and use no analytics. If you choose to donate by card (through Stripe) or PayPal, that payment is handled on Stripe’s or PayPal’s own page under their privacy policies; we only see what they show us, such as your name and the amount.',
+        'The app and the website show no ads. If you choose to donate by card (through Stripe) or PayPal, that payment is handled on Stripe’s or PayPal’s own page under their privacy policies; we only see what they show us, such as your name and the amount.',
+      ],
+      [
+        'Counting visits',
+        'The app uses no analytics. The website counts visits with Cloudflare Web Analytics, which uses no cookies and does not identify you: we see only totals, such as how many people visited and which pages they opened.',
       ],
       ['Notifications', 'Feast reminders are scheduled on your phone only when you turn them on, and nothing is sent to us.'],
       ['Children', 'The app is safe for all ages. We do not knowingly collect personal information from anyone, including children.'],
@@ -33,14 +37,18 @@ const policy: Record<'en' | 'ar', { title: string; subtitle: string; sections: S
   },
   ar: {
     title: 'سياسة الخصوصية',
-    subtitle: 'التسبحة القبطية · آخر تحديث ١٣ أكتوبر ٢٠٢٦',
+    subtitle: 'التسبحة القبطية · آخر تحديث ٩ نوفمبر ٢٠٢٦',
     sections: [
       ['بدون حسابات', 'لا يوجد تسجيل أو دخول في التطبيق، ولا نجمع اسمك أو بريدك أو جهات اتصالك.'],
       ['ما يبقى على هاتفك', 'إعداداتك وقائمة التشغيل ونتائج الاختبارات والتسجيلات المنزّلة تُحفظ على جهازك فقط، وتُحذف عند حذف التطبيق.'],
       ['التسجيلات', 'تُشغَّل تسجيلات الألحان أو تُنزَّل من Cloudflare التي تتلقى عنوان IP الخاص بك لإرسال الملف، مثل أي موقع.'],
       [
         'بدون إعلانات',
-        'لا يعرض التطبيق ولا الموقع أي إعلانات، ولا يستخدمان أدوات تحليل. إذا اخترت التبرع بالبطاقة (عبر Stripe) أو عبر PayPal، فإن الدفع يتم على صفحة Stripe أو PayPal وفق سياسة الخصوصية الخاصة بكل منهما؛ ولا نرى إلا ما يُظهره لنا، مثل اسمك والمبلغ.',
+        'لا يعرض التطبيق ولا الموقع أي إعلانات. إذا اخترت التبرع بالبطاقة (عبر Stripe) أو عبر PayPal، فإن الدفع يتم على صفحة Stripe أو PayPal وفق سياسة الخصوصية الخاصة بكل منهما؛ ولا نرى إلا ما يُظهره لنا، مثل اسمك والمبلغ.',
+      ],
+      [
+        'عدّ الزيارات',
+        'لا يستخدم التطبيق أي أدوات تحليل. أما الموقع فيعدّ الزيارات عبر Cloudflare Web Analytics، دون ملفات تعريف الارتباط (cookies) ودون التعرّف عليك: لا نرى إلا الأرقام الإجمالية، مثل عدد الزوار والصفحات التي فتحوها.',
       ],
       ['الإشعارات', 'تذكيرات الأعياد تُجدول على هاتفك فقط عند تفعيلها، ولا يُرسل إلينا شيء.'],
       ['الأطفال', 'التطبيق آمن لكل الأعمار. لا نجمع عن قصد أي معلومات شخصية من أي شخص، بمن فيهم الأطفال.'],
