@@ -41,7 +41,7 @@ PROJECTOR MODE
 Show any hymn on a church screen, one verse at a time, with Coptic, English and Arabic together in large, clear text.
 
 THE COPTIC CALENDAR
-Today's Coptic date, the current season and what's coming next, with home-screen and Lock Screen widgets. Turn on reminders to hear the evening before each feast and fast, then tap to open its hymns.
+Today's Coptic date, the current season and what's coming next, with home-screen and Lock Screen widgets on iPhone and iPad. Turn on reminders to hear the evening before each feast and fast, then tap to open its hymns.
 
 MADE FOR CHURCH
 • Search titles and words in every language, in Coptic letters or English letters
@@ -54,7 +54,7 @@ MADE FOR CHURCH
 Free to use, with no account and no ads.
 
 **What's new** [4000]
-First release: hymns, Midnight Praises, deacon responses, audio with learning mode, projector mode, the Coptic calendar with widgets, and feast reminders.
+First release: hymns, Midnight Praises, deacon responses, audio with learning mode, projector mode, the Coptic calendar (with widgets on iPhone and iPad), and feast reminders.
 
 ---
 
@@ -95,7 +95,7 @@ First release: hymns, Midnight Praises, deacon responses, audio with learning mo
 اعرض أي لحن على شاشة الكنيسة، مقطعاً بمقطع، بالقبطية والعربية والإنجليزية معاً بخط كبير وواضح.
 
 التقويم القبطي
-تاريخ اليوم القبطي والمناسبة الحالية والمناسبات القادمة، مع أدوات للشاشة الرئيسية وشاشة القفل. فعّل التذكير لتصلك رسالة مساء اليوم السابق لكل عيد وصوم، واضغط عليها لتفتح ألحانه.
+تاريخ اليوم القبطي والمناسبة الحالية والمناسبات القادمة، مع أدوات للشاشة الرئيسية وشاشة القفل على iPhone وiPad. فعّل التذكير لتصلك رسالة مساء اليوم السابق لكل عيد وصوم، واضغط عليها لتفتح ألحانه.
 
 مصمَّم للكنيسة
 • ابحث في العناوين والكلمات بكل اللغات، بالحروف القبطية أو الإنجليزية
@@ -108,7 +108,7 @@ First release: hymns, Midnight Praises, deacon responses, audio with learning mo
 مجاني وبدون حساب وبدون إعلانات.
 
 **ما الجديد**
-الإصدار الأول: الألحان، وتسبحة نصف الليل، ومردات الشماس، والتسجيلات مع وضع التعلّم، ووضع العرض، والتقويم القبطي مع الأدوات، والتذكير بالأعياد.
+الإصدار الأول: الألحان، وتسبحة نصف الليل، ومردات الشماس، والتسجيلات مع وضع التعلّم، ووضع العرض، والتقويم القبطي (مع الأدوات على iPhone وiPad)، والتذكير بالأعياد.
 
 ---
 
@@ -130,4 +130,18 @@ Take each in English and in Arabic. Each caption goes at the top of its screensh
 3. Learning mode with a verse lit up and the speed buttons showing. *"Learn verse by verse"* / *"تعلّم مقطعاً بمقطع"*
 4. Projector mode, landscape, in three languages. *"Ready for the church screen"* / *"جاهز لشاشة الكنيسة"*
 5. Deacon responses with the speaker colours. *"Deacon & altar responses"* / *"مردات الشماس والهيكل"*
-6. Home screen with the Coptic Calendar widget. *"The Coptic calendar on your home screen"* / *"التقويم القبطي على شاشتك الرئيسية"*
+6. Home screen with the Coptic Calendar widget (iPhone only: widgets are not on Android yet, so Google Play gets screenshots 1 to 5). *"The Coptic calendar on your home screen"* / *"التقويم القبطي على شاشتك الرئيسية"*
+
+## Google Play: getting the app out
+
+The app is ready for Android phones, tablets and Chromebooks (it needs no touchscreen or microphone). Widgets are iPhone and iPad only for now.
+
+1. Make a developer account at https://play.google.com/console ($25 once, with ID verification).
+2. Create the app: name "Coptic Psalmody", app (not game), free, no ads.
+3. Build: `npx eas-cli@latest build --platform android --profile production` (an .aab; the version code goes up by itself).
+4. Upload the first .aab by hand in Testing > Closed testing (Google's API cannot make an app's first release).
+5. A new personal account needs 12 testers opted in to the closed test for 14 days in a row before it can publish; add their Gmail addresses and send them the opt-in link.
+6. Fill in the listing above, the content rating questionnaire (Everyone), Data safety (no data collected), and screenshots: phone, plus 7" and 10" tablet ones so Google Play shows the app well on tablets.
+7. After the 14 days, apply for production.
+
+Later builds can be sent with `npx eas-cli@latest submit --platform android --latest`, once a Google Cloud service account key is added to EAS (Play Console > Users and permissions). It goes to the closed testing track as a draft (`eas.json`); open it in Play Console to send it out.
