@@ -8,7 +8,7 @@ import { pressFeedback } from '@/components/haptics';
 import { StatusBarBlur } from '@/components/status-bar-blur';
 import { useTabChrome } from '@/components/tab-chrome';
 import { AlhanPalette } from '@/constants/alhan-colors';
-import { currentTrack, useAudioQueue } from '@/hooks/use-audio-queue';
+import { currentTrack, useAudioQueueSelect } from '@/hooks/use-audio-queue';
 import {
   ChurchEvent,
   copticMonths,
@@ -82,7 +82,7 @@ export default function CalendarScreen() {
   const isRTL = lang === 'ar';
   const insets = useSafeAreaInsets();
   const chrome = useTabChrome();
-  const playing = !!currentTrack(useAudioQueue());
+  const playing = !!useAudioQueueSelect(currentTrack);
   const colors = useAlhanColors();
   const styles = useThemedStyles(createStyles);
   const today = useTodayJdn();

@@ -1,5 +1,6 @@
 import { AudioPlayer, AudioSource, AudioStatus, createAudioPlayer, setAudioModeAsync } from 'expo-audio';
 import { useSyncExternalStore } from 'react';
+import { AppState } from 'react-native';
 
 import { LanguageType } from '../data/hymns';
 import { writeSetting } from './settings-storage';
@@ -82,10 +83,22 @@ let state: QueueState = {
 };
 const listeners = new Set<() => void>();
 
+const notify = () => listeners.forEach((l) => l());
+
 const setState = (patch: Partial<QueueState>) => {
   state = { ...state, ...patch };
-  listeners.forEach((l) => l());
+  notify();
 };
+
+// In another app (or with the screen locked) nobody sees the position, so the twice-a-second updates are kept
+// without redrawing the screens. Redrawing them in the background made the phone close the app after a while.
+let inBackground = AppState.currentState === 'background';
+AppState.addEventListener('change', (next) => {
+  const wasInBackground = inBackground;
+  inBackground = next === 'background';
+  // Back in the app: show where the recording is now
+  if (wasInBackground && !inBackground) notify();
+});
 
 const applyRate = (p: AudioPlayer) => {
   try {
@@ -132,7 +145,13 @@ function onStatus(s: AudioStatus) {
     getPlayer().seekTo(0);
     return setState({ status: { playing: false, currentTime: 0, duration: s.duration, isBuffering: false } });
   }
-  setState({ status: { playing: s.playing, currentTime: s.currentTime, duration: s.duration, isBuffering: s.isBuffering || (s.playing && !s.isLoaded) } });
+  const status = { playing: s.playing, currentTime: s.currentTime, duration: s.duration, isBuffering: s.isBuffering || (s.playing && !s.isLoaded) };
+  // In the background only play/pause is passed on (the screens catch up on the position when the app opens)
+  if (inBackground && status.playing === state.status.playing) {
+    state = { ...state, status };
+    return;
+  }
+  setState({ status });
 }
 
 const shuffled = <T>(list: T[]): T[] => {
@@ -254,6 +273,12 @@ const subscribe = (listener: () => void) => {
 
 export function useAudioQueue(): QueueState {
   return useSyncExternalStore(subscribe, () => state, () => state);
+}
+
+// Only part of the queue (e.g. `currentTrack`): the screen redraws when that part changes, not on every position update.
+// `select` must return a value from the queue or a primitive, not a new object each time.
+export function useAudioQueueSelect<T>(select: (q: QueueState) => T): T {
+  return useSyncExternalStore(subscribe, () => select(state), () => select(state));
 }
 
 export const currentTrack = (q: QueueState): QueueTrack | null => q.tracks[q.index] ?? null;

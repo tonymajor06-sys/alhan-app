@@ -18,7 +18,7 @@ import { faithStrings } from '@/data/faith-guide';
 import { mainCategories, seasons } from '@/data/hymns';
 import { saintsStrings } from '@/data/saints';
 import { useAlhanColors, useThemedStyles } from '@/hooks/use-alhan-colors';
-import { currentTrack, useAudioQueue } from '@/hooks/use-audio-queue';
+import { currentTrack, useAudioQueueSelect } from '@/hooks/use-audio-queue';
 import { usePlaylists } from '@/hooks/use-playlist';
 import { useSettings } from '@/hooks/use-settings';
 import { useTodayJdn } from '@/hooks/use-today';
@@ -35,7 +35,7 @@ export default function HomeScreen() {
   const rowDirection = isRTL ? styles.rowReverse : styles.row;
   const textAlign = isRTL ? styles.alignRight : styles.alignLeft;
   const playlists = usePlaylists();
-  const nowPlaying = currentTrack(useAudioQueue());
+  const nowPlaying = useAudioQueueSelect(currentTrack);
 
   const today = useTodayJdn();
   const seasonInfo = getSeasonInfo(today, 1);

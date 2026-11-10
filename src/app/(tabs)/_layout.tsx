@@ -5,7 +5,7 @@ import { TabBarPlayer } from '@/components/tab-bar-player';
 import { iosHasTabAccessory } from '@/components/tab-chrome';
 import { alhanLightColors } from '@/constants/alhan-colors';
 import { useAlhanColors } from '@/hooks/use-alhan-colors';
-import { currentTrack, useAudioQueue } from '@/hooks/use-audio-queue';
+import { currentTrack, useAudioQueueSelect } from '@/hooks/use-audio-queue';
 import { useSettings } from '@/hooks/use-settings';
 
 // The phone's own tab bar: Home, Hymns, Calendar, Playlist and Settings.
@@ -13,7 +13,7 @@ import { useSettings } from '@/hooks/use-settings';
 export default function TabsLayout() {
   const { language } = useSettings();
   const colors = useAlhanColors();
-  const nowPlaying = currentTrack(useAudioQueue());
+  const nowPlaying = useAudioQueueSelect(currentTrack);
   const t = tabLabels[language];
   const light = colors.background === alhanLightColors.background;
   const content = { backgroundColor: colors.background };
