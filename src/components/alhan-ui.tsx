@@ -101,6 +101,16 @@ export const strings = {
     downloaded: '✓ Saved offline',
     downloadFailed: 'Download failed. Check your connection and try again.',
     downloadAll: '⬇ Download all for offline',
+    nightListening: '🌙 Night listening',
+    nightListeningOn: '🌙 Night listening is on',
+    nightListeningDesc:
+      'For falling asleep to your hymns. The playlist plays all night, every recording is evened out so none is louder than the others, each one fades in gently, and it grows softer over the first hour. Turn your phone’s volume down to a comfortable level first: Night listening never goes above it.',
+    nightDownloadHint: 'Download the playlist first, so it keeps playing if the internet drops during the night.',
+    nightSoft: 'Soft',
+    nightSofter: 'Softer',
+    nightSoftest: 'Softest',
+    startNight: '🌙 Start',
+    stopNight: 'Turn off',
     share: '↗ Share',
     copyWords: '⧉ Copy the words',
     copied: '✓ Copied',
@@ -226,6 +236,16 @@ export const strings = {
     downloaded: '✓ محفوظ بدون إنترنت',
     downloadFailed: 'فشل التنزيل. تحقق من الاتصال وحاول مرة أخرى.',
     downloadAll: '⬇ تنزيل الكل للاستماع بدون إنترنت',
+    nightListening: '🌙 الاستماع ليلاً',
+    nightListeningOn: '🌙 الاستماع ليلاً يعمل',
+    nightListeningDesc:
+      'لتنام على صوت الألحان. تُشغَّل قائمة التشغيل طوال الليل، ويُضبط صوت كل تسجيل حتى لا يعلو أحدها على الآخر، ويبدأ كل لحن بهدوء، ويخفت الصوت قليلاً خلال الساعة الأولى. اخفض صوت هاتفك إلى مستوى مريح أولاً، فالاستماع ليلاً لا يتجاوزه أبداً.',
+    nightDownloadHint: 'نزّل قائمة التشغيل أولاً حتى يستمر التشغيل إذا انقطع الإنترنت أثناء الليل.',
+    nightSoft: 'هادئ',
+    nightSofter: 'أهدأ',
+    nightSoftest: 'الأهدأ',
+    startNight: '🌙 ابدأ',
+    stopNight: 'إيقاف',
     share: '↗ مشاركة',
     copyWords: '⧉ نسخ الكلمات',
     copied: '✓ تم النسخ',
@@ -1570,6 +1590,29 @@ export const createAlhanStyles = (colors: AlhanPalette) => StyleSheet.create({
   playlistDownload: {
     marginTop: 0,
     marginBottom: 14,
+  },
+  // Night listening: its button, and the panel that opens under it
+  nightPanel: {
+    marginBottom: 14,
+    padding: 14,
+    gap: 10,
+    borderRadius: 14,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: colors.gold,
+    backgroundColor: colors.goldSoft,
+  },
+  nightText: {
+    fontSize: 15,
+    lineHeight: 22,
+    color: colors.text,
+  },
+  nightHint: {
+    fontSize: 14,
+    lineHeight: 20,
+    color: colors.muted,
+  },
+  nightLevels: {
+    gap: 8,
   },
   playlistRow: {
     paddingHorizontal: 14,

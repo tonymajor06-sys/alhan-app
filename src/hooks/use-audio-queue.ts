@@ -2,6 +2,7 @@ import { AudioPlayer, AudioSource, AudioStatus, createAudioPlayer, setAudioModeA
 import { useSyncExternalStore } from 'react';
 import { AppState } from 'react-native';
 
+import { audioLoudness } from '../data/audio-loudness';
 import { LanguageType } from '../data/hymns';
 import { writeSetting } from './settings-storage';
 
@@ -27,6 +28,8 @@ export interface QueueState {
   unshuffled: QueueTrack[] | null;
   // Playback speed (learning mode slows recordings down); 1 = normal
   rate: number;
+  // Night listening: how soft (from NIGHT_LEVELS) and when it started; null when off
+  night: { level: number; startedAt: number } | null;
   // isBuffering: waiting for the recording to load or stream in, so the play button can show it is working
   status: Pick<AudioStatus, 'playing' | 'currentTime' | 'duration' | 'isBuffering'>;
 }
@@ -79,6 +82,7 @@ let state: QueueState = {
   shuffle: false,
   unshuffled: null,
   rate: 1,
+  night: null,
   status: { playing: false, currentTime: 0, duration: 0, isBuffering: false },
 };
 const listeners = new Set<() => void>();
@@ -99,6 +103,37 @@ AppState.addEventListener('change', (next) => {
   // Back in the app: show where the recording is now
   if (wasInBackground && !inBackground) notify();
 });
+
+// Night listening, for falling asleep to a playlist: it plays all night, every recording is brought down to the
+// same loudness (src/data/audio-loudness.ts) so none is louder than the rest, each one fades in and out instead of
+// starting at full volume, and it grows softer over the first hour. The phone's own volume is still the ceiling.
+export const NIGHT_LEVELS = { soft: 0.5, softer: 0.3, softest: 0.18 } as const;
+// Recordings are brought down to the quieter ones' loudness (dB below full scale; most are -23 to -12)
+const NIGHT_REFERENCE_DB = -23;
+const NIGHT_FADE_IN = 8;
+const NIGHT_FADE_OUT = 6;
+// After the first hour it plays at 70% of the chosen level
+const NIGHT_SETTLE_MINUTES = 60;
+const NIGHT_SETTLE = 0.7;
+
+const nightVolume = (night: NonNullable<QueueState['night']>, file: string | undefined, currentTime: number, duration: number) => {
+  const db = file ? audioLoudness[file] : undefined;
+  // Unknown or nearly silent: leave it at the chosen level
+  const leveled = db === undefined || db < -50 ? 1 : Math.min(1, 10 ** ((NIGHT_REFERENCE_DB - db) / 20));
+  const minutes = (Date.now() - night.startedAt) / 60000;
+  const settle = 1 - (1 - NIGHT_SETTLE) * Math.min(1, minutes / NIGHT_SETTLE_MINUTES);
+  const fadeIn = Math.min(1, currentTime / NIGHT_FADE_IN);
+  const fadeOut = duration > 0 ? Math.min(1, (duration - currentTime) / NIGHT_FADE_OUT) : 1;
+  return Math.max(0, Math.min(1, night.level * leveled * settle * Math.min(fadeIn, fadeOut)));
+};
+
+const applyVolume = (p: AudioPlayer, currentTime: number, duration: number) => {
+  try {
+    p.volume = state.night ? nightVolume(state.night, state.tracks[state.index]?.file, currentTime, duration) : 1;
+  } catch {
+    // volume is unavailable on this platform
+  }
+};
 
 const applyRate = (p: AudioPlayer) => {
   try {
@@ -122,6 +157,8 @@ const loadTrack = (index: number, autoplay: boolean) => {
   player.replace(track.source);
   player.loop = state.repeat === 'one';
   applyRate(player);
+  // Night listening starts each recording silent and fades it in
+  applyVolume(player, 0, 0);
   if (autoplay) player.play();
   try {
     // Also keeps Android's foreground service alive; without it background audio stops after ~3 minutes
@@ -137,6 +174,7 @@ const loadTrack = (index: number, autoplay: boolean) => {
 };
 
 function onStatus(s: AudioStatus) {
+  if (state.night && player) applyVolume(player, s.currentTime, s.duration);
   if (s.didJustFinish && state.repeat !== 'one') {
     const nextIndex = state.index + 1;
     if (nextIndex < state.tracks.length) return loadTrack(nextIndex, true);
@@ -163,9 +201,29 @@ const shuffled = <T>(list: T[]): T[] => {
   return out;
 };
 
-// `shuffle` starts the list in a random order (and turns Shuffle on); otherwise the queue keeps the Shuffle setting
+// `shuffle` starts the list in a random order (and turns Shuffle on); otherwise the queue keeps the Shuffle setting.
+// Anything played this way turns Night listening off; `playNight` turns it on.
 export function playQueue(tracks: QueueTrack[], startIndex = 0, origin: QueueState['origin'] = 'single', shuffle?: boolean) {
   if (tracks.length === 0) return;
+  setState({ night: null });
+  startQueue(tracks, startIndex, origin, shuffle);
+}
+
+// Night listening: the whole list, over and over until it is stopped, softly (see NIGHT_LEVELS)
+export function playNight(tracks: QueueTrack[], level: number, origin: QueueState['origin'] = 'playlist', shuffle?: boolean) {
+  if (tracks.length === 0) return;
+  setRepeat('all');
+  setState({ night: { level, startedAt: Date.now() } });
+  startQueue(tracks, 0, origin, shuffle);
+}
+
+// Night listening off: back to full volume, the recording keeps playing
+export function stopNight() {
+  setState({ night: null });
+  if (player) applyVolume(player, state.status.currentTime, state.status.duration);
+}
+
+function startQueue(tracks: QueueTrack[], startIndex: number, origin: QueueState['origin'], shuffle?: boolean) {
   const on = shuffle ?? state.shuffle;
   if (on) {
     const start = shuffle ? Math.floor(Math.random() * tracks.length) : Math.min(Math.max(0, startIndex), tracks.length - 1);
@@ -263,7 +321,7 @@ export function stopQueue() {
   } catch {
     // nothing to clear
   }
-  setState({ tracks: [], index: 0, origin: 'single', unshuffled: null, status: { playing: false, currentTime: 0, duration: 0, isBuffering: false } });
+  setState({ tracks: [], index: 0, origin: 'single', unshuffled: null, night: null, status: { playing: false, currentTime: 0, duration: 0, isBuffering: false } });
 }
 
 const subscribe = (listener: () => void) => {

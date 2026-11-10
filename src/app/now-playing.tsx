@@ -20,6 +20,7 @@ import {
   seekTo,
   setShuffle,
   skip,
+  stopNight,
   togglePlay,
   trackKey,
   useAudioQueue,
@@ -92,6 +93,15 @@ export default function NowPlayingScreen() {
           {withCopticFont(track.title)}
         </Text>
         {languageLabel ? <Text style={[styles.subtitle, textAlign]}>{languageLabel}</Text> : null}
+
+        {queue.night ? (
+          <View style={[styles.nightRow, rowDirection]}>
+            <Text style={styles.nightLabel}>{t.nightListeningOn}</Text>
+            <Pressable onPress={stopNight} accessibilityRole="button" hitSlop={10}>
+              <Text style={styles.nightOff}>{t.stopNight}</Text>
+            </Pressable>
+          </View>
+        ) : null}
 
         <SeekBar
           currentTime={currentTime}
@@ -169,6 +179,17 @@ const createStyles = (colors: AlhanPalette) =>
     art: { width: '100%', aspectRatio: 1, borderRadius: 20, marginBottom: 24, backgroundColor: colors.surface },
     title: { fontSize: 24, fontWeight: '800', color: colors.text },
     subtitle: { fontSize: 15, color: colors.muted, marginTop: 4, marginBottom: 12 },
+    nightRow: {
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      marginBottom: 12,
+      paddingHorizontal: 12,
+      paddingVertical: 8,
+      borderRadius: 12,
+      backgroundColor: colors.goldSoft,
+    },
+    nightLabel: { fontSize: 15, fontWeight: '700', color: colors.gold },
+    nightOff: { fontSize: 15, fontWeight: '700', color: colors.text },
     controls: { alignItems: 'center', justifyContent: 'space-between', marginTop: 12 },
     control: { width: 44, height: 44, alignItems: 'center', justifyContent: 'center' },
     controlIcon: { fontSize: 22, color: colors.text, fontWeight: '700' },
