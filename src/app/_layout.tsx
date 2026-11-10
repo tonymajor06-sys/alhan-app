@@ -74,7 +74,9 @@ export default function RootLayout() {
           <Stack.Screen name="privacy" />
           <Stack.Screen name="downloads" />
           <Stack.Screen name="support" />
-          <Stack.Screen name="hymn/[id]" />
+          {/* Back only from the screen's left edge (not a swipe anywhere, iOS 26's default), so sliding along the
+              recording's seek bar moves through the hymn instead of leaving it */}
+          <Stack.Screen name="hymn/[id]" options={{ fullScreenGestureEnabled: false }} />
           <Stack.Screen name="follow/[kind]" />
           <Stack.Screen name="playlist/[id]" />
           {/* The full player slides up over everything, like a music app's */}
