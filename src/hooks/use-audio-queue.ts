@@ -1,9 +1,12 @@
-import { AudioPlayer, AudioSource, AudioStatus, createAudioPlayer, setAudioModeAsync } from 'expo-audio';
+import type { AudioSource, AudioStatus } from 'expo-audio';
+import { Asset } from 'expo-asset';
 import { useSyncExternalStore } from 'react';
-import { AppState } from 'react-native';
+import { AppState, Platform } from 'react-native';
 
 import { audioLoudness } from '../data/audio-loudness';
 import { LanguageType } from '../data/hymns';
+import { createAudioEngine } from './audio-engine';
+import type { AudioEngine, EngineStatus, EngineTrack } from './audio-engine-types';
 import { writeSetting } from './settings-storage';
 
 export interface QueueTrack {
@@ -13,6 +16,8 @@ export interface QueueTrack {
   source: AudioSource;
   // Which recording, when a hymn has more than one in this language
   file?: string;
+  // This entry's place in the queue, given when it is queued (a hymn can be in the queue twice)
+  uid?: string;
 }
 
 export type RepeatMode = 'none' | 'one' | 'all';
@@ -36,43 +41,11 @@ export interface QueueState {
 
 // The last hymn played, for the home screen's "Continue" shortcut
 export const LAST_PLAYED_KEY = 'lastPlayed';
-// Shown on the lock screen; served from the website's public folder
+// Shown on the lock screen and in the car; served from the website's public folder
 const LOCK_SCREEN_ARTWORK = 'https://copticpsalmody.com/artwork.png';
+const ARTIST = 'Coptic Psalmody';
 
 export const trackKey = (t: { hymnId: string; language: LanguageType }) => `${t.hymnId}:${t.language}`;
-
-// One player for the whole app, so audio keeps going when screens change or the app is in the background.
-// It is never released: it lives as long as the app does. Created on first use because the web
-// player needs `Audio`, which doesn't exist during static rendering.
-let player: AudioPlayer | null = null;
-
-const getPlayer = (): AudioPlayer => {
-  if (player) return player;
-  player = createAudioPlayer(null, { updateInterval: 500 });
-  player.addListener('playbackStatusUpdate', onStatus);
-  // Next/previous on the lock screen, in the car or on headphones (added to expo-audio in patches/)
-  player.addListener('remoteCommand', ({ command }) => skip(command === 'next' ? 1 : -1));
-  // On web expo-audio drops the promise from <audio>.play(), so a recording that can't load (not online yet,
-  // or no internet) becomes an "Uncaught Error". Give every play() a handler; the player already shows it as stopped.
-  if (typeof HTMLMediaElement !== 'undefined' && !(HTMLMediaElement.prototype as { alhanSafePlay?: boolean }).alhanSafePlay) {
-    const play = HTMLMediaElement.prototype.play;
-    HTMLMediaElement.prototype.play = function (this: HTMLMediaElement) {
-      const result = play.call(this);
-      result?.catch?.(() => {});
-      return result;
-    };
-    (HTMLMediaElement.prototype as { alhanSafePlay?: boolean }).alhanSafePlay = true;
-  }
-  setAudioModeAsync({
-    playsInSilentMode: true,
-    shouldPlayInBackground: true,
-    // Lock screen controls require exclusive audio focus
-    interruptionMode: 'doNotMix',
-  }).catch(() => {
-    // audio still plays in the foreground
-  });
-  return player;
-};
 
 let state: QueueState = {
   tracks: [],
@@ -94,7 +67,7 @@ const setState = (patch: Partial<QueueState>) => {
   notify();
 };
 
-// In another app (or with the screen locked) nobody sees the position, so the twice-a-second updates are kept
+// In another app (or with the screen locked) nobody sees the position, so the position updates are kept
 // without redrawing the screens. Redrawing them in the background made the phone close the app after a while.
 let inBackground = AppState.currentState === 'background';
 AppState.addEventListener('change', (next) => {
@@ -127,70 +100,94 @@ const nightVolume = (night: NonNullable<QueueState['night']>, file: string | und
   return Math.max(0, Math.min(1, night.level * leveled * settle * Math.min(fadeIn, fadeOut)));
 };
 
-const applyVolume = (p: AudioPlayer, currentTime: number, duration: number) => {
-  try {
-    p.volume = state.night ? nightVolume(state.night, state.tracks[state.index]?.file, currentTime, duration) : 1;
-  } catch {
-    // volume is unavailable on this platform
+const volumeAt = (currentTime: number, duration: number) =>
+  state.night ? nightVolume(state.night, state.tracks[state.index]?.file, currentTime, duration) : 1;
+
+// Every queued entry gets its own id, which the player uses to say which one is playing
+let nextUid = 0;
+const withUids = (tracks: QueueTrack[]): QueueTrack[] => tracks.map((t) => (t.uid ? t : { ...t, uid: `q${++nextUid}` }));
+
+const sourceUrl = (source: AudioSource): string => {
+  if (typeof source === 'number') {
+    const asset = Asset.fromModule(source);
+    return asset.localUri ?? asset.uri;
   }
+  return typeof source === 'string' ? source : (source?.uri ?? '');
 };
 
-const applyRate = (p: AudioPlayer) => {
-  try {
-    // Pitch correction keeps a slowed-down chant at its real pitch
-    p.setPlaybackRate(state.rate, 'high');
-  } catch {
-    // speed control is unavailable on this platform
-  }
-};
+export const toEngineTrack = (t: QueueTrack, id = t.uid ?? trackKey(t)): EngineTrack => ({
+  id,
+  url: sourceUrl(t.source),
+  title: t.title,
+  artist: ARTIST,
+  artwork: LOCK_SCREEN_ARTWORK,
+  hymnId: t.hymnId,
+  language: t.language,
+  file: t.file,
+});
 
-const loadTrack = (index: number, autoplay: boolean) => {
-  const track = state.tracks[index];
-  if (!track) return;
-  setState({ index, status: { playing: autoplay, currentTime: 0, duration: 0, isBuffering: autoplay } });
+const rememberLastPlayed = (track: QueueTrack) => {
   try {
     writeSetting(LAST_PLAYED_KEY, JSON.stringify({ hymnId: track.hymnId, language: track.language }));
   } catch {
     // only the shortcut is lost
   }
-  const player = getPlayer();
-  player.replace(track.source);
-  player.loop = state.repeat === 'one';
-  applyRate(player);
-  // Night listening starts each recording silent and fades it in
-  applyVolume(player, 0, 0);
-  if (autoplay) player.play();
-  try {
-    // Also keeps Android's foreground service alive; without it background audio stops after ~3 minutes
-    player.setActiveForLockScreen(
-      true,
-      { title: track.title, artist: 'Coptic Psalmody', artworkUrl: LOCK_SCREEN_ARTWORK },
-      // Next/previous hymn instead of 10-second jumps, so the car's skip buttons move through the queue
-      { showPreviousTrack: true, showNextTrack: true }
-    );
-  } catch {
-    // lock screen controls are unavailable on this platform
-  }
 };
 
-function onStatus(s: AudioStatus) {
-  if (state.night && player) applyVolume(player, s.currentTime, s.duration);
-  if (s.didJustFinish && state.repeat !== 'one') {
-    const nextIndex = state.index + 1;
-    if (nextIndex < state.tracks.length) return loadTrack(nextIndex, true);
-    if (state.repeat === 'all' && state.tracks.length > 0) return loadTrack(0, true);
-    // End of the queue: rewind so Play starts the last track again
-    getPlayer().seekTo(0);
-    return setState({ status: { playing: false, currentTime: 0, duration: s.duration, isBuffering: false } });
-  }
-  const status = { playing: s.playing, currentTime: s.currentTime, duration: s.duration, isBuffering: s.isBuffering || (s.playing && !s.isLoaded) };
+// The queue moved to another track: show it from its start
+const showTrack = (index: number, playing: boolean) => {
+  const track = state.tracks[index];
+  if (!track) return;
+  setState({ index, status: { playing, currentTime: 0, duration: 0, isBuffering: playing } });
+  rememberLastPlayed(track);
+  // Night listening starts each recording silent and fades it in
+  getEngine().setVolume(volumeAt(0, 0));
+};
+
+const onStatus = (s: EngineStatus) => {
+  if (state.night) getEngine().setVolume(volumeAt(s.currentTime, s.duration));
   // In the background only play/pause is passed on (the screens catch up on the position when the app opens)
-  if (inBackground && status.playing === state.status.playing) {
-    state = { ...state, status };
+  if (inBackground && s.playing === state.status.playing) {
+    state = { ...state, status: s };
     return;
   }
-  setState({ status });
+  setState({ status: s });
+};
+
+// One player for the whole app, so audio keeps going when screens change or the app is in the background.
+// On the website it is made on first use, because the web player needs `Audio`, which doesn't exist during static
+// rendering; on phones it is made right away, so a hymn the car started shows in the app as soon as it opens.
+let engine: AudioEngine | null = null;
+function getEngine(): AudioEngine {
+  if (engine) return engine;
+  engine = createAudioEngine({
+    status: onStatus,
+    trackChanged(id) {
+      const index = state.tracks.findIndex((t) => t.uid === id);
+      if (index >= 0 && index !== state.index) showTrack(index, true);
+    },
+    queueEnded() {
+      setState({ status: { ...state.status, playing: false, isBuffering: false } });
+    },
+    queueReplaced(tracks, index) {
+      // The car started one of the user's playlists: it becomes the queue
+      setState({
+        tracks: tracks.map((t) => ({ hymnId: t.hymnId, language: t.language, title: t.title, source: { uri: t.url }, file: t.file, uid: t.id })),
+        origin: 'playlist',
+        shuffle: false,
+        unshuffled: null,
+        night: null,
+      });
+      showTrack(index, true);
+    },
+  });
+  engine.setRepeat(state.repeat);
+  engine.setRate(state.rate);
+  return engine;
 }
+if (Platform.OS !== 'web') getEngine();
+
+const syncQueue = () => getEngine().update(state.tracks.map((t) => toEngineTrack(t)));
 
 const shuffled = <T>(list: T[]): T[] => {
   const out = [...list];
@@ -220,19 +217,24 @@ export function playNight(tracks: QueueTrack[], level: number, origin: QueueStat
 // Night listening off: back to full volume, the recording keeps playing
 export function stopNight() {
   setState({ night: null });
-  if (player) applyVolume(player, state.status.currentTime, state.status.duration);
+  getEngine().setVolume(1);
 }
 
 function startQueue(tracks: QueueTrack[], startIndex: number, origin: QueueState['origin'], shuffle?: boolean) {
   const on = shuffle ?? state.shuffle;
+  const all = withUids(tracks);
+  let index = Math.min(Math.max(0, startIndex), all.length - 1);
   if (on) {
-    const start = shuffle ? Math.floor(Math.random() * tracks.length) : Math.min(Math.max(0, startIndex), tracks.length - 1);
-    const first = tracks[start];
-    setState({ tracks: [first, ...shuffled(tracks.filter((_, i) => i !== start))], unshuffled: tracks, shuffle: true, origin });
-    return loadTrack(0, true);
-  }
-  setState({ tracks, origin, unshuffled: null, shuffle: false });
-  loadTrack(Math.min(Math.max(0, startIndex), tracks.length - 1), true);
+    const start = shuffle ? Math.floor(Math.random() * all.length) : index;
+    setState({ tracks: [all[start], ...shuffled(all.filter((_, i) => i !== start))], unshuffled: all, shuffle: true, origin });
+    index = 0;
+  } else setState({ tracks: all, origin, unshuffled: null, shuffle: false });
+  showTrack(index, true);
+  getEngine().load(
+    state.tracks.map((t) => toEngineTrack(t)),
+    index,
+    true
+  );
 }
 
 // Shuffle on: what is still to come plays in a random order. Off: back to the original order, from the current track
@@ -244,26 +246,39 @@ export function setShuffle(on: boolean) {
     setState({ shuffle: true, unshuffled: state.unshuffled ?? state.tracks, tracks: [current, ...shuffled(rest)], index: 0 });
   } else {
     const original = state.unshuffled ?? state.tracks;
-    const at = original.findIndex((t) => trackKey(t) === trackKey(current) && t.file === current.file);
+    const at = original.findIndex((t) => t.uid === current.uid);
     setState({ shuffle: false, unshuffled: null, tracks: original, index: Math.max(0, at) });
   }
+  syncQueue();
 }
+
+const goTo = (index: number, autoplay: boolean) => {
+  showTrack(index, autoplay);
+  getEngine().skipTo(index, autoplay);
+};
 
 // Jump straight to a track in the queue (the Up Next list)
 export function jumpTo(index: number) {
-  if (index >= 0 && index < state.tracks.length) loadTrack(index, true);
+  if (index >= 0 && index < state.tracks.length) goTo(index, true);
 }
 
 // Take a track that is still to come out of the queue
 export function removeFromQueue(index: number) {
   if (index <= state.index || index >= state.tracks.length) return;
-  setState({ tracks: state.tracks.filter((_, i) => i !== index) });
+  const gone = state.tracks[index];
+  setState({
+    tracks: state.tracks.filter((_, i) => i !== index),
+    unshuffled: state.unshuffled?.filter((t) => t.uid !== gone.uid) ?? null,
+  });
+  syncQueue();
 }
 
 // Add hymns to the end of the queue (or start playing them when nothing is playing)
 export function addToQueue(tracks: QueueTrack[]) {
   if (state.tracks.length === 0) return playQueue(tracks);
-  setState({ tracks: [...state.tracks, ...tracks] });
+  const added = withUids(tracks);
+  setState({ tracks: [...state.tracks, ...added], unshuffled: state.unshuffled ? [...state.unshuffled, ...added] : null });
+  syncQueue();
 }
 
 // Off, then the whole queue, then this one track, like most music players
@@ -274,54 +289,67 @@ export function cycleRepeat() {
 // Play next: add hymns after the current one, or drop the ones still waiting
 export function queueAfterCurrent(tracks: QueueTrack[]) {
   if (state.tracks.length === 0) return;
-  setState({ tracks: [...state.tracks.slice(0, state.index + 1), ...tracks] });
+  setState({ tracks: [...state.tracks.slice(0, state.index + 1), ...withUids(tracks)] });
+  syncQueue();
 }
 
 export function togglePlay() {
   if (state.tracks.length === 0) return;
-  if (state.status.playing) getPlayer().pause();
-  else getPlayer().play();
+  if (state.status.playing) {
+    getEngine().pause();
+    setState({ status: { ...state.status, playing: false } });
+  } else {
+    getEngine().play();
+    setState({ status: { ...state.status, playing: true } });
+  }
 }
 
 export function seekBy(seconds: number) {
   const { currentTime, duration } = state.status;
-  getPlayer().seekTo(Math.min(Math.max(0, currentTime + seconds), duration || currentTime + seconds));
+  seekTo(Math.min(Math.max(0, currentTime + seconds), duration || currentTime + seconds));
 }
 
 export function seekTo(seconds: number) {
   if (state.tracks.length === 0) return;
-  getPlayer().seekTo(Math.max(0, seconds));
+  getEngine().seekTo(Math.max(0, seconds));
   setState({ status: { ...state.status, currentTime: Math.max(0, seconds) } });
 }
 
 export function setPlaybackRate(rate: number) {
   setState({ rate });
-  if (player) applyRate(player);
+  getEngine().setRate(rate);
 }
 
 export function skip(direction: 1 | -1) {
   // "Previous" restarts the current track first, like most music players
-  if (direction === -1 && state.status.currentTime > 3) return getPlayer().seekTo(0);
+  if (direction === -1 && state.status.currentTime > 3) return seekTo(0);
   const target = state.index + direction;
-  if (target >= 0 && target < state.tracks.length) loadTrack(target, state.status.playing);
+  if (target >= 0 && target < state.tracks.length) goTo(target, state.status.playing);
   else if (state.repeat === 'all' && state.tracks.length > 0)
-    loadTrack((target + state.tracks.length) % state.tracks.length, state.status.playing);
+    goTo((target + state.tracks.length) % state.tracks.length, state.status.playing);
 }
 
 export function setRepeat(repeat: RepeatMode) {
-  if (player) player.loop = repeat === 'one';
   setState({ repeat });
+  getEngine().setRepeat(repeat);
 }
 
 export function stopQueue() {
-  if (!player) return;
-  player.pause();
-  try {
-    player.clearLockScreenControls();
-  } catch {
-    // nothing to clear
-  }
+  if (!engine) return;
+  engine.stop();
   setState({ tracks: [], index: 0, origin: 'single', unshuffled: null, night: null, status: { playing: false, currentTime: 0, duration: 0, isBuffering: false } });
+}
+
+// The user's playlists, for the car's library
+export function setCarLibrary(playlists: { id: string; name: string; tracks: QueueTrack[] }[]) {
+  if (Platform.OS === 'web') return;
+  getEngine().setLibrary(
+    playlists.map((list) => ({
+      id: list.id,
+      name: list.name,
+      tracks: list.tracks.map((t, i) => toEngineTrack(t, `lib-${list.id}-${i}`)),
+    }))
+  );
 }
 
 const subscribe = (listener: () => void) => {

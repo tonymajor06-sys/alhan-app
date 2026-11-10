@@ -1,0 +1,27 @@
+diff --git a/node_modules/react-native-nitro-player/NitroPlayer.podspec b/node_modules/react-native-nitro-player/NitroPlayer.podspec
+index 64762fb..ff9611e 100644
+--- a/node_modules/react-native-nitro-player/NitroPlayer.podspec
++++ b/node_modules/react-native-nitro-player/NitroPlayer.podspec
+@@ -31,7 +31,8 @@ Pod::Spec.new do |s|
+   # Google Cast (CAF) — provides GCKCastContext / GCKRemoteMediaClient used by the
+   # Cast HybridObject. Requires NSBonjourServices + NSLocalNetworkUsageDescription
+   # (and, for guest mode, NSBluetoothAlwaysUsageDescription) in the host app's Info.plist.
+-  s.dependency 'google-cast-sdk', '~> 4.8'
++  # Coptic Psalmody: no Google Cast. Without the SDK every Cast call is a no-op (#if canImport(GoogleCast)), so the
++  # app never scans the local network (no permission prompt) and ships no Google code.
+ 
+   install_modules_dependencies(s)
+ end
+diff --git a/node_modules/react-native-nitro-player/ios/core/TrackPlayerQueueBuild.swift b/node_modules/react-native-nitro-player/ios/core/TrackPlayerQueueBuild.swift
+index bfe632b..6f6c747 100644
+--- a/node_modules/react-native-nitro-player/ios/core/TrackPlayerQueueBuild.swift
++++ b/node_modules/react-native-nitro-player/ios/core/TrackPlayerQueueBuild.swift
+@@ -572,6 +572,8 @@ extension TrackPlayerCore {
+     }
+ 
+     let item = AVPlayerItem(asset: asset)
++    // Coptic Psalmody: the best pitch correction, so a recording slowed down for learning keeps its real pitch cleanly
++    item.audioTimePitchAlgorithm = .spectral
+ 
+     // Let the system choose the optimal forward buffer size (0 = automatic).
+     item.preferredForwardBufferDuration = 0

@@ -4,6 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { copticFont } from '@/components/alhan-ui';
+import { useCarLibrary } from '@/components/car-library';
 import { useHomeScreenQuickActions } from '@/components/quick-actions';
 import { alhanLightColors } from '@/constants/alhan-colors';
 import { useAlhanColors } from '@/hooks/use-alhan-colors';
@@ -31,6 +32,7 @@ export default function RootLayout() {
 
   useReminderNavigation();
   useHomeScreenQuickActions(language, today);
+  useCarLibrary(language);
 
   if (!fontsLoaded && !fontError) return null;
 

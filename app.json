@@ -29,7 +29,10 @@
         "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"
       ],
       "blockedPermissions": [
-        "android.permission.RECORD_AUDIO"
+        "android.permission.RECORD_AUDIO",
+        "android.permission.ACCESS_WIFI_STATE",
+        "android.permission.CHANGE_WIFI_MULTICAST_STATE",
+        "android.permission.FOREGROUND_SERVICE_DATA_SYNC"
       ]
     },
     "web": {
@@ -54,7 +57,8 @@
       [
         "expo-audio",
         {
-          "recordAudioAndroid": false
+          "recordAudioAndroid": false,
+          "enableBackgroundPlayback": false
         }
       ],
       "expo-sqlite",
@@ -112,7 +116,8 @@
       "expo-asset",
       "expo-quick-actions",
       "expo-sharing",
-      "./plugins/with-every-device"
+      "./plugins/with-every-device",
+      "./plugins/with-car-audio"
     ],
     "experiments": {
       "typedRoutes": true,
