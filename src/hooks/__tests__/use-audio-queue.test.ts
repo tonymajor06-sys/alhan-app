@@ -55,7 +55,7 @@ jest.mock('expo-sqlite/kv-store', () => {
     setItemSync: (key: string, value: string) => store.set(key, value),
   };
 });
-jest.mock('../../data/audio-loudness', () => ({ audioLoudness: { 'loud.m4a': -11, 'quiet.m4a': -23 } }));
+jest.mock('../../data/audio-loudness', () => ({ audioLoudness: { 'loud.m4a': -11, 'usual.m4a': -17, 'quiet.m4a': -23 } }));
 
 /* eslint-disable import/first */
 import * as Network from 'expo-network';
@@ -64,7 +64,6 @@ import {
   addToQueue,
   currentTrack,
   jumpTo,
-  NIGHT_LEVELS,
   playNight,
   playQueue,
   QueueTrack,
@@ -190,37 +189,36 @@ describe('the queue', () => {
 });
 
 describe('Night listening', () => {
-  it('plays all night, starting each hymn silent and fading it in', () => {
-    playNight([hymn('quiet', 'quiet.m4a')], NIGHT_LEVELS.softer);
+  it('plays all night, starting each hymn silent and fading it in, then as loud as the phone is set', () => {
+    playNight([hymn('usual', 'usual.m4a')]);
     expect(snapshot().repeat).toBe('all');
     expect(lastVolume()).toBe(0);
     status(4, 300);
-    const halfway = lastVolume();
+    expect(lastVolume()).toBeCloseTo(0.5, 2);
     status(20, 300);
-    expect(halfway).toBeGreaterThan(0);
-    expect(lastVolume()).toBeCloseTo(NIGHT_LEVELS.softer, 2);
+    expect(lastVolume()).toBe(1);
     // and fades out at the end
     status(297, 300);
-    expect(lastVolume()).toBeLessThan(NIGHT_LEVELS.softer);
+    expect(lastVolume()).toBeLessThan(1);
   });
 
-  it('plays a loud recording as softly as a quiet one', () => {
-    playNight([hymn('quiet', 'quiet.m4a'), hymn('loud', 'loud.m4a')], NIGHT_LEVELS.softer);
+  it('brings a loud recording down to the usual loudness, and leaves a quiet one as it is', () => {
+    playNight([hymn('quiet', 'quiet.m4a'), hymn('loud', 'loud.m4a')]);
     status(20, 300);
-    const quiet = lastVolume();
+    expect(lastVolume()).toBe(1);
     mockEngine.events!.trackChanged(loaded()[1].id);
     status(20, 300);
-    // 12 dB louder, so played at a quarter of the volume
-    expect(lastVolume()).toBeCloseTo(quiet / 10 ** (12 / 20), 3);
+    // 6 dB louder than the usual (the middle of the recordings), so played at half the volume
+    expect(lastVolume()).toBeCloseTo(10 ** (-6 / 20), 3);
   });
 
   it('goes back to full volume when turned off, and any other playing turns it off', () => {
-    playNight([hymn('quiet', 'quiet.m4a')], NIGHT_LEVELS.soft);
+    playNight([hymn('loud', 'loud.m4a')]);
     stopNight();
     expect(lastVolume()).toBe(1);
-    playNight([hymn('quiet', 'quiet.m4a')], NIGHT_LEVELS.soft);
+    playNight([hymn('loud', 'loud.m4a')]);
     playQueue([hymn('a')]);
-    expect(snapshot().night).toBeNull();
+    expect(snapshot().night).toBe(false);
     status(1, 100);
     expect(lastVolume()).toBe(1);
   });
@@ -267,7 +265,7 @@ describe('carrying on where a long recording was left', () => {
     playQueue([long()]);
     status(0, 1200);
     status(500, 1200);
-    playNight([long()], NIGHT_LEVELS.soft);
+    playNight([long()]);
     status(0, 1200);
     expect(mockEngine.seekTo).not.toHaveBeenCalled();
   });

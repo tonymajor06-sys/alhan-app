@@ -108,11 +108,8 @@ export const strings = {
     nightListening: '🌙 Night listening',
     nightListeningOn: '🌙 Night listening is on',
     nightListeningDesc:
-      'For falling asleep to your hymns. The playlist plays all night, every recording is evened out so none is louder than the others, each one fades in gently, and it grows softer over the first hour. Turn your phone’s volume down to a comfortable level first: Night listening never goes above it.',
+      'For falling asleep to your hymns. The playlist plays all night, and no hymn comes in louder than the one before: the loud recordings are evened out with the rest, and each hymn fades in gently. Set your phone’s volume to how loud you want it.',
     nightDownloadHint: 'Download the playlist first, so it keeps playing if the internet drops during the night.',
-    nightSoft: 'Soft',
-    nightSofter: 'Softer',
-    nightSoftest: 'Softest',
     startNight: '🌙 Start',
     stopNight: 'Turn off',
     share: '↗ Share',
@@ -247,11 +244,8 @@ export const strings = {
     nightListening: '🌙 الاستماع ليلاً',
     nightListeningOn: '🌙 الاستماع ليلاً يعمل',
     nightListeningDesc:
-      'لتنام على صوت الألحان. تُشغَّل قائمة التشغيل طوال الليل، ويُضبط صوت كل تسجيل حتى لا يعلو أحدها على الآخر، ويبدأ كل لحن بهدوء، ويخفت الصوت قليلاً خلال الساعة الأولى. اخفض صوت هاتفك إلى مستوى مريح أولاً، فالاستماع ليلاً لا يتجاوزه أبداً.',
+      'لتنام على صوت الألحان. تُشغَّل قائمة التشغيل طوال الليل، ولا يأتي لحن أعلى صوتًا من الذي قبله: تُضبط التسجيلات العالية مع الباقي، ويبدأ كل لحن بهدوء. اضبط صوت هاتفك على المستوى الذي تريده.',
     nightDownloadHint: 'نزّل قائمة التشغيل أولاً حتى يستمر التشغيل إذا انقطع الإنترنت أثناء الليل.',
-    nightSoft: 'هادئ',
-    nightSofter: 'أهدأ',
-    nightSoftest: 'الأهدأ',
     startNight: '🌙 ابدأ',
     stopNight: 'إيقاف',
     share: '↗ مشاركة',
@@ -1614,13 +1608,13 @@ export const createAlhanStyles = (colors: AlhanPalette) => StyleSheet.create({
     lineHeight: 22,
     color: colors.text,
   },
+  nightButtons: {
+    gap: 8,
+  },
   nightHint: {
     fontSize: 14,
     lineHeight: 20,
     color: colors.muted,
-  },
-  nightLevels: {
-    gap: 8,
   },
   playlistRow: {
     paddingHorizontal: 14,

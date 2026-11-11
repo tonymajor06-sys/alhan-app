@@ -8,26 +8,14 @@ import { playlistTracks } from '@/components/playlist-tracks';
 import { titleLines } from '@/data/hymn-titles';
 import { useAlhanColors, useThemedStyles } from '@/hooks/use-alhan-colors';
 import { canDownload, downloadAll, useAudioDownloads } from '@/hooks/use-audio-downloads';
-import { currentTrack, cycleRepeat, NIGHT_LEVELS, playNight, playQueue, stopNight, trackKey, useAudioQueue } from '@/hooks/use-audio-queue';
+import { currentTrack, cycleRepeat, playNight, playQueue, stopNight, trackKey, useAudioQueue } from '@/hooks/use-audio-queue';
 import { audioFor, deletePlaylist, findHymn, movePlaylistItem, playlistById, removePlaylistItem, renamePlaylist, usePlaylists } from '@/hooks/use-playlist';
 import { useSettings } from '@/hooks/use-settings';
-import { readSetting, writeSetting } from '@/hooks/settings-storage';
 
 // The playlists live on the phone, so there are no pages to build ahead of time for the website
 export async function generateStaticParams(): Promise<Record<string, string>[]> {
   return [];
 }
-
-type NightLevel = keyof typeof NIGHT_LEVELS;
-const NIGHT_LEVEL_KEY = 'nightLevel';
-const savedNightLevel = (): NightLevel => {
-  try {
-    const saved = readSetting(NIGHT_LEVEL_KEY);
-    return saved && saved in NIGHT_LEVELS ? (saved as NightLevel) : 'softer';
-  } catch {
-    return 'softer';
-  }
-};
 
 // One playlist: Play, Shuffle and Repeat, its hymns in order (move, remove), rename and delete
 export default function PlaylistScreen() {
@@ -46,7 +34,6 @@ export default function PlaylistScreen() {
   const downloads = useAudioDownloads();
   const [renaming, setRenaming] = useState<string | null>(null);
   const [nightOpen, setNightOpen] = useState(false);
-  const [nightLevel, setNightLevel] = useState<NightLevel>(savedNightLevel);
 
   if (!list) return <Redirect href="/playlist" />;
 
@@ -71,12 +58,7 @@ export default function PlaylistScreen() {
 
   const startNight = () => {
     pressFeedback();
-    try {
-      writeSetting(NIGHT_LEVEL_KEY, nightLevel);
-    } catch {
-      // only the choice is forgotten
-    }
-    playNight(playlistTracks(list, lang), NIGHT_LEVELS[nightLevel]);
+    playNight(playlistTracks(list, lang));
     setNightOpen(false);
   };
 
@@ -159,7 +141,7 @@ export default function PlaylistScreen() {
               <Text style={styles.controlText}>{downloadingAny ? t.downloading : t.downloadAll}</Text>
             </Pressable>
           ) : null}
-          {/* Night listening: the playlist all night, softly (see playNight) */}
+          {/* Night listening: the playlist all night, no hymn louder than the one before (see playNight) */}
           {queue.night && playingHere ? (
             <View style={[styles.nightPanel, rowDirection, { alignItems: 'center', justifyContent: 'space-between' }]}>
               <Text style={[styles.controlText, styles.controlTextActive]}>{t.nightListeningOn}</Text>
@@ -178,27 +160,8 @@ export default function PlaylistScreen() {
             <View style={styles.nightPanel}>
               <Text style={[styles.controlText, textAlign]}>{t.nightListening}</Text>
               <Text style={[styles.nightText, textAlign]}>{t.nightListeningDesc}</Text>
-              <View style={[styles.nightLevels, rowDirection]}>
-                {(Object.keys(NIGHT_LEVELS) as NightLevel[]).map((level) => {
-                  const label = level === 'soft' ? t.nightSoft : level === 'softer' ? t.nightSofter : t.nightSoftest;
-                  const selected = level === nightLevel;
-                  return (
-                    <Pressable
-                      key={level}
-                      onPress={() => {
-                        tapFeedback();
-                        setNightLevel(level);
-                      }}
-                      accessibilityRole="radio"
-                      accessibilityState={{ selected }}
-                      style={[styles.controlButton, { flexBasis: 0 }, selected && styles.controlButtonActive]}>
-                      <Text style={[styles.controlText, selected && styles.controlTextActive]}>{label}</Text>
-                    </Pressable>
-                  );
-                })}
-              </View>
               {toDownload.length > 0 ? <Text style={[styles.nightHint, textAlign]}>{t.nightDownloadHint}</Text> : null}
-              <View style={[styles.nightLevels, rowDirection]}>
+              <View style={[styles.nightButtons, rowDirection]}>
                 <Pressable
                   onPress={() => setNightOpen(false)}
                   accessibilityRole="button"
