@@ -29,6 +29,7 @@ jest.mock('react-native', () => {
   const listeners: ((s: string) => void)[] = [];
   return {
     Platform: { OS: 'ios' },
+    Alert: { alert: jest.fn() },
     AppState: {
       currentState: 'active',
       addEventListener: (_: string, cb: (s: string) => void) => listeners.push(cb),
@@ -36,6 +37,16 @@ jest.mock('react-native', () => {
     },
   };
 });
+// The connection, switched by the tests
+jest.mock('expo-network', () => {
+  const listeners: ((s: object) => void)[] = [];
+  return {
+    getNetworkStateAsync: () => new Promise(() => {}),
+    addNetworkStateListener: (cb: (s: object) => void) => listeners.push(cb),
+    mockSetOnline: (online: boolean) => listeners.forEach((cb) => cb({ isConnected: online, isInternetReachable: online })),
+  };
+});
+jest.mock('../use-settings', () => ({ getSettings: () => ({ language: 'en' }) }));
 jest.mock('expo-asset', () => ({ Asset: { fromModule: () => ({ uri: '' }) } }));
 jest.mock('expo-sqlite/kv-store', () => {
   const store = new Map<string, string>();
@@ -47,7 +58,8 @@ jest.mock('expo-sqlite/kv-store', () => {
 jest.mock('../../data/audio-loudness', () => ({ audioLoudness: { 'loud.m4a': -11, 'quiet.m4a': -23 } }));
 
 /* eslint-disable import/first */
-import { AppState } from 'react-native';
+import * as Network from 'expo-network';
+import { Alert, AppState } from 'react-native';
 import {
   addToQueue,
   currentTrack,
@@ -211,5 +223,71 @@ describe('Night listening', () => {
     expect(snapshot().night).toBeNull();
     status(1, 100);
     expect(lastVolume()).toBe(1);
+  });
+});
+
+describe('carrying on where a long recording was left', () => {
+  const long = () => hymn('midnight', 'midnight.m4a');
+  const startedAt = () => mockEngine.seekTo.mock.calls.at(-1)?.[0];
+
+  it('picks a long recording up where it was left, and Start over goes back to the beginning', () => {
+    playQueue([long()]);
+    status(0, 1200);
+    status(600, 1200);
+    playQueue([hymn('a')]);
+    playQueue([long()]);
+    status(0, 1200);
+    expect(startedAt()).toBe(600);
+    expect(snapshot().resumedFrom).toBe(600);
+    seekTo(0);
+    expect(snapshot().resumedFrom).toBeNull();
+  });
+
+  it('starts from the beginning once the recording was finished', () => {
+    playQueue([long()]);
+    status(0, 1200);
+    status(1190, 1200);
+    playQueue([hymn('a')]);
+    mockEngine.seekTo.mockClear();
+    playQueue([long()]);
+    status(0, 1200);
+    expect(mockEngine.seekTo).not.toHaveBeenCalled();
+  });
+
+  it('does not resume short hymns, or in Night listening', () => {
+    playQueue([hymn('short')]);
+    status(0, 120);
+    status(60, 120);
+    playQueue([hymn('a')]);
+    mockEngine.seekTo.mockClear();
+    playQueue([hymn('short')]);
+    status(0, 120);
+    expect(mockEngine.seekTo).not.toHaveBeenCalled();
+
+    playQueue([long()]);
+    status(0, 1200);
+    status(500, 1200);
+    playNight([long()], NIGHT_LEVELS.soft);
+    status(0, 1200);
+    expect(mockEngine.seekTo).not.toHaveBeenCalled();
+  });
+});
+
+describe('with no internet', () => {
+  const setOnline = (online: boolean) => (Network as unknown as { mockSetOnline: (o: boolean) => void }).mockSetOnline(online);
+  afterEach(() => setOnline(true));
+
+  it('says a hymn that is not downloaded needs the internet, instead of trying to play it', () => {
+    setOnline(false);
+    playQueue([hymn('streamed')]);
+    expect(mockEngine.load).not.toHaveBeenCalled();
+    expect(Alert.alert).toHaveBeenCalledWith('No internet connection', expect.stringContaining('“streamed” isn’t downloaded'));
+  });
+
+  it('still plays a downloaded hymn', () => {
+    setOnline(false);
+    playQueue([{ ...hymn('saved'), source: { uri: 'file:///audio/saved.m4a' } }]);
+    expect(mockEngine.load).toHaveBeenCalled();
+    expect(Alert.alert).not.toHaveBeenCalled();
   });
 });

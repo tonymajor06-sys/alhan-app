@@ -4,8 +4,9 @@ import { useEffect } from 'react';
 import { Image, Platform, Pressable, ScrollView, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { createAlhanStyles, MiniPlayer, strings } from '@/components/alhan-ui';
+import { createAlhanStyles, hymnHref, MiniPlayer, strings } from '@/components/alhan-ui';
 import { pressFeedback, tapFeedback } from '@/components/haptics';
+import { hymnTracks } from '@/components/hymn-tracks';
 import { learnArabicStrings, learnEnglishStrings, learnStrings } from '@/components/learn-strings';
 import { localDigits, Tile, TileGrid } from '@/components/lists';
 import { StatusBarBlur } from '@/components/status-bar-blur';
@@ -14,13 +15,14 @@ import { homeArt } from '@/constants/home-art';
 import { displayTitle } from '@/data/arabic-titles';
 import { copticMonths, currentSeasonName, formatCopticDate, formatDaysUntil, getSeasonInfo, jdnToCoptic, kindName, tuneName } from '@/data/coptic-calendar';
 import { guideStrings } from '@/data/deacon-guide';
+import { followAlong, tonightJdn } from '@/data/follow-along';
 import { faithStrings } from '@/data/faith-guide';
 import { mainCategories, seasons } from '@/data/hymns';
 import { saintsStrings } from '@/data/saints';
 import { useAlhanColors, useThemedStyles } from '@/hooks/use-alhan-colors';
-import { currentTrack, useAudioQueueSelect } from '@/hooks/use-audio-queue';
+import { currentTrack, playQueue, useAudioQueueSelect } from '@/hooks/use-audio-queue';
 import { usePlaylists } from '@/hooks/use-playlist';
-import { useSettings } from '@/hooks/use-settings';
+import { updateSettings, useSettings } from '@/hooks/use-settings';
 import { useTodayJdn } from '@/hooks/use-today';
 
 export default function HomeScreen() {
@@ -148,6 +150,25 @@ export default function HomeScreen() {
               </View>
             ) : null}
           </View>
+        </Pressable>
+
+        {/* Tonight's Midnight Praises in one tap: the whole service on one page (Follow Along), recordings playing */}
+        <Pressable
+          onPress={() => {
+            pressFeedback();
+            const night = tonightJdn();
+            const plan = followAlong('midnight', night);
+            const tracks = hymnTracks(plan.hymns, lang);
+            const first = (tracks[0] && plan.hymns.find((h) => h.id === tracks[0].hymnId)) ?? plan.hymns[0];
+            if (!first) return;
+            updateSettings({ followAlong: true });
+            if (tracks.length) playQueue(tracks, 0);
+            router.push(hymnHref(first.id, undefined, { kind: 'midnight', night }));
+          }}
+          accessibilityRole="button"
+          accessibilityHint={t.tonightPraisesHint}
+          style={({ pressed }) => [styles.followOrderButton, { marginTop: 14 }, pressed && styles.pressed]}>
+          <Text style={styles.followOrderButtonText}>{t.tonightPraises}</Text>
         </Pressable>
 
         <View style={styles.homeBody}>

@@ -6,6 +6,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { goBackOrHome, languageLabels, openHymnPage, strings, withCopticFont } from '@/components/alhan-ui';
 import { BusyPulse } from '@/components/busy-pulse';
 import { pressFeedback, tapFeedback } from '@/components/haptics';
+import { ResumeNote } from '@/components/resume-note';
 import { SeekBar } from '@/components/seek-bar';
 import { AlhanPalette } from '@/constants/alhan-colors';
 import { homeArt } from '@/constants/home-art';
@@ -112,6 +113,7 @@ export default function NowPlayingScreen() {
           playing={playing && !isBuffering}
           rate={queue.rate}
         />
+        <ResumeNote lang={lang} />
 
         <View style={[styles.controls, rowDirection]}>
           {button(t.shuffle, '⤨', () => setShuffle(!queue.shuffle), { active: queue.shuffle, disabled: queue.tracks.length < 2 })}

@@ -76,6 +76,9 @@ const subscribe = (listener: () => void) => {
   return () => listeners.delete(listener);
 };
 
+// The settings outside a screen (e.g. the player's messages)
+export const getSettings = (): Settings => settings;
+
 export function useSettings(): Settings {
   return useSyncExternalStore(subscribe, () => settings, () => settings);
 }

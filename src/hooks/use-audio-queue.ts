@@ -1,13 +1,15 @@
 import type { AudioSource, AudioStatus } from 'expo-audio';
 import { Asset } from 'expo-asset';
+import * as Network from 'expo-network';
 import { useSyncExternalStore } from 'react';
-import { AppState, Platform } from 'react-native';
+import { Alert, AppState, Platform } from 'react-native';
 
 import { audioLoudness } from '../data/audio-loudness';
 import { LanguageType } from '../data/hymns';
 import { createAudioEngine } from './audio-engine';
 import type { AudioEngine, EngineStatus, EngineTrack } from './audio-engine-types';
-import { writeSetting } from './settings-storage';
+import { readSetting, writeSetting } from './settings-storage';
+import { getSettings } from './use-settings';
 
 export interface QueueTrack {
   hymnId: string;
@@ -35,6 +37,8 @@ export interface QueueState {
   rate: number;
   // Night listening: how soft (from NIGHT_LEVELS) and when it started; null when off
   night: { level: number; startedAt: number } | null;
+  // Where a long recording was picked up from, where it was left last time (null when it started from the beginning)
+  resumedFrom: number | null;
   // isBuffering: waiting for the recording to load or stream in, so the play button can show it is working
   status: Pick<AudioStatus, 'playing' | 'currentTime' | 'duration' | 'isBuffering'>;
 }
@@ -56,6 +60,7 @@ let state: QueueState = {
   unshuffled: null,
   rate: 1,
   night: null,
+  resumedFrom: null,
   status: { playing: false, currentTime: 0, duration: 0, isBuffering: false },
 };
 const listeners = new Set<() => void>();
@@ -134,11 +139,49 @@ const rememberLastPlayed = (track: QueueTrack) => {
   }
 };
 
-// The queue moved to another track: show it from its start
+// Long recordings (the Midnight Praises, a whole liturgy) carry on where they were left, like a podcast: the place
+// is saved every few seconds and on pause, and forgotten once the recording is finished
+const POSITIONS_KEY = 'audioPositions';
+const RESUME_MIN_DURATION = 240;
+// Not worth resuming in the first or last half minute
+const RESUME_MARGIN = 30;
+const MAX_POSITIONS = 60;
+let positions: Record<string, number> = (() => {
+  try {
+    return JSON.parse(readSetting(POSITIONS_KEY) ?? '{}') as Record<string, number>;
+  } catch {
+    return {};
+  }
+})();
+let lastSaved = 0;
+const savePosition = (file: string | undefined, currentTime: number, duration: number) => {
+  if (!file || !(duration >= RESUME_MIN_DURATION)) return;
+  const finished = currentTime < RESUME_MARGIN || currentTime > duration - RESUME_MARGIN;
+  if (finished ? positions[file] === undefined : Math.abs((positions[file] ?? -1) - currentTime) < 1) return;
+  const { [file]: _old, ...rest } = positions;
+  // The newest last, so the oldest are dropped first
+  positions = finished ? rest : { ...rest, [file]: Math.round(currentTime) };
+  const keys = Object.keys(positions);
+  if (keys.length > MAX_POSITIONS) positions = Object.fromEntries(keys.slice(-MAX_POSITIONS).map((k) => [k, positions[k]]));
+  try {
+    writeSetting(POSITIONS_KEY, JSON.stringify(positions));
+  } catch {
+    // only the place is lost
+  }
+};
+const saveCurrentPosition = () => savePosition(state.tracks[state.index]?.file, state.status.currentTime, state.status.duration);
+// Waiting for the recording to load to jump to where it was left
+let pendingResume: { uid: string | undefined; at: number } | null = null;
+
+// The queue moved to another track: show it from its start (or where it was left)
 const showTrack = (index: number, playing: boolean) => {
   const track = state.tracks[index];
   if (!track) return;
-  setState({ index, status: { playing, currentTime: 0, duration: 0, isBuffering: playing } });
+  saveCurrentPosition();
+  const saved = track.file ? positions[track.file] : undefined;
+  // Night listening always starts a recording from the beginning, to fade it in
+  pendingResume = saved !== undefined && !state.night ? { uid: track.uid, at: saved } : null;
+  setState({ index, resumedFrom: null, status: { playing, currentTime: 0, duration: 0, isBuffering: playing } });
   rememberLastPlayed(track);
   // Night listening starts each recording silent and fades it in
   getEngine().setVolume(volumeAt(0, 0));
@@ -146,6 +189,20 @@ const showTrack = (index: number, playing: boolean) => {
 
 const onStatus = (s: EngineStatus) => {
   if (state.night) getEngine().setVolume(volumeAt(s.currentTime, s.duration));
+  const track = state.tracks[state.index];
+  // The recording has loaded (a fresh status near its start): jump to where it was left
+  if (pendingResume && pendingResume.uid === track?.uid && s.duration > 0 && s.currentTime < 5) {
+    const { at } = pendingResume;
+    pendingResume = null;
+    if (s.duration >= RESUME_MIN_DURATION && at > RESUME_MARGIN && at < s.duration - RESUME_MARGIN) {
+      getEngine().seekTo(at);
+      return setState({ resumedFrom: at, status: { ...s, currentTime: at } });
+    }
+  }
+  if (Math.abs(s.currentTime - lastSaved) >= 10) {
+    lastSaved = s.currentTime;
+    savePosition(track?.file, s.currentTime, s.duration);
+  }
   // In the background only play/pause is passed on (the screens catch up on the position when the app opens)
   if (inBackground && s.playing === state.status.playing) {
     state = { ...state, status: s };
@@ -220,7 +277,48 @@ export function stopNight() {
   getEngine().setVolume(1);
 }
 
+// A recording that is not downloaded streams; with no internet, say so instead of a play button that does nothing
+const streams = (t: QueueTrack | undefined) => !!t && /^https?:/.test(sourceUrl(t.source));
+const offlineStrings = {
+  en: {
+    title: 'No internet connection',
+    message: (name: string) =>
+      `“${name}” isn’t downloaded, so it needs the internet to play. When you’re back online, tap Download on its page (or Download all on a playlist) to keep it for listening offline.`,
+  },
+  ar: {
+    title: 'لا يوجد اتصال بالإنترنت',
+    message: (name: string) =>
+      `«${name}» غير منزَّل، لذلك يحتاج إلى الإنترنت لتشغيله. عندما تتصل بالإنترنت مرة أخرى، اضغط تنزيل في صفحته (أو تنزيل الكل في قائمة التشغيل) لتستمع إليه بدون إنترنت.`,
+  },
+};
+// Kept up to date as the connection comes and goes, so playing never waits for a check (unknown counts as online)
+let offline = false;
+try {
+  const apply = (net: Network.NetworkState | undefined) => {
+    offline = net?.isConnected === false || net?.isInternetReachable === false;
+  };
+  Network.getNetworkStateAsync().then(apply, () => {});
+  Network.addNetworkStateListener(apply);
+} catch {
+  // no connection information on this platform: always try to play
+}
+const warnOffline = (track: QueueTrack) => {
+  const t = offlineStrings[getSettings().language] ?? offlineStrings.en;
+  if (Platform.OS === 'web') globalThis.alert?.(`${t.title}\n\n${t.message(track.title)}`);
+  else Alert.alert(t.title, t.message(track.title));
+};
+// Runs `go` unless `track` streams and there is no internet
+const whenPlayable = (track: QueueTrack | undefined, go: () => void) => {
+  if (offline && track && streams(track)) return warnOffline(track);
+  go();
+};
+
 function startQueue(tracks: QueueTrack[], startIndex: number, origin: QueueState['origin'], shuffle?: boolean) {
+  const first = shuffle ? undefined : tracks[Math.min(Math.max(0, startIndex), tracks.length - 1)];
+  whenPlayable(first, () => loadQueue(tracks, startIndex, origin, shuffle));
+}
+
+function loadQueue(tracks: QueueTrack[], startIndex: number, origin: QueueState['origin'], shuffle?: boolean) {
   const on = shuffle ?? state.shuffle;
   const all = withUids(tracks);
   let index = Math.min(Math.max(0, startIndex), all.length - 1);
@@ -252,10 +350,11 @@ export function setShuffle(on: boolean) {
   syncQueue();
 }
 
-const goTo = (index: number, autoplay: boolean) => {
-  showTrack(index, autoplay);
-  getEngine().skipTo(index, autoplay);
-};
+const goTo = (index: number, autoplay: boolean) =>
+  whenPlayable(state.tracks[index], () => {
+    showTrack(index, autoplay);
+    getEngine().skipTo(index, autoplay);
+  });
 
 // Jump straight to a track in the queue (the Up Next list)
 export function jumpTo(index: number) {
@@ -296,6 +395,7 @@ export function queueAfterCurrent(tracks: QueueTrack[]) {
 export function togglePlay() {
   if (state.tracks.length === 0) return;
   if (state.status.playing) {
+    saveCurrentPosition();
     getEngine().pause();
     setState({ status: { ...state.status, playing: false } });
   } else {
@@ -311,8 +411,9 @@ export function seekBy(seconds: number) {
 
 export function seekTo(seconds: number) {
   if (state.tracks.length === 0) return;
+  pendingResume = null;
   getEngine().seekTo(Math.max(0, seconds));
-  setState({ status: { ...state.status, currentTime: Math.max(0, seconds) } });
+  setState({ resumedFrom: null, status: { ...state.status, currentTime: Math.max(0, seconds) } });
 }
 
 export function setPlaybackRate(rate: number) {
@@ -336,6 +437,7 @@ export function setRepeat(repeat: RepeatMode) {
 
 export function stopQueue() {
   if (!engine) return;
+  saveCurrentPosition();
   engine.stop();
   setState({ tracks: [], index: 0, origin: 'single', unshuffled: null, night: null, status: { playing: false, currentTime: 0, duration: 0, isBuffering: false } });
 }

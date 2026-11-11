@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { copticFont } from '@/components/alhan-ui';
 import { useCarLibrary } from '@/components/car-library';
+import { ErrorScreen } from '@/components/error-screen';
 import { useHomeScreenQuickActions } from '@/components/quick-actions';
 import { alhanLightColors } from '@/constants/alhan-colors';
 import { useAlhanColors } from '@/hooks/use-alhan-colors';
@@ -12,6 +13,9 @@ import { useSettings } from '@/hooks/use-settings';
 import { useTodayJdn } from '@/hooks/use-today';
 import { syncFeastReminders, useReminderNavigation } from '@/notifications/feast-reminders';
 import { syncSeasonWidget } from '@/widgets/season-widget-sync';
+
+// A page that hits a bug shows a "Something went wrong" screen (Try again, Go to Home) instead of a blank app
+export const ErrorBoundary = ErrorScreen;
 
 export default function RootLayout() {
   const { language, feastReminders } = useSettings();
@@ -81,6 +85,7 @@ export default function RootLayout() {
           <Stack.Screen name="hymn/[id]" options={{ fullScreenGestureEnabled: false }} />
           <Stack.Screen name="follow/[kind]" />
           <Stack.Screen name="playlist/[id]" />
+          <Stack.Screen name="favorites" />
           {/* The full player slides up over everything, like a music app's */}
           <Stack.Screen name="now-playing" options={{ presentation: 'modal', animation: 'slide_from_bottom' }} />
           <Stack.Screen name="saints" />

@@ -14,7 +14,7 @@ import { BookColumns, BookHiding, FollowAlongSwitch, ServiceBook, ServiceBookCon
 import { needsPreparing, prepareRecording, sendRecording } from '../hooks/send-recording';
 import { BusyPulse } from './busy-pulse';
 import { followStrings } from './follow-strings';
-import { pressFeedback } from './haptics';
+import { pressFeedback, tapFeedback } from './haptics';
 import { useAlhanColors, useThemedStyles } from '../hooks/use-alhan-colors';
 import {
   audioSourceFor,
@@ -36,6 +36,7 @@ import {
   trackKey,
   useAudioQueue,
 } from '../hooks/use-audio-queue';
+import { isFavorite, toggleFavorite, useFavorites } from '../hooks/use-favorites';
 import { isInAnyPlaylist, PlaylistItem, usePlaylists } from '../hooks/use-playlist';
 import { PlaylistPicker } from './playlist-picker';
 import { TEXT_SCALE_MAX, TEXT_SCALE_MIN, updateSettings, useSettings } from '../hooks/use-settings';
@@ -60,6 +61,7 @@ import {
   withCopticFont,
   withoutNumber,
 } from './alhan-ui';
+import { ResumeNote } from './resume-note';
 import { SeekBar } from './seek-bar';
 
 const SPEEDS = [0.5, 0.75, 1];
@@ -112,6 +114,7 @@ export function HymnReader({
   const rowDirection = isRTL ? styles.rowReverse : styles.row;
   const textAlign = isRTL ? styles.alignRight : styles.alignLeft;
 
+  const favorite = isFavorite(useFavorites(), hymn.id);
   const [activeLanguage, setActiveLanguage] = useState<LanguageType>(
     initialLanguage ?? settings.hymnLanguage ?? defaultHymnLanguage(lang)
   );
@@ -661,6 +664,17 @@ export function HymnReader({
           </View>
 
           <Pressable
+            onPress={() => {
+              tapFeedback();
+              toggleFavorite(hymn.id);
+            }}
+            accessibilityRole="button"
+            accessibilityLabel={t.favorite}
+            accessibilityState={{ selected: favorite }}
+            style={({ pressed }) => [styles.actionToolbarButton, styles.moreCircleButton, pressed && styles.pressed]}>
+            <Text style={styles.moreCircleText}>{favorite ? '♥' : '♡'}</Text>
+          </Pressable>
+          <Pressable
             onPress={() => setSheet('more')}
             accessibilityRole="button"
             accessibilityLabel={t.more}
@@ -812,6 +826,7 @@ export function HymnReader({
                   playing={readerIsCurrent && queue.status.playing && !queue.status.isBuffering}
                   rate={queue.rate}
                 />
+                {readerIsCurrent ? <ResumeNote lang={lang} /> : null}
               </View>
             </View>
             {recordings.length > 1 ? (

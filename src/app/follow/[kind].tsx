@@ -2,16 +2,16 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { ReactNode, useMemo, useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
-import { createAlhanStyles, goBackOrHome, hymnHref, recordingTitle, ScreenShell, strings, withCopticFont } from '@/components/alhan-ui';
+import { createAlhanStyles, goBackOrHome, hymnHref, ScreenShell, strings, withCopticFont } from '@/components/alhan-ui';
 import { followStrings } from '@/components/follow-strings';
+import { hymnTracks } from '@/components/hymn-tracks';
 import { displayTitle } from '@/data/arabic-titles';
 import { formatCopticDate, toArabicDigits } from '@/data/coptic-calendar';
 import { followAlong, FollowSection, PraiseKind, praiseKinds, tonightJdn, weekdayNames } from '@/data/follow-along';
 import { titleLines } from '@/data/hymn-titles';
-import { Hymn, LanguageType } from '@/data/hymns';
+import { Hymn } from '@/data/hymns';
 import { useThemedStyles } from '@/hooks/use-alhan-colors';
-import { audioSourceFor } from '@/hooks/use-audio-downloads';
-import { playQueue, QueueTrack } from '@/hooks/use-audio-queue';
+import { playQueue } from '@/hooks/use-audio-queue';
 import { useSettings } from '@/hooks/use-settings';
 
 // Midnight and Vesper Praises each get their own page in the web version (/follow/midnight, /follow/vesper)
@@ -49,14 +49,7 @@ export default function FollowScreen() {
   const open = (hymn: Hymn) => router.push(hymnHref(hymn.id, undefined, { kind, night: jdn }));
 
   // Every recording in tonight's order, Coptic first (the praises are sung in Coptic)
-  const preferred: LanguageType[] = ['coptic', lang === 'ar' ? 'arabic' : 'english', 'arabic', 'english'];
-  const tracks = plan.hymns.flatMap((hymn): QueueTrack[] => {
-    const version = preferred.map((l) => hymn.versions.find((v) => v.language === l && v.audio)).find(Boolean) ?? hymn.versions.find((v) => v.audio);
-    const source = version?.audio ? audioSourceFor(version.audio) : null;
-    return version?.audio && source
-      ? [{ hymnId: hymn.id, language: version.language, title: recordingTitle(titleLines(hymn, lang).main, version.audio, version.language, lang), source, file: version.audio }]
-      : [];
-  });
+  const tracks = hymnTracks(plan.hymns, lang);
 
   const sectionTitle = (section: FollowSection) =>
     section.key === 'praises' ? ft.praises : section.key === 'conclusion' ? ft.conclusion : ft.day(dayName);
