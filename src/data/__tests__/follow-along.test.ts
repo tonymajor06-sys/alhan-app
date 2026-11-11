@@ -1,4 +1,4 @@
-import { followAlong, doxologyGroupId, praiseJdnFor, weekdayOf } from '../follow-along';
+import { followAlong, doxologyGroupId, praiseJdnFor, tonightJdn, weekdayOf } from '../follow-along';
 import { gregorianToJdn } from '../coptic-calendar';
 import { bookParts, isPraisesBook, partKind, serviceBook, withoutHidden } from '../service-book';
 
@@ -105,5 +105,16 @@ describe('Follow along: headings when parts are hidden', () => {
     ];
     const kept = withoutHidden(book, ['doxologies'], 'annual-midnight-fourth-canticle').map((e) => (e.kind === 'part' ? e.hymn.id : e.id));
     expect(kept).toEqual(['outer', 'inner', 'annual-midnight-first-canticle', 'last', 'annual-midnight-fourth-canticle']);
+  });
+});
+
+describe('Follow along: the Introduction to the Creed is not in the night', () => {
+  it('is left out of every Midnight Praises of the year, Kiahk included, and the night still ends', () => {
+    const start = tonightJdn(new Date(2026, 8, 11));
+    for (let jdn = start; jdn < start + 366; jdn++) {
+      const plan = followAlong('midnight', jdn);
+      expect(plan.hymns.filter((h) => /introduction-to-the-creed$/.test(h.id.split('@')[0]))).toEqual([]);
+      expect(plan.sections.find((s) => s.key === 'conclusion')?.hymns.length).toBeGreaterThan(0);
+    }
   });
 });

@@ -75,7 +75,8 @@ const hymnById = (id: string): Hymn | undefined => {
   return anywhere.get(id);
 };
 // Readings and prayers in a service's list: following along shows only the hymns
-const notSung = /-(gospel-according-to-st-luke|luke-\d[-\d]*|our-father|the-short-blessing|concluding-prayer|the-orthodox-creed)$/;
+// Left out of the night's order. The Introduction to the Creed was taken out at the owner's request (2026-11-10).
+const notSung = /-(gospel-according-to-st-luke|luke-\d[-\d]*|our-father|the-short-blessing|concluding-prayer|the-orthodox-creed|introduction-to-the-creed)$/;
 // The doxologies, one after another, become one entry that opens to show them all
 export const doxologyGroupId = 'follow-doxologies';
 const isDoxology = (h: Hymn) => /-doxology-/.test(h.id.split('@')[0]);
@@ -316,7 +317,8 @@ export function followAlong(kind: PraiseKind, jdn: number): FollowAlong {
     const sections = [
       { key: 'praises' as const, hymns: list.slice(0, fourth + 1) },
       { key: 'day' as const, hymns: list.slice(fourth + 1, cut) },
-      { key: 'conclusion' as const, hymns: list.slice(cut) },
+      // The Introduction to the Creed only marks where the end begins; it is not shown
+      { key: 'conclusion' as const, hymns: list.slice(cut).filter((h) => !notSung.test(h.id.split('@')[0])) },
     ].filter((s) => s.hymns.length);
     return { kind, jdn, weekday, season, service: own!, sections, hymns: flatten(sections) };
   }
@@ -337,9 +339,8 @@ export function followAlong(kind: PraiseKind, jdn: number): FollowAlong {
   const rest = general.slice(fourth + 1);
   // The Psali for the Virgin Mary on the 21st of the Coptic month comes right after the Fourth Canticle
   const on21st = rest.filter((h) => /21st/.test(h.id) && copticDay === 21);
-  // The end, as Spirit & Truth has it, with only what is sung (no Creed, prayers or blessing):
-  // the Introduction to the Creed, then Holy Holy Holy and the Concluding Hymn
-  const conclusion = [...shared('palmsunday-vespers-introduction-to-the-creed'), ...rest.filter((h) => !/21st/.test(h.id))];
+  // The end, with only what is sung (no Creed, prayers or blessing): Holy Holy Holy and the Concluding Hymn
+  const conclusion = rest.filter((h) => !/21st/.test(h.id));
   const dayHymns = [
     ...on21st,
     ...(season.id === 'kiahk' ? kiahkPsalis(weekday) : []),
