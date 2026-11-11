@@ -67,12 +67,12 @@ Several assistants (Claude Code, Antigravity) work in this repo. Commit finished
 
 ## Releases: every other Friday (from 2026-11-13)
 
-The app and the website are updated together every other Friday: 2026-11-13, 11-27, 12-11, 12-25, 2027-01-08, and every 14 days after. Work in between is committed and pushed as usual; nothing goes to the stores or the website in between unless the owner asks (an urgent fix).
+The app (iOS for now) and the website are updated together every other Friday: 2026-11-13, 11-27, 12-11, 12-25, 2027-01-08, and every 14 days after. Work in between is committed and pushed as usual; nothing goes to the stores or the website in between unless the owner asks (an urgent fix).
 
 1. `git pull`, then `npx expo lint`, `npx tsc --noEmit` and `npx jest`; nothing goes out with a failure.
 2. New recordings: `node scripts/upload-audio-r2.mjs`, then `node scripts/audio-waveforms.mjs` (waveforms and Night listening's loudness).
 3. Raise `version` in `app.json` (1.2.0 with new features, 1.1.1 with only fixes); build numbers count up by themselves (EAS `autoIncrement`).
-4. App: `npx eas-cli@latest build --platform all --profile production --auto-submit`. iOS goes to App Store Connect (send it for review there); Android goes to Google Play's closed testing track as a draft (release it in the Play Console). After a native change (a new library, `app.json` plugins), make a `preview` build and try it on a phone first.
+4. App (iPhone and iPad only for now): `npx eas-cli@latest build --platform ios --profile production --auto-submit`, then send it for review in App Store Connect. After a native change (a new library, `app.json` plugins), make a `preview` build and try it on a phone first. Android is on hold (2026-11-10: the owner is still looking for help with it); don't build or submit Android until the owner says. When it starts, remember that Android Auto (`plugins/with-car-audio.js`) brings a manual Google review that holds every Android update until it passes.
 5. Website: the publish command under Website above.
 6. Commit the version, tag it (`git tag v1.2.0`), and push with tags. The release notes are the commits since the last tag, written short for listeners.
 
