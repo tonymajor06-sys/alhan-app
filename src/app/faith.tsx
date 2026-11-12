@@ -3,6 +3,7 @@ import { router } from 'expo-router';
 import { goBackOrHome, ScreenShell } from '@/components/alhan-ui';
 import { MenuList } from '@/components/menu-list';
 import { faithSections, faithStrings } from '@/data/faith-guide';
+import { kidsStrings } from '@/data/kids-lessons';
 import { schoolStrings } from '@/data/theology-school';
 import { useSettings } from '@/hooks/use-settings';
 
@@ -23,6 +24,8 @@ export default function FaithScreen() {
             desc: section.desc[lang],
             onPress: () => router.push({ pathname: '/faith/[section]', params: { section: section.id } }),
           })),
+          // The children's stories, also here for parents and teachers who don't use Kids mode
+          { key: 'kids', title: kidsStrings[lang].title, desc: kidsStrings[lang].subtitle, onPress: () => router.push('/kids') },
         ]}
       />
     </ScreenShell>

@@ -29,6 +29,8 @@ export interface Settings {
   // What Follow along leaves out of Midnight and Vesper Praises: whole kinds ('doxologies', 'psalis', 'lobsh',
   // 'expositions') and single doxologies by id (see service-book.ts)
   followHidden: string[];
+  // Kids mode: a simpler Home with Kids Corner (Bible stories and quizzes for children) and fewer settings
+  kidMode: boolean;
 }
 
 const STORAGE_KEY = 'alhan-settings';
@@ -49,6 +51,7 @@ const loadSettings = (): Settings => {
     followAlong: false,
     thirdLanguage: null,
     followHidden: [],
+    kidMode: false,
   };
   try {
     const raw = readSetting(STORAGE_KEY);

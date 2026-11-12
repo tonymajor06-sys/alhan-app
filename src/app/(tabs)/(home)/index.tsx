@@ -1,7 +1,7 @@
 import { router, useLocalSearchParams } from 'expo-router';
 import Head from 'expo-router/head';
 import { useEffect } from 'react';
-import { Image, Platform, Pressable, ScrollView, Text, View } from 'react-native';
+import { Image, Platform, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { createAlhanStyles, MiniPlayer, strings } from '@/components/alhan-ui';
@@ -15,6 +15,7 @@ import { displayTitle } from '@/data/arabic-titles';
 import { copticMonths, currentSeasonName, formatCopticDate, formatDaysUntil, getSeasonInfo, jdnToCoptic, kindName, tuneName } from '@/data/coptic-calendar';
 import { guideStrings } from '@/data/deacon-guide';
 import { faithStrings } from '@/data/faith-guide';
+import { kidsStrings } from '@/data/kids-lessons';
 import { mainCategories, seasons } from '@/data/hymns';
 import { saintsStrings } from '@/data/saints';
 import { useAlhanColors, useThemedStyles } from '@/hooks/use-alhan-colors';
@@ -49,7 +50,7 @@ export default function HomeScreen() {
     }
   }, [seasonParam]);
 
-  const tiles = [
+  const allTiles = [
     { key: 'hymns', title: displayTitle(mainCategories[1], lang), desc: t.hymnsDesc, href: '/hymns' as const, image: homeArt.hymns, tab: true },
     { key: 'responses', title: displayTitle(mainCategories[0], lang), desc: t.responsesDesc, href: '/responses' as const, image: homeArt.responses },
     { key: 'saints', title: saintsStrings[lang].title, desc: saintsStrings[lang].subtitle, href: '/saints' as const, image: homeArt.saints },
@@ -62,6 +63,11 @@ export default function HomeScreen() {
       ? [{ key: 'learn-arabic', title: learnArabicStrings.title, desc: learnArabicStrings.subtitle, href: '/learn-arabic' as const, image: homeArt.learnArabic }]
       : [{ key: 'learn-english', title: learnEnglishStrings.title, desc: learnEnglishStrings.subtitle, href: '/learn-english' as const, image: homeArt.learnEnglish }]),
   ];
+  // Kids mode keeps Home short: Kids Corner on top, then hymns, saints, Coptic and playlists
+  const kidMode = settings.kidMode;
+  const kidTiles = ['hymns', 'saints', 'learn', 'playlist'];
+  const tiles = kidMode ? kidTiles.map((key) => allTiles.find((tile) => tile.key === key)!) : allTiles;
+  const k = kidsStrings[lang];
 
   return (
     <View style={styles.root} collapsable={false}>
@@ -152,8 +158,30 @@ export default function HomeScreen() {
 
         <View style={styles.homeBody}>
           <View style={styles.hero}>
-            <Text style={[styles.heroSubtitle, textAlign]}>{t.appSubtitle}</Text>
+            <Text style={[styles.heroSubtitle, textAlign]}>{kidMode ? k.hello : t.appSubtitle}</Text>
           </View>
+          {kidMode ? (
+            <Pressable
+              onPress={() => {
+                tapFeedback();
+                router.push('/kids');
+              }}
+              accessibilityRole="button"
+              accessibilityLabel={`${k.homeTitle}, ${k.homeDesc}`}
+              style={({ pressed }) => [
+                kidStyles.banner,
+                rowDirection,
+                { backgroundColor: colors.gold },
+                pressed && { opacity: 0.85, transform: [{ scale: 0.98 }] },
+              ]}>
+              <Text style={kidStyles.bannerEmoji}>📖</Text>
+              <View style={styles.rowTextWrap}>
+                <Text style={[kidStyles.bannerTitle, textAlign, { color: colors.onGold }]}>{k.homeTitle}</Text>
+                <Text style={[kidStyles.bannerDesc, textAlign, { color: colors.onGold }]}>{k.homeDesc}</Text>
+              </View>
+              <Text style={[kidStyles.bannerChevron, { color: colors.onGold }]}>{isRTL ? '‹' : '›'}</Text>
+            </Pressable>
+          ) : null}
           <TileGrid>
             {tiles.map(({ key, title, desc, href, image, tab }) => (
               <Tile
@@ -166,12 +194,14 @@ export default function HomeScreen() {
               />
             ))}
           </TileGrid>
-          <Pressable
-            onPress={() => router.push('/support')}
-            accessibilityRole="link"
-            style={({ pressed }) => [styles.supportLink, pressed && styles.pressed]}>
-            <Text style={styles.supportLinkText}>{t.supportApp}</Text>
-          </Pressable>
+          {kidMode ? null : (
+            <Pressable
+              onPress={() => router.push('/support')}
+              accessibilityRole="link"
+              style={({ pressed }) => [styles.supportLink, pressed && styles.pressed]}>
+              <Text style={styles.supportLinkText}>{t.supportApp}</Text>
+            </Pressable>
+          )}
         </View>
       </ScrollView>
       <StatusBarBlur />
@@ -179,3 +209,20 @@ export default function HomeScreen() {
     </View>
   );
 }
+
+// Kids mode's Kids Corner button
+const kidStyles = StyleSheet.create({
+  banner: {
+    alignItems: 'center',
+    gap: 14,
+    minHeight: 96,
+    borderRadius: 24,
+    paddingVertical: 18,
+    paddingHorizontal: 20,
+    marginBottom: 16,
+  },
+  bannerEmoji: { fontSize: 44 },
+  bannerTitle: { fontSize: 24, fontWeight: '800' },
+  bannerDesc: { fontSize: 16, fontWeight: '600', marginTop: 2 },
+  bannerChevron: { fontSize: 32, fontWeight: '700' },
+});
