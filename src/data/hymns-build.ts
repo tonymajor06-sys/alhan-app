@@ -26,6 +26,7 @@ import { stAdditions } from './st-hymns';
 import { deaconOrder, hymnOrder, liturgies, liturgyFromMatins, stLiturgyDeacon } from './st-liturgies';
 import { stMore } from './st-more';
 import { stMysteries } from './st-mysteries';
+import { verseLines } from './verse-lines';
 import { stSeasonExtras } from './st-season-extras';
 import { stVesperPraises, vpNewHymns } from './st-vesper-praises';
 import { alleluiaFaiPePiehoou, annualAmoini, concludingLines, praxisReading, psalm150Refrains, seasonDoxologies, SeasonLine } from './seasonal-texts';
@@ -8415,6 +8416,22 @@ if (!(globalThis as { __skipStWording?: boolean }).__skipStWording) {
     }
   };
   for (const group of [...seasons, ...deaconCategories]) for (const service of group.services) reword(service.hymns);
+}
+
+// ---- Verses that line up (2026-11-12, see verse-lines.ts) ----
+// Side by Side pairs verses by their place: hymns with a verse missing in one language (Psalm 150 written one verse to
+// a line, the rites' Arabic in English letters without "People:", the Lent psalis...) get it here.
+// (scripts/verse-lines/dump.mjs turns this off, to find them again.)
+if (!(globalThis as { __skipVerseLines?: boolean }).__skipVerseLines) {
+  const lineUp = (list: Hymn[]) => {
+    for (const hymn of list) {
+      if (hymn.children) lineUp(hymn.children);
+      const fix = verseLines[hymn.id];
+      if (!fix) continue;
+      for (const version of hymn.versions) if (fix[version.language] !== undefined) version.text = fix[version.language];
+    }
+  };
+  for (const group of [...seasons, ...deaconCategories]) for (const service of group.services) lineUp(service.hymns);
 }
 
 // Keep these last: give every hymn a "Coptic in Arabic letters" and an "English in Arabic letters" version
