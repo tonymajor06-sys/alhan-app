@@ -43,6 +43,7 @@ import { TEXT_SCALE_MAX, TEXT_SCALE_MIN, updateSettings, useSettings } from '../
 import { clearVerseTimings, saveVerseTimings, useVerseTimings, verseAt } from '../hooks/use-verse-timings';
 import {
   ChipScroller,
+  copticColumnNudge,
   createAlhanStyles,
   defaultHymnLanguage,
   goBackOrHome,
@@ -435,7 +436,7 @@ export function HymnReader({
     language === 'arabic' || language === 'arabicCoptic' || language === 'arabicEnglish'
       ? styles.arabicText
       : language === 'coptic'
-        ? [styles.alignLeft, styles.copticText]
+        ? [styles.alignLeft, styles.copticText, { paddingTop: columnSize * copticColumnNudge }]
         : styles.alignLeft;
   const copticStyle = effectiveLanguage === 'coptic' ? styles.copticText : null;
   // Verse by verse, so each line sits next to its translation

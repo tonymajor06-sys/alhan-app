@@ -371,6 +371,10 @@ export const readerFont = Platform.select({ ios: 'Georgia', android: 'serif', de
 // Coptic script in the church-book style: a Unicode copy of CS Avva Shenouda, loaded in the root layout.
 // It only has Coptic letters, digits and punctuation, so anything else falls back to the system font.
 export const copticFont = 'AvvaShenouda';
+// Next to a column in the reader's font, the Coptic font's letters sit higher: its line box is much shorter than
+// Georgia's (ascent 53 and descent 1.5 per 100, against 92 and 22), and a line centres the box, not the letters. This much
+// lower lines its first line up with the column beside it (Kata ni khoros, 2026-11-12).
+export const copticColumnNudge = 0.09;
 
 // A run of Coptic words: Coptic letters with their marks, plus the spaces and punctuation between them
 const copticRun = /([\u2C80-\u2CFF\u03E2-\u03EF](?:[\u2C80-\u2CFF\u03E2-\u03EF\u0300-\u036F\uFE20-\uFE2F:.,]|\s(?=[\u2C80-\u2CFF\u03E2-\u03EF]))*)/;

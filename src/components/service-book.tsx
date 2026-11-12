@@ -2,7 +2,7 @@ import { ReactNode, RefObject, useEffect, useRef, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { createAlhanStyles, languageLabels, Sheet, SheetRow, Speaker, toVerses, Verse, withCopticFont } from './alhan-ui';
+import { copticColumnNudge, createAlhanStyles, languageLabels, Sheet, SheetRow, Speaker, toVerses, Verse, withCopticFont } from './alhan-ui';
 import { tapFeedback } from './haptics';
 import { useTabChrome } from './tab-chrome';
 import { AlhanPalette } from '../constants/alhan-colors';
@@ -154,7 +154,7 @@ export function ServiceBook({
     shared.hymnText,
     { fontSize: size, lineHeight: size * 1.55 },
     ARABIC_SCRIPT.includes(language) ? shared.arabicText : shared.alignLeft,
-    language === 'coptic' && shared.copticText,
+    language === 'coptic' && [shared.copticText, { paddingTop: size * copticColumnNudge }],
   ];
   const verseContent = (verse: Verse | undefined) =>
     verse ? (
