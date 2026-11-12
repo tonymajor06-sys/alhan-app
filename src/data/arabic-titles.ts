@@ -2,6 +2,7 @@ import type { AppLanguage } from '@/hooks/use-settings';
 
 import { stSaintTabs } from './st-saints';
 import { stThreeFeastsArabicTitles } from './st-three-feasts';
+import { stRitesArabicTitles } from './st-rites';
 import { vpArabicTitles } from './st-vesper-praises-titles';
 
 // Arabic display names, keyed by the id used in hymns.ts
@@ -284,6 +285,19 @@ const arabicTitles: Record<string, string> = {
   'minorfeasts-3-feasts-commemoration-distribution': 'تذكار الأعياد الثلاثة: التوزيع',
   'minorfeasts-3-feasts-commemoration-midnight': 'تذكار الأعياد الثلاثة: تسبحة نصف الليل',
   ...stThreeFeastsArabicTitles,
+  // Hymns > Rites of Grace and its services (2026-11-12)
+  ...stRitesArabicTitles,
+  rites: 'طقوس النعمة (الأسرار المقدسة)',
+  'rites-baptism': 'المعمودية: الولادة الجديدة',
+  'rites-matrimony': 'سر الزيجة: صلاة الإكليل',
+  'rites-unction': 'مسحة المرضى (القنديل)',
+  'rites-holy-orders': 'الرسامات: من المرتل إلى القمص (سر الكهنوت)',
+  'rites-new-priest': 'استقبال كاهن جديد',
+  'rites-waters': 'تقديس المياه (اللقان)',
+  'rites-prostration': 'صلاة السجدة في عيد العنصرة',
+  'rites-consecration': 'التكريسات',
+  'rites-filling-cup': 'ملء الكأس',
+  'rites-funeral': 'صلاة الجناز',
   ...Object.fromEntries(stSaintTabs.map((tab) => [tab.id, tab.titleAr])),
   ...Object.assign({}, ...stSaintTabs.map((tab) => tab.titlesAr)),
 

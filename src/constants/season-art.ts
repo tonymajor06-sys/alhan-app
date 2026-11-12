@@ -79,6 +79,14 @@ export const seasonArt: Record<string, { image: ImageSourcePropType; about: Reco
       ar: 'الختان · عرس قانا · دخول المسيح الهيكل · البشارة · التجلي',
     },
   },
+  rites: {
+    image: require('../../assets/images/seasons/rites.png'),
+    about: {
+      en: 'The Holy Mysteries: baptism, the wedding crowning, unction, ordinations and more',
+      ar: 'الأسرار المقدسة: المعمودية والإكليل والقنديل والرسامات وغيرها',
+    },
+    card: { en: 'Rites of Grace', ar: 'طقوس النعمة' },
+  },
   other: {
     image: require('../../assets/images/seasons/other.png'),
     about: {

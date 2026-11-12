@@ -484,5 +484,23 @@ svg('other', [
   hand(330, 392), hand(374, 392),
 ].join(''), '#e9cf98');
 
+// Rites of Grace (the Holy Mysteries): the Holy Spirit as a dove coming down on the baptismal font, under the cross
+svg('rites', [
+  rays(240, 150, 24, '#fff3c8', 520, 0.4),
+  copticCross(240, 64, 46, C.gold),
+  `<path d="M240,96 L214,300 M240,96 L266,300 M240,96 L240,300" stroke="${C.goldLight}" stroke-width="3" opacity=".9"/>`,
+  // the dove
+  P('M240,150 C214,134 186,120 166,134 C192,140 212,152 226,164 L240,182 L254,164 C268,152 288,140 314,134 C294,120 266,134 240,150 Z', '#fff'),
+  circle(240, 146, 9, '#fff'),
+  `<circle cx="244" cy="144" r="2" fill="${C.line}"/>`,
+  // the font: a wide stone basin on a column
+  P('M150,300 C150,360 330,360 330,300 Z', C.cream),
+  `<ellipse cx="240" cy="300" rx="92" ry="20" fill="#3d7fc0" stroke="${C.line}" stroke-width="2.5"/>`,
+  `<path d="M170,300 q17,-8 35,0 q17,8 35,0 q17,-8 35,0 q17,8 35,0" fill="none" stroke="#cfe6f7" stroke-width="3"/>`,
+  P('M214,350 L266,350 L274,430 L206,430 Z', C.cream),
+  P('M180,430 L300,430 L310,456 L170,456 Z', C.ochre),
+  copticCross(240, 392, 30, C.gold),
+].join(''), '#e3d3ae');
+
 writeFileSync('svg/list.txt', out.join('\n'));
 console.log(out.join(' '));

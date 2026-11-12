@@ -5,8 +5,8 @@ import { searchHymns } from '../search';
 import { stSaints, stSaintTabs } from '../st-saints';
 
 describe('saint tabs', () => {
-  it('sit in one Other tab after the Minor Feasts of the Lord, Veneration first and the Verses of the Cymbals last', () => {
-    expect(seasons.map((s) => s.id).slice(-2)).toEqual(['minor-feasts', 'other']);
+  it('sit in one Other tab after the Minor Feasts of the Lord and Rites of Grace, Veneration first and the Verses of the Cymbals last', () => {
+    expect(seasons.map((s) => s.id).slice(-3)).toEqual(['minor-feasts', 'rites', 'other']);
     const lists = seasons[seasons.length - 1].services.map((s) => s.id);
     expect(lists[0]).toBe('veneration');
     expect(lists[lists.length - 1]).toBe('other-cymbals');

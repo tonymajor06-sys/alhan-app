@@ -26,6 +26,7 @@ import { stAdditions } from './st-hymns';
 import { deaconOrder, hymnOrder, liturgies, liturgyFromMatins, stLiturgyDeacon } from './st-liturgies';
 import { stMore } from './st-more';
 import { stMysteries } from './st-mysteries';
+import { stRites } from './st-rites';
 import { verseLines } from './verse-lines';
 import { stSeasonExtras } from './st-season-extras';
 import { stVesperPraises, vpNewHymns } from './st-vesper-praises';
@@ -8432,6 +8433,42 @@ if (!(globalThis as { __skipVerseLines?: boolean }).__skipVerseLines) {
     }
   };
   for (const group of [...seasons, ...deaconCategories]) for (const service of group.services) lineUp(service.hymns);
+}
+
+// ---- Hymns > Rites of Grace (2026-11-12, the owner's request): Spirit & Truth's Holy Mysteries as a section of Hymns ----
+// Each rite under a name that says what it is: the rites already in Deacon Responses > Special Holy Orders (copied
+// here, "<id>@<service>", after their verses were lined up above) and Holy Orders, the Reception of a New Priest and
+// Filling of the Cup (st-rites.ts). Before the letters below, so the new hymns get theirs too.
+{
+  const special = deaconCategories.find((c) => c.id === 'deacon-special-orders');
+  const fromSt = (id: string) => stRites.find((r) => r.id === id)?.hymns ?? [];
+  const copied = (from: string, serviceId: string): Hymn[] =>
+    (special?.services.find((s) => s.id === from)?.hymns ?? []).map((h) => ({
+      ...h,
+      id: `${h.id}@${serviceId}`,
+      versions: h.versions.map(copyVersion),
+      ...(h.bishop ? { bishop: h.bishop.map(copyVersion) } : {}),
+    }));
+  const rites: { id: string; title: string; hymns: (id: string) => Hymn[] }[] = [
+    { id: 'rites-baptism', title: 'Baptism: Becoming a Christian', hymns: (id) => copied('d-order-baptism', id) },
+    { id: 'rites-matrimony', title: 'Holy Matrimony: The Wedding Crowning', hymns: (id) => copied('d-order-matrimony', id) },
+    { id: 'rites-unction', title: 'Anointing of the Sick (Unction)', hymns: (id) => copied('d-order-unction', id) },
+    { id: 'rites-holy-orders', title: 'Ordinations: Chanter to Hegumen (Holy Orders)', hymns: () => fromSt('rites-holy-orders') },
+    { id: 'rites-new-priest', title: 'Welcoming a New Priest', hymns: () => fromSt('rites-new-priest') },
+    { id: 'rites-waters', title: 'Blessing of the Waters (Lakkan)', hymns: (id) => copied('d-order-waters', id) },
+    { id: 'rites-prostration', title: 'Kneeling Prayers of Pentecost (Prostration)', hymns: (id) => copied('d-order-prostration', id) },
+    { id: 'rites-consecration', title: 'Consecrations', hymns: (id) => copied('d-order-consecration', id) },
+    { id: 'rites-filling-cup', title: 'Filling of the Cup', hymns: () => fromSt('rites-filling-cup') },
+    { id: 'rites-funeral', title: 'Funeral Prayers', hymns: (id) => copied('d-order-funeral', id) },
+  ];
+  const at = seasons.findIndex((s) => s.id === 'other');
+  seasons.splice(at < 0 ? seasons.length : at, 0, {
+    id: 'rites',
+    title: 'Rites of Grace (The Holy Mysteries)',
+    services: rites.map((r) => ({ id: r.id, title: r.title, hymns: r.hymns(r.id) })),
+  });
+  // the seasons are numbered in order
+  seasons.forEach((s, i) => (s.title = s.title.replace(/^(\d+\. )?/, `${i + 1}. `)));
 }
 
 // Keep these last: give every hymn a "Coptic in Arabic letters" and an "English in Arabic letters" version
