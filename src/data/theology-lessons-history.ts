@@ -413,8 +413,8 @@ export const historyLessons: Lesson[] = [
       {
         heading: b('A young defender', 'مدافع شاب'),
         body: b(
-          'Athanasius was the deacon of Pope Alexander when he spoke for the faith at Nicaea in AD 325. Three years later, in 328, he became the 20th Pope of Alexandria, and he led the Church for 45 years.',
-          'كان أثناسيوس شماساً للبابا ألكسندروس حين دافع عن الإيمان في نيقية سنة ٣٢٥م. وبعد ثلاث سنوات، سنة ٣٢٨م، صار البابا العشرين للإسكندرية، ورعى الكنيسة ٤٥ سنة.'
+          'Athanasius was the deacon of Pope Alexander when he spoke for the faith at Nicaea in AD 325. Three years later, in 328, he became the 20th Pope of Alexandria, and he shepherded the Church for 45 years, until AD 373.',
+          'كان أثناسيوس شماساً للبابا ألكسندروس حين دافع عن الإيمان في نيقية سنة ٣٢٥م. وبعد ثلاث سنوات، سنة ٣٢٨م، صار البابا العشرين للإسكندرية، ورعى الكنيسة ٤٥ سنة حتى سنة ٣٧٣م.'
         ),
       },
       {
@@ -662,8 +662,8 @@ export const historyLessons: Lesson[] = [
       {
         heading: b('Faithful through the centuries', 'أمينة عبر القرون'),
         body: b(
-          'After the Arabs entered Egypt in AD 641, the Copts lived through long periods of hardship. Arabic slowly became the everyday language, but the Church kept its faith, its Liturgy and the Coptic language of its hymns.',
-          'بعد دخول العرب مصر سنة ٦٤١م عاش الأقباط فترات طويلة من الضيق. وصارت العربية تدريجياً لغة الحياة اليومية، لكن الكنيسة حفظت إيمانها وطقسها واللغة القبطية في ألحانها.'
+          'After the Arab conquest of Egypt (AD 639–641), the Copts lived through long periods of hardship. Arabic slowly became the everyday language, but the Church kept its faith, its Liturgy and the Coptic language of its hymns.',
+          'بعد دخول العرب مصر (٦٣٩–٦٤١م) عاش الأقباط فترات طويلة من الضيق. وصارت العربية تدريجياً لغة الحياة اليومية، لكن الكنيسة حفظت إيمانها وطقسها واللغة القبطية في ألحانها.'
         ),
       },
       {

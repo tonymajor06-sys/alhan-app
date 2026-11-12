@@ -89,8 +89,8 @@ export const faithLessons: Lesson[] = [
       {
         heading: b("God's written word", 'كلمة الله المكتوبة'),
         body: b(
-          'The Holy Bible is the word of God, written by people inspired by the Holy Spirit (2 Timothy 3:16). The Old Testament prepares for Christ; the New Testament tells of His coming, His Church and His return.',
-          'الكتاب المقدس هو كلمة الله، كتبه أناس مسوقون من الروح القدس (٢ تيموثاوس ٣: ١٦). العهد القديم يمهّد للمسيح، والعهد الجديد يخبر بمجيئه وكنيسته ومجيئه الثاني.'
+          'The Holy Bible is the word of God, given by inspiration of God: holy men of God spoke as they were moved by the Holy Spirit (2 Timothy 3:16; 2 Peter 1:21). The Old Testament prepares for Christ; the New Testament tells of His coming, His Church and His return.',
+          'الكتاب المقدس هو كلمة الله، موحى به من الله، إذ تكلم أناس الله القديسون مسوقين من الروح القدس (٢ تيموثاوس ٣: ١٦؛ ٢ بطرس ١: ٢١). العهد القديم يمهّد للمسيح، والعهد الجديد يخبر بمجيئه وكنيسته ومجيئه الثاني.'
         ),
       },
       {
@@ -279,8 +279,8 @@ export const faithLessons: Lesson[] = [
       ref: b('Romans 5:12', 'رومية ٥: ١٢'),
     },
     know: b(
-      'Our hymns call St Mary "the salvation of our father Adam" and "the joy of Eve": what was lost through the first Adam and Eve is restored through Christ, born of the Virgin.',
-      'تسمّي ألحاننا القديسة مريم "خلاص أبينا آدم" و"فرح حواء": فما خسرناه بآدم وحواء الأولين يُرد إلينا بالمسيح المولود من العذراء.'
+      'The Theotokia often set St Mary beside Eve: through the first Eve came the fall, and through St Mary came Christ, who restored what Adam and Eve had lost.',
+      'كثيراً ما تضع الثيئوطوكيات القديسة مريم بجانب حواء: فبحواء الأولى جاء السقوط، ومن القديسة مريم جاء المسيح الذي ردّ ما خسره آدم وحواء.'
     ),
     remember: [
       b('The fall was a turning away from God, the source of life', 'السقوط كان ابتعاداً عن الله مصدر الحياة'),
@@ -892,8 +892,8 @@ export const faithLessons: Lesson[] = [
       {
         heading: b('How we fast', 'كيف نصوم'),
         body: b(
-          'Coptic fasting has two parts: a time without any food (usually until a certain hour of the day, as your father of confession guides) and food without meat, eggs or dairy.',
-          'للصوم القبطي جانبان: انقطاع عن الطعام لفترة (عادةً حتى ساعة معينة من النهار حسب إرشاد أب الاعتراف)، وطعام نباتي خالٍ من اللحوم والبيض والألبان.'
+          'Coptic fasting has two parts: a time without any food (usually until a certain hour of the day, as your father of confession guides) and food without meat, eggs or dairy. Fish is allowed in some fasts, such as the Nativity Fast and the Apostles\' Fast, but not in Great Lent or the Fast of Jonah.',
+          'للصوم القبطي جانبان: انقطاع عن الطعام لفترة (عادةً حتى ساعة معينة من النهار حسب إرشاد أب الاعتراف)، وطعام نباتي خالٍ من اللحوم والبيض والألبان. ويُسمح بالسمك في بعض الأصوام، مثل صوم الميلاد وصوم الرسل، لا في الصوم الكبير ولا في صوم يونان.'
         ),
       },
       {
