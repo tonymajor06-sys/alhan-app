@@ -2,7 +2,7 @@ import { AppLanguage } from '@/hooks/use-settings';
 
 import { copticMonths, copticToJdn, jdnToCoptic, toArabicDigits } from './coptic-calendar';
 import { saintsData } from './saints-data';
-import { normalizeForSearch } from './search';
+import { normalizeForSearch, searchMatcher } from './search';
 
 // The saints whose stories are well known, each with their story (see saints-data.ts),
 // and the day of the Coptic year the Church remembers them
@@ -42,15 +42,17 @@ export function nextFeast(days: [number, number][], today: number) {
   return dates.sort((a, b) => a.jdn - b.jdn)[0] ?? null;
 }
 
-// Names first, then stories; every word of the search has to be there
-export function searchSaints(query: string): Saint[] {
-  const words = normalizeForSearch(query.trim().toLowerCase()).split(/\s+/).filter(Boolean);
-  if (!words.length) return [];
-  const has = (text: string) => {
-    const folded = normalizeForSearch(text.toLowerCase());
-    return words.every((w) => folded.includes(w));
-  };
-  const byName = saints.filter((s) => has(`${s.name.en} ${s.name.ar}`));
+// Names, or stories when no name fits; every word of the search has to be there
+// (words found from their start, and a saint's other names: Abu Sefein is St Mercurius, see search-words.ts)
+export function searchSaints(query: string, { namesOnly = false } = {}): Saint[] {
+  const match = searchMatcher(query);
+  if (!match) return [];
+  const has = (text: string) => match.all(normalizeForSearch(text));
+  // names with the very words typed first, then those found by another name (St Mary before "the Forty Virgins")
+  const literal = (s: Saint) => (match.words.every((w) => normalizeForSearch(`${s.name.en} ${s.name.ar}`).includes(w)) ? 0 : 1);
+  const byName = saints.filter((s) => has(`${s.name.en} ${s.name.ar}`)).sort((a, b) => literal(a) - literal(b));
+  // a name that fits is what was meant ("philo" is St Mercurius, not St Catherine's "philosophy"); stories only when no name fits
+  if (namesOnly || byName.length) return byName;
   const byStory = saints.filter((s) => !byName.includes(s) && has(`${s.story.en} ${s.story.ar}`));
   return [...byName, ...byStory];
 }

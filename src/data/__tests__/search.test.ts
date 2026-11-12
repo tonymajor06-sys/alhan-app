@@ -1,3 +1,4 @@
+import { searchSaints } from '../saints';
 import { neighborHymns, normalizeForSearch, searchHymns } from '../search';
 
 describe('normalizeForSearch', () => {
@@ -37,7 +38,8 @@ describe('searchHymns', () => {
   });
 
   it('finds a hymn by its Arabic title', () => {
-    expect(searchHymns('أرباع الناقوس').some((r) => r.hymn.id === 'annual-matins-verse-of-cymbals')).toBe(true);
+    // (Matins' Verses of the Cymbals is the same hymn as Vespers', so it is one result for both)
+    expect(searchHymns('أرباع الناقوس').some((r) => /verses? of the cymbals/i.test(r.hymn.title))).toBe(true);
   });
 
   it('finds words inside the text, ignoring tashkeel, and says which language matched', () => {
@@ -61,7 +63,7 @@ describe('searchHymns', () => {
 
   it('finds hymns inside groups, like Midnight Praises > General > Doxologies', () => {
     expect(searchHymns('three holy children').some((r) => r.hymn.id === 'annual-midnight-three-holy-children')).toBe(true);
-    expect(searchHymns('ذكصولوجية مار جرجس').some((r) => r.hymn.id === 'annual-midnight-doxology-st-george')).toBe(true);
+    expect(searchHymns('ذكصولوجية مار جرجس').some((r) => /St George/.test(r.hymn.title))).toBe(true);
     expect(searchHymns('doxologies').every((r) => !r.hymn.children)).toBe(true);
   });
 
@@ -71,6 +73,29 @@ describe('searchHymns', () => {
 
   it('respects the result limit', () => {
     expect(searchHymns('response', 5)).toHaveLength(5);
+  });
+});
+
+describe('a smarter search (2026-11-12)', () => {
+  const philopater = (q: string) => searchHymns(q, 5).every((r) => /Philopater/.test(r.hymn.title));
+
+  it('finds a saint however his name is written', () => {
+    for (const q of ['philo', 'filopater', 'philopateer', 'abu sifein', 'abusefein', 'فيلوباتير', 'ابو سيفين']) expect(philopater(q)).toBe(true);
+    expect(searchHymns('mar girgis', 3).every((r) => /George/.test(r.hymn.title))).toBe(true);
+    expect(searchHymns('marmina', 3).every((r) => /Mena/.test(r.hymn.title))).toBe(true);
+    expect(searchHymns('abanoub', 3).every((r) => /Apanoub/.test(r.hymn.title))).toBe(true);
+  });
+
+  it('shows a hymn sung in many places once, saying how many more have it', () => {
+    const results = searchHymns('philo');
+    const doxology = results.filter((r) => r.hymn.title === 'Ⲫⲓⲗⲟⲡⲁⲧⲏⲣ Ⲙⲉⲣⲕⲟⲩⲣⲓⲟⲥ (Doxology for St Philopater Mercurius)');
+    expect(doxology.length).toBeLessThanOrEqual(2);
+    expect(doxology[0].alsoIn).toBeGreaterThan(5);
+  });
+
+  it('matches words from their start, not inside other words', () => {
+    expect(searchSaints('philo').map((s) => s.name.en)).not.toContain('St. Catherine of Alexandria');
+    expect(searchSaints('abu sefein')[0]?.name.en).toBe('St. Mercurius (Abu Sefein)');
   });
 });
 

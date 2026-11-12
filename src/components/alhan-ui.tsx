@@ -9,6 +9,7 @@ import { BusyPulse } from './busy-pulse';
 import { StatusBarBlur } from './status-bar-blur';
 import { useTabChrome } from './tab-chrome';
 import { AlhanPalette } from '../constants/alhan-colors';
+import { toArabicDigits } from '../data/coptic-calendar';
 import { LanguageType } from '../data/hymns';
 import { hymnSlug } from '../data/search';
 import { useThemedStyles } from '../hooks/use-alhan-colors';
@@ -94,6 +95,9 @@ export const strings = {
     searchHint: 'Search titles and words in every language.',
     noResults: 'No hymns found.',
     titleMatch: 'Title',
+    alsoIn: (n: number) => `also in ${n} other ${n === 1 ? 'place' : 'places'}`,
+    saintsFound: 'Saints',
+    hymnsFound: 'Hymns',
     sideBySide: '⇆ Side by side',
     compareWith: 'Next to it',
     download: '⬇ Save offline',
@@ -230,6 +234,9 @@ export const strings = {
     searchHint: 'ابحث في العناوين والكلمات بكل اللغات.',
     noResults: 'لا توجد ألحان مطابقة.',
     titleMatch: 'العنوان',
+    alsoIn: (n: number) => `وفي ${toArabicDigits(n)} ${n === 1 ? 'موضع آخر' : 'مواضع أخرى'}`,
+    saintsFound: 'القديسون',
+    hymnsFound: 'الألحان',
     sideBySide: '⇆ جنباً إلى جنب',
     compareWith: 'بجانبه',
     download: '⬇ حفظ بدون إنترنت',

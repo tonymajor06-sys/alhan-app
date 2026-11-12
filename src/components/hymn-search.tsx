@@ -39,6 +39,7 @@ export function SearchResults({ results }: { results: SearchResult[] }) {
               {name.coptic ? <Text style={[styles.tileCoptic, textAlign]}>{name.coptic}</Text> : null}
               <Text style={[styles.playlistMeta, textAlign]} numberOfLines={1}>
                 {where} · {matchedIn}
+                {result.alsoIn ? ` · ${t.alsoIn(result.alsoIn)}` : ''}
               </Text>
               {result.snippet ? (
                 <Text style={[styles.searchSnippet, language === 'arabic' ? styles.arabicText : textAlign]} numberOfLines={2}>
