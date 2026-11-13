@@ -70,8 +70,7 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   { file: "arsani-030-taishori-hymn-of-intercessions.m4a", hymns: ["annual-liturgy-taishori-hitens-bishop"], language: "coptic" },
   // Afrek Etfe (Hymn of the Ascension) - Arsani Sidarous
   { file: "arsani-031-afrek-etfe-hymn-of-ascension.m4a", hymns: ["pentecost-liturgy-he-bowed-heaven"], language: "coptic" },
-  // Annual Psalm 150 - Arsani Sidarous
-  { file: "arsani-034-annual-psalm-150.m4a", hymns: ["annual-distribution-psalm-150"], language: "coptic" },
+  // (Arsani's Annual Psalm 150, arsani-034, is the Arabic recording again, sung the same: taken off the Coptic 2026-11-12)
   // Pinishti (Short) | Archdeacon Arsani Sidarous
   // One recording cut in two: its first 31 seconds are Let Those Who Read (Ⲛⲏⲉⲧⲱϣ), the rest is Pinishti
   { file: "arsani-035-let-those-who-read.m4a", hymns: ["d-annual-liturgy-faithful-let-those-who-read"], language: "coptic" },

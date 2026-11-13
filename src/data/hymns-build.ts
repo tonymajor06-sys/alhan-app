@@ -8419,6 +8419,29 @@ if (!(globalThis as { __skipStWording?: boolean }).__skipStWording) {
   for (const group of [...seasons, ...deaconCategories]) for (const service of group.services) reword(service.hymns);
 }
 
+// ---- Piouk (The Bread of Life) ends with the people's "Blessed be the Father..." (the owner's request, 2026-11-12) ----
+// in Annual's Distribution and every copy of it
+{
+  const ending: Partial<Record<LanguageType, string>> = {
+    coptic: 'Ⲡⲓⲗⲁⲟⲥ:\n\nϪⲉ ϥⲥⲙⲁⲣⲱⲟⲩⲧ ⲛ̀ϫⲉ Ⲫⲓⲱⲧ ⲛⲉⲙ ⲡ̀Ϣⲏⲣⲓ: ⲛⲉⲙ ⲡⲓⲠ̀ⲛⲉⲩⲙⲁ ⲉⲑⲟⲩⲁⲃ: ϯⲦ̀ⲣⲓⲁⲥ ⲉⲧϫⲏⲕ ⲉ̀ⲃⲟⲗ: ⲧⲉⲛⲟⲩⲱϣⲧ ⲙ̀ⲙⲟⲥ ⲧⲉⲛϯⲱ̀ⲟⲩ ⲛⲁⲥ.',
+    englishCoptic: 'Pilaos:\n\nJe efesmarowout enje Efiot nem Epsheeri: nem Pi-epnevma ethowab: Ti-etrias etjeek evol: tenowosht emmos tentioou nas.',
+    english: 'People:\n\nBlessed be the Father and the Son and the Holy Spirit, the perfect Trinity. We worship Him and glorify Him.',
+    englishArabic: "Esh-sha'b:\n\nMubarakun el-Ab wal-Ibn war-Rouh el-Qudus, eth-thalouth el-kamil, nasgud lahu wa numaggiduh.",
+    arabic: 'الشعب:\n\nمبارك الآب والابن والروح القدس، الثالوث الكامل، نسجد له ونمجده.',
+  };
+  const addEnding = (list: Hymn[]) => {
+    for (const hymn of list) {
+      if (hymn.children) addEnding(hymn.children);
+      if (baseOf(hymn.id) !== 'annual-distribution-pi-oik') continue;
+      for (const version of hymn.versions) {
+        const more = ending[version.language];
+        if (more && version.text.trim() && !version.text.trimEnd().endsWith(more.split('\n\n')[1])) version.text = `${version.text.trimEnd()}\n\n${more}`;
+      }
+    }
+  };
+  for (const group of [...seasons, ...deaconCategories]) for (const service of group.services) addEnding(service.hymns);
+}
+
 // ---- Verses that line up (2026-11-12, see verse-lines.ts) ----
 // Side by Side pairs verses by their place: hymns with a verse missing in one language (Psalm 150 written one verse to
 // a line, the rites' Arabic in English letters without "People:", the Lent psalis...) get it here.
