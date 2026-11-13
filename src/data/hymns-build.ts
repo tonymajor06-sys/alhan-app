@@ -7902,11 +7902,12 @@ for (const season of seasons) {
         });
       }
       if (base === 'holyweek-apocalypse-praises-psalm-151') {
-        editRecordings(hymn, ALL_LANGUAGES, (files) => {
-          const order = ['arsani-yt-bright-saturday-psalm-151.m4a', 'arsani-026-anok-pe-pikoji-psalm-151-fr-luke.m4a', 'alhan-brightsat-anok.mp3'];
-          return [...order.filter((f) => files.includes(f)), ...files.filter((f) => !order.includes(f))];
-        });
+        // Arsani's two (YouTube and SoundCloud) are off it at the owner's request (2026-11-13); alhan.org's stays
+        const off = ['arsani-yt-bright-saturday-psalm-151.m4a', 'arsani-026-anok-pe-pikoji-psalm-151-fr-luke.m4a'];
+        editRecordings(hymn, ALL_LANGUAGES, (files) => files.filter((f) => !off.includes(f)));
       }
+      // Its recording (alhan.org's "Marenouonh") is not this hymn (the owner, 2026-11-13)
+      if (base === 'holyweek-apocalypse-praises-the-second-hoos-lobsh') editRecordings(hymn, ALL_LANGUAGES, () => []);
       if (base === 'kiahk-midnight-hymn-20') {
         editRecordings(hymn, ALL_LANGUAGES, (files) => {
           const order = ['arsani-275-tenen-kiahk-2010.m4a', 'arsani-yt-kiahk-tenen-2016.m4a', 'midnight-tenen.m4a', 'arsani-048-tenen-tenoweh-kiahk.m4a', 'kiahk-midnight-tenen.mp3'];
