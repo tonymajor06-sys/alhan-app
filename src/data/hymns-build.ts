@@ -7480,6 +7480,9 @@ for (const full of [...stFullSeasons, ...stThreeFeasts]) {
   const season = seasons.find((s) => s.id === full.season);
   if (!season) continue;
   let headers = 0;
+  // (a hymn copied twice into one day, as Bright Saturday's St Basil and St Gregory both sing the Creed: "-2" after
+  // the second copy's id)
+  const copies = new Map<string, number>();
   const hymns = full.items.flatMap((item): Hymn[] => {
     if ('header' in item) return [{ id: `${full.id}-header-${++headers}`, title: item.header, versions: [], isSectionHeader: true }];
     if ('hymn' in item) {
@@ -7488,7 +7491,10 @@ for (const full of [...stFullSeasons, ...stThreeFeasts]) {
     }
     if ('ref' in item) return leavesById.has(item.ref) ? [leavesById.get(item.ref)!] : [];
     const source = leavesById.get(item.copy);
-    return source ? [{ ...JSON.parse(JSON.stringify(source)), id: `${source.id}@${full.id}` }] : [];
+    if (!source) return [];
+    const nth = (copies.get(source.id) ?? 0) + 1;
+    copies.set(source.id, nth);
+    return [{ ...JSON.parse(JSON.stringify(source)), id: `${source.id}@${full.id}${nth > 1 ? `-${nth}` : ''}` }];
   });
   // the season's own hymns now listed here leave the list they were in
   const listed = new Set(hymns.map((h) => h.id));
@@ -8169,6 +8175,13 @@ const aspasmosRank = (title: string): number => {
   return (watos ? 6 : 1) + nth;
 };
 const orderAspasmos = (list: Hymn[]): Hymn[] => {
+  // (a day with two liturgies, as Bright Saturday's St Basil and St Gregory: each in its own order, under its heading)
+  const liturgies = list.flatMap((h, i) => (h.isSectionHeader && /Liturgy of Saint/.test(h.title) ? [i] : []));
+  if (liturgies.length > 1)
+    return [
+      ...orderAspasmos(list.slice(0, liturgies[0])),
+      ...liturgies.flatMap((at, n) => [list[at], ...orderAspasmos(list.slice(at + 1, liturgies[n + 1] ?? list.length))]),
+    ];
   const aspasmos = list.filter((h) => !h.children && !h.isSectionHeader && aspasmosRank(h.title) >= 0);
   if (aspasmos.length < 2) return list;
   const anchor = list.find((h) => aspasmos.includes(h) && aspasmosRank(h.title) === 1) ?? aspasmos[0];

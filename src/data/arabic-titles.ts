@@ -2,6 +2,7 @@ import type { AppLanguage } from '@/hooks/use-settings';
 
 import { stSaintTabs } from './st-saints';
 import { stThreeFeastsArabicTitles } from './st-three-feasts';
+import { stBrightSaturdayArabicTitles } from './st-bright-saturday';
 import { stRitesArabicTitles } from './st-rites';
 import { vpArabicTitles } from './st-vesper-praises-titles';
 
@@ -285,6 +286,7 @@ const arabicTitles: Record<string, string> = {
   'minorfeasts-3-feasts-commemoration-distribution': 'تذكار الأعياد الثلاثة: التوزيع',
   'minorfeasts-3-feasts-commemoration-midnight': 'تذكار الأعياد الثلاثة: تسبحة نصف الليل',
   ...stThreeFeastsArabicTitles,
+  ...stBrightSaturdayArabicTitles,
   // Hymns > Rites of Grace and its services (2026-11-12)
   ...stRitesArabicTitles,
   rites: 'طقوس النعمة (الأسرار المقدسة)',
