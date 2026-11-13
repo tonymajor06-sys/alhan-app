@@ -411,4 +411,18 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   { file: "liturgy-amen-ton-thanaton-coptic-2.m4a", hymns: ["annual-liturgy-amen-ton-thanaton"], language: "coptic" },
   { file: "deacon-confession-arabic.m4a", hymns: ["d-annual-liturgy-faithful-the-confession"], language: "arabic" },
   { file: "liturgy-one-is-the-holy-father-arabic.m4a", hymns: ["kiahk-liturgy-one-is-the-holy-father@annual-liturgy"], language: "arabic" },
+  // Bright Saturday 2026, cut from the service recording by scripts/st-bright-saturday/slice-audio.py at Gemini's times
+  // (2026-11-13, not yet checked: the owner will say which are wrong)
+  { file: "bright-saturday-2026-agios-1.m4a", hymns: ["annual-liturgy-agios@holyweek-bright-saturday"], language: "coptic" },
+  { file: "bright-saturday-2026-agios-2.m4a", hymns: ["annual-liturgy-agios@holyweek-bright-saturday"], language: "coptic" },
+  { file: "bright-saturday-2026-psalm-151.m4a", hymns: ["holyweek-apocalypse-praises-psalm-151"], language: "coptic" },
+  { file: "bright-saturday-2026-first-canticle.m4a", hymns: ["annual-midnight-first-canticle@holyweek-bright-saturday"], language: "coptic" },
+  { file: "bright-saturday-2026-third-canticle-arabic.m4a", hymns: ["annual-midnight-third-canticle@holyweek-bright-saturday"], language: "arabic" },
+  { file: "bright-saturday-2026-ari-psalin.m4a", hymns: ["annual-midnight-greek-psali-watos@holyweek-bright-saturday"], language: "coptic" },
+  { file: "bright-saturday-2026-tenen.m4a", hymns: ["annual-midnight-three-holy-children@holyweek-bright-saturday"], language: "coptic" },
+  { file: "bright-saturday-2026-tenoueh-ensok.m4a", hymns: ["annual-midnight-psali-watos-three-holy-youth@holyweek-bright-saturday"], language: "coptic" },
+  { file: "bright-saturday-2026-hymn-of-bright-saturday-1.m4a", hymns: ["holyweek-bright-saturday-the-hymn-of-bright-saturday"], language: "coptic" },
+  { file: "bright-saturday-2026-hymn-of-bright-saturday-2.m4a", hymns: ["holyweek-bright-saturday-the-hymn-of-bright-saturday"], language: "coptic" },
+  { file: "bright-saturday-2026-morning-doxology.m4a", hymns: ["annual-morning praises-morning-doxology@holyweek-bright-saturday"], language: "coptic" },
+  { file: "bright-saturday-2026-one-is-the-holy-father.m4a", hymns: ["holyweek-bright-saturday-one-is-the-holy-father"], language: "coptic" },
 ];
