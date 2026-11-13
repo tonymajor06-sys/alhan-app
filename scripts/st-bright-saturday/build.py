@@ -204,6 +204,10 @@ SKIP_TITLES = re.compile(r'^(Spirit & Truth|Fractions Index|Synaxarion|Our Fathe
 SKIP_EXACT = {'Lord Have Mercy', 'Holy Holy Holy', 'As It Was', 'Offering of Morning Incense', 'Liturgy of the Word',
               'Distribution of the Holy Mysteries', 'The Divine Liturgy of Saint Basil the Great',
               'The Divine Liturgy of Saint Gregory the Theologian'}
+# the Bible readings of Midnight Praises (the Prophets' Praises, the Gospel praises, the Story of Susanna): read, not
+# sung, so left out at the owner's request (2026-11-13: "i only want the hymns")
+READINGS = re.compile(r'\((Deuteronomy|1 Samuel|Habakkuk|Jonah|Isaiah|2 Chronicles|Lamentations|Baruch|1 Kings|1 Chronicles|Daniel|Luke) [0-9]'
+                      r'|^The (Second|Third) Praise of the Prophet Isaiah$', re.I)
 OTHER_SEASON = re.compile(r'Sunday of|Feast of|Day of|Paramoun|Kiahk|Lent|Nativity|Theophany|Ode')
 report, to_write, new_titles = [], {}, {}
 
@@ -249,6 +253,9 @@ for parts, header in SERVICES:
         own_name = any(OWN.match(h) and by_id[h]['title'].lower() == sec['title'].lower() for h in full)
         if sec['title'] in ('Spirit & Truth', 'Midnight Praises of Bright Saturday') or sec['title'] in SKIP_EXACT \
                 or (not midnight and SKIP_TITLES.match(sec['title']) and not own_name):
+            continue
+        if midnight and READINGS.search(sec['title']):
+            report.append(f'reading left out: {sec["title"][:70]}')
             continue
         if midnight and sec['title'] in full_midnight: sec = full_midnight[sec['title']]  # (with every repeated row)
         cop = [r for r in sec['rows'] if 'cop' in r]

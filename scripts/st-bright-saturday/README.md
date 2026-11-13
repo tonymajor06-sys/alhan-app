@@ -12,7 +12,8 @@ Canticle's Lobsh, Arsani's, now open Midnight Praises, so Holy Week's "Apocalyps
 Annual's and the other seasons' are copied in (another season's only when it is the same hymn, not with its own
 season's verses). The hymns the app lacked are written in from Spirit & Truth's words, and so are the Prophets'
 Praises, which had no Coptic. The litanies, readings and the priest's prayers are left out, as for the other feasts,
-but not in Midnight Praises, where the readers read the Prophets' Praises, the Story of Susanna and the rest. The
+and so are Midnight Praises' Bible readings (the Prophets' Praises, the Praises of the Virgin, Zacharias and Simeon, the
+Story of Susanna: `READINGS` in `build.py`), left out at the owner's request on 2026-11-13 ("i only want the hymns"). The
 Hours and the Book of Revelation (psalms and readings) are left out too; the Apocalypse's hymns are in Holy Week's
 Apocalypse Night: Revelation.
 
