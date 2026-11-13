@@ -2,7 +2,6 @@ import type { AppLanguage } from '@/hooks/use-settings';
 
 import { stSaintTabs } from './st-saints';
 import { stThreeFeastsArabicTitles } from './st-three-feasts';
-import { stBrightSaturdayArabicTitles } from './st-bright-saturday';
 import { stRitesArabicTitles } from './st-rites';
 import { vpArabicTitles } from './st-vesper-praises-titles';
 
@@ -286,7 +285,6 @@ const arabicTitles: Record<string, string> = {
   'minorfeasts-3-feasts-commemoration-distribution': 'تذكار الأعياد الثلاثة: التوزيع',
   'minorfeasts-3-feasts-commemoration-midnight': 'تذكار الأعياد الثلاثة: تسبحة نصف الليل',
   ...stThreeFeastsArabicTitles,
-  ...stBrightSaturdayArabicTitles,
   // Hymns > Rites of Grace and its services (2026-11-12)
   ...stRitesArabicTitles,
   rites: 'طقوس النعمة (الأسرار المقدسة)',
@@ -1022,6 +1020,22 @@ const arabicTitles: Record<string, string> = {
   "holyweek-bright-saturday-agios-agios-agios": "آجيوس آجيوس آجيوس",
   "holyweek-bright-saturday-one-is-the-holy-father": "واحد هو الآب القدوس",
   "holyweek-bright-saturday-agios-agios-agios-2": "قدوسٌ قدوسٌ قدوسٌ",
+  "holyweek-bright-saturday-second-praise-of-moses-the-prophet-deuteronomy-32-": "التسبحة الثانية لموسى النبي",
+  "holyweek-bright-saturday-the-praise-of-hannah-mother-of-samuel-1-samuel-2-1": "صلاة حنة أم صموئيل",
+  "holyweek-bright-saturday-the-praise-of-the-prophet-habakkuk-habakkuk-3-2-19": "صلاة حبقوق النبي",
+  "holyweek-bright-saturday-the-praise-of-the-prophet-jonah-jonah-2-2-10": "صلاة يونان النبي",
+  "holyweek-bright-saturday-the-praise-of-hezekiah-the-king-of-judah-isaiah-38": "صلاة حزقيا ملك يهوذا",
+  "holyweek-bright-saturday-the-praise-of-king-manasseh-2-chronicles-37-1-15": "صلاة منسى الملك",
+  "holyweek-bright-saturday-the-first-praise-of-isaiah-isaiah-26-9-20": "صلاة أشعياء النبي الأولى",
+  "holyweek-bright-saturday-the-second-praise-of-the-prophet-isaiah": "تسبحة أشعياء النبي الثانية",
+  "holyweek-bright-saturday-the-third-praise-of-the-prophet-isaiah": "تسبحة أشعياء النبي الثالثة",
+  "holyweek-bright-saturday-the-praise-of-the-prophet-jeremiah-lamentations-5-": "تسبحة أرميا النبي",
+  "holyweek-bright-saturday-the-praise-of-the-prophet-baruch-baruch-2-11-15": "تسبحة باروخ النبي",
+  "holyweek-bright-saturday-praise-of-the-prophet-elijah-1-kings-18-36-39": "تسبحة إیلیا النبي",
+  "holyweek-bright-saturday-the-praise-of-david-the-prophet-1-chronicles-29-10": "صلاة داود النبي (١ اخبار ٢٩ : ١٠-١٣)",
+  "holyweek-bright-saturday-the-praise-of-the-prophet-daniel-daniel-9-4-19": "صلاة دانيال النبي",
+  "holyweek-bright-saturday-the-praise-of-azarias-daniel-3-25-51": "تسبحة عزريا",
+  "holyweek-bright-saturday-praise-of-virgin-mary-luke-1-46-55": "تسبحة العذراء مريم",
   "kiahk-vespers-the-orthodox-creed": "قانون الإيمان المقدس الأرثوذكسي",
   "kiahk-liturgy-lord-have-mercy": "يا رب إرحم",
   "kiahk-liturgy-agios-agios-agios": "قدوسٌ قدوسٌ قدوسٌ",

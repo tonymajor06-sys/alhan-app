@@ -7480,9 +7480,6 @@ for (const full of [...stFullSeasons, ...stThreeFeasts]) {
   const season = seasons.find((s) => s.id === full.season);
   if (!season) continue;
   let headers = 0;
-  // (a hymn copied twice into one day, as Bright Saturday's St Basil and St Gregory both sing the Creed: "-2" after
-  // the second copy's id)
-  const copies = new Map<string, number>();
   const hymns = full.items.flatMap((item): Hymn[] => {
     if ('header' in item) return [{ id: `${full.id}-header-${++headers}`, title: item.header, versions: [], isSectionHeader: true }];
     if ('hymn' in item) {
@@ -7491,10 +7488,7 @@ for (const full of [...stFullSeasons, ...stThreeFeasts]) {
     }
     if ('ref' in item) return leavesById.has(item.ref) ? [leavesById.get(item.ref)!] : [];
     const source = leavesById.get(item.copy);
-    if (!source) return [];
-    const nth = (copies.get(source.id) ?? 0) + 1;
-    copies.set(source.id, nth);
-    return [{ ...JSON.parse(JSON.stringify(source)), id: `${source.id}@${full.id}${nth > 1 ? `-${nth}` : ''}` }];
+    return source ? [{ ...JSON.parse(JSON.stringify(source)), id: `${source.id}@${full.id}` }] : [];
   });
   // the season's own hymns now listed here leave the list they were in
   const listed = new Set(hymns.map((h) => h.id));
@@ -7902,12 +7896,11 @@ for (const season of seasons) {
         });
       }
       if (base === 'holyweek-apocalypse-praises-psalm-151') {
-        // Arsani's two (YouTube and SoundCloud) are off it at the owner's request (2026-11-13); alhan.org's stays
-        const off = ['arsani-yt-bright-saturday-psalm-151.m4a', 'arsani-026-anok-pe-pikoji-psalm-151-fr-luke.m4a'];
-        editRecordings(hymn, ALL_LANGUAGES, (files) => files.filter((f) => !off.includes(f)));
+        editRecordings(hymn, ALL_LANGUAGES, (files) => {
+          const order = ['arsani-yt-bright-saturday-psalm-151.m4a', 'arsani-026-anok-pe-pikoji-psalm-151-fr-luke.m4a', 'alhan-brightsat-anok.mp3'];
+          return [...order.filter((f) => files.includes(f)), ...files.filter((f) => !order.includes(f))];
+        });
       }
-      // Its recording (alhan.org's "Marenouonh") is not this hymn (the owner, 2026-11-13)
-      if (base === 'holyweek-apocalypse-praises-the-second-hoos-lobsh') editRecordings(hymn, ALL_LANGUAGES, () => []);
       if (base === 'kiahk-midnight-hymn-20') {
         editRecordings(hymn, ALL_LANGUAGES, (files) => {
           const order = ['arsani-275-tenen-kiahk-2010.m4a', 'arsani-yt-kiahk-tenen-2016.m4a', 'midnight-tenen.m4a', 'arsani-048-tenen-tenoweh-kiahk.m4a', 'kiahk-midnight-tenen.mp3'];
@@ -8176,13 +8169,6 @@ const aspasmosRank = (title: string): number => {
   return (watos ? 6 : 1) + nth;
 };
 const orderAspasmos = (list: Hymn[]): Hymn[] => {
-  // (a day with two liturgies, as Bright Saturday's St Basil and St Gregory: each in its own order, under its heading)
-  const liturgies = list.flatMap((h, i) => (h.isSectionHeader && /Liturgy of Saint/.test(h.title) ? [i] : []));
-  if (liturgies.length > 1)
-    return [
-      ...orderAspasmos(list.slice(0, liturgies[0])),
-      ...liturgies.flatMap((at, n) => [list[at], ...orderAspasmos(list.slice(at + 1, liturgies[n + 1] ?? list.length))]),
-    ];
   const aspasmos = list.filter((h) => !h.children && !h.isSectionHeader && aspasmosRank(h.title) >= 0);
   if (aspasmos.length < 2) return list;
   const anchor = list.find((h) => aspasmos.includes(h) && aspasmosRank(h.title) === 1) ?? aspasmos[0];
