@@ -63,11 +63,19 @@ export default function HomeScreen() {
       ? [{ key: 'learn-arabic', title: learnArabicStrings.title, desc: learnArabicStrings.subtitle, href: '/learn-arabic' as const, image: homeArt.learnArabic }]
       : [{ key: 'learn-english', title: learnEnglishStrings.title, desc: learnEnglishStrings.subtitle, href: '/learn-english' as const, image: homeArt.learnEnglish }]),
   ];
-  // Kids mode keeps Home short: Kids Corner on top, then hymns, saints, Coptic and playlists
+  // Kids mode: big, plain buttons for hymns and responses first (everything else is still below)
   const kidMode = settings.kidMode;
-  const kidTiles = ['hymns', 'saints', 'learn', 'playlist'];
-  const tiles = kidMode ? kidTiles.map((key) => allTiles.find((tile) => tile.key === key)!) : allTiles;
+  const tiles = allTiles;
   const k = kidsStrings[lang];
+  const todaySeason = getSeasonInfo(today, 0).current?.seasonId;
+  const todayId = seasons.some((s) => s.id === todaySeason) ? todaySeason! : 'annual';
+  const kidButtons = [
+    { key: 'today', emoji: '🎵', title: k.todayHymns, desc: k.todayHymnsDesc, open: () => router.navigate({ pathname: '/hymns/[season]', params: { season: todayId } }), main: true },
+    { key: 'hymns', emoji: '📚', title: k.allHymns, desc: k.allHymnsDesc, open: () => router.navigate('/hymns') },
+    { key: 'responses', emoji: '🙌', title: k.responses, desc: k.responsesDesc, open: () => router.push('/responses') },
+    { key: 'find', emoji: '🔎', title: k.findHymn, desc: k.findHymnDesc, open: () => router.push('/search') },
+    { key: 'kids', emoji: '📖', title: k.homeTitle, desc: k.homeDesc, open: () => router.push('/kids') },
+  ];
 
   return (
     <View style={styles.root} collapsable={false}>
@@ -160,28 +168,31 @@ export default function HomeScreen() {
           <View style={styles.hero}>
             <Text style={[styles.heroSubtitle, textAlign]}>{kidMode ? k.hello : t.appSubtitle}</Text>
           </View>
-          {kidMode ? (
-            <Pressable
-              onPress={() => {
-                tapFeedback();
-                router.push('/kids');
-              }}
-              accessibilityRole="button"
-              accessibilityLabel={`${k.homeTitle}, ${k.homeDesc}`}
-              style={({ pressed }) => [
-                kidStyles.banner,
-                rowDirection,
-                { backgroundColor: colors.gold },
-                pressed && { opacity: 0.85, transform: [{ scale: 0.98 }] },
-              ]}>
-              <Text style={kidStyles.bannerEmoji}>📖</Text>
-              <View style={styles.rowTextWrap}>
-                <Text style={[kidStyles.bannerTitle, textAlign, { color: colors.onGold }]}>{k.homeTitle}</Text>
-                <Text style={[kidStyles.bannerDesc, textAlign, { color: colors.onGold }]}>{k.homeDesc}</Text>
-              </View>
-              <Text style={[kidStyles.bannerChevron, { color: colors.onGold }]}>{isRTL ? '‹' : '›'}</Text>
-            </Pressable>
-          ) : null}
+          {kidMode
+            ? kidButtons.map((b) => (
+                <Pressable
+                  key={b.key}
+                  onPress={() => {
+                    tapFeedback();
+                    b.open();
+                  }}
+                  accessibilityRole="button"
+                  accessibilityLabel={`${b.title}, ${b.desc}`}
+                  style={({ pressed }) => [
+                    kidStyles.banner,
+                    rowDirection,
+                    b.main ? { backgroundColor: colors.gold } : { backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.border },
+                    pressed && { opacity: 0.85, transform: [{ scale: 0.98 }] },
+                  ]}>
+                  <Text style={kidStyles.bannerEmoji}>{b.emoji}</Text>
+                  <View style={styles.rowTextWrap}>
+                    <Text style={[kidStyles.bannerTitle, textAlign, { color: b.main ? colors.onGold : colors.text }]}>{b.title}</Text>
+                    <Text style={[kidStyles.bannerDesc, textAlign, { color: b.main ? colors.onGold : colors.muted }]}>{b.desc}</Text>
+                  </View>
+                  <Text style={[kidStyles.bannerChevron, { color: b.main ? colors.onGold : colors.gold }]}>{isRTL ? '‹' : '›'}</Text>
+                </Pressable>
+              ))
+            : null}
           <TileGrid>
             {tiles.map(({ key, title, desc, href, image, tab }) => (
               <Tile
@@ -194,14 +205,12 @@ export default function HomeScreen() {
               />
             ))}
           </TileGrid>
-          {kidMode ? null : (
-            <Pressable
-              onPress={() => router.push('/support')}
-              accessibilityRole="link"
-              style={({ pressed }) => [styles.supportLink, pressed && styles.pressed]}>
-              <Text style={styles.supportLinkText}>{t.supportApp}</Text>
-            </Pressable>
-          )}
+          <Pressable
+            onPress={() => router.push('/support')}
+            accessibilityRole="link"
+            style={({ pressed }) => [styles.supportLink, pressed && styles.pressed]}>
+            <Text style={styles.supportLinkText}>{t.supportApp}</Text>
+          </Pressable>
         </View>
       </ScrollView>
       <StatusBarBlur />
@@ -210,16 +219,16 @@ export default function HomeScreen() {
   );
 }
 
-// Kids mode's Kids Corner button
+// Kids mode's big buttons
 const kidStyles = StyleSheet.create({
   banner: {
     alignItems: 'center',
     gap: 14,
-    minHeight: 96,
+    minHeight: 88,
     borderRadius: 24,
-    paddingVertical: 18,
+    paddingVertical: 16,
     paddingHorizontal: 20,
-    marginBottom: 16,
+    marginBottom: 12,
   },
   bannerEmoji: { fontSize: 44 },
   bannerTitle: { fontSize: 24, fontWeight: '800' },

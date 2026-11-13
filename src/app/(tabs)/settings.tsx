@@ -49,8 +49,7 @@ const strings = {
     remindersDenied: 'Notifications are turned off for Coptic Psalmody. You can allow them in your phone’s settings.',
     kids: 'Kids',
     kidMode: 'Kids mode',
-    kidModeHint: 'A simpler Home with Kids Corner: Bible stories and quizzes for children',
-    kidModeOn: 'Kids mode is on: some settings are hidden. Turn it off to see them all.',
+    kidModeHint: "Big, easy buttons on Home for today's hymns, deacon responses and Bible stories",
   },
   ar: {
     title: 'الإعدادات',
@@ -81,8 +80,7 @@ const strings = {
     remindersDenied: 'الإشعارات متوقفة لتطبيق التسبحة القبطية. يمكنك السماح بها من إعدادات الهاتف.',
     kids: 'الأطفال',
     kidMode: 'وضع الأطفال',
-    kidModeHint: 'شاشة رئيسية أبسط مع ركن الأطفال: قصص من الكتاب المقدس واختبارات للأطفال',
-    kidModeOn: 'وضع الأطفال مفعّل: بعض الإعدادات مخفية. أوقفه لتراها كلها.',
+    kidModeHint: 'أزرار كبيرة وسهلة في الشاشة الرئيسية لألحان اليوم ومردات الشماس وقصص الكتاب المقدس',
   },
 };
 
@@ -202,7 +200,6 @@ export default function SettingsScreen() {
       {section(
         t.kids,
         <View style={styles.group}>{switchRow(t.kidMode, t.kidModeHint, kids, () => updateSettings({ kidMode: !kids }), true)}</View>,
-        kids ? t.kidModeOn : undefined
       )}
 
       {section(
@@ -214,7 +211,7 @@ export default function SettingsScreen() {
         )
       )}
 
-      {kids ? null : section(
+      {section(
         t.titles,
         <>
           {segmented<TitleStyle>(
@@ -237,7 +234,7 @@ export default function SettingsScreen() {
         </>
       )}
 
-      {kids ? null : section(
+      {section(
         t.opensIn,
         <ChipScroller rtl={rtl} contentStyle={styles.chips}>
           {hymnLanguages.map(({ key, label }) => {
@@ -286,7 +283,7 @@ export default function SettingsScreen() {
         </View>
       )}
 
-      {kids ? null : section(
+      {section(
         t.reading,
         <View style={styles.group}>
           {switchRow(t.sideBySide, t.sideBySideHint, settings.sideBySide, () => updateSettings({ sideBySide: !settings.sideBySide }), true)}
@@ -295,13 +292,13 @@ export default function SettingsScreen() {
         </View>
       )}
       {/* Recordings saved on the phone, and the space they take */}
-      {Platform.OS !== 'web' && !kids ? section(t.offline, <View style={styles.group}>{linkRow(t.downloads, '/downloads', true)}</View>) : null}
-      {kids ? null : <DonationBox lang={lang} />}
+      {Platform.OS !== 'web' ? section(t.offline, <View style={styles.group}>{linkRow(t.downloads, '/downloads', true)}</View>) : null}
+      <DonationBox lang={lang} />
       {section(
         t.about,
         <View style={styles.group}>
           {linkRow(t.support, '/support', true)}
-          {kids ? null : externalLinkRow(lang === 'ar' ? 'إنستغرام (@copticpsalmody)' : 'Instagram (@copticpsalmody)', INSTAGRAM_URL)}
+          {externalLinkRow(lang === 'ar' ? 'إنستغرام (@copticpsalmody)' : 'Instagram (@copticpsalmody)', INSTAGRAM_URL)}
           {linkRow(t.privacy, '/privacy')}
         </View>
       )}
