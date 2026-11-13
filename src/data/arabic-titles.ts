@@ -337,6 +337,7 @@ const arabicTitles: Record<string, string> = {
   'annual-morning-praises-adam-theotokias-conclusion': 'ختام الثيئوطوكيات الآدام (مراحمك يا إلهي)',
   'annual-matins-verse-of-cymbals': 'أرباع الناقوس',
   'annual-distribution-psalm-150': 'المزمور المئة والخمسون',
+  'annual-distribution-blessed-be-the-father': 'مبارك الآب والابن والروح القدس',
   'annual-distribution-pi-oik': 'بي أويك (خبز الحياة)',
   'annual-distribution-our-father': 'أبانا الذي في السماوات',
   'annual-distribution-listen-o-christs-congregation': 'إسمعوا يا شعب المسيح',

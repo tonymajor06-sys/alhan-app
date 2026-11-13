@@ -8419,27 +8419,23 @@ if (!(globalThis as { __skipStWording?: boolean }).__skipStWording) {
   for (const group of [...seasons, ...deaconCategories]) for (const service of group.services) reword(service.hymns);
 }
 
-// ---- Piouk (The Bread of Life) ends with the people's "Blessed be the Father..." (the owner's request, 2026-11-12) ----
-// in Annual's Distribution and every copy of it
+// ---- Annual > Distribution: the people's "Blessed be the Father..." as a hymn of its own after Piouk (the owner's request, 2026-11-12) ----
+// (its Coptic in English and Arabic letters are written below with the others)
 {
-  const ending: Partial<Record<LanguageType, string>> = {
-    coptic: 'Ⲡⲓⲗⲁⲟⲥ:\n\nϪⲉ ϥⲥⲙⲁⲣⲱⲟⲩⲧ ⲛ̀ϫⲉ Ⲫⲓⲱⲧ ⲛⲉⲙ ⲡ̀Ϣⲏⲣⲓ: ⲛⲉⲙ ⲡⲓⲠ̀ⲛⲉⲩⲙⲁ ⲉⲑⲟⲩⲁⲃ: ϯⲦ̀ⲣⲓⲁⲥ ⲉⲧϫⲏⲕ ⲉ̀ⲃⲟⲗ: ⲧⲉⲛⲟⲩⲱϣⲧ ⲙ̀ⲙⲟⲥ ⲧⲉⲛϯⲱ̀ⲟⲩ ⲛⲁⲥ.',
-    englishCoptic: 'Pilaos:\n\nJe efesmarowout enje Efiot nem Epsheeri: nem Pi-epnevma ethowab: Ti-etrias etjeek evol: tenowosht emmos tentioou nas.',
-    english: 'People:\n\nBlessed be the Father and the Son and the Holy Spirit, the perfect Trinity. We worship Him and glorify Him.',
-    englishArabic: "Esh-sha'b:\n\nMubarakun el-Ab wal-Ibn war-Rouh el-Qudus, eth-thalouth el-kamil, nasgud lahu wa numaggiduh.",
-    arabic: 'الشعب:\n\nمبارك الآب والابن والروح القدس، الثالوث الكامل، نسجد له ونمجده.',
-  };
-  const addEnding = (list: Hymn[]) => {
-    for (const hymn of list) {
-      if (hymn.children) addEnding(hymn.children);
-      if (baseOf(hymn.id) !== 'annual-distribution-pi-oik') continue;
-      for (const version of hymn.versions) {
-        const more = ending[version.language];
-        if (more && version.text.trim() && !version.text.trimEnd().endsWith(more.split('\n\n')[1])) version.text = `${version.text.trimEnd()}\n\n${more}`;
-      }
-    }
-  };
-  for (const group of [...seasons, ...deaconCategories]) for (const service of group.services) addEnding(service.hymns);
+  const distribution = seasons.find((s) => s.id === 'annual')?.services.find((s) => s.id === 'annual-distribution');
+  const at = distribution?.hymns.findIndex((h) => h.id === 'annual-distribution-pi-oik') ?? -1;
+  if (distribution && at >= 0 && !distribution.hymns.some((h) => h.id === 'annual-distribution-blessed-be-the-father')) {
+    distribution.hymns.splice(at + 1, 0, {
+      id: 'annual-distribution-blessed-be-the-father',
+      title: 'Ϫⲉ ϥⲥⲙⲁⲣⲱⲟⲩⲧ (Blessed Be the Father)',
+      versions: [
+        { language: 'coptic', text: 'Ⲡⲓⲗⲁⲟⲥ:\n\nϪⲉ ϥⲥⲙⲁⲣⲱⲟⲩⲧ ⲛ̀ϫⲉ Ⲫⲓⲱⲧ ⲛⲉⲙ ⲡ̀Ϣⲏⲣⲓ: ⲛⲉⲙ ⲡⲓⲠ̀ⲛⲉⲩⲙⲁ ⲉⲑⲟⲩⲁⲃ: ϯⲦ̀ⲣⲓⲁⲥ ⲉⲧϫⲏⲕ ⲉ̀ⲃⲟⲗ: ⲧⲉⲛⲟⲩⲱϣⲧ ⲙ̀ⲙⲟⲥ ⲧⲉⲛϯⲱ̀ⲟⲩ ⲛⲁⲥ.' },
+        { language: 'english', text: 'People:\n\nBlessed be the Father and the Son and the Holy Spirit, the perfect Trinity. We worship Him and glorify Him.' },
+        { language: 'englishArabic', text: "Esh-sha'b:\n\nMubarakun el-Ab wal-Ibn war-Rouh el-Qudus, eth-thalouth el-kamil, nasgud lahu wa numaggiduh." },
+        { language: 'arabic', text: 'الشعب:\n\nمبارك الآب والابن والروح القدس، الثالوث الكامل، نسجد له ونمجده.' },
+      ],
+    });
+  }
 }
 
 // ---- Verses that line up (2026-11-12, see verse-lines.ts) ----
