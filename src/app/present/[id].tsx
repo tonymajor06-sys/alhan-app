@@ -1,8 +1,8 @@
-import { useLocalSearchParams } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import Head from 'expo-router/head';
 import { StatusBar } from 'expo-status-bar';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Platform, Pressable, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
+import { useEffect, useState } from 'react';
+import { Platform, Pressable, ScrollView, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -10,9 +10,9 @@ import { copticFont, goBackOrHome, KeepScreenAwake, languageLabels, readerFont, 
 import { hymnPlainText } from '@/components/hymn-reader';
 import { alhanColors } from '@/constants/alhan-colors';
 import { displayTitle } from '@/data/arabic-titles';
-import { LanguageType } from '@/data/hymns';
+import { Hymn, LanguageType } from '@/data/hymns';
 import { toArabicDigits } from '@/data/coptic-calendar';
-import { allHymnSlugs, locateHymn } from '@/data/search';
+import { allHymnSlugs, hymnSlug, locateHymn, neighborHymns } from '@/data/search';
 import { readSetting, writeSetting } from '@/hooks/settings-storage';
 import { useSettings } from '@/hooks/use-settings';
 
@@ -23,10 +23,34 @@ export async function generateStaticParams(): Promise<Record<string, string>[]> 
 
 // Projector mode: one verse at a time, side-by-side columns (up to 4 languages), like Spirit & Truth.
 // Always dark, whatever the phone's theme, because light text on black reads best on a projector.
+// Made easier to use (2026-11-12, the owner's request): it goes on through the whole service (next on the last verse is
+// the next hymn), big back and next buttons and every verse's number at the bottom, swipes, a blank screen, the
+// languages stacked on a phone held upright, and the languages chosen kept for next time.
 const colors = alhanColors;
 const preferred: LanguageType[] = ['coptic', 'english', 'arabic'];
 const MAX_SHOWN = 4;
 export const STORAGE_SCALE_KEY = 'projector-text-scale';
+const STORAGE_LANGUAGES_KEY = 'projector-languages';
+
+const savedLanguages = (): LanguageType[] => {
+  try {
+    const raw = readSetting(STORAGE_LANGUAGES_KEY);
+    return raw ? (JSON.parse(raw) as LanguageType[]) : [];
+  } catch {
+    return [];
+  }
+};
+
+// The hymn before or after this one in its service that has words to show
+const hymnBeside = (hymn: Hymn, step: 1 | -1): Hymn | undefined => {
+  let at: Hymn | undefined = hymn;
+  for (let i = 0; i < 50 && at; i++) {
+    const { previous, next } = neighborHymns(at.id);
+    at = step > 0 ? next : previous;
+    if (at && at.versions.some((v) => v.text?.trim())) return at;
+  }
+  return undefined;
+};
 export const MIN_SCALE = 0.5;
 export const MAX_SCALE = 2.5;
 export const SCALE_STEP = 0.1;
@@ -71,7 +95,8 @@ export function fitFontSize(texts: string[], colWidth: number, height: number): 
 }
 
 export default function PresentScreen() {
-  const { id, lang } = useLocalSearchParams<{ id: string; lang?: string }>();
+  // at=end opens on the last verse (coming back from the next hymn)
+  const { id, lang, at } = useLocalSearchParams<{ id: string; lang?: string; at?: string }>();
   const settings = useSettings();
   const appLang = settings.language;
   const t = strings[appLang];
@@ -83,10 +108,9 @@ export default function PresentScreen() {
   const [scale, setScale] = useState<number>(() => getSavedScale(1));
   const [toastText, setToastText] = useState<string | null>(null);
   const [controlsVisible, setControlsVisible] = useState(true);
+  const [blank, setBlank] = useState(false);
 
-  const triggerToast = useCallback((msg: string) => {
-    setToastText(msg);
-  }, []);
+  const triggerToast = (msg: string) => setToastText(msg);
 
   useEffect(() => {
     if (!toastText) return;
@@ -94,7 +118,7 @@ export default function PresentScreen() {
     return () => clearTimeout(timer);
   }, [toastText]);
 
-  const updateScale = useCallback((updater: (prev: number) => number) => {
+  const updateScale = (updater: (prev: number) => number) => {
     setScale((prev) => {
       const next = Math.min(MAX_SCALE, Math.max(MIN_SCALE, Math.round(updater(prev) * 100) / 100));
       try {
@@ -103,40 +127,55 @@ export default function PresentScreen() {
       triggerToast(`${t.textSize}: ${Math.round(next * 100)}%`);
       return next;
     });
-  }, [t.textSize, triggerToast]);
+  };
 
-  const changeScale = useCallback((delta: number) => {
+  const changeScale = (delta: number) => {
     setControlsVisible(true);
     updateScale((prev) => prev + delta);
-  }, [updateScale]);
+  };
 
-  const resetScale = useCallback(() => {
+  const resetScale = () => {
     setControlsVisible(true);
     updateScale(() => 1);
-  }, [updateScale]);
+  };
 
   const available = languageLabels.en
     .map((l) => l.key)
     .filter((key) => hymn?.versions.some((v) => v.language === key && v.text));
+  // The languages chosen last time (or Coptic, English and Arabic), with the one the hymn was open in
   const [shown, setShown] = useState<LanguageType[]>(() => {
-    const start = preferred.filter((l) => available.includes(l));
+    const saved = savedLanguages();
+    const start = (saved.length ? saved : preferred).filter((l) => available.includes(l));
     const opened = available.find((l) => l === lang);
     if (opened && !start.includes(opened)) start.unshift(opened);
     return (start.length > 0 ? start : available).slice(0, MAX_SHOWN);
   });
-  const [index, setIndex] = useState(0);
+  // The verse shown, kept with the hymn it belongs to: a new hymn (going on through the service) starts at its first
+  // verse, or its last coming back
+  const place = `${id}|${at ?? ''}`;
+  const [position, setPosition] = useState({ place, index: at === 'end' ? Number.MAX_SAFE_INTEGER : 0 });
+  const index = position.place === place ? position.index : at === 'end' ? Number.MAX_SAFE_INTEGER : 0;
+  const setIndex = (next: number) => setPosition({ place, index: next });
 
-  // Shown languages in reading order: Coptic first, Arabic last
-  const ordered = available.filter((l) => shown.includes(l));
+  // Shown languages in reading order: Coptic first, Arabic last (a hymn without them shows its first language)
+  const chosen = available.filter((l) => shown.includes(l));
+  const ordered = chosen.length ? chosen : available.slice(0, 1);
   const versesBy = new Map(ordered.map((l) => [l, hymn ? toVerses(hymnPlainText(hymn, l)) : []]));
   const count = Math.max(1, ...ordered.map((l) => versesBy.get(l)?.length ?? 0));
   const current = Math.min(index, count - 1);
 
-  const go = useCallback((step: number) => {
-    setIndex((prev) => Math.max(0, Math.min(count - 1, prev + step)));
-  }, [count]);
+  const nextHymn = hymn ? hymnBeside(hymn, 1) : undefined;
+  const previousHymn = hymn ? hymnBeside(hymn, -1) : undefined;
+  const openHymn = (h: Hymn, where: 'start' | 'end') => router.setParams({ id: hymnSlug(h.id), at: where === 'end' ? 'end' : '' });
+  // Past the last verse is the next hymn in the service, before the first the previous one
+  const go = (step: number) => {
+    setBlank(false);
+    if (step > 0 && current >= count - 1) return nextHymn ? openHymn(nextHymn, 'start') : undefined;
+    if (step < 0 && current <= 0) return previousHymn ? openHymn(previousHymn, 'end') : undefined;
+    setIndex(Math.max(0, Math.min(count - 1, current + step)));
+  };
 
-  // Clickers, keyboards, and wheel shortcuts
+  // Clickers, keyboards, and wheel shortcuts (listening again after every change, so they act on the verse shown)
   useEffect(() => {
     if (Platform.OS !== 'web') return;
     const onKey = (e: KeyboardEvent) => {
@@ -145,6 +184,7 @@ export default function PresentScreen() {
       else if (e.key === 'Home') setIndex(0);
       else if (e.key === 'End') setIndex(count - 1);
       else if (e.key === 'f' || e.key === 'F') toggleFullscreen();
+      else if (e.key === 'b' || e.key === 'B' || e.key === '.') setBlank((b) => !b);
       else if (e.key === '+' || e.key === '=' || e.key === 'Add') changeScale(SCALE_STEP);
       else if (e.key === '-' || e.key === '_' || e.key === 'Subtract') changeScale(-SCALE_STEP);
       else if (e.key === '0') resetScale();
@@ -167,22 +207,32 @@ export default function PresentScreen() {
       window.removeEventListener('keydown', onKey);
       window.removeEventListener('wheel', onWheel);
     };
-  }, [changeScale, count, go, resetScale, updateScale]);
+  });
 
-  // Pinch-to-zoom gesture on touch devices
-  const pinch = useMemo(
-    () =>
-      Gesture.Pinch()
-        .runOnJS(true)
-        .onEnd((e) => {
-          if (e.scale > 1.15) {
-            changeScale(SCALE_STEP);
-          } else if (e.scale < 0.85) {
-            changeScale(-SCALE_STEP);
-          }
-        }),
-    [changeScale]
-  );
+  // Pinch-to-zoom gesture on touch devices, and a swipe to the next or previous verse
+  const gestures = Gesture.Simultaneous(
+        Gesture.Pinch()
+          .runOnJS(true)
+          .onEnd((e) => {
+            if (e.scale > 1.15) {
+              changeScale(SCALE_STEP);
+            } else if (e.scale < 0.85) {
+              changeScale(-SCALE_STEP);
+            }
+          }),
+        Gesture.Pan()
+          .runOnJS(true)
+          .minPointers(1)
+          .maxPointers(1)
+          .activeOffsetX([-30, 30])
+          .failOffsetY([-40, 40])
+          .onEnd((e) => {
+            const forward = isRTL ? e.translationX > 60 : e.translationX < -60;
+            const back = isRTL ? e.translationX < -60 : e.translationX > 60;
+            if (forward) go(1);
+            else if (back) go(-1);
+          })
+      );
 
   // The controls fade away so only the words are on screen; any tap brings them back
   useEffect(() => {
@@ -193,24 +243,27 @@ export default function PresentScreen() {
 
   const toggleLanguage = (l: LanguageType) => {
     setControlsVisible(true);
+    let next = shown;
     if (shown.includes(l)) {
-      if (shown.length > 1) setShown(shown.filter((s) => s !== l));
+      if (shown.length > 1) next = shown.filter((s) => s !== l);
     } else {
-      if (shown.length < MAX_SHOWN) {
-        setShown([...shown, l]);
-      } else {
-        setShown([...shown.slice(1), l]);
-      }
+      next = shown.length < MAX_SHOWN ? [...shown, l] : [...shown.slice(1), l];
     }
+    setShown(next);
+    try {
+      writeSetting(STORAGE_LANGUAGES_KEY, JSON.stringify(next));
+    } catch {}
   };
 
   const digits = (n: number) => (isRTL ? toArabicDigits(n) : String(n));
   const verseText = (v: Verse | undefined) => (v ? [v.label, v.text].filter(Boolean).join('\n') : '');
   const texts = ordered.map((l) => verseText(versesBy.get(l)?.[current]));
   const numCols = Math.max(1, ordered.length);
-  const colWidth = Math.floor((width - 32 - (numCols - 1) * 16) / numCols);
+  // A phone held upright stacks the languages, one above the other, instead of narrow columns
+  const stacked = numCols > 1 && height > width * 1.1;
+  const colWidth = stacked ? width - 52 : Math.floor((width - 32 - (numCols - 1) * 16) / numCols);
   const availHeight = height - insets.top - insets.bottom - 110;
-  const baseFontSize = fitFontSize(texts, colWidth, availHeight);
+  const baseFontSize = fitFontSize(texts, colWidth, stacked ? availHeight / numCols - 12 : availHeight);
   const fontSize = Math.max(12, Math.round(baseFontSize * scale));
   const lineHeight = Math.round(fontSize * 1.35);
   const speakerColor = { deacon: colors.gold, people: colors.people, priest: colors.priest };
@@ -224,7 +277,7 @@ export default function PresentScreen() {
   }
 
   return (
-    <GestureDetector gesture={pinch}>
+    <GestureDetector gesture={gestures}>
       <View style={styles.root}>
         <Head>
           <title>{`${hymn.title} · Projector | Coptic Psalmody`}</title>
@@ -234,13 +287,13 @@ export default function PresentScreen() {
         <KeepScreenAwake />
 
         {/* The verse, side-by-side columns like Spirit & Truth */}
-        <View style={[styles.stage, { paddingTop: insets.top + 64, paddingBottom: insets.bottom + 48 }]}>
+        <View style={[styles.stage, stacked && styles.stageStacked, { paddingTop: insets.top + 64, paddingBottom: insets.bottom + 48 }, blank && styles.hidden]}>
           {ordered.map((l, i) => {
             const verse = versesBy.get(l)?.[current];
             if (!verse) return null;
             const arabic = l === 'arabic' || l === 'arabicCoptic' || l === 'arabicEnglish';
             return (
-              <View key={l} style={[styles.column, i > 0 && styles.columnDivider]}>
+              <View key={l} style={[styles.column, stacked && styles.row, i > 0 && (stacked ? styles.rowDivider : styles.columnDivider)]}>
                 <Text
                   style={[
                     styles.verse,
@@ -262,12 +315,25 @@ export default function PresentScreen() {
           })}
         </View>
 
-        {/* Tap the left or right side to move; the middle shows the controls */}
+        {blank ? (
+          <Text style={[styles.blankNote, { bottom: insets.bottom + 18 }]} pointerEvents="none">
+            {t.screenBlank}
+          </Text>
+        ) : null}
+
+        {/* Tap the left or right side to move; the middle shows the controls (a blank screen comes back with any tap) */}
         <View style={[StyleSheet.absoluteFill, styles.tapZones]}>
-          <Pressable style={styles.tapSide} onPress={() => go(isRTL ? 1 : -1)} accessibilityLabel={isRTL ? t.nextVerse : t.previousVerse} />
-          <Pressable style={styles.tapMiddle} onPress={() => setControlsVisible(!controlsVisible)} />
-          <Pressable style={styles.tapSide} onPress={() => go(isRTL ? -1 : 1)} accessibilityLabel={isRTL ? t.previousVerse : t.nextVerse} />
+          <Pressable style={styles.tapSide} onPress={() => (blank ? setBlank(false) : go(isRTL ? 1 : -1))} accessibilityLabel={isRTL ? t.nextVerse : t.previousVerse} />
+          <Pressable style={styles.tapMiddle} onPress={() => (blank ? setBlank(false) : setControlsVisible(!controlsVisible))} />
+          <Pressable style={styles.tapSide} onPress={() => (blank ? setBlank(false) : go(isRTL ? -1 : 1))} accessibilityLabel={isRTL ? t.previousVerse : t.nextVerse} />
         </View>
+
+        {/* On the last verse, what comes next in the service (for whoever is presenting) */}
+        {!controlsVisible && !blank && current === count - 1 && nextHymn ? (
+          <Text style={[styles.nextUp, { bottom: insets.bottom + 10 }, isRTL ? styles.nextUpLeft : styles.nextUpRight]} numberOfLines={1} pointerEvents="none">
+            {t.nextUp(displayTitle(nextHymn, appLang))} {isRTL ? '‹' : '›'}
+          </Text>
+        ) : null}
 
         <View style={[styles.progressTrack, { bottom: insets.bottom }]} pointerEvents="none">
           <View style={[styles.progressFill, { width: `${((current + 1) / count) * 100}%` }]} />
@@ -376,12 +442,62 @@ export default function PresentScreen() {
             <Text style={styles.hint}>
               {Platform.OS === 'web'
                 ? isRTL
-                  ? 'اضغط على الجانبين أو ← → للتنقل · +/- لحجم الخط · F للشاشة الكاملة'
-                  : 'Tap sides or ← → to move · +/- for text size · F for full screen'
+                  ? 'اضغط على الجانبين أو ← → للتنقل · +/- لحجم الخط · F للشاشة الكاملة · B لإخفاء الشاشة'
+                  : 'Tap the sides or ← → to move · +/- for text size · F for full screen · B to blank the screen'
                 : isRTL
-                ? 'اضغط على الجانبين للتنقل · باعد بين إصبعيك أو استخدم A- / A+ لتغيير الحجم'
-                : 'Tap sides to move · Pinch or use A− / A+ for text size'}
+                ? 'اضغط على الجانبين أو اسحب للتنقل · باعد بين إصبعيك لتغيير الحجم'
+                : 'Tap the sides or swipe to move · Pinch for text size'}
             </Text>
+          </View>
+        ) : null}
+
+        {/* Back and next, and every verse to jump to; past the end is the next hymn in the service */}
+        {controlsVisible ? (
+          <View style={[styles.bottomBar, { paddingBottom: insets.bottom + 10 }, isRTL && styles.rowReverse]}>
+            <Pressable
+              onPress={() => go(-1)}
+              disabled={current <= 0 && !previousHymn}
+              accessibilityRole="button"
+              accessibilityLabel={current <= 0 ? t.goPreviousHymn : t.previousVerse}
+              style={({ pressed }) => [styles.navButton, pressed && styles.pressed, current <= 0 && !previousHymn && styles.disabled]}>
+              <Text style={styles.navButtonText}>{isRTL ? '›' : '‹'}</Text>
+              {current <= 0 && previousHymn ? <Text style={styles.navButtonSub}>{t.goPreviousHymn}</Text> : null}
+            </Pressable>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.verseStrip} contentContainerStyle={[styles.verseStripContent, isRTL && styles.rowReverse]}>
+              {Array.from({ length: count }, (_, i) => (
+                <Pressable
+                  key={i}
+                  onPress={() => {
+                    setBlank(false);
+                    setControlsVisible(true);
+                    setIndex(i);
+                  }}
+                  accessibilityRole="button"
+                  accessibilityState={{ selected: i === current }}
+                  style={[styles.verseChip, i === current && styles.verseChipOn]}>
+                  <Text style={[styles.verseChipText, i === current && styles.verseChipTextOn]}>{digits(i + 1)}</Text>
+                </Pressable>
+              ))}
+            </ScrollView>
+            <Pressable
+              onPress={() => setBlank((b) => !b)}
+              accessibilityRole="button"
+              style={({ pressed }) => [styles.blankButton, pressed && styles.pressed, blank && styles.chipOn]}>
+              <Text style={[styles.blankButtonText, blank && styles.chipTextOn]}>{t.blankScreen}</Text>
+            </Pressable>
+            <Pressable
+              onPress={() => go(1)}
+              disabled={current >= count - 1 && !nextHymn}
+              accessibilityRole="button"
+              accessibilityLabel={current >= count - 1 ? t.goNextHymn : t.nextVerse}
+              style={({ pressed }) => [styles.navButton, styles.navButtonNext, pressed && styles.pressed, current >= count - 1 && !nextHymn && styles.disabled]}>
+              <Text style={[styles.navButtonText, styles.navButtonTextNext]}>{isRTL ? '‹' : '›'}</Text>
+              {current >= count - 1 && nextHymn ? (
+                <Text style={[styles.navButtonSub, styles.navButtonTextNext]} numberOfLines={1}>
+                  {t.goNextHymn}
+                </Text>
+              ) : null}
+            </Pressable>
           </View>
         ) : null}
       </View>
@@ -405,12 +521,72 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 16,
   },
+  stageStacked: { flexDirection: 'column' },
+  hidden: { opacity: 0 },
   column: {
     flex: 1,
     height: '100%',
     justifyContent: 'center',
     paddingHorizontal: 10,
   },
+  row: { width: '100%', height: undefined, paddingVertical: 6 },
+  rowDivider: { borderTopWidth: 1, borderTopColor: 'rgba(217, 173, 85, 0.25)' },
+  blankNote: { position: 'absolute', alignSelf: 'center', color: 'rgba(255,255,255,0.35)', fontSize: 14 },
+  nextUp: { position: 'absolute', maxWidth: '60%', color: 'rgba(233, 223, 200, 0.55)', fontSize: 14, fontWeight: '600' },
+  nextUpRight: { right: 16 },
+  nextUpLeft: { left: 16 },
+  bottomBar: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    paddingTop: 10,
+    paddingHorizontal: 12,
+    backgroundColor: 'rgba(14, 19, 34, 0.94)',
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(217, 173, 85, 0.35)',
+  },
+  navButton: {
+    minWidth: 64,
+    minHeight: 56,
+    paddingHorizontal: 14,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: colors.border,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  navButtonNext: { backgroundColor: colors.gold, borderColor: colors.gold, minWidth: 84 },
+  navButtonText: { color: colors.text, fontSize: 30, fontWeight: '800', lineHeight: 32 },
+  navButtonTextNext: { color: colors.onGold },
+  navButtonSub: { color: colors.muted, fontSize: 11, fontWeight: '700', maxWidth: 110 },
+  verseStrip: { flex: 1 },
+  verseStripContent: { gap: 6, alignItems: 'center', paddingHorizontal: 2 },
+  verseChip: {
+    minWidth: 40,
+    minHeight: 40,
+    paddingHorizontal: 8,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: colors.border,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  verseChipOn: { backgroundColor: colors.gold, borderColor: colors.gold },
+  verseChipText: { color: colors.text, fontSize: 15, fontWeight: '700', fontVariant: ['tabular-nums'] },
+  verseChipTextOn: { color: colors.onGold, fontWeight: '800' },
+  blankButton: {
+    minHeight: 44,
+    paddingHorizontal: 14,
+    borderRadius: 22,
+    borderWidth: 1,
+    borderColor: colors.border,
+    justifyContent: 'center',
+  },
+  blankButtonText: { color: colors.text, fontSize: 15, fontWeight: '700' },
   columnDivider: {
     borderLeftWidth: 1,
     borderLeftColor: 'rgba(217, 173, 85, 0.25)',
