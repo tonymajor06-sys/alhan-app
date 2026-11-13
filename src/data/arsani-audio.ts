@@ -411,4 +411,13 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   { file: "liturgy-amen-ton-thanaton-coptic-2.m4a", hymns: ["annual-liturgy-amen-ton-thanaton"], language: "coptic" },
   { file: "deacon-confession-arabic.m4a", hymns: ["d-annual-liturgy-faithful-the-confession"], language: "arabic" },
   { file: "liturgy-one-is-the-holy-father-arabic.m4a", hymns: ["kiahk-liturgy-one-is-the-holy-father@annual-liturgy"], language: "arabic" },
+  // Bright Saturday (2026-11-13, the owner's request): the playlist's track for each of its hymns, by the hymn's name
+  // (one track a hymn, the one with the most likes; tracks of another season or with two hymns in one are left out)
+  { file: "arsani-371-the-second-hoos-lobsh.m4a", hymns: ["holyweek-apocalypse-praises-the-second-hoos-lobsh"], language: "coptic" },
+  { file: "arsani-011-1st-hos-coptic-seattle-s.m4a", hymns: ["annual-midnight-first-canticle@holyweek-bright-saturday"], language: "coptic" },
+  { file: "arsani-121-first-hoos-lobsh-khen-oushot-s-of-la-diocese.m4a", hymns: ["annual-midnight-first-canticle-lobsh@holyweek-bright-saturday"], language: "coptic" },
+  { file: "arsani-029-aripsalin-joe-seif-s-from-diocese-of-los-angeles-l.m4a", hymns: ["annual-midnight-greek-psali-watos@holyweek-bright-saturday"], language: "coptic" },
+  { file: "arsani-074-tenen.m4a", hymns: ["annual-midnight-three-holy-children@holyweek-bright-saturday"], language: "coptic" },
+  { file: "arsani-227-tenoueh-ensok-joe-seif.m4a", hymns: ["annual-midnight-psali-watos-three-holy-youth@holyweek-bright-saturday"], language: "coptic" },
+  { file: "arsani-167-neknai-o-panouti-i.m4a", hymns: ["annual-vesper-praises-sunday-adam-theotokias-conclusion@holyweek-bright-saturday"], language: "coptic" },
 ];
