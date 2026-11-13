@@ -94,6 +94,7 @@ export default function RootLayout() {
           <Stack.Screen name="learn/[lesson]" />
           <Stack.Screen name="learn-arabic" />
           <Stack.Screen name="learn-arabic/[lesson]" />
+          <Stack.Screen name="learn-arabic/course/[unit]" />
           <Stack.Screen name="learn-english" />
           <Stack.Screen name="learn-english/[lesson]" />
           <Stack.Screen name="guide" />

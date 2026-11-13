@@ -6,6 +6,7 @@ import { goBackOrHome, openHymnPage, ScreenShell, withCopticFont } from '@/compo
 import { ArabicLessonId, arabicLessonIds, learnArabicStrings as t } from '@/components/learn-strings';
 import { useLessonStyles } from '@/components/lesson-styles';
 import { QuizLevels } from '@/components/quiz-levels';
+import { speakArabic } from '@/components/speak';
 import {
   arabicAlphabet,
   arabicForms,
@@ -58,6 +59,9 @@ function Alphabet() {
       <View style={styles.card}>
         <Text style={styles.arabicLetter}>{letter.letter}</Text>
         <Text style={styles.letterName}>{letter.name.en}</Text>
+        <Pressable onPress={() => speakArabic(letter.name.ar)} accessibilityRole="button" style={({ pressed }) => [shared.controlButton, styles.toggle, pressed && shared.pressed]}>
+          <Text style={shared.controlText}>🔊 Listen</Text>
+        </Pressable>
         <Text style={[styles.label, shared.alignLeft]}>{t.sounds}</Text>
         <Text style={[styles.value, shared.alignLeft]}>{letter.sound.en}</Text>
         <Text style={[styles.label, shared.alignLeft]}>{t.inEnglishLetters}</Text>
@@ -79,7 +83,9 @@ function Alphabet() {
           ))}
         </View>
         <Text style={[styles.label, shared.alignLeft]}>{t.example}</Text>
-        <Text style={[styles.arabicWord, shared.alignLeft]}>{letter.example}</Text>
+        <Pressable onPress={() => speakArabic(letter.example)} accessibilityRole="button" accessibilityLabel={`Listen: ${letter.exampleSound}`}>
+          <Text style={[styles.arabicWord, shared.alignLeft]}>{letter.example} 🔊</Text>
+        </Pressable>
         <Text style={[styles.sound, shared.alignLeft]}>{letter.exampleSound}</Text>
         <Text style={[styles.note, shared.alignLeft]}>{letter.meaning.en}</Text>
       </View>
@@ -158,10 +164,10 @@ function Words() {
             onPress={() => setRevealed((r) => new Set(r).add(word.arabic))}
             accessibilityRole={shown ? 'text' : 'button'}
             style={[shared.rowCard, shared.row]}>
-            <View style={shared.rowTextWrap}>
-              <Text style={[styles.arabicWord, shared.alignLeft]}>{word.arabic}</Text>
+            <Pressable onPress={() => speakArabic(word.arabic)} accessibilityRole="button" accessibilityLabel={`Listen: ${word.sound}`} style={shared.rowTextWrap}>
+              <Text style={[styles.arabicWord, shared.alignLeft]}>{word.arabic} 🔊</Text>
               <Text style={[styles.sound, shared.alignLeft]}>{word.sound}</Text>
-            </View>
+            </Pressable>
             <Text style={[styles.meaning, !shown && styles.hidden]}>{shown ? word.meaning : t.tapToReveal}</Text>
           </Pressable>
         );

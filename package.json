@@ -23,6 +23,7 @@
     "expo-quick-actions": "^6.0.2",
     "expo-router": "~57.0.28",
     "expo-sharing": "~57.0.25",
+    "expo-speech": "~57.0.3",
     "expo-splash-screen": "~57.0.10",
     "expo-sqlite": "~57.0.4",
     "expo-status-bar": "~57.0.1",

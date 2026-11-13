@@ -19,3 +19,8 @@ export const pressFeedback = () => {
 export const successFeedback = () => {
   if (enabled) Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(() => {});
 };
+
+// A wrong answer in a lesson
+export const errorFeedback = () => {
+  if (enabled) Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error).catch(() => {});
+};
