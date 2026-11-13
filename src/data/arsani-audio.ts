@@ -101,11 +101,11 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   // Melismatic Joyful Agios | Arsani Sidarous and Clergy Chorus (after the regular Agios)
   { file: "arsani-melismatic-joyful-agios.m4a", hymns: ["annual-liturgy-agios"], language: "coptic" },
   // Holy Week Mournful Agios - Primary: score 77.33
-  { file: "arsani-049-agios-mournful-tune.m4a", hymns: ["holyweek-pascha-agios", "annual-liturgy-agios@holyweek-bright-saturday"], language: "coptic" },
+  { file: "arsani-049-agios-mournful-tune.m4a", hymns: ["holyweek-pascha-agios"], language: "coptic" },
   // Covenant Thursday Agios - YouTube (Secondary: score 51.66)
   { file: "arsani-yt-covenant-thursday-agios.m4a", hymns: ["holyweek-pascha-agios", "annual-liturgy-agios@holyweek-bright-saturday"], language: "coptic" },
   // Holy Week Mournful Agios - Tertiary: score 39.02
-  { file: "arsani-270-agios-mournful-tune.m4a", hymns: ["holyweek-pascha-agios", "annual-liturgy-agios@holyweek-bright-saturday"], language: "coptic" },
+  { file: "arsani-270-agios-mournful-tune.m4a", hymns: ["holyweek-pascha-agios"], language: "coptic" },
   // Holy Week Agios - Quaternary: score 38.08
   { file: "arsani-237-agios-holy-week.m4a", hymns: ["holyweek-pascha-agios", "annual-liturgy-agios@holyweek-bright-saturday"], language: "coptic" },
   // Sunday Theotokia Part 10: JoeSeif's "20- Teoi", then the melismatic tune. If these are split into shorter files,
