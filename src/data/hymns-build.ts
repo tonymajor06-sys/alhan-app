@@ -7902,8 +7902,9 @@ for (const season of seasons) {
         });
       }
       if (base === 'holyweek-apocalypse-praises-psalm-151') {
-        // Arsani's two (YouTube and SoundCloud) are off it at the owner's request (2026-11-13); alhan.org's stays
-        const off = ['arsani-yt-bright-saturday-psalm-151.m4a', 'arsani-026-anok-pe-pikoji-psalm-151-fr-luke.m4a'];
+        // Arsani's YouTube recording is off it at the owner's request (2026-11-13); the playlist's (Anok Pe Pikoji, Arsani
+        // and Fr Luke Sidarous) is its recording (the owner, 2026-11-13)
+        const off = ['arsani-yt-bright-saturday-psalm-151.m4a'];
         editRecordings(hymn, ALL_LANGUAGES, (files) => files.filter((f) => !off.includes(f)));
       }
       if (base === 'kiahk-midnight-hymn-20') {
