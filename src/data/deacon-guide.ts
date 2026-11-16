@@ -128,14 +128,14 @@ export const guideSections: GuideSection[] = [
       },
       {
         text: {
-          en: 'Inside the altar, speak only when needed, and keep your phone off.',
-          ar: 'داخل الهيكل لا تتكلم إلا للضرورة، وأغلق هاتفك.',
+          en: 'Keep your phone off inside the altar.',
+          ar: 'أغلق هاتفك داخل الهيكل.',
         },
       },
       {
         text: {
-          en: "Stand still and in order. Don't lean on the altar or walk in front of the priest while he prays.",
-          ar: 'قف بهدوء وبترتيب. لا تستند على المذبح ولا تمر أمام الكاهن وهو يصلي.',
+          en: "Don't walk in front of the priest while he prays.",
+          ar: 'لا تمر أمام الكاهن وهو يصلي.',
         },
       },
       {
@@ -147,7 +147,81 @@ export const guideSections: GuideSection[] = [
     ],
   },
   // From Archdeacon Arsani Sidarous's instructions to deacons, as the owner forwards them (candles 2026-11-03, vestments
-  // 2026-11-07), each kept short to read quickly: follow his words, and add his later ones here
+  // 2026-11-07, the altar and the sanctuary 2026-11-16), each kept short to read quickly: follow his words, and add his
+  // later ones here
+  {
+    id: 'altar-respect',
+    icon: '✠',
+    title: { en: 'Respect of the Altar', ar: 'توقير المذبح' },
+    desc: { en: 'How to stand before the altar', ar: 'كيف تقف أمام المذبح' },
+    items: [
+      {
+        title: { en: 'Never lean on it', ar: 'لا تستند عليه' },
+        text: { en: 'Never lean on the altar, at any time.', ar: 'لا تستند على المذبح في أي وقت.' },
+      },
+      {
+        title: { en: 'Your mind on the Sacrifice', ar: 'فكرك في الذبيحة' },
+        text: {
+          en: 'Stay focused on the Holy Sacrifice for the whole Liturgy.',
+          ar: 'كن منتبهاً للذبيحة المقدسة طوال القداس.',
+        },
+      },
+      {
+        title: { en: 'Face the East', ar: 'اتجه نحو الشرق' },
+        text: {
+          en: 'The altar is the East. Serving in the sanctuary, face the altar at all times. Don’t look at the congregation.',
+          ar: 'المذبح هو الشرق. وأنت تخدم في الهيكل، اتجه نحو المذبح دائماً، ولا تنظر إلى الشعب.',
+        },
+      },
+      {
+        title: { en: 'Only those serving', ar: 'لمن يخدم فقط' },
+        text: {
+          en: 'No one enters the sanctuary unless he is serving the altar.',
+          ar: 'لا يدخل الهيكل إلا من يخدم المذبح.',
+        },
+      },
+    ],
+  },
+  {
+    id: 'sanctuary-movement',
+    icon: '☩',
+    title: { en: 'Moving in the Sanctuary', ar: 'الحركة داخل الهيكل' },
+    desc: { en: 'Which door, which foot, and keeping still', ar: 'أي باب وأي قدم، والهدوء' },
+    items: [
+      {
+        title: { en: 'Going in', ar: 'الدخول' },
+        text: {
+          en: '• Right foot first.\n• By the right door, on the right side of the altar.\n• Not through the royal door at the front.',
+          ar: '• بالقدم اليمنى أولاً.\n• من الباب الأيمن، على الجانب الأيمن من المذبح.\n• لا تمر من الباب الملوكي في الأمام.',
+        },
+      },
+      {
+        title: { en: 'Coming out', ar: 'الخروج' },
+        text: {
+          en: 'Left foot first, from the left side, facing the sanctuary.',
+          ar: 'بالقدم اليسرى أولاً، من الجانب الأيسر، ووجهك نحو الهيكل.',
+        },
+      },
+      {
+        title: { en: 'The royal door', ar: 'الباب الملوكي' },
+        text: {
+          en: 'Only for the deacon holding the cross or the Gospel, and the deacon carrying the wine and water cruets at the Offering.',
+          ar: 'فقط للشماس الذي يحمل الصليب أو الإنجيل، ولحامل قارورتي الخمر والماء أثناء تقديم الحمل.',
+        },
+      },
+      {
+        title: { en: 'Still and silent', ar: 'بهدوء وصمت' },
+        text: { en: 'Don’t move about or talk inside the sanctuary.', ar: 'لا تتحرك ولا تتكلم داخل الهيكل.' },
+      },
+      {
+        title: { en: 'The censer', ar: 'الشورية' },
+        text: {
+          en: 'The deacon nearest the censer, on the right, takes care of it, so the deacon on the left never has to cross to the other side of the altar.',
+          ar: 'الشماس الأقرب إلى الشورية، على اليمين، يهتم بها، حتى لا يضطر الشماس الذي على اليسار أن يعبر إلى الجانب الآخر من المذبح.',
+        },
+      },
+    ],
+  },
   {
     id: 'vestments',
     icon: '✚',
@@ -503,6 +577,48 @@ const guideQuestions: GuideQuestion[] = [
     q: b('Who touches the altar board and the holy vessels?', 'من يلمس لوح المذبح والأواني المقدسة؟'),
     right: b('Only the priest. A deacon never touches them', 'الكاهن وحده. الشماس لا يلمسها أبداً'),
     wrong: [b('Any deacon', 'أي شماس'), b('Only the archdeacon', 'رئيس الشمامسة فقط'), b('A deacon, when the priest asks him', 'الشماس، إذا طلب منه الكاهن')],
+  },
+  // Respect of the altar
+  {
+    q: b('When may a deacon lean on the altar?', 'متى يجوز للشماس أن يستند على المذبح؟'),
+    right: b('Never, at any time', 'أبداً، في أي وقت'),
+    wrong: [b('When he is tired', 'عندما يتعب'), b('During the readings', 'أثناء القراءات'), b('When the priest is not there', 'عندما لا يكون الكاهن موجوداً')],
+  },
+  {
+    q: b('Serving in the sanctuary, which way do you face?', 'وأنت تخدم في الهيكل، إلى أين تتجه؟'),
+    right: b('The altar, the East, at all times', 'نحو المذبح، الشرق، دائماً'),
+    wrong: [b('The congregation', 'نحو الشعب'), b('The choir', 'نحو الخورس'), b('Whichever way is easiest', 'أي اتجاه أسهل')],
+  },
+  {
+    q: b('Who may enter the sanctuary?', 'من يجوز له دخول الهيكل؟'),
+    right: b('Only those serving the altar', 'من يخدم المذبح فقط'),
+    wrong: [b('Anyone wearing a tonia', 'كل من يلبس التونية'), b('Anyone taking communion', 'كل من يتناول'), b('Anyone who asks the priest', 'كل من يستأذن الكاهن')],
+  },
+  // Moving in the sanctuary
+  {
+    q: b('How does a deacon enter the sanctuary?', 'كيف يدخل الشماس الهيكل؟'),
+    right: b('Right foot first, by the right door', 'بالقدم اليمنى أولاً، من الباب الأيمن'),
+    wrong: [b('Left foot first, by the left door', 'بالقدم اليسرى أولاً، من الباب الأيسر'), b('Through the royal door at the front', 'من الباب الملوكي في الأمام'), b('By whichever door is closest', 'من أقرب باب')],
+  },
+  {
+    q: b('How does a deacon come out of the sanctuary?', 'كيف يخرج الشماس من الهيكل؟'),
+    right: b('Left foot first, from the left side, facing the sanctuary', 'بالقدم اليسرى أولاً، من الجانب الأيسر، ووجهه نحو الهيكل'),
+    wrong: [b('Right foot first, from the right side', 'بالقدم اليمنى أولاً، من الجانب الأيمن'), b('Through the royal door', 'من الباب الملوكي'), b('Turning his back to the altar', 'معطياً ظهره للمذبح')],
+  },
+  {
+    q: b('Which deacon may go through the royal door?', 'أي شماس يجوز له المرور من الباب الملوكي؟'),
+    right: b('One holding the cross or the Gospel (or the cruets at the Offering)', 'من يحمل الصليب أو الإنجيل (أو القارورتين عند التقديم)'),
+    wrong: [b('Any deacon', 'أي شماس'), b('Only the archdeacon', 'رئيس الشمامسة فقط'), b('The deacon holding the censer', 'الشماس الذي يحمل الشورية')],
+  },
+  {
+    q: b('Who takes care of the censer in the sanctuary?', 'من يهتم بالشورية داخل الهيكل؟'),
+    right: b('The deacon nearest it, on the right', 'الشماس الأقرب إليها، على اليمين'),
+    wrong: [b('The deacon on the left, crossing over', 'الشماس الذي على اليسار، فيعبر إليها'), b('The youngest deacon', 'أصغر الشمامسة'), b('Whoever is free', 'أي شماس غير مشغول')],
+  },
+  {
+    q: b('Inside the sanctuary, a deacon should…', 'داخل الهيكل، على الشماس أن…'),
+    right: b('Not move about or talk', 'لا يتحرك ولا يتكلم'),
+    wrong: [b('Talk quietly with the others', 'يتكلم بهدوء مع الآخرين'), b('Move to help wherever he can', 'يتحرك ليساعد أينما استطاع'), b('Watch the congregation', 'يراقب الشعب')],
   },
   // Blessing the tonia
   {
