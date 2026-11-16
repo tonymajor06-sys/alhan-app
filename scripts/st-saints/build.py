@@ -32,7 +32,7 @@ SAINTS = [
     ('antony-paul', 'St. Antony and St. Paul', 'القديسان أنطونيوس وبولا', [(5, 22), (6, 2)], r'Antony and St Paul|Abba Antony'),
     ('antony', 'St. Antony', 'القديس أنطونيوس', [(5, 22)], r'St\.? Antony'),
     ('pishoy-kamel', 'St. Pishoy Kamel', 'القديس بيشوي كامل', [(7, 12)], r'Pishoy Kamel'),
-    ('pishoy-paul', 'St. Pishoy and St. Paul of Tammah', 'الأنبا بيشوي والأنبا بولا الطموهي', [(11, 8), (1, 7)], r'Pishoy and St Paul|Abba Pishoy|abba Pishoy'),
+    ('pishoy-paul', 'St. Pishoy and St. Paul of Tammah', 'الأنبا بيشوي والأنبا بولا الطموهي', [(11, 8), (2, 7)], r'Pishoy and St Paul|Abba Pishoy|abba Pishoy'),
     ('pishoy', 'St. Pishoy', 'القديس الأنبا بيشوي', [(11, 8)], r'St\. Bishoy'),
     ('paul-hermit', 'St. Paul the Hermit', 'القديس أنبا بولا', [(6, 2)], r'Paul the Hermit|holy Abba Paul'),
     ('paul', 'St. Paul the Apostle', 'القديس بولس الرسول', [(11, 5)], r'St\.? Paul the Apostle|our father Paul|teacher Paul'),

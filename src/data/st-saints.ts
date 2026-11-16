@@ -32,7 +32,7 @@ export const stSaints: Record<string, StSaint> = {
   "antony-paul": { name: { en: "St. Antony and St. Paul", ar: "القديسان أنطونيوس وبولا" }, days: [[5, 22], [6, 2]] },
   "antony": { name: { en: "St. Antony", ar: "القديس أنطونيوس" }, days: [[5, 22]] },
   "pishoy-kamel": { name: { en: "St. Pishoy Kamel", ar: "القديس بيشوي كامل" }, days: [[7, 12]] },
-  "pishoy-paul": { name: { en: "St. Pishoy and St. Paul of Tammah", ar: "الأنبا بيشوي والأنبا بولا الطموهي" }, days: [[11, 8], [1, 7]] },
+  "pishoy-paul": { name: { en: "St. Pishoy and St. Paul of Tammah", ar: "الأنبا بيشوي والأنبا بولا الطموهي" }, days: [[11, 8], [2, 7]] },
   "pishoy": { name: { en: "St. Pishoy", ar: "القديس الأنبا بيشوي" }, days: [[11, 8]] },
   "paul-hermit": { name: { en: "St. Paul the Hermit", ar: "القديس أنبا بولا" }, days: [[6, 2]] },
   "paul": { name: { en: "St. Paul the Apostle", ar: "القديس بولس الرسول" }, days: [[11, 5]] },
