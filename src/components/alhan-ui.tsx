@@ -460,18 +460,21 @@ export function Sheet({
   title,
   rtl,
   onClose,
+  onClosed,
   children,
 }: {
   visible: boolean;
   title: string;
   rtl: boolean;
   onClose: () => void;
+  // Once the sheet has finished sliding away (iOS only reports it then)
+  onClosed?: () => void;
   children: ReactNode;
 }) {
   const styles = useThemedStyles(createAlhanStyles);
   const insets = useSafeAreaInsets();
   return (
-    <Modal visible={visible} transparent animationType="slide" onRequestClose={onClose}>
+    <Modal visible={visible} transparent animationType="slide" onRequestClose={onClose} onDismiss={onClosed}>
       <Pressable style={styles.sheetBackdrop} onPress={onClose} accessibilityRole="button" accessibilityLabel={strings[rtl ? 'ar' : 'en'].close} />
       <View style={[styles.sheet, { paddingBottom: insets.bottom + 16 }]}>
         <View style={styles.sheetHandle} />
@@ -2020,6 +2023,11 @@ export const createAlhanStyles = (colors: AlhanPalette) => StyleSheet.create({
   },
   learnVerseActive: {
     backgroundColor: colors.goldSoft,
+  },
+  // The line being sung, lit up inside its verse
+  learnLineActive: {
+    backgroundColor: colors.goldSoft,
+    color: colors.gold,
   },
   getAppBanner: {
     alignItems: 'center',

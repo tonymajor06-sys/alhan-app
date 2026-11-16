@@ -1,10 +1,12 @@
 import { Redirect, useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
-import { Alert, Platform, Pressable, Text, TextInput, View } from 'react-native';
+import { Alert, Platform, Pressable, Share, Text, TextInput, View } from 'react-native';
 
 import { createAlhanStyles, goBackOrHome, languageLabels, ScreenShell, strings, withCopticFont } from '@/components/alhan-ui';
 import { pressFeedback, successFeedback, tapFeedback } from '@/components/haptics';
 import { playlistTracks } from '@/components/playlist-tracks';
+import { practiceStrings } from '@/components/practice-strings';
+import { listWebUrl } from '@/constants/site';
 import { titleLines } from '@/data/hymn-titles';
 import { useAlhanColors, useThemedStyles } from '@/hooks/use-alhan-colors';
 import { canDownload, downloadAll, useAudioDownloads } from '@/hooks/use-audio-downloads';
@@ -54,6 +56,23 @@ export default function PlaylistScreen() {
         { text: t.cancel, style: 'cancel' },
         { text: t.deletePlaylist, style: 'destructive', onPress: go },
       ]);
+  };
+
+  // A link anyone can open, in the app or on the website, to see the list and save it (a choir's hymns for the week)
+  const shareList = () => {
+    pressFeedback();
+    const p = practiceStrings[lang];
+    const url = listWebUrl(list.name, list.items);
+    if (Platform.OS === 'web' && typeof navigator.share !== 'function') {
+      navigator.clipboard?.writeText(url).then(
+        () => window.alert(p.linkCopied),
+        () => window.alert(url)
+      );
+      return;
+    }
+    Share.share({ message: p.shareListMessage(list.name, url) }).catch(() => {
+      // share sheet dismissed
+    });
   };
 
   const startNight = () => {
@@ -242,6 +261,11 @@ export default function PlaylistScreen() {
       )}
 
       <View style={[styles.audioControls, rowDirection, { marginTop: 20 }]}>
+        {list.items.length ? (
+          <Pressable onPress={shareList} accessibilityRole="button" style={({ pressed }) => [styles.controlButton, pressed && styles.pressed]}>
+            <Text style={styles.controlText}>{practiceStrings[lang].shareList}</Text>
+          </Pressable>
+        ) : null}
         <Pressable
           onPress={() => setRenaming(list.name)}
           accessibilityRole="button"

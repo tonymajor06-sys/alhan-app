@@ -60,7 +60,7 @@ function GetAppBanner() {
 }
 
 export default function HymnPage() {
-  const { id, lang, follow, night } = useLocalSearchParams<{ id: string; lang?: string; follow?: string; night?: string }>();
+  const { id, lang, follow, night, learn } = useLocalSearchParams<{ id: string; lang?: string; follow?: string; night?: string; learn?: string }>();
   const settings = useSettings();
   const styles = useThemedStyles(createAlhanStyles);
   const hymn = id ? locateHymn(id)?.hymn : undefined;
@@ -86,6 +86,7 @@ export default function HymnPage() {
         hymn={hymn}
         initialLanguage={initialLanguage}
         banner={<GetAppBanner />}
+        startLearning={learn === '1'}
         follow={praiseKinds.includes(follow as PraiseKind) && Number(night) > 0 ? { kind: follow as PraiseKind, night: Number(night) } : undefined}
       />
     </View>

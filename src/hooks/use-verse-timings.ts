@@ -60,3 +60,24 @@ export function verseAt(times: number[], time: number): number {
   }
   return current;
 }
+
+// How far into its verse the recording is, from 0 to just under 1 (verse times mark only where each verse starts)
+export function verseProgress(times: number[], verse: number, time: number, duration: number): number {
+  const start = times[verse];
+  const end = times[verse + 1] ?? duration;
+  if (start === undefined || !(end > start)) return 0;
+  return Math.min(0.999, Math.max(0, (time - start) / (end - start)));
+}
+
+// The line of a verse being sung `progress` of the way through it. Lines are only timed by their verse, so each line
+// gets a share of the verse's time as long as its letters (a long line takes longer to sing than a short one).
+export function lineAt(lines: string[], progress: number): number {
+  const weights = lines.map((l) => Math.max(1, l.replace(/\s/g, '').length));
+  const total = weights.reduce((a, b) => a + b, 0);
+  let reached = 0;
+  for (let i = 0; i < lines.length; i++) {
+    reached += weights[i];
+    if (progress * total < reached) return i;
+  }
+  return lines.length - 1;
+}

@@ -7,6 +7,8 @@ import { pressFeedback, successFeedback } from '@/components/haptics';
 import { playlistTracks } from '@/components/playlist-tracks';
 import { useAlhanColors, useThemedStyles } from '@/hooks/use-alhan-colors';
 import { useFavorites } from '@/hooks/use-favorites';
+import { hymnsWithStatus, useLearning } from '@/hooks/use-learning';
+import { practiceStrings } from '@/components/practice-strings';
 import { currentTrack, playQueue, useAudioQueue } from '@/hooks/use-audio-queue';
 import { createPlaylist, DEFAULT_PLAYLIST_NAME, Playlist, usePlaylists } from '@/hooks/use-playlist';
 import { useSettings } from '@/hooks/use-settings';
@@ -23,6 +25,8 @@ export default function PlaylistsScreen() {
   const textAlign = isRTL ? styles.alignRight : styles.alignLeft;
   const lists = usePlaylists();
   const favorites = useFavorites();
+  const learning = useLearning();
+  const p = practiceStrings[lang];
   const queue = useAudioQueue();
   const nowPlaying = currentTrack(queue);
   const [name, setName] = useState('');
@@ -48,6 +52,20 @@ export default function PlaylistsScreen() {
         <View style={styles.rowTextWrap}>
           <Text style={[styles.rowTitle, textAlign]}>{t.favoritesTitle}</Text>
           <Text style={[styles.playlistMeta, textAlign]}>{favorites.length ? t.playlistDesc(favorites.length) : t.favoritesEmpty}</Text>
+        </View>
+        <Text style={styles.listChevron}>{isRTL ? '‹' : '›'}</Text>
+      </Pressable>
+
+      {/* My hymns to learn, with today's review */}
+      <Pressable
+        onPress={() => router.push('/learning')}
+        accessibilityRole="button"
+        style={({ pressed }) => [styles.rowCard, styles.playlistRow, rowDirection, pressed && styles.rowCardPressed]}>
+        <View style={styles.rowTextWrap}>
+          <Text style={[styles.rowTitle, textAlign]}>{p.learnList}</Text>
+          <Text style={[styles.playlistMeta, textAlign]}>
+            {p.learnListDesc(hymnsWithStatus(learning, 'learning').length, hymnsWithStatus(learning, 'known').length)}
+          </Text>
         </View>
         <Text style={styles.listChevron}>{isRTL ? '‹' : '›'}</Text>
       </Pressable>

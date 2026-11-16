@@ -39,8 +39,11 @@ import {
 import { isFavorite, toggleFavorite, useFavorites } from '../hooks/use-favorites';
 import { isInAnyPlaylist, PlaylistItem, usePlaylists } from '../hooks/use-playlist';
 import { PlaylistPicker } from './playlist-picker';
+import { canPractise, PracticePanel } from './practice-panel';
+import { practiceStrings } from './practice-strings';
+import { markPractised, setLearnStatus, useLearning } from '../hooks/use-learning';
 import { TEXT_SCALE_MAX, TEXT_SCALE_MIN, updateSettings, useSettings } from '../hooks/use-settings';
-import { clearVerseTimings, saveVerseTimings, useVerseTimings, verseAt } from '../hooks/use-verse-timings';
+import { clearVerseTimings, lineAt, saveVerseTimings, useVerseTimings, verseAt, verseProgress } from '../hooks/use-verse-timings';
 import {
   ChipScroller,
   copticColumnNudge,
@@ -98,8 +101,11 @@ export function HymnReader({
   initialLanguage,
   banner,
   follow,
+  startLearning = false,
 }: {
   hymn: Hymn;
+  // Opened from Today's review: Learn is already on
+  startLearning?: boolean;
   initialLanguage?: LanguageType;
   // Shown above the language chips (the web version's "Get the app")
   banner?: ReactNode;
@@ -214,6 +220,19 @@ export function HymnReader({
   const currentSeason = acrossSeasons.find((x) => x.hymn.id === hymn.id)?.season;
   // Which sheet is open: the language, the season, the language beside it, or the other tools
   const [sheet, setSheet] = useState<'language' | 'season' | 'compare' | 'more' | null>(null);
+  // iOS opens no share sheet while another sheet is still sliding away, so Share and Copy wait for More to close
+  const afterSheet = useRef<(() => void) | null>(null);
+  const runAfterSheet = () => {
+    const run = afterSheet.current;
+    afterSheet.current = null;
+    run?.();
+  };
+  const closeSheetThen = (run: () => void) => {
+    setSheet(null);
+    if (Platform.OS !== 'ios') return run();
+    afterSheet.current = run;
+    setTimeout(runAfterSheet, 700); // in case the sheet's closing is never reported
+  };
 
   // Play next: the hymns after this one in the service that have a recording in the same language
   const followingTracks = (language: LanguageType = audioLanguage): QueueTrack[] => {
@@ -457,8 +476,12 @@ export function HymnReader({
   const columnSize = fontSize * 0.85;
   const columnText = { fontSize: columnSize, lineHeight: columnSize * 1.6 };
   const speakerColor: Record<Speaker, string> = { deacon: colors.gold, people: colors.people, priest: colors.priest };
-  const verseContent = (verse: Verse | undefined) =>
-    verse ? (
+  // `progress`: how far the recording is into this verse; the line being sung at that point lights up
+  const verseContent = (verse: Verse | undefined, progress: number | null = null) => {
+    if (!verse) return null;
+    const lines = verse.text.split('\n');
+    const sung = progress === null || !verse.text.trim() ? -1 : lineAt(lines, progress);
+    return (
       <>
         {verse.speaker ? (
           <Text style={[styles.speaker, { color: speakerColor[verse.speaker] }]}>
@@ -466,15 +489,31 @@ export function HymnReader({
             {verse.text ? '\n' : ''}
           </Text>
         ) : null}
-        {verse.text}
+        {sung < 0
+          ? verse.text
+          : lines.map((line, l) => (
+              <Text key={l}>
+                {l > 0 ? '\n' : ''}
+                <Text style={l === sung ? styles.learnLineActive : null}>{line}</Text>
+              </Text>
+            ))}
       </>
-    ) : null;
+    );
+  };
 
   // ---------- Learning mode ----------
   // With verse times for the recording, the verse being sung lights up and follows the audio;
   // a verse can be tapped to jump to it, slowed down, or repeated until it is learnt.
   const timings = useVerseTimings(currentAudio);
-  const [learning, setLearning] = useState(false);
+  const [learning, setLearning] = useState(startLearning);
+  // My hymns to learn: whether this one is on it, and playing its recording counts as today's practice
+  const p = practiceStrings[lang];
+  const learnStatus = useLearning()[hymn.id]?.status ?? null;
+  useEffect(() => {
+    if (readerIsCurrent && status.playing) markPractised(hymn.id);
+  }, [readerIsCurrent, status.playing, hymn.id]);
+  // The verse Practice records: the last one tapped (the first until then)
+  const [practiceVerse, setPracticeVerse] = useState(0);
   const [marks, setMarks] = useState<number[] | null>(null); // verse starts tapped so far while marking
   const [loopVerse, setLoopVerse] = useState<number | null>(null);
   const [followed, setFollowed] = useState<number | null>(null);
@@ -513,6 +552,7 @@ export function HymnReader({
 
   const tapVerse = (i: number) => {
     if (marks) return;
+    setPracticeVerse(i);
     if (timings?.[i] !== undefined && currentAudio) {
       if (!readerIsCurrent) toggleReaderAudio();
       seekTo(timings[i]);
@@ -545,12 +585,29 @@ export function HymnReader({
     else setMarks(next);
   };
 
+  const practiceRange = timings
+    ? { start: timings[Math.min(practiceVerse, timings.length - 1)] ?? 0, end: timings[practiceVerse + 1] ?? null }
+    : { start: 0, end: null };
+  const playPracticeOriginal = () => {
+    if (!currentAudio) return;
+    if (!readerIsCurrent) toggleReaderAudio();
+    else if (!status.playing) togglePlay();
+    seekTo(practiceRange.start);
+  };
+
   const sendTimings = () => {
     if (!currentAudio || !timings) return;
     Share.share({ message: `${hymn.id}\n'${currentAudio}': [${timings.join(', ')}],` }).catch(() => {});
   };
 
-  const learnVerseStyle = (i: number) => [styles.learnVerse, i === highlighted && styles.learnVerseActive];
+  // While a recording with verse times plays, only the line being sung lights up, not its whole verse; the whole verse
+  // still lights up while marking verse starts, or when one is tapped in a recording without verse times
+  const lineProgress =
+    !marks && readerIsCurrent && liveTimes && sungVerse >= 0 && highlighted === sungVerse
+      ? verseProgress(liveTimes, sungVerse, status.currentTime, status.duration)
+      : null;
+  const progressFor = (i: number) => (i === highlighted ? lineProgress : null);
+  const learnVerseStyle = (i: number) => [styles.learnVerse, i === highlighted && lineProgress === null && styles.learnVerseActive];
 
 
   const actionChip = (label: string, onPress: () => void, active = false) => (
@@ -726,7 +783,7 @@ export function HymnReader({
             />
           ))}
         </Sheet>
-        <Sheet visible={sheet === 'more'} title={t.more} rtl={isRTL} onClose={() => setSheet(null)}>
+        <Sheet visible={sheet === 'more'} title={t.more} rtl={isRTL} onClose={() => setSheet(null)} onClosed={runAfterSheet}>
           {compareOptions.length > 0 ? (
             <SheetRow
               rtl={isRTL}
@@ -748,6 +805,12 @@ export function HymnReader({
           ) : null}
           <SheetRow
             rtl={isRTL}
+            label={learnStatus === 'known' ? p.knowIt : p.addToLearn}
+            onPress={() => setLearnStatus(hymn.id, learnStatus ? null : 'learning')}
+            end={<Text style={styles.sheetCheck}>{learnStatus ? '✓' : ''}</Text>}
+          />
+          <SheetRow
+            rtl={isRTL}
             label={t.present}
             onPress={() => {
               setSheet(null);
@@ -757,18 +820,12 @@ export function HymnReader({
           <SheetRow
             rtl={isRTL}
             label={t.share}
-            onPress={() => {
-              setSheet(null);
-              share();
-            }}
+            onPress={() => closeSheetThen(share)}
           />
           <SheetRow
             rtl={isRTL}
             label={copied ? t.copied : t.copyWords}
-            onPress={() => {
-              if (Platform.OS !== 'web') setSheet(null);
-              copyWords();
-            }}
+            onPress={() => (Platform.OS === 'web' ? copyWords() : closeSheetThen(copyWords))}
           />
           <SheetRow
             rtl={isRTL}
@@ -915,6 +972,21 @@ export function HymnReader({
                         {currentAudio ? actionChip(t.clearMarks, () => clearVerseTimings(currentAudio)) : null}
                       </View>
                     ) : null}
+                    <View style={[styles.learnRow, rowDirection]}>
+                      {actionChip(p.addToLearn, () => setLearnStatus(hymn.id, learnStatus === 'learning' ? null : 'learning'), learnStatus === 'learning')}
+                      {actionChip(p.knowIt, () => setLearnStatus(hymn.id, learnStatus === 'known' ? null : 'known'), learnStatus === 'known')}
+                    </View>
+                    {canPractise ? (
+                      <PracticePanel
+                        key={timings ? practiceVerse : 'whole'}
+                        lang={lang}
+                        hymnId={hymn.id}
+                        verse={timings ? Math.min(practiceVerse, timings.length - 1) : null}
+                        range={practiceRange}
+                        isCurrent={readerIsCurrent}
+                        playOriginal={playPracticeOriginal}
+                      />
+                    ) : null}
                   </>
                 )}
               </View>
@@ -1023,11 +1095,11 @@ export function HymnReader({
                 onLayout={(e) => (verseY.current[i] = e.nativeEvent.layout.y)}
                 style={[styles.verseRow, rowDirection, i > 0 && styles.verseRowDivider, versesTappable && learnVerseStyle(i)]}>
                 <Text selectable={!versesTappable} style={[styles.hymnText, styles.verseColumn, columnText, columnStyle(effectiveLanguage)]}>
-                  {verseContent(verses[i])}
+                  {verseContent(verses[i], progressFor(i))}
                 </Text>
                 <View style={styles.verseGutter} />
                 <Text selectable={!versesTappable} style={[styles.hymnText, styles.verseColumn, columnText, columnStyle(compareLanguage)]}>
-                  {verseContent(compareVerses[i])}
+                  {verseContent(compareVerses[i], progressFor(i))}
                 </Text>
               </Pressable>
             ))
@@ -1046,7 +1118,7 @@ export function HymnReader({
                     isArabicText ? styles.arabicText : styles.alignLeft,
                     copticStyle,
                   ]}>
-                  {verseContent(verse)}
+                  {verseContent(verse, progressFor(i))}
                 </Text>
               </Pressable>
             ))

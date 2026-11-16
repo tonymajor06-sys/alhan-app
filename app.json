@@ -57,6 +57,7 @@
       [
         "expo-audio",
         {
+          "microphonePermission": "Coptic Psalmody uses the microphone only when you tap Record in Practice, so you can hear yourself sing a hymn next to its recording. Nothing is saved or sent.",
           "recordAudioAndroid": false,
           "enableBackgroundPlayback": false
         }

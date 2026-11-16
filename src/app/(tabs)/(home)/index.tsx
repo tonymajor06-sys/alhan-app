@@ -12,6 +12,7 @@ import { StatusBarBlur } from '@/components/status-bar-blur';
 import { useTabChrome } from '@/components/tab-chrome';
 import { homeArt } from '@/constants/home-art';
 import { displayTitle } from '@/data/arabic-titles';
+import { titleLines } from '@/data/hymn-titles';
 import { copticMonths, currentSeasonName, formatCopticDate, formatDaysUntil, getSeasonInfo, jdnToCoptic, kindName, tuneName } from '@/data/coptic-calendar';
 import { guideStrings } from '@/data/deacon-guide';
 import { faithStrings } from '@/data/faith-guide';
@@ -20,7 +21,9 @@ import { mainCategories, seasons } from '@/data/hymns';
 import { saintsStrings } from '@/data/saints';
 import { useAlhanColors, useThemedStyles } from '@/hooks/use-alhan-colors';
 import { currentTrack, useAudioQueueSelect } from '@/hooks/use-audio-queue';
-import { usePlaylists } from '@/hooks/use-playlist';
+import { findHymn, usePlaylists } from '@/hooks/use-playlist';
+import { todaysReview, useLearning } from '@/hooks/use-learning';
+import { practiceStrings } from '@/components/practice-strings';
 import { useSettings } from '@/hooks/use-settings';
 import { useTodayJdn } from '@/hooks/use-today';
 
@@ -37,6 +40,10 @@ export default function HomeScreen() {
   const textAlign = isRTL ? styles.alignRight : styles.alignLeft;
   const playlists = usePlaylists();
   const nowPlaying = useAudioQueueSelect(currentTrack);
+  // Today's review of My hymns to learn, while some are still waiting
+  const review = todaysReview(useLearning()).filter((r) => findHymn(r.hymnId));
+  const reviewLeft = review.filter((r) => !r.done).length;
+  const p = practiceStrings[lang];
 
   const today = useTodayJdn();
   const seasonInfo = getSeasonInfo(today, 1);
@@ -193,6 +200,23 @@ export default function HomeScreen() {
                 </Pressable>
               ))
             : null}
+          {reviewLeft ? (
+            <Pressable
+              onPress={() => {
+                tapFeedback();
+                router.push('/learning');
+              }}
+              accessibilityRole="button"
+              style={({ pressed }) => [styles.rowCard, styles.playlistRow, rowDirection, { marginBottom: 14 }, pressed && styles.rowCardPressed]}>
+              <View style={styles.rowTextWrap}>
+                <Text style={[styles.rowTitle, textAlign]}>📚 {p.todaysReview}</Text>
+                <Text style={[styles.playlistMeta, textAlign]} numberOfLines={1}>
+                  {review.map((r) => `${r.done ? '✓' : '○'} ${titleLines(findHymn(r.hymnId)!, lang).main}`).join('   ')}
+                </Text>
+              </View>
+              <Text style={styles.listChevron}>{isRTL ? '‹' : '›'}</Text>
+            </Pressable>
+          ) : null}
           <TileGrid>
             {tiles.map(({ key, title, desc, href, image, tab }) => (
               <Tile

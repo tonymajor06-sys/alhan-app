@@ -77,10 +77,10 @@ export const isInPlaylist = (items: PlaylistItem[], item: PlaylistItem) => items
 export const isInAnyPlaylist = (lists: Playlist[], item: PlaylistItem) => lists.some((l) => isInPlaylist(l.items, item));
 export const playlistById = (lists: Playlist[], id: string | undefined) => lists.find((l) => l.id === id);
 
-// A new playlist, optionally with its first hymn; returns its id
-export function createPlaylist(name: string, first?: PlaylistItem): string {
+// A new playlist, optionally with its first hymn (or all its hymns, from a shared list); returns its id
+export function createPlaylist(name: string, first?: PlaylistItem, items?: PlaylistItem[]): string {
   const id = newId();
-  save([...playlists, { id, name: name.trim() || DEFAULT_PLAYLIST_NAME.en, items: first ? [first] : [] }]);
+  save([...playlists, { id, name: name.trim() || DEFAULT_PLAYLIST_NAME.en, items: items ?? (first ? [first] : []) }]);
   return id;
 }
 
