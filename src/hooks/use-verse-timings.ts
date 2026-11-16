@@ -1,5 +1,6 @@
 import { useSyncExternalStore } from 'react';
 
+import type { LanguageType } from '../data/hymns';
 import { verseTimings as bundledTimings } from '../data/verse-timings';
 import { readSetting, writeSetting } from './settings-storage';
 
@@ -37,7 +38,43 @@ export function saveVerseTimings(file: string, times: number[]) {
 
 export function clearVerseTimings(file: string) {
   const { [file]: _removed, ...rest } = marked;
+  const { [file]: _lines, ...otherLines } = markedLines;
+  saveLines(otherLines);
   save(rest);
+}
+
+// When each line starts (marked line by line in Learn), per verse, with the language whose lines they are: lines
+// don't line up between languages the way verses do, so another language's lines are timed from its verse's share
+export type LineTimes = { language: LanguageType; lines: number[][] };
+const LINES_KEY = 'alhan-line-timings';
+let markedLines: Record<string, LineTimes> = (() => {
+  try {
+    const raw = readSetting(LINES_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch {
+    return {};
+  }
+})();
+const saveLines = (next: Record<string, LineTimes>) => {
+  markedLines = next;
+  try {
+    writeSetting(LINES_KEY, JSON.stringify(markedLines));
+  } catch {
+    // marks still apply for this session
+  }
+};
+
+// Saves the line starts, and each verse's start (its first line) as the verse times
+export function saveLineTimings(file: string, language: LanguageType, lines: number[][]) {
+  const verses = lines.filter((l) => l.length > 0);
+  if (!verses.length) return;
+  saveLines({ ...markedLines, [file]: { language, lines: verses } });
+  save({ ...marked, [file]: verses.map((l) => l[0]) });
+}
+
+export function useLineTimings(file: string | null | undefined): LineTimes | null {
+  useSyncExternalStore(subscribe, () => marked, () => marked);
+  return file ? (markedLines[file] ?? null) : null;
 }
 
 const subscribe = (listener: () => void) => {

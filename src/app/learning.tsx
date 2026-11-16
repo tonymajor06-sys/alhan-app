@@ -1,12 +1,14 @@
 import { router } from 'expo-router';
+import { useMemo } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
 import { createAlhanStyles, goBackOrHome, hymnHref, ScreenShell, withCopticFont } from '@/components/alhan-ui';
 import { tapFeedback } from '@/components/haptics';
+import { learnBadges, serviceProgress } from '@/components/learn-badges';
 import { practiceStrings } from '@/components/practice-strings';
 import { titleLines } from '@/data/hymn-titles';
-import { useThemedStyles } from '@/hooks/use-alhan-colors';
-import { hymnsWithStatus, LearnStatus, setLearnStatus, todaysReview, useLearning } from '@/hooks/use-learning';
+import { useAlhanColors, useThemedStyles } from '@/hooks/use-alhan-colors';
+import { currentStreak, hymnsWithStatus, LearnStatus, longestStreak, setLearnStatus, todaysReview, useLearning, usePracticeDays } from '@/hooks/use-learning';
 import { findHymn } from '@/hooks/use-playlist';
 import { useSettings } from '@/hooks/use-settings';
 
@@ -24,6 +26,21 @@ export default function LearningScreen() {
   const review = todaysReview(entries).filter((r) => findHymn(r.hymnId));
   const learning = hymnsWithStatus(entries, 'learning').filter((id) => findHymn(id));
   const known = hymnsWithStatus(entries, 'known').filter((id) => findHymn(id));
+  const colors = useAlhanColors();
+  // The streak and badges
+  const days = usePracticeDays();
+  const streak = currentStreak(days);
+  const best = longestStreak(days);
+  const services = useMemo(() => serviceProgress(entries, lang), [entries, lang]);
+  const servicesDone = services.filter((s) => s.have === s.all);
+  const closest = services.filter((s) => s.have < s.all).sort((a, b) => b.have / b.all - a.have / a.all || a.all - b.all)[0];
+  const badges = learnBadges(entries, best, servicesDone.length, lang);
+  const header = (title: string) => (
+    <View style={[styles.sectionHeader, rowDirection, { marginTop: 18, marginBottom: 10 }]}>
+      <Text style={styles.sectionHeaderText}>{title}</Text>
+      <View style={styles.sectionLine} />
+    </View>
+  );
 
   const open = (id: string) => router.push({ ...hymnHref(id), params: { ...hymnHref(id).params, learn: '1' } });
 
@@ -65,9 +82,15 @@ export default function LearningScreen() {
     <ScreenShell lang={lang} title={p.learnList} subtitle={p.learnListDesc(learning.length, known.length)} onBack={goBackOrHome}>
       {learning.length === 0 && known.length === 0 ? <Text style={[styles.emptyText, textAlign]}>{p.learnEmpty}</Text> : null}
 
+      {/* Days in a row */}
+      <View style={[styles.rowCard, { marginBottom: 6 }]}>
+        <Text style={[styles.rowTitle, textAlign]}>{streak ? p.streak(streak) : p.streakNone}</Text>
+        <Text style={[styles.playlistMeta, textAlign]}>{best > 1 ? `${p.streakBest(best)} · ${p.streakHint}` : p.streakHint}</Text>
+      </View>
+
       {review.length ? (
         <>
-          <Text style={[styles.sectionHeaderText, textAlign, { marginTop: 18, marginBottom: 10 }]}>{p.todaysReview}</Text>
+          {header(p.todaysReview)}
           <Text style={[styles.learnHint, textAlign, { marginBottom: 8 }]}>{review.every((r) => r.done) ? p.reviewDone : p.reviewHint}</Text>
           <View style={styles.listGroup}>{review.map((r, i) => row(r.hymnId, i, { label: p.moveToKnown, status: 'known' }, r.done))}</View>
         </>
@@ -75,15 +98,47 @@ export default function LearningScreen() {
 
       {learning.length ? (
         <>
-          <Text style={[styles.sectionHeaderText, textAlign, { marginTop: 18, marginBottom: 10 }]}>{p.learningTitle}</Text>
+          {header(p.learningTitle)}
           <View style={styles.listGroup}>{learning.map((id, i) => row(id, i, { label: p.moveToKnown, status: 'known' }))}</View>
         </>
       ) : null}
 
       {known.length ? (
         <>
-          <Text style={[styles.sectionHeaderText, textAlign, { marginTop: 18, marginBottom: 10 }]}>{p.knownTitle}</Text>
+          {header(p.knownTitle)}
           <View style={styles.listGroup}>{known.map((id, i) => row(id, i, { label: p.moveToLearning, status: 'learning' }))}</View>
+        </>
+      ) : null}
+      {header(p.badges)}
+      <View style={[rowDirection, { flexWrap: 'wrap', gap: 8 }]}>
+        {badges.map((b) => {
+          const earned = b.have >= b.need;
+          return (
+            <View
+              key={b.key}
+              accessibilityLabel={`${b.title}${earned ? '' : `, ${p.badgeProgress(b.have, b.need)}`}`}
+              style={[
+                styles.chip,
+                { paddingVertical: 8, alignItems: 'center', minWidth: 96 },
+                earned ? { borderColor: colors.gold, backgroundColor: colors.goldSoft } : { opacity: 0.55 },
+              ]}>
+              <Text style={{ fontSize: 22 }}>{b.emoji}</Text>
+              <Text style={[styles.chipText, { textAlign: 'center' }]}>{b.title}</Text>
+              {!earned && b.need > 1 ? <Text style={[styles.playlistMeta, { textAlign: 'center' }]}>{p.badgeProgress(b.have, b.need)}</Text> : null}
+            </View>
+          );
+        })}
+      </View>
+
+      {servicesDone.length || closest ? (
+        <>
+          {header(p.servicesLearnt)}
+          {servicesDone.map((s) => (
+            <Text key={s.name} style={[styles.listTitle, textAlign, { marginBottom: 6 }]}>
+              ☩ {s.name}
+            </Text>
+          ))}
+          {closest ? <Text style={[styles.learnHint, textAlign]}>{p.closestService(closest.name, closest.have, closest.all)}</Text> : null}
         </>
       ) : null}
     </ScreenShell>

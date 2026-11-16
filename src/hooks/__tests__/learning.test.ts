@@ -1,7 +1,7 @@
-jest.mock('../settings-storage', () => ({ readSetting: () => null, writeSetting: () => {} }));
-
-import { LearnList, todaysReview } from '../use-learning';
+import { currentStreak, LearnList, longestStreak, todaysReview } from '../use-learning';
 import { lineAt, verseProgress } from '../use-verse-timings';
+
+jest.mock('../settings-storage', () => ({ readSetting: () => null, writeSetting: () => {} }));
 
 describe('lineAt', () => {
   const lines = ['short', 'a much much longer line here', 'end'];
@@ -45,5 +45,17 @@ describe('todaysReview', () => {
       { hymnId: 'c', done: false },
       { hymnId: 'd', done: false },
     ]);
+  });
+});
+
+describe('streaks', () => {
+  it('counts days in a row up to today, or up to yesterday before today is practised', () => {
+    expect(currentStreak([7, 8, 9, 10], 10)).toBe(4);
+    expect(currentStreak([7, 8, 9], 10)).toBe(3);
+    expect(currentStreak([7, 8], 10)).toBe(0);
+  });
+  it('keeps the longest run ever', () => {
+    expect(longestStreak([1, 2, 3, 10, 11, 20])).toBe(3);
+    expect(longestStreak([])).toBe(0);
   });
 });

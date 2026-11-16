@@ -11,7 +11,7 @@ import { Alert, Platform, Pressable, Text, View } from 'react-native';
 
 import { useAlhanColors, useThemedStyles } from '@/hooks/use-alhan-colors';
 import { togglePlay, useAudioQueue } from '@/hooks/use-audio-queue';
-import { markPractised } from '@/hooks/use-learning';
+import { markPractised, notePracticeDay } from '@/hooks/use-learning';
 import { AppLanguage } from '@/hooks/use-settings';
 
 import { createAlhanStyles, formatTime } from './alhan-ui';
@@ -135,6 +135,7 @@ export function PracticePanel({
       );
       setTake(recorder.uri);
       markPractised(hymnId);
+      notePracticeDay();
     } else {
       pauseOriginal();
       player.pause();

@@ -48,7 +48,60 @@ export function setLearnStatus(hymnId: string, status: LearnStatus | null) {
 // Practising a Learning hymn (playing its recording, recording oneself) counts as today's review of it
 export function markPractised(hymnId: string, day = dayNumber()) {
   const entry = list[hymnId];
-  if (entry?.status === 'learning' && entry.practised !== day) save({ ...list, [hymnId]: { ...entry, practised: day } });
+  if (entry?.status !== 'learning') return;
+  notePracticeDay(day);
+  if (entry.practised !== day) save({ ...list, [hymnId]: { ...entry, practised: day } });
+}
+
+// ---- Streak ----
+// The days something was practised (a hymn played in Learn, one of My hymns to learn reviewed, a Practice take),
+// for the streak: days in a row, and the longest run ever (badges are kept by the longest, so they never go away)
+const DAYS_KEY = 'alhan-practice-days';
+let days: number[] = (() => {
+  try {
+    const saved = JSON.parse(readSetting(DAYS_KEY) ?? '[]');
+    return Array.isArray(saved) ? saved.filter((d): d is number => typeof d === 'number') : [];
+  } catch {
+    return [];
+  }
+})();
+
+export function notePracticeDay(day = dayNumber()) {
+  if (days.includes(day)) return;
+  days = [...days, day].sort((a, b) => a - b);
+  try {
+    writeSetting(DAYS_KEY, JSON.stringify(days));
+  } catch {
+    // it still counts for this session
+  }
+  listeners.forEach((l) => l());
+}
+
+// Days in a row up to today; a streak still stands on a day not yet practised, until that day is over
+export function currentStreak(practised: number[], today = dayNumber()): number {
+  const set = new Set(practised);
+  let day = set.has(today) ? today : today - 1;
+  let n = 0;
+  while (set.has(day)) {
+    n++;
+    day--;
+  }
+  return n;
+}
+
+export function longestStreak(practised: number[]): number {
+  const sorted = [...new Set(practised)].sort((a, b) => a - b);
+  let best = 0;
+  let run = 0;
+  sorted.forEach((d, i) => {
+    run = i > 0 && sorted[i - 1] === d - 1 ? run + 1 : 1;
+    best = Math.max(best, run);
+  });
+  return best;
+}
+
+export function usePracticeDays(): number[] {
+  return useSyncExternalStore(subscribe, () => days, () => days);
 }
 
 // Today's review: Learning hymns not yet practised today, never-practised first, then the longest ago;

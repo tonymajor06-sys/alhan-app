@@ -41,9 +41,10 @@ import { isInAnyPlaylist, PlaylistItem, usePlaylists } from '../hooks/use-playli
 import { PlaylistPicker } from './playlist-picker';
 import { canPractise, PracticePanel } from './practice-panel';
 import { practiceStrings } from './practice-strings';
-import { markPractised, setLearnStatus, useLearning } from '../hooks/use-learning';
+import { WordSheet } from './word-sheet';
+import { markPractised, notePracticeDay, setLearnStatus, useLearning } from '../hooks/use-learning';
 import { TEXT_SCALE_MAX, TEXT_SCALE_MIN, updateSettings, useSettings } from '../hooks/use-settings';
-import { clearVerseTimings, lineAt, saveVerseTimings, useVerseTimings, verseAt, verseProgress } from '../hooks/use-verse-timings';
+import { clearVerseTimings, lineAt, saveLineTimings, useLineTimings, useVerseTimings, verseAt, verseProgress } from '../hooks/use-verse-timings';
 import {
   ChipScroller,
   copticColumnNudge,
@@ -95,6 +96,9 @@ const showMessage = (text: string) => {
   if (Platform.OS === 'web') globalThis.alert?.(text);
   else Alert.alert(text);
 };
+
+// A line lit up in a verse: by its number, or by how far the recording is into the verse
+type LineMark = { line: number } | { progress: number } | null;
 
 export function HymnReader({
   hymn,
@@ -476,11 +480,52 @@ export function HymnReader({
   const columnSize = fontSize * 0.85;
   const columnText = { fontSize: columnSize, lineHeight: columnSize * 1.6 };
   const speakerColor: Record<Speaker, string> = { deacon: colors.gold, people: colors.people, priest: colors.priest };
-  // `progress`: how far the recording is into this verse; the line being sung at that point lights up
-  const verseContent = (verse: Verse | undefined, progress: number | null = null) => {
+  // ---------- Tap a word ----------
+  // With "Tap a word" on, each Coptic word (in Coptic letters, or in English or Arabic letters when its line has as
+  // many words as the Coptic one) opens its meaning from the Coptic dictionary
+  const [wordMode, setWordMode] = useState(false);
+  const [word, setWord] = useState<string | null>(null);
+  const isCopticFamily = (l: LanguageType | null) => l === 'coptic' || l === 'englishCoptic' || l === 'arabicCoptic';
+  const hasCoptic = hymn.versions.some((v) => v.language === 'coptic' && v.text);
+  const wordLines = (text: string | undefined) => (text ?? '').split('\n').map((line) => line.split(/\s+/).filter(Boolean));
+  const copticWordLines = wordMode && hasCoptic ? toVerses(hymnPlainText(hymn, 'coptic')).map((v) => wordLines(v.text)) : null;
+  const wordsOf = (language: LanguageType | null, i: number) => {
+    if (!copticWordLines || !isCopticFamily(language)) return undefined;
+    const own = wordLines((language === effectiveLanguage ? verses : compareVerses)[i]?.text);
+    return (l: number) => {
+      const coptic = copticWordLines[i]?.[l];
+      return coptic && own[l]?.length === coptic.length ? coptic : null;
+    };
+  };
+
+  // `mark`: the line being sung (by number, or by how far the recording is into the verse) lights up.
+  // `onLine`: each line can be tapped. `words`: Coptic words can be tapped for their meaning (see wordsOf).
+  const verseContent = (
+    verse: Verse | undefined,
+    mark: LineMark = null,
+    onLine?: (line: number) => void,
+    words?: (line: number) => (string | null)[] | null
+  ) => {
     if (!verse) return null;
     const lines = verse.text.split('\n');
-    const sung = progress === null || !verse.text.trim() ? -1 : lineAt(lines, progress);
+    const sung = !mark || !verse.text.trim() ? -1 : 'line' in mark ? mark.line : lineAt(lines, mark.progress);
+    const lineText = (line: string, l: number) => {
+      const coptic = words?.(l);
+      if (!coptic) return line;
+      let w = -1;
+      return line.split(/(\s+)/).map((part, j) => {
+        if (!part.trim()) return part;
+        const word = coptic[++w];
+        return word ? (
+          <Text key={j} onPress={() => setWord(word)} style={styles.tapWord}>
+            {part}
+          </Text>
+        ) : (
+          part
+        );
+      });
+    };
+    const plain = sung < 0 && !onLine && !words;
     return (
       <>
         {verse.speaker ? (
@@ -489,13 +534,15 @@ export function HymnReader({
             {verse.text ? '\n' : ''}
           </Text>
         ) : null}
-        {sung < 0
+        {plain
           ? verse.text
           : lines.map((line, l) => (
-              <Text key={l}>
-                {l > 0 ? '\n' : ''}
-                <Text style={l === sung ? styles.learnLineActive : null}>{line}</Text>
-              </Text>
+          <Text key={l}>
+            {l > 0 ? '\n' : ''}
+            <Text onPress={onLine ? () => onLine(l) : undefined} style={l === sung ? styles.learnLineActive : null}>
+              {lineText(line, l)}
+            </Text>
+          </Text>
             ))}
       </>
     );
@@ -510,22 +557,41 @@ export function HymnReader({
   const p = practiceStrings[lang];
   const learnStatus = useLearning()[hymn.id]?.status ?? null;
   useEffect(() => {
-    if (readerIsCurrent && status.playing) markPractised(hymn.id);
-  }, [readerIsCurrent, status.playing, hymn.id]);
+    if (!readerIsCurrent || !status.playing) return;
+    markPractised(hymn.id);
+    // Listening in Learn counts toward the streak, whatever the hymn
+    if (learning) notePracticeDay();
+  }, [readerIsCurrent, status.playing, hymn.id, learning]);
   // The verse Practice records: the last one tapped (the first until then)
   const [practiceVerse, setPracticeVerse] = useState(0);
-  const [marks, setMarks] = useState<number[] | null>(null); // verse starts tapped so far while marking
+  const [marks, setMarks] = useState<number[] | null>(null); // line starts tapped so far while marking, in order
   const [loopVerse, setLoopVerse] = useState<number | null>(null);
   const [followed, setFollowed] = useState<number | null>(null);
-  const liveTimes = marks ?? timings;
+  // Every line of the text, verse by verse: marking goes through them one by one
+  const verseLines = verses.map((v) => v.text.split('\n'));
+  const lineStarts = verseLines.reduce<number[]>((all, lines, v) => [...all, v ? all[v - 1] + verseLines[v - 1].length : 0], []);
+  const lineCount = verseLines.reduce((n, lines) => n + lines.length, 0);
+  const lineOf = (k: number) => {
+    let v = 0;
+    while (v + 1 < verseLines.length && lineStarts[v + 1] <= k) v++;
+    return { verse: v, line: k - lineStarts[v] };
+  };
+  // While marking, a verse starts where its first line was marked
+  const markedVerses = marks ? verseLines.map((_, v) => marks[lineStarts[v]]).filter((x) => x !== undefined) : null;
+  const liveTimes = markedVerses ?? timings;
+  // Line times marked in the language being read; another language's lines are timed by their share of the verse
+  const lineTimes = useLineTimings(currentAudio);
+  const ownLines = lineTimes?.language === effectiveLanguage ? lineTimes.lines : null;
+  const timesOfLines = (v: number) => (ownLines?.[v]?.length && ownLines[v].length <= verseLines[v].length ? ownLines[v] : null);
   // While this hymn's recording plays and its verse times are known, the verse being sung lights up even outside
   // learning mode, and a verse can be tapped to jump to it
   const autoFollow = !learning && readerIsCurrent && !!timings;
   const versesTappable = learning || autoFollow;
   const sungVerse = versesTappable && readerIsCurrent && liveTimes ? verseAt(liveTimes, status.currentTime) : -1;
+  const markingLine = marks && marks.length ? lineOf(marks.length - 1) : null;
   const highlighted = learning
     ? marks
-      ? marks.length - 1
+      ? (markingLine?.verse ?? null)
       : sungVerse >= 0
         ? sungVerse
         : followed
@@ -574,15 +640,50 @@ export function HymnReader({
   };
 
   const finishMarking = (times: number[]) => {
-    if (currentAudio && times.length > 0) saveVerseTimings(currentAudio, times);
+    if (currentAudio && times.length > 0)
+      saveLineTimings(
+        currentAudio,
+        effectiveLanguage,
+        verseLines.map((lines, v) => times.slice(lineStarts[v], lineStarts[v] + lines.length))
+      );
     setMarks(null);
   };
 
-  const markVerse = () => {
-    if (!marks) return;
-    const next = [...marks, Math.round(status.currentTime * 10) / 10];
-    if (next.length >= verses.length) finishMarking(next);
+  // Line k starts now. Tapping a line further on gives the lines skipped times spread evenly up to it; tapping one
+  // already marked marks it again, and the ones after it again as they come.
+  const markLine = (k: number) => {
+    if (!marks || !readerIsCurrent) return;
+    const now = Math.round(status.currentTime * 10) / 10;
+    const next = marks.slice(0, k);
+    const from = next.at(-1) ?? 0;
+    const skipped = k - next.length;
+    for (let j = 1; j <= skipped; j++) next.push(Math.round((from + ((now - from) * j) / (skipped + 1)) * 10) / 10);
+    next.push(now);
+    if (next.length >= lineCount) finishMarking(next);
     else setMarks(next);
+  };
+  const markNextLine = () => marks && markLine(marks.length);
+  // Back a line: its mark is taken away and the recording goes back to the line before, to mark it again
+  const unmarkLine = () => {
+    if (!marks?.length) return;
+    const next = marks.slice(0, -1);
+    setMarks(next);
+    seekTo(Math.max(0, (next.at(-1) ?? 0) - 0.5));
+  };
+
+  // Jump to a line: its own time when the lines are marked, else its verse
+  const playFrom = (time: number) => {
+    if (!readerIsCurrent) toggleReaderAudio();
+    else if (!status.playing) togglePlay();
+    seekTo(time);
+  };
+  const tapLine = (v: number, l: number) => {
+    if (marks) return markLine(lineStarts[v] + l);
+    const time = timesOfLines(v)?.[l];
+    if (time === undefined || !currentAudio) return tapVerse(v);
+    setPracticeVerse(v);
+    if (loopVerse !== null) setLoopVerse(v);
+    playFrom(time);
   };
 
   const practiceRange = timings
@@ -597,17 +698,45 @@ export function HymnReader({
 
   const sendTimings = () => {
     if (!currentAudio || !timings) return;
-    Share.share({ message: `${hymn.id}\n'${currentAudio}': [${timings.join(', ')}],` }).catch(() => {});
+    const lines = lineTimes ? `\nlines (${lineTimes.language}): ${JSON.stringify(lineTimes.lines)}` : '';
+    Share.share({ message: `${hymn.id}\n'${currentAudio}': [${timings.join(', ')}],${lines}` }).catch(() => {});
   };
 
-  // While a recording with verse times plays, only the line being sung lights up, not its whole verse; the whole verse
-  // still lights up while marking verse starts, or when one is tapped in a recording without verse times
+  // Only the line being sung lights up, never its whole verse: the line being marked, the line whose marked time has
+  // come, or (lines not marked) the line its share of the verse's time has reached. The column beside it goes by share.
+  // Only a verse tapped in a recording without verse times lights up whole.
   const lineProgress =
     !marks && readerIsCurrent && liveTimes && sungVerse >= 0 && highlighted === sungVerse
       ? verseProgress(liveTimes, sungVerse, status.currentTime, status.duration)
       : null;
-  const progressFor = (i: number) => (i === highlighted ? lineProgress : null);
-  const learnVerseStyle = (i: number) => [styles.learnVerse, i === highlighted && lineProgress === null && styles.learnVerseActive];
+  const ownLineTimes = lineProgress !== null ? timesOfLines(sungVerse) : null;
+  const sungLine: { verse: number; line: number } | null = markingLine
+    ? markingLine
+    : lineProgress !== null
+      ? { verse: sungVerse, line: ownLineTimes ? Math.max(0, verseAt(ownLineTimes, status.currentTime)) : lineAt(verseLines[sungVerse] ?? [], lineProgress) }
+      : null;
+  const mainLine = (i: number): LineMark => (sungLine?.verse === i ? { line: sungLine.line } : null);
+  const besideLine = (i: number): LineMark => (i === highlighted && lineProgress !== null ? { progress: lineProgress } : null);
+  const learnVerseStyle = (i: number) => [styles.learnVerse, i === highlighted && !marks && lineProgress === null && styles.learnVerseActive];
+
+  // Keyboards (the website): → or Space marks the next line while marking, else goes to the next line; ← goes back
+  useEffect(() => {
+    if (Platform.OS !== 'web' || !learning) return;
+    const onKey = (e: KeyboardEvent) => {
+      const tag = (e.target as HTMLElement | null)?.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || e.metaKey || e.ctrlKey || e.altKey) return;
+      const forward = ['ArrowRight', 'ArrowDown', ' ', 'Enter'].includes(e.key);
+      const back = ['ArrowLeft', 'ArrowUp', 'Backspace'].includes(e.key);
+      if (!forward && !back) return;
+      e.preventDefault();
+      if (marks) return forward ? markNextLine() : unmarkLine();
+      const here = sungLine ?? { verse: Math.max(0, sungVerse), line: -1 };
+      const target = lineOf(Math.min(lineCount - 1, Math.max(0, lineStarts[here.verse] + here.line + (forward ? 1 : here.line < 0 ? 0 : -1))));
+      tapLine(target.verse, target.line);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  });
 
 
   const actionChip = (label: string, onPress: () => void, active = false) => (
@@ -741,6 +870,7 @@ export function HymnReader({
           </Pressable>
         </ChipScroller>
 
+        <WordSheet word={word} lang={lang} onClose={() => setWord(null)} />
         <Sheet visible={sheet === 'language'} title={t.language} rtl={isRTL} onClose={() => setSheet(null)}>
           {availableLanguages.map((l) => (
             <SheetRow
@@ -801,6 +931,17 @@ export function HymnReader({
                 setSheet(null);
               }}
               end={<Text style={styles.sheetCheck}>{learning ? '✓' : ''}</Text>}
+            />
+          ) : null}
+          {hasCoptic ? (
+            <SheetRow
+              rtl={isRTL}
+              label={p.tapWords}
+              onPress={() => {
+                setWordMode(!wordMode);
+                setSheet(null);
+              }}
+              end={<Text style={styles.sheetCheck}>{wordMode ? '✓' : ''}</Text>}
             />
           ) : null}
           <SheetRow
@@ -941,17 +1082,19 @@ export function HymnReader({
                 </View>
                 {marks ? (
                   <>
-                    <Text style={[styles.learnHint, textAlign]}>{t.markingProgress(marks.length + 1, verses.length)}</Text>
+                    <Text style={[styles.learnHint, textAlign]}>{t.markingProgress(Math.min(marks.length + 1, lineCount), lineCount)}</Text>
                     <Pressable
-                      onPress={markVerse}
+                      onPress={markNextLine}
                       disabled={!readerIsCurrent}
                       accessibilityRole="button"
                       style={({ pressed }) => [styles.markButton, pressed && styles.pressed, !readerIsCurrent && styles.disabled]}>
                       <Text style={styles.markButtonText}>{marks.length === 0 ? t.markStart : t.markNext}</Text>
                     </Pressable>
                     <View style={[styles.learnRow, rowDirection]}>
+                      {marks.length ? actionChip(p.backLine, unmarkLine) : null}
                       {actionChip(t.markDone, () => finishMarking(marks))}
                     </View>
+                    <Text style={[styles.learnHint, textAlign]}>{Platform.OS === 'web' ? p.markHintKeys : p.markHint}</Text>
                   </>
                 ) : (
                   <>
@@ -1094,12 +1237,12 @@ export function HymnReader({
                 onPress={() => tapVerse(i)}
                 onLayout={(e) => (verseY.current[i] = e.nativeEvent.layout.y)}
                 style={[styles.verseRow, rowDirection, i > 0 && styles.verseRowDivider, versesTappable && learnVerseStyle(i)]}>
-                <Text selectable={!versesTappable} style={[styles.hymnText, styles.verseColumn, columnText, columnStyle(effectiveLanguage)]}>
-                  {verseContent(verses[i], progressFor(i))}
+                <Text selectable={!versesTappable && !wordMode} style={[styles.hymnText, styles.verseColumn, columnText, columnStyle(effectiveLanguage)]}>
+                  {verseContent(verses[i], mainLine(i), versesTappable ? (l) => tapLine(i, l) : undefined, wordsOf(effectiveLanguage, i))}
                 </Text>
                 <View style={styles.verseGutter} />
-                <Text selectable={!versesTappable} style={[styles.hymnText, styles.verseColumn, columnText, columnStyle(compareLanguage)]}>
-                  {verseContent(compareVerses[i], progressFor(i))}
+                <Text selectable={!versesTappable && !wordMode} style={[styles.hymnText, styles.verseColumn, columnText, columnStyle(compareLanguage)]}>
+                  {verseContent(compareVerses[i], besideLine(i), undefined, wordsOf(compareLanguage, i))}
                 </Text>
               </Pressable>
             ))
@@ -1118,13 +1261,13 @@ export function HymnReader({
                     isArabicText ? styles.arabicText : styles.alignLeft,
                     copticStyle,
                   ]}>
-                  {verseContent(verse, progressFor(i))}
+                  {verseContent(verse, mainLine(i), (l) => tapLine(i, l), wordsOf(effectiveLanguage, i))}
                 </Text>
               </Pressable>
             ))
           ) : (
             <Text
-              selectable
+              selectable={!wordMode}
               style={[
                 styles.hymnText,
                 { fontSize, lineHeight: fontSize * 1.65 },
@@ -1134,7 +1277,7 @@ export function HymnReader({
               {verses.map((verse, i) => (
                 <Text key={i}>
                   {i > 0 ? '\n\n' : ''}
-                  {verseContent(verse)}
+                  {verseContent(verse, null, undefined, wordsOf(effectiveLanguage, i))}
                 </Text>
               ))}
             </Text>
@@ -1157,11 +1300,11 @@ export function HymnReader({
                 {showSideBySide && compareLanguage ? (
                   Array.from({ length: Math.max(bishopVerses.length, bishopCompareVerses.length) }, (_, i) => (
                     <View key={i} style={[styles.verseRow, rowDirection, i > 0 && styles.verseRowDivider]}>
-                      <Text selectable={!versesTappable} style={[styles.hymnText, styles.verseColumn, columnText, columnStyle(effectiveLanguage)]}>
+                      <Text selectable={!versesTappable && !wordMode} style={[styles.hymnText, styles.verseColumn, columnText, columnStyle(effectiveLanguage)]}>
                         {verseContent(bishopVerses[i])}
                       </Text>
                       <View style={styles.verseGutter} />
-                      <Text selectable={!versesTappable} style={[styles.hymnText, styles.verseColumn, columnText, columnStyle(compareLanguage)]}>
+                      <Text selectable={!versesTappable && !wordMode} style={[styles.hymnText, styles.verseColumn, columnText, columnStyle(compareLanguage)]}>
                         {verseContent(bishopCompareVerses[i])}
                       </Text>
                     </View>

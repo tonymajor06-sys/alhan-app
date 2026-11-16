@@ -22,7 +22,7 @@ import { saintsStrings } from '@/data/saints';
 import { useAlhanColors, useThemedStyles } from '@/hooks/use-alhan-colors';
 import { currentTrack, useAudioQueueSelect } from '@/hooks/use-audio-queue';
 import { findHymn, usePlaylists } from '@/hooks/use-playlist';
-import { todaysReview, useLearning } from '@/hooks/use-learning';
+import { currentStreak, todaysReview, useLearning, usePracticeDays } from '@/hooks/use-learning';
 import { practiceStrings } from '@/components/practice-strings';
 import { useSettings } from '@/hooks/use-settings';
 import { useTodayJdn } from '@/hooks/use-today';
@@ -43,6 +43,7 @@ export default function HomeScreen() {
   // Today's review of My hymns to learn, while some are still waiting
   const review = todaysReview(useLearning()).filter((r) => findHymn(r.hymnId));
   const reviewLeft = review.filter((r) => !r.done).length;
+  const streak = currentStreak(usePracticeDays());
   const p = practiceStrings[lang];
 
   const today = useTodayJdn();
@@ -209,7 +210,10 @@ export default function HomeScreen() {
               accessibilityRole="button"
               style={({ pressed }) => [styles.rowCard, styles.playlistRow, rowDirection, { marginBottom: 14 }, pressed && styles.rowCardPressed]}>
               <View style={styles.rowTextWrap}>
-                <Text style={[styles.rowTitle, textAlign]}>📚 {p.todaysReview}</Text>
+                <Text style={[styles.rowTitle, textAlign]}>
+                  📚 {p.todaysReview}
+                  {streak ? ` · ${p.streak(streak)}` : ''}
+                </Text>
                 <Text style={[styles.playlistMeta, textAlign]} numberOfLines={1}>
                   {review.map((r) => `${r.done ? '✓' : '○'} ${titleLines(findHymn(r.hymnId)!, lang).main}`).join('   ')}
                 </Text>
