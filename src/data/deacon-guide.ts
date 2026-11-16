@@ -198,8 +198,8 @@ export const guideSections: GuideSection[] = [
       {
         title: { en: 'Coming out', ar: 'الخروج' },
         text: {
-          en: 'Left foot first, from the left side, facing the sanctuary.',
-          ar: 'بالقدم اليسرى أولاً، من الجانب الأيسر، ووجهك نحو الهيكل.',
+          en: 'From the left side, facing the sanctuary. Your left foot is the last to leave.',
+          ar: 'من الجانب الأيسر، ووجهك نحو الهيكل. وقدمك اليسرى آخر ما يخرج.',
         },
       },
       {
@@ -602,8 +602,8 @@ const guideQuestions: GuideQuestion[] = [
   },
   {
     q: b('How does a deacon come out of the sanctuary?', 'كيف يخرج الشماس من الهيكل؟'),
-    right: b('Left foot first, from the left side, facing the sanctuary', 'بالقدم اليسرى أولاً، من الجانب الأيسر، ووجهه نحو الهيكل'),
-    wrong: [b('Right foot first, from the right side', 'بالقدم اليمنى أولاً، من الجانب الأيمن'), b('Through the royal door', 'من الباب الملوكي'), b('Turning his back to the altar', 'معطياً ظهره للمذبح')],
+    right: b('From the left side, facing the sanctuary, his left foot leaving last', 'من الجانب الأيسر، ووجهه نحو الهيكل، وقدمه اليسرى آخر ما يخرج'),
+    wrong: [b('From the right side, his right foot leaving last', 'من الجانب الأيمن، وقدمه اليمنى آخر ما يخرج'), b('Through the royal door', 'من الباب الملوكي'), b('Turning his back to the altar', 'معطياً ظهره للمذبح')],
   },
   {
     q: b('Which deacon may go through the royal door?', 'أي شماس يجوز له المرور من الباب الملوكي؟'),
