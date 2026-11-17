@@ -27,9 +27,11 @@ for (const saint of saints) {
   storySaintsByDay.set(key, [...(storySaintsByDay.get(key) ?? []), saint]);
 }
 
-// Spirit & Truth's saints (keys of stSaints), by day
+// Spirit & Truth's saints (keys of stSaints), by day; not the Four Incorporeal Creatures (the owner, 2026-11-17)
+const NOT_ON_CALENDAR = new Set(['four-creatures']);
 const stSaintsByDay = new Map<string, string[]>();
 for (const [id, saint] of Object.entries(stSaints)) {
+  if (NOT_ON_CALENDAR.has(id)) continue;
   for (const [month, day] of saint.days) {
     const key = dayKey(month, day);
     stSaintsByDay.set(key, [...(stSaintsByDay.get(key) ?? []), id]);
