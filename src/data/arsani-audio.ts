@@ -440,4 +440,14 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   { file: "arsani-377-thursday-theotokia-part-7.m4a", hymns: ["annual-midnight-thursday-theotokia-part-7"], language: "arabic" },
   { file: "arsani-377-thursday-theotokia-part-8.m4a", hymns: ["annual-midnight-thursday-theotokia-part-8"], language: "arabic" },
   { file: "arsani-377-thursday-theotokia-part-9.m4a", hymns: ["annual-midnight-thursday-theotokia-part-9"], language: "arabic" },
+  // Venerations the owner sent (2026-11-17): St Mina and St Moses the Strong (Sotem Efnoti), St Abraam (Archdeacon Arsani,
+  // 21:36-25:45 of his recording), St Philopater Mercurius's second melody (Arsani 2021, Arsani and chorus, and one in
+  // English and Arabic)
+  { file: "veneration-st-mina-sotem-efnoti.m4a", hymns: ["veneration-melody-for-st-mena-the-wonderworker"], language: "arabic" },
+  { file: "veneration-st-moses-the-strong-sotem-efnoti.m4a", hymns: ["veneration-melody-for-st-moses-the-strong"], language: "arabic" },
+  { file: "arsani-veneration-st-abraam.m4a", hymns: ["veneration-melody-for-st-abraam-bishop-of-fayoum"], language: "arabic" },
+  { file: "arsani-veneration-st-mercurius-2021.m4a", hymns: ["veneration-second-melody-for-st-philopater-mercurius"], language: "arabic" },
+  { file: "arsani-veneration-st-mercurius-chorus.m4a", hymns: ["veneration-second-melody-for-st-philopater-mercurius"], language: "arabic" },
+  { file: "veneration-st-mercurius-english-arabic.m4a", hymns: ["veneration-second-melody-for-st-philopater-mercurius"], language: "arabic" },
+  { file: "veneration-st-mercurius-english-arabic.m4a", hymns: ["veneration-second-melody-for-st-philopater-mercurius"], language: "english" },
 ];

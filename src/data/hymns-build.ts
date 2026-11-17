@@ -8409,6 +8409,16 @@ seasons.push({
   title: `${seasons.length + 1}. Other`,
   services: stSaintTabs.map((tab) => ({ id: tab.id, title: tab.title, hymns: tab.hymns })),
 });
+// Recordings in arsani-audio.ts for these lists (they come in after the recordings are given out above)
+for (const hymn of stSaintTabs.flatMap((tab) => tab.hymns)) {
+  for (const { file, hymns: ids, language } of arsaniAudio) {
+    if (!ids.includes(hymn.id)) continue;
+    for (const version of hymn.versions.filter((v) => audioLanguages[language]?.includes(v.language))) {
+      if (!version.audio) version.audio = file;
+      else if (version.audio !== file && !version.otherAudio?.includes(file)) version.otherAudio = [...(version.otherAudio ?? []), file];
+    }
+  }
+}
 
 // ---- Spirit & Truth's wording (2026-11-07, see st-wording.ts) ----
 // Every verse the app shares with Spirit & Truth says what Spirit & Truth says for the same Coptic, in English and
