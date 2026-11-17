@@ -135,6 +135,12 @@ export default function CalendarScreen() {
     .filter((ev, i, all) => all.findIndex((o) => o.name.en === ev.name.en) === i);
   const daySaints = storySaintsOn(selectedCoptic.month, selectedCoptic.day);
   const dayHymns = saintHymnsOn(selectedCoptic.month, selectedCoptic.day);
+  // The day's saints known only by their hymns (no story in the app), each once
+  const plain = (name: string) => name.toLowerCase().replace(/^(sts?\.?|saint|the)\s+/, '').replace(/[^a-z]/g, '');
+  const hymnSaints = dayHymns
+    .filter((h, i, all) => all.findIndex((o) => o.saint.en === h.saint.en) === i)
+    .filter((h) => !daySaints.some((s) => plain(s.name.en) === plain(h.saint.en)))
+    .map((h) => ({ name: h.saint, hymnId: h.hymn.id }));
   const upcoming = getSeasonInfo(today, 10).upcoming;
 
   const rowDirection = isRTL ? styles.rowReverse : styles.row;
@@ -363,23 +369,29 @@ export default function CalendarScreen() {
 
         {/* The day's saints and their hymns */}
         <SectionHeader title={t.saints} />
-        {daySaints.length ? (
+        {daySaints.length || hymnSaints.length ? (
           <ListGroup
-            rows={daySaints.map((saint) => (
-              <ListRow
-                key={saint.id}
-                title={saint.name[lang]}
-                sub={saint.story[lang].slice(0, 110).replace(/\s+\S*$/, '') + '…'}
-                onPress={() => router.push({ pathname: '/saints/[id]', params: { id: saint.id } })}
-              />
-            ))}
+            rows={[
+              ...daySaints.map((saint) => (
+                <ListRow
+                  key={saint.id}
+                  title={saint.name[lang]}
+                  sub={saint.story[lang].slice(0, 110).replace(/\s+\S*$/, '') + '…'}
+                  onPress={() => router.push({ pathname: '/saints/[id]', params: { id: saint.id } })}
+                />
+              )),
+              // Saints the app has hymns for but no story: their name opens their first hymn
+              ...hymnSaints.map(({ name, hymnId }) => (
+                <ListRow key={`h-${name.en}`} title={name[lang]} onPress={() => openHymnPage(hymnId)} />
+              )),
+            ]}
           />
-        ) : !dayHymns.length ? (
+        ) : (
           <Text style={[styles.emptyDay, textAlign]}>{t.noSaints}</Text>
-        ) : null}
+        )}
         {dayHymns.length ? (
           <>
-            {daySaints.length ? <SectionHeader title={t.saintHymns} /> : null}
+            <SectionHeader title={t.saintHymns} />
             <ListGroup
               rows={dayHymns.map(({ hymn, tab, saint }) => {
                 const { main, coptic } = titleLines(hymn, lang, titleStyle);
