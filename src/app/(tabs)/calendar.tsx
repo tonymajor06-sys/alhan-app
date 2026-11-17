@@ -5,7 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { MiniPlayer, openHymnPage, Sheet } from '@/components/alhan-ui';
 import { pressFeedback, tapFeedback } from '@/components/haptics';
-import { ListGroup, ListRow, SectionHeader } from '@/components/lists';
+import { SectionHeader } from '@/components/lists';
 import { StatusBarBlur } from '@/components/status-bar-blur';
 import { useTabChrome } from '@/components/tab-chrome';
 import { AlhanPalette } from '@/constants/alhan-colors';
@@ -22,11 +22,9 @@ import {
   getSeasonInfo,
   jdnToCoptic,
   jdnToGregorian,
-  kindName,
   toArabicDigits,
   tuneName,
 } from '@/data/coptic-calendar';
-import { titleLines } from '@/data/hymn-titles';
 import { useAlhanColors, useThemedStyles } from '@/hooks/use-alhan-colors';
 import { currentTrack, useAudioQueueSelect } from '@/hooks/use-audio-queue';
 import { updateSettings, useSettings } from '@/hooks/use-settings';
@@ -51,7 +49,6 @@ const strings = {
     weekdays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
     weekdaysLong: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
     saints: 'Saints remembered',
-    saintHymns: 'Hymns for the saints of the day',
     noSaints: 'No saint in the app’s lists on this day.',
     reminders: 'Feast reminders',
     remindersOn: 'On · the evening before each feast and fast',
@@ -77,7 +74,6 @@ const strings = {
     weekdays: ['أحد', 'اثنين', 'ثلاثاء', 'أربعاء', 'خميس', 'جمعة', 'سبت'],
     weekdaysLong: ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'],
     saints: 'تذكار القديسين',
-    saintHymns: 'ألحان قديسي اليوم',
     noSaints: 'لا يوجد قديس في قوائم التطبيق في هذا اليوم.',
     reminders: 'تذكير بالأعياد',
     remindersOn: 'مفعّل · مساء اليوم السابق لكل عيد وصوم',
@@ -101,7 +97,7 @@ const monthIndexOf = (jdn: number) => {
 const monthStartOf = (index: number) => copticToJdn(Math.floor(index / 13), (index % 13) + 1, 1);
 
 export default function CalendarScreen() {
-  const { language: lang, feastReminders, titleStyle } = useSettings();
+  const { language: lang, feastReminders } = useSettings();
   const t = strings[lang];
   const isRTL = lang === 'ar';
   const insets = useSafeAreaInsets();
@@ -135,12 +131,27 @@ export default function CalendarScreen() {
     .filter((ev, i, all) => all.findIndex((o) => o.name.en === ev.name.en) === i);
   const daySaints = storySaintsOn(selectedCoptic.month, selectedCoptic.day);
   const dayHymns = saintHymnsOn(selectedCoptic.month, selectedCoptic.day);
-  // The day's saints known only by their hymns (no story in the app), each once
+  // One card for each of the day's saints: the saint with a story in the app, and each saint's hymns by what they are
+  // (Veneration, Doxology...), not by their long titles
   const plain = (name: string) => name.toLowerCase().replace(/^(sts?\.?|saint|the)\s+/, '').replace(/[^a-z]/g, '');
-  const hymnSaints = dayHymns
-    .filter((h, i, all) => all.findIndex((o) => o.saint.en === h.saint.en) === i)
-    .filter((h) => !daySaints.some((s) => plain(s.name.en) === plain(h.saint.en)))
-    .map((h) => ({ name: h.saint, hymnId: h.hymn.id }));
+  const saintCards: { key: string; name: Record<'en' | 'ar', string>; story?: (typeof daySaints)[number]; hymns: typeof dayHymns }[] = [
+    ...daySaints.map((saint) => ({
+      key: saint.id,
+      name: saint.name,
+      story: saint,
+      hymns: dayHymns.filter((h) => plain(h.saint.en) === plain(saint.name.en)),
+    })),
+    ...dayHymns
+      .filter((h, i, all) => all.findIndex((o) => o.saint.en === h.saint.en) === i)
+      .filter((h) => !daySaints.some((saint) => plain(saint.name.en) === plain(h.saint.en)))
+      .map((h) => ({ key: h.saint.en, name: h.saint, hymns: dayHymns.filter((o) => o.saint.en === h.saint.en) })),
+  ];
+  // "Veneration", or "Veneration 2" for a saint's second one
+  const hymnLabel = (hymns: typeof dayHymns, i: number) => {
+    const kind = saintHymnKind[hymns[i].tab]?.[lang] ?? '';
+    const same = hymns.filter((h) => h.tab === hymns[i].tab);
+    return same.length > 1 ? `${kind} ${n(same.indexOf(hymns[i]) + 1)}` : kind;
+  };
   const upcoming = getSeasonInfo(today, 10).upcoming;
 
   const rowDirection = isRTL ? styles.rowReverse : styles.row;
@@ -311,36 +322,45 @@ export default function CalendarScreen() {
         </View>
 
         {/* The day */}
-        <View style={styles.todayCard}>
-          <Text style={[styles.cardLabel, textAlign]}>
-            {selected === today ? `${t.today} · ` : ''}
-            {t.weekdaysLong[selectedWeekday]} · {formatGregorianDate(selected, lang, true)}
-          </Text>
-          <Text style={[styles.copticDate, textAlign]}>{formatCopticDate(selected, lang)}</Text>
-          <View style={styles.divider} />
-          {selectedEvents.length ? (
-            selectedEvents.map((ev) => (
+        <View style={styles.dayCard}>
+          <View style={[styles.dayCardTop, rowDirection]}>
+            <View style={[styles.dayBadge, selectedEvents[0]?.kind === 'fast' && styles.dayBadgeFast]}>
+              <Text style={styles.dayBadgeNumber}>{n(selectedCoptic.day)}</Text>
+              <Text style={styles.dayBadgeMonth} numberOfLines={1} adjustsFontSizeToFit>
+                {copticMonths[lang][selectedCoptic.month - 1]}
+              </Text>
+            </View>
+            <View style={styles.flex}>
+              <Text style={[styles.cardLabel, textAlign]}>
+                {selected === today ? `${t.today} · ` : ''}
+                {t.weekdaysLong[selectedWeekday]}
+              </Text>
+              <Text style={[styles.dayCardDate, textAlign]}>
+                {formatGregorianDate(selected, lang, true)} · {lang === 'ar' ? `${n(selectedCoptic.year)} للشهداء` : `${selectedCoptic.year} A.M.`}
+              </Text>
               <Pressable
-                key={ev.key}
-                disabled={!ev.seasonId}
-                onPress={() => ev.seasonId && openSeasonHymns(ev.seasonId)}
+                onPress={() => openSeasonHymns(selectedEvents[0]?.seasonId ?? selectedInfo.current?.seasonId ?? 'annual')}
                 accessibilityRole="button"
-                style={({ pressed }) => [styles.dayEvent, rowDirection, pressed && styles.pressed]}>
-                <View style={[styles.eventMarker, ev.kind === 'fast' ? styles.markerFast : styles.markerFeast]} />
-                <View style={styles.flex}>
-                  <Text style={[styles.dayEventName, textAlign, ev.kind === 'fast' && { color: colors.fast }]}>{ev.name[lang]}</Text>
-                  <Text style={[styles.eventDate, textAlign]}>
-                    {kindName[lang][ev.kind]}
-                    {ev.end > ev.start ? ` · ${formatGregorianDate(ev.start, lang)} – ${formatGregorianDate(ev.end, lang)}` : ''}
-                  </Text>
-                </View>
+                style={({ pressed }) => pressed && styles.pressed}>
+                <Text style={[styles.seasonName, textAlign, selectedEvents[0]?.kind === 'fast' && { color: colors.fast }]}>
+                  {selectedEvents[0]?.name[lang] ?? currentSeasonName(selectedInfo, lang)}
+                </Text>
               </Pressable>
-            ))
-          ) : (
-            <Text style={[styles.seasonName, textAlign]}>{currentSeasonName(selectedInfo, lang)}</Text>
-          )}
+            </View>
+          </View>
+          {selectedEvents.slice(1).map((ev) => (
+            <Pressable
+              key={ev.key}
+              disabled={!ev.seasonId}
+              onPress={() => ev.seasonId && openSeasonHymns(ev.seasonId)}
+              accessibilityRole="button"
+              style={({ pressed }) => [styles.dayEvent, rowDirection, pressed && styles.pressed]}>
+              <View style={[styles.eventDot, ev.kind === 'fast' ? styles.markerFast : styles.markerFeast]} />
+              <Text style={[styles.dayEventName, textAlign]}>{ev.name[lang]}</Text>
+            </Pressable>
+          ))}
           <View style={[styles.tagRow, rowDirection]}>
-            {selectedInfo.weekName ? (
+            {selectedInfo.weekName && selectedInfo.weekName[lang] !== selectedEvents[0]?.name[lang] ? (
               <View style={styles.tag}>
                 <Text style={styles.tagText}>{selectedInfo.weekName[lang]}</Text>
               </View>
@@ -367,48 +387,54 @@ export default function CalendarScreen() {
           </View>
         </View>
 
-        {/* The day's saints and their hymns */}
+        {/* The day's saints, each with its hymns */}
         <SectionHeader title={t.saints} />
-        {daySaints.length || hymnSaints.length ? (
-          <ListGroup
-            rows={[
-              ...daySaints.map((saint) => (
-                <ListRow
-                  key={saint.id}
-                  title={saint.name[lang]}
-                  sub={saint.story[lang].slice(0, 110).replace(/\s+\S*$/, '') + '…'}
-                  onPress={() => router.push({ pathname: '/saints/[id]', params: { id: saint.id } })}
-                />
-              )),
-              // Saints the app has hymns for but no story: their name opens their first hymn
-              ...hymnSaints.map(({ name, hymnId }) => (
-                <ListRow key={`h-${name.en}`} title={name[lang]} onPress={() => openHymnPage(hymnId)} />
-              )),
-            ]}
-          />
+        {saintCards.length ? (
+          saintCards.map((card) => {
+            const openStory = card.story ? () => router.push({ pathname: '/saints/[id]', params: { id: card.story!.id } }) : undefined;
+            return (
+              <View key={card.key} style={styles.saintCard}>
+                <Pressable
+                  disabled={!openStory}
+                  onPress={openStory}
+                  accessibilityRole={openStory ? 'button' : undefined}
+                  style={({ pressed }) => [rowDirection, styles.saintHead, pressed && styles.pressed]}>
+                  <View style={styles.flex}>
+                    <Text style={[styles.saintName, textAlign]}>{card.name[lang]}</Text>
+                    {card.story ? (
+                      <Text style={[styles.saintStory, textAlign]} numberOfLines={2}>
+                        {card.story.story[lang]}
+                      </Text>
+                    ) : null}
+                  </View>
+                  {openStory ? <Text style={styles.saintChevron}>{isRTL ? '‹' : '›'}</Text> : null}
+                </Pressable>
+                {card.hymns.length ? (
+                  <View style={[styles.saintHymns, rowDirection]}>
+                    {card.hymns.map((h, i) => (
+                      <Pressable
+                        key={h.hymn.id}
+                        onPress={() => {
+                          tapFeedback();
+                          openHymnPage(h.hymn.id);
+                        }}
+                        accessibilityRole="button"
+                        accessibilityLabel={`${hymnLabel(card.hymns, i)}, ${card.name[lang]}`}
+                        style={({ pressed }) => [styles.hymnChip, pressed && styles.pressed]}>
+                        <Text style={styles.hymnChipText}>
+                          {hymnLabel(card.hymns, i)}
+                          {h.hymn.versions.some((v) => v.audio) ? '  ♪' : ''}
+                        </Text>
+                      </Pressable>
+                    ))}
+                  </View>
+                ) : null}
+              </View>
+            );
+          })
         ) : (
           <Text style={[styles.emptyDay, textAlign]}>{t.noSaints}</Text>
         )}
-        {dayHymns.length ? (
-          <>
-            <SectionHeader title={t.saintHymns} />
-            <ListGroup
-              rows={dayHymns.map(({ hymn, tab, saint }) => {
-                const { main, coptic } = titleLines(hymn, lang, titleStyle);
-                return (
-                  <ListRow
-                    key={hymn.id}
-                    title={main}
-                    coptic={coptic}
-                    sub={`${saintHymnKind[tab]?.[lang] ?? ''} · ${saint[lang]}`}
-                    audio={hymn.versions.some((v) => v.audio)}
-                    onPress={() => openHymnPage(hymn.id)}
-                  />
-                );
-              })}
-            />
-          </>
-        ) : null}
 
         {/* Coming up */}
         <View style={styles.sectionGap} />
@@ -561,27 +587,15 @@ const createStyles = (colors: AlhanPalette) => StyleSheet.create({
     marginBottom: 16,
   },
 
-  todayCard: {
-    backgroundColor: colors.surface,
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderTopWidth: 3,
-    borderTopColor: colors.gold,
-    padding: 20,
-    marginBottom: 16,
-  },
   cardLabel: {
     fontSize: 14,
     fontWeight: '700',
     color: colors.muted,
     letterSpacing: 0.5,
   },
-  copticDate: { fontSize: 26, fontWeight: '800', color: colors.text, marginTop: 4 },
   gregorianDate: { fontSize: 16, color: colors.muted, marginTop: 2 },
-  divider: { height: 1, backgroundColor: colors.border, marginVertical: 16 },
-  seasonName: { fontSize: 22, fontWeight: '800', color: colors.gold, marginTop: 4 },
-  tagRow: { flexWrap: 'wrap', gap: 8, marginTop: 10 },
+  seasonName: { fontSize: 18, fontWeight: '800', color: colors.gold, marginTop: 4 },
+  tagRow: { flexWrap: 'wrap', gap: 8, marginTop: 12 },
   tag: {
     paddingHorizontal: 12,
     paddingVertical: 5,
@@ -593,7 +607,7 @@ const createStyles = (colors: AlhanPalette) => StyleSheet.create({
   tagTextFast: { color: colors.fast },
   cardActions: {
     gap: 10,
-    marginTop: 18,
+    marginTop: 14,
   },
   cardActionBtn: {
     flex: 1,
@@ -642,7 +656,7 @@ const createStyles = (colors: AlhanPalette) => StyleSheet.create({
   monthSubtitle: { fontSize: 13, color: colors.muted, marginTop: 2 },
   grid: { flexWrap: 'wrap' },
   weekdayCell: { width: `${100 / 7}%`, paddingVertical: 4 },
-  cell: { width: `${100 / 7}%`, aspectRatio: 0.85, padding: 2 },
+  cell: { width: `${100 / 7}%`, aspectRatio: 1, padding: 2 },
   weekday: {
     textAlign: 'center',
     fontSize: 11,
@@ -708,8 +722,46 @@ const createStyles = (colors: AlhanPalette) => StyleSheet.create({
   markerFeast: { backgroundColor: colors.gold },
   markerFast: { backgroundColor: colors.fast },
   eventName: { fontSize: 17, fontWeight: '700', color: colors.text },
-  dayEvent: { alignItems: 'center', gap: 12, paddingVertical: 6 },
-  dayEventName: { fontSize: 20, fontWeight: '800', color: colors.gold },
+  dayEvent: { alignItems: 'center', gap: 10, paddingTop: 8 },
+  dayEventName: { flex: 1, fontSize: 15, fontWeight: '600', color: colors.text },
+  eventDot: { width: 8, height: 8, borderRadius: 4 },
+  dayCard: {
+    backgroundColor: colors.surface,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: colors.border,
+    padding: 16,
+    marginBottom: 8,
+  },
+  dayCardTop: { alignItems: 'center', gap: 14 },
+  dayBadge: {
+    width: 72,
+    height: 72,
+    borderRadius: 18,
+    backgroundColor: colors.goldSoft,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 4,
+  },
+  dayBadgeFast: { backgroundColor: colors.fastSoft },
+  dayBadgeNumber: { fontSize: 28, lineHeight: 32, fontWeight: '800', color: colors.text },
+  dayBadgeMonth: { fontSize: 12, fontWeight: '700', color: colors.muted },
+  dayCardDate: { fontSize: 14, color: colors.muted, marginTop: 2 },
+  saintCard: {
+    backgroundColor: colors.surface,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: colors.border,
+    padding: 14,
+    marginBottom: 10,
+  },
+  saintHead: { alignItems: 'center', gap: 10 },
+  saintName: { fontSize: 17, fontWeight: '800', color: colors.text },
+  saintStory: { fontSize: 14, lineHeight: 20, color: colors.muted, marginTop: 4 },
+  saintChevron: { fontSize: 22, color: colors.muted },
+  saintHymns: { flexWrap: 'wrap', gap: 8, marginTop: 12 },
+  hymnChip: { paddingHorizontal: 14, paddingVertical: 8, borderRadius: 18, backgroundColor: colors.goldSoft },
+  hymnChipText: { fontSize: 14, fontWeight: '700', color: colors.gold },
   emptyDay: { fontSize: 15, color: colors.muted, marginBottom: 8 },
   sectionGap: { height: 24 },
   yearRow: { alignItems: 'center', marginBottom: 12 },
