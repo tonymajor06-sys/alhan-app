@@ -679,6 +679,7 @@ export function ScreenShell({
   onBack,
   hidePlayerFor,
   scrollRef,
+  onScrollY,
   children,
 }: {
   lang: AppLanguage;
@@ -690,6 +691,8 @@ export function ScreenShell({
   onBack?: () => void;
   hidePlayerFor?: string;
   scrollRef?: RefObject<ScrollView | null>;
+  // Hears how far the page is scrolled
+  onScrollY?: (y: number) => void;
   children: ReactNode;
 }) {
   const styles = useThemedStyles(createAlhanStyles);
@@ -709,6 +712,8 @@ export function ScreenShell({
       <ScrollView
         ref={scrollRef}
         keyboardShouldPersistTaps="handled"
+        onScroll={onScrollY ? (e) => onScrollY(e.nativeEvent.contentOffset.y) : undefined}
+        scrollEventThrottle={onScrollY ? 100 : undefined}
         contentInsetAdjustmentBehavior={chrome.autoInsets ? 'automatic' : 'never'}
         contentContainerStyle={[
           styles.scrollContent,

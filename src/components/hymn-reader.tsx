@@ -603,6 +603,15 @@ export function HymnReader({
   const scrollRef = useRef<ScrollView>(null);
   const textCardY = useRef(0);
   const verseY = useRef<number[]>([]);
+  const scrollY = useRef(0);
+  // Follow along opens at the verse being read: the one being sung, else the first one at the top of the screen
+  // (worked out as the switch is turned on, from where the page was)
+  const [bookStart, setBookStart] = useState(0);
+  const followFromHere = () => {
+    const top = scrollY.current - textCardY.current + 60;
+    const reading = verseY.current.findLastIndex((y) => y !== undefined && y <= top);
+    setBookStart(sungVerse >= 0 ? sungVerse : Math.max(0, reading));
+  };
   useEffect(() => {
     if (sungVerse < 0 || verseY.current[sungVerse] === undefined) return;
     scrollRef.current?.scrollTo({ y: Math.max(0, textCardY.current + verseY.current[sungVerse] - 140), animated: true });
@@ -759,7 +768,8 @@ export function HymnReader({
         subtitle={breadcrumb}
         onBack={goBackOrHome}
         hidePlayerFor={trackKey(readerItem)}
-        scrollRef={scrollRef}>
+        scrollRef={scrollRef}
+        onScrollY={(y) => (scrollY.current = y)}>
         <KeepScreenAwake />
         {banner}
         {/* Settings out in the open: Season, Side by Side, Learn, Project, Text scale, More */}
@@ -794,7 +804,7 @@ export function HymnReader({
             </Pressable>
           ) : null}
 
-          {book.length > 1 ? <FollowAlongSwitch lang={lang} /> : null}
+          {book.length > 1 ? <FollowAlongSwitch lang={lang} onTurnOn={followFromHere} /> : null}
 
           {currentAudio ? (
             <Pressable
@@ -1202,6 +1212,8 @@ export function HymnReader({
             languages={bookColumns.columns}
             lang={lang}
             scrollRef={scrollRef}
+            startVerse={bookStart}
+            sungVerse={sungVerse}
             onPlace={(id, y) => (bookPositions.current[id] = y)}
             onSelect={openNeighbor}
             onPlay={bookPlay}

@@ -50,7 +50,7 @@ const plainText = (hymn: Hymn, language: LanguageType) =>
   (hymn.versions.find((v) => v.language === language)?.text ?? '').replace(/(?:\\n)+/g, '\n\n');
 
 // The small on/off switch in the reader's row of buttons, remembered for every hymn
-export function FollowAlongSwitch({ lang }: { lang: AppLanguage }) {
+export function FollowAlongSwitch({ lang, onTurnOn }: { lang: AppLanguage; onTurnOn?: () => void }) {
   const settings = useSettings();
   const shared = useThemedStyles(createAlhanStyles);
   const styles = useThemedStyles(createStyles);
@@ -60,6 +60,7 @@ export function FollowAlongSwitch({ lang }: { lang: AppLanguage }) {
     <Pressable
       onPress={() => {
         tapFeedback();
+        if (!on) onTurnOn?.();
         updateSettings({ followAlong: !on });
       }}
       accessibilityRole="switch"
@@ -104,6 +105,8 @@ export function ServiceBook({
   languages,
   lang,
   scrollRef,
+  startVerse = 0,
+  sungVerse = -1,
   onPlace,
   onSelect,
   onPlay,
@@ -111,6 +114,9 @@ export function ServiceBook({
   book: BookEntry[];
   currentId: string;
   playingId?: string;
+  // The current part's verse the book opens at (where the reader was), and the one being sung in it (-1: none)
+  startVerse?: number;
+  sungVerse?: number;
   // The columns, side by side
   languages: LanguageType[];
   lang: AppLanguage;
@@ -129,16 +135,31 @@ export function ServiceBook({
   const isRTL = lang === 'ar';
   const rowDirection = isRTL ? shared.rowReverse : shared.row;
 
-  // Scrolled to the current part once it has its place on the page, and again whenever another part becomes current
+  // Opened at the current part (at the verse the reader was on) once it has its place on the page, and scrolled to a
+  // part again whenever another becomes current; the verse being sung stays in view
   const scrolledTo = useRef<string | null>(null);
   const positions = useRef<Record<string, number>>({});
+  const verseYs = useRef<Record<string, number[]>>({});
+  const verseTop = (id: string, verse: number) => {
+    const part = positions.current[id];
+    const inPart = verse > 0 ? verseYs.current[id]?.[verse] : 0;
+    return part === undefined || inPart === undefined ? undefined : part + inPart;
+  };
+  const openAtStart = () => {
+    if (scrolledTo.current === currentId) return;
+    const y = verseTop(currentId, startVerse);
+    if (y === undefined) return;
+    scrolledTo.current = currentId;
+    scrollRef.current?.scrollTo({ y: Math.max(0, y - insets.top - (startVerse > 0 ? 60 : 8)), animated: false });
+  };
   const placed = (id: string, y: number) => {
     positions.current[id] = y;
     onPlace(id, y);
-    if (id === currentId && scrolledTo.current !== currentId) {
-      scrolledTo.current = currentId;
-      scrollRef.current?.scrollTo({ y: Math.max(0, y - insets.top - 8), animated: false });
-    }
+    if (id === currentId) openAtStart();
+  };
+  const placedVerse = (id: string, verse: number, y: number) => {
+    (verseYs.current[id] ??= [])[verse] = y;
+    if (id === currentId && verse === startVerse) openAtStart();
   };
   useEffect(() => {
     const y = positions.current[currentId];
@@ -146,6 +167,13 @@ export function ServiceBook({
     scrolledTo.current = currentId;
     scrollRef.current?.scrollTo({ y: Math.max(0, y - insets.top - 8), animated: true });
   }, [currentId, scrollRef, insets.top]);
+  const singingHere = sungVerse >= 0 && playingId === currentId;
+  useEffect(() => {
+    if (!singingHere) return;
+    const y = verseTop(currentId, sungVerse);
+    if (y !== undefined) scrollRef.current?.scrollTo({ y: Math.max(0, y - 140), animated: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [singingHere, sungVerse, currentId]);
 
   const columns = languages.length;
   const size = 20 * settings.textScale * (columns > 2 ? 0.72 : columns > 1 ? 0.8 : 0.9);
@@ -229,7 +257,10 @@ export function ServiceBook({
               </View>
               {rows === 0 ? <Text style={styles.noText}>{t.noText}</Text> : null}
               {Array.from({ length: rows }, (_, i) => (
-                <View key={i}>
+                <View
+                  key={i}
+                  onLayout={(e) => placedVerse(hymn.id, i, e.nativeEvent.layout.y)}
+                  style={isCurrent && singingHere && i === sungVerse ? styles.verseSung : undefined}>
                   {ordered(
                     languages.map((l, c) => (
                       <Text key={l} style={[columnStyle(l), styles.column, i > 0 && styles.verseGap]}>
@@ -455,6 +486,7 @@ const createStyles = (colors: AlhanPalette) =>
     titleRule: { width: 36, height: 2, borderRadius: 1, backgroundColor: colors.gold, opacity: 0.5, marginTop: 10 },
     verseRow: { alignItems: 'stretch' },
     verseGap: { paddingTop: 14 },
+    verseSung: { backgroundColor: colors.goldSoft, borderRadius: 6, marginHorizontal: -6, paddingHorizontal: 6 },
     column: { flex: 1 },
     columnRule: { width: StyleSheet.hairlineWidth, backgroundColor: colors.border, marginHorizontal: 10 },
     columnHeads: { paddingBottom: 8, marginBottom: 4, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: colors.border },
