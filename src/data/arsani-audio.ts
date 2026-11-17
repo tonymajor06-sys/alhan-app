@@ -361,8 +361,6 @@ export const arsaniAudio: { file: string; hymns: string[]; language: LanguageTyp
   { file: "arsani-yt-cross-doxologies.m4a", hymns: ["cross-matins-doxology"], language: "coptic" },
   // Kiahk St Anthony Praise
   { file: "arsani-yt-kiahk-st-anthony.m4a", hymns: ["kiahk-midnight-hymn-24"], language: "arabic" },
-  // Kiahk St Moses the Black Praise
-  { file: "arsani-yt-kiahk-anba-mousa.m4a", hymns: ["kiahk-midnight-hymn-26"], language: "arabic" },
   // Good Friday Agios (Omonogenyc)
   { file: "arsani-yt-good-friday-agios.m4a", hymns: ["holyweek-great-friday-omonogenyc"], language: "coptic" },
   // Lazarus Saturday Gospel

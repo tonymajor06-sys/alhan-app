@@ -9098,3 +9098,21 @@ for (const group of deaconCategories)
   for (const service of seasons.find((s) => s.id === 'holy-week')?.services ?? [])
     if (service.id === 'holyweek-bright-saturday') walk(service.hymns);
 }
+
+// ---- Aikoti (Ⲁⲓⲕⲱϯ ⲛ̀ⲥⲱⲕ, I sought after You) is sung with Annual's recordings in every season, Kiahk and the
+// Prostration too (the owner's request, 2026-11-17): every recording Annual's has, in each language ----
+{
+  const ANNUAL_AIKOTI = 'annual-midnight-sunday-psali-lord-jesus';
+  const aikoti = new Set([ANNUAL_AIKOTI, 'lent-midnight-sunday-psali-lord-jesus', 'kiahk-midnight-hymn-36', 'd-order-prostration-the-adam-psali-for-the-lord-jesus-before-the-sunda']);
+  const everyHymn = [...seasons, ...deaconCategories].flatMap((g) => g.services.flatMap((s) => flattenHymns(s.hymns)));
+  const annual = everyHymn.find((h) => h.id === ANNUAL_AIKOTI);
+  for (const hymn of everyHymn) {
+    if (!annual || hymn === annual || !aikoti.has(hymn.id.split('@')[0])) continue;
+    for (const version of hymn.versions) {
+      const from = annual.versions.find((v) => v.language === version.language);
+      if (!from?.audio) continue;
+      version.audio = from.audio;
+      version.otherAudio = from.otherAudio ? [...from.otherAudio] : undefined;
+    }
+  }
+}
