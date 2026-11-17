@@ -8,6 +8,7 @@ import { createAlhanStyles, MiniPlayer, strings } from '@/components/alhan-ui';
 import { pressFeedback, tapFeedback } from '@/components/haptics';
 import { learnArabicStrings, learnEnglishStrings, learnStrings } from '@/components/learn-strings';
 import { localDigits, Tile, TileGrid } from '@/components/lists';
+import { SaintCards, useSaintCards } from '@/components/saint-day';
 import { StatusBarBlur } from '@/components/status-bar-blur';
 import { useTabChrome } from '@/components/tab-chrome';
 import { homeArt } from '@/constants/home-art';
@@ -49,6 +50,8 @@ export default function HomeScreen() {
   const today = useTodayJdn();
   const seasonInfo = getSeasonInfo(today, 1);
   const todayCoptic = jdnToCoptic(today);
+  // Today's saints, with their Veneration and other hymns (as on the Calendar)
+  const todaysSaints = useSaintCards(todayCoptic.month, todayCoptic.day).filter((card) => card.hymns.length);
 
   // Links from before the tabs (feast reminders already scheduled on phones) open a season with ?season=<id>
   const { season: seasonParam } = useLocalSearchParams<{ season?: string }>();
@@ -220,6 +223,14 @@ export default function HomeScreen() {
               </View>
               <Text style={styles.listChevron}>{isRTL ? '‹' : '›'}</Text>
             </Pressable>
+          ) : null}
+          {todaysSaints.length ? (
+            <View style={{ marginBottom: 6 }}>
+              <Text style={[styles.sectionHeaderText, textAlign, { marginBottom: 8 }]}>
+                {lang === 'ar' ? `قديسو اليوم · ${formatCopticDate(today, lang)}` : `Today's saints · ${formatCopticDate(today, lang)}`}
+              </Text>
+              <SaintCards cards={todaysSaints} lang={lang} />
+            </View>
           ) : null}
           <TileGrid>
             {tiles.map(({ key, title, desc, href, image, tab }) => (

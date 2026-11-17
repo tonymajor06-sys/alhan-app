@@ -3,13 +3,14 @@ import { useState } from 'react';
 import { Alert, PanResponder, Platform, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { MiniPlayer, openHymnPage, Sheet } from '@/components/alhan-ui';
+import { MiniPlayer, Sheet } from '@/components/alhan-ui';
 import { pressFeedback, tapFeedback } from '@/components/haptics';
+import { SaintCards, useSaintCards } from '@/components/saint-day';
 import { SectionHeader } from '@/components/lists';
 import { StatusBarBlur } from '@/components/status-bar-blur';
 import { useTabChrome } from '@/components/tab-chrome';
 import { AlhanPalette } from '@/constants/alhan-colors';
-import { hasSaints, saintHymnKind, saintHymnsOn, storySaintsOn } from '@/data/calendar-day';
+import { hasSaints } from '@/data/calendar-day';
 import {
   ChurchEvent,
   copticMonths,
@@ -129,29 +130,7 @@ export default function CalendarScreen() {
     .sort((a, b) => b.priority - a.priority)
     // one line for each name (a season's hidden range and its first day can share one)
     .filter((ev, i, all) => all.findIndex((o) => o.name.en === ev.name.en) === i);
-  const daySaints = storySaintsOn(selectedCoptic.month, selectedCoptic.day);
-  const dayHymns = saintHymnsOn(selectedCoptic.month, selectedCoptic.day);
-  // One card for each of the day's saints: the saint with a story in the app, and each saint's hymns by what they are
-  // (Veneration, Doxology...), not by their long titles
-  const plain = (name: string) => name.toLowerCase().replace(/^(sts?\.?|saint|the)\s+/, '').replace(/[^a-z]/g, '');
-  const saintCards: { key: string; name: Record<'en' | 'ar', string>; story?: (typeof daySaints)[number]; hymns: typeof dayHymns }[] = [
-    ...daySaints.map((saint) => ({
-      key: saint.id,
-      name: saint.name,
-      story: saint,
-      hymns: dayHymns.filter((h) => plain(h.saint.en) === plain(saint.name.en)),
-    })),
-    ...dayHymns
-      .filter((h, i, all) => all.findIndex((o) => o.saint.en === h.saint.en) === i)
-      .filter((h) => !daySaints.some((saint) => plain(saint.name.en) === plain(h.saint.en)))
-      .map((h) => ({ key: h.saint.en, name: h.saint, hymns: dayHymns.filter((o) => o.saint.en === h.saint.en) })),
-  ];
-  // "Veneration", or "Veneration 2" for a saint's second one
-  const hymnLabel = (hymns: typeof dayHymns, i: number) => {
-    const kind = saintHymnKind[hymns[i].tab]?.[lang] ?? '';
-    const same = hymns.filter((h) => h.tab === hymns[i].tab);
-    return same.length > 1 ? `${kind} ${n(same.indexOf(hymns[i]) + 1)}` : kind;
-  };
+  const saintCards = useSaintCards(selectedCoptic.month, selectedCoptic.day);
   const upcoming = getSeasonInfo(today, 10).upcoming;
 
   const rowDirection = isRTL ? styles.rowReverse : styles.row;
@@ -390,48 +369,7 @@ export default function CalendarScreen() {
         {/* The day's saints, each with its hymns */}
         <SectionHeader title={t.saints} />
         {saintCards.length ? (
-          saintCards.map((card) => {
-            const openStory = card.story ? () => router.push({ pathname: '/saints/[id]', params: { id: card.story!.id } }) : undefined;
-            return (
-              <View key={card.key} style={styles.saintCard}>
-                <Pressable
-                  disabled={!openStory}
-                  onPress={openStory}
-                  accessibilityRole={openStory ? 'button' : undefined}
-                  style={({ pressed }) => [rowDirection, styles.saintHead, pressed && styles.pressed]}>
-                  <View style={styles.flex}>
-                    <Text style={[styles.saintName, textAlign]}>{card.name[lang]}</Text>
-                    {card.story ? (
-                      <Text style={[styles.saintStory, textAlign]} numberOfLines={2}>
-                        {card.story.story[lang]}
-                      </Text>
-                    ) : null}
-                  </View>
-                  {openStory ? <Text style={styles.saintChevron}>{isRTL ? '‹' : '›'}</Text> : null}
-                </Pressable>
-                {card.hymns.length ? (
-                  <View style={[styles.saintHymns, rowDirection]}>
-                    {card.hymns.map((h, i) => (
-                      <Pressable
-                        key={h.hymn.id}
-                        onPress={() => {
-                          tapFeedback();
-                          openHymnPage(h.hymn.id);
-                        }}
-                        accessibilityRole="button"
-                        accessibilityLabel={`${hymnLabel(card.hymns, i)}, ${card.name[lang]}`}
-                        style={({ pressed }) => [styles.hymnChip, pressed && styles.pressed]}>
-                        <Text style={styles.hymnChipText}>
-                          {hymnLabel(card.hymns, i)}
-                          {h.hymn.versions.some((v) => v.audio) ? '  ♪' : ''}
-                        </Text>
-                      </Pressable>
-                    ))}
-                  </View>
-                ) : null}
-              </View>
-            );
-          })
+          <SaintCards cards={saintCards} lang={lang} />
         ) : (
           <Text style={[styles.emptyDay, textAlign]}>{t.noSaints}</Text>
         )}
@@ -747,21 +685,6 @@ const createStyles = (colors: AlhanPalette) => StyleSheet.create({
   dayBadgeNumber: { fontSize: 28, lineHeight: 32, fontWeight: '800', color: colors.text },
   dayBadgeMonth: { fontSize: 12, fontWeight: '700', color: colors.muted },
   dayCardDate: { fontSize: 14, color: colors.muted, marginTop: 2 },
-  saintCard: {
-    backgroundColor: colors.surface,
-    borderRadius: 16,
-    borderWidth: 1,
-    borderColor: colors.border,
-    padding: 14,
-    marginBottom: 10,
-  },
-  saintHead: { alignItems: 'center', gap: 10 },
-  saintName: { fontSize: 17, fontWeight: '800', color: colors.text },
-  saintStory: { fontSize: 14, lineHeight: 20, color: colors.muted, marginTop: 4 },
-  saintChevron: { fontSize: 22, color: colors.muted },
-  saintHymns: { flexWrap: 'wrap', gap: 8, marginTop: 12 },
-  hymnChip: { paddingHorizontal: 14, paddingVertical: 8, borderRadius: 18, backgroundColor: colors.goldSoft },
-  hymnChipText: { fontSize: 14, fontWeight: '700', color: colors.gold },
   emptyDay: { fontSize: 15, color: colors.muted, marginBottom: 8 },
   sectionGap: { height: 24 },
   yearRow: { alignItems: 'center', marginBottom: 12 },

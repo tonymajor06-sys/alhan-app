@@ -18,7 +18,7 @@ import { syncSeasonWidget } from '@/widgets/season-widget-sync';
 export const ErrorBoundary = ErrorScreen;
 
 export default function RootLayout() {
-  const { language, feastReminders } = useSettings();
+  const { language, feastReminders, saintReminders } = useSettings();
   const today = useTodayJdn();
   const colors = useAlhanColors();
   // Coptic text uses this font everywhere; wait for it so Coptic never flashes in the fallback font
@@ -31,8 +31,8 @@ export default function RootLayout() {
 
   // Likewise the feast reminders, which only cover the next few months at a time
   useEffect(() => {
-    syncFeastReminders(language, feastReminders);
-  }, [language, feastReminders, today]);
+    syncFeastReminders(language, feastReminders, saintReminders);
+  }, [language, feastReminders, saintReminders, today]);
 
   useReminderNavigation();
   useHomeScreenQuickActions(language, today);

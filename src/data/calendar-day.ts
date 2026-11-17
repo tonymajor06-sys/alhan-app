@@ -59,6 +59,14 @@ export function saintHymnsOn(month: number, day: number): SaintHymn[] {
   );
 }
 
+// The day's saints who have a Veneration, each once with their first one (for the morning reminder)
+export function venerationsOn(month: number, day: number): { saint: Record<AppLanguage, string>; hymnId: string }[] {
+  return saintHymnsOn(month, day)
+    .filter((h) => h.tab === 'veneration')
+    .filter((h, i, all) => all.findIndex((o) => o.saint.en === h.saint.en) === i)
+    .map((h) => ({ saint: h.saint, hymnId: h.hymn.id }));
+}
+
 // Whether a day remembers a saint (the calendar marks it with a dot)
 export const hasSaints = (month: number, day: number) =>
   storySaintsByDay.has(dayKey(month, day)) || stSaintsByDay.has(dayKey(month, day));

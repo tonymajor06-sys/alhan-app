@@ -16,6 +16,9 @@ export interface Settings {
   compareLanguage: LanguageType | null;
   // A notification the evening before each feast and fast (phone apps only)
   feastReminders: boolean;
+  // A notification in the morning of a day that remembers a saint with a Veneration (phone apps only; needs
+  // notifications allowed, from this switch or Feast reminders)
+  saintReminders: boolean;
   // When a hymn's recording ends, play the next hymn in the service that has one and open its words
   playNext: boolean;
   titleStyle: TitleStyle;
@@ -44,6 +47,7 @@ const loadSettings = (): Settings => {
     sideBySide: false,
     compareLanguage: null,
     feastReminders: false,
+    saintReminders: true,
     playNext: true,
     titleStyle: 'both',
     theme: 'system',

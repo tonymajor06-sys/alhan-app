@@ -41,6 +41,8 @@ const strings = {
     playNextHint: 'When a recording ends, the next one in the service starts',
     reminders: 'Feast reminders',
     remindersHint: 'A notification the evening before each feast and fast',
+    saintReminders: "Saints' days",
+    saintRemindersHint: 'A notification in the morning when a saint with a Veneration is remembered, with the Coptic date',
     about: 'About',
     support: 'Support and feedback',
     privacy: 'Privacy Policy',
@@ -72,6 +74,8 @@ const strings = {
     playNextHint: 'عند انتهاء التسجيل يبدأ التالي في الخدمة',
     reminders: 'تذكير بالأعياد',
     remindersHint: 'رسالة تذكير مساء اليوم السابق لكل عيد وصوم',
+    saintReminders: 'أعياد القديسين',
+    saintRemindersHint: 'رسالة صباح يوم تذكار قديس له تمجيد، مع التاريخ القبطي',
     about: 'عن التطبيق',
     support: 'الدعم والملاحظات',
     privacy: 'سياسة الخصوصية',
@@ -165,6 +169,11 @@ export default function SettingsScreen() {
   const toggleReminders = async () => {
     if (settings.feastReminders) return updateSettings({ feastReminders: false });
     if (await requestReminderPermission()) updateSettings({ feastReminders: true });
+    else Alert.alert(t.remindersDenied);
+  };
+  const toggleSaintReminders = async () => {
+    if (settings.saintReminders) return updateSettings({ saintReminders: false });
+    if (await requestReminderPermission()) updateSettings({ saintReminders: true });
     else Alert.alert(t.remindersDenied);
   };
 
@@ -289,6 +298,7 @@ export default function SettingsScreen() {
           {switchRow(t.sideBySide, t.sideBySideHint, settings.sideBySide, () => updateSettings({ sideBySide: !settings.sideBySide }), true)}
           {switchRow(t.playNext, t.playNextHint, settings.playNext, () => updateSettings({ playNext: !settings.playNext }))}
           {Platform.OS !== 'web' ? switchRow(t.reminders, t.remindersHint, settings.feastReminders, toggleReminders) : null}
+          {Platform.OS !== 'web' ? switchRow(t.saintReminders, t.saintRemindersHint, settings.saintReminders, toggleSaintReminders) : null}
         </View>
       )}
       {/* Recordings saved on the phone, and the space they take */}
