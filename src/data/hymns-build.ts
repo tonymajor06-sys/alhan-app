@@ -8409,6 +8409,17 @@ seasons.push({
   title: `${seasons.length + 1}. Other`,
   services: stSaintTabs.map((tab) => ({ id: tab.id, title: tab.title, hymns: tab.hymns })),
 });
+// Their texts tidied (2026-11-17): a "\" Spirit & Truth leaves between lines becomes " / " as in the other verses, and
+// the verse numbers in Arabic in English letters read "(1/18)", not the Arabic's "(18/1)" (which reads right to left)
+for (const hymn of stSaintTabs.flatMap((tab) => tab.hymns)) {
+  for (const version of hymn.versions) {
+    let text = version.text.replace(/\s*\\+\s*/g, ' / ');
+    const numbers = [...text.matchAll(/\((\d+)\/(\d+)\)/g)];
+    if (version.language !== 'arabic' && numbers.length > 1 && numbers.every((m) => m[1] === numbers[0][1]))
+      text = text.replace(/\((\d+)\/(\d+)\)/g, '($2/$1)');
+    version.text = text;
+  }
+}
 // Recordings in arsani-audio.ts for these lists (they come in after the recordings are given out above)
 for (const hymn of stSaintTabs.flatMap((tab) => tab.hymns)) {
   for (const { file, hymns: ids, language } of arsaniAudio) {

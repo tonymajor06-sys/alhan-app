@@ -234,6 +234,8 @@ const phrasePattern = (words: string[]) => wordPattern(words[0]) + words.slice(1
 // One thing the search looks for: a word, or a name with every other way it is written (see search-words.ts)
 interface Term {
   pattern: RegExp;
+  // a title before a name (St, Anba, Abba, Pope...): it helps a hymn come first but a hymn needn't have it
+  optional?: boolean;
   // the word typed, in English letters, for words that sound the same in a title
   sound: string;
 }
@@ -247,7 +249,15 @@ export interface SearchMatcher {
   allBySound: (titleSounds: string[]) => boolean;
 }
 
+// Titles before a saint's name, which hymns write in many ways or leave out ("anba moses" finds St Moses the Strong)
+const HONORIFICS = [
+  'st', 'saint', 'sts', 'saints', 'anba', 'amba', 'abba', 'ava', 'mar', 'mari', 'fr', 'father', 'abouna', 'abuna', 'pope', 'papa',
+  'القديس', 'القديسة', 'القديسين', 'الانبا', 'انبا', 'الأنبا', 'أنبا', 'مار', 'البابا', 'ابونا', 'أبونا', 'الشهيد', 'الشهيدة',
+];
+let honorifics: Set<string> | null = null;
+
 export function searchMatcher(query: string): SearchMatcher | null {
+  honorifics ??= new Set(HONORIFICS.map(normalizeForSearch));
   const words = normalizeForSearch(query).split(/\s+/).filter(Boolean);
   if (words.length === 0 || words.join('').length < 2) return null;
   const terms: Term[] = [];
@@ -259,15 +269,17 @@ export function searchMatcher(query: string): SearchMatcher | null {
     terms.push({
       pattern: new RegExp(names.map((n) => `(?:${phrasePattern(n.split(' '))})`).join('|'), 'u'),
       sound: length === 1 ? soundKey(typed[0]) : '',
+      optional: length === 1 && honorifics.has(typed[0]),
     });
     i += length;
   }
+  const required = terms.some((t) => !t.optional) ? terms.filter((t) => !t.optional) : terms;
   return {
     words,
     terms,
-    all: (folded) => terms.every((t) => t.pattern.test(folded)),
+    all: (folded) => required.every((t) => t.pattern.test(folded)),
     allBySound: (titleSounds) =>
-      terms.every((t) => t.sound.length >= 3 && titleSounds.some((k) => k.startsWith(t.sound))),
+      required.every((t) => t.sound.length >= 3 && titleSounds.some((k) => k.startsWith(t.sound))),
   };
 }
 

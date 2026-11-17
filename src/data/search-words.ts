@@ -27,7 +27,8 @@ const NAME_GROUPS: string[][] = [
   ['theodore', 'tadros', 'تادرس'],
   ['victor', 'boktor', 'بقطر'],
   ['takla', 'tekle', 'تكلا'],
-  ['abraam', 'abram', 'ابرام'],
+  ['abraam', 'abram', 'avraam', 'afraam', 'ابرام', 'ابرآم', 'افرام', 'آفرآم'],
+  ['moses the strong', 'moses the black', 'moussa el aswad', 'mousa el aswad', 'موسى الاسود', 'موسى القوي'],
   ['barsoum', 'barsom', 'برسوم'],
   ['verena', 'fereena', 'فيرينا'],
   ['midnight praises', 'tasbeha', 'psalmody', 'تسبحه'],
@@ -60,13 +61,13 @@ export function soundKey(word: string): string {
 
 let groups: { members: string[]; keys: Set<string> }[] | null = null;
 
-// The other names of the name in `words` from `at` on (one word or two), and how many words it took
+// The other names of the name in `words` from `at` on (up to three words), and how many words it took
 export function otherNames(words: string[], at: number, fold: (s: string) => string): { names: string[]; length: number } | null {
   groups ??= NAME_GROUPS.map((g) => {
     const members = [...new Set(g.map(fold))];
     return { members, keys: new Set(members.map((m) => m.split(' ').map(soundKey).join(' '))) };
   });
-  for (const length of [2, 1]) {
+  for (const length of [3, 2, 1]) {
     if (at + length > words.length) continue;
     const typed = words.slice(at, at + length).join(' ');
     const typedKey = words.slice(at, at + length).map(soundKey).join(' ');
